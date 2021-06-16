@@ -1,0 +1,25 @@
+{
+    "name": "mythic",
+    "title": "Mythic 4.0",
+    "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
+    "author": "Tyler Baum",
+    "version": "0.0.0-beta",
+    "minimumCoreVersion": "0.8.6",
+    "compatbileCoreVersion": "0.8.7",
+    "esmodules": [
+        "mythic.js"
+    ],
+    "styles": [
+        "mythic.css"
+    ],
+    "packs": [
+
+    ],
+    "languages": [
+
+    ],
+    "gridDistance": 1,
+    "gridUnits": "m",
+    "primaryTokenAttribute": "wounds",
+    "initiative": "1d10 + @agMod"
+}
