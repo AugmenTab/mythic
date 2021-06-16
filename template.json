@@ -2,8 +2,68 @@
     "Actor": {},
     "Item": {
         "types": [
+            "vehicle",
             "weapon"
         ],
+        "vehicle": {
+            "group": "",
+            "exp": 0,
+            "size": {
+                "length": 0.0,
+                "width": 0.0,
+                "height": 0.0,
+                "weight": 0.0
+            },
+            "movement": {
+                "accelerate": 0,
+                "brake": 0,
+                "topSpeed": 0,
+                "maneuver": 0,
+                "vertical": 0,
+                "takeoff": 0,
+                "targetRange": 0,
+                "targeting": 0
+            },
+            "melee": {
+                "strength": 0,
+                "mythicStrength": 0,
+                "damageRoll": "3D10"
+            },
+            "crew": "",
+            "complement": "",
+            "hull": "",
+            "breakPoints": {
+                "wep": 0,
+                "mob": 0,
+                "eng": 0,
+                "op": 0,
+                "crew": 0
+            },
+            "armor": {
+                "front": 0,
+                "back": 0,
+                "side": 0,
+                "top": 0,
+                "bottom": 0
+            },
+            "shield": {
+                "rating": 0,
+                "delay": 0,
+                "recharge": 0
+            },
+            "variants": [
+                {
+                    "name": "",
+                    "armament": [],
+                    "price": 0
+                }
+            ],
+            "sizePoints": 0,
+            "weaponPoints": 0,
+            "special": {},
+            "moveType": "",
+            "additionalMaterial": []
+        },
         "weapon": {
             "group": "ranged",
             "tags": {
