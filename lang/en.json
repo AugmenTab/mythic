@@ -1,0 +1,11 @@
+{
+    "mythic": {
+        "weaponGroups": {
+            "none": "",
+            "ranged": "Ranged",
+            "melee": "Melee",
+            "grenade": "Grenade",
+            "vehicle": "Vehicle Weapon"
+        }
+    }
+}
