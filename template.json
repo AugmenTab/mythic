@@ -5,8 +5,24 @@
             "vehicle",
             "weapon"
         ],
+        "templates": {
+            "additionalMaterial": {
+                "content": ""
+            },
+            "faction": {
+                "name": ""
+            },
+            "itemDescription": {
+                "description": ""
+            }
+        },
         "vehicle": {
-            "group": "",
+            "templates": [
+                "additionalMaterial",
+                "faction",
+                "itemDescription"
+            ],
+            "type": "",
             "exp": 0,
             "size": {
                 "length": 0.0,
@@ -22,12 +38,13 @@
                 "vertical": 0,
                 "takeoff": 0,
                 "targetRange": 0,
-                "targeting": 0
+                "targeting": 0,
+                "type": ""
             },
             "melee": {
                 "strength": 0,
                 "mythicStrength": 0,
-                "damageRoll": "3D10"
+                "damageRoll": ""
             },
             "crew": "",
             "complement": "",
@@ -60,11 +77,14 @@
             ],
             "sizePoints": 0,
             "weaponPoints": 0,
-            "special": {},
-            "moveType": "",
-            "additionalMaterial": []
+            "special": {}
         },
         "weapon": {
+            "templates": [
+                "additionalMaterial",
+                "faction",
+                "itemDescription"
+            ],
             "group": "ranged",
             "tags": {
                 "[UD]": true,
@@ -93,8 +113,7 @@
             "price": 0,
             "baseReload": "0",
             "weight": 0.0,
-            "breakPoints": 0,
-            "description": ""
+            "breakPoints": 0
         }
     }
 }
