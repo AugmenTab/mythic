@@ -1,0 +1,40 @@
+{
+    "Actor": {},
+    "Item": {
+        "types": [
+            "weapon"
+        ],
+        "weapon": {
+            "group": "ranged",
+            "tags": {
+                "[UD]": true,
+                "[I]": false,
+                "[OH]": false,
+                "[TH]": false,
+                "[HW]": false,
+                "[SD]": false,
+                "[PD]": false,
+                "[BD]": false
+            },
+            "special": {
+                "vehicleWeapon": false
+            },
+            "fireMode": {},
+            "type": "",
+            "attackBonus": 0,
+            "damageRoll": "1D10",
+            "baseDamage": 0,
+            "strengthDamage": 0,
+            "piercing": 0,
+            "capacity": 0,
+            "close": 0,
+            "long": 0,
+            "ammunition": "",
+            "price": 0,
+            "baseReload": "0",
+            "weight": 0.0,
+            "breakPoints": 0,
+            "description": ""
+        }
+    }
+}
