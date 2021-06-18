@@ -9,7 +9,7 @@ export default class MythicItemSheet extends ItemSheet {
   }
 
   get template(){
-    return `systems/mythic/templates/sheets/${this.item.data.type}-sheet.html`;
+    return `systems/mythic/templates/sheets/${this.item.data.type}-sheet.hbs`;
   }
 
   getData() {
