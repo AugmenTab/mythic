@@ -118,24 +118,18 @@
             "weapon"
         ],
         "templates": {
-            "additionalMaterial": {
-                "content": ""
-            },
-            "faction": {
-                "name": ""
-            },
-            "itemDescription": {
-                "description": ""
+            "baseItemDetails": {
+                "additionalMaterial": "",
+                "faction": "",
+                "itemDescription": ""
             }
         },
         "vehicle": {
             "templates": [
-                "additionalMaterial",
-                "faction",
-                "itemDescription"
+                "baseItemDetails"
             ],
             "type": "",
-            "exp": 0,
+            "experiencePayout": 0,
             "size": {
                 "length": 0.0,
                 "width": 0.0,
@@ -184,38 +178,94 @@
             "variants": [
                 {
                     "name": "",
-                    "armament": [],
+                    "armament": "",
                     "price": 0
                 }
             ],
             "sizePoints": 0,
             "weaponPoints": 0,
-            "special": {}
+            "special": {
+                "rule": [
+                    "All-Terrain",
+                    "Anti-Gravitational",
+                    "Boost",
+                    "Heavy Plating",
+                    "Neural Interface",
+                    "Open-Top",
+                    "Walker Stomp"
+                ],
+                "value": 0
+            }
         },
         "weapon": {
             "templates": [
-                "additionalMaterial",
-                "faction",
-                "itemDescription"
+                "baseItemDetails"
             ],
-            "group": "ranged",
-            "tags": {
-                "[UD]": true,
-                "[I]": false,
-                "[OH]": false,
-                "[TH]": false,
-                "[HW]": false,
-                "[SD]": false,
-                "[PD]": false,
-                "[BD]": false
-            },
+            "group": [
+                "Ranged",
+                "Melee",
+                "Explosive"
+            ],
+            "tags": [
+                "[UD]",
+                "[I]",
+                "[OH]",
+                "[TH]",
+                "[HW]",
+                "[SD]",
+                "[PD]",
+                "[BD]"
+            ],
             "special": {
-                "vehicleWeapon": false
+                "rule": [
+                    "Acid",
+                    "Blast",
+                    "Cauterize",
+                    "Charge",
+                    "Dice Minimum",
+                    "Electrified",
+                    "EMP",
+                    "Flame",
+                    "Gravimetric Pulse",
+                    "Gravity",
+                    "Hard Light",
+                    "Headshot",
+                    "Homing",
+                    "Kill",
+                    "Kinetic",
+                    "Needle",
+                    "Nonlethal",
+                    "Overheat",
+                    "Penetrating",
+                    "Pepper Spray",
+                    "Recharge Rate",
+                    "Slow",
+                    "Spike",
+                    "Spike",
+                    "Spin",
+                    "Spread",
+                    "Sticky",
+                    "Stun",
+                    "Tranquilize",
+                    "Vehicle Lock"
+                ],
+                "value": 0
             },
-            "fireMode": {},
+            "fireMode": {
+                "mode": [
+                    "Auto",
+                    "Burst",
+                    "Drawback",
+                    "Flintlock",
+                    "Pump",
+                    "Semi-Auto",
+                    "Sustained"
+                ],
+                "value": 0
+            },
             "type": "",
             "attackBonus": 0,
-            "damageRoll": "1D10",
+            "damageRoll": "",
             "baseDamage": 0,
             "strengthDamage": 0,
             "piercing": 0,
@@ -224,7 +274,7 @@
             "long": 0,
             "ammunition": "",
             "price": 0,
-            "baseReload": "0",
+            "baseReload": 0,
             "weight": 0.0,
             "breakPoints": 0
         }
