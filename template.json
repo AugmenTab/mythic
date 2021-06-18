@@ -1,5 +1,117 @@
 {
-    "Actor": {},
+    "Actor": {
+        "types": [
+            "Named Character",
+            "Bestiary Enemy",
+            "Flood"
+        ],
+        "templates": {
+            "commonStats": {
+                "faction": "",
+                "soldierType": "",
+                "rank": "",
+                "race": "",
+                "characteristics": {
+                    "strength": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "toughness": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "agility": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "warfareRanged": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "warfareMelee": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "intellect": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "perception": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "courage": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "charisma": {
+                        "value": 0,
+                        "advancements": 0
+                    },
+                    "leadership": {
+                        "value": 0,
+                        "advancements": 0
+                    }
+                },
+                "mythicCharacteristics": {
+                    "mythicStrength": 0,
+                    "mythicToughness": 0,
+                    "mythicAgility": 0
+                },
+                "size": [
+                    "Mini",
+                    "Small",
+                    "Normal",
+                    "Large",
+                    "Huge",
+                    "Hulking",
+                    "Giant",
+                    "Immense",
+                    "Massive",
+                    "Great",
+                    "Monumental"
+                ],
+                "wounds": {
+                    "value": 0,
+                    "max": 0
+                },
+                "luck": {
+                    "value": 0,
+                    "max": 0
+                },
+                "fatigue": 0
+            }
+        },
+        "Named Character": {
+            "name": "",
+            "specialization": "",
+            "templates": [
+                "commonStats"
+            ],
+            "supportPoints": 0,
+            "experience": 0
+        },
+        "Bestiary Enemy": {
+            "templates": [
+                "commonStats"
+            ],
+            "experiencePayout": 0,
+            "level": [
+                "Easy",
+                "Normal",
+                "Heroic",
+                "Legendary",
+                "Nemesis"
+            ]
+        },
+        "Flood": {
+            "templates": [
+                "commonStats"
+            ],
+            "experiencePayout": 0,
+            "contamination": 0
+        }
+    },
     "Item": {
         "types": [
             "vehicle",
@@ -64,7 +176,8 @@
                 "bottom": 0
             },
             "shield": {
-                "rating": 0,
+                "integrity": 0,
+                "current": 0,
                 "delay": 0,
                 "recharge": 0
             },
