@@ -4,7 +4,7 @@
             "none": "",
             "ranged": "Ranged",
             "melee": "Melee",
-            "grenade": "Grenade",
+            "explosive": "Explosive",
             "vehicle": "Vehicle Weapon"
         }
     }
