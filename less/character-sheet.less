@@ -1,0 +1,37 @@
+.mythic.sheet.namedCharacter {
+    header {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+
+        img {
+            height: 150px;
+        }
+
+        .basic-info {
+            display: grid;
+            grid-template-rows: repeat(3, auto);
+
+            .identity {
+                display: grid;
+                grid-template-columns: 125px 1fr 180px;
+            }
+            
+            .background {
+                display: grid;
+                grid-template-rows: repeat(2, 30px);
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .physical {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                column-gap: 2px;
+
+                select {
+                    grid-column: span 2;
+                    align-self: center;
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,9 @@ import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet
 
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
-    "systems/mythic/templates/partials/character-stat-block.hbs"
+    "systems/mythic/templates/partials/character-stat-block.hbs",
+    "systems/mythic/templates/partials/character-nav.hbs",
+    "systems/mythic/templates/partials/character-sheet-body.hbs"
   ];
   return loadTemplates(templatePaths);
 }
