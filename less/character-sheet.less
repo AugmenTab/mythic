@@ -34,4 +34,27 @@
             }
         }
     }
+
+    .character-stat-block {
+        table {
+            th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+
+            td {
+                text-align: center;
+
+                .characteristic {
+                font-size: 2em;
+                }
+            }
+        }
+
+        .extra-stats {
+            display: grid;
+            grid-template-columns: 0.75fr 1.5fr 0.75fr;
+            column-gap: 4px;
+        }
+    }
 }
