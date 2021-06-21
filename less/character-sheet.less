@@ -45,15 +45,22 @@
             td {
                 text-align: center;
 
-                .characteristic {
+            }
+            
+            td.characteristic {
                 font-size: 2em;
-                }
             }
         }
 
-        .extra-stats {
+        .physical-stats {
             display: grid;
             grid-template-columns: 0.75fr 1.5fr 0.75fr;
+            column-gap: 4px;
+        }
+
+        .scaled {
+            display: grid;
+            grid-template-columns: repeat(6, auto);
             column-gap: 4px;
         }
     }
