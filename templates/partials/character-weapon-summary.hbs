@@ -5,9 +5,9 @@
         <th colspan="7">Weapons</th>
       </tr>
       <tr>
-        <th>Group</th>
         <th>Name</th>
-        <th>Ammo</th>
+        <th>Fire Mode</th>
+        <th>Range</th>
         <th>Magazine</th>
         <th>Sin.</th>
         <th>Half</th>
@@ -16,42 +16,69 @@
     </thead>
     <tbody>
       <tr>
-        <td>R</td>
+        <td>M392 Designated Marksman Rifle</td>
+        <td>
+          <select name="fire-mode">
+            <option value="semi-3">Semi (3)</option>
+            <option value="burst-2">Burst (2)</option>
+          </select>
+        </td>
+        <td>30 - 1400</td>
+        <td>15 / 15</td>
+        <td><button>1</button></td>
+        <td><button>3</button></td>
+        <td><button>6</button></td>
+      </tr>
+      <tr>
         <td>DTM/Law Enforcement Series Close Assault Weapon System</td>
-        <td>INSTFLBCR</td>
+        <td>
+          <select name="fire-mode">
+            <option value="pump-2">Pump (2)</option>
+          </select>
+        </td>
+        <td>10 - 80</td>
         <td>7 / 12</td>
         <td><button>1</button></td>
         <td><button>2</button></td>
         <td><button>4</button></td>
       </tr>
       <tr>
-        <td>R</td>
         <td>Confetti Maker</td>
-        <td>HYPHEAPINsSAPMG</td>
+        <td>
+          <select name="fire-mode">
+            <option value="auto-20">Auto (20)</option>
+          </select>
+        </td>
+        <td>5 - 400</td>
         <td>120 / 120</td>
         <td><button>1</button></td>
         <td><button>10</button></td>
         <td><button>20</button></td>
       </tr>
       <tr>
-        <td>M</td>
         <td>Energy Sword</td>
-        <td colspan="2">Reach: 3 meters</td>
+        <td>Melee</td>
+        <td>3</td>
+        <td>--</td>
         <td><button>1</button></td>
         <td><button>4</button></td>
         <td><button>8</button></td>
       </tr>
       <tr>
-        <td>G</td>
         <td>Plasma Grenade</td>
-        <td>--</td>
+        <td>Grenade</td>
+        <td>6 / 1</td>
         <td>1 / 2</td>
         <td colspan="3"><button>1</button></td>
       </tr>
       <tr>
-        <td>V</td>
-        <td>NA6 Defoliant Projector</td>
-        <td>White Diamond Defoliant</td>
+        <td>NA6 Defoliant Projector (V)</td>
+        <td>
+          <select name="fire-mode">
+            <option value="sustained-6">Sustained (6)</option>
+          </select>
+        </td>
+        <td>10 - 40</td>
         <td>54 / 60</td>
         <td><button>1</button></td>
         <td><button>3</button></td>
