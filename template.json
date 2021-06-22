@@ -11,6 +11,7 @@
                 "soldierType": "",
                 "rank": "",
                 "race": "",
+                "notes": "",
                 "characteristics": {
                     "strength": {
                         "value": 0,
@@ -89,7 +90,8 @@
                 "commonStats"
             ],
             "supportPoints": 0,
-            "experience": 0
+            "experience": 0,
+            "biography": ""
         },
         "Bestiary Enemy": {
             "templates": [
