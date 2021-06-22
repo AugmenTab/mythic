@@ -1,1 +1,132 @@
-<p>test</p>
+<section class="character-sheet-skills">
+  <table id="skill-table" class="summary-table">
+    <thead>
+      <tr>
+        <th colspan="7">{{actor.name}}'s Skills</th>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Difficulty</th>
+        <th>Type</th>
+        <th>Characteristic</th>
+        <th>Training</th>
+        <th style="width:90px">Modifiers</th>
+        <th>Roll</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Interrogation</td>
+        <td>Basic</td>
+        <td>Social</td>
+        <td>
+          <select name="skill-characteristics">
+            <option value="ch" selected>Charisma</option>
+            <option value="int">Intellect</option>
+            <option value="ld">Leadership</option>
+          </select>
+        </td>
+        <td>
+          <select name="skill-training">
+            <option value="none" selected>--</option>
+            <option value="trained">Trained</option>
+            <option value="plus-10">+10</option>
+            <option value="plus-20">+20</option>
+          </select>
+        </td>
+        <td>
+          <input name="_-mod" type="number" value="_-mod"/>
+        </td>
+        <td><button>100</button></td>
+      </tr>
+      <tr>
+        <td>Medication (Mgalekgolo)</td>
+        <td>Advanced</td>
+        <td>Field Craft</td>
+        <td>Intellect</td>
+        <td>
+          <select name="skill-training">
+            <option value="none" selected>--</option>
+            <option value="trained">Trained</option>
+            <option value="plus-10">+10</option>
+            <option value="plus-20">+20</option>
+          </select>
+        <td>
+          <input name="_-mod" type="number" value="_-mod"/>
+        </td>
+        <td><button>100</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <table id="educations-table" class="summary-table">
+    <thead>
+      <tr>
+        <th colspan="7">{{actor.name}}'s Educations</th>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Difficulty</th>
+        <th>Type</th>
+        <th>Skill</th>
+        <th>Training</th>
+        <th style="width:90px">Modifiers</th>
+        <th>Roll</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aeronautics</td>
+        <td>Advanced</td>
+        <td>Piloting</td>
+        <td>
+          <select name="skill-options">
+            <option value="none" selected>--</option>
+            <option value="stunting">Stunting</option>
+            <option value="pilot">Pilot (Ground)</option>
+            <option value="pilot">Pilot (Air)</option>
+            <option value="pilot">Pilot (Space)</option>
+            <option value="evasion">Evasion</option>
+            <option value="technology">Technology (Human)</option>
+            <option value="technology">Technology (Covenant)</option>
+            <option value="technology">Technology (Forerunner)</option>
+          </select>
+        </td>
+        <td>
+          <select name="skill-training">
+            <option value="none" selected>--</option>
+            <option value="plus-5">+5</option>
+            <option value="plus-10">+10</option>
+          </select>
+        </td>
+        <td>
+          <input name="_-mod" type="number" value="_-mod"/>
+        </td>
+        <td><button>100</button></td>
+      </tr>
+      <tr>
+        <td>Covenant Vehicle Maintenance</td>
+        <td>Basic</td>
+        <td>Engineer</td>
+        <td>
+          <select name="skill-options">
+            <option value="none" selected>--</option>
+            <option value="technology">Technology (Human)</option>
+            <option value="technology">Technology (Covenant)</option>
+            <option value="technology">Technology (Forerunner)</option>
+          </select>
+        </td>
+        <td>
+          <select name="skill-training">
+            <option value="none" selected>--</option>
+            <option value="plus-5">+5</option>
+            <option value="plus-10">+10</option>
+          </select>
+        </td>
+        <td>
+          <input name="_-mod" type="number" value="_-mod"/>
+        </td>
+        <td><button>100</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
