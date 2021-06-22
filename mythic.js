@@ -7,7 +7,8 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/character-details.hbs",
     "systems/mythic/templates/partials/character-nav.hbs",
     "systems/mythic/templates/partials/character-sheet-body.hbs",
-    "systems/mythic/templates/partials/character-stat-block.hbs"
+    "systems/mythic/templates/partials/character-stat-block.hbs",
+    "systems/mythic/templates/partials/character-weapon-summary.hbs"
   ];
   return loadTemplates(templatePaths);
 }
