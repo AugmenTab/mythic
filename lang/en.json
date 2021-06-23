@@ -50,6 +50,17 @@
                 "legs": "Legs"
             }
         },
+        "characterWeaponSummary": {
+            "title": "Weapons",
+            "initiative": "Initiative",
+            "name": "Name",
+            "fireMode": "Fire Mode",
+            "range": "Range",
+            "mag": "Magazine",
+            "one": "One",
+            "half": "Half",
+            "full": "Full"
+        },
         "weaponGroups": {
             "none": "",
             "ranged": "Ranged",
