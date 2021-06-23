@@ -116,6 +116,7 @@
     },
     "Item": {
         "types": [
+            "ability",
             "vehicle",
             "weapon"
         ],
@@ -125,6 +126,12 @@
                 "faction": "",
                 "itemDescription": ""
             }
+        },
+        "ability": {
+            "prerequisite": "",
+            "cost": 0,
+            "summary": "",
+            "description": ""
         },
         "vehicle": {
             "templates": [

@@ -6,6 +6,11 @@
             "melee": "Melee",
             "explosive": "Explosive",
             "vehicle": "Vehicle Weapon"
+        },
+        "ability": {
+            "summary": "Summary",
+            "prerequisite": "Prerequisites",
+            "cost": "EXP Cost"
         }
     }
 }
