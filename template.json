@@ -59,19 +59,7 @@
                     "mythicToughness": 0,
                     "mythicAgility": 0
                 },
-                "size": [
-                    "Mini",
-                    "Small",
-                    "Normal",
-                    "Large",
-                    "Huge",
-                    "Hulking",
-                    "Giant",
-                    "Immense",
-                    "Massive",
-                    "Great",
-                    "Monumental"
-                ],
+                "size": "",
                 "wounds": {
                     "value": 0,
                     "max": 0

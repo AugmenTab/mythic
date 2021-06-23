@@ -5,4 +5,11 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       classes: ["mythic", "sheet", "namedCharacter"]
     });
   }
+
+  getData() {
+    const data = super.getData();
+    data.config = CONFIG.mythic;
+    return data;
+  }
+  
 }

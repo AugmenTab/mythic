@@ -3,60 +3,54 @@
   <div class="basic-info">
     <div class="identity">
       <h1 id="rank">
-        <input name="rank" type="text" value="{{actor.rank}}" placeholder="Rank"/>
+        <input name="data.rank" type="text" value="{{data.data.rank}}" placeholder="Rank"/>
       </h1>
       <h1 id="name">
         <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
       </h1>
       <h1 id="faction">
-        <input name="faction" type="text" value="{{actor.faction}}" placeholder="Faction"/>
+        <input name="data.faction" type="text" value="{{data.data.faction}}" placeholder="Faction"/>
       </h1>
     </div>
     <div class="background">
       <p>
-        <input name="soldier-type" type="text" value="{{actor.soldierType}}" placeholder="Soldier Type"/>
+        <input name="data.soldierType" type="text" value="{{data.data.soldierType}}" placeholder="Soldier Type"/>
       </p>
       <p>
-        <input name="race" type="text" value="{{actor.race}}" placeholder="Race"/>
+        <input name="data.race" type="text" value="{{data.data.race}}" placeholder="Race"/>
       </p>
       <p>
-        <input name="specialization" type="text" value="{{actor.specialization}}" placeholder="Specialization"/>
+        <input name="data.specialization" type="text" value="{{data.data.specialization}}" placeholder="Specialization"/>
       </p>
       <p>
-        <input name="upbringing" type="text" value="{{actor.upbringing}}" placeholder="Upbringing"/>
+        <input name="data.upbringing" type="text" value="{{data.data.upbringing}}" placeholder="Upbringing"/>
       </p>
       <p>
-        <input name="environment" type="text" value="{{actor.environment}}" placeholder="Environment"/>
+        <input name="data.environment" type="text" value="{{data.data.environment}}" placeholder="Environment"/>
       </p>
       <p>
-        <input name="lifestyle" type="text" value="{{actor.lifestyle}}" placeholder="Lifestyle"/>
+        <input name="data.lifestyle" type="text" value="{{data.data.lifestyle}}" placeholder="Lifestyle"/>
       </p>
     </div>
     <div class="physical">
-      <select name="size">
-        <option value="mini">Mini</option>
-        <option value="small">Small</option>
-        <option value="normal" selected>Normal</option>
-        <option value="large">Large</option>
-        <option value="huge">Huge</option>
-        <option value="hulking">Hulking</option>
-        <option value="giant">Giant</option>
-        <option value="immense">Immense</option>
-        <option value="massive">Massive</option>
-        <option value="great">Great</option>
-        <option value="monumental">Monumental</option>
+      <select name="data.size">
+        {{#select data.data.size}}
+          {{#each config.size as |name size|}}
+            <option value="{{size}}">{{name}}</option>
+          {{/each}}
+        {{/select}}
       </select>
       <p>
-        <input name="height" type="text" value="{{actor.height}}" placeholder="Height"/>
+        <input name="data.height" type="text" value="{{data.data.height}}" placeholder="Height"/>
       </p>
       <p>
-        <input name="weight" type="text" value="{{actor.weight}}" placeholder="Weight"/>
+        <input name="data.weight" type="text" value="{{data.data.weight}}" placeholder="Weight"/>
       </p>
       <p>
-        <input name="age" type="number" value="{{actor.age}}" placeholder="Age"/>
+        <input name="data.age" type="number" value="{{data.data.age}}" placeholder="Age"/>
       </p>
       <p>
-        <input name="gender" type="text" value="{{actor.gender}}" placeholder="Gender"/>
+        <input name="data.gender" type="text" value="{{data.data.gender}}" placeholder="Gender"/>
       </p>
     </div>
   </div>

@@ -11,6 +11,19 @@
             "summary": "Summary",
             "prerequisite": "Prerequisites",
             "cost": "EXP Cost"
+        },
+        "sizes": {
+            "mini": "Mini",
+            "small": "Small",
+            "normal": "Normal",
+            "large": "Large",
+            "huge": "Huge",
+            "hulking": "Hulking",
+            "giant": "Giant",
+            "immense": "Immense",
+            "massive": "Massive",
+            "great": "Great",
+            "monumental": "Monumental"
         }
     }
 }
