@@ -1,34 +1,32 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
     <h1>
-      <input name="name" type="text" value="{{item.name}}" placeholder="Name" />
+      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
     </h1>
   </header>
-  <div>
-    <p>
-      <input name="data.summary" type="text" value="{{data.summary}}" placeholder="{{localize "mythic.ability.summary"}}" />
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.ability.prerequisite"}}</th>
-          <th>{{localize "mythic.ability.cost"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input name="data.prerequisite" type="text" value="{{data.prerequisite}}" placeholder="{{localize "mythic.ability.prerequisite"}}" />
-          </td>
-          <td>
-            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" placeholder="{{localize "mythic.ability.cost"}}" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="text-entry">
-      <textarea class="editor" name="data.description">{{data.description}}</textarea>
-    </div>
+  <p>
+    <input name="data.summary" type="text" value="{{data.data.summary}}" placeholder="{{localize "mythic.ability.summary"}}"/>
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.ability.prerequisite"}}</th>
+        <th>{{localize "mythic.ability.cost"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input name="data.prerequisite" type="text" value="{{data.data.prerequisite}}" placeholder="{{localize "mythic.ability.prerequisite"}}"/>
+        </td>
+        <td>
+          <input name="data.cost" type="number" value="{{data.data.cost}}" data-dtype="Number" placeholder="{{localize "mythic.ability.cost"}}"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-entry">
+    <textarea class="editor" name="data.description">{{data.data.description}}</textarea>
   </div>
 </form>
