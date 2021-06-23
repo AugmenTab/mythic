@@ -15,6 +15,41 @@
             "age": "Age",
             "gender": "Gender"
         },
+        "characterStatBlock": {
+            "mythics": "Mythic Characteristics",
+            "movement": {
+                "title": "Character Movement",
+                "half": "Half",
+                "full": "Full",
+                "charge": "Charge",
+                "run": "Run",
+                "sprint": "Sprint",
+                "jump": "Jump",
+                "leap": "Leap"
+            },
+            "capacity": {
+                "title": "Carrying Capacity",
+                "carry": "Carry",
+                "lift": "Lift",
+                "push": "Push"
+            },
+            "physical": {
+                "wounds": "Wounds",
+                "fatigue": "Fatigue",
+                "luck": "Luck",
+                "support": "Support Pts",
+                "armor": "Armor",
+                "shields": "Shields",
+                "current": "Current",
+                "max": "Max",
+                "delay": "Delay",
+                "charge": "Charge",
+                "head": "Head",
+                "chest": "Chest",
+                "arms": "Arms",
+                "legs": "Legs"
+            }
+        },
         "weaponGroups": {
             "none": "",
             "ranged": "Ranged",
