@@ -1,5 +1,20 @@
 {
     "mythic": {
+        "characterDetails": {
+            "rank": "Rank",
+            "name": "Name",
+            "faction": "Faction",
+            "soldierType": "Soldier Type",
+            "race": "Race",
+            "specialization": "Specialization",
+            "upbringing": "Upbringing",
+            "environment": "Environment",
+            "lifestyle": "Lifestyle",
+            "height": "Height",
+            "weight": "Weight",
+            "age": "Age",
+            "gender": "Gender"
+        },
         "weaponGroups": {
             "none": "",
             "ranged": "Ranged",
@@ -7,7 +22,7 @@
             "explosive": "Explosive",
             "vehicle": "Vehicle Weapon"
         },
-        "ability": {
+        "abilitySheet": {
             "summary": "Summary",
             "prerequisite": "Prerequisites",
             "cost": "EXP Cost"

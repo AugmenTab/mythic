@@ -8,11 +8,11 @@ mythic.weaponGroups = {
   vehicle: "mythic.weaponGroups.vehicle"
 }
 
-mythic.ability = {
-  summary: "mythic.ability.summary",
-  prerequisite: "mythic.ability.prerequisite",
-  cost: "mythic.ability.cost",
-  description: "mythic.ability.description"
+mythic.abilitySheet = {
+  summary: "mythic.abilitySheet.summary",
+  prerequisite: "mythic.abilitySheet.prerequisite",
+  cost: "mythic.abilitySheet.cost",
+  description: "mythic.abilitySheet.description"
 }
 
 mythic.size = {
@@ -28,17 +28,3 @@ mythic.size = {
   great: "mythic.sizes.great",
   monumental: "mythic.sizes.monumental"
 }
-
-// mythic.size = {
-//   mini: "Mini",
-//   small: "Small",
-//   normal: "Normal",
-//   large: "Large",
-//   huge: "Huge",
-//   hulking: "Hulking",
-//   giant: "Giant",
-//   immense: "Immense",
-//   massive: "Massive",
-//   great: "Great",
-//   monumental: "Monumental"
-// }
