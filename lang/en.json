@@ -97,7 +97,7 @@
             "cost": "EXP Cost"
         },
         "skillSheet": {
-            "characteristic": "Characteristic",
+            "stats": "Characteristics",
             "difficulty": "Difficulty",
             "difficulties": {
                 "basic": "Basic",

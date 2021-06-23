@@ -129,7 +129,18 @@
                 "plus10": 0,
                 "plus20": 0
             },
-            "characteristic": {},
+            "stat": {
+                "str": false,
+                "tou": false,
+                "agi": false,
+                "wfr": false,
+                "wfm": false,
+                "int": false,
+                "per": false,
+                "cr": false,
+                "ch": false,
+                "ld": false
+            },
             "description": ""
         },
         "vehicle": {
