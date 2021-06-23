@@ -12,7 +12,6 @@ mythic.abilitySheet = {
   summary: "mythic.abilitySheet.summary",
   prerequisite: "mythic.abilitySheet.prerequisite",
   cost: "mythic.abilitySheet.cost",
-  description: "mythic.abilitySheet.description"
 }
 
 mythic.skillDifficulty = {

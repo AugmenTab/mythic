@@ -5,32 +5,32 @@
 {{> "systems/mythic/templates/partials/character-sheet-skills.hbs"}}
 
 {{!-- Weapons Page: --}}
-{{!--  --}}
+{{!-- TODO --}}
 
 {{!-- Armor Page: --}}
-{{!--  --}}
+{{!-- TODO --}}
 
 {{!-- Equipment Page: --}}
-{{!--  --}}
+{{!-- TODO --}}
 
 {{!-- Medical Page: --}}
-{{!--  --}}
+{{!-- TODO --}}
 
 {{!-- Biography Page: --}}
 {{!-- <form>
-  <h1>{{localize "mythic.characterNav.bio"}}</h1>
-  <div class="text-entry">
-    <textarea class="editor" name="data._">{{data._}}</textarea>
+  <div class="sheet-content">
+    <h1>{{localize "mythic.characterNav.bio"}}</h1>
+    {{editor content=data.data.biography target="data.biography" button=true owner=owner editable=this.options.editable}}
   </div>
 </form> --}}
 
 {{!-- Notes Page: --}}
 {{!-- <form>
-  <h1>{{localize "mythic.characterNav.notes"}}</h1>
-  <div class="text-entry">
-    <textarea class="editor" name="data._">{{data._}}</textarea>
+  <div class="sheet-content">
+    <h1>{{localize "mythic.characterNav.notes"}}</h1>
+    {{editor content=data.data.notes target="data.notes" button=true owner=owner editable=this.options.editable}}
   </div>
 </form> --}}
 
 {{!-- Settings Page: --}}
-{{!--  --}}
+{{!-- TODO --}}

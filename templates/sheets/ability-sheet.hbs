@@ -5,28 +5,28 @@
       <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
     </h1>
   </header>
-  <p>
-    <input name="data.summary" type="text" value="{{data.data.summary}}" placeholder="{{localize "mythic.abilitySheet.summary"}}"/>
-  </p>
-  <table>
-    <thead>
-      <tr>
-        <th>{{localize "mythic.abilitySheet.prerequisite"}}</th>
-        <th>{{localize "mythic.abilitySheet.cost"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <input name="data.prerequisite" type="text" value="{{data.data.prerequisite}}" placeholder="{{localize "mythic.abilitySheet.prerequisite"}}"/>
-        </td>
-        <td>
-          <input name="data.cost" type="number" value="{{data.data.cost}}" data-dtype="Number" placeholder="{{localize "mythic.abilitySheet.cost"}}"/>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="text-entry">
-    <textarea class="editor" name="data.description">{{data.data.description}}</textarea>
+  <div class="sheet-content">
+    <p>
+      <input name="data.summary" type="text" value="{{data.data.summary}}" placeholder="{{localize "mythic.abilitySheet.summary"}}"/>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.abilitySheet.prerequisite"}}</th>
+          <th>{{localize "mythic.abilitySheet.cost"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input name="data.prerequisite" type="text" value="{{data.data.prerequisite}}" placeholder="{{localize "mythic.abilitySheet.prerequisite"}}"/>
+          </td>
+          <td>
+            <input name="data.cost" type="number" value="{{data.data.cost}}" data-dtype="Number" placeholder="{{localize "mythic.abilitySheet.cost"}}"/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {{editor content=data.data.description target="data.description" button=true owner=owner editable=this.options.editable}}
   </div>
 </form>
