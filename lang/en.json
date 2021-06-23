@@ -26,6 +26,18 @@
             "notes": "Notes",
             "settings": "Settings"
         },
+        "characterSkills": {
+            "skillsTitle": "Skills",
+            "educationsTitle": "Educations",
+            "name": "Name",
+            "difficulty": "Difficulty",
+            "type": "Type",
+            "characteristic": "Characteristic",
+            "skill": "Skill",
+            "training": "Training",
+            "mods": "Modifiers",
+            "roll": "Roll"
+        },
         "characterStatBlock": {
             "mythics": "Mythic Characteristics",
             "movement": {
