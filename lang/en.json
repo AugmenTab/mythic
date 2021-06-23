@@ -96,6 +96,23 @@
             "prerequisite": "Prerequisites",
             "cost": "EXP Cost"
         },
+        "skillSheet": {
+            "characteristic": "Characteristic",
+            "difficulty": "Difficulty",
+            "difficulties": {
+                "basic": "Basic",
+                "adv": "Advanced"
+            },
+            "type": "Type",
+            "types": {
+                "social": "Social",
+                "move": "Movement",
+                "field": "Field Craft"
+            },
+            "mod": "Modifier",
+            "cost": "EXP Cost",
+            "trained": "Trained"
+        },
         "sizes": {
             "mini": "Mini",
             "small": "Small",

@@ -104,6 +104,7 @@
     "Item": {
         "types": [
             "ability",
+            "skill",
             "vehicle",
             "weapon"
         ],
@@ -118,6 +119,17 @@
             "prerequisite": "",
             "cost": 0,
             "summary": "",
+            "description": ""
+        },
+        "skill": {
+            "difficulty": "",
+            "type": "",
+            "cost": {
+                "trained": 0,
+                "plus10": 0,
+                "plus20": 0
+            },
+            "characteristic": {},
             "description": ""
         },
         "vehicle": {
