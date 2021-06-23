@@ -1,0 +1,55 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <h1>
+      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+    </h1>
+  </header>
+  <div class="sheet-content">
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">{{localize "mythic.educationSheet.details"}}</th>
+          <th colspan="2">{{localize "mythic.educationSheet.cost"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.educationSheet.difficulty"}}</th>
+          <th>{{localize "mythic.educationSheet.type"}}</th>
+          <th>+5</th>
+          <th>+10</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select name="data.difficulty">
+              {{#select data.data.difficulty}}
+                {{#each config.skillDifficulty as |name diff|}}
+                  <option value="{{diff}}">{{localize name}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+          </td>
+          <td>
+            <select name="data.type">
+              {{#select data.data.type}}
+                {{#each config.educationType as |name type|}}
+                  <option value="{{type}}">{{localize name}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+          </td>
+          <td>
+            <input name="data.cost.plus5" type="text" value="{{data.data.cost.plus5}}"/>
+          </td>
+          <td>
+            <input name="data.cost.plus10" type="text" value="{{data.data.cost.plus10}}"/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="skill-list">
+      <p>TODO: Checkboxes for each Skill.</p>
+    </div>
+  </div>
+</form>

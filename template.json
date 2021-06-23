@@ -104,6 +104,7 @@
     "Item": {
         "types": [
             "ability",
+            "education",
             "skill",
             "vehicle",
             "weapon"
@@ -142,6 +143,15 @@
                 "ld": false
             },
             "description": ""
+        },
+        "education": {
+            "difficulty": "",
+            "type": "",
+            "cost": {
+                "plus5": 0,
+                "plus10": 0
+            },
+            "skill": {}
         },
         "vehicle": {
             "templates": [

@@ -96,6 +96,23 @@
             "prerequisite": "Prerequisites",
             "cost": "EXP Cost"
         },
+        "educationSheet": {
+            "details": "Details",
+            "cost": "EXP Cost",
+            "difficulty": "Difficulty",
+            "type": "Type",
+            "types": {
+                "piloting": "Piloting",
+                "engineer": "Engineer",
+                "space": "Space",
+                "cultural": "Cultural",
+                "computer": "Computer",
+                "biological": "Biological",
+                "military": "Military",
+                "restricted": "Restricted",
+                "dimensional": "Dimensional"
+            }
+        },
         "skillSheet": {
             "stats": "Characteristics",
             "difficulty": "Difficulty",

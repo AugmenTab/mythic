@@ -14,6 +14,18 @@ mythic.abilitySheet = {
   cost: "mythic.abilitySheet.cost",
 }
 
+mythic.educationType = {
+  piloting: "mythic.educationSheet.types.piloting",
+  engineer: "mythic.educationSheet.types.engineer",
+  space: "mythic.educationSheet.types.space",
+  cultural: "mythic.educationSheet.types.cultural",
+  computer: "mythic.educationSheet.types.computer",
+  biological: "mythic.educationSheet.types.biological",
+  military: "mythic.educationSheet.types.military",
+  restricted: "mythic.educationSheet.types.restricted",
+  dimensional: "mythic.educationSheet.types.dimensional"
+}
+
 mythic.skillDifficulty = {
   basic: "mythic.skillSheet.difficulties.basic",
   adv: "mythic.skillSheet.difficulties.adv"
