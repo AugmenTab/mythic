@@ -15,6 +15,17 @@
             "age": "Age",
             "gender": "Gender"
         },
+        "characterNav": {
+            "summary": "Summary",
+            "skills": "Skills",
+            "weapons": "Weapons",
+            "armor": "Armor",
+            "equipment": "Equipment",
+            "medical": "Medical",
+            "bio": "Biography",
+            "notes": "Notes",
+            "settings": "Settings"
+        },
         "characterStatBlock": {
             "mythics": "Mythic Characteristics",
             "movement": {
