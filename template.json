@@ -98,7 +98,8 @@
                 "commonStats"
             ],
             "experiencePayout": 0,
-            "contamination": 0
+            "contamination": 0,
+            "swarm": 1
         }
     },
     "Item": {
