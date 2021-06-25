@@ -5,7 +5,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       tabs: [
         {
           navSelector: '.tabs',
-          contentSelector: 'sheet-body',
+          contentSelector: '.sheet-body',
           initial: 'summary'
         }
       ],
@@ -19,6 +19,3 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     return data;
   }
 }
-
-// const tabs = new Tabs({navSelector: ".tabs", contentSelector: ".tab", initial: "summary"});
-// tabs.bind(html);

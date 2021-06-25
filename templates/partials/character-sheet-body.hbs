@@ -11,38 +11,36 @@
 
   {{!-- Weapons Page: --}}
   <div class="tab" data-group="primary" data-tab="weapons">
-    {{!-- TODO --}}
+    <p><b>TODO</b></p>
   </div>
 
   {{!-- Armor Page: --}}
   <div class="tab" data-group="primary" data-tab="armor">
-    {{!-- TODO --}}
+    <p><b>TODO</b></p>
   </div>
 
   {{!-- Equipment Page: --}}
   <div class="tab" data-group="primary" data-tab="equipment">
-    {{!-- TODO --}}
+    <p><b>TODO</b></p>
   </div>
 
   {{!-- Medical Page: --}}
   <div class="tab" data-group="primary" data-tab="medical">
-    {{!-- TODO --}}
+    <p><b>TODO</b></p>
   </div>
 
   {{!-- Biography Page: --}}
-  <div class="tab sheet-content" data-group="primary" data-tab="biography">
-    <h1>{{localize "mythic.characterNav.bio"}}</h1>
-    {{editor content=data.data.biography target="data.biography" button=true owner=owner editable=this.options.editable}}
+  <div class="tab" data-group="primary" data-tab="biography">
+    {{> "systems/mythic/templates/partials/character-editor.hbs" localText="mythic.characterNav.bio" textContent=data.data.biography target="data.biography"}}
   </div>
 
   {{!-- Notes Page: --}}
-  <div class="tab sheet-content" data-group="primary" data-tab="notes">
-    <h1>{{localize "mythic.characterNav.notes"}}</h1>
-    {{editor content=data.data.notes target="data.notes" button=true owner=owner editable=this.options.editable}}
+  <div class="tab" data-group="primary" data-tab="notes">
+    {{> "systems/mythic/templates/partials/character-editor.hbs" localText="mythic.characterNav.notes" textContent=data.data.notes target="data.notes"}}
   </div>
 
   {{!-- Settings Page: --}}
   <div class="tab" data-group="primary" data-tab="settings">
-    {{!-- TODO --}}
+    <p><b>TODO</b></p>
   </div>
 </section>
