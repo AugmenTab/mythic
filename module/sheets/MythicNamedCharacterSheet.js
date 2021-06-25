@@ -1,8 +1,15 @@
 export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      template: "systems/mythic/templates/sheets/namedCharacter-sheet.hbs",
-      classes: ["mythic", "sheet", "namedCharacter"]
+      classes: ["mythic", "sheet", "namedCharacter"],
+      tabs: [
+        {
+          navSelector: '.tabs',
+          contentSelector: 'sheet-body',
+          initial: 'summary'
+        }
+      ],
+      template: "systems/mythic/templates/sheets/namedCharacter-sheet.hbs"
     });
   }
 
@@ -11,5 +18,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.config = CONFIG.mythic;
     return data;
   }
-  
 }
+
+// const tabs = new Tabs({navSelector: ".tabs", contentSelector: ".tab", initial: "summary"});
+// tabs.bind(html);

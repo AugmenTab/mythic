@@ -1,36 +1,48 @@
-{{!-- Summary Page: --}}
-{{> "systems/mythic/templates/partials/character-sheet-summary.hbs"}}
+<section class="sheet-body">
+  {{!-- Summary Page: --}}
+  <div class="tab" data-group="primary" data-tab="summary">
+    {{> "systems/mythic/templates/partials/character-sheet-summary.hbs"}}
+  </div>
 
-{{!-- Skills & Educations Page: --}}
-{{!-- {{> "systems/mythic/templates/partials/character-sheet-skills.hbs"}} --}}
+  {{!-- Skills & Educations Page: --}}
+  <div class="tab" data-group="primary" data-tab="skills">
+    {{> "systems/mythic/templates/partials/character-sheet-skills.hbs"}}
+  </div>
 
-{{!-- Weapons Page: --}}
-{{!-- TODO --}}
+  {{!-- Weapons Page: --}}
+  <div class="tab" data-group="primary" data-tab="weapons">
+    {{!-- TODO --}}
+  </div>
 
-{{!-- Armor Page: --}}
-{{!-- TODO --}}
+  {{!-- Armor Page: --}}
+  <div class="tab" data-group="primary" data-tab="armor">
+    {{!-- TODO --}}
+  </div>
 
-{{!-- Equipment Page: --}}
-{{!-- TODO --}}
+  {{!-- Equipment Page: --}}
+  <div class="tab" data-group="primary" data-tab="equipment">
+    {{!-- TODO --}}
+  </div>
 
-{{!-- Medical Page: --}}
-{{!-- TODO --}}
+  {{!-- Medical Page: --}}
+  <div class="tab" data-group="primary" data-tab="medical">
+    {{!-- TODO --}}
+  </div>
 
-{{!-- Biography Page: --}}
-{{!-- <form>
-  <div class="sheet-content">
+  {{!-- Biography Page: --}}
+  <div class="tab sheet-content" data-group="primary" data-tab="biography">
     <h1>{{localize "mythic.characterNav.bio"}}</h1>
     {{editor content=data.data.biography target="data.biography" button=true owner=owner editable=this.options.editable}}
   </div>
-</form> --}}
 
-{{!-- Notes Page: --}}
-{{!-- <form>
-  <div class="sheet-content">
+  {{!-- Notes Page: --}}
+  <div class="tab sheet-content" data-group="primary" data-tab="notes">
     <h1>{{localize "mythic.characterNav.notes"}}</h1>
     {{editor content=data.data.notes target="data.notes" button=true owner=owner editable=this.options.editable}}
   </div>
-</form> --}}
 
-{{!-- Settings Page: --}}
-{{!-- TODO --}}
+  {{!-- Settings Page: --}}
+  <div class="tab" data-group="primary" data-tab="settings">
+    {{!-- TODO --}}
+  </div>
+</section>
