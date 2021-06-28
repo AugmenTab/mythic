@@ -5,9 +5,9 @@ import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
     "systems/mythic/templates/partials/character-details.hbs",
-    "systems/mythic/templates/partials/character-editor.hbs",
     "systems/mythic/templates/partials/character-nav.hbs",
     "systems/mythic/templates/partials/character-sheet-body.hbs",
+    "systems/mythic/templates/partials/character-sheet-settings.hbs",
     "systems/mythic/templates/partials/character-sheet-skills.hbs",
     "systems/mythic/templates/partials/character-sheet-summary.hbs",
     "systems/mythic/templates/partials/character-stat-block.hbs",

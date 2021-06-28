@@ -13,51 +13,108 @@
                 "race": "",
                 "notes": "",
                 "characteristics": {
-                    "strength": {
-                        "value": 0,
-                        "advancements": 0
+                    "str": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "toughness": {
-                        "value": 0,
-                        "advancements": 0
+                    "tou": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "agility": {
-                        "value": 0,
-                        "advancements": 0
+                    "agi": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "warfareRanged": {
-                        "value": 0,
-                        "advancements": 0
+                    "wfr": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "warfareMelee": {
-                        "value": 0,
-                        "advancements": 0
+                    "wfm": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "intellect": {
-                        "value": 0,
-                        "advancements": 0
+                    "int": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "perception": {
-                        "value": 0,
-                        "advancements": 0
+                    "per": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "courage": {
-                        "value": 0,
-                        "advancements": 0
+                    "cr": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "charisma": {
-                        "value": 0,
-                        "advancements": 0
+                    "ch": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
                     },
-                    "leadership": {
-                        "value": 0,
-                        "advancements": 0
-                    }
+                    "ld": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
+                    },
+                    "notes": ""
                 },
                 "mythicCharacteristics": {
-                    "mythicStrength": 0,
-                    "mythicToughness": 0,
-                    "mythicAgility": 0
+                    "str": {
+                        "soldierType": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
+                    },
+                    "tou": {
+                        "soldierType": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
+                    },
+                    "agi": {
+                        "soldierType": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "other": 0
+                    },
+                    "notes": ""
                 },
                 "size": "",
                 "wounds": {

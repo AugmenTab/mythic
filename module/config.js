@@ -50,3 +50,16 @@ mythic.size = {
   great: "mythic.sizes.great",
   monumental: "mythic.sizes.monumental"
 }
+
+mythic.characteristic = {
+  str: "STR",
+  tou: "TOU",
+  agi: "AGI",
+  wfr: "WFR",
+  wfm: "WFM",
+  int: "INT",
+  per: "PER",
+  cr: "CR",
+  ch: "CH",
+  ld: "LD"
+}

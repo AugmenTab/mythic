@@ -31,16 +31,18 @@
 
   {{!-- Biography Page: --}}
   <div class="tab" data-group="primary" data-tab="biography">
-    {{> "systems/mythic/templates/partials/character-editor.hbs" localText="mythic.characterNav.bio" textContent=data.data.biography target="data.biography"}}
+    <h1>{{localize "mythic.characterNav.bio"}}</h1>
+    {{editor content=data.data.biography target="data.biography" button=true owner=owner editable=this.options.editable}}
   </div>
 
   {{!-- Notes Page: --}}
   <div class="tab" data-group="primary" data-tab="notes">
-    {{> "systems/mythic/templates/partials/character-editor.hbs" localText="mythic.characterNav.notes" textContent=data.data.notes target="data.notes"}}
+    <h1>{{localize "mythic.characterNav.bio"}}</h1>
+    {{editor content=data.data.notes target="data.notes" button=true owner=owner editable=this.options.editable}}
   </div>
 
   {{!-- Settings Page: --}}
   <div class="tab" data-group="primary" data-tab="settings">
-    <p><b>TODO</b></p>
+    {{> "systems/mythic/templates/partials/character-sheet-settings.hbs"}}
   </div>
 </section>
