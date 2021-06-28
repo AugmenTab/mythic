@@ -23,238 +23,53 @@
         </tr>
         <tr>
           <td>Ability Pool (100)</td>
-          <td>
-            <input class="calc-str" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-tou" name="data." type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-agi" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfr" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfm" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-int" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-per" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-cr" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ch" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ld" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.abilityPool" value="{{stat.abilityPool}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
         </tr>
         <tr>
           <td>Background</td>
-          <td>
-            <input class="calc-str" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-tou" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-agi" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfr" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfm" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-int" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-per" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-cr" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ch" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ld" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.background" value="{{stat.background}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
         </tr>
         <tr>
           <td>Equipment</td>
-          <td>
-            <input class="calc-str" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-tou" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-agi" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfr" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfm" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-int" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-per" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-cr" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ch" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ld" name="" type="number" value="data." data-dtype="Number" placeholder="0"/>
-          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
         </tr>
         <tr>
           <td>Advancements</td>
-          <td>
-            <select class="calc-str" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-tou" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-agi" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-wfr" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-wfm" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-int" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-per" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-cr" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-ch" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
-          <td>
-            <select class="calc-ld" name="">
-              <option value="0" selected>--</option>
-              <option value="1">+5</option>
-              <option value="2">+10</option>
-              <option value="3">+15</option>
-              <option value="4">+20</option>
-              <option value="5">+25</option>
-            </select>
-          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.advancements" value="{{stat.advancements}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
         </tr>
         <tr>
           <td>Other</td>
-          <td>
-            <input class="calc-str" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-tou" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-agi" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfr" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-wfm" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-int" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-per" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-cr" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ch" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
-          <td>
-            <input class="calc-ld" name="" type="number" value="" data-dtype="Number" placeholder="0"/>
-          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
         </tr>
       </tbody>
       <thead>

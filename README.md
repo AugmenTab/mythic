@@ -4,6 +4,7 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
 
 ## Stretch Goals
 
+* Change characteristics advancements settings to dropdown select.
 * Tooltips for everything.
 * Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Compendiums for all items, equipment, skills, abilities, and educations in the core book.
