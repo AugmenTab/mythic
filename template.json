@@ -6,11 +6,14 @@
             "Flood"
         ],
         "templates": {
-            "commonStats": {
-                "faction": "",
-                "soldierType": "",
+            "basicDetails": {
                 "rank": "",
-                "race": "",
+                "faction": "",
+                "race": ""
+            },
+            "commonStats": {
+                "soldierType": "",
+                "size": "",
                 "notes": "",
                 "characteristics": {
                     "str": {
@@ -116,29 +119,58 @@
                     },
                     "notes": ""
                 },
-                "size": "",
+                "carryingCapacity": {
+                    "doubleStr": false,
+                    "doubleTou": false,
+                    "strongBack": false
+                },
+                "movement": {
+                    "doubleAgiRunCharge": false,
+                    "jumpMultiplier": 1,
+                    "leapAgiBonus": 0,
+                    "leapMultiplier": 1,
+                    "rush": false,
+                    "blur": false
+                },
                 "wounds": {
-                    "value": 0,
-                    "max": 0
+                    "current": 0,
+                    "doubleTou": false,
+                    "aiDegen": 0,
+                    "other": 0
+                },
+                "fatigue": {
+                    "current": 0,
+                    "enduring": false
                 },
                 "luck": {
-                    "value": 0,
+                    "current": 0,
                     "max": 0
                 },
-                "fatigue": 0
+                "initiative": {
+                    "fastFoot": false,
+                    "battleMind": false
+                }
             }
         },
         "Named Character": {
-            "specialization": "",
             "templates": [
+                "basicDetails",
                 "commonStats"
             ],
-            "supportPoints": 0,
-            "experience": 0,
+            "specialization": "",
+            "supportPoints": {
+                "current": 0,
+                "max": 0
+            },
+            "experience": {
+                "total": 0,
+                "spent": 0
+            },
             "biography": ""
         },
         "Bestiary Enemy": {
             "templates": [
+                "basicDetails",
                 "commonStats"
             ],
             "experiencePayout": 0,
@@ -151,9 +183,6 @@
             ]
         },
         "Flood": {
-            "templates": [
-                "commonStats"
-            ],
             "experiencePayout": 0,
             "contamination": 0,
             "swarm": 1
