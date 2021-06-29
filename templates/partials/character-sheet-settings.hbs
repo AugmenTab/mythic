@@ -187,21 +187,38 @@
         </tr>
       </tbody>
     </table>
-    <h2>{{localize "mythic.characterSettings.fatigueAndLuck.label"}}</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.characterSettings.fatigueAndLuck.enduring"}}</th>
-          <th>{{localize "mythic.characterSettings.fatigueAndLuck.luck"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input name="data.fatigue.enduring" type="checkbox" {{checked data.data.fatigue.enduring}}/></td>
-          <td><input name="data.luck.max" type="number" value="{{data.data.luck.max}}" data-dtype="Number"/></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="character-sheet-summary">
+      <div>
+        <h2>{{localize "mythic.characterSettings.fatigue.label"}}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "mythic.characterSettings.fatigue.enduring"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input name="data.fatigue.enduring" type="checkbox" {{checked data.data.fatigue.enduring}}/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>{{localize "mythic.characterSettings.luck.label"}}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "mythic.characterSettings.luck.label"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input name="data.luck.max" type="number" value="{{data.data.luck.max}}" data-dtype="Number"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <div class="wide">
     <h2>{{localize "mythic.characterSettings.movement.label"}}</h2>

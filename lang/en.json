@@ -47,15 +47,18 @@
                 "doubleTou": "Double Toughness?",
                 "strongBack": "Strong Back?"
             },
-            "fatigueAndLuck": {
-                "label": "Fatigue and Luck Settings",
-                "enduring": "Enduring?",
-                "luck": "Max Luck Points"
+            "fatigue": {
+                "label": "Fatigue Settings",
+                "enduring": "Enduring?"
             },
             "initiative": {
                 "label": "Initiative Settings",
                 "battleMind": "Battle Mind?",
                 "fastFoot": "Fast Foot?"
+            },
+            "luck": {
+                "label": "Luck Settings",
+                "luck": "Max Luck Points"
             },
             "movement": {
                 "label": "Movement Settings",
