@@ -1,10 +1,10 @@
 <section class="character-sheet-summary tab">
   <div class="characteristics-settings">
-    <h2>Characteristics Settings</h2>
+    <h2>{{localize "mythic.characterSettings.characteristics.charLabel"}}</h2>
     <table>
       <thead>
         <tr>
-          <th>Source</th>
+          <th>{{localize "mythic.characterSettings.characteristics.source"}}</th>
           {{#each config.characteristic as |name _|}}
             <td>{{name}}</td>
           {{/each}}
@@ -12,7 +12,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>Soldier Type</td>
+          <td>{{localize "mythic.characterSettings.characteristics.soldierType"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -22,7 +22,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>Ability Pool (100)</td>
+          <td>{{localize "mythic.characterSettings.characteristics.abilityPool"}} (100)</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -32,7 +32,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>Background</td>
+          <td>{{localize "mythic.characterSettings.characteristics.background"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -42,7 +42,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>Equipment</td>
+          <td>{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -52,7 +52,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>Advancements</td>
+          <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -62,7 +62,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>Other</td>
+          <td>{{localize "mythic.characterSettings.characteristics.other"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -74,7 +74,7 @@
       </tbody>
       <thead>
         <tr>
-          <th>Total</th>
+          <th>{{localize "mythic.characterSettings.characteristics.total"}}</th>
           <th>100</th>
           <th>100</th>
           <th>100</th>
@@ -88,6 +88,70 @@
         </tr>
       </thead>
     </table>
-    <textarea name="data.characteristics.notes" placeholder="Notes about characteristics.">{{data.data.characteristics.notes}}</textarea>
+    <textarea name="data.characteristics.notes" placeholder="{{localize "mythic.characterSettings.characteristics.charNotes"}}">{{data.data.characteristics.notes}}</textarea>
+  </div>
+  <div class="characteristics-settings">
+    <h2>{{localize "mythic.characterSettings.characteristics.mythicsLabel"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.characteristics.source"}}</th>
+          <th>STR</th>
+          <th>TOU</th>
+          <th>AGI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{localize "mythic.characterSettings.characteristics.soldierType"}}</td>
+          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.soldierType" value="{{stat.soldierType}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+        <tr>
+          <td>{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
+          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+        <tr>
+          <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
+          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.advancements" value="{{stat.advancements}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+        <tr>
+          <td>{{localize "mythic.characterSettings.characteristics.other"}}</td>
+          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.characteristics.total"}}</th>
+          <th>100</th>
+          <th>100</th>
+          <th>100</th>
+        </tr>
+      </thead>
+    </table>
+    <textarea name="data.mythicCharacteristics.notes" placeholder="{{localize "mythic.characterSettings.characteristics.mythicsNotes"}}">{{data.data.characteristics.notes}}</textarea>
   </div>
 </section>

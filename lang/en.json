@@ -26,6 +26,22 @@
             "notes": "Notes",
             "settings": "Settings"
         },
+        "characterSettings": {
+            "characteristics": {
+              "charLabel": "Characteristics Settings",
+              "mythicsLabel": "Mythic Characteristics Settings",
+              "source": "Source",
+              "soldierType": "Soldier Type",
+              "abilityPool": "Ability Pool",
+              "background": "Background",
+              "equipment": "Equipment",
+              "advancements": "Advancements",
+              "other": "Other",
+              "charNotes": "Notes about characteristics.",
+              "mythicsNotes": "Notes about Mythic characteristics.",
+              "total": "Total"
+            }
+          },
         "characterSkills": {
             "skillsTitle": "Skills",
             "educationsTitle": "Educations",
