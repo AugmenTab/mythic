@@ -58,7 +58,9 @@
             },
             "luck": {
                 "label": "Luck Settings",
-                "luck": "Max Luck Points"
+                "starting": "Starting",
+                "advancements": "Advancements",
+                "burnt": "Burnt"
             },
             "movement": {
                 "label": "Movement Settings",
@@ -72,7 +74,8 @@
             "wounds": {
                 "label": "Wounds Settings",
                 "doubleTou": "Double Toughness Modifier?",
-                "aiDegen": "AI Destabilizations"
+                "aiDegen": "AI Destabilizations",
+                "advancements": "Advancements"
             }
           },
         "characterSkills": {

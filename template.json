@@ -136,6 +136,7 @@
                     "current": 0,
                     "doubleTou": false,
                     "aiDegen": 0,
+                    "advancements": 0,
                     "other": 0
                 },
                 "fatigue": {
@@ -144,7 +145,10 @@
                 },
                 "luck": {
                     "current": 0,
-                    "max": 0
+                    "starting": 0,
+                    "advancements": 0,
+                    "max": 0,
+                    "burnt": 0
                 },
                 "initiative": {
                     "fastFoot": false,

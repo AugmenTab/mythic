@@ -1,7 +1,7 @@
 <section class="character-sheet-summary tab">
   <div class="characteristics-settings wide">
     <h2>{{localize "mythic.characterSettings.characteristics.charLabel"}}</h2>
-    <table>
+    <table class="characteristics-settings">
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.characteristics.source"}}</th>
@@ -154,71 +154,104 @@
     </table>
     <textarea name="data.mythicCharacteristics.notes" placeholder="{{localize "mythic.characterSettings.characteristics.mythicsNotes"}}">{{data.data.characteristics.notes}}</textarea>
   </div>
-  <div>
-    <h2>{{localize "mythic.characterSettings.initiative.label"}}</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.characterSettings.initiative.battleMind"}}</th>
-          <th>{{localize "mythic.characterSettings.initiative.fastFoot"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input name="data.initiative.battleMind" type="checkbox" {{checked data.data.initiative.battleMind}}/></td>
-          <td><input name="data.initiative.fastFoot" type="checkbox" {{checked data.data.initiative.fastFoot}}/></td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>{{localize "mythic.characterSettings.carry.label"}}</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.characterSettings.carry.doubleStr"}}</th>
-          <th>{{localize "mythic.characterSettings.carry.doubleTou"}}</th>
-          <th>{{localize "mythic.characterSettings.carry.strongBack"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input name="data.carryingCapacity.doubleStr" type="checkbox" {{checked data.data.carryingCapacity.doubleStr}}/></td>
-          <td><input name="data.carryingCapacity.doubleTou" type="checkbox" {{checked data.data.carryingCapacity.doubleTou}}/></td>
-          <td><input name="data.carryingCapacity.strongBack" type="checkbox" {{checked data.data.carryingCapacity.strongBack}}/></td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="character-sheet-summary">
-      <div>
-        <h2>{{localize "mythic.characterSettings.fatigue.label"}}</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "mythic.characterSettings.fatigue.enduring"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input name="data.fatigue.enduring" type="checkbox" {{checked data.data.fatigue.enduring}}/></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <h2>{{localize "mythic.characterSettings.luck.label"}}</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "mythic.characterSettings.luck.label"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input name="data.luck.max" type="number" value="{{data.data.luck.max}}" data-dtype="Number"/></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="character-sheet-summary">
+    <div>
+      <h2>{{localize "mythic.characterSettings.initiative.label"}}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{{localize "mythic.characterSettings.initiative.battleMind"}}</th>
+            <th>{{localize "mythic.characterSettings.initiative.fastFoot"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="data.initiative.battleMind" type="checkbox" {{checked data.data.initiative.battleMind}}/></td>
+            <td><input name="data.initiative.fastFoot" type="checkbox" {{checked data.data.initiative.fastFoot}}/></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <div>
+      <h2>{{localize "mythic.characterSettings.fatigue.label"}}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{{localize "mythic.characterSettings.fatigue.enduring"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="data.fatigue.enduring" type="checkbox" {{checked data.data.fatigue.enduring}}/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="wide">
+      <h2>{{localize "mythic.characterSettings.carry.label"}}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>{{localize "mythic.characterSettings.carry.doubleStr"}}</th>
+            <th>{{localize "mythic.characterSettings.carry.doubleTou"}}</th>
+            <th>{{localize "mythic.characterSettings.carry.strongBack"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input name="data.carryingCapacity.doubleStr" type="checkbox" {{checked data.data.carryingCapacity.doubleStr}}/></td>
+            <td><input name="data.carryingCapacity.doubleTou" type="checkbox" {{checked data.data.carryingCapacity.doubleTou}}/></td>
+            <td><input name="data.carryingCapacity.strongBack" type="checkbox" {{checked data.data.carryingCapacity.strongBack}}/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="wide">
+      <h2>{{localize "mythic.characterSettings.luck.label"}}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
+            <th>{{localize "mythic.characterSettings.luck.starting"}}</th>
+            <th style="width:105px">{{localize "mythic.characterSettings.luck.advancements"}}</th>
+            <th>{{localize "mythic.characterSettings.other"}}</th>
+            <th>{{localize "mythic.characterSettings.luck.burnt"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>20</b></td>
+            <td><input name="data.luck.starting" type="number" value="{{data.data.luck.starting}}" data-dtype="Number"/></td>
+            <td><input name="data.luck.advancements" type="number" value="{{data.data.luck.advancements}}" data-dtype="Number"/></td>
+            <td><input name="data.luck.other" type="number" value="{{data.data.luck.other}}" data-dtype="Number"/></td>
+            <td><input name="data.luck.burnt" type="number" value="{{data.data.luck.burnt}}" data-dtype="Number"/></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="wide">
+    <h2>{{localize "mythic.characterSettings.wounds.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.advancements"}}</th>
+          <th>{{localize "mythic.characterSettings.other"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>100</b></td>
+          <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
+          <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
+          <td><input name="data.wounds.advancements" type="number" data-dtype="Number" value="{{data.data.wounds.advancements}}"/></td>
+          <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <div class="wide">
     <h2>{{localize "mythic.characterSettings.movement.label"}}</h2>
@@ -241,27 +274,6 @@
           <td><input name="data.movement.doubleAgiRunCharge" type="checkbox" {{checked data.data.movement.doubleAgiRunCharge}}/></td>
           <td><input name="data.movement.blur" type="checkbox" {{checked data.data.movement.blur}}/></td>
           <td><input name="data.movement.rush" type="checkbox" {{checked data.data.movement.rush}}/></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="wide">
-    <h2>{{localize "mythic.characterSettings.wounds.label"}}</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.characterSettings.total"}}</th>
-          <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
-          <th>{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
-          <th>{{localize "mythic.characterSettings.other"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>100</td>
-          <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
-          <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
-          <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
         </tr>
       </tbody>
     </table>
