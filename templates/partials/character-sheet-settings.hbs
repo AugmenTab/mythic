@@ -62,7 +62,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.other"}}</td>
+          <td>{{localize "mythic.characterSettings.other"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -133,7 +133,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.other"}}</td>
+          <td>{{localize "mythic.characterSettings.other"}}</td>
           {{#each actor.data.data.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
@@ -241,6 +241,27 @@
           <td><input name="data.movement.doubleAgiRunCharge" type="checkbox" {{checked data.data.movement.doubleAgiRunCharge}}/></td>
           <td><input name="data.movement.blur" type="checkbox" {{checked data.data.movement.blur}}/></td>
           <td><input name="data.movement.rush" type="checkbox" {{checked data.data.movement.rush}}/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="wide">
+    <h2>{{localize "mythic.characterSettings.wounds.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.total"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
+          <th>{{localize "mythic.characterSettings.other"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>100</td>
+          <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
+          <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
+          <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
         </tr>
       </tbody>
     </table>

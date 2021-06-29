@@ -28,6 +28,7 @@
         },
         "characterSettings": {
             "total": "Total",
+            "other": "Other",
             "characteristics": {
               "charLabel": "Characteristics Settings",
               "mythicsLabel": "Mythic Characteristics Settings",
@@ -37,7 +38,6 @@
               "background": "Background",
               "equipment": "Equipment",
               "advancements": "Advancements",
-              "other": "Other",
               "charNotes": "Notes about characteristics.",
               "mythicsNotes": "Notes about Mythic characteristics."
             },
@@ -64,10 +64,15 @@
                 "label": "Movement Settings",
                 "doubleAgiRunCharge": "Double Agility for Run/Charge?",
                 "jumpMultiplier": "Jump Multiplier",
-                "leapAgiBonus": "Leap Agility Bonus",
+                "leapAgiBonus": "Leap Agility Mod Bonus",
                 "leapMultiplier": "Leap Multiplier",
                 "rush": "Rush?",
                 "blur": "Blur?"
+            },
+            "wounds": {
+                "label": "Wounds Settings",
+                "doubleTou": "Double Toughness Modifier?",
+                "aiDegen": "AI Destabilizations"
             }
           },
         "characterSkills": {
