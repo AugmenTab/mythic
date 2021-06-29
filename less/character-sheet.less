@@ -66,9 +66,24 @@
         }
     }
 
+    .character-sheet-summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 8px;
+
+        .wide {
+            grid-column: span 2;
+        }
+    }
+
     .characteristics-settings {
         table td:not(:first-child) {
             width: 65px;
+        }
+
+        textarea {
+            resize: none;
+            height: 73px;
         }
     }
 }

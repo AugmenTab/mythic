@@ -27,6 +27,7 @@
             "settings": "Settings"
         },
         "characterSettings": {
+            "total": "Total",
             "characteristics": {
               "charLabel": "Characteristics Settings",
               "mythicsLabel": "Mythic Characteristics Settings",
@@ -38,8 +39,32 @@
               "advancements": "Advancements",
               "other": "Other",
               "charNotes": "Notes about characteristics.",
-              "mythicsNotes": "Notes about Mythic characteristics.",
-              "total": "Total"
+              "mythicsNotes": "Notes about Mythic characteristics."
+            },
+            "carry": {
+                "label": "Carrying Capacity Settings",
+                "doubleStr": "Double Strength?",
+                "doubleTou": "Double Toughness?",
+                "strongBack": "Strong Back?"
+            },
+            "fatigueAndLuck": {
+                "label": "Fatigue and Luck Settings",
+                "enduring": "Enduring?",
+                "luck": "Max Luck Points"
+            },
+            "initiative": {
+                "label": "Initiative Settings",
+                "battleMind": "Battle Mind?",
+                "fastFoot": "Fast Foot?"
+            },
+            "movement": {
+                "label": "Movement Settings",
+                "doubleAgiRunCharge": "Double Agility for Run/Charge?",
+                "jumpMultiplier": "Jump Multiplier",
+                "leapAgiBonus": "Leap Agility Bonus",
+                "leapMultiplier": "Leap Multiplier",
+                "rush": "Rush?",
+                "blur": "Blur?"
             }
           },
         "characterSkills": {

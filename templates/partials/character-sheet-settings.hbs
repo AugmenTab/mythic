@@ -1,5 +1,5 @@
 <section class="character-sheet-summary tab">
-  <div class="characteristics-settings">
+  <div class="characteristics-settings wide">
     <h2>{{localize "mythic.characterSettings.characteristics.charLabel"}}</h2>
     <table>
       <thead>
@@ -26,7 +26,7 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.abilityPool" value="{{stat.abilityPool}}" type="number" data-dtype="Number"/>
+                <input class="calc-{{name}} calc-pool" name="data.characteristics.{{name}}.abilityPool" value="{{stat.abilityPool}}" type="number" data-dtype="Number"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -74,7 +74,7 @@
       </tbody>
       <thead>
         <tr>
-          <th>{{localize "mythic.characterSettings.characteristics.total"}}</th>
+          <th>{{localize "mythic.characterSettings.total"}}</th>
           <th>100</th>
           <th>100</th>
           <th>100</th>
@@ -145,7 +145,7 @@
       </tbody>
       <thead>
         <tr>
-          <th>{{localize "mythic.characterSettings.characteristics.total"}}</th>
+          <th>{{localize "mythic.characterSettings.total"}}</th>
           <th>100</th>
           <th>100</th>
           <th>100</th>
@@ -153,5 +153,79 @@
       </thead>
     </table>
     <textarea name="data.mythicCharacteristics.notes" placeholder="{{localize "mythic.characterSettings.characteristics.mythicsNotes"}}">{{data.data.characteristics.notes}}</textarea>
+  </div>
+  <div>
+    <h2>{{localize "mythic.characterSettings.initiative.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.initiative.battleMind"}}</th>
+          <th>{{localize "mythic.characterSettings.initiative.fastFoot"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input name="data.initiative.battleMind" type="checkbox" {{checked data.data.initiative.battleMind}}/></td>
+          <td><input name="data.initiative.fastFoot" type="checkbox" {{checked data.data.initiative.fastFoot}}/></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>{{localize "mythic.characterSettings.carry.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.carry.doubleStr"}}</th>
+          <th>{{localize "mythic.characterSettings.carry.doubleTou"}}</th>
+          <th>{{localize "mythic.characterSettings.carry.strongBack"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input name="data.carryingCapacity.doubleStr" type="checkbox" {{checked data.data.carryingCapacity.doubleStr}}/></td>
+          <td><input name="data.carryingCapacity.doubleTou" type="checkbox" {{checked data.data.carryingCapacity.doubleTou}}/></td>
+          <td><input name="data.carryingCapacity.strongBack" type="checkbox" {{checked data.data.carryingCapacity.strongBack}}/></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>{{localize "mythic.characterSettings.fatigueAndLuck.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.fatigueAndLuck.enduring"}}</th>
+          <th>{{localize "mythic.characterSettings.fatigueAndLuck.luck"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input name="data.fatigue.enduring" type="checkbox" {{checked data.data.fatigue.enduring}}/></td>
+          <td><input name="data.luck.max" type="number" value="{{data.data.luck.max}}" data-dtype="Number"/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="wide">
+    <h2>{{localize "mythic.characterSettings.movement.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.movement.jumpMultiplier"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.leapAgiBonus"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.leapMultiplier"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.doubleAgiRunCharge"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.blur"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.rush"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input name="data.movement.jumpMultiplier" type="number" value="{{data.data.movement.jumpMultiplier}}" data-dtype="Number"/></td>
+          <td><input name="data.movement.leapAgiBonus" type="number" value="{{data.data.movement.leapAgiBonus}}" data-dtype="Number"/></td>
+          <td><input name="data.movement.leapMultiplier" type="number" value="{{data.data.movement.leapMultiplier}}" data-dtype="Number"/></td>
+          <td><input name="data.movement.doubleAgiRunCharge" type="checkbox" {{checked data.data.movement.doubleAgiRunCharge}}/></td>
+          <td><input name="data.movement.blur" type="checkbox" {{checked data.data.movement.blur}}/></td>
+          <td><input name="data.movement.rush" type="checkbox" {{checked data.data.movement.rush}}/></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
