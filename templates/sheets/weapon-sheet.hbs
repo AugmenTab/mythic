@@ -5,5 +5,34 @@
       <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
     </h1>
   </header>
-  <!-- TODO: Add sheet content. -->
+  <div class="sheet-content">
+    <table class="weapon-info">
+      <thead>
+        <tr>
+          <th>Weapon Tags</th>
+          <th>Weapon Group</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div>
+              {{#each data.data.tags as |has name|}}
+                <input name="data.tags.{{name}}" type="checkbox" {{checked has}}/>
+                <p>{{name}}</p>
+              {{/each}}
+            </div>
+          </td>
+          <td>
+            <div>
+              {{#each data.data.group as |in name|}}
+                <input name="data.group.{{name}}" type="checkbox" {{checked in}}/>
+                <p>{{name}}</p>
+              {{/each}}
+            </div>
+          </td>
+        </tr>        
+      </tbody>
+    </table>
+  </div>
 </form>
