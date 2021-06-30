@@ -321,68 +321,134 @@
             "templates": [
                 "baseItemDetails"
             ],
-            "group": [
-                "Ranged",
-                "Melee",
-                "Explosive",
-                "Vehicle"
-            ],
-            "tags": [
-                "[UD]",
-                "[I]",
-                "[OH]",
-                "[TH]",
-                "[HW]",
-                "[SD]",
-                "[PD]",
-                "[BD]"
-            ],
+            "group": {
+                "ranged": false,
+                "melee": false,
+                "explosive": false,
+                "vehicle": false
+            },
+            "tags": {
+                "[UD]": true,
+                "[I]": false,
+                "[OH]": false,
+                "[TH]": false,
+                "[HW]": false,
+                "[SD]": false,
+                "[PD]": false,
+                "[BD]": false
+            },
             "special": {
-                "rule": [
-                    "Acid",
-                    "Blast",
-                    "Cauterize",
-                    "Charge",
-                    "Dice Minimum",
-                    "Electrified",
-                    "EMP",
-                    "Flame",
-                    "Gravimetric Pulse",
-                    "Gravity",
-                    "Hard Light",
-                    "Headshot",
-                    "Homing",
-                    "Kill",
-                    "Kinetic",
-                    "Needle",
-                    "Nonlethal",
-                    "Overheat",
-                    "Penetrating",
-                    "Pepper Spray",
-                    "Recharge Rate",
-                    "Slow",
-                    "Spike",
-                    "Spike",
-                    "Spin",
-                    "Spread",
-                    "Sticky",
-                    "Stun",
-                    "Tranquilize",
-                    "Vehicle Lock"
-                ],
-                "value": 0
+                "acid": {
+                    "has": false,
+                    "value": 0
+                },
+                "blast": {
+                    "has": false,
+                    "value": 0
+                },
+                "cauterize": {
+                    "has": false,
+                    "value": 0
+                },
+                "charge": {
+                    "has": false,
+                    "value": 0
+                },
+                "diceMinimum": {
+                    "has": false,
+                    "value": 0
+                },
+                "electrified": {
+                    "has": false
+                },
+                "emp": {
+                    "has": false,
+                    "value": 0
+                },
+                "flame": {
+                    "has": false,
+                    "value": 0
+                },
+                "gravimetricPulse": {
+                    "has": false,
+                    "value": 0
+                },
+                "gravity": {
+                    "has": false,
+                    "value": 0
+                },
+                "hardlight": {
+                    "has": false,
+                    "value": 0
+                },
+                "headshot": {
+                    "has": false
+                },
+                "homing": {
+                    "has": false,
+                    "value": 0
+                },
+                "kill": {
+                    "has": false,
+                    "value": 0
+                },
+                "kinetic": {
+                    "has": false
+                },
+                "needle": {
+                    "has": false,
+                    "value": 0
+                },
+                "nonlethal": {
+                    "has": false
+                },
+                "overheat": {
+                    "has": false,
+                    "value": 0
+                },
+                "penetrating": {
+                    "has": false
+                },
+                "rechargeRate": {
+                    "has": false,
+                    "value": 0
+                },
+                "slow": {
+                    "has": false
+                },
+                "spike": {
+                    "has": false
+                },
+                "spin": {
+                    "has": false,
+                    "value": 0
+                },
+                "spread": {
+                    "has": false
+                },
+                "sticky": {
+                    "has": false
+                },
+                "stun": {
+                    "has": false,
+                    "value": 0
+                },
+                "tranquilize": {
+                    "has": false,
+                    "value": 0
+                },
+                "vehicleLock": {
+                    "has": false
+                }
             },
             "fireMode": {
-                "mode": [
-                    "Auto",
-                    "Burst",
-                    "Drawback",
-                    "Flintlock",
-                    "Pump",
-                    "Semi-Auto",
-                    "Sustained"
-                ],
-                "value": 0
+                "auto": 0,
+                "burst": 0,
+                "drawback": 0,
+                "flintlock": 0,
+                "pump": 0,
+                "semi": 0,
+                "sustained": 0
             },
             "type": "",
             "attackBonus": 0,
