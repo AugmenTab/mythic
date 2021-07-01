@@ -204,6 +204,34 @@
                 "explosive": "Explosive",
                 "vehicle": "Vehicle"
             },
+            "fireMode": {
+                "label": "Fire Modes",
+                "auto": "Automatic",
+                "burst": "Burst",
+                "charge": "Charge",
+                "drawback": "Drawback",
+                "flintlock": "Flintlock",
+                "pump": "Pump Action",
+                "semi": "Semi-Auto",
+                "sustained": "Sustained"
+            },
+            "stats": {
+                "label": "Weapon Stats",
+                "damageRoll": "Damage Roll",
+                "baseDamage": "Base Damage",
+                "piercing": "Piercing",
+                "magazine": "Magazine",
+                "range": "Range",
+                "ammo": "Ammunition",
+                "price": "Price",
+                "baseReload": "Base Reload",
+                "attackBonus": "To-Hit Bonus",
+                "type": "Type",
+                "weight": "Weight (kgs)",
+                "desc": "Write weapon description here.",
+                "nickname": "Nickname",
+                "faction": "Faction"
+            },
             "specialRules": {
                 "label": "Weapon Special Rules",
                 "acid": "Acid",

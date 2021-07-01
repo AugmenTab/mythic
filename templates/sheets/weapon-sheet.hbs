@@ -5,8 +5,89 @@
       <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
     </h1>
   </header>
+  <div class="weapon-details">
+    <input name="data.nickname" type="text" value="{{data.data.nickname}}" placeholder="{{localize "mythic.weaponSheet.stats.nickname"}}"/>
+    <input name="data.faction" type="text" value="{{data.data.faction}}" placeholder="{{localize "mythic.weaponSheet.stats.faction"}}"/>
+    <input name="data.type" type="text" value="{{data.data.type}}" placeholder="{{localize "mythic.weaponSheet.stats.type"}}"/>
+    <input name="data.ammo" type="text" value="{{data.data.ammo}}" placeholder="{{localize "mythic.weaponSheet.stats.ammo"}}"/>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.weaponSheet.fireMode.label"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{#each data.data.fireMode as |v mode|}}
+              <span>
+                <p>{{localize (concat "mythic.weaponSheet.fireMode." mode)}}</p>
+                <input name="data.fireMode.{{mode}}" type="number" data-dtype="Number" value="{{v}}"/>
+              </span>
+            {{/each}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="sheet-content">
-    <p>TODO base weapon stats</p>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="8">{{localize "mythic.weaponSheet.stats.label"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.weaponSheet.stats.damageRoll"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.baseDamage"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.attackBonus"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.price"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input name="data.damageRoll" type="text" value="{{data.data.damageRoll}}" placeholder="2D10"/></td>
+          <td><input name="data.baseDamage" type="number" data-dtype="Number" value="{{data.data.baseDamage}}"/></td>
+          <td><input name="data.piercing" type="number" data-dtype="Number" value="{{data.data.piercing}}"/></td>
+          <td><input name="data.attackBonus" type="number" data-dtype="Number" value="{{data.data.attackBonus}}"/></td>
+          <td><input name="data.price" type="number" data-dtype="Number" value="{{data.data.price}}"/></td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th colspan="2">{{localize "mythic.weaponSheet.stats.range"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.magazine"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.baseReload"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.weight"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <div class="range">
+              <input name="data.close" type="number" data-dtype="Number" value="{{data.data.close}}"/>
+              <p><b>&mdash;</b></p>
+              <input name="data.long" type="number" data-dtype="Number" value="{{data.data.long}}"/>
+              <p>meters</p>
+            </div>
+          </td>
+          <td>
+            <div class="magazine">
+              <input name="data.magazine.current" type="number" data-dtype="Number" value="{{data.data.magazine.current}}"/>
+              <p><b>/</b></p>
+              <input name="data.magazine.max" type="number" data-dtype="Number" value="{{data.data.magazine.max}}"/>
+            </div>
+          </td>
+          <td><input name="data.baseReload" type="number" data-dtype="Number" value="{{data.data.baseReload}}"/></td>
+          <td><input name="data.weight" type="number" data-dtype="Number" value="{{data.data.weight}}"/></td>
+        </tr>
+        <tr>
+          <td colspan="8">
+              <textarea name="data.itemDescription" placeholder="{{localize "mythic.weaponSheet.stats.desc"}}">{{data.data.itemDescription}}</textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <table class="weapon-info">
       <thead>
         <tr>
@@ -49,7 +130,7 @@
                 <input name="data.special.{{name}}.has" type="checkbox" {{checked details.has}}/>
                 <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
                 {{#if details.value includeZero=true}}
-                  <input name="data.special.{{name}}.value" type="number" data-dtype="Number" value="{{details.value}}"/>
+                  <input name="data.special.{{name}}.value" {{#if (eq name "flame")}} type="text" {{else}} type="number" data-dtype="Number" {{/if}} value="{{details.value}}"/>
                 {{/if}}
               </span>
             {{/each}}

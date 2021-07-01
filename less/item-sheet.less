@@ -15,12 +15,46 @@
         td {
             display: grid;
             grid-template-columns: repeat(3, auto);
-            column-gap: 16px;
+            column-gap: 10px;
 
             span {
                 display: grid;
-                grid-template-columns: 30px auto 30px;
+                grid-template-columns: 30px auto 45px;
             }
         }
+    }
+
+    .weapon-details {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        place-items: center;
+        column-gap: 16px;
+
+        table {
+            grid-column: 2;
+            grid-row: 1 / span 4;
+
+            td {
+                display: grid;
+                grid-template-columns: repeat(2, auto);
+
+                span {
+                    display: grid;
+                    grid-template-columns: auto 30px;
+                }
+            }
+        }
+    }
+
+    .magazine {
+        display: grid;
+        grid-template-columns: 40px auto 40px;
+        column-gap: 4px;
+    }
+
+    .range {
+        display: grid;
+        grid-template-columns: repeat(2, 40px auto);
+        column-gap: 4px;
     }
 }

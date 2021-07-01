@@ -2,6 +2,12 @@
 
 An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.
 
+## Known Bugs
+
+* Flame special rule input field disappears when passed an empty string. **Workaround:** open the console (F12) in Foundry, then enter the following two lines in order:
+    1. `myWeapon = game.items.entities.find(w => w.name === "<your weapon name>")`
+    2. `myWeapon.data.data.special.flame.value = <Flame special rule value>`
+
 ## Stretch Goals
 
 * Change characteristics advancements settings to select dropdown.

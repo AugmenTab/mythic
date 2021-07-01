@@ -367,7 +367,7 @@
                 },
                 "flame": {
                     "has": false,
-                    "value": 0
+                    "value": "1D5"
                 },
                 "gravimetricPulse": {
                     "has": false,
@@ -444,22 +444,26 @@
             "fireMode": {
                 "auto": 0,
                 "burst": 0,
+                "charge": 0,
                 "drawback": 0,
                 "flintlock": 0,
                 "pump": 0,
                 "semi": 0,
                 "sustained": 0
             },
+            "nickname": "",
             "type": "",
             "attackBonus": 0,
             "damageRoll": "",
             "baseDamage": 0,
-            "strengthDamage": 0,
             "piercing": 0,
-            "capacity": 0,
+            "magazine": {
+                "current": 0,
+                "max": 0
+            },
             "close": 0,
             "long": 0,
-            "ammunition": "",
+            "ammo": "",
             "price": 0,
             "baseReload": 0,
             "weight": 0.0,
