@@ -6,11 +6,12 @@
     </h1>
   </header>
   <div class="sheet-content">
+    <p>TODO base weapon stats</p>
     <table class="weapon-info">
       <thead>
         <tr>
-          <th>Weapon Tags</th>
-          <th>Weapon Group</th>
+          <th>{{localize "mythic.weaponSheet.tagsLabel"}}</th>
+          <th>{{localize "mythic.weaponSheet.groups.label"}}</th>
         </tr>
       </thead>
       <tbody>
@@ -27,18 +28,17 @@
             <div>
               {{#each data.data.group as |in name|}}
                 <input name="data.group.{{name}}" type="checkbox" {{checked in}}/>
-                <p>{{name}}</p>
+                <p>{{localize (concat "mythic.weaponSheet.groups." name)}}</p>
               {{/each}}
             </div>
           </td>
         </tr>        
       </tbody>
     </table>
-    <p>TODO weapon stats</p>
     <table class="special-rules">
       <thead>
         <tr>
-          <th>Weapon Special Rules</th>
+          <th>{{localize "mythic.weaponSheet.specialRules.label"}}</th>
         </tr>
       </thead>
       <tbody>

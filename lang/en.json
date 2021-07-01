@@ -196,7 +196,16 @@
             "monumental": "Monumental"
         },
         "weaponSheet": {
+            "tagsLabel": "Weapon Tags",
+            "groups": {
+                "label": "Weapon Group",
+                "ranged": "Ranged",
+                "melee": "Melee",
+                "explosive": "Explosive",
+                "vehicle": "Vehicle"
+            },
             "specialRules": {
+                "label": "Weapon Special Rules",
                 "acid": "Acid",
                 "blast": "Blast",
                 "cauterize": "Cauterize",
