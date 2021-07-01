@@ -34,5 +34,29 @@
         </tr>        
       </tbody>
     </table>
+    <p>TODO weapon stats</p>
+    <table class="special-rules">
+      <thead>
+        <tr>
+          <th>Weapon Special Rules</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{#each data.data.special as |details name|}}
+              <span>
+                <input name="data.special.{{name}}.has" type="checkbox" {{checked details.has}}/>
+                <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
+                {{#if details.value includeZero=true}}
+                  <input name="data.special.{{name}}.value" type="number" data-dtype="Number" value="{{details.value}}"/>
+                {{/if}}
+              </span>
+            {{/each}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 </form>

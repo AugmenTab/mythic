@@ -194,6 +194,38 @@
             "massive": "Massive",
             "great": "Great",
             "monumental": "Monumental"
+        },
+        "weaponSheet": {
+            "specialRules": {
+                "acid": "Acid",
+                "blast": "Blast",
+                "cauterize": "Cauterize",
+                "charge": "Charge",
+                "diceMinimum": "Dice Minimum",
+                "electrified": "Electrified",
+                "emp": "EMP",
+                "flame": "Flame",
+                "gravimetricPulse": "Gravimetric Pulse",
+                "gravity": "Gravity",
+                "hardlight": "Hard Light",
+                "headshot": "Headshot",
+                "homing": "Homing",
+                "kill": "Kill",
+                "kinetic": "Kinetic",
+                "needle": "Needle",
+                "nonlethal": "Nonlethal",
+                "overheat": "Overheat",
+                "penetrating": "Penetrating",
+                "rechargeRate": "Recharge Rate",
+                "slow": "Slow",
+                "spike": "Spike",
+                "spin": "Spin",
+                "spread": "Spread",
+                "sticky": "Sticky",
+                "stun": "Stun",
+                "tranquilize": "Tranquilize",
+                "vehicleLock": "Vehicle Lock"
+            }
         }
     }
 }

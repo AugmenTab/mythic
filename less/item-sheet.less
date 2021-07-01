@@ -1,5 +1,5 @@
 .mythic.sheet.item {
-    .weapon-info tbody tr {
+    .weapon-info {
         td:nth-of-type(1) div {
             display: grid;
             grid-template-columns: repeat(2, auto 1fr);
@@ -9,6 +9,19 @@
             display: grid;
             grid-template-columns: auto 1fr;
             text-transform: capitalize;
+        }
+    }
+
+    .special-rules {
+        td {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            column-gap: 8px;
+
+            span {
+                display: grid;
+                grid-template-columns: 30px auto 30px;
+            }
         }
     }
 }
