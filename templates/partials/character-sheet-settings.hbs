@@ -14,7 +14,7 @@
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.soldierType"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
+            {{#unless (eq name "extra")}}
               <td>
                 <input class="calc-{{name}}" name="data.characteristics.{{name}}.soldierType" value="{{stat.soldierType}}" type="number" data-dtype="Number" placeholder="0"/>
               </td>
@@ -22,9 +22,9 @@
           {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.abilityPool"}} (100)</td>
+          <td>{{localize "mythic.characterSettings.characteristics.abilityPool"}} ({{data.data.characteristics.extra.poolTotal}})</td>
           {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
+            {{#unless (eq name "extra")}}
               <td>
                 <input class="calc-{{name}} calc-pool" name="data.characteristics.{{name}}.abilityPool" value="{{stat.abilityPool}}" type="number" data-dtype="Number"/>
               </td>
@@ -34,7 +34,7 @@
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.background"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
+            {{#unless (eq name "extra")}}
               <td>
                 <input class="calc-{{name}}" name="data.characteristics.{{name}}.background" value="{{stat.background}}" type="number" data-dtype="Number"/>
               </td>
@@ -44,7 +44,7 @@
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
+            {{#unless (eq name "extra")}}
               <td>
                 <input class="calc-{{name}}" name="data.characteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number"/>
               </td>
@@ -54,7 +54,7 @@
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
+            {{#unless (eq name "extra")}}
               <td>
                 <input class="calc-{{name}}" name="data.characteristics.{{name}}.advancements" value="{{stat.advancements}}" type="number" data-dtype="Number"/>
               </td>
@@ -64,7 +64,7 @@
         <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
+            {{#unless (eq name "extra")}}
               <td>
                 <input class="calc-{{name}}" name="data.characteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number"/>
               </td>
@@ -88,7 +88,7 @@
         </tr>
       </thead>
     </table>
-    <textarea name="data.characteristics.notes" placeholder="{{localize "mythic.characterSettings.characteristics.charNotes"}}">{{data.data.characteristics.notes}}</textarea>
+    <textarea name="data.characteristics.extra.notes" placeholder="{{localize "mythic.characterSettings.characteristics.charNotes"}}">{{data.data.characteristics.extra.notes}}</textarea>
   </div>
   <div class="characteristics-settings">
     <h2>{{localize "mythic.characterSettings.characteristics.mythicsLabel"}}</h2>
