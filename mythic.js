@@ -1,4 +1,5 @@
 import { mythic } from "./module/config.js";
+import { MythicActor } from "./module/MythicActor.js";
 import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
 
@@ -20,6 +21,7 @@ Hooks.once("init", function() {
   console.log("mythic | Initializing Mythic 4.0 System");
 
   CONFIG.mythic = mythic;
+  CONFIG.Actor.documentClass = MythicActor;
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("mythic", MythicNamedCharacterSheet, { makeDefault: true });
