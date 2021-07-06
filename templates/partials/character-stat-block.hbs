@@ -16,16 +16,16 @@
     </thead>
     <tbody>
       <tr>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
-        <td><button class="characteristic">120</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.str.roll}}">{{data.data.characteristics.str.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.tou.roll}}">{{data.data.characteristics.tou.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.agi.roll}}">{{data.data.characteristics.agi.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.wfr.roll}}">{{data.data.characteristics.wfr.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.wfm.roll}}">{{data.data.characteristics.wfm.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.int.roll}}">{{data.data.characteristics.int.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.per.roll}}">{{data.data.characteristics.per.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.cr.roll}}">{{data.data.characteristics.cr.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.ch.roll}}">{{data.data.characteristics.ch.roll}}</button></td>
+        <td><button class="characteristic" value="{{data.data.characteristics.ld.roll}}">{{data.data.characteristics.ld.roll}}</button></td>
       </tr>
     </tbody>
   </table>
@@ -123,11 +123,13 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td>10</td>
+          <td style="width:30px">
+            <input name="data.fatigue.current" value="{{data.data.fatigue.current}}" type="number" data-dtype="Number"/>
+          </td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
-          <td>10</td>
+          <td>{{data.data.fatigue.max}}</td>
         </tr>
       </tbody>
     </table>

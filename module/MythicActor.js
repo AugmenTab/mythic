@@ -40,6 +40,10 @@ export class MythicActor extends Actor {
       if (key != "extra") {
         value.total = (value.soldierType + value.abilityPool + value.background
           + value.equipment + value.advancements + value.other);
+        const f = actorData.data.fatigue;
+        const feltFatigue = f.enduring ? f.current - 2 : f.current;
+        const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
+        value.roll = roll > 0 ? roll : 0;
       }
     }
 
@@ -49,5 +53,9 @@ export class MythicActor extends Actor {
         value.total = value.soldierType + value.equipment + value.advancements + value.other;
       }
     }
+
+    // Calculate Max Fatigue
+    const tou = actorData.data.characteristics.tou.total;
+    actorData.data.fatigue.max = 2 * (tou < 0 ? 0 : Math.floor(tou / 10));
   }
 }

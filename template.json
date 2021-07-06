@@ -24,7 +24,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "tou": {
                         "soldierType": 0,
@@ -34,7 +35,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "agi": {
                         "soldierType": 0,
@@ -44,7 +46,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "wfr": {
                         "soldierType": 0,
@@ -54,7 +57,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "wfm": {
                         "soldierType": 0,
@@ -64,7 +68,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "int": {
                         "soldierType": 0,
@@ -74,7 +79,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "per": {
                         "soldierType": 0,
@@ -84,7 +90,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "cr": {
                         "soldierType": 0,
@@ -94,7 +101,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "ch": {
                         "soldierType": 0,
@@ -104,7 +112,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "ld": {
                         "soldierType": 0,
@@ -114,7 +123,8 @@
                         "advancements": 0,
                         "other": 0,
                         "medical": 0,
-                        "total": 0
+                        "total": 0,
+                        "roll": 0
                     },
                     "extra": {
                         "poolTotal": 0,
@@ -148,7 +158,8 @@
                 "carryingCapacity": {
                     "doubleStr": false,
                     "doubleTou": false,
-                    "strongBack": false
+                    "strongBack": false,
+                    "carry": 0
                 },
                 "movement": {
                     "doubleAgiRunCharge": false,
@@ -167,6 +178,7 @@
                 },
                 "fatigue": {
                     "current": 0,
+                    "max": 0,
                     "enduring": false
                 },
                 "luck": {
