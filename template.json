@@ -126,19 +126,22 @@
                         "soldierType": 0,
                         "equipment": 0,
                         "advancements": 0,
-                        "other": 0
+                        "other": 0,
+                        "total": 0
                     },
                     "tou": {
                         "soldierType": 0,
                         "equipment": 0,
                         "advancements": 0,
-                        "other": 0
+                        "other": 0,
+                        "total": 0
                     },
                     "agi": {
                         "soldierType": 0,
                         "equipment": 0,
                         "advancements": 0,
-                        "other": 0
+                        "other": 0,
+                        "total": 0
                     },
                     "notes": ""
                 },
@@ -170,6 +173,7 @@
                     "current": 0,
                     "starting": 0,
                     "advancements": 0,
+                    "other": 0,
                     "max": 0,
                     "burnt": 0
                 },

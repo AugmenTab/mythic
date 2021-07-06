@@ -42,5 +42,12 @@ export class MythicActor extends Actor {
           + value.equipment + value.advancements + value.other);
       }
     }
+
+    // Calculate Mythic Characteristics
+    for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
+      if (key != "notes") {
+        value.total = value.soldierType + value.equipment + value.advancements + value.other;
+      }
+    }
   }
 }
