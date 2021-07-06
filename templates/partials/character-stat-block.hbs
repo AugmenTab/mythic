@@ -106,7 +106,9 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td>20</td>
+          <td style="width:30px">
+            <input name="data.wounds.current" value="{{data.data.wounds.current}}" type="number" data-dtype="Number"/>
+          </td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
@@ -142,11 +144,13 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td>20</td>
+          <td style="width:30px">
+            <input name="data.luck.current" value="{{data.data.luck.current}}" type="number" data-dtype="Number"/>
+          </td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
-          <td>20</td>
+          <td>{{data.data.luck.max}}</td>
         </tr>
       </tbody>
     </table>

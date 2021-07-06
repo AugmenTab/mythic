@@ -68,5 +68,12 @@ export class MythicActor extends Actor {
 
     // Calculate Max Fatigue
     actorData.data.fatigue.max = 2 * touMod;
+
+    // Calculate Luck
+    const max = (
+      actorData.data.luck.starting + actorData.data.luck.advancements +
+      actorData.data.luck.other - actorData.data.luck.burnt
+    );
+    actorData.data.luck.max = max > 0 ? max : 0;
   }
 }
