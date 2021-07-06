@@ -174,7 +174,8 @@
                     "doubleTou": false,
                     "aiDegen": 0,
                     "advancements": 0,
-                    "other": 0
+                    "other": 0,
+                    "max": 0
                 },
                 "fatigue": {
                     "current": 0,
