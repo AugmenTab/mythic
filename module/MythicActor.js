@@ -20,6 +20,8 @@ export class MythicActor extends Actor {
 
   _prepareNamedCharacterData(actorData) {
     if (actorData.type !== "Named Character") return;
+
+    // Calculate Ability Pool
     actorData.data.characteristics.extra.poolTotal = (
       actorData.data.characteristics.str.abilityPool +
       actorData.data.characteristics.tou.abilityPool +
@@ -32,5 +34,13 @@ export class MythicActor extends Actor {
       actorData.data.characteristics.ch.abilityPool +
       actorData.data.characteristics.ld.abilityPool
     );
+
+    // Calculate Characteristics
+    for (const [key, value] of Object.entries(actorData.data.characteristics)) {
+      if (key != "extra") {
+        value.total = (value.soldierType + value.abilityPool + value.background
+          + value.equipment + value.advancements + value.other);
+      }
+    }
   }
 }
