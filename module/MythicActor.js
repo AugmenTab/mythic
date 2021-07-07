@@ -36,14 +36,14 @@ export class MythicActor extends Actor {
     );
 
     // Calculate Characteristics
+    const f = actorData.data.fatigue;
+    const feltFatigue = f.enduring ? f.current - 2 : f.current;
     for (const [key, value] of Object.entries(actorData.data.characteristics)) {
       if (key != "extra") {
         value.total = (
           value.soldierType + value.abilityPool + value.background +
           value.equipment + value.advancements + value.other
         );
-        const f = actorData.data.fatigue;
-        const feltFatigue = f.enduring ? f.current - 2 : f.current;
         const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
         value.roll = roll > 0 ? roll : 0;
       }
@@ -62,6 +62,8 @@ export class MythicActor extends Actor {
     const touMod = tou < 0 ? 0 : Math.floor(tou / 10);
     const agi = actorData.data.characteristics.agi.total;
     const agiMod = agi < 0 ? 0 : Math.floor(agi / 10);
+    const int = actorData.data.characteristics.int.total;
+    const intMod = int < 0 ? 0 : Math.floor(int / 10);
 
     // Calculate Wounds
     actorData.data.wounds.max = 20 + (
@@ -124,17 +126,16 @@ export class MythicActor extends Actor {
     );
 
     // Calculate Initiative
-    const agiRoll = Math.floor(actorData.data.characteristics.agi.roll / 10);
-    const intRoll = Math.floor(actorData.data.characteristics.int.roll / 10);
     const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
     const battlemind = actorData.data.initiative.battleMind;
     let formula = [];
     formula.push(actorData.data.initiative.fastFoot ? "2d10kh" : "1d10");
-    formula.push((battlemind ? intRoll : agiRoll).toString());
+    formula.push((battlemind ? intMod : agiMod).toString());
     if (!battlemind && mythicAgi > 0) {
       const bonus = Math.floor(mythicAgi / 2);
       formula.push(bonus > 1 ? bonus : 1);
     };
+    formula.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
     const mods = eval(formula.slice(1).join("+"));
     actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
     actorData.data.initiative.formula = formula.join("+");
