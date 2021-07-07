@@ -122,5 +122,21 @@ export class MythicActor extends Actor {
     actorData.data.movement.leap = (
       (strLeap > agiLeap ? strLeap : agiLeap) * actorData.data.movement.leapMultiplier
     );
+
+    // Calculate Initiative
+    const agiRoll = Math.floor(actorData.data.characteristics.agi.roll / 10);
+    const intRoll = Math.floor(actorData.data.characteristics.int.roll / 10);
+    const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
+    const battlemind = actorData.data.initiative.battleMind;
+    let formula = [];
+    formula.push(actorData.data.initiative.fastFoot ? "2d10kh" : "1d10");
+    formula.push((battlemind ? intRoll : agiRoll).toString());
+    if (!battlemind && mythicAgi > 0) {
+      const bonus = Math.floor(mythicAgi / 2);
+      formula.push(bonus > 1 ? bonus : 1);
+    };
+    const mods = eval(formula.slice(1).join("+"));
+    actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
+    actorData.data.initiative.formula = formula.join("+");
   }
 }

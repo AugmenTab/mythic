@@ -3,7 +3,11 @@
     <thead>
       <tr>
         <th colspan="4">{{localize "mythic.characterWeaponSummary.title"}}</th>
-        <td colspan="3"><button style="color:white">{{localize "mythic.characterWeaponSummary.initiative"}}: +6</button></td>
+        <td colspan="3">
+          <button style="color:white" value="{{data.data.initiative.formula}}">
+            {{localize "mythic.characterWeaponSummary.initiative"}}: {{data.data.initiative.mods}}
+
+          </button></td>
       </tr>
       <tr>
         <th>{{localize "mythic.characterWeaponSummary.name"}}</th>

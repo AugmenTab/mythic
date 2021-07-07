@@ -201,7 +201,9 @@
                 },
                 "initiative": {
                     "fastFoot": false,
-                    "battleMind": false
+                    "battleMind": false,
+                    "mods": 0,
+                    "formula": "1D10"
                 }
             },
             "skills": {}
