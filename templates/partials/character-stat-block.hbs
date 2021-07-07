@@ -89,9 +89,9 @@
       </thead>
       <tbody>
         <tr>
-          <td>10000</td>
-          <td>10000</td>
-          <td>10000</td>
+          <td>{{data.data.carryingCapacity.carry}}</td>
+          <td>{{data.data.carryingCapacity.lift}}</td>
+          <td>{{data.data.carryingCapacity.push}}</td>
         </tr>
       </tbody>
     </table>
@@ -163,11 +163,11 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td>20</td>
+          <td style="width:30px"><input name="data.supportPoints.current" value="{{data.data.supportPoints.current}}" type="number" data-dtype="Number"/></td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
-          <td>20</td>
+          <td>{{data.data.supportPoints.max}}</td>
         </tr>
       </tbody>
     </table>

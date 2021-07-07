@@ -43,8 +43,8 @@
             },
             "carry": {
                 "label": "Carrying Capacity Settings",
-                "doubleStr": "Double Strength?",
-                "doubleTou": "Double Toughness?",
+                "doubleStr": "Double STR?",
+                "doubleTou": "Double TOU?",
                 "strongBack": "Strong Back?"
             },
             "fatigue": {
@@ -64,16 +64,20 @@
             },
             "movement": {
                 "label": "Movement Settings",
-                "doubleAgiRunCharge": "Double Agility for Run/Charge?",
+                "doubleAgiRunCharge": "Double AGI for Run/Charge?",
                 "jumpMultiplier": "Jump Multiplier",
-                "leapAgiBonus": "Leap Agility Mod Bonus",
+                "leapAgiBonus": "Leap AGI Mod Bonus",
                 "leapMultiplier": "Leap Multiplier",
                 "rush": "Rush?",
                 "blur": "Blur?"
             },
+            "supportPoints": {
+                "label": "Support Points Settings",
+                "rank": "Rank"
+            },
             "wounds": {
                 "label": "Wounds Settings",
-                "doubleTou": "Double Toughness Modifier?",
+                "doubleTou": "Double TOU Mod?",
                 "aiDegen": "AI Destabilizations",
                 "advancements": "Advancements"
             }

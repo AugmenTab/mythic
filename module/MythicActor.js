@@ -56,8 +56,12 @@ export class MythicActor extends Actor {
       }
     }
 
+    const str = actorData.data.characteristics.str.total;
+    const strMod = str < 0 ? 0 : Math.floor(str / 10);
     const tou = actorData.data.characteristics.tou.total;
     const touMod = tou < 0 ? 0 : Math.floor(tou / 10);
+    const agi = actorData.data.characteristics.agi.total;
+    const agiMod = agi < 0 ? 0 : Math.floor(agi / 10);
 
     // Calculate Wounds
     actorData.data.wounds.max = 20 + (
@@ -75,5 +79,22 @@ export class MythicActor extends Actor {
       actorData.data.luck.other - actorData.data.luck.burnt
     );
     actorData.data.luck.max = max > 0 ? max : 0;
+
+    // Calculate Support Points
+    actorData.data.supportPoints.max = (
+      actorData.data.supportPoints.rank + actorData.data.supportPoints.other
+    );
+
+    // Calculate Carry Weight
+    const carry = (
+      (actorData.data.carryingCapacity.doubleStr ? str * 2 : str) +
+      ((actorData.data.carryingCapacity.strongBack ? tou + (touMod * 3) : tou) *
+      (actorData.data.carryingCapacity.doubleTou ? 2 : 1)) +
+      (actorData.data.mythicCharacteristics.str.total * 10) +
+      (actorData.data.mythicCharacteristics.tou.total * 10)
+    );
+    actorData.data.carryingCapacity.carry = carry;
+    actorData.data.carryingCapacity.lift = carry * 2;
+    actorData.data.carryingCapacity.push = carry * 4;
   }
 }

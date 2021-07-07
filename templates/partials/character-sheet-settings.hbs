@@ -231,28 +231,48 @@
     </div>
   </div>
   <div class="wide">
-    <h2>{{localize "mythic.characterSettings.wounds.label"}}</h2>
-    <table>
-      <thead>
-        <tr>
-          <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
-          <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
-          <th>{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
-          <th>{{localize "mythic.characterSettings.wounds.advancements"}}</th>
-          <th>{{localize "mythic.characterSettings.other"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><b>{{data.data.wounds.max}}</b></td>
-          <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
-          <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
-          <td><input name="data.wounds.advancements" type="number" data-dtype="Number" value="{{data.data.wounds.advancements}}"/></td>
-          <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="offset-cols">
+      <div>
+        <h2>{{localize "mythic.characterSettings.wounds.label"}}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
+              <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
+              <th style="width: 140px">{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
+              <th style="width:120px">{{localize "mythic.characterSettings.wounds.advancements"}}</th>
+              <th style="width:75px">{{localize "mythic.characterSettings.other"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>{{data.data.wounds.max}}</b></td>
+              <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
+              <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
+              <td><input name="data.wounds.advancements" type="number" data-dtype="Number" value="{{data.data.wounds.advancements}}"/></td>
+              <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h2>{{localize "mythic.characterSettings.supportPoints.label"}}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "mythic.characterSettings.supportPoints.rank"}}</th>
+              <th>{{localize "mythic.characterSettings.other"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input name="data.supportPoints.rank" type="number" data-dtype="Number" value="{{data.data.supportPoints.rank}}"/></td>
+              <td><input name="data.supportPoints.other" type="number" data-dtype="Number" value="{{data.data.supportPoints.other}}"/></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   <div class="wide">
     <h2>{{localize "mythic.characterSettings.movement.label"}}</h2>
     <table>
