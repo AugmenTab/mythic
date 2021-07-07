@@ -96,5 +96,31 @@ export class MythicActor extends Actor {
     actorData.data.carryingCapacity.carry = carry;
     actorData.data.carryingCapacity.lift = carry * 2;
     actorData.data.carryingCapacity.push = carry * 4;
+
+    // Calculate Movement Distances
+    const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
+    if (base <= 0) {
+      actorData.data.movement.half = 0.5;
+      actorData.data.movement.full = 1;
+      actorData.data.movement.charge = 2;
+      actorData.data.movement.run = 3;
+    } else {
+      actorData.data.movement.half = base;
+      actorData.data.movement.full = base * 2;
+      actorData.data.movement.charge = (
+        ((actorData.data.movement.doubleAgiRunCharge ? base * 2 : base) * 3) +
+        (actorData.data.movement.rush ? base : 0)
+      );
+      actorData.data.movement.run = (
+        (actorData.data.movement.doubleAgiRunCharge ? base * 2 : base) * 6
+      );
+      actorData.data.movement.sprint = actorData.data.movement.blur ? base * 8 : "--";
+    }
+    const strLeap = Math.floor(strMod / 2);
+    const agiLeap = Math.floor(agiMod / 2) + actorData.data.movement.leapAgiBonus;
+    actorData.data.movement.jump = (strMod * actorData.data.movement.jumpMultiplier) / 4;
+    actorData.data.movement.leap = (
+      (strLeap > agiLeap ? strLeap : agiLeap) * actorData.data.movement.leapMultiplier
+    );
   }
 }

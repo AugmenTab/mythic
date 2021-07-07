@@ -169,7 +169,14 @@
                     "leapAgiBonus": 0,
                     "leapMultiplier": 1,
                     "rush": false,
-                    "blur": false
+                    "blur": false,
+                    "half": 0,
+                    "full": 0,
+                    "charge": 0,
+                    "run": 0,
+                    "sprint": "--",
+                    "jump": 0,
+                    "leap": 0
                 },
                 "wounds": {
                     "current": 0,
