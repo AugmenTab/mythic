@@ -26,9 +26,159 @@ mythic.educationType = {
   dimensional: "mythic.educationSheet.types.dimensional"
 }
 
+mythic.skills = {
+  appeal: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["CH"]
+  },
+  athletics: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.move",
+    characteristics: ["AGI", "STR"]
+  },
+  camouflage: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT", "PER"]
+  },
+  command: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["LD"]
+  },
+  cryptography: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  deception: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["CH"]
+  },
+  demolition: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  evasion: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.move",
+    characteristics: ["AGI"]
+  },
+  gambling: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["INT", "CH"]
+  },
+  interrogation: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["CH", "LD", "INT"]
+  },
+  intimidation: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["STR", "CH", "LD", "INT"]
+  },
+  investigation: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["INT", "PER"]
+  },
+  medHuman: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  medCovenant: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  medMgalekgolo: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  navGroundAir: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT", "PER"]
+  },
+  navSpace: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT", "PER"]
+  },
+  navSlipspace: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT", "PER"]
+  },
+  negotiation: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.social",
+    characteristics: ["CH"]
+  },
+  pilotGround: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["AGI", "INT"]
+  },
+  pilotAir: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["AGI", "INT"]
+  },
+  pilotSpace: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["AGI", "INT"]
+  },
+  security: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  stunting: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.move",
+    characteristics: ["AGI"]
+  },
+  survival: {
+    difficulty: "mythic.skillSheet.difficulties.basic",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT", "PER"]
+  },
+  techHuman: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  techCovenant: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  },
+  techForerunner: {
+    difficulty: "mythic.skillSheet.difficulties.adv",
+    type: "mythic.skillSheet.types.field",
+    characteristics: ["INT"]
+  }
+}
+
 mythic.skillDifficulty = {
   basic: "mythic.skillSheet.difficulties.basic",
   adv: "mythic.skillSheet.difficulties.adv"
+}
+
+mythic.skillTraining = {
+  "none": "mythic.skillTraining.none",
+  "trained": "mythic.skillTraining.trained",
+  "plus10": "mythic.skillTraining.plus10",
+  "plus20": "mythic.skillTraining.plus20"
 }
 
 mythic.skillType = {

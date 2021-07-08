@@ -15,50 +15,40 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Interrogation</td>
-        <td>Basic</td>
-        <td>Social</td>
-        <td>
-          <select name="skill-characteristics">
-            <option value="ch" selected>Charisma</option>
-            <option value="int">Intellect</option>
-            <option value="ld">Leadership</option>
-          </select>
-        </td>
-        <td>
-          <select name="skill-training">
-            <option value="none" selected>--</option>
-            <option value="trained">Trained</option>
-            <option value="plus-10">+10</option>
-            <option value="plus-20">+20</option>
-          </select>
-        </td>
-        <td>
-          <input name="_-mod" type="number" value="_-mod"/>
-        </td>
-        <td><button>100</button></td>
-      </tr>
-      <tr>
-        <td>Medication (Mgalekgolo)</td>
-        <td>Advanced</td>
-        <td>Field Craft</td>
-        <td>Intellect</td>
-        <td>
-          <select name="skill-training">
-            <option value="none" selected>--</option>
-            <option value="trained">Trained</option>
-            <option value="plus-10">+10</option>
-            <option value="plus-20">+20</option>
-          </select>
-        <td>
-          <input name="_-mod" type="number" value="_-mod"/>
-        </td>
-        <td><button>100</button></td>
-      </tr>
+      {{#each actor.data.data.skills as |details skill|}}
+        <tr>
+          <td>{{localize (concat "mythic.skillNames." skill)}}</td>
+          {{#with (lookup ../config.skills [skill])~}}
+            <td>{{localize this.difficulty}}</td>
+            <td>{{localize this.type}}</td>
+          {{/with}}
+          <td>
+            <select name="data.skills.{{skill}}.characteristic">
+              {{#select details.characteristic}}
+                {{#with (lookup ../config.skills [skill])~}}
+                  {{#each this.characteristics as |stat|}}
+                    <option value="{{stat}}">{{stat}}</option>
+                  {{/each}}
+                {{/with}}
+              {{/select}}
+            </select>
+          </td>
+          <td>
+            <select name="data.skills.{{skill}}.training">
+              {{#select details.training}}
+                {{#each ../config.skillTraining as |content option|}}
+                  <option value="{{option}}">{{localize content}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+          </td>
+          <td><input name={{concat "data.skills." skill ".mods"}} type="number" data-dtype="Number" value="{{details.mods}}"/></td>
+          <td><button value="{{details.roll}}"><b>{{details.roll}}</b></button></td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
-  <table id="educations-table">
+  {{!-- <table id="educations-table">
     <thead>
       <tr>
         <th colspan="7">{{localize "mythic.characterSkills.educationsTitle"}}</th>
@@ -128,5 +118,5 @@
         <td><button>100</button></td>
       </tr>
     </tbody>
-  </table>
+  </table> --}}
 </section>
