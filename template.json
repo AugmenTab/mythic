@@ -210,172 +210,257 @@
                 "skills": {
                     "appeal": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "athletics": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "camouflage": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "command": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "cryptography": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "deception": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "demolition": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "evasion": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "gambling": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "interrogation": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "intimidation": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "investigation": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "medHuman": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "medCovenant": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "medMgalekgolo": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "navGroundAir": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "navSpace": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "navSlipspace": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "negotiation": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "pilotGround": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "pilotAir": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "pilotSpace": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "security": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "stunting": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "survival": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "techHuman": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "techCovenant": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
                     },
                     "techForerunner": {
                         "characteristic": "",
-                        "training": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
                         "mods": 0,
                         "roll": 0
-                    }
+                    },
+                    "notes": ""
                 }
             }
         },

@@ -92,7 +92,8 @@
             "skill": "Skill",
             "training": "Training",
             "mods": "Modifiers",
-            "roll": "Roll"
+            "roll": "Roll",
+            "notes": "Write skill notes here."
         },
         "characterStatBlock": {
             "mythics": "Mythic Characteristics",

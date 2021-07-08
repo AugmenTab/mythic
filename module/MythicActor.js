@@ -139,5 +139,23 @@ export class MythicActor extends Actor {
     const mods = eval(formula.slice(1).join("+"));
     actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
     actorData.data.initiative.formula = formula.join("+");
+    
+    // Calculate Skill Test Target Numbers
+    for (const [key, value] of Object.entries(actorData.data.skills)) {
+      if (key != "notes") {
+        let target = value.mods;
+        const stats = actorData.data.characteristics;
+        target += stats[value.characteristic.toLowerCase()].roll;
+        const tier = value.training.tier;
+        if (tier === "none") {
+          target -= (20 * value.training.penalty);
+        } else if (tier === "plus10") {
+          target += 10;
+        } else if (tier === "plus20") {
+          target += 20;
+        }
+        value.roll = target <= 0 ? 0 : target;
+      }
+    }
   }
 }
