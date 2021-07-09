@@ -2,30 +2,18 @@
   <table>
     <thead>
       <tr>
-        <th>STR</th>
-        <th>TOU</th>
-        <th>AGI</th>
-        <th>WFR</th>
-        <th>WFM</th>
-        <th>INT</th>
-        <th>PER</th>
-        <th>CR</th>
-        <th>CH</th>
-        <th>LD</th>
+        {{#each config.characteristic as |value _|}}
+          <th>{{value}}</th>
+        {{/each}}
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><button class="characteristic" value="{{data.data.characteristics.str.roll}}">{{data.data.characteristics.str.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.tou.roll}}">{{data.data.characteristics.tou.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.agi.roll}}">{{data.data.characteristics.agi.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.wfr.roll}}">{{data.data.characteristics.wfr.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.wfm.roll}}">{{data.data.characteristics.wfm.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.int.roll}}">{{data.data.characteristics.int.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.per.roll}}">{{data.data.characteristics.per.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.cr.roll}}">{{data.data.characteristics.cr.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.ch.roll}}">{{data.data.characteristics.ch.roll}}</button></td>
-        <td><button class="characteristic" value="{{data.data.characteristics.ld.roll}}">{{data.data.characteristics.ld.roll}}</button></td>
+        {{#each data.data.characteristics as |details stat|}}
+          {{#unless (eq stat "extra")}}
+            <td><button class="characteristic rollable" name="test-{{stat}}" value="{{details.roll}}">{{details.roll}}</button></td>
+          {{/unless}}
+        {{/each}}
       </tr>
     </tbody>
   </table>
