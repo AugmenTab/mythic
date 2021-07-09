@@ -11,7 +11,7 @@
       <tr>
         {{#each data.data.characteristics as |details stat|}}
           {{#unless (eq stat "extra")}}
-            <td><button class="characteristic rollable" name="test-{{stat}}" value="{{details.roll}}">{{details.roll}}</button></td>
+            <td><button class="characteristic rollable" name="{{stat}}" value="{{details.roll}}">{{details.roll}}</button></td>
           {{/unless}}
         {{/each}}
       </tr>

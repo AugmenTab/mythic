@@ -1,3 +1,5 @@
+import * as Dice from "../dice.js";
+
 export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -17,5 +19,24 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const data = super.getData();
     data.config = CONFIG.mythic;
     return data;
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    html.find(".rollable").click(this._onRoll.bind(this));
+  }
+
+  _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const test = element.classList[0];
+
+    if (test === "characteristic") {
+      const stat = element.name;
+      const target = parseInt(element.value);
+      const message = Dice.rollCharacteristicTest(stat, target);
+      console.log(message);
+    }
   }
 }

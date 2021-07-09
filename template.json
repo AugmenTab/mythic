@@ -486,7 +486,8 @@
         "Bestiary Enemy": {
             "templates": [
                 "basicDetails",
-                "commonStats"
+                "commonStats",
+                "skills"
             ],
             "experiencePayout": 0,
             "level": [
