@@ -61,8 +61,17 @@
 
         .scaled {
             display: grid;
-            grid-template-columns: repeat(6, auto);
+            grid-template-columns: repeat(5, auto);
             column-gap: 4px;
+
+            :first-of-type {
+                td {
+                    width: 45px;
+                }
+                input {
+                    width: 40px;
+                }
+            }
         }
     }
 

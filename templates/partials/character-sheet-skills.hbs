@@ -44,7 +44,7 @@
               </select>
             </td>
             <td><input name={{concat "data.skills." skill ".mods"}} type="number" data-dtype="Number" value="{{details.mods}}"/></td>
-            <td><button value="{{details.roll}}"><b>{{details.roll}}</b></button></td>
+            <td><button class="skill rollable" name="{{localize (concat "mythic.skillNames." skill)}} ({{details.characteristic}})" value="{{details.roll}}"><b>{{details.roll}}</b></button></td>
           </tr>
         {{/unless}}
       {{/each}}

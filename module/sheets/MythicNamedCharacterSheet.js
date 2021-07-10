@@ -4,6 +4,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "namedCharacter"],
+      height: 710,
+      width: 800,
       tabs: [
         {
           navSelector: '.tabs',

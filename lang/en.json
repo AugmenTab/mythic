@@ -117,7 +117,7 @@
                 "wounds": "Wounds",
                 "fatigue": "Fatigue",
                 "luck": "Luck",
-                "support": "Support Pts",
+                "support": "Support Points",
                 "armor": "Armor",
                 "shields": "Shields",
                 "current": "Current",
@@ -126,8 +126,21 @@
                 "charge": "Charge",
                 "head": "Head",
                 "chest": "Chest",
-                "arms": "Arms",
-                "legs": "Legs"
+                "arms": {
+                    "left": "Left Arm",
+                    "right": "Right Arm"
+                },
+                "legs": {
+                    "left": "Left Leg",
+                    "right": "Right Leg"
+                }
+            },
+            "experience": {
+                "label": "Experience",
+                "tier": "Tier",
+                "total": "Total",
+                "spent": "Spent",
+                "current": "Current"
             }
         },
         "characterWeaponSummary": {

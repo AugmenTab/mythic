@@ -20,23 +20,24 @@ export async function rollTest(element) {
   } else if (type === "initiative") {
     // TODO
   } else {
-    const stat = element.name;
+    const test = element.name;
     const target = parseInt(element.value);
-    return await rollBasicTest(type, stat, target);
+    return await rollBasicTest(target, test, type);
   }
 }
 
-async function rollBasicTest(type, stat, target) {
+async function rollBasicTest(target, test, type) {
   const roll = await new Roll(FORMULA).roll({ async: true });
   let result = {
     type: type,
-    test: CHARACTERISTICS[stat],
+    test: CHARACTERISTICS[test] != undefined ? CHARACTERISTICS[test] : test;
     roll: roll.total,
     target: target,
     critical: false,
     degrees: 0,
     outcome: ""
   };
+
   if (roll.total >= THRESHOLD) {
     result.critical = true;
     result.outcome = "failure";

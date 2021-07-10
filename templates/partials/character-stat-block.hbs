@@ -94,7 +94,7 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td style="width:30px">
+          <td>
             <input name="data.wounds.current" value="{{data.data.wounds.current}}" type="number" data-dtype="Number"/>
           </td>
         </tr>
@@ -113,7 +113,7 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td style="width:30px">
+          <td>
             <input name="data.fatigue.current" value="{{data.data.fatigue.current}}" type="number" data-dtype="Number"/>
           </td>
         </tr>
@@ -132,7 +132,7 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td style="width:30px">
+          <td>
             <input name="data.luck.current" value="{{data.data.luck.current}}" type="number" data-dtype="Number"/>
           </td>
         </tr>
@@ -151,32 +151,11 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td style="width:30px"><input name="data.supportPoints.current" value="{{data.data.supportPoints.current}}" type="number" data-dtype="Number"/></td>
+          <td><input name="data.supportPoints.current" value="{{data.data.supportPoints.current}}" type="number" data-dtype="Number"/></td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
           <td>{{data.data.supportPoints.max}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <table >
-      <thead>
-        <tr>
-          <th colspan="4">{{localize "mythic.characterStatBlock.physical.armor"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="height:28.8px">
-          <th>{{localize "mythic.characterStatBlock.physical.head"}}</th>
-          <td>55</td>
-          <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
-          <td>55</td>
-        </tr>
-        <tr style="height:28.8px">
-          <th>{{localize "mythic.characterStatBlock.physical.arms"}}</th>
-          <td>55</td>
-          <th>{{localize "mythic.characterStatBlock.physical.legs"}}</th>
-          <td>55</td>
         </tr>
       </tbody>
     </table>
@@ -189,7 +168,7 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td>175</td>
+          <td><input name="" value="" type="number" data-dtype="Number"/></td>
           <th>{{localize "mythic.characterStatBlock.physical.delay"}}</th>
           <td>20</td>
         </tr>
@@ -198,6 +177,54 @@
           <td>175</td>
           <th>{{localize "mythic.characterStatBlock.physical.charge"}}</th>
           <td>50</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="scaled">
+    <table style="grid-column: span 2">
+      <thead>
+        <tr>
+          <th colspan="4">Experience</th>
+        </tr>
+        <tr>
+          <th>Tier</th>
+          <th>Total</th>
+          <th>Spent</th>
+          <th>Current</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>7</td>
+          <td>100000</td>
+          <td>100000</td>
+          <td>100000</td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="grid-column: span 3">
+      <thead>
+        <tr>
+          <th colspan="6">{{localize "mythic.characterStatBlock.physical.armor"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.physical.head"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.arms.left"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.arms.right"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.legs.left"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.legs.right"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>55</td>
+          <td>55</td>
+          <td>55</td>
+          <td>55</td>
+          <td>55</td>
+          <td>55</td>
         </tr>
       </tbody>
     </table>
