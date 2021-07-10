@@ -27,7 +27,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".rollable").click(this._onRoll.bind(this));
   }
 
-  _onRoll(event) {
+  async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const test = element.classList[0];
@@ -35,7 +35,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (test === "characteristic") {
       const stat = element.name;
       const target = parseInt(element.value);
-      const message = Dice.rollCharacteristicTest(stat, target);
+      const message = await Dice.rollCharacteristicTest(stat, target);
       console.log(message);
     }
   }
