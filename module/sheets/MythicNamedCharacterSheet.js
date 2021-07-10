@@ -35,8 +35,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (test === "characteristic") {
       const stat = element.name;
       const target = parseInt(element.value);
-      const message = await Dice.rollCharacteristicTest(stat, target);
-      console.log(message);
+      const result = await Dice.rollCharacteristicTest(stat, target);
+      console.log(result);
     }
   }
 }
