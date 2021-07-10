@@ -4,9 +4,8 @@
       <tr>
         <th colspan="4">{{localize "mythic.characterWeaponSummary.title"}}</th>
         <td colspan="3">
-          <button style="color:white" value="{{data.data.initiative.formula}}">
+          <button class="initiative rollable" style="color:white" data-roll="{{data.data.initiative.formula}}" data-label="{{localize "mythic.characterWeaponSummary.initiative"}}">
             {{localize "mythic.characterWeaponSummary.initiative"}}: {{data.data.initiative.mods}}
-
           </button></td>
       </tr>
       <tr>

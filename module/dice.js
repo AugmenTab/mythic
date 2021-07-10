@@ -1,5 +1,3 @@
-const FORMULA = "D100";
-const THRESHOLD = 98;
 const CHARACTERISTICS = {
   "str": "Strength",
   "tou": "Toughness",
@@ -12,13 +10,15 @@ const CHARACTERISTICS = {
   "ch": "Charisma",
   "ld": "Leadership"
 };
+const FORMULA = "D100";
+const THRESHOLD = 98;
 
-export async function rollTest(element) {
+export async function rollTest(element, actor) {
   const type = element.classList[0];
   if (type === "attack") {
     // TODO
   } else if (type === "initiative") {
-    // TODO
+    return await rollInitiative(element, actor);
   } else {
     const test = element.name;
     const target = parseInt(element.value);
@@ -30,7 +30,7 @@ async function rollBasicTest(target, test, type) {
   const roll = await new Roll(FORMULA).roll({ async: true });
   let result = {
     type: type,
-    test: CHARACTERISTICS[test] != undefined ? CHARACTERISTICS[test] : test;
+    test: CHARACTERISTICS[test] != undefined ? CHARACTERISTICS[test] : test,
     roll: roll.total,
     target: target,
     critical: false,
@@ -50,4 +50,16 @@ async function rollBasicTest(target, test, type) {
     result.degrees = Math.abs(d).toFixed(1);
   }
   return result;
+}
+
+async function rollInitiative(element, actor) {
+  const dataset = element.dataset;
+  if (dataset.roll) {
+    const roll = await new Roll(dataset.roll, actor.data.data);
+    const result = await roll.roll({  async: true });
+    result.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: actor }),
+      flavor: dataset.label ? dataset.label : ""
+    });
+  }
 }

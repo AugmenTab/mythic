@@ -32,7 +32,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const rollData = await rollTest(element);
+    const rollData = await rollTest(element, this.actor);
     console.log(rollData);
   }
 }
