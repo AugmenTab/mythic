@@ -1,4 +1,5 @@
 const FORMULA = "D100";
+const THRESHOLD = 98;
 const CHARACTERISTICS = {
   "str": "Strength",
   "tou": "Toughness",
@@ -12,9 +13,23 @@ const CHARACTERISTICS = {
   "ld": "Leadership"
 };
 
-export async function rollCharacteristicTest(stat, target) {
+export async function rollTest(element) {
+  const type = element.classList[0];
+  if (type === "attack") {
+    // TODO
+  } else if (type === "initiative") {
+    // TODO
+  } else {
+    const stat = element.name;
+    const target = parseInt(element.value);
+    return await rollBasicTest(type, stat, target);
+  }
+}
+
+async function rollBasicTest(type, stat, target) {
   const roll = await new Roll(FORMULA).roll({ async: true });
   let result = {
+    type: type,
     test: CHARACTERISTICS[stat],
     roll: roll.total,
     target: target,
@@ -22,7 +37,7 @@ export async function rollCharacteristicTest(stat, target) {
     degrees: 0,
     outcome: ""
   };
-  if (roll.total >= 98) {
+  if (roll.total >= THRESHOLD) {
     result.critical = true;
     result.outcome = "failure";
   } else if (roll.total === 1) {
