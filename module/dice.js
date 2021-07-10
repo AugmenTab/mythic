@@ -18,7 +18,7 @@ export async function rollTest(element, actor) {
   if (type === "attack") {
     // TODO
   } else if (type === "initiative") {
-    return await rollInitiative(element, actor);
+    await rollInitiative(element, actor);
   } else {
     const test = element.name;
     const target = parseInt(element.value);
