@@ -14,6 +14,29 @@ mythic.abilitySheet = {
   cost: "mythic.abilitySheet.cost",
 }
 
+mythic.advancements = {
+  characteristics: {
+    0: "--",
+    1: "+5",
+    2: "+10",
+    3: "+15",
+    4: "+20",
+    5: "+25"
+  },
+  mythicCharacteristics: {
+    0: "--",
+    1: "+1",
+    2: "+2"
+  },
+  wounds: {
+    0: "+0",
+    1: "+4",
+    2: "+8",
+    3: "+12",
+    4: "+16"
+  }
+}
+
 mythic.educationType = {
   piloting: "mythic.educationSheet.types.piloting",
   engineer: "mythic.educationSheet.types.engineer",

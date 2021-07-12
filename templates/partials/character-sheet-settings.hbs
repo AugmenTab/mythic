@@ -56,7 +56,13 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.advancements" value="{{stat.advancements}}" type="number" data-dtype="Number"/>
+                <select name="data.characteristics.{{name}}.advancements">
+                  {{#select stat.advancements}}
+                    {{#each ../config.advancements.characteristics as |text num|}}
+                      <option value="{{num}}">{{text}}</option>
+                    {{/each}}
+                  {{/select}}
+                </select>
               </td>
             {{/unless}}
           {{/each}}
@@ -75,16 +81,11 @@
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.total"}}</th>
-          <th>{{data.data.characteristics.str.total}}</th>
-          <th>{{data.data.characteristics.tou.total}}</th>
-          <th>{{data.data.characteristics.agi.total}}</th>
-          <th>{{data.data.characteristics.wfr.total}}</th>
-          <th>{{data.data.characteristics.wfm.total}}</th>
-          <th>{{data.data.characteristics.int.total}}</th>
-          <th>{{data.data.characteristics.per.total}}</th>
-          <th>{{data.data.characteristics.cr.total}}</th>
-          <th>{{data.data.characteristics.ch.total}}</th>
-          <th>{{data.data.characteristics.ld.total}}</th>
+          {{#each actor.data.data.characteristics as |stat _|}}
+            {{#unless (eq name "extra")}}
+              <th>{{stat.total}}</th>
+            {{/unless}}
+          {{/each}}
         </tr>
       </thead>
     </table>
@@ -96,9 +97,9 @@
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.characteristics.source"}}</th>
-          <th>STR</th>
-          <th>TOU</th>
-          <th>AGI</th>
+          <th>{{config.characteristic.str}}</th>
+          <th>{{config.characteristic.tou}}</th>
+          <th>{{config.characteristic.agi}}</th>
         </tr>
       </thead>
       <tbody>
@@ -127,7 +128,13 @@
           {{#each actor.data.data.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
-                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.advancements" value="{{stat.advancements}}" type="number" data-dtype="Number"/>
+                <select name="data.mythicCharacteristics.{{name}}.advancements">
+                  {{#select stat.advancements}}
+                    {{#each ../config.advancements.mythicCharacteristics as |text num|}}
+                      <option value="{{num}}">{{text}}</option>
+                    {{/each}}
+                  {{/select}}
+                </select>
               </td>
             {{/unless}}
           {{/each}}
@@ -249,7 +256,15 @@
               <td><b>{{data.data.wounds.max}}</b></td>
               <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
               <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
-              <td><input name="data.wounds.advancements" type="number" data-dtype="Number" value="{{data.data.wounds.advancements}}"/></td>
+              <td>
+                <select name="data.wounds.advancements">
+                  {{#select data.data.wounds.advancements}}
+                    {{#each config.advancements.wounds as |text num|}}
+                      <option value="{{num}}">{{text}}</option>
+                    {{/each}}
+                  {{/select}}
+                </select>
+              </td>
               <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
             </tr>
           </tbody>

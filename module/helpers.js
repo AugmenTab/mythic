@@ -1,4 +1,4 @@
-export default Handlebars.registerHelper("concat", function() {
+Handlebars.registerHelper("concat", function() {
   let str = "";
   for(var arg in arguments){
     if(typeof arguments[arg] != "object"){
@@ -8,6 +8,6 @@ export default Handlebars.registerHelper("concat", function() {
   return str;
 });
 
-export default Handlebars.registerHelper("localnum", function(num) {
+Handlebars.registerHelper("localnum", function(num) {
   return num.toLocaleString();
 })
