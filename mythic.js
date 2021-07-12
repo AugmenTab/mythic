@@ -41,3 +41,7 @@ Handlebars.registerHelper("concat", function() {
   }
   return str;
 });
+
+Handlebars.registerHelper("localnum", function(num) {
+  return num.toLocaleString();
+})

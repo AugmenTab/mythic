@@ -54,12 +54,12 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{data.data.movement.half}}</td>
+          <td>{{localnum data.data.movement.half}}</td>
           <td>{{data.data.movement.full}}</td>
           <td>{{data.data.movement.charge}}</td>
           <td>{{data.data.movement.run}}</td>
           <td>{{data.data.movement.sprint}}</td>
-          <td>{{data.data.movement.jump}}</td>
+          <td>{{localnum data.data.movement.jump}}</td>
           <td>{{data.data.movement.leap}}</td>
         </tr>
       </tbody>
@@ -77,9 +77,9 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{data.data.carryingCapacity.carry}}</td>
-          <td>{{data.data.carryingCapacity.lift}}</td>
-          <td>{{data.data.carryingCapacity.push}}</td>
+          <td>{{localnum data.data.carryingCapacity.carry}}</td>
+          <td>{{localnum data.data.carryingCapacity.lift}}</td>
+          <td>{{localnum data.data.carryingCapacity.push}}</td>
         </tr>
       </tbody>
     </table>
@@ -197,9 +197,9 @@
       <tbody>
         <tr>
           <td>7</td>
-          <td>100000</td>
-          <td>100000</td>
-          <td>100000</td>
+          <td>{{localnum 100000}}</td>
+          <td>{{localnum 100000}}</td>
+          <td>{{localnum 100000}}</td>
         </tr>
       </tbody>
     </table>
