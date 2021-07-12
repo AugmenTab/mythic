@@ -10,7 +10,6 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
 
 ## Stretch Goals
 
-* Change all instances of advancements settings to select dropdown.
 * Tooltips for everything.
 * Collapsible sections for sheet to save on vertical space when not being used (collapse skills, weapon special rules, etc).
 * Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
