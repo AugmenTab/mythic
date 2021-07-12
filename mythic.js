@@ -1,3 +1,4 @@
+import * as Helpers from "./module/helpers.js";
 import { mythic } from "./module/config.js";
 import { MythicActor } from "./module/MythicActor.js";
 import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
@@ -31,17 +32,3 @@ Hooks.once("init", function() {
 
   preloadHandlebarsTemplates();
 });
-
-Handlebars.registerHelper("concat", function() {
-  let str = "";
-  for(var arg in arguments){
-    if(typeof arguments[arg] != "object"){
-      str += arguments[arg];
-    }
-  }
-  return str;
-});
-
-Handlebars.registerHelper("localnum", function(num) {
-  return num.toLocaleString();
-})
