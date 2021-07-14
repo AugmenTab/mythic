@@ -47,7 +47,7 @@ async function rollBasicTest(target, test, type) {
   } else {
     const d = (target - roll.total) / 10;
     result.outcome = d >= 0 ? "success" : "failure";
-    result.degrees = Math.abs(d).toFixed(1);
+    result.degrees = parseFloat(Math.abs(d).toFixed(1));
   }
   return result;
 }

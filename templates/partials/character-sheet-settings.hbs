@@ -16,7 +16,7 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.soldierType" value="{{stat.soldierType}}" type="number" data-dtype="Number" placeholder="0"/>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.soldierType" value="{{stat.soldierType}}" type="number" data-dtype="Number" placeholder="0" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -26,7 +26,7 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
-                <input class="calc-{{name}} calc-pool" name="data.characteristics.{{name}}.abilityPool" value="{{stat.abilityPool}}" type="number" data-dtype="Number"/>
+                <input class="calc-{{name}} calc-pool" name="data.characteristics.{{name}}.abilityPool" value="{{stat.abilityPool}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -36,7 +36,7 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.background" value="{{stat.background}}" type="number" data-dtype="Number"/>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.background" value="{{stat.background}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -46,7 +46,7 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number"/>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -72,7 +72,7 @@
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number"/>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -108,7 +108,7 @@
           {{#each actor.data.data.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
-                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.soldierType" value="{{stat.soldierType}}" type="number" data-dtype="Number"/>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.soldierType" value="{{stat.soldierType}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -118,7 +118,7 @@
           {{#each actor.data.data.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
-                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number"/>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -144,7 +144,7 @@
           {{#each actor.data.data.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
-                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number"/>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number" onfocus="this.select()"/>
               </td>
             {{/unless}}
           {{/each}}
@@ -228,10 +228,10 @@
         <tbody>
           <tr>
             <td><b>{{data.data.luck.max}}</b></td>
-            <td><input name="data.luck.starting" type="number" value="{{data.data.luck.starting}}" data-dtype="Number"/></td>
-            <td><input name="data.luck.advancements" type="number" value="{{data.data.luck.advancements}}" data-dtype="Number"/></td>
-            <td><input name="data.luck.other" type="number" value="{{data.data.luck.other}}" data-dtype="Number"/></td>
-            <td><input name="data.luck.burnt" type="number" value="{{data.data.luck.burnt}}" data-dtype="Number"/></td>
+            <td><input name="data.luck.starting" type="number" value="{{data.data.luck.starting}}" data-dtype="Number" onfocus="this.select()"/></td>
+            <td><input name="data.luck.advancements" type="number" value="{{data.data.luck.advancements}}" data-dtype="Number" onfocus="this.select()"/></td>
+            <td><input name="data.luck.other" type="number" value="{{data.data.luck.other}}" data-dtype="Number" onfocus="this.select()"/></td>
+            <td><input name="data.luck.burnt" type="number" value="{{data.data.luck.burnt}}" data-dtype="Number" onfocus="this.select()"/></td>
           </tr>
         </tbody>
       </table>
@@ -281,8 +281,8 @@
           </thead>
           <tbody>
             <tr>
-              <td><input name="data.supportPoints.rank" type="number" data-dtype="Number" value="{{data.data.supportPoints.rank}}"/></td>
-              <td><input name="data.supportPoints.other" type="number" data-dtype="Number" value="{{data.data.supportPoints.other}}"/></td>
+              <td><input name="data.supportPoints.rank" type="number" data-dtype="Number" value="{{data.data.supportPoints.rank}}" onfocus="this.select()"/></td>
+              <td><input name="data.supportPoints.other" type="number" data-dtype="Number" value="{{data.data.supportPoints.other}}" onfocus="this.select()"/></td>
             </tr>
           </tbody>
         </table>
@@ -303,9 +303,9 @@
       </thead>
       <tbody>
         <tr>
-          <td><input name="data.movement.jumpMultiplier" type="number" value="{{data.data.movement.jumpMultiplier}}" data-dtype="Number"/></td>
-          <td><input name="data.movement.leapAgiBonus" type="number" value="{{data.data.movement.leapAgiBonus}}" data-dtype="Number"/></td>
-          <td><input name="data.movement.leapMultiplier" type="number" value="{{data.data.movement.leapMultiplier}}" data-dtype="Number"/></td>
+          <td><input name="data.movement.jumpMultiplier" type="number" value="{{data.data.movement.jumpMultiplier}}" data-dtype="Number" onfocus="this.select()"/></td>
+          <td><input name="data.movement.leapAgiBonus" type="number" value="{{data.data.movement.leapAgiBonus}}" data-dtype="Number" onfocus="this.select()"/></td>
+          <td><input name="data.movement.leapMultiplier" type="number" value="{{data.data.movement.leapMultiplier}}" data-dtype="Number" onfocus="this.select()"/></td>
           <td><input name="data.movement.doubleAgiRunCharge" type="checkbox" {{checked data.data.movement.doubleAgiRunCharge}}/></td>
           <td><input name="data.movement.blur" type="checkbox" {{checked data.data.movement.blur}}/></td>
           <td><input name="data.movement.rush" type="checkbox" {{checked data.data.movement.rush}}/></td>
