@@ -81,7 +81,7 @@
                 "aiDegen": "AI Destabilizations",
                 "advancements": "Advancements"
             }
-          },
+        },
         "characterSkills": {
             "skillsTitle": "Skills",
             "educationsTitle": "Educations",
@@ -153,6 +153,18 @@
             "one": "One",
             "half": "Half",
             "full": "Full"
+        },
+        "chat": {
+            "actions": {
+                "cancel": "Cancel",
+                "roll": "Roll"
+            },
+            "options": {
+                "circumstance": "Circumstance Modifier"
+            },
+            "test": {
+                "title": "Test"
+            }
         },
         "weaponGroups": {
             "none": "",
