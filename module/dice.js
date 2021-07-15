@@ -1,10 +1,8 @@
-import { mythic } from "./config.js";
-
 const CHARACTERISTICS = {
   "str": "Strength",
   "tou": "Toughness",
   "agi": "Agility",
-  "wfr": "Warfare Ranged",
+  "wfr": "Warfare Range",
   "wfm": "Warfare Melee",
   "int": "Intellect",
   "per": "Perception",
@@ -19,8 +17,9 @@ export async function rollTest(element, actor) {
   const type = element.classList[0];
   const test = type === "initiative" 
     ? `${type[0].toUpperCase()}${type.slice(1)}` 
-    : (
-      CHARACTERISTICS[element.name] != undefined ? CHARACTERISTICS[element.name] : element.name
+    : (CHARACTERISTICS[element.name] != undefined 
+        ? CHARACTERISTICS[element.name] 
+        : element.name
     );
   const target = parseInt(element.value);
   const testOptions = await getTestOptions(test);
@@ -29,8 +28,7 @@ export async function rollTest(element, actor) {
     if (type === "initiative") {
       await rollInitiative(element, mod, actor);
     } else {
-      console.log(testOptions.circumstance.includes('e'));
-      return await rollBasicTest(target + mod, test, type);
+      return await rollBasicTest(target + mod, test, type, actor);
     }
   } else {
     return;
@@ -42,7 +40,9 @@ async function getTestOptions(test) {
   const html = await renderTemplate(template, {});
   return new Promise(resolve => {
     const data = {
-      title: `${CHARACTERISTICS[test] != undefined ? CHARACTERISTICS[test] : test} ${game.i18n.format("mythic.chat.test.title")}`,
+      title: `${CHARACTERISTICS[test] != undefined 
+        ? CHARACTERISTICS[test] 
+        : test} ${game.i18n.format("mythic.chat.test.title")}`,
       content: html,
       buttons: {
         roll: {
@@ -67,7 +67,26 @@ function _processTestOptions(form) {
   }
 }
 
-async function rollBasicTest(target, test, type) {
+async function postBasicTestChatMessage(data, actor) {
+  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
+  await ChatMessage.create({
+    user: game.user.id,
+    speaker: ChatMessage.getSpeaker({ actor: actor }),
+    flavor: `${data.test} ${game.i18n.localize("mythic.chat.test.title")}`,
+    content: buildBasicTestChatMessage(data)
+  }, {});
+}
+
+function buildBasicTestChatMessage(data) {
+  console.log(data);
+  const outcome = data.critical 
+    ? `Critical ${data.outcome}` 
+    : `${data.degrees} degree${Math.abs(parseFloat(data.degrees)) === 1 ? "" : "s"} of ${data.outcome}`;
+  const message = `<p><b>${data.roll} vs. ${data.target}:</b> ${outcome}!</p>`;
+  return message;
+}
+
+async function rollBasicTest(target, test, type, actor) {
   const roll = await new Roll(FORMULA).roll({ async: true });
   let result = {
     type: type,
@@ -90,7 +109,7 @@ async function rollBasicTest(target, test, type) {
     result.outcome = d >= 0 ? "success" : "failure";
     result.degrees = Math.abs(d).toFixed(1);
   }
-  return result;
+  await postBasicTestChatMessage(result, actor);
 }
 
 async function rollInitiative(element, mod, actor) {

@@ -35,8 +35,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (element.classList[0] === "attack") {
       // TODO
     } else {
-      const rollData = await rollTest(element, this.actor);
-      console.log(rollData);
+      await rollTest(element, this.actor);
     }
   }
 }
