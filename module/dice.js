@@ -64,26 +64,7 @@ async function getTestOptions(test) {
 function _processTestOptions(form) {
   return {
     circumstance: form.circumstance.value
-  }
-}
-
-async function postBasicTestChatMessage(data, actor) {
-  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
-  await ChatMessage.create({
-    user: game.user.id,
-    speaker: ChatMessage.getSpeaker({ actor: actor }),
-    flavor: `${data.test} ${game.i18n.localize("mythic.chat.test.title")}`,
-    content: buildBasicTestChatMessage(data)
-  }, {});
-}
-
-function buildBasicTestChatMessage(data) {
-  console.log(data);
-  const outcome = data.critical 
-    ? `Critical ${data.outcome}` 
-    : `${data.degrees} degree${Math.abs(parseFloat(data.degrees)) === 1 ? "" : "s"} of ${data.outcome}`;
-  const message = `<p><b>${data.roll} vs. ${data.target}:</b> ${outcome}!</p>`;
-  return message;
+  };
 }
 
 async function rollBasicTest(target, test, type, actor) {
@@ -123,4 +104,19 @@ async function rollInitiative(element, mod, actor) {
       flavor: dataset.label ? dataset.label : ""
     });
   }
+}
+
+async function buildBasicTestChatMessage(data) {
+  const template = "systems/mythic/templates/chat/test-chat.hbs";
+  return await renderTemplate(template, data);
+}
+
+async function postBasicTestChatMessage(data, actor) {
+  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
+  await ChatMessage.create({
+    user: game.user.id,
+    speaker: ChatMessage.getSpeaker({ actor: actor }),
+    flavor: `${data.test} ${game.i18n.localize("mythic.chat.test.title")}`,
+    content: await buildBasicTestChatMessage(data)
+  }, {});
 }
