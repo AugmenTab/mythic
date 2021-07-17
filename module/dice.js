@@ -101,13 +101,14 @@ async function rollBasicTest(target, test, type, actor) {
 
 async function rollInitiative(element, mod, actor) {
   const dataset = element.dataset;
+  console.log(dataset.label);
   if (dataset.roll) {
     const circumstance = `${mod > 0 ? " + " + mod : mod}`;
     const roll = await new Roll(dataset.roll + circumstance, actor.data.data, { async: true });
     const result = await roll.roll({ async: true });
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: actor }),
-      flavor: dataset.label ? dataset.label : ""
+      flavor: game.i18n.localize("mythic.characterWeaponSummary.initiative")
     });
   }
 }
