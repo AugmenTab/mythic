@@ -1,0 +1,73 @@
+<section class="character-sheet-educations tab">
+  <table id="education-table">
+    <thead>
+      <tr>
+        <th colspan="7">{{localize "mythic.characterSkills.educationsTitle"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.characterSkills.name"}}</th>
+        <th>{{localize "mythic.characterSkills.difficulty"}}</th>
+        <th>{{localize "mythic.characterSkills.type"}}</th>
+        <th>{{localize "mythic.characterSkills.skill"}}</th>
+        <th>{{localize "mythic.characterSkills.training"}}</th>
+        <th style="width:90px">{{localize "mythic.characterSkills.mods"}}</th>
+        <th>{{localize "mythic.characterSkills.roll"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aeronautics</td>
+        <td>Advanced</td>
+        <td>Piloting</td>
+        <td>
+          <select name="skill-options">
+            <option value="none" selected>--</option>
+            <option value="stunting">Stunting</option>
+            <option value="pilot">Pilot (Ground)</option>
+            <option value="pilot">Pilot (Air)</option>
+            <option value="pilot">Pilot (Space)</option>
+            <option value="evasion">Evasion</option>
+            <option value="technology">Technology (Human)</option>
+            <option value="technology">Technology (Covenant)</option>
+            <option value="technology">Technology (Forerunner)</option>
+          </select>
+        </td>
+        <td>
+          <select name="skill-training">
+            <option value="none" selected>--</option>
+            <option value="plus-5">+5</option>
+            <option value="plus-10">+10</option>
+          </select>
+        </td>
+        <td>
+          <input name="_-mod" type="number" value="_-mod"/>
+        </td>
+        <td><button disabled="true">100</button></td>
+      </tr>
+      <tr>
+        <td>Covenant Vehicle Maintenance</td>
+        <td>Basic</td>
+        <td>Engineer</td>
+        <td>
+          <select name="skill-options">
+            <option value="none" selected>--</option>
+            <option value="technology">Technology (Human)</option>
+            <option value="technology">Technology (Covenant)</option>
+            <option value="technology">Technology (Forerunner)</option>
+          </select>
+        </td>
+        <td>
+          <select name="skill-training">
+            <option value="none">--</option>
+            <option value="plus-5" selected>+5</option>
+            <option value="plus-10">+10</option>
+          </select>
+        </td>
+        <td>
+          <input name="_-mod" type="number" value="_-mod"/>
+        </td>
+        <td><button>100</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>

@@ -9,7 +9,6 @@ export class MythicActor extends Actor {
 
   prepareDerivedData() {
     const actorData = this.data;
-    const data = actorData.data;
     const flags = actorData.flags.boilerplate || {};
 
     this._prepareNamedCharacterData(actorData);

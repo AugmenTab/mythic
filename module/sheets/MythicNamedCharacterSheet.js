@@ -11,6 +11,11 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
           navSelector: '.tabs',
           contentSelector: '.sheet-body',
           initial: 'summary'
+        },
+        {
+          navSelector:'.talent-tabs',
+          contentSelector: '.talent-body',
+          initial: 'abilities'
         }
       ],
       template: "systems/mythic/templates/sheets/namedCharacter-sheet.hbs"

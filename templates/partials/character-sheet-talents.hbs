@@ -1,0 +1,28 @@
+<nav class="talent-tabs tabs" data-group="secondary">
+  <a class="item" data-tab="abilities">Abilities</a>
+  <a class="item" data-tab="skills">Skills</a>
+  <a class="item" data-tab="educations">Educations</a>
+  <a class="item" data-tab="traits">Traits</a>
+</nav>
+
+<section class="talent-body">
+  {{!-- Abilities Page: --}}
+  <div class="tab" data-group="secondary" data-tab="abilities">
+    <p><b>TODO</b></p>
+  </div>
+
+  {{!-- Skills Page: --}}
+  <div class="tab" data-group="secondary" data-tab="skills">
+    {{> "systems/mythic/templates/partials/character-sheet-skills.hbs"}}
+  </div>
+
+  {{!-- Educations Page: --}}
+  <div class="tab" data-group="secondary" data-tab="educations">
+    {{> "systems/mythic/templates/partials/character-sheet-educations.hbs"}}
+  </div>
+
+  {{!-- Traits & Augmentations Page: --}}
+  <div class="tab" data-group="secondary" data-tab="traits">
+    <p><b>TODO</b></p>
+  </div>
+</section>

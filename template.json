@@ -14,7 +14,7 @@
             "commonStats": {
                 "soldierType": "",
                 "size": "",
-                "notes": "",
+                "notes": "Write character notes here.",
                 "characteristics": {
                     "str": {
                         "soldierType": 0,
@@ -481,7 +481,7 @@
                 "total": 0,
                 "spent": 0
             },
-            "biography": ""
+            "biography": "Write character biography here."
         },
         "Bestiary Enemy": {
             "templates": [
