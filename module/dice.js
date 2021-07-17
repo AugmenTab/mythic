@@ -28,10 +28,8 @@ export async function rollTest(element, actor) {
     if (type === "initiative") {
       await rollInitiative(element, mod, actor);
     } else {
-      return await rollBasicTest(target + mod, test, type, actor);
+      await rollBasicTest(target + mod, test, type, actor);
     }
-  } else {
-    return;
   }
 }
 
@@ -76,15 +74,19 @@ async function rollBasicTest(target, test, type, actor) {
     target: target,
     critical: false,
     degrees: 0,
-    outcome: ""
+    outcome: "",
+    template: "test",
+    color: "black"
   };
 
   if (roll.total >= THRESHOLD) {
     result.critical = true;
     result.outcome = "failure";
+    result.color = "red";
   } else if (roll.total === 1) {
     result.critical = true;
     result.outcome = "success";
+    result.color = "green";
   } else {
     const d = (target - roll.total) / 10;
     result.outcome = d >= 0 ? "success" : "failure";
@@ -97,8 +99,8 @@ async function rollInitiative(element, mod, actor) {
   const dataset = element.dataset;
   if (dataset.roll) {
     const circumstance = `${mod > 0 ? " + " + mod : mod}`;
-    const roll = await new Roll(dataset.roll + circumstance, actor.data.data);
-    const result = await roll.roll({  async: true });
+    const roll = await new Roll(dataset.roll + circumstance, actor.data.data, { async: true });
+    const result = await roll.roll({ async: true });
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: actor }),
       flavor: dataset.label ? dataset.label : ""
@@ -106,8 +108,8 @@ async function rollInitiative(element, mod, actor) {
   }
 }
 
-async function buildBasicTestChatMessage(data) {
-  const template = "systems/mythic/templates/chat/test-chat.hbs";
+async function buildChatMessageContent(data) {
+  const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
   return await renderTemplate(template, data);
 }
 
@@ -117,6 +119,6 @@ async function postBasicTestChatMessage(data, actor) {
     user: game.user.id,
     speaker: ChatMessage.getSpeaker({ actor: actor }),
     flavor: `${data.test} ${game.i18n.localize("mythic.chat.test.title")}`,
-    content: await buildBasicTestChatMessage(data)
+    content: await buildChatMessageContent(data)
   }, {});
 }
