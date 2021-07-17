@@ -172,11 +172,9 @@
             }
         },
         "weaponGroups": {
-            "none": "",
             "ranged": "Ranged",
             "melee": "Melee",
-            "explosive": "Explosive",
-            "vehicle": "Vehicle Weapon"
+            "thrown": "Thrown"
         },
         "abilitySheet": {
             "summary": "Summary",
@@ -268,13 +266,7 @@
         },
         "weaponSheet": {
             "tagsLabel": "Weapon Tags",
-            "groups": {
-                "label": "Weapon Group",
-                "ranged": "Ranged",
-                "melee": "Melee",
-                "explosive": "Explosive",
-                "vehicle": "Vehicle"
-            },
+            "groups": "Weapon Group",
             "fireMode": {
                 "label": "Fire Modes",
                 "auto": "Automatic",
@@ -294,7 +286,7 @@
                 "magazine": "Magazine",
                 "range": "Range",
                 "ammo": "Ammunition",
-                "price": "Price",
+                "price": "Price (cR)",
                 "baseReload": "Base Reload",
                 "attackBonus": "To-Hit Bonus",
                 "type": "Type",

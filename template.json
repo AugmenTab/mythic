@@ -633,12 +633,7 @@
             "templates": [
                 "baseItemDetails"
             ],
-            "group": {
-                "ranged": false,
-                "melee": false,
-                "explosive": false,
-                "vehicle": false
-            },
+            "group": "",
             "tags": {
                 "[UD]": true,
                 "[I]": false,
