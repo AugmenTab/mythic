@@ -652,78 +652,93 @@
             "special": {
                 "acid": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "blast": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "cauterize": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "charge": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "diceMinimum": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "electrified": {
                     "has": false
                 },
                 "emp": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "flame": {
                     "has": false,
-                    "value": "1D5"
+                    "value": "1D5",
+                    "needsInput": true
                 },
                 "gravimetricPulse": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "gravity": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "hardlight": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "headshot": {
                     "has": false
                 },
                 "homing": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "kill": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "kinetic": {
                     "has": false
                 },
                 "needle": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "nonlethal": {
                     "has": false
                 },
                 "overheat": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "penetrating": {
                     "has": false
                 },
                 "rechargeRate": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "slow": {
                     "has": false
@@ -733,7 +748,8 @@
                 },
                 "spin": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "spread": {
                     "has": false
@@ -743,11 +759,13 @@
                 },
                 "stun": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "tranquilize": {
                     "has": false,
-                    "value": 0
+                    "value": 0,
+                    "needsInput": true
                 },
                 "vehicleLock": {
                     "has": false
