@@ -13,6 +13,10 @@ const CHARACTERISTICS = {
 const FORMULA = "D100";
 const THRESHOLD = 98;
 
+export async function rollAttacks(element, actor) {
+  return;
+}
+
 export async function rollTest(element, actor) {
   const type = element.classList[0];
   const test = type === "initiative" 

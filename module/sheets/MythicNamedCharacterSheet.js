@@ -1,4 +1,4 @@
-import { rollTest } from "../dice.js";
+import { rollAttacks, rollTest } from "../dice.js";
 
 export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
@@ -33,7 +33,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     if (element.classList[0] === "attack") {
-      // TODO
+      await rollAttacks(element, this.actor);
     } else {
       await rollTest(element, this.actor);
     }
