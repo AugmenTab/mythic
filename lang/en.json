@@ -17,12 +17,17 @@
         },
         "characterNav": {
             "summary": "Summary",
-            "skills": "Skills",
-            "weapons": "Weapons",
-            "armor": "Armor",
-            "equipment": "Equipment",
+            "talents": {
+                "label": "Talents",
+                "abilities": "Abilities",
+                "skills": "Skills",
+                "educations": "Educations",
+                "traits": "Traits"
+            },
+            "inventory": "Inventory",
             "medical": "Medical",
-            "bio": "Biography",
+            "experience": "Experience",
+            "biography": "Biography",
             "notes": "Notes",
             "settings": "Settings"
         },
