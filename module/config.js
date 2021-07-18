@@ -6,6 +6,24 @@ mythic.weaponGroups = {
   thrown: "mythic.weaponGroups.thrown",
 }
 
+mythic.trainings = {
+  equipment: {
+    basic: "mythic.trainings.equipment.basic",
+    infantry: "mythic.trainings.equipment.infantry",
+    advanced: "mythic.trainings.equipment.advanced",
+    longRange: "mythic.trainings.equipment.longRange",
+    vehicle: "mythic.trainings.equipment.vehicle",
+    explosive: "mythic.trainings.equipment.explosive",
+    melee: "mythic.trainings.equipment.melee",
+    heavy: "mythic.trainings.equipment.heavy"
+  },
+  factions: {
+    unsc: "mythic.trainings.factions.unsc",
+    covenant: "mythic.trainings.factions.covenant",
+    forerunner: "mythic.trainings.factions.forerunner"
+  }
+}
+
 mythic.abilitySheet = {
   summary: "mythic.abilitySheet.summary",
   prerequisite: "mythic.abilitySheet.prerequisite",

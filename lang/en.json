@@ -293,7 +293,9 @@
                 "weight": "Weight (kgs)",
                 "desc": "Write weapon description here.",
                 "nickname": "Nickname",
-                "faction": "Faction"
+                "faction": "Faction",
+                "factionTraining": "Faction Training",
+                "equipmentTraining": "Equipment Training"
             },
             "specialRules": {
                 "label": "Weapon Special Rules",
@@ -325,6 +327,23 @@
                 "stun": "Stun",
                 "tranquilize": "Tranquilize",
                 "vehicleLock": "Vehicle Lock"
+            }
+        },
+        "trainings": {
+            "equipment": {
+                "basic": "Basic",
+                "infantry": "Infantry",
+                "advanced": "Advanced",
+                "longRange": "Long-Range",
+                "vehicle": "Vehicle",
+                "explosive": "Explosive/Ordnance",
+                "melee": "Melee",
+                "heavy": "Heavy"
+            },
+            "factions": {
+                "unsc": "UNSC",
+                "covenant": "Covenant",
+                "forerunner": "Forerunner"
             }
         }
     }

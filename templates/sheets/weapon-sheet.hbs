@@ -14,6 +14,22 @@
     <input name="data.type" type="text" value="{{data.data.type}}"/>
     <p>{{localize "mythic.weaponSheet.stats.ammo"}}</p>
     <input name="data.ammo" type="text" value="{{data.data.ammo}}"/>
+    <p>{{localize "mythic.weaponSheet.stats.factionTraining"}}</p>
+    <select name="data.trainings.faction">
+      {{#select data.data.trainings.faction}}
+        {{#each config.trainings.factions as |value key|}}
+          <option value="{{key}}">{{localize value}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
+    <p>{{localize "mythic.weaponSheet.stats.equipmentTraining"}}</p>
+    <select name="data.trainings.equipment">
+      {{#select data.data.trainings.equipment}}
+        {{#each config.trainings.equipment as |value key|}}
+          <option value="{{key}}">{{localize value}}</option>
+        {{/each}}
+      {{/select}}
+    </select>
   </div>
   <div class="weapon-core">
     <table>

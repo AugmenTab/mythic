@@ -156,6 +156,7 @@ export class MythicActor extends Actor {
         } else if (tier === "plus20") {
           target += 20;
         }
+        // TODO Add penalties for missing trainings on Technology tests.
         value.roll = target <= 0 ? 0 : target;
       }
     }

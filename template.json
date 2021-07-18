@@ -634,6 +634,10 @@
                 "baseItemDetails"
             ],
             "group": "",
+            "trainings": {
+                "equipment": "",
+                "faction": ""
+            },
             "tags": {
                 "[UD]": true,
                 "[I]": false,
