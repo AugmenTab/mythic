@@ -2,11 +2,16 @@
   <table>
     <thead>
       <tr>
-        <th colspan="4">{{localize "mythic.characterWeaponSummary.title"}}</th>
-        <th colspan="3">
+        <th colspan="3">{{localize "mythic.characterWeaponSummary.title"}}</th>
+        <th>
           <button class="initiative rollable" data-roll="{{data.data.initiative.formula}}" data-label="initiative">
             {{localize "mythic.characterWeaponSummary.initiative"}}: {{data.data.initiative.mods}}
-          </button></td>
+          </button>
+      </th>
+      <th colspan="3">
+        <button class="skill rollable" name="{{localize "mythic.skillNames.evasion"}} ({{data.data.skills.evasion.characteristic}})" value="{{data.data.skills.evasion.roll}}">
+          {{localize "mythic.skillNames.evasion"}}: {{data.data.skills.evasion.roll}}
+        </button>
       </th>
       <tr>
         <th>{{localize "mythic.characterWeaponSummary.name"}}</th>
