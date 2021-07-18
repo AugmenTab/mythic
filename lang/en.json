@@ -97,7 +97,9 @@
             "training": "Training",
             "mods": "Modifiers",
             "roll": "Roll",
-            "notes": "Write skill notes here."
+            "noEducations": "No Educations have been added yet.",
+            "skillNotes": "Write skill notes here.",
+            "educationNotes": "Write education notes here."
         },
         "characterStatBlock": {
             "mythics": "Mythic Characteristics",
@@ -145,6 +147,19 @@
                 "total": "Total",
                 "spent": "Spent",
                 "current": "Current"
+            }
+        },
+        "characterTalents": {
+            "abilities": {},
+            "trainings": {
+                "factionTraining": "Faction Training",
+                "equipmentTraining": "Equipment Training",
+                "equipmentGroup": "Equipment Group",
+                "included": "Included Weapons",
+                "trained": "Trained",
+                "languages": "Languages",
+                "languagesTextarea": "Write known languages here, separated by a semicolon (;)."
+
             }
         },
         "characterWeaponSummary": {
@@ -338,6 +353,16 @@
                 "explosive": "Explosive/Ordnance",
                 "melee": "Melee",
                 "heavy": "Heavy"
+            },
+            "examples": {
+                "basic": "Pistols, Revolvers, Shotguns, Knives.",
+                "infantry": "Rifles, Carbines, SMGs, Grenades, Satchel Charges.",
+                "advanced": "Energy Weapons, Railguns, Flame Throwers.",
+                "longRange": "Sniper Rifles and other Extreme-Range Weapons.",
+                "vehicle": "Any and all vehicle weapons.",
+                "explosive": "Grenade, Missile, and Rocket Launchers, Demolition and Ordinance Explosives.",
+                "melee": "All available Melee Weapons.",
+                "heavy": "Light Machine Guns, Machine Guns, Heavy Machine Guns."
             },
             "factions": {
                 "unsc": "UNSC",

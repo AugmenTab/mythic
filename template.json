@@ -204,6 +204,24 @@
                     "battleMind": false,
                     "mods": 0,
                     "formula": "1D10"
+                },
+                "trainings": {
+                    "equipment": {
+                        "basic": false,
+                        "infantry": false,
+                        "advanced": false,
+                        "longRange": false,
+                        "vehicle": false,
+                        "explosive": false,
+                        "melee": false,
+                        "heavy": false
+                    },
+                    "faction": {
+                        "unsc": false,
+                        "covenant": false,
+                        "forerunner": false
+                    },
+                    "languages": ""
                 }
             },
             "skills": {
@@ -480,6 +498,9 @@
             "experience": {
                 "total": 0,
                 "spent": 0
+            },
+            "educations": {
+                "notes": ""
             },
             "biography": "Write character biography here."
         },

@@ -50,7 +50,7 @@
       {{/each}}
       <tr>
         <td colspan="7">
-          <textarea name="data.skills.notes" placeholder="{{localize "mythic.characterSkills.notes"}}">{{data.data.skills.notes}}</textarea>
+          <textarea name="data.skills.notes" placeholder="{{localize "mythic.characterSkills.skillNotes"}}">{{data.data.skills.notes}}</textarea>
         </td>
       </tr>
     </tbody>
@@ -71,7 +71,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      {{!-- <tr>
         <td>Aeronautics</td>
         <td>Advanced</td>
         <td>Piloting</td>
@@ -123,7 +123,15 @@
           <input name="_-mod" type="number" value="_-mod"/>
         </td>
         <td><button>100</button></td>
+      </tr> --}}
+      <tr>
+        <td colspan="7">{{localize "mythic.characterSkills.noEducations"}}</td>
       </tr>
+      <tr>
+        <td colspan="7">
+          <textarea name="data.educations.notes" placeholder="{{localize "mythic.characterSkills.educationNotes"}}">{{data.data.educations.notes}}</textarea>
+        </td>
+      </educations
     </tbody>
   </table>
 </section>

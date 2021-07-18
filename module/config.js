@@ -17,6 +17,16 @@ mythic.trainings = {
     melee: "mythic.trainings.equipment.melee",
     heavy: "mythic.trainings.equipment.heavy"
   },
+  examples: {
+    basic: "mythic.trainings.examples.basic",
+    infantry: "mythic.trainings.examples.infantry",
+    advanced: "mythic.trainings.examples.advanced",
+    longRange: "mythic.trainings.examples.longRange",
+    vehicle: "mythic.trainings.examples.vehicle",
+    explosive: "mythic.trainings.examples.explosive",
+    melee: "mythic.trainings.examples.melee",
+    heavy: "mythic.trainings.examples.heavy"
+  },
   factions: {
     unsc: "mythic.trainings.factions.unsc",
     covenant: "mythic.trainings.factions.covenant",
