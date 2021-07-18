@@ -156,7 +156,12 @@ export class MythicActor extends Actor {
         } else if (tier === "plus20") {
           target += 20;
         }
-        // TODO Add penalties for missing trainings on Technology tests.
+        if ( (key === "techHuman" && !actorData.data.trainings.faction.unsc)
+          || (key === "techCovenant" && !actorData.data.trainings.faction.covenant)
+          || (key === "techForerunner" && !actorData.data.trainings.faction.forerunner)
+        ) {
+          target -= 20;
+        }
         value.roll = target <= 0 ? 0 : target;
       }
     }
