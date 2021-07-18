@@ -160,5 +160,7 @@ export class MythicActor extends Actor {
         value.roll = target <= 0 ? 0 : target;
       }
     }
+
+    //
   }
 }

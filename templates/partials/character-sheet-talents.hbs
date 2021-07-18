@@ -1,28 +1,22 @@
-<nav class="talent-tabs tabs" data-group="secondary">
+<nav class="talent-tabs tabs" data-group="primary">
   <a class="item" data-tab="abilities">{{localize "mythic.characterNav.talents.abilities"}}</a>
   <a class="item" data-tab="skills">{{localize "mythic.characterNav.talents.skills"}}</a>
-  <a class="item" data-tab="educations">{{localize "mythic.characterNav.talents.educations"}}</a>
-  <a class="item" data-tab="traits">{{localize "mythic.characterNav.talents.traits"}}</a>
+  <a class="item" data-tab="trainings">{{localize "mythic.characterNav.talents.trainings"}}</a>
 </nav>
 
 <section class="talent-body">
-  {{!-- Abilities Page: --}}
-  <div class="tab" data-group="secondary" data-tab="abilities">
+  {{!-- Abilities & Traits Page: --}}
+  <div class="tab" data-group="primary" data-tab="abilities">
     <p><b>TODO</b></p>
   </div>
 
   {{!-- Skills Page: --}}
-  <div class="tab" data-group="secondary" data-tab="skills">
+  <div class="tab" data-group="primary" data-tab="skills">
     {{> "systems/mythic/templates/partials/character-sheet-skills.hbs"}}
   </div>
 
-  {{!-- Educations Page: --}}
-  <div class="tab" data-group="secondary" data-tab="educations">
-    {{> "systems/mythic/templates/partials/character-sheet-educations.hbs"}}
-  </div>
-
-  {{!-- Traits & Augmentations Page: --}}
-  <div class="tab" data-group="secondary" data-tab="traits">
-    <p><b>TODO</b></p>
+  {{!-- Trainings Page: --}}
+  <div class="tab" data-group="primary" data-tab="trainings">
+    {{> "systems/mythic/templates/partials/character-sheet-trainings.hbs"}}
   </div>
 </section>

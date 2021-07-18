@@ -4,7 +4,7 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
 
 ## Known Bugs
 
-* Talents tabs are inconsistently displaying active tab styling.
+* None currently.
 
 ## Stretch Goals
 

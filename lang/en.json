@@ -19,10 +19,9 @@
             "summary": "Summary",
             "talents": {
                 "label": "Talents",
-                "abilities": "Abilities",
-                "skills": "Skills",
-                "educations": "Educations",
-                "traits": "Traits"
+                "abilities": "Abilities & Traits",
+                "skills": "Skills & Educations",
+                "trainings": "Trainings"
             },
             "inventory": "Inventory",
             "medical": "Medical",
