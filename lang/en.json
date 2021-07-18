@@ -152,6 +152,7 @@
         "characterTalents": {
             "abilities": {},
             "trainings": {
+                "trainingsHeader": "Faction & Equipment Trainings",
                 "factionTraining": "Faction Training",
                 "equipmentTraining": "Equipment Training",
                 "equipmentGroup": "Equipment Group",
@@ -159,7 +160,6 @@
                 "trained": "Trained",
                 "languages": "Languages",
                 "languagesTextarea": "Write known languages here, separated by a semicolon (;)."
-
             }
         },
         "characterWeaponSummary": {
