@@ -4,8 +4,7 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
 
 ## Known Bugs
 
-* Talents tabs are not accepting first attempt to access them - must click into Talents, then select Abilities & Traits, then select other tabs.
-* Talents tabs are not persisting previous selection when clicking to other page tabs.
+* Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 
 ## Stretch Goals
