@@ -143,6 +143,7 @@
             },
             "experience": {
                 "label": "Experience",
+                "button": "Apply",
                 "tier": "Tier",
                 "total": "Total",
                 "spent": "Spent",

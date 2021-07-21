@@ -1,5 +1,5 @@
 <div class="sheet-content">
-  <table>
+  <table class="exp">
     <thead>
       <tr>
         <th>{{localize "mythic.characterStatBlock.experience.tier"}}</th>
@@ -10,10 +10,22 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{data.data.experience.tier}}</td>
-        <td><input name="data.experience.total" type="number" value="{{data.data.experience.total}}" data-dtype="Number"/></td>
-        <td><input name="data.experience.spent" type="number" value="{{data.data.experience.spent}}" data-dtype="Number"/></td>
-        <td>{{data.data.experience.current}}</td>
+        <td><b>{{data.data.experience.tier}}</b></td>
+        <td>
+          <div class="exp-edit">
+            <b>{{localnum data.data.experience.total}}</b>
+            <input id="exp-total-value" type="number" data-dtype="Number"/>
+            <button class="exp-total-apply">{{localize "mythic.characterStatBlock.experience.button"}}</button>
+          </div>
+        </td>
+        <td>
+          <div class="exp-edit">
+            <b>{{localnum data.data.experience.spent}}</b>
+            <input id="exp-spent-value" type="number" data-dtype="Number"/>
+            <button class="exp-spent-apply">{{localize "mythic.characterStatBlock.experience.button"}}</button>
+          </div>
+        </td>
+        <td><b>{{localnum data.data.experience.current}}</b></td>
       </tr>
     </tbody>
   </table>
