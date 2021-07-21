@@ -37,6 +37,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".exp-total-apply").click(this._onExpApply.bind(this));
     html.find(".exp-spent-apply").click(this._onExpApply.bind(this));
     html.find(".languages").blur(this._onLanguagesBlur.bind(this));
+    html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
   }
 
@@ -67,6 +68,19 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     let data = duplicate(this.actor.data);
     data.data.trainings.languages.list = element.value.split(";").map(x => x.trim());
     await this.actor.update(data);
+  }
+
+  async _onPostItem(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item_id"));
+    const template = `systems/mythic/templates/chat/postable-${item.type}.hbs`;
+    await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: `${item.type[0].toUpperCase()}${item.type.slice(1)}`,
+      content: await renderTemplate(template, item.data)
+    });
   }
 
   async _onRoll(event) {

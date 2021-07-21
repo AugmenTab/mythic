@@ -84,18 +84,27 @@
         }
     }
 
-    .character-sheet-summary {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+    .picture-name {
+        display: inline-grid;
+        grid-template-columns: 3em auto;
         column-gap: 8px;
+        place-items: center;
 
-        .wide {
-            grid-column: span 2;
+        img {
+            height: 3em;
+        }
+    }
 
-            .offset-cols {
-                display: grid;
-                grid-template-columns: 5fr 2fr;
-                column-gap: 8px;
+    .postable:hover {
+        font-weight: 800;
+        text-shadow: 0 0 5px red;
+    }
+
+    .abilities-table {
+        tbody tr {
+            :nth-child(2) {
+                text-align: start;
+                padding-left: 4px;
             }
         }
     }
@@ -111,6 +120,22 @@
             column-gap: 8px;
             place-items: center;
             padding: 0 4px;
+        }
+    }
+
+    .character-sheet-summary {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 8px;
+
+        .wide {
+            grid-column: span 2;
+
+            .offset-cols {
+                display: grid;
+                grid-template-columns: 5fr 2fr;
+                column-gap: 8px;
+            }
         }
     }
 

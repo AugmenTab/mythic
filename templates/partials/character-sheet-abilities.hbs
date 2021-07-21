@@ -1,4 +1,4 @@
-<table>
+<table class="abilities-table">
   <thead>
     <tr>
       <th colspan="3">{{localize "mythic.characterTalents.abilities.label"}}</th>
@@ -10,11 +10,15 @@
     </tr>
   </thead>
   <tbody>
-    {{#each abilities as |ability id|}}
-    {{log this}}
+    {{#each abilities as |ability _|}}
       <tr>
-        <td>{{ability.name}}</td>
-        <td style="text-align:start;padding-left:4px">{{ability.data.summary}}</td>
+        <td>
+          <a class="postable picture-name" data-item_id="{{ability._id}}">
+            <img alt="{{ability.name}}" src="{{ability.img}}"/>
+            <p>{{ability.name}}</p>
+          </a>
+        </td>
+        <td>{{ability.data.summary}}</td>
         <td>{{ability.data.cost}}</td>
       </tr>
     {{else}}
