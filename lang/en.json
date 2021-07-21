@@ -146,7 +146,8 @@
                 "tier": "Tier",
                 "total": "Total",
                 "spent": "Spent",
-                "current": "Current"
+                "current": "Current",
+                "notes": "Experience Notes"
             }
         },
         "characterTalents": {

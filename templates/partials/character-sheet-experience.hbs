@@ -1,0 +1,22 @@
+<div class="sheet-content">
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.characterStatBlock.experience.tier"}}</th>
+        <th>{{localize "mythic.characterStatBlock.experience.total"}}</th>
+        <th>{{localize "mythic.characterStatBlock.experience.spent"}}</th>
+        <th>{{localize "mythic.characterStatBlock.experience.current"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{data.data.experience.tier}}</td>
+        <td><input name="data.experience.total" type="number" value="{{data.data.experience.total}}" data-dtype="Number"/></td>
+        <td><input name="data.experience.spent" type="number" value="{{data.data.experience.spent}}" data-dtype="Number"/></td>
+        <td>{{data.data.experience.current}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>{{localize "mythic.characterStatBlock.experience.notes"}}</h2>
+  {{editor content=data.data.experience.notes target="data.experience.notes" button=true owner=owner editable=this.options.editable}}
+</div>

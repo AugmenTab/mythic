@@ -9,6 +9,7 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/character-details.hbs",
     "systems/mythic/templates/partials/character-nav.hbs",
     "systems/mythic/templates/partials/character-sheet-body.hbs",
+    "systems/mythic/templates/partials/character-sheet-experience.hbs",
     "systems/mythic/templates/partials/character-sheet-settings.hbs",
     "systems/mythic/templates/partials/character-sheet-skills.hbs",
     "systems/mythic/templates/partials/character-sheet-summary.hbs",

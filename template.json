@@ -496,8 +496,11 @@
                 "other": 0
             },
             "experience": {
+                "tier": 0,
                 "total": 0,
-                "spent": 0
+                "spent": 0,
+                "current": 0,
+                "notes": ""
             },
             "educations": {
                 "notes": ""

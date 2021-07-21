@@ -58,6 +58,28 @@ export class MythicActor extends Actor {
       }
     }
 
+    // Calculate Experience
+    const totalExp = actorData.data.experience.total;
+    actorData.data.experience.current = totalExp - actorData.data.experience.spent;
+    if (totalExp >= 32000) {
+      actorData.data.experience.tier = 7;
+    } else if (totalExp >= 16000 ) {
+      actorData.data.experience.tier = 6;
+    } else if (totalExp >= 8000) {
+      actorData.data.experience.tier = 5;
+    } else if (totalExp >= 4000) {
+      actorData.data.experience.tier = 4;
+    } else if (totalExp >= 2000) {
+      actorData.data.experience.tier = 3;
+    } else if (totalExp >= 1000) {
+      actorData.data.experience.tier = 2;
+    } else if (totalExp >= 500) {
+      actorData.data.experience.tier = 1;
+    } else {
+      actorData.data.experience.tier = 0;
+    }
+
+    // Characteristic Modifiers
     const str = actorData.data.characteristics.str.total;
     const strMod = str < 0 ? 0 : Math.floor(str / 10);
     const tou = actorData.data.characteristics.tou.total;
