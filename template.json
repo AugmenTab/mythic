@@ -221,7 +221,8 @@
                         "covenant": false,
                         "forerunner": false
                     },
-                    "languages": ""
+                    "languages": "",
+                    "alienTech": false
                 }
             },
             "skills": {

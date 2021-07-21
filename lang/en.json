@@ -161,7 +161,8 @@
                 "included": "Included Weapons",
                 "trained": "Trained",
                 "languages": "Languages",
-                "languagesTextarea": "Write known languages here, separated by a semicolon (;)."
+                "languagesTextarea": "Write known languages here, separated by a semicolon (;).",
+                "alienTech": "Alien Tech?"
             }
         },
         "characterWeaponSummary": {

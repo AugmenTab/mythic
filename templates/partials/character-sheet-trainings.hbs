@@ -3,12 +3,13 @@
   <table>
     <thead>
       <tr>
-        <th colspan="3">{{localize "mythic.characterTalents.trainings.factionTraining"}}</th>
+        <th colspan="4">{{localize "mythic.characterTalents.trainings.factionTraining"}}</th>
       </tr>
       <tr>
         {{#each config.trainings.factions as |value _|}}
           <th>{{localize value}}</th>
         {{/each}}
+        <th>{{localize "mythic.characterTalents.trainings.alienTech"}}</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
         {{#each data.data.trainings.faction as |trained faction|}}
           <td><input name="data.trainings.faction.{{faction}}" type="checkbox" {{checked trained}}/></td>
         {{/each}}
+        <td><input name="data.trainings.alienTech" type="checkbox" {{checked data.data.trainings.alienTech}}/></td>
       </tr>
     </tbody>
   </table>

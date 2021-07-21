@@ -182,7 +182,7 @@ export class MythicActor extends Actor {
           || (key === "techCovenant" && !actorData.data.trainings.faction.covenant)
           || (key === "techForerunner" && !actorData.data.trainings.faction.forerunner)
         ) {
-          target -= 20;
+          target -= actorData.data.trainings.alienTech ? 10 : 20;
         }
         value.roll = target <= 0 ? 0 : target;
       }
