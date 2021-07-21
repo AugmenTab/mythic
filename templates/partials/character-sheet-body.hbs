@@ -26,14 +26,12 @@
 
   {{!-- Biography Page: --}}
   <div class="tab" data-group="primary" data-tab="biography">
-    <h1>{{localize "mythic.characterNav.bio"}}</h1>
-    {{editor content=data.data.biography target="data.biography" button=true owner=owner editable=this.options.editable}}
+    {{> "systems/mythic/templates/partials/character-sheet-editor.hbs" content=data.data.biography target="data.biography" link="biography"}}
   </div>
 
   {{!-- Notes Page: --}}
   <div class="tab" data-group="primary" data-tab="notes">
-    <h1>{{localize "mythic.characterNav.notes"}}</h1>
-    {{editor content=data.data.notes target="data.notes" button=true owner=owner editable=this.options.editable}}
+    {{> "systems/mythic/templates/partials/character-sheet-editor.hbs" content=data.data.notes target="data.notes" link="notes"}}
   </div>
 
   {{!-- Settings Page: --}}
