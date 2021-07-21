@@ -221,7 +221,10 @@
                         "covenant": false,
                         "forerunner": false
                     },
-                    "languages": "",
+                    "languages": {
+                        "notes": "",
+                        "list": []
+                    },
                     "alienTech": false
                 }
             },

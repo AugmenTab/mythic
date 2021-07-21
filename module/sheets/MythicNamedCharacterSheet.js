@@ -31,9 +31,10 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".exp-total-apply").click(this._onExpApply.bind(this));
     html.find(".exp-spent-apply").click(this._onExpApply.bind(this));
+    html.find(".languages").blur(this._onLanguagesBlur.bind(this));
+    html.find(".rollable").click(this._onRoll.bind(this));
   }
 
   async _onExpApply(event) {
@@ -54,6 +55,14 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       ui.notifications.error("Invalid entry: please enter a whole number.")
     }
     field.value = "";
+    await this.actor.update(data);
+  }
+
+  async _onLanguagesBlur(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    let data = duplicate(this.actor.data);
+    data.data.trainings.languages.list = element.value.split(";").map(x => x.trim());
     await this.actor.update(data);
   }
 
