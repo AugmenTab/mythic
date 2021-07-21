@@ -1,0 +1,27 @@
+<table>
+  <thead>
+    <tr>
+      <th colspan="3">{{localize "mythic.characterTalents.abilities.label"}}</th>
+    </tr>
+    <tr>
+      <th>{{localize "mythic.characterTalents.abilities.name"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.summary"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each abilities as |ability id|}}
+    {{log this}}
+      <tr>
+        <td>{{ability.name}}</td>
+        <td style="text-align:start;padding-left:4px">{{ability.data.summary}}</td>
+        <td>{{ability.data.cost}}</td>
+      </tr>
+    {{else}}
+      <tr>
+        <td colspan="3">{{localize "mythic.characterTalents.abilities.empty"}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<textarea name="data.abilityNotes" placeholder="{{localize "mythic.characterTalents.abilities.notes"}}">{{data.data.abilityNotes}}</textarea>

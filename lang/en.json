@@ -152,7 +152,14 @@
             }
         },
         "characterTalents": {
-            "abilities": {},
+            "abilities": {
+                "label": "Abilities, Traits, and Augmentations",
+                "name": "Name",
+                "summary": "Summary",
+                "cost": "EXP Cost",
+                "notes": "Write Ability, Trait, and Augmentation notes here.",
+                "empty": "No Abilities, Traits, or Augmentations have been added yet."
+            },
             "trainings": {
                 "trainingsHeader": "Faction & Equipment Trainings",
                 "factionTraining": "Faction Training",

@@ -8,6 +8,7 @@ async function preloadHandlebarsTemplates() {
   const templatePaths = [
     "systems/mythic/templates/partials/character-details.hbs",
     "systems/mythic/templates/partials/character-nav.hbs",
+    "systems/mythic/templates/partials/character-sheet-abilities.hbs",
     "systems/mythic/templates/partials/character-sheet-body.hbs",
     "systems/mythic/templates/partials/character-sheet-editor.hbs",
     "systems/mythic/templates/partials/character-sheet-experience.hbs",

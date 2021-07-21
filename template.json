@@ -226,7 +226,8 @@
                         "list": []
                     },
                     "alienTech": false
-                }
+                },
+                "abilityNotes": ""
             },
             "skills": {
                 "skills": {

@@ -25,6 +25,9 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.config = CONFIG.mythic;
+    data.abilities = data.items.filter(function(item) { return item.type === "ability"});
+    data.educations = data.items.filter(function(item) { return item.type === "education"});
+    data.weapons = data.items.filter(function(item) { return item.type === "weapon"});
     return data;
   }
 
