@@ -43,9 +43,9 @@ export class MythicActor extends Actor {
           value.soldierType + value.abilityPool + value.background +
           value.equipment + (parseInt(value.advancements) * 5) + value.other
         );
-        value.total = total >= 0 ? total : 0;
+        value.total = Math.floor(total >= 0 ? total : 0);
         const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
-        value.roll = roll > 0 ? roll : 0;
+        value.roll = Math.floor(roll > 0 ? roll : 0);
       }
     }
 
