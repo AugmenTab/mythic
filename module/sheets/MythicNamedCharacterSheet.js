@@ -25,18 +25,13 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.config = CONFIG.mythic;
-    let a = sortItems(data.items.filter(function(item) { return item.type === "ability" }));
+    let a = sortItems(data.items.filter(function(item) { return item.type === "ability" }), "name");
     data.abilities = a.filter(function(item) { return item.data.type === "ability" });
     data.augmentations = a.filter(function(item) { return item.data.type === "augmentation" });
     data.racials = a.filter(function(item) { return item.data.type === "racial" });
     data.traits = a.filter(function(item) { return item.data.type === "trait" });
-    // data.educations = data.items
-    //   .filter(function(item) { return item.type === "education"})
-    //   .sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
-    // data.weapons = data.items
-    //   .filter(function(item) { return item.type === "weapon"})
-    //   .sort((a, b) => a.data.nickname < b.data.nickname ? -1 : 
-    //      (a.data.nickname > b.data.nickname ? 1 : 0));
+    data.educations = sortItems(data.items.filter(function(item) { return item.type === "education"}), "name");
+    data.weapons = sortItems(data.items.filter(function(item) { return item.type === "weapon"}), "nickname");
     return data;
   }
 
