@@ -86,21 +86,21 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   async _onItemDelete(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const item = await this.actor.items.get(element.getAttribute("data-item_id"));
-    await this.actor.deleteOwnedItem(item.id);
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    await item.delete();
   }
 
   async _onItemEdit(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const item = await this.actor.items.get(element.getAttribute("data-item_id"));
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     item.sheet.render(true);
   }
 
   async _onPostItem(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const item = await this.actor.items.get(element.getAttribute("data-item_id"));
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     const template = `systems/mythic/templates/chat/postable-${item.type}.hbs`;
     await ChatMessage.create({
       user: game.user.id,
