@@ -237,7 +237,8 @@
                 "military": "Military",
                 "restricted": "Restricted",
                 "dimensional": "Dimensional"
-            }
+            },
+            "skills": "Applicable Skills"
         },
         "skillSheet": {
             "stats": "Characteristics",

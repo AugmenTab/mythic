@@ -48,8 +48,24 @@
         </tr>
       </tbody>
     </table>
-    <div class="skill-list">
-      <p>TODO: Checkboxes for each Skill.</p>
-    </div>
+    <table class="skill-list">
+      <thead>
+        <tr>
+          <th>{{localize "mythic.educationSheet.skills"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{#each data.data.skills as |has key|}}
+              <div>
+                <input name="data.skills.{{key}}" type="checkbox" {{checked has}}/>
+                <p>{{localize (concat "mythic.skillNames." key)}}</p>
+              </div>
+            {{/each}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </form>

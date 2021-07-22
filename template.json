@@ -583,7 +583,36 @@
                 "plus5": 0,
                 "plus10": 0
             },
-            "skill": {}
+            "skills": {
+                "appeal": false,
+                "athletics": false,
+                "camouflage": false,
+                "command": false,
+                "cryptography": false,
+                "deception": false,
+                "demolition": false,
+                "evasion": false,
+                "gambling": false,
+                "interrogation": false,
+                "intimidation": false,
+                "investigation": false,
+                "medHuman": false,
+                "medCovenant": false,
+                "medMgalekgolo": false,
+                "navGroundAir": false,
+                "navSpace": false,
+                "navSlipspace": false,
+                "negotiation": false,
+                "pilotGround": false,
+                "pilotAir": false,
+                "pilotSpace": false,
+                "security": false,
+                "stunting": false,
+                "survival": false,
+                "techHuman": false,
+                "techCovenant": false,
+                "techForerunner": false
+            }
         },
         "vehicle": {
             "templates": [
