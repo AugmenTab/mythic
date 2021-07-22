@@ -1,4 +1,4 @@
-import { rollAttacks, rollTest } from "../dice.js";
+import { rollAttacks, rollTest, sortItems } from "../dice.js";
 
 export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
@@ -25,13 +25,11 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.config = CONFIG.mythic;
-    let a = data.items
-      .filter(function(item) { return item.type === "ability"})
-      .sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
-    data.abilities = a.filter(function(item) { return item.data.type === "ability"});
-    data.augmentations = a.filter(function(item) { return item.data.type === "augmentation"});
-    data.racials = a.filter(function(item) { return item.data.type === "racial"});
-    data.traits = a.filter(function(item) { return item.data.type === "trait"});
+    let a = sortItems(data.items.filter(function(item) { return item.type === "ability" }));
+    data.abilities = a.filter(function(item) { return item.data.type === "ability" });
+    data.augmentations = a.filter(function(item) { return item.data.type === "augmentation" });
+    data.racials = a.filter(function(item) { return item.data.type === "racial" });
+    data.traits = a.filter(function(item) { return item.data.type === "trait" });
     // data.educations = data.items
     //   .filter(function(item) { return item.type === "education"})
     //   .sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));

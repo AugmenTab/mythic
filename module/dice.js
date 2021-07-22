@@ -37,6 +37,10 @@ export async function rollTest(element, actor) {
   }
 }
 
+export function sortItems(items) {
+  return items.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
+}
+
 async function getTestOptions(test) {
   const template = "systems/mythic/templates/chat/test-dialog.hbs";
   const html = await renderTemplate(template, {});
