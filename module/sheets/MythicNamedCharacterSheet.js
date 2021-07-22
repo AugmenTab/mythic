@@ -102,10 +102,11 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     const template = `systems/mythic/templates/chat/postable-${item.type}.hbs`;
+    console.log(item.data.data.type);
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `${item.type[0].toUpperCase()}${item.type.slice(1)}`,
+      flavor: game.i18n.localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
       content: await renderTemplate(template, item.data)
     });
   }
