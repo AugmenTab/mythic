@@ -612,6 +612,12 @@
                 "techHuman": false,
                 "techCovenant": false,
                 "techForerunner": false
+            },
+            "roll": {
+                "skill": "",
+                "training": "none",
+                "mods": 0,
+                "roll": 0
             }
         },
         "vehicle": {

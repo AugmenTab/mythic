@@ -42,6 +42,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".exp-spent-apply").click(this._onExpApply.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
+    html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
     html.find(".languages").blur(this._onLanguagesBlur.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
@@ -88,6 +89,16 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     item.sheet.render(true);
+  }
+
+  async _onItemEditInline(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.dataset.itemId);
+    const key = `data.roll.${element.dataset.field}`;
+    const val = parseInt(element.value);
+    await item.update({ [key]: isNaN(val) ? element.value : val });
+    console.log(item);
   }
 
   async _onPostItem(event) {

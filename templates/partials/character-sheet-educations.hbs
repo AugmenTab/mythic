@@ -1,79 +1,77 @@
 <section class="character-sheet-educations">
-  <table id="education-table">
+  <table class="educations-table">
     <thead>
       <tr>
-        <th colspan="7">{{localize "mythic.characterSkills.educationsTitle"}}</th>
+        <th colspan="6">{{localize "mythic.characterEducations.title"}}</th>
       </tr>
       <tr>
-        <th>{{localize "mythic.characterSkills.name"}}</th>
-        <th>{{localize "mythic.characterSkills.difficulty"}}</th>
-        <th>{{localize "mythic.characterSkills.type"}}</th>
-        <th>{{localize "mythic.characterSkills.skill"}}</th>
-        <th>{{localize "mythic.characterSkills.training"}}</th>
-        <th style="width:90px">{{localize "mythic.characterSkills.mods"}}</th>
-        <th>{{localize "mythic.characterSkills.roll"}}</th>
+        <th>{{localize "mythic.characterEducations.name"}}</th>
+        <th>{{localize "mythic.characterEducations.details"}}</th>
+        <th>{{localize "mythic.characterEducations.skill"}}</th>
+        <th>{{localize "mythic.characterEducations.training"}}</th>
+        <th style="width:90px">{{localize "mythic.characterEducations.mods"}}</th>
+        <th>{{localize "mythic.characterEducations.roll"}}</th>
       </tr>
     </thead>
     <tbody>
-      {{!-- <tr>
-        <td>Aeronautics</td>
-        <td>Advanced</td>
-        <td>Piloting</td>
-        <td>
-          <select name="skill-options">
-            <option value="none" selected>--</option>
-            <option value="stunting">Stunting</option>
-            <option value="pilot">Pilot (Ground)</option>
-            <option value="pilot">Pilot (Air)</option>
-            <option value="pilot">Pilot (Space)</option>
-            <option value="evasion">Evasion</option>
-            <option value="technology">Technology (Human)</option>
-            <option value="technology">Technology (Covenant)</option>
-            <option value="technology">Technology (Forerunner)</option>
-          </select>
-        </td>
-        <td>
-          <select name="skill-training">
-            <option value="none" selected>--</option>
-            <option value="plus-5">+5</option>
-            <option value="plus-10">+10</option>
-          </select>
-        </td>
-        <td>
-          <input name="_-mod" type="number" value="_-mod"/>
-        </td>
-        <td><button disabled="true">100</button></td>
-      </tr>
+      {{#each educations as |edu _|}}
+        <tr>
+          <td>
+            <div class="education-name">
+              <img alt="{{edu.name}}" src="{{edu.img}}"/>
+              <p>{{edu.name}}</p>
+              <div class="item-management">
+                <a class="item-edit" data-item-id="{{edu._id}}"><i class="clickable fas fa-edit"></i></a>
+                <a class="item-delete" data-item-id="{{edu._id}}"><i class="clickable fas fa-trash"></i></a>
+              </div>
+            </div>
+          </td>
+          <td>
+            <p>{{localize (concat "mythic.educationSheet.difficulties." edu.data.difficulty)}}</p>
+            <p>{{localize (concat "mythic.educationSheet.types." edu.data.type)}}</p>
+          </td>
+          <td>
+            <select class="item-edit-inline" data-field="skill" data-item-id="{{edu._id}}">
+              {{#select edu.data.roll.skill}}
+                {{#each edu.data.skills as |skill key|}}
+                  {{#if skill}}
+                    <option value="{{key}}">{{localize (concat "mythic.skillNames." key)}}</option>
+                  {{/if}}
+                {{/each}}
+              {{/select}}
+            </select>
+          </td>
+          <td>
+            <select class="item-edit-inline" data-field="training" data-item-id="{{edu._id}}">
+              {{#select edu.data.roll.training}}
+                {{#each ../config.educationTraining as |value key|}}
+                  <option value="{{key}}">{{localize value}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+          </td>
+          <td style="width:90px">
+            <input class="item-edit-inline" data-field="mods" data-item-id="{{edu._id}}" type="number" data-dtype="Number" value="{{edu.data.roll.mods}}"/>
+          </td>
+          <td style="width:48px">
+            <button 
+              class="education rollable"
+              name="{{edu.name}}"
+              value="{{edu.data.roll.roll}}"
+              {{#if (eq edu.data.roll.training "none")}} disabled="true" {{/if}}
+            >
+              <b>{{edu.data.roll.roll}}</b>
+            </button>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="6">{{localize "mythic.characterEducations.empty"}}</td>
+        </tr>
+      {{/each}}
       <tr>
-        <td>Covenant Vehicle Maintenance</td>
-        <td>Basic</td>
-        <td>Engineer</td>
-        <td>
-          <select name="skill-options">
-            <option value="none" selected>--</option>
-            <option value="technology">Technology (Human)</option>
-            <option value="technology">Technology (Covenant)</option>
-            <option value="technology">Technology (Forerunner)</option>
-          </select>
-        </td>
-        <td>
-          <select name="skill-training">
-            <option value="none">--</option>
-            <option value="plus-5" selected>+5</option>
-            <option value="plus-10">+10</option>
-          </select>
-        </td>
-        <td>
-          <input name="_-mod" type="number" value="_-mod"/>
-        </td>
-        <td><button {{#if (eq education.training "none")}} disabled="true" {{/if}}>100</button></td>
-      </tr> --}}
-      <tr>
-        <td colspan="7">{{localize "mythic.characterSkills.noEducations"}}</td>
-      </tr>
-      <tr>
-        <td colspan="7">
-          <textarea name="data.educations.notes" placeholder="{{localize "mythic.characterSkills.educationNotes"}}">{{data.data.educations.notes}}</textarea>
+        <td colspan="6">
+          <textarea name="data.educations.notes" placeholder="{{localize "mythic.characterEducations.notes"}}">{{data.data.educations.notes}}</textarea>
         </td>
       </tr>
     </tbody>

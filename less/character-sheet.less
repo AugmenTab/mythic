@@ -102,30 +102,44 @@
         font-weight: 800;
     }
 
+    .item-management {
+        display: grid;
+        grid-template-columns: 16px;
+        grid-template-rows: repeat(2, auto);
+        row-gap: 4px;
+
+        :nth-child(1) {
+            align-self: end;
+        }
+
+        :nth-child(2) {
+            align-self: start;
+        }
+    }
+
     .abilities-table {
         .ability-summary {
             display: inline-grid;
             grid-template-columns: auto 16px;
             column-gap: 8px;
             text-align: start;
+            align-items: center;
             padding: 0 8px;
             width: 100%;
             height: 100%;
+        }
+    }
 
-            :nth-child(2) {
-                display: grid;
-                grid-template-columns: 16px;
-                grid-template-rows: repeat(2, auto);
-                row-gap: 4px;
-
-                :nth-child(1) {
-                    align-self: end;
-                }
-
-                :nth-child(2) {
-                    align-self: start;
-                }
-            }
+    .educations-table {
+        .education-name {
+            display: inline-grid;
+            grid-template-columns: 3em auto 16px;
+            column-gap: 8px;
+            text-align: start;
+            align-items: center;
+            padding: 0 8px;
+            width: 100%;
+            height: 100%;
         }
     }
 

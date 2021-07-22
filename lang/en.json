@@ -86,20 +86,27 @@
                 "advancements": "Advancements"
             }
         },
-        "characterSkills": {
-            "skillsTitle": "Skills",
-            "educationsTitle": "Educations",
+        "characterEducations": {
+            "title": "Educations",
             "name": "Name",
-            "difficulty": "Difficulty",
-            "type": "Type",
-            "characteristic": "Characteristic",
+            "details": "Details",
             "skill": "Skill",
             "training": "Training",
             "mods": "Modifiers",
             "roll": "Roll",
-            "noEducations": "No Educations have been added yet.",
-            "skillNotes": "Write skill notes here.",
-            "educationNotes": "Write education notes here."
+            "empty": "No Educations have been added yet.",
+            "notes": "Write education notes here."
+        },
+        "characterSkills": {
+            "skillsTitle": "Skills",
+            "name": "Name",
+            "difficulty": "Difficulty",
+            "type": "Type",
+            "characteristic": "Characteristic",
+            "training": "Training",
+            "mods": "Modifiers",
+            "roll": "Roll",
+            "skillNotes": "Write skill notes here."
         },
         "characterStatBlock": {
             "mythics": "Mythic Characteristics",
@@ -226,6 +233,10 @@
             "details": "Details",
             "cost": "EXP Cost",
             "difficulty": "Difficulty",
+            "difficulties": {
+                "basic": "Basic",
+                "adv": "Advanced"
+            },
             "type": "Type",
             "types": {
                 "piloting": "Piloting",
@@ -292,6 +303,11 @@
             "trained": "Trained",
             "plus10": "+10",
             "plus20": "+20"
+        },
+        "educationTraining": {
+            "none": "--",
+            "plus5": "+5",
+            "plus10": "+10"
         },
         "sizes": {
             "mini": "Mini",

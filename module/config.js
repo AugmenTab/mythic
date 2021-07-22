@@ -231,6 +231,12 @@ mythic.skillTraining = {
   "plus20": "mythic.skillTraining.plus20"
 }
 
+mythic.educationTraining = {
+  "none": "mythic.educationTraining.none",
+  "plus5": "mythic.educationTraining.plus5",
+  "plus10": "mythic.educationTraining.plus10"
+}
+
 mythic.skillType = {
   social: "mythic.skillSheet.types.social",
   move: "mythic.skillSheet.types.move",
