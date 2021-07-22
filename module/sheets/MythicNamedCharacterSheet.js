@@ -36,6 +36,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
     html.find(".exp-total-apply").click(this._onExpApply.bind(this));
     html.find(".exp-spent-apply").click(this._onExpApply.bind(this));
+    html.find(".item-delete").click(this._onItemDelete.bind(this));
+    html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".languages").blur(this._onLanguagesBlur.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
@@ -68,6 +70,20 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     let data = duplicate(this.actor.data);
     data.data.trainings.languages.list = element.value.split(";").map(x => x.trim());
     await this.actor.update(data);
+  }
+
+  async _onItemDelete(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item_id"));
+    return await this.actor.deleteOwnedItem(item.id);
+  }
+
+  async _onItemEdit(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item_id"));
+    item.sheet.render(true);
   }
 
   async _onPostItem(event) {

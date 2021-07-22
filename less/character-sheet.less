@@ -88,23 +88,44 @@
         display: inline-grid;
         grid-template-columns: 3em auto;
         column-gap: 8px;
-        place-items: center;
+        justify-items: start;
+        align-items: center;
+        width: 100%;
+        padding: 0 4px;
 
         img {
             height: 3em;
         }
     }
 
-    .postable:hover {
+    .clickable:hover {
         font-weight: 800;
         text-shadow: 0 0 5px red;
     }
 
     .abilities-table {
-        tbody tr {
+        .ability-summary {
+            display: inline-grid;
+            grid-template-columns: auto 16px;
+            column-gap: 8px;
+            text-align: start;
+            padding: 0 8px;
+            width: 100%;
+            height: 100%;
+
             :nth-child(2) {
-                text-align: start;
-                padding-left: 4px;
+                display: grid;
+                grid-template-columns: 16px;
+                grid-template-rows: repeat(2, auto);
+                row-gap: 4px;
+
+                :nth-child(1) {
+                    align-self: end;
+                }
+
+                :nth-child(2) {
+                    align-self: start;
+                }
             }
         }
     }
