@@ -18,5 +18,5 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
     * Calculators for falling damage and damage from getting hit by falling objects
     * Scatter
     * Calculator for splatter damage
-* Ability to add custom skills, educations, etc.
+* Ability to add custom skills.
 * Fully functioning Medical page to handle injuries.

@@ -10,4 +10,4 @@ Handlebars.registerHelper("concat", function() {
 
 Handlebars.registerHelper("localnum", function(num) {
   return num.toLocaleString();
-})
+});
