@@ -14,6 +14,7 @@
         <tr>
           <th>{{localize "mythic.abilitySheet.prerequisite"}}</th>
           <th>{{localize "mythic.abilitySheet.cost"}}</th>
+          <th>{{localize "mythic.abilitySheet.type"}}</th>
         </tr>
       </thead>
       <tbody>
@@ -23,6 +24,15 @@
           </td>
           <td>
             <input name="data.cost" type="number" value="{{data.data.cost}}" data-dtype="Number" placeholder="{{localize "mythic.abilitySheet.cost"}}"/>
+          </td>
+          <td>
+            <select name="data.type">
+              {{#select data.data.type}}
+                {{#each config.abilityTypes as |value key|}}
+                  <option value="{{key}}">{{localize value}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
           </td>
         </tr>
       </tbody>

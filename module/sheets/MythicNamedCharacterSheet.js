@@ -25,9 +25,13 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.config = CONFIG.mythic;
-    data.abilities = data.items.filter(function(item) { return item.type === "ability"});
-    data.educations = data.items.filter(function(item) { return item.type === "education"});
-    data.weapons = data.items.filter(function(item) { return item.type === "weapon"});
+    let a = data.items.filter(function(item) { return item.type === "ability"});
+    data.abilities = a.filter(function(item) { return item.data.type === "ability"});
+    data.augmentations = a.filter(function(item) { return item.data.type === "augmentation"});
+    data.racials = a.filter(function(item) { return item.data.type === "racial"});
+    data.traits = a.filter(function(item) { return item.data.type === "trait"});
+    // data.educations = data.items.filter(function(item) { return item.type === "education"});
+    // data.weapons = data.items.filter(function(item) { return item.type === "weapon"});
     return data;
   }
 
@@ -76,7 +80,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item_id"));
-    return await this.actor.deleteOwnedItem(item.id);
+    await this.actor.deleteOwnedItem(item.id);
   }
 
   async _onItemEdit(event) {

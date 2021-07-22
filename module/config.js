@@ -34,10 +34,11 @@ mythic.trainings = {
   }
 }
 
-mythic.abilitySheet = {
-  summary: "mythic.abilitySheet.summary",
-  prerequisite: "mythic.abilitySheet.prerequisite",
-  cost: "mythic.abilitySheet.cost",
+mythic.abilityTypes = {
+  ability: "mythic.characterTalents.abilities.type.ability",
+  racial: "mythic.characterTalents.abilities.type.racial",
+  trait: "mythic.characterTalents.abilities.type.trait",
+  augmentation: "mythic.characterTalents.abilities.type.augmentation"
 }
 
 mythic.advancements = {

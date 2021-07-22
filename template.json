@@ -551,7 +551,8 @@
             "prerequisite": "",
             "cost": 0,
             "summary": "",
-            "description": ""
+            "description": "",
+            "type": ""
         },
         "skill": {
             "difficulty": "",

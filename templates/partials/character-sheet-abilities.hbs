@@ -1,7 +1,7 @@
 <table class="abilities-table">
   <thead>
     <tr>
-      <th colspan="3">{{localize "mythic.characterTalents.abilities.label"}}</th>
+      <th colspan="3">{{localize "mythic.characterTalents.abilities.labels.abilities"}}</th>
     </tr>
     <tr>
       <th>{{localize "mythic.characterTalents.abilities.name"}}</th>
@@ -11,27 +11,67 @@
   </thead>
   <tbody>
     {{#each abilities as |ability _|}}
-      <tr>
-        <td>
-          <a class="postable clickable picture-name" data-item_id="{{ability._id}}">
-            <img alt="{{ability.name}}" src="{{ability.img}}"/>
-            <p>{{ability.name}}</p>
-          </a>
-        </td>
-        <td>
-          <div class="ability-summary">
-            <p>{{ability.data.summary}}</p>
-            <div>
-              <a class="item-edit" data-item_id="{{ability._id}}"><i class="clickable fas fa-edit"></i></a>
-              <a class="item-delete" data-item_id="{{ability._id}}"><i class="clickable fas fa-trash"></i></a>
-            </div>
-          </div>
-        </td>
-        <td>{{ability.data.cost}}</td>
-      </tr>
+      {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" ability}}
     {{else}}
       <tr>
-        <td colspan="3">{{localize "mythic.characterTalents.abilities.empty"}}</td>
+        <td colspan="3">{{localize "mythic.characterTalents.abilities.empty.ability"}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="3">{{localize "mythic.characterTalents.abilities.labels.racials"}}</th>
+    </tr>
+    <tr>
+      <th>{{localize "mythic.characterTalents.abilities.name"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.summary"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each racials as |racial _|}}
+      {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" racial}}
+    {{else}}
+      <tr>
+        <td colspan="3">{{localize "mythic.characterTalents.abilities.empty.racial"}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="3">{{localize "mythic.characterTalents.abilities.labels.traits"}}</th>
+    </tr>
+    <tr>
+      <th>{{localize "mythic.characterTalents.abilities.name"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.summary"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each traits as |trait _|}}
+      {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" trait}}
+    {{else}}
+      <tr>
+        <td colspan="3">{{localize "mythic.characterTalents.abilities.empty.trait"}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="3">{{localize "mythic.characterTalents.abilities.labels.augmentations"}}</th>
+    </tr>
+    <tr>
+      <th>{{localize "mythic.characterTalents.abilities.name"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.summary"}}</th>
+      <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each augmentations as |augmentation _|}}
+      {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" augmentation}}
+    {{else}}
+      <tr>
+        <td colspan="3">{{localize "mythic.characterTalents.abilities.empty.augmentation"}}</td>
       </tr>
     {{/each}}
   </tbody>

@@ -153,12 +153,28 @@
         },
         "characterTalents": {
             "abilities": {
-                "label": "Abilities, Traits, and Augmentations",
+                "labels": {
+                    "abilities": "Abilities",
+                    "racials": "Racial Abilities",
+                    "traits": "Traits",
+                    "augmentations": "Augmentations"
+                },
                 "name": "Name",
                 "summary": "Summary",
                 "cost": "EXP Cost",
                 "notes": "Write Ability, Trait, and Augmentation notes here.",
-                "empty": "No Abilities, Traits, or Augmentations have been added yet."
+                "empty": {
+                    "ability": "No Abilities have been added yet.",
+                    "augmentation": "No Augmentations have been added yet.",
+                    "trait": "No Traits have been added yet.",
+                    "racial": "No Racial Abilities have been added yet."
+                },
+                "type": {
+                    "ability": "Ability",
+                    "trait": "Trait",
+                    "augmentation": "Augmentation",
+                    "racial": "Racial Ability"
+                }
             },
             "trainings": {
                 "trainingsHeader": "Faction & Equipment Trainings",
@@ -203,7 +219,8 @@
         "abilitySheet": {
             "summary": "Summary",
             "prerequisite": "Prerequisites",
-            "cost": "EXP Cost"
+            "cost": "EXP Cost",
+            "type": "Type"
         },
         "educationSheet": {
             "details": "Details",
