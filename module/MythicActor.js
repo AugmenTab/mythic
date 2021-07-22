@@ -4,10 +4,6 @@ export class MythicActor extends Actor {
   }
 
   prepareBaseData() {
-
-  }
-
-  prepareDerivedData() {
     const actorData = this.data;
     const flags = actorData.flags.boilerplate || {};
 
@@ -16,6 +12,10 @@ export class MythicActor extends Actor {
     // this._prepareFloodCharacterData(actorData);
     // this._prepareVehicleData(actorData);
   }
+
+  prepareDerivedData() {}
+
+  prepareEmbeddedEntities() {}
 
   _prepareNamedCharacterData(actorData) {
     if (actorData.type !== "Named Character") return;
@@ -187,7 +187,5 @@ export class MythicActor extends Actor {
         value.roll = target <= 0 ? 0 : target;
       }
     }
-
-    //
   }
 }
