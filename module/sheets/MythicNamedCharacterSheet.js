@@ -1,4 +1,4 @@
-import { sortItems } from "../calculations.js";
+import { sortAndFilterItems } from "../calculations.js";
 import { rollAttacks, rollTest } from "../dice.js";
 
 export default class MythicNamedCharacterSheet extends ActorSheet {
@@ -26,13 +26,17 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.config = CONFIG.mythic;
-    let a = sortItems(data.items.filter(function(item) { return item.type === "ability" }), "name");
-    data.abilities = a.filter(function(item) { return item.data.type === "ability" });
-    data.augmentations = a.filter(function(item) { return item.data.type === "augmentation" });
-    data.racials = a.filter(function(item) { return item.data.type === "racial" });
-    data.traits = a.filter(function(item) { return item.data.type === "trait" });
-    data.educations = sortItems(data.items.filter(function(item) { return item.type === "education"}), "name");
-    data.weapons = sortItems(data.items.filter(function(item) { return item.type === "weapon"}), "nickname");
+
+    const a = sortAndFilterItems(data.items, "ability");
+    data.abilities = a.filter(function(i) { return i.data.type === "ability" });
+    data.augmentations = a.filter(function(i) {
+      return i.data.type === "augmentation"
+    });
+    data.racials = a.filter(function(i) { return i.data.type === "racial" });
+    data.traits = a.filter(function(i) { return i.data.type === "trait" });
+
+    data.educations = sortAndFilterItems(data.items, "education");
+    data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
     return data;
   }
 

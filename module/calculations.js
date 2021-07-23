@@ -184,10 +184,11 @@ export function calculateWounds(actorData, touMod) {
   );
 }
 
-export function sortItems(items, val) {
-  if (val === "name") {
-    return items.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
-  } else if (val === "nickname") {
-    return items.sort((a, b) => a.nickname < b.nickname ? -1 : (a.nickname > b.nickname ? 1 : 0));
+export function sortAndFilterItems(items, filterParam, sortParam = "name") {
+  let f = items.filter(function(item) { return item.type === filterParam });
+  if (sortParam === "name") {
+    return f.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
+  } else if (sortParam === "nickname") {
+    return f.sort((a, b) => a.nickname < b.nickname ? -1 : (a.nickname > b.nickname ? 1 : 0));
   }
 }
