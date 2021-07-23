@@ -1,4 +1,5 @@
-import { rollAttacks, rollTest, sortItems } from "../dice.js";
+import { sortItems } from "../calculations.js";
+import { rollAttacks, rollTest } from "../dice.js";
 
 export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
