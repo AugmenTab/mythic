@@ -100,7 +100,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.dataset.itemId);
-    const key = `data.roll.${element.dataset.field}`;
+    const key = `data.${element.dataset.field}`;
     const val = parseInt(element.value);
     await item.update({ [key]: isNaN(val) ? element.value : val });
   }
@@ -110,7 +110,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     const template = `systems/mythic/templates/chat/postable-${item.type}.hbs`;
-    console.log(item.data.data.type);
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),

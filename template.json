@@ -845,6 +845,11 @@
                 "semi": 0,
                 "sustained": 0
             },
+            "attack": {
+                "fireMode": "",
+                "half": 0,
+                "full": 0
+            },
             "nickname": "",
             "type": "",
             "attackBonus": 0,

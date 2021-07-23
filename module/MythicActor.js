@@ -80,6 +80,9 @@ export class MythicActor extends Actor {
 
     // Calculate Education Test Target Numbers
     Calc.calculateEducationTargets(actorData);
+
+    // Calculate Weapon Attacks
+    Calc.calculateWeaponNumberOfAttacks(actorData);
   }
 
   _prepareVehicleData(actorData) {

@@ -176,6 +176,31 @@ export function calculateSupportPoints(actorData) {
   );
 }
 
+export function calculateWeaponNumberOfAttacks(actorData) {
+  let weapons = actorData.items.filter(function(item) { return item.type === "weapon" });
+  for (let weapon of Object.values(weapons)) {
+    console.log(weapon);
+    const a = weapon.data.data.attack.fireMode.split("-");
+    const mode = a[0], attacks = parseInt(a[1]);
+    if (["auto", "sustained"].includes(mode)) {
+      console.log("Auto or Sustained");
+      weapon.data.data.attack.half = Math.floor(attacks / 2);
+      weapon.data.data.attack.full = attacks;
+    } else if (["burst", "pump", "semi"].includes(mode)) {
+      console.log("Burst, Pump, or Semi");
+      weapon.data.data.attack.half = attacks;
+      weapon.data.data.attack.full = attacks * 2;
+    } else if (mode === "charge") {
+      weapon.data.data.attack.half = 1;
+    } else if (mode === "drawback") {
+      weapon.data.data.attack.half = 1;
+      weapon.data.data.attack.full = 1;
+    } else if (mode === "flintlock") {
+      weapon.data.data.attack.full = 1;
+    }
+  }
+}
+
 export function calculateWounds(actorData, touMod) {
   actorData.data.wounds.max = 20 + (
     (2 * (actorData.data.wounds.doubleTou ? touMod * 2 : touMod)) + 
