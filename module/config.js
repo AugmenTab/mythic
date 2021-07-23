@@ -65,15 +65,15 @@ mythic.advancements = {
 }
 
 mythic.educationType = {
-  piloting: "mythic.educationSheet.types.piloting",
-  engineer: "mythic.educationSheet.types.engineer",
-  space: "mythic.educationSheet.types.space",
-  cultural: "mythic.educationSheet.types.cultural",
-  computer: "mythic.educationSheet.types.computer",
   biological: "mythic.educationSheet.types.biological",
+  computer: "mythic.educationSheet.types.computer",
+  cultural: "mythic.educationSheet.types.cultural",
+  dimensional: "mythic.educationSheet.types.dimensional",
+  engineer: "mythic.educationSheet.types.engineer",
   military: "mythic.educationSheet.types.military",
+  piloting: "mythic.educationSheet.types.piloting",
   restricted: "mythic.educationSheet.types.restricted",
-  dimensional: "mythic.educationSheet.types.dimensional"
+  space: "mythic.educationSheet.types.space"
 }
 
 mythic.skills = {

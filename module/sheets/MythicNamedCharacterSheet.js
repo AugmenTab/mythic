@@ -98,7 +98,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const key = `data.roll.${element.dataset.field}`;
     const val = parseInt(element.value);
     await item.update({ [key]: isNaN(val) ? element.value : val });
-    console.log(item);
   }
 
   async _onPostItem(event) {

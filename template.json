@@ -614,7 +614,7 @@
                 "techForerunner": false
             },
             "roll": {
-                "skill": "",
+                "skill": "int",
                 "training": "none",
                 "mods": 0,
                 "roll": 0

@@ -33,6 +33,7 @@
           <td>
             <select class="item-edit-inline" data-field="skill" data-item-id="{{edu._id}}">
               {{#select edu.data.roll.skill}}
+                <option value="int">INT</option>
                 {{#each edu.data.skills as |skill key|}}
                   {{#if skill}}
                     <option value="{{key}}">{{localize (concat "mythic.skillNames." key)}}</option>

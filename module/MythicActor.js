@@ -13,9 +13,9 @@ export class MythicActor extends Actor {
     // this._prepareVehicleData(actorData);
   }
 
-  prepareDerivedData() {}
-
   prepareEmbeddedEntities() {}
+  
+  prepareDerivedData() {}
 
   _prepareNamedCharacterData(actorData) {
     if (actorData.type !== "Named Character") return;
@@ -186,6 +186,18 @@ export class MythicActor extends Actor {
         }
         value.roll = target <= 0 ? 0 : target;
       }
+    }
+
+    // Calculate Education Test Target Numbers
+    let educations = actorData.items.filter(function(item) { return item.type === "education" });
+    for (let e of Object.values(educations)) {
+      const base = e.data.data.roll.skill === "int"
+        ? actorData.data.characteristics.int.roll
+        : actorData.data.skills[e.data.data.roll.skill].roll;
+      const training = e.data.data.roll.training !== "none"
+        ? parseInt(e.data.data.roll.training.replace("plus", ""))
+        : 0;
+      e.data.data.roll.roll = base + training + e.data.data.roll.mods;
     }
   }
 }
