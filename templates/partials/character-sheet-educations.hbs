@@ -31,7 +31,7 @@
             <p>{{localize (concat "mythic.educationSheet.types." edu.data.type)}}</p>
           </td>
           <td>
-            <select class="item-edit-inline" data-field="skill" data-item-id="{{edu._id}}">
+            <select class="item-edit-inline" data-field="roll.skill" data-item-id="{{edu._id}}">
               {{#select edu.data.roll.skill}}
                 <option value="int">INT</option>
                 {{#each edu.data.skills as |skill key|}}
@@ -43,7 +43,7 @@
             </select>
           </td>
           <td>
-            <select class="item-edit-inline" data-field="training" data-item-id="{{edu._id}}">
+            <select class="item-edit-inline" data-field="roll.training" data-item-id="{{edu._id}}">
               {{#select edu.data.roll.training}}
                 {{#each ../config.educationTraining as |value key|}}
                   <option value="{{key}}">{{localize value}}</option>
@@ -52,7 +52,7 @@
             </select>
           </td>
           <td style="width:90px">
-            <input class="item-edit-inline" data-field="mods" data-item-id="{{edu._id}}" type="number" data-dtype="Number" value="{{edu.data.roll.mods}}"/>
+            <input class="item-edit-inline" data-field="roll.mods" data-item-id="{{edu._id}}" type="number" data-dtype="Number" value="{{edu.data.roll.mods}}"/>
           </td>
           <td style="width:48px">
             <button 
