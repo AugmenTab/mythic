@@ -1,5 +1,4 @@
 <section class="sheet-trainings">
-  <h2>{{localize "mythic.characterTalents.trainings.trainingsHeader"}}</h2>
   <table>
     <thead>
       <tr>
@@ -18,6 +17,38 @@
           <td><input name="data.trainings.faction.{{faction}}" type="checkbox" {{checked trained}}/></td>
         {{/each}}
         <td><input name="data.trainings.alienTech" type="checkbox" {{checked data.data.trainings.alienTech}}/></td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="4">{{localize "mythic.characterTalents.trainings.abilities"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.characterTalents.trainings.hth"}}</th>
+        <th>{{localize "mythic.characterTalents.trainings.mac"}}</th>
+        <th>{{localize "mythic.characterTalents.trainings.rapidReload"}}</th>
+        <th>{{localize "mythic.characterTalents.trainings.unarmedCombatant"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input name="data.trainings.weapons.hth" type="checkbox" {{checked data.data.trainings.weapons.hth}}/></td>
+        <td>
+          <input
+            name="data.trainings.weapons.mac"
+            type="checkbox"
+            {{#unless data.data.trainings.weapons.hth}}
+              disabled="true"
+            {{/unless}}
+            {{checked data.data.trainings.weapons.mac}}
+          />
+        </td>
+        <td><input name="data.trainings.weapons.rapidReload" type="checkbox" {{checked data.data.trainings.weapons.rapidReload}}/></td>
+        <td>
+          <input name="data.trainings.weapons.unarmedCombatant" type="checkbox" {{checked data.data.trainings.weapons.unarmedCombatant}}/>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -43,5 +74,5 @@
     </tbody>
   </table>
   <h2>{{localize "mythic.characterTalents.trainings.languages"}}</h2>
-  <textarea class="languages" style="height:110px" name="data.trainings.languages.notes" placeholder="{{localize "mythic.characterTalents.trainings.languagesTextarea"}}">{{data.data.trainings.languages.notes}}</textarea>
+  <textarea class="languages" name="data.trainings.languages.notes" placeholder="{{localize "mythic.characterTalents.trainings.languagesTextarea"}}">{{data.data.trainings.languages.notes}}</textarea>
 </section>

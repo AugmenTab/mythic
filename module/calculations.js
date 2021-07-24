@@ -178,9 +178,15 @@ export function calculateSupportPoints(actorData) {
 
 export function calculateWeaponAttacksMelee(actorData, weapon) {
   const mod = calculateCharacteristicModifier(actorData.data.characteristics.wfm.total);
-  const half = mod > 7 ? 4 : Math.ceil(mod / 2);
+  let half = mod > 7 ? 4 : Math.ceil(mod / 2);
+  let full = half * 2;
+  if (actorData.data.trainings.weapons.hth) {
+    half += 1;
+    full += 2;
+  }
+  if (actorData.data.trainings.weapons.mac) full += full >= 10 ? 0 : 1;
   weapon.data.data.attack.half = half;
-  weapon.data.data.attack.full = half * 2;
+  weapon.data.data.attack.full = full;
 }
 
 export function calculateWeaponAttacksRanged(weapon) {

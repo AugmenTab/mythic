@@ -184,15 +184,19 @@
                 }
             },
             "trainings": {
-                "trainingsHeader": "Faction & Equipment Trainings",
                 "factionTraining": "Faction Training",
                 "equipmentTraining": "Equipment Training",
                 "equipmentGroup": "Equipment Group",
                 "included": "Included Weapons",
                 "trained": "Trained",
+                "alienTech": "Alien Tech?",
+                "abilities": "Weapon Abilities",
+                "hth": "Hand to Hand Basic?",
+                "mac": "Modern Army Combative?",
+                "rapidReload": "Rapid Reload?",
+                "unarmedCombatant": "Unarmed Combatant?",
                 "languages": "Languages",
-                "languagesTextarea": "Write known languages here, separated by a semicolon (;).",
-                "alienTech": "Alien Tech?"
+                "languagesTextarea": "Write known languages here, separated by a semicolon (;)."
             }
         },
         "characterWeaponSummary": {

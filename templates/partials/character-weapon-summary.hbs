@@ -39,6 +39,7 @@
             {{#if (eq weapon.data.group "ranged")}}
               <select class="item-edit-inline special-focus" data-field="attack.fireMode" data-item-id="{{weapon._id}}">
                 {{#select weapon.data.attack.fireMode}}
+                  <option value="none">--</option>
                   {{#each weapon.data.fireMode as |rate mode|}}
                     {{#if rate}}
                       <option value="{{mode}}-{{rate}}">{{localize (concat "mythic.weaponSheet.fireMode." mode)}} ({{rate}})</option>
@@ -72,9 +73,28 @@
             {{/unless}}
           </td>
           {{!-- Buttons --}}
-          <td><button><b>1</b></button></td>
-          <td><button {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}><b>{{weapon.data.attack.half}}</b></button></td>
-          <td><button><b>{{weapon.data.attack.full}}</b></button></td>
+          <td>
+            <button
+              {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+            >
+              <b>1</b>
+            </button>
+          </td>
+          <td>
+            <button
+              {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+              {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
+            >
+              <b>{{weapon.data.attack.half}}</b>
+            </button>
+          </td>
+          <td>
+            <button
+              {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+            >
+              <b>{{weapon.data.attack.full}}</b>
+            </button>
+          </td>
         </tr>
       {{/each}}
     </tbody>

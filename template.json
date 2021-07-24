@@ -221,6 +221,12 @@
                         "covenant": false,
                         "forerunner": false
                     },
+                    "weapons": {
+                        "hth": false,
+                        "mac": false,
+                        "rapidReload": false,
+                        "unarmedCombatant": false
+                    },
                     "languages": {
                         "notes": "",
                         "list": []
