@@ -176,6 +176,13 @@ export function calculateSupportPoints(actorData) {
   );
 }
 
+export function calculateWeaponAttacksMelee(actorData, weapon) {
+  const mod = calculateCharacteristicModifier(actorData.data.characteristics.wfm.total);
+  const half = mod > 7 ? 4 : Math.ceil(mod / 2);
+  weapon.data.data.attack.half = half;
+  weapon.data.data.attack.full = half * 2;
+}
+
 export function calculateWeaponAttacksRanged(weapon) {
   const a = weapon.data.data.attack.fireMode.split("-");
   const mode = a[0], attacks = parseInt(a[1]);
@@ -183,7 +190,6 @@ export function calculateWeaponAttacksRanged(weapon) {
     weapon.data.data.attack.half = Math.floor(attacks / 2);
     weapon.data.data.attack.full = attacks;
   } else if (["burst", "pump", "semi"].includes(mode)) {
-    console.log("Burst, Pump, or Semi");
     weapon.data.data.attack.half = attacks;
     weapon.data.data.attack.full = attacks * 2;
   } else if (mode === "charge") {
@@ -203,7 +209,7 @@ export function calculateWeaponNumberOfAttacks(actorData) {
       weapon.data.data.attack.half = 1;
       weapon.data.data.attack.full = 1;  
     } else if (weapon.data.data.group === "melee") {
-      // calculateWeaponAttacksMelee(weapon);
+      calculateWeaponAttacksMelee(actorData, weapon);
       return;
     } else if (weapon.data.data.group === "ranged") {
       calculateWeaponAttacksRanged(weapon);
