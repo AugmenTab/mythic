@@ -210,7 +210,6 @@ export function calculateWeaponNumberOfAttacks(actorData) {
       weapon.data.data.attack.full = 1;  
     } else if (weapon.data.data.group === "melee") {
       calculateWeaponAttacksMelee(actorData, weapon);
-      return;
     } else if (weapon.data.data.group === "ranged") {
       calculateWeaponAttacksRanged(weapon);
     }

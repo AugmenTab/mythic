@@ -51,6 +51,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".languages").blur(this._onLanguagesBlur.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
+    html.find(".special-focus").focus(this._onItemEditInline.bind(this));
   }
 
   async _onExpApply(event) {
