@@ -866,8 +866,13 @@
                 "current": 0,
                 "max": 0
             },
-            "close": 0,
-            "long": 0,
+            "range": {
+                "close": 0,
+                "long": 0,
+                "melee": 0,
+                "thrown": 0,
+                "grip": "solid"
+            },
             "ammo": "",
             "price": 0,
             "baseReload": 0,

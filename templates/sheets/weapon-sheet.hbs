@@ -74,10 +74,10 @@
   <table>
     <thead>
       <tr>
-        <th colspan="6">{{localize "mythic.weaponSheet.stats.label"}}</th>
+        <th colspan="5">{{localize "mythic.weaponSheet.stats.label"}}</th>
       </tr>
       <tr>
-        <th colspan="2">{{localize "mythic.weaponSheet.groups"}}</th>
+        <th>{{localize "mythic.weaponSheet.groups"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.damageRoll"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.baseDamage"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
@@ -86,7 +86,7 @@
     </thead>
     <tbody>
       <tr>
-        <td colspan="2">
+        <td>
           <select name="data.group">
             {{#select data.data.group}}
               {{#each config.weaponGroups as |value key|}}
@@ -103,7 +103,15 @@
     </tbody>
     <thead>
       <tr>
-        <th colspan="2">{{localize "mythic.weaponSheet.stats.range"}}</th>
+        <th>
+          {{#if (eq data.data.group "ranged")}}
+            {{localize "mythic.weaponSheet.stats.range"}}
+          {{else if (eq data.data.group "melee")}}
+            {{localize "mythic.weaponSheet.stats.rangeBonus"}}
+          {{else if (eq data.data.group "thrown")}}
+            {{localize "mythic.weaponSheet.stats.grip"}}
+          {{/if}}
+        </th>
         <th>{{localize "mythic.weaponSheet.stats.magazine"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.baseReload"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.price"}}</th>
@@ -112,13 +120,25 @@
     </thead>
     <tbody>
       <tr>
-        <td colspan="2">
-          <div class="range">
-            <input name="data.close" type="number" data-dtype="Number" value="{{data.data.close}}"/>
-            <p><b>&mdash;</b></p>
-            <input name="data.long" type="number" data-dtype="Number" value="{{data.data.long}}"/>
-            <p>m</p>
-          </div>
+        <td>
+          {{#if (eq data.data.group "ranged")}}
+            <div class="range">
+              <input name="data.range.close" type="number" data-dtype="Number" value="{{data.data.range.close}}"/>
+              <p><b>&mdash;</b></p>
+              <input name="data.range.long" type="number" data-dtype="Number" value="{{data.data.range.long}}"/>
+              <p>m</p>
+            </div>
+          {{else if (eq data.data.group "melee")}}
+            <input name="data.range.close" type="number" data-dtype="Number" value="{{data.data.range.close}}"/>
+          {{else if (eq data.data.group "thrown")}}
+            <select name="data.range.grip">
+              {{#select data.data.range.grip}}
+                {{#each config.grips as |value key|}}
+                  <option value="key">{{localize value}}</option>
+                {{/each}}
+              {{/select}}
+            </select>
+          {{/if}}
         </td>
         <td>
           <input name="data.magazine.max" type="number" data-dtype="Number" value="{{data.data.magazine.max}}"/>

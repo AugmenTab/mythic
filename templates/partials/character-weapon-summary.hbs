@@ -54,11 +54,11 @@
           {{!-- Range --}}
           <td>
             {{#if (eq weapon.data.group "thrown")}}
-              {{weapon.data.special.blast.value}} / {{weapon.data.special.kill.value}}
+              {{weapon.data.range.thrown}} m ({{weapon.data.special.blast.value}} / {{weapon.data.special.kill.value}})
             {{else if (eq weapon.data.group "melee")}}
-              {{weapon.data.long}}
+              {{weapon.data.range.melee}} m
             {{else if (eq weapon.data.group "ranged")}}
-              {{weapon.data.close}} - {{weapon.data.long}}
+              {{weapon.data.range.close}} - {{weapon.data.range.long}} m
             {{/if}}
           </td>
           {{!-- Magazine --}}
@@ -96,6 +96,7 @@
             </button>
           </td>
         </tr>
+      {{else}} <td colspan="7">No weapons have been added yet.</td>
       {{/each}}
     </tbody>
   </table>

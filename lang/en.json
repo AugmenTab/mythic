@@ -340,6 +340,12 @@
                 "semi": "Semi-Auto",
                 "sustained": "Sustained"
             },
+            "grips": {
+                "solid": "Solid",
+                "slight": "Slight",
+                "partial": "Partial",
+                "sloppy": "Sloppy"
+            },
             "stats": {
                 "label": "Weapon Stats",
                 "damageRoll": "Damage Roll",
@@ -347,6 +353,8 @@
                 "piercing": "Piercing",
                 "magazine": "Magazine",
                 "range": "Range",
+                "rangeBonus": "Range Bonus",
+                "grip": "Grip",
                 "ammo": "Ammunition",
                 "price": "Price (cR)",
                 "baseReload": "Base Reload",

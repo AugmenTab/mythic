@@ -76,6 +76,13 @@ mythic.educationType = {
   space: "mythic.educationSheet.types.space"
 }
 
+mythic.grips = {
+  solid: "mythic.weaponSheet.grips.solid",
+  slight: "mythic.weaponSheet.grips.slight",
+  partial: "mythic.weaponSheet.grips.partial",
+  sloppy: "mythic.weaponSheet.grips.sloppy"
+}
+
 mythic.skills = {
   appeal: {
     difficulty: "mythic.skillSheet.difficulties.basic",

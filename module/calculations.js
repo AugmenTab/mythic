@@ -1,3 +1,17 @@
+const MELEE_REACH_SIZE_BONUS = {
+  "minii": 1,
+  "small": 1,
+  "normal": 1,
+  "large": 2,
+  "huge": 2,
+  "hulking": 3,
+  "giant": 3,
+  "immense": 4,
+  "massive": 4,
+  "great": 5,
+  "monumental": 5
+};
+
 export function calculateAbilityPool(actorData) {
   actorData.data.characteristics.extra.poolTotal = (
     actorData.data.characteristics.str.abilityPool +
@@ -176,7 +190,7 @@ export function calculateSupportPoints(actorData) {
   );
 }
 
-export function calculateWeaponAttacksMelee(actorData, weapon) {
+function calculateWeaponAttacksMelee(actorData, weapon) {
   const mod = calculateCharacteristicModifier(actorData.data.characteristics.wfm.total);
   let half = mod > 7 ? 4 : Math.ceil(mod / 2);
   let full = half * 2;
@@ -189,7 +203,7 @@ export function calculateWeaponAttacksMelee(actorData, weapon) {
   weapon.data.data.attack.full = full;
 }
 
-export function calculateWeaponAttacksRanged(weapon) {
+function calculateWeaponAttacksRanged(weapon) {
   const a = weapon.data.data.attack.fireMode.split("-");
   const mode = a[0], attacks = parseInt(a[1]);
   if (["auto", "sustained"].includes(mode)) {
@@ -208,18 +222,51 @@ export function calculateWeaponAttacksRanged(weapon) {
   }
 }
 
+function calculateWeaponRangeMelee(actorData, weapon) {
+  weapon.data.data.range.melee = (
+    weapon.data.data.range.close + MELEE_REACH_SIZE_BONUS[actorData.data.size]
+  );
+}
+
+function calculateWeaponRangeThrown(actorData, weapon) {
+  const base = (
+    calculateCharacteristicModifier(actorData.data.characteristics.str.total) +
+    actorData.data.mythicCharacteristics.str.total
+  );
+  let mult = 15;
+  const penalty = calculateWeightPenaltyThrown(base);
+  mult -= Math.floor(weapon.data.data.weight / penalty.weight) * penalty.multiplier;
+  if (weapon.data.data.range.grip === "slight") mult -= 1;
+  if (["partial", "sloppy"].includes(weapon.data.data.range.grip)) mult -= 2;
+  const range = (base * mult) / (weapon.data.data.range.grip === "sloppy" ? 2 : 1);
+  weapon.data.data.range.thrown = range > 0.5 ? range : 0;
+}
+
 export function calculateWeaponSummaryAttackData(actorData) {
   let weapons = actorData.items.filter(function(item) { return item.type === "weapon" });
   for (let weapon of Object.values(weapons)) {
     if (weapon.data.data.group === "thrown") {
+      calculateWeaponRangeThrown(actorData, weapon);
       weapon.data.data.attack.half = 1;
       weapon.data.data.attack.full = 1;  
     } else if (weapon.data.data.group === "melee") {
+      calculateWeaponRangeMelee(actorData, weapon);
       calculateWeaponAttacksMelee(actorData, weapon);
     } else if (weapon.data.data.group === "ranged") {
       calculateWeaponAttacksRanged(weapon);
     }
   }
+}
+
+function calculateWeightPenaltyThrown(mod) {
+  let penalty = { weight: 1, multiplier: 1 };
+  if (mod >= 19) penalty.weight = 7;
+  else if (mod >= 13) penalty.weight = 6;
+  else if (mod >= 10) penalty.weight = 5;
+  else if (mod >= 8) penalty.weight = 2;
+  else if (mod >= 3) penalty.multiplier = 2;
+  else penalty.multiplier = 3;
+  return penalty;
 }
 
 export function calculateWounds(actorData, touMod) {
