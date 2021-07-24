@@ -208,7 +208,7 @@ export function calculateWeaponAttacksRanged(weapon) {
   }
 }
 
-export function calculateWeaponNumberOfAttacks(actorData) {
+export function calculateWeaponSummaryAttackData(actorData) {
   let weapons = actorData.items.filter(function(item) { return item.type === "weapon" });
   for (let weapon of Object.values(weapons)) {
     if (weapon.data.data.group === "thrown") {

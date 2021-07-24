@@ -81,8 +81,11 @@ export class MythicActor extends Actor {
     // Calculate Education Test Target Numbers
     Calc.calculateEducationTargets(actorData);
 
+    // Fix Talent Dependencies
+    if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+
     // Calculate Weapon Attacks
-    Calc.calculateWeaponNumberOfAttacks(actorData);
+    Calc.calculateWeaponSummaryAttackData(actorData);
   }
 
   _prepareVehicleData(actorData) {
