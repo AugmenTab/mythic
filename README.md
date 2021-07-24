@@ -20,3 +20,4 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
     * Calculator for splatter damage
 * Ability to add custom skills.
 * Fully functioning Medical page to handle injuries.
+* Lock nav bar at the top of the Actor Sheet.
