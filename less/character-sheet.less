@@ -78,9 +78,10 @@
     .character-weapon-summary {
         .magazine {
             display: grid;
-            grid-template-columns: 45px auto auto;
-            column-gap: 2px;
+            grid-template-columns: 45px 6px 30px 16px;
+            column-gap: 4px;
             place-items: center;
+            padding: 0 4px;
         }
     }
 
@@ -110,10 +111,13 @@
 
         :nth-child(1) {
             align-self: end;
+            height: 16px;
+            margin: 0;
         }
-
+        
         :nth-child(2) {
             align-self: start;
+            height: 16px;
         }
     }
 

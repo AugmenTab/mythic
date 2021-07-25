@@ -860,11 +860,12 @@
                 "baseDamage": 0,
                 "strDamage": 0,
                 "piercing": 0,
-                "strPiercing": 0
+                "strPiercing": 0,
+                "target": 0
             },
             "reload": {
                 "base": 0,
-                "mod": 0
+                "total": 0
             },
             "nickname": "",
             "type": "",

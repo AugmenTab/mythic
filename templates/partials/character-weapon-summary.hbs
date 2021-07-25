@@ -14,7 +14,7 @@
         </button>
       </th>
       <tr>
-        <th>{{localize "mythic.characterWeaponSummary.name"}}</th>
+        <th>{{localize "mythic.characterWeaponSummary.name"}} ({{localize "mythic.characterWeaponSummary.target"}})</th>
         <th>{{localize "mythic.characterWeaponSummary.fireMode"}}</th>
         <th>{{localize "mythic.characterWeaponSummary.range"}}</th>
         <th>{{localize "mythic.characterWeaponSummary.mag"}}</th>
@@ -29,10 +29,11 @@
           {{!-- Nickname or Name --}}
           <td>
             {{#unless weapon.data.nickname}}
-              {{weapon.name}} 
+              {{weapon.name}}
             {{else}}
               {{weapon.data.nickname}}
             {{/unless}}
+            ({{weapon.data.attack.target}})
           </td>
           {{!-- Fire Mode --}}
           <td>
@@ -62,25 +63,29 @@
             {{/if}}
           </td>
           {{!-- Magazine --}}
-          <td>
+          <td style="width:120px">
             {{#unless (eq weapon.data.group "melee")}}
               <div class="magazine">
                 <input class="item-edit-inline" data-field="magazine.current" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.magazine.current}}"/>
                 <p>/</p>
                 <p>{{weapon.data.magazine.max}}</p>
+                <div class="item-management">
+                  <p>{{weapon.data.reload.total}}</p>
+                  <a class="reload" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
+                </div>
               </div>
             {{else}} --
             {{/unless}}
           </td>
           {{!-- Buttons --}}
-          <td>
+          <td style="width:40px">
             <button
               {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
             >
               <b>1</b>
             </button>
           </td>
-          <td>
+          <td style="width:40px">
             <button
               {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
               {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
@@ -88,15 +93,16 @@
               <b>{{weapon.data.attack.half}}</b>
             </button>
           </td>
-          <td>
+          <td style="width:40px">
             <button
               {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+              {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
             >
               <b>{{weapon.data.attack.full}}</b>
             </button>
           </td>
         </tr>
-      {{else}} <td colspan="7">No weapons have been added yet.</td>
+      {{else}} <td colspan="8">No weapons have been added yet.</td>
       {{/each}}
     </tbody>
   </table>

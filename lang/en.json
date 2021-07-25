@@ -206,6 +206,7 @@
             "fireMode": "Fire Mode",
             "range": "Range",
             "mag": "Magazine",
+            "target": "Target",
             "one": "One",
             "half": "Half",
             "full": "Full"
