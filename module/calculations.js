@@ -201,6 +201,7 @@ function calculateWeaponAttacksMelee(actorData, weapon) {
   if (actorData.data.trainings.weapons.mac) full += full >= 10 ? 0 : 1;
   weapon.data.data.attack.half = half;
   weapon.data.data.attack.full = full;
+  weapon.data.data.attack.fireMode = "melee";
 }
 
 function calculateWeaponAttacksRanged(weapon) {
@@ -263,13 +264,39 @@ function calculateWeaponReloadSingleLoading(actorData, weapon) {
   weapon.data.data.reload.total = final > 3 ? 3 : final;
 }
 
+function calculateWeaponTarget(actorData, weapon) {
+  const group = weapon.data.data.group;
+  const mode = weapon.data.data.attack.fireMode.split("-")[0];
+  const stat = group === "ranged"
+    ? actorData.data.characteristics.wfr.roll
+    : actorData.data.characteristics.wfm.roll;
+  let mod = stat + weapon.data.data.attack.attackBonus;
+  if (!actorData.data.trainings.faction[weapon.data.data.trainings.faction]) {
+    mod -= actorData.data.trainings.alienTech ? 10 : 20;
+  }
+  if (!actorData.data.trainings.equipment[weapon.data.data.trainings.equipment]) {
+    mod -= 10;
+  }
+  if (["burst", "semi", "sustained"].includes(mode)) {
+    mod += 10;
+  }
+  if (group === "melee" && actorData.data.trainings.weapons.hth) {
+    mod += 5;
+  }
+  if (group === "melee" && actorData.data.trainings.weapons.mac) {
+    mod += 10;
+  }
+  weapon.data.data.attack.target = mod > 0 ? mod : 0;
+}
+
 export function calculateWeaponSummaryAttackData(actorData) {
   let weapons = actorData.items.filter(function(item) { return item.type === "weapon" });
   for (let weapon of Object.values(weapons)) {
     if (weapon.data.data.group === "thrown") {
       calculateWeaponRangeThrown(actorData, weapon);
       weapon.data.data.attack.half = 1;
-      weapon.data.data.attack.full = 1;  
+      weapon.data.data.attack.full = 1;
+      weapon.data.data.attack.fireMode = "thrown"; 
     } else if (weapon.data.data.group === "melee") {
       calculateWeaponRangeMelee(actorData, weapon);
       calculateWeaponAttacksMelee(actorData, weapon);
@@ -279,6 +306,7 @@ export function calculateWeaponSummaryAttackData(actorData) {
         calculateWeaponReloadSingleLoading(actorData, weapon);
       } else calculateWeaponReloadStandard(actorData, weapon);
     }
+    calculateWeaponTarget(actorData, weapon);
   }
 }
 
