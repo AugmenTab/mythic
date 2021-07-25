@@ -51,6 +51,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".languages").blur(this._onLanguagesBlur.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
+    html.find(".reload").click(this._onReload.bind(this));
     html.find(".special-focus").focus(this._onItemEditInline.bind(this));
   }
 
@@ -117,6 +118,13 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       flavor: game.i18n.localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
       content: await renderTemplate(template, item.data)
     });
+  }
+
+  async _onReload(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    await item.update({ "data.magazine.current": item.data.data.magazine.max });
   }
 
   async _onRoll(event) {
