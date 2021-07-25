@@ -43,7 +43,8 @@ export class MythicActor extends Actor {
 
     // Reference Characteristics and Modifiers
     const str = actorData.data.characteristics.str.total;
-    const strMod = Calc.calculateCharacteristicModifier(str);
+    const strMod = (Calc.calculateCharacteristicModifier(str)
+      + actorData.data.mythicCharacteristics.str.total);
     const tou = actorData.data.characteristics.tou.total;
     const touMod = Calc.calculateCharacteristicModifier(tou);
     const agi = actorData.data.characteristics.agi.total;
