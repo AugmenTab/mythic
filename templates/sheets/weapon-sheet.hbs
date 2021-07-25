@@ -95,10 +95,42 @@
             {{/select}}
           </select>
         </td>
-        <td><input name="data.damageRoll" type="text" value="{{data.data.damageRoll}}" placeholder="2D10"/></td>
-        <td><input name="data.baseDamage" type="number" data-dtype="Number" value="{{data.data.baseDamage}}"/></td>
-        <td><input name="data.piercing" type="number" data-dtype="Number" value="{{data.data.piercing}}"/></td>
-        <td><input name="data.attackBonus" type="number" data-dtype="Number" value="{{data.data.attackBonus}}"/></td>
+        <td><input name="data.attack.damageRoll" type="text" value="{{data.data.attack.damageRoll}}" placeholder="2D10"/></td>
+        <td>
+          {{#if (eq data.data.group "melee")}}
+            <div class="melee-double">
+              <input name="data.attack.baseDamage" type="number" data-dtype="Number" value="{{data.data.attack.baseDamage}}"/>
+              <p><b>&plus;</b></p>
+              <select name="data.attack.strDamage">
+                {{#select data.data.attack.strDamage}}
+                  <option value="0">--</option>
+                  <option value="0.5">&frac12; STR</option>
+                  <option value="1">STR</option>
+                {{/select}}
+              </select>
+            </div>
+          {{else}}
+            <input name="data.attack.baseDamage" type="number" data-dtype="Number" value="{{data.data.attack.baseDamage}}"/>
+          {{/if}}
+        </td>
+        <td>
+          {{#if (eq data.data.group "melee")}}
+            <div class="melee-double">
+              <input name="data.attack.piercing" type="number" data-dtype="Number" value="{{data.data.attack.piercing}}"/>
+              <p><b>&plus;</b></p>
+              <select name="data.attack.strPiercing">
+                {{#select data.data.attack.strPiercing}}
+                  <option value="0">--</option>
+                  <option value="0.5">&frac12; STR</option>
+                  <option value="1">STR</option>
+                {{/select}}
+              </select>
+            </div>
+          {{else}}
+            <input name="data.attack.piercing" type="number" data-dtype="Number" value="{{data.data.attack.piercing}}"/>
+          {{/if}}
+        </td>
+        <td><input name="data.attack.attackBonus" type="number" data-dtype="Number" value="{{data.data.attack.attackBonus}}"/></td>
       </tr>
     </tbody>
     <thead>
@@ -143,13 +175,13 @@
         <td>
           <input name="data.magazine.max" type="number" data-dtype="Number" value="{{data.data.magazine.max}}"/>
         </td>
-        <td><input name="data.baseReload" type="number" data-dtype="Number" value="{{data.data.baseReload}}"/></td>
+        <td><input name="data.reload.base" type="number" data-dtype="Number" value="{{data.data.reload.base}}"/></td>
         <td><input name="data.price" type="number" data-dtype="Number" value="{{data.data.price}}"/></td>
         <td><input name="data.weight" type="number" data-dtype="Number" value="{{data.data.weight}}"/></td>
       </tr>
       <tr>
         <td colspan="8">
-            <textarea name="data.itemDescription" placeholder="{{localize "mythic.weaponSheet.stats.desc"}}">{{data.data.itemDescription}}</textarea>
+          <textarea name="data.itemDescription" placeholder="{{localize "mythic.weaponSheet.stats.desc"}}">{{data.data.itemDescription}}</textarea>
         </td>
       </tr>
     </tbody>

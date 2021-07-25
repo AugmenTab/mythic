@@ -854,14 +854,20 @@
             "attack": {
                 "fireMode": "",
                 "half": 0,
-                "full": 0
+                "full": 0,
+                "attackBonus": 0,
+                "damageRoll": "",
+                "baseDamage": 0,
+                "strDamage": 0,
+                "piercing": 0,
+                "strPiercing": 0
+            },
+            "reload": {
+                "base": 0,
+                "mod": 0
             },
             "nickname": "",
             "type": "",
-            "attackBonus": 0,
-            "damageRoll": "",
-            "baseDamage": 0,
-            "piercing": 0,
             "magazine": {
                 "current": 0,
                 "max": 0
@@ -875,7 +881,6 @@
             },
             "ammo": "",
             "price": 0,
-            "baseReload": 0,
             "weight": 0.0,
             "breakPoints": 0
         }
