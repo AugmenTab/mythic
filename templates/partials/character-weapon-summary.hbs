@@ -87,29 +87,34 @@
             {{/unless}}
           </td>
           {{!-- Buttons --}}
-          <td style="width:40px">
+          <td
+            style="width:40px"
+            {{#if (eq weapon.data.group "thrown")}} colspan="3" {{/if}}
+          >
             <button
               {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
             >
               <b>1</b>
             </button>
           </td>
-          <td style="width:40px">
-            <button
-              {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-              {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
-            >
-              <b>{{weapon.data.attack.half}}</b>
-            </button>
-          </td>
-          <td style="width:40px">
-            <button
-              {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-              {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
-            >
-              <b>{{weapon.data.attack.full}}</b>
-            </button>
-          </td>
+          {{#unless (eq weapon.data.group "thrown")}}
+            <td style="width:40px">
+              <button
+                {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+                {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
+              >
+                <b>{{weapon.data.attack.half}}</b>
+              </button>
+            </td>
+            <td style="width:40px">
+              <button
+                {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+                {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
+              >
+                <b>{{weapon.data.attack.full}}</b>
+              </button>
+            </td>
+          {{/unless}}
         </tr>
       {{else}} <td colspan="8">No weapons have been added yet.</td>
       {{/each}}
