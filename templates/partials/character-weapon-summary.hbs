@@ -28,12 +28,18 @@
         <tr>
           {{!-- Nickname or Name --}}
           <td>
-            {{#unless weapon.data.nickname}}
-              {{weapon.name}}
-            {{else}}
-              {{weapon.data.nickname}}
-            {{/unless}}
-            ({{weapon.data.attack.target}})
+            <div class="weapon-name">
+              <img alt="{{weapon.name}}" src="{{weapon.img}}"/>
+              <p>
+                {{#unless weapon.data.nickname}}
+                  {{weapon.name}}
+                {{else}}
+                  {{weapon.data.nickname}}
+                {{/unless}}
+                ({{weapon.data.attack.target}})
+              </p>
+              <a class="item-edit" data-item-id="{{weapon._id}}"><i class="clickable fas fa-edit"></i></a>
+              </div>
           </td>
           {{!-- Fire Mode --}}
           <td>
@@ -70,7 +76,10 @@
                 <p>/</p>
                 <p>{{weapon.data.magazine.max}}</p>
                 <div class="item-management">
-                  <p>{{weapon.data.reload.total}}</p>
+                  {{#unless (eq weapon.data.group "thrown")}}
+                    <p>{{weapon.data.reload.total}}</p>
+                  {{else}} <p>T</p>
+                  {{/unless}}
                   <a class="reload" data-field="magazine.current" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
                 </div>
               </div>

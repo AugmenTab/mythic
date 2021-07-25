@@ -550,6 +550,12 @@
             "baseItemDetails": {
                 "faction": "",
                 "itemDescription": ""
+            },
+            "physical": {
+                "price": 0,
+                "weight": 0.0,
+                "breakPoints": 0,
+                "carried": false
             }
         },
         "ability": {
@@ -605,7 +611,8 @@
         },
         "weapon": {
             "templates": [
-                "baseItemDetails"
+                "baseItemDetails",
+                "physical"
             ],
             "group": "",
             "trainings": {
@@ -786,10 +793,7 @@
                 "thrown": 0,
                 "grip": "solid"
             },
-            "ammo": "",
-            "price": 0,
-            "weight": 0.0,
-            "breakPoints": 0
+            "ammo": ""
         }
     }
 }
