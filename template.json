@@ -713,6 +713,9 @@
                     "value": 0,
                     "needsInput": true
                 },
+                "singleLoading": {
+                    "has": false
+                },
                 "slow": {
                     "has": false
                 },

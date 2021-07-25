@@ -246,13 +246,21 @@ function calculateWeaponRangeThrown(actorData, weapon) {
   weapon.data.data.range.thrown = range > 0.5 ? range : 0;
 }
 
-function calculateWeaponReloadRanged(actorData, weapon) {
+function calculateWeaponReloadStandard(actorData, weapon) {
   let base = weapon.data.data.reload.base;
   if (actorData.data.trainings.weapons.rapidReload) base = Math.ceil(base / 2);
   const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
   const wfrMod = calculateCharacteristicModifier(actorData.data.characteristics.wfr.total);
   const final = base - Math.floor(agiMod / 2) - Math.floor(wfrMod / 2);
-   weapon.data.data.reload.total = final <= 0 ? "R" : final;
+  weapon.data.data.reload.total = final < 1 ? "R" : final;
+}
+
+function calculateWeaponReloadSingleLoading(actorData, weapon) {
+  let base = 1;
+  const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
+  const wfrMod = calculateCharacteristicModifier(actorData.data.characteristics.wfr.total);
+  const final = base + Math.floor(agiMod / 2) + Math.floor(wfrMod / 2);
+  weapon.data.data.reload.total = final > 3 ? 3 : final;
 }
 
 export function calculateWeaponSummaryAttackData(actorData) {
@@ -267,7 +275,9 @@ export function calculateWeaponSummaryAttackData(actorData) {
       calculateWeaponAttacksMelee(actorData, weapon);
     } else if (weapon.data.data.group === "ranged") {
       calculateWeaponAttacksRanged(weapon);
-      calculateWeaponReloadRanged(actorData, weapon);
+      if (weapon.data.data.special.singleLoading.has) {
+        calculateWeaponReloadSingleLoading(actorData, weapon);
+      } else calculateWeaponReloadStandard(actorData, weapon);
     }
   }
 }
