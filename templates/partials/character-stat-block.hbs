@@ -206,7 +206,7 @@
     <table style="grid-column: span 3">
       <thead>
         <tr>
-          <th colspan="6">{{localize "mythic.characterStatBlock.physical.armor"}}</th>
+          <th colspan="7">{{localize "mythic.characterStatBlock.physical.armor"}}</th>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.head"}}</th>
@@ -215,6 +215,7 @@
           <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.legs.left"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.legs.right"}}</th>
+          <th>TOU DR</th>
         </tr>
       </thead>
       <tbody>
@@ -225,6 +226,7 @@
           <td>55</td>
           <td>55</td>
           <td>55</td>
+          <td>{{data.data.characteristics.extra.touDR}}</td>
         </tr>
       </tbody>
     </table>

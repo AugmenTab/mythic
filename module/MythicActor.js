@@ -52,6 +52,9 @@ export class MythicActor extends Actor {
     const int = actorData.data.characteristics.int.total;
     const intMod = Calc.calculateCharacteristicModifier(int);
 
+    // Calculate Toughness DR
+    actorData.data.characteristics.extra.touDR = touMod + actorData.data.mythicCharacteristics.tou.total;
+
     // Calculate Experience
     Calc.calculateExperience(actorData);
 
