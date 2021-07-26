@@ -92,7 +92,15 @@
             {{#if (eq weapon.data.group "thrown")}} colspan="3" {{/if}}
           >
             <button
+              class="attack rollable"
+              data-item-id="{{weapon._id}}"
+              value="single"
               {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+              {{#unless weapon.data.magazine.current}}
+                {{#unless (eq weapon.data.attack.fireMode "melee")}}
+                  disabled="true"
+                {{/unless}}
+              {{/unless}}
             >
               <b>1</b>
             </button>
@@ -100,6 +108,9 @@
           {{#unless (eq weapon.data.group "thrown")}}
             <td style="width:40px">
               <button
+                class="attack rollable"
+                data-item-id="{{weapon._id}}"
+                value="half"
                 {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
                 {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
               >
@@ -108,6 +119,9 @@
             </td>
             <td style="width:40px">
               <button
+                class="attack rollable"
+                data-item-id="{{weapon._id}}"
+                value="full"
                 {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
                 {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
               >

@@ -14,7 +14,7 @@ const FORMULA = "D100";
 const THRESHOLD = 98;
 
 export async function rollAttacks(element, actor) {
-  return;
+  console.log("Ready to start attacks!");
 }
 
 export async function rollTest(element, actor) {
