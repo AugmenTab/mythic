@@ -1,5 +1,5 @@
 const MELEE_REACH_SIZE_BONUS = {
-  "minii": 1,
+  "mini": 1,
   "small": 1,
   "normal": 1,
   "large": 2,
@@ -12,7 +12,91 @@ const MELEE_REACH_SIZE_BONUS = {
   "monumental": 5
 };
 
-export function calculateAbilityPool(actorData) {
+export function prepareBestiary(actorData) {
+  return;
+}
+
+export function prepareFlood(actorData) {
+  return;
+}
+
+export function prepareNamedCharacter(actorData) {
+  // Calculate Ability Pool
+  calculateAbilityPool(actorData);
+
+  // Calculate Characteristics
+  const f = actorData.data.fatigue;
+  const feltFatigue = f.enduring ? f.current - 2 : f.current;
+  calculateCharacteristics(actorData, feltFatigue);
+
+  // Calculate Mythic Characteristics
+  calculateMythicCharacteristics(actorData);
+
+  // Reference Characteristics and Modifiers
+  const str = actorData.data.characteristics.str.total;
+  const strMod = (calculateCharacteristicModifier(str)
+    + actorData.data.mythicCharacteristics.str.total);
+  const tou = actorData.data.characteristics.tou.total;
+  const touMod = calculateCharacteristicModifier(tou);
+  const agi = actorData.data.characteristics.agi.total;
+  const agiMod = calculateCharacteristicModifier(agi);
+  const int = actorData.data.characteristics.int.total;
+  const intMod = calculateCharacteristicModifier(int);
+
+  // Calculate Toughness DR
+  actorData.data.characteristics.extra.touDR = touMod + actorData.data.mythicCharacteristics.tou.total;
+
+  // Calculate Experience
+  calculateExperience(actorData);
+
+  // Calculate Wounds
+  calculateWounds(actorData, touMod);
+
+  // Calculate Max Fatigue
+  calculateMaxFatigue(actorData, touMod);
+
+  // Calculate Luck
+  calculateLuck(actorData);
+
+  // Calculate Support Points
+  calculateSupportPoints(actorData);
+
+  // Calculate Carry Weight
+  calculateCarryWeight(actorData, str, tou);
+
+  // Calculate Movement Distances
+  calculateMovementDistances(actorData, strMod, agiMod);
+
+  // Calculate Initiative
+  calculateInitiative(actorData, agiMod, intMod, feltFatigue);
+  
+  // Calculate Skill Test Target Numbers
+  calculateSkillTargets(actorData);
+
+  // Calculate Education Test Target Numbers
+  calculateEducationTargets(actorData);
+
+  // Fix Talent Dependencies
+  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+
+  // Calculate Weapon Attacks
+  calculateWeaponSummaryAttackData(actorData);
+}
+
+export function prepareVehicle(actorData) {
+  return;
+}
+
+export function sortAndFilterItems(items, filterParam, sortParam = "name") {
+  let f = items.filter(function(item) { return item.type === filterParam });
+  if (sortParam === "name") {
+    return f.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
+  } else if (sortParam === "nickname") {
+    return f.sort((a, b) => a.nickname < b.nickname ? -1 : (a.nickname > b.nickname ? 1 : 0));
+  }
+}
+
+function calculateAbilityPool(actorData) {
   actorData.data.characteristics.extra.poolTotal = (
     actorData.data.characteristics.str.abilityPool +
     actorData.data.characteristics.tou.abilityPool +
@@ -27,7 +111,7 @@ export function calculateAbilityPool(actorData) {
   );
 }
 
-export function calculateCarryWeight(actorData, str, tou) {
+function calculateCarryWeight(actorData, str, tou) {
   const touMod = calculateCharacteristicModifier(tou);
   const carry = (
     (actorData.data.carryingCapacity.doubleStr ? str * 2 : str) +
@@ -41,7 +125,7 @@ export function calculateCarryWeight(actorData, str, tou) {
   actorData.data.carryingCapacity.push = carry * 4;
 }
 
-export function calculateCharacteristics(actorData, feltFatigue) {
+function calculateCharacteristics(actorData, feltFatigue) {
   for (const [key, value] of Object.entries(actorData.data.characteristics)) {
     if (key != "extra") {
       const total = (
@@ -55,11 +139,11 @@ export function calculateCharacteristics(actorData, feltFatigue) {
   }
 }
 
-export function calculateCharacteristicModifier(score) {
+function calculateCharacteristicModifier(score) {
   return score < 0 ? 0 : Math.floor(score / 10);
 }
 
-export function calculateEducationTargets(actorData) {
+function calculateEducationTargets(actorData) {
   let educations = actorData.items.filter(function(item) { return item.type === "education" });
   for (let e of Object.values(educations)) {
     const base = e.data.data.roll.skill === "int"
@@ -72,7 +156,7 @@ export function calculateEducationTargets(actorData) {
   }
 }
 
-export function calculateExperience(actorData) {
+function calculateExperience(actorData) {
   const totalExp = actorData.data.experience.total;
   actorData.data.experience.current = totalExp - actorData.data.experience.spent;
   if (totalExp >= 32000) {
@@ -94,7 +178,7 @@ export function calculateExperience(actorData) {
   }
 }
 
-export function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
+function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
   const battlemind = actorData.data.initiative.battleMind;
   let formula = [];
@@ -110,7 +194,7 @@ export function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   actorData.data.initiative.formula = formula.join("+");
 }
 
-export function calculateLuck(actorData) {
+function calculateLuck(actorData) {
   const max = (
     actorData.data.luck.starting + actorData.data.luck.advancements +
     actorData.data.luck.other - actorData.data.luck.burnt
@@ -118,11 +202,11 @@ export function calculateLuck(actorData) {
   actorData.data.luck.max = max > 0 ? max : 0;
 }
 
-export function calculateMaxFatigue(actorData, touMod) {
+function calculateMaxFatigue(actorData, touMod) {
   actorData.data.fatigue.max = 2 * touMod;
 }
 
-export function calculateMovementDistances(actorData, strMod, agiMod) {
+function calculateMovementDistances(actorData, strMod, agiMod) {
   const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
   if (base <= 0) {
     actorData.data.movement.half = 0.5;
@@ -149,7 +233,7 @@ export function calculateMovementDistances(actorData, strMod, agiMod) {
   );
 }
 
-export function calculateMythicCharacteristics(actorData) {
+function calculateMythicCharacteristics(actorData) {
   for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
     if (key != "notes") {
       const total = (value.soldierType + value.equipment + value.other + 
@@ -159,7 +243,7 @@ export function calculateMythicCharacteristics(actorData) {
   }
 }
 
-export function calculateSkillTargets(actorData) {
+function calculateSkillTargets(actorData) {
   for (const [key, value] of Object.entries(actorData.data.skills)) {
     if (key != "notes") {
       let target = value.mods;
@@ -184,7 +268,7 @@ export function calculateSkillTargets(actorData) {
   }
 }
 
-export function calculateSupportPoints(actorData) {
+function calculateSupportPoints(actorData) {
   actorData.data.supportPoints.max = (
     actorData.data.supportPoints.rank + actorData.data.supportPoints.other
   );
@@ -289,7 +373,7 @@ function calculateWeaponTarget(actorData, weapon) {
   weapon.data.data.attack.target = mod > 0 ? mod : 0;
 }
 
-export function calculateWeaponSummaryAttackData(actorData) {
+function calculateWeaponSummaryAttackData(actorData) {
   let weapons = actorData.items.filter(function(item) { return item.type === "weapon" });
   for (let weapon of Object.values(weapons)) {
     if (weapon.data.data.group === "thrown") {
@@ -321,19 +405,10 @@ function calculateWeightPenaltyThrown(mod) {
   return penalty;
 }
 
-export function calculateWounds(actorData, touMod) {
+function calculateWounds(actorData, touMod) {
   actorData.data.wounds.max = 20 + (
     (2 * (actorData.data.wounds.doubleTou ? touMod * 2 : touMod)) + 
     actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
     (parseInt(actorData.data.wounds.advancements) * 4)
   );
-}
-
-export function sortAndFilterItems(items, filterParam, sortParam = "name") {
-  let f = items.filter(function(item) { return item.type === filterParam });
-  if (sortParam === "name") {
-    return f.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
-  } else if (sortParam === "nickname") {
-    return f.sort((a, b) => a.nickname < b.nickname ? -1 : (a.nickname > b.nickname ? 1 : 0));
-  }
 }
