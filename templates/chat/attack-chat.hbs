@@ -11,10 +11,10 @@
         {{#if attack.critical}}
           Critical {{attack.outcome}}!
         {{else}}
-          {{this.degrees}} degrees of {{this.outcome}}!
+          {{attack.degrees}} degrees of {{attack.outcome}}!
         {{/if}}
       </p>
-      {{#ifCond (eq attack.outcome "success") "||" attack.damageRoll}}
+      {{#if (cond "||" (eq attack.outcome "success") attack.damageRoll)}}
         <div class="damage-block">
           {{#times attack.damages}}
             <p>
@@ -25,7 +25,10 @@
             </p>
           {{/times}}
         </div>
-      {{/ifCond}}
+      {{/if}}
     </div>
   {{/each}}
+  <div class="special">
+
+  </div>
 </div>
