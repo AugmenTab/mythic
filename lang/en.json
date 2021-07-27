@@ -442,6 +442,64 @@
                 "covenant": "Covenant",
                 "forerunner": "Forerunner"
             }
+        },
+        "hitLocations": {
+            "body": {
+                "chest": {
+                    "location": "Chest",
+                    "noOrgan": "No Organ Hit",
+                    "lungs": "Lung",
+                    "heart": "Heart",
+                    "splanchnic": "Stomach/Liver",
+                    "kidney": "Kidney",
+                    "large": "Large Intestines",
+                    "small": "Small Intestines"
+                },
+                "leg": {
+                    "left": "Left Leg",
+                    "right": "Right Leg",
+                    "pelvis": "Pelvis",
+                    "thigh": "Thigh",
+                    "knee": "Knee",
+                    "shin": "Shin",
+                    "ankle": "Ankle",
+                    "foot": "Foot",
+                    "toe": "Toe"
+                },
+                "arm": {
+                    "left": "Left Arm",
+                    "right": "Right Arm",
+                    "shoulder": "Shoulder",
+                    "bicep": "Bicep",
+                    "elbow": "Elbow",
+                    "forearm": "Forearm",
+                    "hand": "Hand",
+                    "finger": "Finger"
+                },
+                "head": {
+                    "location": "Head",
+                    "ear": "Ear",
+                    "forehead": "Forehead",
+                    "eye": "Eye",
+                    "cheek": "Cheek",
+                    "nose": "Nose",
+                    "mouth": "Mouth",
+                    "chin": "Chin",
+                    "neck": "Neck"
+                },
+                "digits": {
+                    "thumb": "Thumb",
+                    "index": "Index",
+                    "middle": "Middle",
+                    "ring": "Ring",
+                    "pinky": "Pinky"
+                }
+            },
+            "side": {
+                "left": "Left",
+                "right": "Right"
+            },
+            "vehicle": {}
         }
     }
 }
