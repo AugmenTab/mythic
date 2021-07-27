@@ -21,13 +21,22 @@
               [[{{attack.damageRoll}}]] P{{attack.piercing}}
               {{#unless attack.apply}}
                 : {{attack.location}}
-              {{!-- {{else}}
+              {{else}}
                 {{#if (eq attack.outcome "failure")}}
                   :
-                  <span class="scatter">
+                  <span 
+                    class="scatter"
+                    data-wfm="{{../../this.wfm}}"
+                    data-dof="{{attack.degrees}}"
+                    {{#if (eq ../../this.weaponData.group "thrown")}}
+                      data-range="{{../../this.weaponData.range.thrown}}"
+                    {{else}}
+                      data-range="{{../../this.weaponData.range.long}}"
+                    {{/if}}
+                  >
                     {{localize "mythic.chat.scatter.title"}}!
                   </span>
-                {{/if}} --}}
+                {{/if}}
               {{/unless}}
             </p>
           {{/times}}

@@ -1,3 +1,4 @@
+import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
 import { mythic } from "./module/config.js";
 import { MythicActor } from "./module/MythicActor.js";
@@ -39,3 +40,5 @@ Hooks.once("init", function() {
 
   preloadHandlebarsTemplates();
 });
+
+Hooks.on("renderChatMessage", (app, html, data) => Chat.addChatListeners(html));

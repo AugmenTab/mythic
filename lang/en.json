@@ -232,7 +232,10 @@
                 "title": "Attack"
             },
             "options": {
-                "circumstance": "Circumstance Modifier"
+                "circumstance": "Circumstance Modifier",
+                "dof": "Degrees of Failure",
+                "distance": "Distance from Target (meters)",
+                "isZeroG": "Zero Gravity?"
             },
             "scatter": {
                 "title": "Scatter"

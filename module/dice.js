@@ -195,6 +195,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
   let result = {
     name: weapon.data.data.nickname,
     img: weapon.img,
+    wfm: actor.data.data.characteristics.wfm.total,
     weaponData: weapon.data.data,
     attacks: [],
     type: type,
