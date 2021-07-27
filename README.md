@@ -24,7 +24,8 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
 * Fully functioning Medical page to handle injuries.
 * Lock nav bar at the top of the Actor Sheet.
 * Add hit locations for targeting vehicles.
-* Add called shots.
+* Add called shots, Clear Target, and Precision Strike.
+* Add dual wielding.
 * Weapon summary QOL improvements:
     * Include attack roll target in parentheses after weapon name.
     * Include reload half-actions and a reload button next to each magazine.

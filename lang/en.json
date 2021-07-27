@@ -448,7 +448,7 @@
                 "chest": {
                     "location": "Chest",
                     "noOrgan": "No Organ Hit",
-                    "lungs": "Lung",
+                    "lung": "Lung",
                     "heart": "Heart",
                     "splanchnic": "Stomach/Liver",
                     "kidney": "Kidney",

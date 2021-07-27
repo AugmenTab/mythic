@@ -1,3 +1,31 @@
-<div>
-  {{log this}}
+<div class="post-attack">
+  <h1 class="post-header">
+    <img alt="{{this.name}}" src="{{this.img}}"/>
+    {{this.name}}
+  </h1>
+  {{#each this.attacks as |attack|}}
+    <div>
+      <h3>{{localize "mythic.chat.attack.title"}} {{attack.attackNumber}}</h3>
+      <p>
+        <b style="color:{{attack.color}}">[[{{attack.roll}}]]</b><b> vs {{../this.target}}:</b>
+        {{#if attack.critical}}
+          Critical {{attack.outcome}}!
+        {{else}}
+          {{this.degrees}} degrees of {{this.outcome}}!
+        {{/if}}
+      </p>
+      {{#ifCond (eq attack.outcome "success") "||" attack.damageRoll}}
+        <div class="damage-block">
+          {{#times attack.damages}}
+            <p>
+              [[{{attack.damageRoll}}]] P{{attack.piercing}}
+              {{#unless attack.apply}}
+                : {{attack.location}}
+              {{/unless}}
+            </p>
+          {{/times}}
+        </div>
+      {{/ifCond}}
+    </div>
+  {{/each}}
 </div>

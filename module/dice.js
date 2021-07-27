@@ -95,7 +95,7 @@ async function determineHitSublocation(key, root) {
   if (key >= 97) return game.i18n.localize(`${root}.chest.noOrgan`);
   if (key >= 90) {
     const side = await determineHitSide();
-    return `${side} ${game.i18n.localize(`${root}.chest.lungs`)}`;
+    return `${side} ${game.i18n.localize(`${root}.chest.lung`)}`;
   }
   if (key >= 85) return game.i18n.localize(`${root}.chest.heart`);
   if (key >= 79) return game.i18n.localize(`${root}.chest.splanchnic`);
@@ -160,11 +160,11 @@ async function determineHitSublocation(key, root) {
   if (key >= 9) return game.i18n.localize(`${root}.head.forehead`);
   if (key >= 8) {
     const side = await determineHitSide();
-    return `${side} ${game.i18n.localize(`${root}.head.eyes`)}`;
+    return `${side} ${game.i18n.localize(`${root}.head.eye`)}`;
   }
   if (key >= 6) {
     const side = await determineHitSide();
-    return `${side} ${game.i18n.localize(`${root}.head.cheeks`)}`;
+    return `${side} ${game.i18n.localize(`${root}.head.cheek`)}`;
   }
   if (key >= 4) return game.i18n.localize(`${root}.head.nose`);
   if (key >= 3) return game.i18n.localize(`${root}.head.mouth`);
@@ -191,17 +191,17 @@ function determineRollOutcome(roll, target) {
 }
 
 async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
+  const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let result = {
-    name: weapon.name,
+    name: weapon.data.data.nickname,
     img: weapon.img,
     weaponData: weapon.data.data,
     attacks: [],
     type: type,
     target: target,
     template: "attack",
-    flavor: `${capitalize(weapon.data.data.group)} ${capitalize(type)} ${game.i18n.localize("mythic.chat.attack.title")}`
+    flavor: getAttackFlavor(weapon.data.data.group, type, fireMode)
   };
-  const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let attacks = 1, damagesPerAttack = 1;
   if (type !== "single" && fireMode === "sustained") {
     damagesPerAttack = weapon.data.data.attack[type];
@@ -216,6 +216,16 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
     result.attacks.push(attack);
   }
   await postChatMessage(result, actor);
+}
+
+function getAttackFlavor(group, type, fireMode) {
+  let message = `${capitalize(group)} ${capitalize(type)}
+  ${game.i18n.localize("mythic.chat.attack.title")}`;
+  if (group === "ranged") {
+    message += " - ";
+    message += game.i18n.localize(`mythic.weaponSheet.fireMode.${fireMode}`);
+  }
+  return message;
 }
 
 async function getAttackRollOptions() {
@@ -274,12 +284,13 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages)
   let attack = {
     attackNumber: attackNumber,
     damages: damages,
-    target: target,
     roll: roll.total,
     ...outcome
   };
-
-  if (attack.outcome === "success") {
+  if (attack.outcome === "success"
+    || weapon.data.data.special.blast.has 
+    || weapon.data.data.special.kill.has
+  ) {
     attack.location = await determineHitLocation(roll.total);
     let damage = weapon.data.data.attack.damageRoll;
     let min = weapon.data.data.special.diceMinimum.has
@@ -304,6 +315,9 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages)
     }
     attack.damageRoll = `${damage} + ${base}`;
     attack.piercing = pierce;
+    if (weapon.data.data.special.blast.has || weapon.data.data.special.kill.has) {
+      attack.apply = true;
+    }
   }
   return attack;
 }
