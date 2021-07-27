@@ -21,6 +21,13 @@
               [[{{attack.damageRoll}}]] P{{attack.piercing}}
               {{#unless attack.apply}}
                 : {{attack.location}}
+              {{!-- {{else}}
+                {{#if (eq attack.outcome "failure")}}
+                  :
+                  <span class="scatter">
+                    {{localize "mythic.chat.scatter.title"}}!
+                  </span>
+                {{/if}} --}}
               {{/unless}}
             </p>
           {{/times}}

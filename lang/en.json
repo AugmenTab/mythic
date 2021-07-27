@@ -234,6 +234,9 @@
             "options": {
                 "circumstance": "Circumstance Modifier"
             },
+            "scatter": {
+                "title": "Scatter"
+            },
             "test": {
                 "title": "Test"
             }
