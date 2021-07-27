@@ -12,6 +12,10 @@ const MELEE_REACH_SIZE_BONUS = {
   "monumental": 5
 };
 
+export function calculateCharacteristicModifier(score) {
+  return score < 0 ? 0 : Math.floor(score / 10);
+}
+
 export function prepareBestiary(actorData) {
   return;
 }
@@ -137,10 +141,6 @@ function calculateCharacteristics(actorData, feltFatigue) {
       value.roll = Math.floor(roll > 0 ? roll : 0);
     }
   }
-}
-
-function calculateCharacteristicModifier(score) {
-  return score < 0 ? 0 : Math.floor(score / 10);
 }
 
 function calculateEducationTargets(actorData) {

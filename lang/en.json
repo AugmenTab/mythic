@@ -15,6 +15,18 @@
             "age": "Age",
             "gender": "Gender"
         },
+        "characteristics": {
+            "str": "Strength",
+            "tou": "Toughness",
+            "agi": "Agility",
+            "wfr": "Warfare Range",
+            "wfm": "Warfare Melee",
+            "int": "Intellect",
+            "per": "Perception",
+            "cr": "Courage",
+            "ch": "Charisma",
+            "ld": "Leadership"
+        },
         "characterNav": {
             "summary": "Summary",
             "talents": {
@@ -215,6 +227,9 @@
             "actions": {
                 "cancel": "Cancel",
                 "roll": "Roll"
+            },
+            "attack": {
+                "title": "Attack"
             },
             "options": {
                 "circumstance": "Circumstance Modifier"

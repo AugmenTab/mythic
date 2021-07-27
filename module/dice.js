@@ -1,3 +1,5 @@
+import { calculateCharacteristicModifier } from "./calculations.js";
+
 const CHARACTERISTICS = {
   "str": "Strength",
   "tou": "Toughness",
@@ -14,13 +16,19 @@ const FORMULA = "D100";
 const THRESHOLD = 98;
 
 export async function rollAttacks(element, actor) {
-  console.log("Ready to start attacks!");
+  const weapon = await actor.items.get(element.getAttribute("data-item-id"));
+  const attackOptions = await getAttackRollOptions();
+  const target = weapon.data.data.attack.target + parseInt(attackOptions.circumstance);
+  const type = element.value;
+  if (!attackOptions.cancelled) {
+    await getAttackAndDamageOutcomes(actor, weapon, target, type);
+  }
 }
 
 export async function rollTest(element, actor) {
   const type = element.classList[0];
   const test = type === "initiative" 
-    ? `${type[0].toUpperCase()}${type.slice(1)}` 
+    ? capitalize(type) 
     : (CHARACTERISTICS[element.name] != undefined 
         ? CHARACTERISTICS[element.name] 
         : element.name
@@ -35,6 +43,85 @@ export async function rollTest(element, actor) {
       await rollBasicTest(target + mod, test, type, actor);
     }
   }
+}
+
+async function buildChatMessageContent(data) {
+  const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
+  return await renderTemplate(template, data);
+}
+
+function capitalize(str) {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
+function determineRollOutcome(roll, target) {
+  let outcome = { color: "black", critical: false };
+  if (roll >= THRESHOLD) {
+    outcome.critical = true;
+    outcome.outcome = "failure";
+    outcome.color = "red";
+  } else if (roll === 1) {
+    outcome.critical = true;
+    outcome.outcome = "success";
+    outcome.color = "green";
+  } else {
+    const d = (target - roll) / 10;
+    outcome.outcome = d >= 0 ? "success" : "failure";
+    outcome.degrees = Math.abs(d).toFixed(1);
+  }
+  return outcome;
+}
+
+async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
+  let result = {
+    name: weapon.name,
+    img: weapon.img,
+    weaponData: weapon.data.data,
+    attacks: [],
+    type: type,
+    target: target,
+    template: "attack",
+    flavor: `${capitalize(weapon.data.data.group)} ${capitalize(type)} ${game.i18n.localize("mythic.chat.attack.title")}`
+  };
+  const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
+  let attacks = 1, damagesPerAttack = 1;
+  if (type !== "single" && fireMode === "sustained") {
+    damagesPerAttack = weapon.data.data.attack[type];
+  } else if (type !== "single" && fireMode === "burst") {
+    attacks = type === "full" ? 2 : 1;
+    damagesPerAttack = weapon.data.data.attack.half;
+  } else if (type !== "single") {
+    attacks = weapon.data.data.attack[type];
+  }
+  for (let i = 1; i <= attacks; i++) {
+    const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack);
+    result.attacks.push(attack);
+  }
+  await postChatMessage(result, actor);
+}
+
+async function getAttackRollOptions() {
+  const template = "systems/mythic/templates/chat/attack-dialog.hbs";
+  const html = await renderTemplate(template, {});
+  return new Promise(resolve => {
+    const data = {
+      title: game.i18n.format("mythic.chat.attack.title"),
+      content: html,
+      buttons: {
+        roll: {
+          label: game.i18n.localize("mythic.chat.actions.roll"),
+          callback: html => resolve(_processAttackOptions(html[0].querySelector("form")))
+        },
+        cancel: {
+          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          callback: html => resolve({cancelled: true})
+        }
+      },
+      default: "roll",
+      close: () => resolve({cancelled: true})
+    };
+    new Dialog(data, null).render(true);
+  });
 }
 
 async function getTestOptions(test) {
@@ -63,14 +150,48 @@ async function getTestOptions(test) {
   });
 }
 
-function _processTestOptions(form) {
-  return {
-    circumstance: form.circumstance.value
+async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages) {
+  const roll = await new Roll(FORMULA).roll({ async: true });
+  const outcome = determineRollOutcome(roll.total, target);
+  let attack = {
+    attackNumber: attackNumber,
+    damages: damages,
+    target: target,
+    roll: roll.total,
+    ...outcome
   };
+
+  if (attack.outcome === "success") {
+    let damage = weapon.data.data.attack.damageRoll;
+    let min = weapon.data.data.special.diceMinimum.has
+      ? weapon.data.data.special.diceMinimum.value
+      : 0;
+    if (roll.total === 1 && min < 5) min = 5;
+    if (min > 0) damage += `min${min}`;
+
+    let base = weapon.data.data.attack.baseDamage;
+    let pierce = weapon.data.data.attack.piercing;
+    if (weapon.data.data.group === "melee") {
+      const str = (
+        actor.data.data.mythicCharacteristics.str.total +
+        calculateCharacteristicModifier(actor.data.data.characteristics.str.total)
+      );
+      base += Math.floor(str * weapon.data.data.attack.strDamage);
+      pierce += Math.floor(str * weapon.data.data.attack.strPiercing);
+      if (actor.data.data.trainings.weapons.unarmedCombatant) {
+        const wfm = calculateCharacteristicModifier(actor.data.data.characteristics.wfm.total);
+        pierce += Math.floor(wfm / 2);
+      }
+    }
+    attack.damageRoll = `${damage} + ${base}`;
+    attack.piercing = pierce;
+  }
+  return attack;
 }
 
 async function rollBasicTest(target, test, type, actor) {
   const roll = await new Roll(FORMULA).roll({ async: true });
+  const outcome = determineRollOutcome(roll.total, target);
   let result = {
     type: type,
     test: test,
@@ -80,28 +201,14 @@ async function rollBasicTest(target, test, type, actor) {
     degrees: 0,
     outcome: "",
     template: "test",
-    color: "black"
+    flavor: `${test} ${game.i18n.localize("mythic.chat.test.title")}`,
+    ...outcome
   };
-
-  if (roll.total >= THRESHOLD) {
-    result.critical = true;
-    result.outcome = "failure";
-    result.color = "red";
-  } else if (roll.total === 1) {
-    result.critical = true;
-    result.outcome = "success";
-    result.color = "green";
-  } else {
-    const d = (target - roll.total) / 10;
-    result.outcome = d >= 0 ? "success" : "failure";
-    result.degrees = Math.abs(d).toFixed(1);
-  }
-  await postBasicTestChatMessage(result, actor);
+  await postChatMessage(result, actor);
 }
 
 async function rollInitiative(element, mod, actor) {
   const dataset = element.dataset;
-  console.log(dataset.label);
   if (dataset.roll) {
     const circumstance = `${mod > 0 ? " + " + mod : mod}`;
     const roll = await new Roll(dataset.roll + circumstance, actor.data.data, { async: true });
@@ -113,17 +220,24 @@ async function rollInitiative(element, mod, actor) {
   }
 }
 
-async function buildChatMessageContent(data) {
-  const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
-  return await renderTemplate(template, data);
-}
-
-async function postBasicTestChatMessage(data, actor) {
+async function postChatMessage(data, actor) {
   await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
   await ChatMessage.create({
     user: game.user.id,
     speaker: ChatMessage.getSpeaker({ actor: actor }),
-    flavor: `${data.test} ${game.i18n.localize("mythic.chat.test.title")}`,
+    flavor: data.flavor,
     content: await buildChatMessageContent(data)
   }, {});
+}
+
+function _processAttackOptions(form) {
+  return {
+    circumstance: form.circumstance.value
+  };
+}
+
+function _processTestOptions(form) {
+  return {
+    circumstance: form.circumstance.value
+  };
 }
