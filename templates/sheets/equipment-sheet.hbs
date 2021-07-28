@@ -1,0 +1,37 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <h1>
+      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+    </h1>
+  </header>
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.equipmentSheet.faction"}}</th>
+        <th>{{localize "mythic.equipmentSheet.price"}}</th>
+        <th>{{localize "mythic.equipmentSheet.weight"}}</th>
+        <th>{{localize "mythic.equipmentSheet.selfSupported"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <select name="data.trainings.faction">
+            {{#select data.data.trainings.faction}}
+              {{#each config.trainings.factions as |value key|}}
+                <option value="{{key}}">{{localize value}}</option>
+              {{/each}}
+            {{/select}}
+          </select>
+        </td>
+        <td><input name="data.price" type="number" data-dtype="Number" value="{{data.data.price}}"/></td>
+        <td><input name="data.weight.each" type="number" data-dtype="Number" value="{{data.data.weight.each}}"/></td>
+        <td><input name="data.weight.selfSupported" type="checkbox" {{checked data.data.weight.selfSupported}}/></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="sheet-content">
+    {{editor content=data.data.description target="data.description" button=true owner=owner editable=this.options.editable}}
+  </div>
+</form>

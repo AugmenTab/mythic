@@ -14,7 +14,7 @@
                 "race": "",
                 "rank": "",
                 "soldierType": "",
-                "notes": "Write character notes here.",
+                "notes": "",
                 "characteristics": {
                     "str": {
                         "soldierType": 0,
@@ -514,7 +514,7 @@
             "educations": {
                 "notes": ""
             },
-            "biography": "Write character biography here."
+            "biography": ""
         },
         "Bestiary Enemy": {
             "templates": [
@@ -547,12 +547,11 @@
         "templates": {
             "baseItemDetails": {
                 "faction": "",
-                "itemDescription": ""
+                "description": ""
             },
             "physical": {
                 "price": 0,
                 "breakPoints": 0,
-                "carried": false,
                 "trainings": {
                     "equipment": "",
                     "faction": ""
@@ -562,6 +561,7 @@
                     "felt": 0.0,
                     "each": 0.0,
                     "quantity": 1,
+                    "carried": false,
                     "equipped": false,
                     "selfSupported": false
                 }
@@ -620,16 +620,16 @@
         },
         "equipment": {
             "templates": [
-                "baseItemDetails",
                 "physical"
-            ]
+            ],
+            "description": ""
         },
         "weapon": {
             "templates": [
                 "baseItemDetails",
                 "physical"
             ],
-            "group": "",
+            "group": "ranged",
             "tags": {
                 "[UD]": true,
                 "[I]": false,

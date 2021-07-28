@@ -36,6 +36,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.traits = a.filter(function(i) { return i.data.type === "trait" });
 
     data.educations = sortAndFilterItems(data.items, "education");
+    data.equipment = sortAndFilterItems(data.items, "equipment");
     data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
     return data;
   }

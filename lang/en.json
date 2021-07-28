@@ -284,6 +284,12 @@
             },
             "skills": "Applicable Skills"
         },
+        "equipmentSheet": {
+            "faction": "Faction",
+            "price": "Price (cR)",
+            "weight": "Weight (kgs)",
+            "selfSupported": "Self-Supporting?"
+        },
         "skillSheet": {
             "stats": "Characteristics",
             "difficulty": "Difficulty",
