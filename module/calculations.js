@@ -93,10 +93,13 @@ export function prepareVehicle(actorData) {
 
 export function sortAndFilterItems(items, filterParam, sortParam = "name") {
   let f = items.filter(function(item) { return item.type === filterParam });
+  console.log()
   if (sortParam === "name") {
     return f.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
   } else if (sortParam === "nickname") {
-    return f.sort((a, b) => a.nickname < b.nickname ? -1 : (a.nickname > b.nickname ? 1 : 0));
+    return f.sort((a, b) => (
+      a.data.nickname < b.data.nickname ? -1 : (a.data.nickname > b.data.nickname ? 1 : 0))
+    );
   }
 }
 

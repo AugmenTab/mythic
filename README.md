@@ -85,7 +85,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 * Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
-* Weapons listed in Weapon Summary are not sorting.
 
 ## Planned Features and Stretch Goals
 
