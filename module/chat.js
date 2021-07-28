@@ -52,29 +52,35 @@ async function getScatterOptions(degrees = 0) {
 async function onScatter(event) {
   const element = event.currentTarget;
   const options = await getScatterOptions(element.dataset.dof);
-  let msg = "";
+  const distance = parseInt(options.distance);
+  const dof = parseFloat(options.dof)
 
-  let times = options.isZeroG ? 2 : 1;
-  for (let i = 1; i <= times; i++) {
-    const roll = await new Roll("1D10").roll({ async: true });
-    if (i === 2) msg += " | ";
-    let distance = parseInt(options.distance);
-    let mod = 0;
-    mod += Math.floor(parseFloat(options.dof));
-    mod += Math.floor(distance / 100);
-    if (distance > element.dataset.range) {
-      if (distance > element.dataset.range * 2) { mod *= 5 }
-      else { mod *= 2 }
-    }
-    mod -= calculateCharacteristicModifier(parseInt(element.dataset.wfm));
-    const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
-    msg += getScatterDirection(roll.total).split("").map(x => getArrow(x)).join("");
-    msg += ` ${dice.total} m`;
+  if (isNaN(distance) || isNaN(dof)) {
+    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    options.cancelled = true;
   }
-
-  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
-  element.classList.remove("scatter");
-  element.innerHTML = msg;
+  if (!options.cancelled) {
+    let msg = "";
+    let times = options.isZeroG ? 2 : 1;
+    for (let i = 1; i <= times; i++) {
+      const roll = await new Roll("1D10").roll({ async: true });
+      if (i === 2) msg += " | ";
+      let mod = 0;
+      mod += Math.floor(dof);
+      mod += Math.floor(distance / 100);
+      if (distance > element.dataset.range) {
+        if (distance > element.dataset.range * 2) { mod *= 5 }
+        else { mod *= 2 }
+      }
+      mod -= calculateCharacteristicModifier(parseInt(element.dataset.wfm));
+      const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
+      msg += getScatterDirection(roll.total).split("").map(x => getArrow(x)).join("");
+      msg += ` ${dice.total} m`;
+    }
+    await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
+    element.classList.remove("scatter");
+    element.innerHTML = msg;
+  }
 }
 
 function _processTestOptions(form) {

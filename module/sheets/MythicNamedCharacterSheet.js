@@ -70,7 +70,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       data.data.experience.spent += (!isNaN(val)) ? val : 0;
     }
     if (isNaN(parseInt(field.value))) {
-      ui.notifications.error("Invalid entry: please enter a whole number.")
+      ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     }
     field.value = "";
     await this.actor.update(data);

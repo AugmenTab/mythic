@@ -231,6 +231,9 @@
             "attack": {
                 "title": "Attack"
             },
+            "error": {
+                "nan": "Invalid entry: please enter a whole number."
+            },
             "options": {
                 "circumstance": "Circumstance Modifier",
                 "dof": "Degrees of Failure",

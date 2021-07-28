@@ -16,11 +16,15 @@ const FORMULA = "D100";
 const THRESHOLD = 98;
 
 export async function rollAttacks(element, actor) {
-  const weapon = await actor.items.get(element.getAttribute("data-item-id"));
   const attackOptions = await getAttackRollOptions();
-  const target = weapon.data.data.attack.target + parseInt(attackOptions.circumstance);
-  const type = element.value;
+  if (isNaN(parseInt(attackOptions.circumstance))) {
+    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    attackOptions.cancelled = true;
+  }
   if (!attackOptions.cancelled) {
+    const weapon = await actor.items.get(element.getAttribute("data-item-id"));
+    const target = weapon.data.data.attack.target + parseInt(attackOptions.circumstance);
+    const type = element.value;
     await getAttackAndDamageOutcomes(actor, weapon, target, type);
   }
 }
@@ -36,6 +40,10 @@ export async function rollTest(element, actor) {
   const target = parseInt(element.value);
   const testOptions = await getTestOptions(test);
   const mod = parseInt(testOptions.circumstance);
+  if (isNaN(mod)) {
+    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    testOptions.cancelled = true;
+  }
   if (!testOptions.cancelled) {
     if (type === "initiative") {
       await rollInitiative(element, mod, actor);
