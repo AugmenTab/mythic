@@ -27,5 +27,4 @@ An unofficial system implementation for playing the fan-made Halo: Mythic game o
 * Add called shots, Clear Target, and Precision Strike.
 * Add dual wielding.
 * Weapon summary QOL improvements:
-    * Include attack roll target in parentheses after weapon name.
-    * Include reload half-actions and a reload button next to each magazine.
+    * Evasion button should prompt a dialog window asking how many to roll (and circumstance modifier), then roll batched Evasions, with stacking penalty.

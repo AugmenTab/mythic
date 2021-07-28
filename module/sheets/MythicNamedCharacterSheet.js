@@ -40,6 +40,12 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     return data;
   }
 
+  getRollData() {
+    const data = super.getRollData();
+
+    return data;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
 
