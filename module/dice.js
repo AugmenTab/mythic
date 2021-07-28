@@ -174,6 +174,8 @@ async function determineHitSublocation(key, root) {
 
 function determineRollOutcome(roll, target) {
   let outcome = { color: "black", critical: false };
+  const d = (target - roll) / 10;
+  outcome.degrees = Math.abs(d).toFixed(1);
   if (roll >= THRESHOLD) {
     outcome.critical = true;
     outcome.outcome = "failure";
@@ -183,9 +185,7 @@ function determineRollOutcome(roll, target) {
     outcome.outcome = "success";
     outcome.color = "green";
   } else {
-    const d = (target - roll) / 10;
     outcome.outcome = d >= 0 ? "success" : "failure";
-    outcome.degrees = Math.abs(d).toFixed(1);
   }
   return outcome;
 }
@@ -332,7 +332,6 @@ async function rollBasicTest(target, test, type, actor) {
     roll: roll.total,
     target: target,
     critical: false,
-    degrees: 0,
     outcome: "",
     template: "test",
     flavor: `${test} ${game.i18n.localize("mythic.chat.test.title")}`,
