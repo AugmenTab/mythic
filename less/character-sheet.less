@@ -148,16 +148,39 @@
         }
     }
 
-    .educations-table {
-        .education-name {
-            display: inline-grid;
-            grid-template-columns: 3em auto 16px;
-            column-gap: 8px;
-            text-align: start;
-            align-items: center;
-            padding: 0 8px;
-            width: 100%;
-            height: 100%;
+    .education-name {
+        display: inline-grid;
+        grid-template-columns: 3em auto 16px;
+        column-gap: 8px;
+        text-align: start;
+        align-items: center;
+        padding: 0 8px;
+        width: 100%;
+        height: 100%;
+
+        img {
+            height: 3em;
+        }
+    }
+
+    .item-name {
+        display: inline-grid;
+        grid-template-columns: 1.75em auto 36px;
+        column-gap: 8px;
+        text-align: start;
+        align-items: center;
+        padding: 0 8px;
+        width: 100%;
+        height: 100%;
+
+        img {
+            height: 1.75em;
+        }
+
+        .item-management {
+            display: grid;
+            grid-template-columns: repeat(2, 16px);
+            column-gap: 4px;
         }
     }
 

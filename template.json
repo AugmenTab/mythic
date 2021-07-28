@@ -162,7 +162,10 @@
                     "strongBack": false,
                     "carry": 0,
                     "lift": 0,
-                    "push": 0
+                    "push": 0,
+                    "felt": 0,
+                    "total": 0,
+                    "character": 0
                 },
                 "movement": {
                     "doubleAgiRunCharge": false,
@@ -231,7 +234,8 @@
                     "languages": [],
                     "alienTech": false
                 },
-                "abilityNotes": ""
+                "abilityNotes": "",
+                "equipmentNotes": ""
             },
             "skills": {
                 "skills": {

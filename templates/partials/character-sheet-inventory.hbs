@@ -1,1 +1,71 @@
-<p><b>TODO</b></p>
+<section class="">
+  <div class="bars">
+
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Carried</th>
+        <th>Equipped</th>
+        <th>Quantity</th>
+        <th>Felt Weight</th>
+        <th>Total Weight</th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="6">Weapons</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each weapons as |weapon|}}
+        {{> "systems/mythic/templates/partials/character-sheet-items.hbs" weapon}}
+      {{else}}
+        <tr>
+          <td colspan="6">{{localize "mythic.characterInventory.weapon.empty"}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="6">Armor</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each armors as |armor|}}
+        {{> "systems/mythic/templates/partials/character-sheet-items.hbs" armor}}
+      {{else}}
+        <tr>
+          <td colspan="6">{{localize "mythic.characterInventory.armor.empty"}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="6">Equipment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each equipment as |equip|}}
+        {{> "systems/mythic/templates/partials/character-sheet-items.hbs" equip}}
+      {{else}}
+        <tr>
+          <td colspan="6">{{localize "mythic.characterInventory.equipment.empty"}}</td>
+        </tr>
+      {{/each}}
+      <td colspan="6">
+        <textarea name="data.equipmentNotes" placeholder="Write equipment notes here.">{{data.data.equipmentNotes}}</textarea>
+      </td>
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="4">
+          {{localize "mythic.characterInventory.grandTotals"}}: {{data.data.carryingCapacity.character}}
+        </th>
+        <th>{{data.data.carryingCapacity.felt}}</th>
+        <th>{{data.data.carryingCapacity.total}}</th>
+      </tr>
+    </thead>
+  </table>
+</section>

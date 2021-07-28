@@ -109,6 +109,29 @@
             "empty": "No Educations have been added yet.",
             "notes": "Write education notes here."
         },
+        "characterInventory": {
+            "bars": {},
+            "name": "Name",
+            "carried": "Carried",
+            "equipped": "Equipped",
+            "quantity": "Quantity",
+            "felt": "Felt Weight",
+            "total": "Total Weight",
+            "weapon": {
+                "label": "Weapons",
+                "empty": "No weapons have been added yet."
+            },
+            "armor": {
+                "label": "Armor",
+                "empty": "No armors have been added yet."
+            },
+            "equipment": {
+                "label": "Equipment",
+                "empty": "No equipment has been added yet."
+            },
+            "grandTotals": "Totals",
+            "equipmentNotes": "Write equipment notes here."
+        },
         "characterSkills": {
             "skillsTitle": "Skills",
             "name": "Name",
@@ -225,7 +248,8 @@
             "target": "Target",
             "one": "One",
             "half": "Half",
-            "full": "Full"
+            "full": "Full",
+            "empty": "No equipped weapons have been added yet."
         },
         "chat": {
             "actions": {
