@@ -208,7 +208,11 @@
                 "rapidReload": "Rapid Reload?",
                 "unarmedCombatant": "Unarmed Combatant?",
                 "languages": "Languages",
-                "languagesTextarea": "Write known languages here, separated by a semicolon (;)."
+                "addLanguage": "Add Language",
+                "removeLanguage": "Remove Language",
+                "noLang": "No languages exist by that name for this character.",
+                "emptyLang": "Please enter a language.",
+                "hasLang": "This character already knows that language."
             }
         },
         "characterWeaponSummary": {

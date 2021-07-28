@@ -228,10 +228,7 @@
                         "rapidReload": false,
                         "unarmedCombatant": false
                     },
-                    "languages": {
-                        "notes": "",
-                        "list": []
-                    },
+                    "languages": [],
                     "alienTech": false
                 },
                 "abilityNotes": ""

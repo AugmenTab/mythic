@@ -73,6 +73,19 @@
       {{/each}}
     </tbody>
   </table>
-  <h2>{{localize "mythic.characterTalents.trainings.languages"}}</h2>
-  <textarea class="languages" name="data.trainings.languages.notes" placeholder="{{localize "mythic.characterTalents.trainings.languagesTextarea"}}">{{data.data.trainings.languages.notes}}</textarea>
+  <div class="languages">
+    <div>
+      <h2>{{localize "mythic.characterTalents.trainings.languages"}}</h2>
+      <div>
+        {{#each data.data.trainings.languages}}
+          <span class="language">{{this}}</span>
+        {{/each}}
+      </div>
+    </div>
+    <div class="language-edit">
+      <input id="lang-input" type="text"/>
+      <button class="lang-add">Add Language</button>
+      <button class="lang-remove">Remove Language</button>
+    </div>
+  </div>
 </section>

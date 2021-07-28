@@ -54,7 +54,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
-    html.find(".languages").blur(this._onLanguagesBlur.bind(this));
+    html.find(".lang-add").click(this._onLanguageUpdate.bind(this));
+    html.find(".lang-remove").click(this._onLanguageUpdate.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".reload").click(this._onReload.bind(this));
@@ -82,11 +83,31 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     await this.actor.update(data);
   }
 
-  async _onLanguagesBlur(event) {
+  async _onLanguageUpdate(event) {
     event.preventDefault();
     const element = event.currentTarget;
+    const field = document.getElementById("lang-input");
+    if (field.value === "") {
+      ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.emptyLang"));
+      return;
+    }
+
     let data = duplicate(this.actor.data);
-    data.data.trainings.languages.list = element.value.split(";").map(x => x.trim());
+    let langs = new Set(data.data.trainings.languages);
+    if (element.classList[0] === "lang-add") {
+      if (langs.has(field.value)) {
+        ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.hasLang"));
+        return;
+      } else langs.add(field.value);
+    } else if (element.classList[0] === "lang-remove") {
+      if (langs.has(field.value)) {
+        langs.delete(field.value);
+      } else {
+        ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.noLang"));
+        return;
+      }
+    }
+    data.data.trainings.languages = [...langs];
     await this.actor.update(data);
   }
 

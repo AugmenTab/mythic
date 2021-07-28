@@ -201,4 +201,27 @@
             height: 73px;
         }
     }
+
+    .languages {
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        column-gap: 16px;
+
+        .language {
+            display: inline-block;
+            font-size: 0.75em;
+            color: white;
+            margin: 2px 1px;
+            padding: 2px;
+            border: 2px solid gray;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .language-edit {
+            display: grid;
+            row-gap: 4px;
+            text-align: center;
+        }
+    }
 }
