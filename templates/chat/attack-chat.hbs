@@ -44,7 +44,22 @@
       {{/if}}
     </div>
   {{/each}}
-  <div class="special">
-
-  </div>
+  <aside class="special">
+    <span class="special-damage">
+      {{#if weaponData.special.flame.has}}
+        <p><b>{{localize "mythic.weaponSheet.specialRules.flame"}}:</b> [[{{weaponData.special.flame.value}}]]</p>
+      {{/if}}
+      {{#if weaponData.special.needle.has}}
+        <p><b>{{localize "mythic.weaponSheet.specialRules.needle"}}:</b> [[{{weaponData.special.needle.value}}D5]]</p>
+      {{/if}}
+    </span>
+    {{#each weaponData.special as |special name|}}
+      {{#if special.has}}
+        <span class="special-rule">
+          {{localize (concat "mythic.weaponSheet.specialRules." name)}}
+          {{#if special.value}} ({{special.value}}) {{/if}}
+        </span>
+      {{/if}}
+    {{/each}}
+  </aside>
 </div>

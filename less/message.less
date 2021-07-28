@@ -24,8 +24,12 @@
     }
 
     .post-attack {
+        div:not(:last-of-type) {
+            border-bottom: 2px dotted black;
+        }
+
         div:not(:first-of-type) {
-            border-top: 2px dotted black;
+            margin-top: 0.5em;
         }
 
         .damage-block {
@@ -38,6 +42,24 @@
             }
         }
 
-        .special {}
+        .special {
+            .special-damage {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                place-items: center;
+                width: 100%;
+            }
+                
+            .special-rule {
+                display: inline-block;
+                font-size: 0.75em;
+                color: white;
+                margin: 2px 1px;
+                padding: 2px;
+                border: 2px solid gray;
+                border-radius: 4px;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        }
     }
 }
