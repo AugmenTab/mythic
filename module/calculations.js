@@ -324,7 +324,7 @@ function calculateWeaponRangeThrown(actorData, weapon) {
   );
   let mult = 15;
   const penalty = calculateWeightPenaltyThrown(base);
-  mult -= Math.floor(weapon.data.data.weight / penalty.weight) * penalty.multiplier;
+  mult -= Math.floor(weapon.data.data.weight.each / penalty.weight) * penalty.multiplier;
   if (weapon.data.data.range.grip === "slight") mult -= 1;
   if (["partial", "sloppy"].includes(weapon.data.data.range.grip)) mult -= 2;
   const range = (base * mult) / (weapon.data.data.range.grip === "sloppy" ? 2 : 1);

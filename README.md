@@ -89,8 +89,10 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 ## Planned Features and Stretch Goals
 
+* Have attacks drain the weapon's magazine.
 * Allow circumstance modifier dialog window to evaluate modifiers.
 * Tooltips for everything.
+* Languages and equipment tags 
 * Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Compendiums for all items, equipment, skills, abilities, and educations in the core book.
 * Compendiums for extra splatbook content.

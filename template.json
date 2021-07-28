@@ -544,6 +544,7 @@
         "types": [
             "ability",
             "education",
+            "equipment",
             "weapon"
         ],
         "templates": {
@@ -553,9 +554,20 @@
             },
             "physical": {
                 "price": 0,
-                "weight": 0.0,
                 "breakPoints": 0,
-                "carried": false
+                "carried": false,
+                "trainings": {
+                    "equipment": "",
+                    "faction": ""
+                },
+                "weight": {
+                    "total": 0.0,
+                    "felt": 0.0,
+                    "each": 0.0,
+                    "quantity": 1,
+                    "equipped": false,
+                    "selfSupported": false
+                }
             }
         },
         "ability": {
@@ -609,16 +621,18 @@
                 "roll": 0
             }
         },
+        "equipment": {
+            "templates": [
+                "baseItemDetails",
+                "physical"
+            ]
+        },
         "weapon": {
             "templates": [
                 "baseItemDetails",
                 "physical"
             ],
             "group": "",
-            "trainings": {
-                "equipment": "",
-                "faction": ""
-            },
             "tags": {
                 "[UD]": true,
                 "[I]": false,
@@ -642,7 +656,7 @@
                 },
                 "cauterize": {
                     "has": false,
-                    "value": 10,
+                    "value": 9,
                     "needsInput": true
                 },
                 "charge": {
@@ -679,9 +693,7 @@
                     "needsInput": true
                 },
                 "hardlight": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
+                    "has": false
                 },
                 "headshot": {
                     "has": false
