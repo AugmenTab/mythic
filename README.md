@@ -88,6 +88,7 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 ## Planned Features and Stretch Goals
 
+* Tabbed focus on all text inputs needs to highlight content.
 * Have attacks drain the weapon's magazine.
 * Allow circumstance modifier dialog window to evaluate modifiers.
 * Move all instances of notes to their own "notes" section of the Actor data model.

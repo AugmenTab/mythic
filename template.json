@@ -167,7 +167,13 @@
                     "total": 0,
                     "character": 0,
                     "hearing": "",
-                    "encumbered": false
+                    "encumbrance": 0,
+                    "bar": {
+                        "bgBar": "",
+                        "bgFill": "",
+                        "width": "",
+                        "left": ""
+                    }
                 },
                 "movement": {
                     "doubleAgiRunCharge": false,

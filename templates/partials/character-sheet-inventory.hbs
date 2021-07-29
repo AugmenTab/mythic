@@ -1,6 +1,13 @@
-<section class="">
-  <div class="bars">
-    
+<section>
+  <div class="weight-tracker" style="background:{{data.data.carryingCapacity.bar.bgBar}}">
+    <div 
+      class="encumbrance"
+      style="background:{{data.data.carryingCapacity.bar.bgFill}};width:{{data.data.carryingCapacity.bar.width}}"
+    >
+      <p style="color:{{data.data.carryingCapacity.bar.color}};margin-left:{{data.data.carryingCapacity.bar.left}}">
+        {{data.data.carryingCapacity.bar.width}}
+      </p>
+    </div>
   </div>
   <table>
     <thead>

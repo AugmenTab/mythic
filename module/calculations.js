@@ -96,7 +96,6 @@ export function prepareVehicle(actorData) {
 
 export function sortAndFilterItems(items, filterParam, sortParam = "name") {
   let f = items.filter(function(item) { return item.type === filterParam });
-  console.log()
   if (sortParam === "name") {
     return f.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
   } else if (sortParam === "nickname") {
@@ -200,28 +199,74 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   actorData.data.initiative.formula = formula.join("+");
 }
 
+function calculateInventoryBars(actorData) {
+  const percent = 100 * (
+    actorData.data.carryingCapacity.felt / actorData.data.carryingCapacity.carry
+  ).toFixed(5);
+  if (percent > 400) {
+    const adjusted = percent - 400;
+    actorData.data.carryingCapacity.encumbrance = adjusted;
+    actorData.data.carryingCapacity.bar.bgBar = "darkred";
+    actorData.data.carryingCapacity.bar.bgFill = "darkred";
+    actorData.data.carryingCapacity.bar.width = "100%";
+    actorData.data.carryingCapacity.bar.color = "white";
+    actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+  } else if (percent > 200) {
+    const adjusted = percent - 200;
+    actorData.data.carryingCapacity.encumbrance = adjusted;
+    actorData.data.carryingCapacity.bar.bgBar = "#fb8c00";
+    actorData.data.carryingCapacity.bar.bgFill = "darkred";
+    actorData.data.carryingCapacity.bar.width = `${Math.floor(adjusted)}%`;
+    actorData.data.carryingCapacity.bar.color = adjusted >= 3 ? "white" : "black";
+    actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+  } else if (percent > 100) {
+    const adjusted = percent - 100;
+    actorData.data.carryingCapacity.encumbrance = adjusted;
+    actorData.data.carryingCapacity.bar.bgBar = "rgba(0, 0, 0, 0.5)";
+    actorData.data.carryingCapacity.bar.bgFill = "#fb8c00";
+    actorData.data.carryingCapacity.bar.width = `${Math.floor(percent - 100)}%`;
+    actorData.data.carryingCapacity.bar.color = adjusted >= 3 ? "black" : "white";
+    actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+  } else {
+    actorData.data.carryingCapacity.encumbrance = percent;
+    actorData.data.carryingCapacity.bar.bgBar = "transparent";
+    actorData.data.carryingCapacity.bar.bgFill = "rgba(0, 0, 0, 0.5)";
+    actorData.data.carryingCapacity.bar.width = `${Math.floor(percent)}%`;
+    actorData.data.carryingCapacity.bar.color = percent >= 3 ? "white" : "black";
+    actorData.data.carryingCapacity.bar.left = percent <= 4 ? "0.3em" : "0";
+  }
+}
+
+function calculateItemWeight(item) {
+  let felt = 0, total = 0;
+  if (item.data.data.weight.carried) {
+    let quantity = (item.type === "weapon" && item.data.data.group === "thrown")
+      ? item.data.data.magazine.current
+      : item.data.data.weight.quantity;
+    const weight = quantity * item.data.data.weight.each;
+    total += weight;
+    item.data.data.weight.total = weight;
+    if (!item.data.data.weight.selfSupported) {
+      felt += weight;
+      item.data.data.weight.felt = weight;  
+    } else item.data.data.weight.felt = 0;
+  } else {
+    item.data.data.weight.felt = 0;
+    item.data.data.weight.total = 0;
+  }
+  return {felt: felt, total: total};
+}
+
 function calculateInventoryWeight(actorData) {
   let items = actorData.items.filter(function(item) {
     return ["armor", "equipment", "weapon"].includes(item.type);
   });
   let felt = 0, total = 0;
   for (let item of items) {
-    if (item.data.data.weight.carried) {
-      let quantity = (item.type === "weapon" && item.data.data.group === "thrown")
-        ? item.data.data.magazine.current
-        : item.data.data.weight.quantity;
-      const weight = quantity * item.data.data.weight.each;
-      console.log()
-      total += weight;
-      item.data.data.weight.total = weight;
-      if (!item.data.data.weight.selfSupported) {
-        felt += weight;
-        item.data.data.weight.felt = weight;  
-      } else item.data.data.weight.felt = 0;
-    } else {
-      item.data.data.weight.felt = 0;
-      item.data.data.weight.total = 0;
-    }
+    if (!item.data.data.weight.carried) item.data.data.weight.equipped = false;
+    const weight = calculateItemWeight(item);
+    felt += weight.felt;
+    total += weight.total;
   }
   actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
   actorData.data.carryingCapacity.total = total > 0 ? total : 0;
@@ -229,7 +274,7 @@ function calculateInventoryWeight(actorData) {
   let msg = `${characterTotal} kg`;
   actorData.data.carryingCapacity.character = msg;
   actorData.data.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
-  actorData.data.carryingCapacity.encumbered = total > actorData.data.carryingCapacity.carry;
+  calculateInventoryBars(actorData);
 }
 
 function calculateLuck(actorData) {
