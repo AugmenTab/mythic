@@ -73,7 +73,7 @@
             <td style="width:120px">
               {{#unless (eq weapon.data.group "melee")}}
                 <div class="magazine">
-                  <input class="item-edit-inline" data-field="magazine.current" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.magazine.current}}"/>
+                  <input class="item-edit-inline" data-field="magazine.current" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.magazine.current}}" onfocus="this.select()"/>
                   <p>/</p>
                   <p>{{weapon.data.magazine.max}}</p>
                   <div class="item-management">

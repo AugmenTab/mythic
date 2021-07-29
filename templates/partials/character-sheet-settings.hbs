@@ -255,7 +255,7 @@
             <tr>
               <td><b>{{data.data.wounds.max}}</b></td>
               <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
-              <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}"/></td>
+              <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}" onfocus="this.select()"/></td>
               <td>
                 <select name="data.wounds.advancements">
                   {{#select data.data.wounds.advancements}}
@@ -265,7 +265,7 @@
                   {{/select}}
                 </select>
               </td>
-              <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}"/></td>
+              <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}" onfocus="this.select()"/></td>
             </tr>
           </tbody>
         </table>

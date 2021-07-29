@@ -24,6 +24,7 @@
       style="width:50px;"
       type="number" data-dtype="Number"
       data-item-id="{{this._id}}"
+      onfocus="this.select()"
       {{#if (cond "&&" (eq this.type "weapon") (eq this.data.group "thrown"))}}
         data-field="magazine.current"
         value="{{this.data.magazine.current}}"
