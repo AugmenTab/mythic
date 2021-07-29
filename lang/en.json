@@ -115,6 +115,7 @@
             "carried": "Carried",
             "equipped": "Equipped",
             "quantity": "Quantity",
+            "selfSupported": "Self-Supporting?",
             "felt": "Felt Weight",
             "total": "Total Weight",
             "weapon": {

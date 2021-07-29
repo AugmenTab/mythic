@@ -16,6 +16,9 @@
     <input class="item-edit-inline" data-field="weight.equipped" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.equipped}} {{#unless this.data.weight.carried}} disabled="true" aria-disabled="true" {{/unless}}/>
   </td>
   <td>
+    <input class="item-edit-inline" data-field="weight.selfSupported" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.selfSupported}}/>
+  </td>
+  <td>
     <input
       class="item-edit-inline"
       style="width:50px;"
