@@ -129,7 +129,7 @@
                 "label": "Equipment",
                 "empty": "No equipment has been added yet."
             },
-            "grandTotals": "Totals",
+            "characterTotal": "Character Total Weight",
             "equipmentNotes": "Write equipment notes here."
         },
         "characterSkills": {
@@ -249,7 +249,8 @@
             "one": "One",
             "half": "Half",
             "full": "Full",
-            "empty": "No equipped weapons have been added yet."
+            "empty": "No weapons have been added yet.",
+            "unequipped": "No weapons have been equipped yet."
         },
         "chat": {
             "actions": {

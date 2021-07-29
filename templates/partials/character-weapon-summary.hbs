@@ -25,111 +25,114 @@
     </thead>
     <tbody>
       {{#each weapons as |weapon _|}}
-        <tr>
-          {{!-- Nickname or Name --}}
-          <td>
-            <div class="weapon-name">
-              <img alt="{{weapon.name}}" src="{{weapon.img}}"/>
-              <p>
-                {{#unless weapon.data.nickname}}
-                  {{weapon.name}}
-                {{else}}
-                  {{weapon.data.nickname}}
-                {{/unless}}
-                ({{weapon.data.attack.target}})
-              </p>
-              <a class="item-edit" data-item-id="{{weapon._id}}"><i class="clickable fas fa-edit"></i></a>
-              </div>
-          </td>
-          {{!-- Fire Mode --}}
-          <td>
-            {{#if (eq weapon.data.group "ranged")}}
-              <select class="item-edit-inline special-focus" data-field="attack.fireMode" data-item-id="{{weapon._id}}">
-                {{#select weapon.data.attack.fireMode}}
-                  <option value="none">--</option>
-                  {{#each weapon.data.fireMode as |rate mode|}}
-                    {{#if rate}}
-                      <option value="{{mode}}-{{rate}}">{{localize (concat "mythic.weaponSheet.fireMode." mode)}} ({{rate}})</option>
-                    {{/if}}
-                  {{/each}}
-                {{/select}}
-              </select>
-            {{else}}
-              {{localize (concat "mythic.weaponGroups." weapon.data.group)}}
-            {{/if}}
-          </td>
-          {{!-- Range --}}
-          <td>
-            {{#if (eq weapon.data.group "thrown")}}
-              {{weapon.data.range.thrown}} m ({{weapon.data.special.blast.value}} / {{weapon.data.special.kill.value}})
-            {{else if (eq weapon.data.group "melee")}}
-              {{weapon.data.range.melee}} m
-            {{else if (eq weapon.data.group "ranged")}}
-              {{weapon.data.range.close}} - {{weapon.data.range.long}} m
-            {{/if}}
-          </td>
-          {{!-- Magazine --}}
-          <td style="width:120px">
-            {{#unless (eq weapon.data.group "melee")}}
-              <div class="magazine">
-                <input class="item-edit-inline" data-field="magazine.current" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.magazine.current}}"/>
-                <p>/</p>
-                <p>{{weapon.data.magazine.max}}</p>
-                <div class="item-management">
-                  {{#unless (eq weapon.data.group "thrown")}}
-                    <p>{{weapon.data.reload.total}}</p>
-                  {{else}} <p>T</p>
+        {{#if weapon.data.weight.equipped}}
+          <tr>
+            {{!-- Nickname or Name --}}
+            <td>
+              <div class="weapon-name">
+                <img alt="{{weapon.name}}" src="{{weapon.img}}"/>
+                <p>
+                  {{#unless weapon.data.nickname}}
+                    {{weapon.name}}
+                  {{else}}
+                    {{weapon.data.nickname}}
                   {{/unless}}
-                  <a class="reload" data-field="magazine.current" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
+                  ({{weapon.data.attack.target}})
+                </p>
+                <a class="item-edit" data-item-id="{{weapon._id}}"><i class="clickable fas fa-edit"></i></a>
                 </div>
-              </div>
-            {{else}} --
-            {{/unless}}
-          </td>
-          {{!-- Buttons --}}
-          <td
-            style="width:40px"
-            {{#if (eq weapon.data.group "thrown")}} colspan="3" {{/if}}
-          >
-            <button
-              class="attack rollable"
-              data-item-id="{{weapon._id}}"
-              value="single"
-              {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-              {{#unless weapon.data.magazine.current}}
-                {{#unless (eq weapon.data.attack.fireMode "melee")}}
-                  disabled="true"
-                {{/unless}}
+            </td>
+            {{!-- Fire Mode --}}
+            <td>
+              {{#if (eq weapon.data.group "ranged")}}
+                <select class="item-edit-inline special-focus" data-field="attack.fireMode" data-item-id="{{weapon._id}}">
+                  {{#select weapon.data.attack.fireMode}}
+                    <option value="none">--</option>
+                    {{#each weapon.data.fireMode as |rate mode|}}
+                      {{#if rate}}
+                        <option value="{{mode}}-{{rate}}">{{localize (concat "mythic.weaponSheet.fireMode." mode)}} ({{rate}})</option>
+                      {{/if}}
+                    {{/each}}
+                  {{/select}}
+                </select>
+              {{else}}
+                {{localize (concat "mythic.weaponGroups." weapon.data.group)}}
+              {{/if}}
+            </td>
+            {{!-- Range --}}
+            <td>
+              {{#if (eq weapon.data.group "thrown")}}
+                {{weapon.data.range.thrown}} m ({{weapon.data.special.blast.value}} / {{weapon.data.special.kill.value}})
+              {{else if (eq weapon.data.group "melee")}}
+                {{weapon.data.range.melee}} m
+              {{else if (eq weapon.data.group "ranged")}}
+                {{weapon.data.range.close}} - {{weapon.data.range.long}} m
+              {{/if}}
+            </td>
+            {{!-- Magazine --}}
+            <td style="width:120px">
+              {{#unless (eq weapon.data.group "melee")}}
+                <div class="magazine">
+                  <input class="item-edit-inline" data-field="magazine.current" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.magazine.current}}"/>
+                  <p>/</p>
+                  <p>{{weapon.data.magazine.max}}</p>
+                  <div class="item-management">
+                    {{#unless (eq weapon.data.group "thrown")}}
+                      <p>{{weapon.data.reload.total}}</p>
+                    {{else}} <p>T</p>
+                    {{/unless}}
+                    <a class="reload" data-field="magazine.current" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
+                  </div>
+                </div>
+              {{else}} --
               {{/unless}}
+            </td>
+            {{!-- Buttons --}}
+            <td
+              style="width:40px"
+              {{#if (eq weapon.data.group "thrown")}} colspan="3" {{/if}}
             >
-              <b>1</b>
-            </button>
-          </td>
-          {{#unless (eq weapon.data.group "thrown")}}
-            <td style="width:40px">
               <button
                 class="attack rollable"
                 data-item-id="{{weapon._id}}"
-                value="half"
+                value="single"
                 {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-                {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
+                {{#unless weapon.data.magazine.current}}
+                  {{#unless (eq weapon.data.attack.fireMode "melee")}}
+                    disabled="true"
+                  {{/unless}}
+                {{/unless}}
               >
-                <b>{{weapon.data.attack.half}}</b>
+                <b>1</b>
               </button>
             </td>
-            <td style="width:40px">
-              <button
-                class="attack rollable"
-                data-item-id="{{weapon._id}}"
-                value="full"
-                {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-                {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
-              >
-                <b>{{weapon.data.attack.full}}</b>
-              </button>
-            </td>
-          {{/unless}}
-        </tr>
+            {{#unless (eq weapon.data.group "thrown")}}
+              <td style="width:40px">
+                <button
+                  class="attack rollable"
+                  data-item-id="{{weapon._id}}"
+                  value="half"
+                  {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+                  {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
+                >
+                  <b>{{weapon.data.attack.half}}</b>
+                </button>
+              </td>
+              <td style="width:40px">
+                <button
+                  class="attack rollable"
+                  data-item-id="{{weapon._id}}"
+                  value="full"
+                  {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+                  {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
+                >
+                  <b>{{weapon.data.attack.full}}</b>
+                </button>
+              </td>
+            {{/unless}}
+          </tr>
+        {{else}} <td colspan="8">{{localize "mythic.characterWeaponSummary.unequipped"}}</td>
+        {{/if}}
       {{else}} <td colspan="8">{{localize "mythic.characterWeaponSummary.empty"}}</td>
       {{/each}}
     </tbody>

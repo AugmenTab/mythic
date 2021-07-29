@@ -130,10 +130,14 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   async _onItemEditInline(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const item = await this.actor.items.get(element.dataset.itemId);
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     const key = `data.${element.dataset.field}`;
-    const val = parseInt(element.value);
-    await item.update({ [key]: isNaN(val) ? element.value : val });
+    if (element.type === "checkbox") {
+      await item.update({ [key]: element.checked })
+    } else {
+      const val = parseInt(element.value);
+      await item.update({ [key]: isNaN(val) ? element.value : val });
+    }
   }
 
   async _onPostItem(event) {

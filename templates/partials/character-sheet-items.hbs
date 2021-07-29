@@ -11,17 +11,17 @@
     </div>
   </td>
   <td>
-    <input class="item-edit-inline" data-field="weight.carried" data-item-id="{{this._id}}" type="checkbox" {{checked data.data.weight.carried}}/>
+    <input class="item-edit-inline" data-field="weight.carried" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.carried}}/>
   </td>
   <td>
-    <input class="item-edit-inline" data-field="weight.equipped" data-item-id="{{this._id}}" type="checkbox" {{checked data.data.weight.equipped}}/>
+    <input class="item-edit-inline" data-field="weight.equipped" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.equipped}} {{#unless this.data.weight.carried}} disabled="true" {{/unless}}/>
   </td>
   <td>
     <input
       class="item-edit-inline"
       style="width:50px;"
       type="number" data-dtype="Number"
-      data-item-id="{{edu._id}}"
+      data-item-id="{{this._id}}"
       {{#if (cond "&&" (eq this.type "weapon") (eq this.data.group "thrown"))}}
         data-field="magazine.current"
         value="{{this.data.magazine.current}}"
@@ -31,6 +31,6 @@
       {{/if}}
     />
   </td>
-  <td>{{this.data.weight.felt}}</td>
-  <td>{{this.data.weight.total}}</td>
+  <td>{{this.data.weight.felt}} kg</td>
+  <td>{{this.data.weight.total}} kg</td>
 </tr>
