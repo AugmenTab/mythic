@@ -1,6 +1,6 @@
 <section class="">
   <div class="bars">
-
+    
   </div>
   <table>
     <thead>
@@ -60,11 +60,14 @@
     </tbody>
     <thead>
       <tr>
-        <th colspan="4">
-          {{localize "mythic.characterInventory.characterTotal"}}: {{data.data.carryingCapacity.character}} kg
+        <th colspan="2">
+          {{localize "mythic.characterInventory.characterTotal"}}: {{localnum data.data.carryingCapacity.character}}
+        <th colspan="2">
+          +{{data.data.carryingCapacity.hearing}} {{localize "mythic.characterInventory.heard"}}
         </th>
-        <th>{{data.data.carryingCapacity.felt}} kg</th>
-        <th>{{data.data.carryingCapacity.total}} kg</th>
+        </th>
+        <th>{{localnum data.data.carryingCapacity.felt}} kg</th>
+        <th>{{localnum data.data.carryingCapacity.total}} kg</th>
       </tr>
     </thead>
   </table>

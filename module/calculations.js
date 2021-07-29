@@ -211,6 +211,7 @@ function calculateInventoryWeight(actorData) {
         ? item.data.data.magazine.current
         : item.data.data.weight.quantity;
       const weight = quantity * item.data.data.weight.each;
+      console.log()
       total += weight;
       item.data.data.weight.total = weight;
       if (!item.data.data.weight.selfSupported) {
@@ -222,8 +223,13 @@ function calculateInventoryWeight(actorData) {
       item.data.data.weight.total = 0;
     }
   }
-  actorData.data.carryingCapacity.felt = felt;
-  actorData.data.carryingCapacity.total = total;
+  actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
+  actorData.data.carryingCapacity.total = total > 0 ? total : 0;
+  const characterTotal = total + actorData.data.weight;
+  let msg = `${characterTotal} kg`;
+  actorData.data.carryingCapacity.character = msg;
+  actorData.data.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
+  actorData.data.carryingCapacity.encumbered = total > actorData.data.carryingCapacity.carry;
 }
 
 function calculateLuck(actorData) {

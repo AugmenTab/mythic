@@ -68,8 +68,7 @@
         <tr>
           <td>{{localize (concat "mythic.trainings.equipment." group)}}</td>
           <td>{{localize (concat "mythic.trainings.examples." group)}}</td>
-          <td>
-          </td>
+          <td><input name="data.trainings.equipment.{{group}}" type="checkbox" {{checked trained}}/></td>
         </tr>
       {{/each}}
     </tbody>

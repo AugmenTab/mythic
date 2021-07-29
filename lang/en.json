@@ -130,7 +130,8 @@
                 "empty": "No equipment has been added yet."
             },
             "characterTotal": "Character Total Weight",
-            "equipmentNotes": "Write equipment notes here."
+            "equipmentNotes": "Write equipment notes here.",
+            "heard": "to be heard"
         },
         "characterSkills": {
             "skillsTitle": "Skills",

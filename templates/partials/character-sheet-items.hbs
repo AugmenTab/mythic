@@ -1,4 +1,3 @@
-{{!-- {{log this}} --}}
 <tr>
   <td>
     <div class="item-name">
@@ -31,6 +30,6 @@
       {{/if}}
     />
   </td>
-  <td>{{this.data.weight.felt}} kg</td>
-  <td>{{this.data.weight.total}} kg</td>
+  <td>{{localnum this.data.weight.felt}} kg</td>
+  <td>{{localnum this.data.weight.total}} kg</td>
 </tr>
