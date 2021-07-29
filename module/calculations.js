@@ -1,3 +1,5 @@
+/** @module calculations */
+
 const MELEE_REACH_SIZE_BONUS = {
   "mini": 1,
   "small": 1,
@@ -12,18 +14,35 @@ const MELEE_REACH_SIZE_BONUS = {
   "monumental": 5
 };
 
+/**
+ * Get the characteristic modifier for a given characteristic score.
+ * @param {number} score - The characteristic score.
+ * @returns {number} The characteristic modifier.
+ */
 export function calculateCharacteristicModifier(score) {
   return score < 0 ? 0 : Math.floor(score / 10);
 }
 
+/**
+ * Prepares all Actor data for a Bestiary Enemy Actor type.
+ * @param {ActorData} actorData - The Bestiary Enemy Actor data.
+ */
 export function prepareBestiary(actorData) {
-  return;
+  // TODO
 }
 
+/**
+ * Prepares all Actor data for a Flood Actor type.
+ * @param {ActorData} actorData - The Flood Actor data.
+ */
 export function prepareFlood(actorData) {
-  return;
+  // TODO
 }
 
+/**
+ * Prepares all Actor data for a Named Character Actor type.
+ * @param {ActorData} actorData - The Named Character Actor data.
+ */
 export function prepareNamedCharacter(actorData) {
   // Calculate Ability Pool
   calculateAbilityPool(actorData);
@@ -90,10 +109,21 @@ export function prepareNamedCharacter(actorData) {
   calculateInventoryWeight(actorData);
 }
 
+/**
+ * Prepares all Actor data for a Vehicle Actor type.
+ * @param {ActorData} actorData - The Vehicle Actor data.
+ */
 export function prepareVehicle(actorData) {
-  return;
+  // TODO
 }
 
+/**
+ * Filter a list of Items by their type, then sort based on a given parameter.
+ * @param {Array.<number>} items - An array of Item objects.
+ * @param {string} filterParam - The Item type to filter by.
+ * @param {string} sortParam - The Item key sort parameter.
+ * @returns {Array.<number>} The filtered and sorted array of Item objects.
+ */
 export function sortAndFilterItems(items, filterParam, sortParam = "name") {
   let f = items.filter(function(item) { return item.type === filterParam });
   if (sortParam === "name") {

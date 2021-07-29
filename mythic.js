@@ -1,3 +1,5 @@
+/** @module mythic */
+
 import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
 import { mythic } from "./module/config.js";
@@ -5,6 +7,11 @@ import { MythicActor } from "./module/MythicActor.js";
 import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
 
+/**
+ * Loads all registered Handlebars partials.
+ * @async
+ * @returns {Array.<Function>} An array of functions to establish partials.
+ */
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
     "systems/mythic/templates/partials/character-details.hbs",
@@ -28,6 +35,7 @@ async function preloadHandlebarsTemplates() {
   return loadTemplates(templatePaths);
 }
 
+/** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */
 Hooks.once("init", function() {
   console.log("mythic | Initializing Mythic 4.0 System");
 
@@ -43,4 +51,5 @@ Hooks.once("init", function() {
   preloadHandlebarsTemplates();
 });
 
+/** Hook to establish event listeners on the chat log. */
 Hooks.on("renderChatMessage", (app, html, data) => Chat.addChatListeners(html));

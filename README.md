@@ -29,51 +29,51 @@ The following is a list of features offered by Mythic for Foundry.
 
 ### Compendiums
 
-All of the following are planned compendiums. None are currently implemented.
+All of the following are planned compendiums. Unimplemented compendiums are *italicized.*.
 
 * Actor
-    * Bestiary - Covenant
-    * Bestiary - Flood
-    * Bestiary - Human
-    * Bestiary - Promethean
-    * Bestiary - Sentinel
-    * Vehicles - Banished
-    * Vehicles - Covenant
-    * Vehicles - Forerunner
-    * Vehicles - Human
+    * *Bestiary - Covenant*
+    * *Bestiary - Flood*
+    * *Bestiary - Human*
+    * *Bestiary - Promethean*
+    * *Bestiary - Sentinel*
+    * *Vehicles - Banished*
+    * *Vehicles - Covenant*
+    * *Vehicles - Forerunner*
+    * *Vehicles - Human*
 * Item
-    * Abilities
-    * Armors
-    * Educations
-    * Equipment - Covenant
-    * Equipment - Human
-    * Weapons - Banished
-    * Weapons - Covenant
-    * Weapons - Forerunner
-    * Weapons - Human
-    * Weapons - Splatbooks
+    * *Abilities*
+    * *Armors*
+    * *Educations*
+    * *Equipment - Covenant*
+    * *Equipment - Human*
+    * *Weapons - Banished*
+    * *Weapons - Covenant*
+    * *Weapons - Forerunner*
+    * *Weapons - Human*
+    * *Weapons - Splatbooks*
 * JournalEntry
-    * Ammunition
-    * Armor Abilities
-    * Armor Permutations
-    * Armor Variants - Covenant
-    * Armor Variants - MJOLNIR GEN1
-    * Armor Variants - MJOLNIR GEN2
-    * Modifications - Vehicles
-    * Modifications - Weapons
-    * Rules
-    * Skills
+    * *Ammunition*
+    * *Armor Abilities*
+    * *Armor Permutations*
+    * *Armor Variants - Covenant*
+    * *Armor Variants - MJOLNIR GEN1*
+    * *Armor Variants - MJOLNIR GEN2*
+    * *Modifications - Vehicles*
+    * *Modifications - Weapons*
+    * *Rules*
+    * *Skills*
 * Macro
-    * Calculate Damage from Falling Objects
-    * Calculate Falling Damage
-    * Calculate Scatter
-    * Calculate Splatter Damage
-    * Generate Encounter
-    * Generate Environment
-    * Generate Mission
-    * Generate NPC
-    * Generate Weather Conditions
-    * Generate Planet
+    * *Calculate Damage from Falling Objects*
+    * *Calculate Falling Damage*
+    * *Calculate Scatter*
+    * *Calculate Splatter Damage*
+    * *Generate Encounter*
+    * *Generate Environment*
+    * *Generate Mission*
+    * *Generate NPC*
+    * *Generate Weather Conditions*
+    * *Generate Planet*
 
 ## Legal
 
@@ -94,18 +94,12 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Move all instances of notes to their own "notes" section of the Actor data model.
 * Tooltips for everything.
 * Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
-* Compendiums for all items, equipment, skills, abilities, and educations in the core book.
-* Compendiums for extra splatbook content.
-* Compendium of journal entries for rules.
-* Compendium of helpful macros. Some ideas:
-    * Calculators for falling damage and damage from getting hit by falling objects
-    * Scatter
-    * Calculator for splatter damage
-* Ability to add custom skills.
+* Compendiums as laid out above.
 * Fully functioning Medical page to handle injuries.
 * Lock nav bar at the top of the Actor Sheet.
 * Add hit locations for targeting vehicles.
 * Add called shots, Clear Target, and Precision Strike.
 * Add dual wielding.
+* Ability to add custom skills.
 * Weapon summary QOL improvements:
     * Evasion button should prompt a dialog window asking how many to roll (and circumstance modifier), then roll batched Evasions, with stacking penalty.

@@ -1,5 +1,11 @@
+/** @module chat */
+
 import { calculateCharacteristicModifier } from "./calculations.js";
 
+/**
+ * Add event listeners to chat messages.
+ * @param {jQuery.fn} html - The HTML hook.
+ */
 export function addChatListeners(html) {
   html.on("click", ".scatter", onScatter);
 }

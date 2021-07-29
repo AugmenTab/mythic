@@ -1,3 +1,5 @@
+/** @module dice */
+
 import { calculateCharacteristicModifier } from "./calculations.js";
 
 const CHARACTERISTICS = {
@@ -15,6 +17,11 @@ const CHARACTERISTICS = {
 const FORMULA = "D100";
 const THRESHOLD = 98;
 
+/**
+ * Roll attacks from an Actor sheet.
+ * @param {Element} element - The HTML element the listener originated from.
+ * @param {Actor} actor - The Actor that fired the listener.
+ */
 export async function rollAttacks(element, actor) {
   const attackOptions = await getAttackRollOptions();
   if (isNaN(parseInt(attackOptions.circumstance))) {
@@ -29,6 +36,11 @@ export async function rollAttacks(element, actor) {
   }
 }
 
+/**
+ * Roll tests from an Actor sheet.
+ * @param {Element} element - The HTML element the listener originated from.
+ * @param {Actor} actor - The Actor that fired the listener.
+ */
 export async function rollTest(element, actor) {
   const type = element.classList[0];
   const test = type === "initiative" 

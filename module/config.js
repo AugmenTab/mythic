@@ -1,3 +1,8 @@
+/** @module config */
+
+/**
+ * The config object.
+ */
 export const mythic = {};
 
 mythic.weaponGroups = {
