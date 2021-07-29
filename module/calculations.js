@@ -202,37 +202,29 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
 function calculateInventoryBars(actorData) {
   const percent = 100 * (
     actorData.data.carryingCapacity.felt / actorData.data.carryingCapacity.carry
-  ).toFixed(5);
+  );
   if (percent > 400) {
     const adjusted = percent - 400;
-    actorData.data.carryingCapacity.encumbrance = adjusted;
     actorData.data.carryingCapacity.bar.bgBar = "darkred";
     actorData.data.carryingCapacity.bar.bgFill = "darkred";
     actorData.data.carryingCapacity.bar.width = "100%";
-    actorData.data.carryingCapacity.bar.color = "white";
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
   } else if (percent > 200) {
     const adjusted = percent - 200;
-    actorData.data.carryingCapacity.encumbrance = adjusted;
     actorData.data.carryingCapacity.bar.bgBar = "#fb8c00";
     actorData.data.carryingCapacity.bar.bgFill = "darkred";
-    actorData.data.carryingCapacity.bar.width = `${Math.floor(adjusted)}%`;
-    actorData.data.carryingCapacity.bar.color = adjusted >= 3 ? "white" : "black";
+    actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
   } else if (percent > 100) {
     const adjusted = percent - 100;
-    actorData.data.carryingCapacity.encumbrance = adjusted;
     actorData.data.carryingCapacity.bar.bgBar = "rgba(0, 0, 0, 0.5)";
     actorData.data.carryingCapacity.bar.bgFill = "#fb8c00";
-    actorData.data.carryingCapacity.bar.width = `${Math.floor(percent - 100)}%`;
-    actorData.data.carryingCapacity.bar.color = adjusted >= 3 ? "black" : "white";
+    actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
   } else {
-    actorData.data.carryingCapacity.encumbrance = percent;
     actorData.data.carryingCapacity.bar.bgBar = "transparent";
     actorData.data.carryingCapacity.bar.bgFill = "rgba(0, 0, 0, 0.5)";
-    actorData.data.carryingCapacity.bar.width = `${Math.floor(percent)}%`;
-    actorData.data.carryingCapacity.bar.color = percent >= 3 ? "white" : "black";
+    actorData.data.carryingCapacity.bar.width = `${percent.toFixed(1)}%`;
     actorData.data.carryingCapacity.bar.left = percent <= 4 ? "0.3em" : "0";
   }
 }
