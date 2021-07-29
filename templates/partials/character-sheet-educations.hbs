@@ -59,7 +59,9 @@
               class="education rollable"
               name="{{edu.name}}"
               value="{{edu.data.roll.roll}}"
-              {{#if (eq edu.data.roll.training "none")}} disabled="true" {{/if}}
+              {{#if (eq edu.data.roll.training "none")}}
+                disabled="true" aria-disabled="true"
+              {{/if}}
             >
               <b>{{edu.data.roll.roll}}</b>
             </button>

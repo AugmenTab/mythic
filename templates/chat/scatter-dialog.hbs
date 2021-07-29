@@ -4,7 +4,7 @@
     <input 
       type="number" name="dof" 
       {{#if this.dof}}
-        value="{{this.dof}}" disabled="true"
+        value="{{this.dof}}" disabled="true" aria-disabled="true"
       {{else}}
         value="0"
       {{/if}}

@@ -96,10 +96,12 @@
                 class="attack rollable"
                 data-item-id="{{weapon._id}}"
                 value="single"
-                {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
+                {{#if (eq weapon.data.attack.fireMode "none")}}
+                  disabled="true" aria-disabled="true"
+                {{/if}}
                 {{#unless weapon.data.magazine.current}}
                   {{#unless (eq weapon.data.attack.fireMode "melee")}}
-                    disabled="true"
+                    disabled="true" aria-disabled="true"
                   {{/unless}}
                 {{/unless}}
               >
@@ -112,8 +114,12 @@
                   class="attack rollable"
                   data-item-id="{{weapon._id}}"
                   value="half"
-                  {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-                  {{#unless weapon.data.attack.half}} disabled="true" {{/unless}}
+                  {{#if (eq weapon.data.attack.fireMode "none")}}
+                    disabled="true" aria-disabled="true"
+                  {{/if}}
+                  {{#unless weapon.data.attack.half}}
+                    disabled="true" aria-disabled="true"
+                  {{/unless}}
                 >
                   <b>{{weapon.data.attack.half}}</b>
                 </button>
@@ -123,8 +129,12 @@
                   class="attack rollable"
                   data-item-id="{{weapon._id}}"
                   value="full"
-                  {{#if (eq weapon.data.attack.fireMode "none")}} disabled="true" {{/if}}
-                  {{#unless weapon.data.attack.full}} disabled="true" {{/unless}}
+                  {{#if (eq weapon.data.attack.fireMode "none")}}
+                    disabled="true" aria-disabled="true"
+                  {{/if}}
+                  {{#unless weapon.data.attack.full}}
+                    disabled="true" aria-disabled="true"
+                  {{/unless}}
                 >
                   <b>{{weapon.data.attack.full}}</b>
                 </button>
