@@ -24,7 +24,14 @@ const THRESHOLD = 98;
  */
 export async function rollAttacks(element, actor) {
   const attackOptions = await getAttackRollOptions();
-  if (isNaN(parseInt(attackOptions.circumstance))) {
+  let mod = 0;
+  try {
+    mod = eval(attackOptions.circumstance);
+    if (isNaN(mod)) {
+      ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+      attackOptions.cancelled = true;
+    }
+  } catch {
     ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     attackOptions.cancelled = true;
   }
@@ -51,8 +58,14 @@ export async function rollTest(element, actor) {
     );
   const target = parseInt(element.value);
   const testOptions = await getTestOptions(test);
-  const mod = parseInt(testOptions.circumstance);
-  if (isNaN(mod)) {
+  let mod = 0;
+  try {
+    mod = eval((testOptions.circumstance));
+    if (isNaN(mod)) {
+      ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+      testOptions.cancelled = true;
+    }
+  } catch {
     ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     testOptions.cancelled = true;
   }
