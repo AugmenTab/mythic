@@ -85,6 +85,9 @@ export function prepareNamedCharacter(actorData) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actorData);
+
+  // Calculate Weight
+  calculateInventoryWeight(actorData);
 }
 
 export function prepareVehicle(actorData) {
@@ -195,6 +198,32 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   const mods = eval(formula.slice(1).join("+"));
   actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
   actorData.data.initiative.formula = formula.join("+");
+}
+
+function calculateInventoryWeight(actorData) {
+  let items = actorData.items.filter(function(item) {
+    return ["armor", "equipment", "weapon"].includes(item.type);
+  });
+  let felt = 0, total = 0;
+  for (let item of items) {
+    if (item.data.data.weight.carried) {
+      let quantity = (item.type === "weapon" && item.data.data.group === "thrown")
+        ? item.data.data.magazine.current
+        : item.data.data.weight.quantity;
+      const weight = quantity * item.data.data.weight.each;
+      total += weight;
+      item.data.data.weight.total = weight;
+      if (!item.data.data.weight.selfSupported) {
+        felt += weight;
+        item.data.data.weight.felt = weight;  
+      } else item.data.data.weight.felt = 0;
+    } else {
+      item.data.data.weight.felt = 0;
+      item.data.data.weight.total = 0;
+    }
+  }
+  actorData.data.carryingCapacity.felt = felt;
+  actorData.data.carryingCapacity.total = total;
 }
 
 function calculateLuck(actorData) {
