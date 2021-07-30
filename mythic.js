@@ -17,7 +17,6 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/character-details.hbs",
     "systems/mythic/templates/partials/character-sheet-ability.hbs",
     "systems/mythic/templates/partials/character-sheet-abilities.hbs",
-    "systems/mythic/templates/partials/character-sheet-editor.hbs",
     "systems/mythic/templates/partials/character-sheet-educations.hbs",
     "systems/mythic/templates/partials/character-sheet-experience.hbs",
     "systems/mythic/templates/partials/character-sheet-inventory.hbs",
@@ -28,7 +27,8 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/character-sheet-talents.hbs",
     "systems/mythic/templates/partials/character-sheet-trainings.hbs",
     "systems/mythic/templates/partials/character-stat-block.hbs",
-    "systems/mythic/templates/partials/character-weapon-summary.hbs"
+    "systems/mythic/templates/partials/character-weapon-summary.hbs",
+    "systems/mythic/templates/partials/editor.hbs"
   ];
   return loadTemplates(templatePaths);
 }

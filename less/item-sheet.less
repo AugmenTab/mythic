@@ -1,4 +1,33 @@
 .mythic.sheet.item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .editable {
+        height: 100%;
+
+        section {
+            height: 100%;
+        }
+
+        .armor-tabs {
+            padding-top: 0.3em;
+        }
+    
+        .tab {
+            padding-top: 0.5em;
+
+            .active {
+                height: 100%;
+        
+                .editor {
+                    height: 100%;
+                }
+            }
+        }
+        
+    }
+
     .weapon-details {
         display: grid;
         grid-template-columns: repeat(4, auto);

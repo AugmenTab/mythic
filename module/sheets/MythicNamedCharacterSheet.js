@@ -42,7 +42,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.config = CONFIG.mythic;
 
     const a = sortAndFilterItems(data.items, "ability");
-    data.abilities = a.filter(function(i) { return i.data.type === "ability" });
+    // data.abilities = a.filter(function(i) { return i.data.type === "ability" });
+    data.abilities = a.filter(i => i.data.type === "ability");
     data.augmentations = a.filter(function(i) {
       return i.data.type === "augmentation"
     });

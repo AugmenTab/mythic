@@ -289,6 +289,13 @@
             "cost": "EXP Cost",
             "type": "Type"
         },
+        "armorSheet": {
+            "notes": {
+                "armor": "Armor Details",
+                "variant": "Variant Details",
+                "other": "Notes"
+            }
+        },
         "educationSheet": {
             "details": "Details",
             "cost": "EXP Cost",

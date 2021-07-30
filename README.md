@@ -92,16 +92,15 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 ## Planned Features and Stretch Goals
 
-* Tabbed focus on all text inputs needs to highlight content.
-* Move all instances of notes to their own "notes" section of the Actor data model.
 * Tooltips for everything.
-* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
-* Compendiums as laid out above.
-* Fully functioning Medical page to handle injuries.
-* Lock nav bar at the top of the Actor Sheet.
-* Add hit locations for targeting vehicles.
-* Add called shots, Clear Target, and Precision Strike.
-* Add dual wielding.
-* Ability to add custom skills.
 * Weapon summary QOL improvements:
     * Evasion button should prompt a dialog window asking how many to roll (and circumstance modifier), then roll batched Evasions, with stacking penalty.
+* Compendiums as laid out above.
+* Fully functioning Medical page to handle injuries.
+* Add called shots, Clear Target, and Precision Strike.
+* Add hit locations for targeting vehicles.
+* Add dual wielding.
+* Lock nav bar at the top of the Actor Sheet.
+* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
+* Ability to add custom skills.
+* Move all instances of notes to their own "notes" section of the Actor data model.

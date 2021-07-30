@@ -551,6 +551,7 @@
     "Item": {
         "types": [
             "ability",
+            "armor",
             "education",
             "equipment",
             "weapon"
@@ -584,6 +585,115 @@
             "summary": "",
             "description": "",
             "type": ""
+        },
+        "armor": {
+            "templates": [
+                "baseItemDetails",
+                "physical"
+            ],
+            "characteristics": {
+                "str": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "agi": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "mythicStr": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "mythicAgi": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
+            "hardpoints": {
+                "head": 0,
+                "chest": 0,
+                "leftArm": 0,
+                "rightArm": 0,
+                "leftLeg": 0,
+                "rightLeg": 0
+            },
+            "material": "",
+            "notes": {
+                "armor": "",
+                "variant": "",
+                "permutations": "",
+                "other": ""
+            },
+            "protection": {
+                "head": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "chest": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "leftArm": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "rightArm": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "leftLeg": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "rightLeg": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
+            "shields": {
+                "value": 0,
+                "max": 0,
+                "integrity": {
+                    "armor": 0,
+                    "variant": 0,
+                    "equipment": 0,
+                    "total": 0
+                },
+                "recharge": {
+                    "armor": 0,
+                    "variant": 0,
+                    "equipment": 0,
+                    "total": 0
+                },
+                "delay": {
+                    "armor": 0,
+                    "variant": 0,
+                    "equipment": 0,
+                    "total": 0
+                }
+            },
+            "size": "",
+            "variant": ""
         },
         "education": {
             "difficulty": "",

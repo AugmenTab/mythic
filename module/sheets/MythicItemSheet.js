@@ -10,9 +10,16 @@ export default class MythicItemSheet extends ItemSheet {
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      width: 575,
+      classes: ["mythic", "sheet", "item"],
       height: 620,
-      classes: ["mythic", "sheet", "item"]
+      width: 575,
+      tabs: [
+        {
+          navSelector: ".armor-tabs",
+          contentSelector: ".armor-body",
+          initial: "basic"
+        }
+      ]
     });
   }
 

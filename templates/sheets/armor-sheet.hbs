@@ -1,0 +1,129 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <h1>
+      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+    </h1>
+  </header>
+  <nav class="armor-tabs tabs" data-group="primary">
+    <a class="item" data-tab="basic">Basic Info</a>
+    <a class="item" data-tab="armor">Armor</a>
+    <a class="item" data-tab="variant">Variant</a>
+    <a class="item" data-tab="permutations">Permutations</a>
+    <a class="item" data-tab="notes">Notes</a>
+  </nav>
+  <section class="armor-body">
+    {{!-- Basic Info Page --}}
+    <div class="tab" data-group="primary" data-tab="basic">
+      <div class="weapon-details">
+        <p>Variant</p>
+        <input name="data.variant" type="text" value="{{data.data.variant}}"/>
+        <p>Faction</p>
+        <input name="data.faction" type="text" value="{{data.data.faction}}"/>
+        <p>Size</p>
+        <select name="data.size">
+          {{#select data.data.size}}
+            {{#each config.size as |size key|}}
+              <option value="{{key}}">{{localize size}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+        <p>Faction Training</p>
+        <select name="data.trainings.faction">
+          {{#select data.data.trainings.faction}}
+            {{#each config.trainings.factions as |value key|}}
+              <option value="{{key}}">{{localize value}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Price</th>
+            <th>Material</th>
+            <th>Weight (each)</th>
+            <th>Self-Supporting?</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    {{!-- Armor Details Page --}}
+    <div class="tab" data-group="primary" data-tab="armor">
+      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.armor target="data.notes.armor" link="armorSheet.notes.armor"}}
+    </div>
+
+    {{!-- Variant Page --}}
+    <div class="tab" data-group="primary" data-tab="variant">
+      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.other target="data.notes.other" link="armorSheet.notes.variant"}}
+    </div>
+
+    {{!-- Permutations Page --}}
+    <div class="tab" data-group="primary" data-tab="permutations">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="6">Hardpoints</th>
+          </tr>
+          <tr>
+            <th>Head</th>
+            <th>Chest</th>
+            <th>Left Arm</th>
+            <th>Right Arm</th>
+            <th>Left Leg</th>
+            <th>Right Leg</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span>
+                <input style="width:40px" type="number" data-dtype="Number">
+                / 3
+              </span>
+            </td>
+            <td>
+              <span>
+                <input style="width:40px" type="number" data-dtype="Number">
+                / 6
+              </span>
+            </td>
+            <td>
+              <span>
+                <input style="width:40px" type="number" data-dtype="Number">
+                / 2
+              </span>
+            </td>
+            <td>
+              <span>
+                <input style="width:40px" type="number" data-dtype="Number">
+                / 2
+              </span>
+            </td>
+            <td>
+              <span>
+                <input style="width:40px" type="number" data-dtype="Number">
+                / 2
+              </span>
+            </td>
+            <td>
+              <span>
+                <input style="width:40px" type="number" data-dtype="Number">
+                / 2
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="sheet-content">
+        {{editor content=data.data.notes.permutations target="data.notes.permutations" button=true owner=owner editable=this.options.editable}}
+      </div>
+    </div>
+
+    {{!-- Notes Page --}}
+    <div class="tab" data-group="primary" data-tab="notes">
+      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.other target="data.notes.other" link="armorSheet.notes.other"}}
+    </div>
+  </section>
+</form>
