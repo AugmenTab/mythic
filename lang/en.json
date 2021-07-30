@@ -290,6 +290,50 @@
             "type": "Type"
         },
         "armorSheet": {
+            "nav": {
+                "basic": "Basic Info",
+                "details": "Details",
+                "variant": "Variant",
+                "permutations": "Permutations",
+                "notes": "Notes"
+            },
+            "details": {
+                "variant": "Variant",
+                "faction": "Faction",
+                "size": "Size",
+                "training": "Faction Training",
+                "price": "Price (cR)",
+                "material": "Material",
+                "weight": "Weight (kgs)",
+                "selfSupported": "Self-Supporting?",
+                "hasShields": "Shields?",
+                "hasStats": "Characteristics?"
+            },
+            "locations": {
+                "label": "Armor Locations",
+                "head": "Head",
+                "chest": "Chest",
+                "leftArm": "L. Arm",
+                "rightArm": "R. Arm",
+                "leftLeg": "L. Leg",
+                "rightLeg": "R. Leg"
+            },
+            "shields": {
+                "label": "Shields",
+                "integrity": "Integrity",
+                "recharge": "Recharge",
+                "delay": "Delay"
+            },
+            "characteristics": "Characteristic Adjustments",
+            "mythic": "Mythic",
+            "source": {
+                "label": "Source",
+                "armor": "Armor",
+                "variant": "Variant",
+                "other": "Other"
+            },
+            "total": "Total",
+            "hardpoints": "Hardpoints",
             "notes": {
                 "armor": "Armor Details",
                 "variant": "Variant Details",

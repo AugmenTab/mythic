@@ -101,29 +101,68 @@
     </thead>
   </table>
   {{!-- Shields --}}
-  <table {{#unless data.data.shields.has}} hidden {{/unless}}>
+  <table class="armor-shields" {{#unless data.data.shields.has}} hidden {{/unless}}>
     <thead>
       <tr>
-        <th colspan="5">{{localize "mythic.armorSheet.shields.label"}}</th>
+        <th colspan="4">{{localize "mythic.armorSheet.shields.label"}}</th>
       </tr>
       <tr>
         <th>{{localize "mythic.armorSheet.source.label"}}</th>
-        {{!-- {{#each data.data.shields as |value key|}}
-          {{#unless ??}}
+        {{#each data.data.shields as |values key|}}
+          {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <th>{{localize (concat "mythic.armorSheet.shields." key)}}</th>
           {{/unless}}
-        {{/each}} --}}
+        {{/each}}
       </tr>
     </thead>
     <tbody>
-
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.armor"}}</td>
+        {{#each data.data.shields as |values key|}}
+          {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+            <td>
+              <input name="data.shields.{{key}}.armor" type="number" data-dtype="Number" value="{{values.armor}}" onfocus="this.select()"/>
+            </td>
+          {{/unless}}
+        {{/each}}
+      </tr>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.variant"}}</td>
+        {{#each data.data.shields as |values key|}}
+          {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+            <td>
+              <input name="data.shields.{{key}}.variant" type="number" data-dtype="Number" value="{{values.variant}}" onfocus="this.select()"/>
+            </td>
+          {{/unless}}
+        {{/each}}
+      </tr>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.other"}}</td>
+        {{#each data.data.shields as |values key|}}
+          {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+            <td>
+              <input name="data.shields.{{key}}.other" type="number" data-dtype="Number" value="{{values.other}}" onfocus="this.select()"/>
+            </td>
+          {{/unless}}
+        {{/each}}
+      </tr>
     </tbody>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.armorSheet.total"}}</th>
+        {{#each data.data.shields as |values key|}}
+          {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+            <th>{{values.total}}</th>
+          {{/unless}}
+        {{/each}}
+      </tr>
+    </thead>
   </table>
   {{!-- Characteristic Adjustments --}}
   <table class="armor-stats" {{#unless data.data.characteristics.has}} hidden {{/unless}}>
     <thead>
       <tr>
-        <th colspan="5">{{localize "mythic.armorSheet.characteristics.label"}}</th>
+        <th colspan="5">{{localize "mythic.armorSheet.characteristics"}}</th>
       </tr>
       <tr>
         <th>{{localize "mythic.armorSheet.source.label"}}</th>
@@ -176,4 +215,5 @@
       </tr>
     </thead>
   </table>
+  <div></div>
 </div>

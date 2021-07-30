@@ -592,6 +592,7 @@
                 "physical"
             ],
             "characteristics": {
+                "has": false,
                 "str": {
                     "armor": 0,
                     "variant": 0,
@@ -671,24 +672,25 @@
                 }
             },
             "shields": {
+                "has": false,
                 "value": 0,
                 "max": 0,
                 "integrity": {
                     "armor": 0,
                     "variant": 0,
-                    "equipment": 0,
+                    "other": 0,
                     "total": 0
                 },
                 "recharge": {
                     "armor": 0,
                     "variant": 0,
-                    "equipment": 0,
+                    "other": 0,
                     "total": 0
                 },
                 "delay": {
                     "armor": 0,
                     "variant": 0,
-                    "equipment": 0,
+                    "other": 0,
                     "total": 0
                 }
             },

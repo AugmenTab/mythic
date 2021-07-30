@@ -16,16 +16,36 @@
     
         .tab {
             padding-top: 0.5em;
-
-            .active {
-                height: 100%;
+            height: 100%;
         
-                .editor {
-                    height: 100%;
-                }
+            .editor {
+                height: 100%;
             }
         }
-        
+    }
+
+    .armor-tables {
+        .armor-locations {
+            td:not(:first-of-type) {
+                width: 75px;
+            }
+        }
+
+        .armor-shields {
+            td:not(:first-of-type) {
+                width: 100px;
+            }
+        }
+
+        .armor-stats {
+            td:not(:first-of-type) {
+                width: 100px;
+            }
+        }
+
+        div {
+            height: 0.1em;
+        }
     }
 
     .weapon-details {
