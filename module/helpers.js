@@ -5,11 +5,11 @@
  * @param {...string} var_args - The strings to be concatenated.
  * @returns {string} The concatenated string.
  */
-Handlebars.registerHelper("concat", function() {
+Handlebars.registerHelper("concat", function(...var_args) {
   let str = "";
-  for(var arg in arguments){
-    if(typeof arguments[arg] != "object"){
-      str += arguments[arg];
+  for(let arg in var_args){
+    if(typeof var_args[arg] != "object"){
+      str += var_args[arg];
     }
   }
   return str;
@@ -18,24 +18,33 @@ Handlebars.registerHelper("concat", function() {
 /**
  * Register Handlebars helper to perform comparisons.
  * @param {string} operator - A string representation of a comparison operator.
- * @param {boolean} v1 - The outcome of a boolean expression evaluated by Handlebars.
- * @param {boolean} v2 - The outcome of a boolean expression evaluated by Handlebars.
- * @returns {boolean} The outcome of the comparison operation.
+ * @param {...*} var_args - An array of arguments containing a string representation of the comparison operator, the booleans to be compared, and optionally an object containing the HTML block from Handlebars.
+ * @returns {boolean} The outcome of the comparison operations.
  */
-Handlebars.registerHelper('cond', function(operator, v1, v2) {
-  switch (operator) {
-    case '==': return (v1 == v2);
-    case '===': return (v1 === v2);
-    case '!=': return (v1 != v2);
-    case '!==': return (v1 !== v2);
-    case '<': return (v1 < v2);
-    case '<=': return (v1 <= v2);
-    case '>': return (v1 > v2);
-    case '>=': return (v1 >= v2);
-    case '&&': return (v1 && v2);
-    case '||': return (v1 || v2);
-    default: return options.inverse(this);
-  }
+Handlebars.registerHelper("cond", function(...var_args) {
+  // let args = [...arguments];
+  if (typeof(var_args.slice(-1)[0]) === "object") var_args.pop();
+  const operator = var_args[0];
+  let exps = var_args.slice(1).map(x => {
+    if (x) { return true } else { return false };
+  });
+  return exps.reduce(_compare);
+  
+  function _compare(v1, v2) {
+    switch (operator) {
+      case '==': return (v1 == v2);
+      case '===': return (v1 === v2);
+      case '!=': return (v1 != v2);
+      case '!==': return (v1 !== v2);
+      case '<': return (v1 < v2);
+      case '<=': return (v1 <= v2);
+      case '>': return (v1 > v2);
+      case '>=': return (v1 >= v2);
+      case '&&': return (v1 && v2);
+      case '||': return (v1 || v2);
+      default: return options.inverse(this);
+    }
+  };
 });
 
 /**
@@ -53,7 +62,7 @@ Handlebars.registerHelper("localnum", function(num) {
  * @returns {boolean} The inverted boolean value.
  */
 Handlebars.registerHelper("not", function(arg) {
-  return !arg;
+  if (arg) return !arg;
 });
 
 /**
