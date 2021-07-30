@@ -22,7 +22,6 @@ Handlebars.registerHelper("concat", function(...var_args) {
  * @returns {boolean} The outcome of the comparison operations.
  */
 Handlebars.registerHelper("cond", function(...var_args) {
-  // let args = [...arguments];
   if (typeof(var_args.slice(-1)[0]) === "object") var_args.pop();
   const operator = var_args[0];
   let exps = var_args.slice(1).map(x => {
@@ -42,7 +41,7 @@ Handlebars.registerHelper("cond", function(...var_args) {
       case '>=': return (v1 >= v2);
       case '&&': return (v1 && v2);
       case '||': return (v1 || v2);
-      default: return options.inverse(this);
+      default: throw new Error(`The '${operator}' operator is not recognized.`);
     }
   };
 });
