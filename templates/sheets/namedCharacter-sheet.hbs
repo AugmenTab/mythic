@@ -1,7 +1,56 @@
 <form class="{{cssClass}}" autocomplete="off">
   {{!-- Sheet Tab Navigation --}}
-  {{> "systems/mythic/templates/partials/character-nav.hbs"}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="summary">{{localize "mythic.characterNav.summary"}}</a>
+    <a class="item" data-tab="talents">{{localize "mythic.characterNav.talents.label"}}</a>
+    <a class="item" data-tab="inventory">{{localize "mythic.characterNav.inventory"}}</a>
+    {{!-- <a class="item" data-tab="medical">{{localize "mythic.characterNav.medical"}}</a> --}}
+    <a class="item" data-tab="experience">{{localize "mythic.characterNav.experience"}}</a>
+    <a class="item" data-tab="biography">{{localize "mythic.characterNav.biography"}}</a>
+    <a class="item" data-tab="notes">{{localize "mythic.characterNav.notes"}}</a>
+    <a class="item" data-tab="settings">{{localize "mythic.characterNav.settings"}}</a>
+  </nav>
 
   {{!-- Sheet Body --}}
-  {{> "systems/mythic/templates/partials/character-sheet-body.hbs"}}
+  <section class="sheet-body">
+    {{!-- Summary Page: --}}
+    <div class="tab" data-group="primary" data-tab="summary">
+      {{> "systems/mythic/templates/partials/character-sheet-summary.hbs"}}
+    </div>
+
+    {{!-- Talents Page: --}}
+    <div class="tab" data-group="primary" data-tab="talents">
+      {{> "systems/mythic/templates/partials/character-sheet-talents.hbs"}}
+    </div>
+
+    {{!-- Inventory Page: --}}
+    <div class="tab" data-group="primary" data-tab="inventory">
+      {{> "systems/mythic/templates/partials/character-sheet-inventory.hbs"}}
+    </div>
+
+    {{!-- Medical Page: --}}
+    {{!-- <div class="tab" data-group="primary" data-tab="medical">
+      <p><b>TODO</b></p>
+    </div> --}}
+
+    {{!-- Experience Page --}}
+    <div class="tab" data-group="primary" data-tab="experience">
+      {{> "systems/mythic/templates/partials/character-sheet-experience.hbs"}}
+    </div>
+
+    {{!-- Biography Page: --}}
+    <div class="tab" data-group="primary" data-tab="biography">
+      {{> "systems/mythic/templates/partials/character-sheet-editor.hbs" content=data.data.biography target="data.biography" link="biography"}}
+    </div>
+
+    {{!-- Notes Page: --}}
+    <div class="tab" data-group="primary" data-tab="notes">
+      {{> "systems/mythic/templates/partials/character-sheet-editor.hbs" content=data.data.notes target="data.notes" link="notes"}}
+    </div>
+
+    {{!-- Settings Page: --}}
+    <div class="tab" data-group="primary" data-tab="settings">
+      {{> "systems/mythic/templates/partials/character-sheet-settings.hbs"}}
+    </div>
+  </section>
 </form>
