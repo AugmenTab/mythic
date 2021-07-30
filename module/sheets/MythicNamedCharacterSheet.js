@@ -54,6 +54,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.educations = sortAndFilterItems(data.items, "education");
     data.equipment = sortAndFilterItems(data.items, "equipment");
     data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
+    data.equippedWeapons = data.weapons.filter(w => w.data.weight.equipped);
     return data;
   }
 

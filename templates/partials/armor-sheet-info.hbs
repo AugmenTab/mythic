@@ -1,0 +1,179 @@
+<div class="weapon-details">
+  <p>{{localize "mythic.armorSheet.details.variant"}}</p>
+  <input name="data.variant" type="text" value="{{data.data.variant}}"/>
+  <p>{{localize "mythic.armorSheet.details.faction"}}</p>
+  <input name="data.faction" type="text" value="{{data.data.faction}}"/>
+  <p>{{localize "mythic.armorSheet.details.size"}}</p>
+  <select name="data.size">
+    {{#select data.data.size}}
+      {{#each config.size as |size key|}}
+        <option value="{{key}}">{{localize size}}</option>
+      {{/each}}
+    {{/select}}
+  </select>
+  <p>{{localize "mythic.armorSheet.details.training"}}</p>
+  <select name="data.trainings.faction">
+    {{#select data.data.trainings.faction}}
+      {{#each config.trainings.factions as |value key|}}
+        <option value="{{key}}">{{localize value}}</option>
+      {{/each}}
+    {{/select}}
+  </select>
+</div>
+{{!-- Armor Basics --}}
+<div class="armor-tables">
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.armorSheet.details.weight"}}</th>
+        <th>{{localize "mythic.armorSheet.details.price"}}</th>
+        <th>{{localize "mythic.armorSheet.details.material"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input name="data.weight.each" type="number" data-dtype="Number" value="{{data.data.weight.each}}" onfocus="this.select()"/></td>
+        <td><input name="data.price" type="number" data-dtype="Number" value="{{data.data.price}}" onfocus="this.select()"/></td>
+        <td><input name="data.material" type="text" value="{{data.data.material}}" onfocus="this.select()"/></td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.armorSheet.details.selfSupported"}}</th>
+        <th>{{localize "mythic.armorSheet.details.hasShields"}}</th>
+        <th>{{localize "mythic.armorSheet.details.hasStats"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input name="data.weight.selfSupported" type="checkbox" {{checked data.data.weight.selfSupported}}/></td>
+        <td><input name="data.shields.has" type="checkbox" {{checked data.data.shields.has}}/></td>
+        <td><input name="data.characteristics.has" type="checkbox" {{checked data.data.characteristics.has}}/></td>
+      </tr>
+    </tbody>
+  </table>
+  {{!-- Armor Locations --}}
+  <table class="armor-locations">
+    <thead>
+      <tr>
+        <th colspan="7">{{localize "mythic.armorSheet.locations.label"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.armorSheet.source.label"}}</th>
+        {{#each data.data.protection as |_ loc|}}
+          <th>{{localize (concat "mythic.armorSheet.locations." loc)}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.armor"}}</td>
+        {{#each data.data.protection as |values loc|}}
+          <td>
+            <input name="data.protection.{{loc}}.armor" type="number" data-dtype="Number" value="{{values.armor}}" onfocus="this.select()"/>
+          </td>
+        {{/each}}
+      </tr>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.variant"}}</td>
+        {{#each data.data.protection as |values loc|}}
+          <td>
+            <input name="data.protection.{{loc}}.variant" type="number" data-dtype="Number" value="{{values.variant}}" onfocus="this.select()"/>
+          </td>
+        {{/each}}
+      </tr>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.other"}}</td>
+        {{#each data.data.protection as |values loc|}}
+          <td>
+            <input name="data.protection.{{loc}}.other" type="number" data-dtype="Number" value="{{values.other}}" onfocus="this.select()"/>
+          </td>
+        {{/each}}
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.armorSheet.total"}}</th>
+        {{#each data.data.protection as |values|}}
+          <th>{{values.total}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+  </table>
+  {{!-- Shields --}}
+  <table {{#unless data.data.shields.has}} hidden {{/unless}}>
+    <thead>
+      <tr>
+        <th colspan="5">{{localize "mythic.armorSheet.shields.label"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.armorSheet.source.label"}}</th>
+        {{!-- {{#each data.data.shields as |value key|}}
+          {{#unless ??}}
+            <th>{{localize (concat "mythic.armorSheet.shields." key)}}</th>
+          {{/unless}}
+        {{/each}} --}}
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+  {{!-- Characteristic Adjustments --}}
+  <table class="armor-stats" {{#unless data.data.characteristics.has}} hidden {{/unless}}>
+    <thead>
+      <tr>
+        <th colspan="5">{{localize "mythic.armorSheet.characteristics.label"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.armorSheet.source.label"}}</th>
+        <th>STR</th>
+        <th>AGI</th>
+        <th>{{localize "mythic.armorSheet.mythic"}} STR</th>
+        <th>{{localize "mythic.armorSheet.mythic"}} AGI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.armor"}}</td>
+        {{#each data.data.characteristics as |values stat|}}
+          {{#unless (eq stat "has")}}
+            <td>
+              <input name="data.characteristics.{{stat}}.armor" type="number" data-dtype="Number" value="{{values.armor}}" onfocus="this.select()"/>
+            </td>
+          {{/unless}}
+        {{/each}}
+      </tr>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.variant"}}</td>
+        {{#each data.data.characteristics as |values stat|}}
+          {{#unless (eq stat "has")}}
+            <td>
+              <input name="data.characteristics.{{stat}}.variant" type="number" data-dtype="Number" value="{{values.variant}}" onfocus="this.select()"/>
+            </td>
+          {{/unless}}
+        {{/each}}
+      </tr>
+      <tr>
+        <td>{{localize "mythic.armorSheet.source.other"}}</td>
+        {{#each data.data.characteristics as |values stat|}}
+          {{#unless (eq stat "has")}}
+            <td>
+              <input name="data.characteristics.{{stat}}.other" type="number" data-dtype="Number" value="{{values.other}}" onfocus="this.select()"/>
+            </td>
+          {{/unless}}
+        {{/each}}
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.armorSheet.total"}}</th>
+        {{#each data.data.characteristics as |values stat|}}
+          {{#unless (eq stat "has")}}
+            <th>{{values.total}}</th>
+          {{/unless}}
+        {{/each}}          
+      </tr>
+    </thead>
+  </table>
+</div>
