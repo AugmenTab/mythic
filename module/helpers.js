@@ -2,14 +2,14 @@
 
 /**
  * Register Handlebars helper to concatenate strings.
- * @param {...string} var_args - The strings to be concatenated.
+ * @param {...string} arguments - The strings to be concatenated.
  * @returns {string} The concatenated string.
  */
-Handlebars.registerHelper("concat", function(...var_args) {
+Handlebars.registerHelper("concat", function() {
   let str = "";
-  for(let arg in var_args){
-    if(typeof var_args[arg] != "object"){
-      str += var_args[arg];
+  for(let arg in arguments){
+    if(typeof arguments[arg] != "object"){
+      str += arguments[arg];
     }
   }
   return str;
@@ -24,10 +24,9 @@ Handlebars.registerHelper("concat", function(...var_args) {
 Handlebars.registerHelper("cond", function(...var_args) {
   if (typeof(var_args.slice(-1)[0]) === "object") var_args.pop();
   const operator = var_args[0];
-  let exps = var_args.slice(1).map(x => {
-    if (x) { return true } else { return false };
-  });
-  return exps.reduce(_compare);
+  return var_args.slice(1)
+    .map(x => {if (x) { return true } else { return false }})
+    .reduce(_compare);
   
   function _compare(v1, v2) {
     switch (operator) {
