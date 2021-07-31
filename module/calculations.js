@@ -26,26 +26,50 @@ export function calculateCharacteristicModifier(score) {
 }
 
 /**
- * Prepares all Actor data for a Bestiary Enemy Actor type.
+ * Prepares all base Actor data for a Bestiary Enemy Actor type.
  * @param {ActorData} actorData - The Bestiary Enemy Actor data.
  */
-export function prepareBestiary(actorData) {
+export function prepareBestiaryBase(actorData) {
   // TODO
 }
 
 /**
- * Prepares all Actor data for a Flood Actor type.
+ * Prepares all derived Actor data for a Bestiary Enemy Actor type.
+ * @param {ActorData} actorData - The Bestiary Enemy Actor data.
+ */
+export function prepareBestiaryDerived(actorData) {
+  // TODO
+}
+
+/**
+ * Prepares all base Actor data for a Flood Actor type.
  * @param {ActorData} actorData - The Flood Actor data.
  */
-export function prepareFlood(actorData) {
+export function prepareFloodBase(actorData) {
   // TODO
 }
 
 /**
- * Prepares all Actor data for a Named Character Actor type.
+ * Prepares all derived Actor Data for a Flood Actor type.
+ * @param {ActorData} actorData - The Flood Actor data.
+ */
+export function prepareFloodDerived(actorData) {
+  // TODO
+}
+
+/**
+ * Prepares all base Actor data for a Named Character Actor type.
  * @param {ActorData} actorData - The Named Character Actor data.
  */
-export function prepareNamedCharacter(actorData) {
+export function prepareNamedCharacterBase(actorData) {
+  // TODO
+}
+
+/**
+ * Prepares all derived Actor data for a Named Character Actor type.
+ * @param {ActorData} actorData - The Named Character Actor data.
+ */
+export function prepareNamedCharacterDerivedData(actorData) {
   // Calculate Ability Pool
   calculateAbilityPool(actorData);
 
@@ -112,10 +136,18 @@ export function prepareNamedCharacter(actorData) {
 }
 
 /**
- * Prepares all Actor data for a Vehicle Actor type.
+ * Prepares all base Actor data for a Vehicle Actor type.
  * @param {ActorData} actorData - The Vehicle Actor data.
  */
-export function prepareVehicle(actorData) {
+export function prepareVehicleBase(actorData) {
+  // TODO
+}
+
+/**
+ * Prepares all derived Actor data for a Vehicle Actor type.
+ * @param {ActorData} actorData - The Vehicle Actor data.
+ */
+export function prepareVehicleDerived(actorData) {
   // TODO
 }
 
