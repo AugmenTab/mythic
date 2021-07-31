@@ -62,14 +62,24 @@ export function prepareFloodDerived(actorData) {
  * @param {ActorData} actorData - The Named Character Actor data.
  */
 export function prepareNamedCharacterBase(actorData) {
-  // TODO
+  // Calculate Experience
+  calculateExperience(actorData);
+
+  // Calculate Luck
+  calculateLuck(actorData);
+
+  // Calculate Support Points
+  calculateSupportPoints(actorData);
+
+  // Fix Talent Dependencies
+  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
 }
 
 /**
  * Prepares all derived Actor data for a Named Character Actor type.
  * @param {ActorData} actorData - The Named Character Actor data.
  */
-export function prepareNamedCharacterDerivedData(actorData) {
+export function prepareNamedCharacterDerived(actorData) {
   // Calculate Ability Pool
   calculateAbilityPool(actorData);
 
@@ -95,20 +105,11 @@ export function prepareNamedCharacterDerivedData(actorData) {
   // Calculate Toughness DR
   actorData.data.characteristics.extra.touDR = touMod + actorData.data.mythicCharacteristics.tou.total;
 
-  // Calculate Experience
-  calculateExperience(actorData);
-
   // Calculate Wounds
   calculateWounds(actorData, touMod);
 
   // Calculate Max Fatigue
   calculateMaxFatigue(actorData, touMod);
-
-  // Calculate Luck
-  calculateLuck(actorData);
-
-  // Calculate Support Points
-  calculateSupportPoints(actorData);
 
   // Calculate Carry Weight
   calculateCarryWeight(actorData, str, tou);
@@ -124,9 +125,6 @@ export function prepareNamedCharacterDerivedData(actorData) {
 
   // Calculate Education Test Target Numbers
   calculateEducationTargets(actorData);
-
-  // Fix Talent Dependencies
-  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actorData);
