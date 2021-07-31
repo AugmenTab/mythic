@@ -78,6 +78,7 @@ All of the compendiums that come included with this system. Unimplemented compen
     * *Generate NPC*
     * *Generate Weather Conditions*
     * *Generate Planet*
+    * *Place a Blast/Kill template.*
 
 ## Legal
 
@@ -92,7 +93,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 ## Planned Features and Stretch Goals
 
-* Remove eval usage from all files.
 * Compendiums as laid out above.
 * Tooltips for everything.
 * Weapon summary QOL improvements:

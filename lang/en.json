@@ -263,7 +263,8 @@
                 "title": "Attack"
             },
             "error": {
-                "nan": "Invalid entry: please enter a whole number."
+                "nan": "Invalid entry: please enter a whole number.",
+                "parseFailure": "The provided roll modifiers could not be parsed. Please try again, entering only whole numbers, the '+' symbol, and the '-' symbol."
             },
             "options": {
                 "circumstance": "Circumstance Modifier",

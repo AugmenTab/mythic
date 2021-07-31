@@ -18,6 +18,23 @@ const FORMULA = "D100";
 const THRESHOLD = 98;
 
 /**
+ * Evaluates a string of simple addition and subtraction expressions.
+ * @param {string} str - The string representation of the expression.
+ * @returns {number} The number value of the evaluated expression.
+ */
+export function interpretDiceRollModifiers(str) {
+  let re = /\s*[+\-]?\s*\d+\s*/g;
+  let mods = str.trim().match(re);
+  let num = 0;
+  for (let mod of mods) num += parseInt(mod);
+  if (str.replace(re, "") !== "" || isNaN(num)) {
+    const msg = game.i18n.localize("mythic.chat.error.parseFailure");
+    ui.notifications.error(msg);
+    throw new Error(msg);
+  } else return num;
+}
+
+/**
  * Roll attacks from an Actor sheet.
  * @param {Element} element - The HTML element the listener originated from.
  * @param {Actor} actor - The Actor that fired the listener.
@@ -25,19 +42,14 @@ const THRESHOLD = 98;
 export async function rollAttacks(element, actor) {
   const attackOptions = await getAttackRollOptions();
   let mod = 0;
-  try {
-    mod = eval(attackOptions.circumstance);
-    if (isNaN(mod)) {
-      ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
-      attackOptions.cancelled = true;
-    }
-  } catch {
+  if (!attackOptions.cancelled) mod = interpretDiceRollModifiers(attackOptions.circumstance);
+  if (isNaN(mod)) {
     ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     attackOptions.cancelled = true;
   }
   if (!attackOptions.cancelled) {
     const weapon = await actor.items.get(element.getAttribute("data-item-id"));
-    const target = weapon.data.data.attack.target + parseInt(attackOptions.circumstance);
+    const target = weapon.data.data.attack.target + mod;
     const type = element.value;
     await getAttackAndDamageOutcomes(actor, weapon, target, type);
   }
@@ -59,13 +71,8 @@ export async function rollTest(element, actor) {
   const target = parseInt(element.value);
   const testOptions = await getTestOptions(test);
   let mod = 0;
-  try {
-    mod = eval((testOptions.circumstance));
-    if (isNaN(mod)) {
-      ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
-      testOptions.cancelled = true;
-    }
-  } catch {
+  if (!testOptions.cancelled) mod = interpretDiceRollModifiers(testOptions.circumstance);
+  if (isNaN(mod)) {
     ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     testOptions.cancelled = true;
   }

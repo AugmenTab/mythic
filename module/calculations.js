@@ -1,5 +1,7 @@
 /** @module calculations */
 
+import { interpretDiceRollModifiers } from "./dice.js";
+
 const MELEE_REACH_SIZE_BONUS = {
   "mini": 1,
   "small": 1,
@@ -224,7 +226,7 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
     formula.push(bonus > 1 ? bonus : 1);
   };
   formula.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
-  const mods = eval(formula.slice(1).join("+"));
+  const mods = interpretDiceRollModifiers(formula.slice(1).join("+"));
   actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
   actorData.data.initiative.formula = formula.join("+");
 }
