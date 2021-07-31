@@ -116,8 +116,7 @@ async function determineHitDigit(root) {
   if (roll.total === 1) return game.i18n.localize(`${root}.digits.pinky`);
 }
 
-async function determineHitLocation(roll) {
-  const key = parseInt(String(roll).split("").reverse().join(""));
+async function determineHitLocation(key) {
   const root = "mythic.hitLocations.body";
   let location = "";
   if (key >= 61) {
@@ -356,6 +355,14 @@ async function getTestOptions(test) {
   });
 }
 
+function reverseDigits(roll) {
+  let digits = String(roll).split("");
+  if (digits.length === 1) {
+    digits.push("0");
+  } else digits.reverse();
+  return parseInt(digits.join(""));
+}
+
 async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages) {
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, target);
@@ -369,7 +376,7 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages)
     || weapon.data.data.special.blast.has 
     || weapon.data.data.special.kill.has
   ) {
-    attack.location = await determineHitLocation(roll.total);
+    attack.location = await determineHitLocation(reverseDigits(roll.total));
     let damage = weapon.data.data.attack.damageRoll;
     let min = weapon.data.data.special.diceMinimum.has
       ? weapon.data.data.special.diceMinimum.value

@@ -62,6 +62,9 @@ export function prepareFloodDerived(actorData) {
  * @param {ActorData} actorData - The Named Character Actor data.
  */
 export function prepareNamedCharacterBase(actorData) {
+  // Calculate Ability Pool
+  calculateAbilityPool(actorData);
+
   // Calculate Experience
   calculateExperience(actorData);
 
@@ -80,9 +83,6 @@ export function prepareNamedCharacterBase(actorData) {
  * @param {ActorData} actorData - The Named Character Actor data.
  */
 export function prepareNamedCharacterDerived(actorData) {
-  // Calculate Ability Pool
-  calculateAbilityPool(actorData);
-
   // Calculate Characteristics
   const f = actorData.data.fatigue;
   const feltFatigue = f.enduring ? f.current - 2 : f.current;
