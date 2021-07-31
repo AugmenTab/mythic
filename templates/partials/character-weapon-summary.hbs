@@ -63,11 +63,17 @@
               {{!-- Range --}}
               <td>
                 {{#if (eq weapon.data.group "thrown")}}
-                {{weapon.data.range.thrown}} m ({{weapon.data.special.blast.value}} / {{weapon.data.special.kill.value}})
+                  {{weapon.data.range.thrown}} m 
+                  {{#if weapon.data.special.blast.has}}
+                    ({{weapon.data.special.blast.value}} {{else}} (0
+                  {{/if}}
+                  {{#if weapon.data.special.kill.has}}
+                    / {{weapon.data.special.kill.value}}) {{else}} / 0)
+                  {{/if}}
                 {{else if (eq weapon.data.group "melee")}}
-                {{weapon.data.range.melee}} m
+                  {{weapon.data.range.melee}} m
                 {{else if (eq weapon.data.group "ranged")}}
-                {{weapon.data.range.close}} - {{weapon.data.range.long}} m
+                  {{weapon.data.range.close}} - {{weapon.data.range.long}} m
                 {{/if}}
               </td>
               {{!-- Magazine --}}
