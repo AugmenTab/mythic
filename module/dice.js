@@ -58,7 +58,9 @@ export async function rollAttacks(element, actor) {
 export async function rollEvasionBatch(element, actor) {
   const options = await getEvadeOptions();
   let mod = 0;
-  if (!options.cancelled) mod = interpretDiceRollModifiers(options.circumstance);
+  if (options.cancelled) {
+    return;
+  } else mod = interpretDiceRollModifiers(options.circumstance);
   if (isNaN(mod) || isNaN(options.penalty) || isNaN(options.times)) {
     ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     options.cancelled = true;
