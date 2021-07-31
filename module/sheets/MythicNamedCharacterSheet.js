@@ -1,7 +1,7 @@
 /** @module MythicNamedCharacterSheet */
 
 import { sortAndFilterItems } from "../calculations.js";
-import { rollAttacks, rollTest } from "../dice.js";
+import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /** Class representing the unique features of this system's Named Character sheet.
  * @extends ActorSheet
@@ -74,6 +74,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.find(".evade").click(this._onEvade.bind(this));
     html.find(".exp-total-apply").click(this._onExpApply.bind(this));
     html.find(".exp-spent-apply").click(this._onExpApply.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
@@ -85,6 +86,11 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".reload").click(this._onReload.bind(this));
     html.find(".special-focus").focus(this._onItemEditInline.bind(this));
+  }
+
+  async _onEvade(event) {
+    event.preventDefault();
+    await rollEvasionBatch(event.currentTarget, this.actor);
   }
 
   async _onExpApply(event) {

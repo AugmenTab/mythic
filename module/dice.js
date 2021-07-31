@@ -55,6 +55,17 @@ export async function rollAttacks(element, actor) {
   }
 }
 
+export async function rollEvasionBatch(element, actor) {
+  const options = await getEvadeOptions();
+  let mod = 0;
+  if (!options.cancelled) mod = interpretDiceRollModifiers(options.circumstance);
+  if (isNaN(mod) || isNaN(options.penalty) || isNaN(options.times)) {
+    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    options.cancelled = true;
+  }
+  if (!options.cancelled) await rollEvasions(parseInt(element.value) + mod, options, actor);
+}
+
 /**
  * Roll tests from an Actor sheet.
  * @param {Element} element - The HTML element the listener originated from.
@@ -214,7 +225,7 @@ async function determineHitSublocation(key, root) {
 
 function determineRollOutcome(roll, target) {
   let outcome = { color: "black", critical: false };
-  const d = (target - roll) / 10;
+  const d = ((target > 0 ? target : 0) - roll) / 10;
   outcome.degrees = Math.abs(d).toFixed(1);
   if (roll >= THRESHOLD) {
     outcome.critical = true;
@@ -239,7 +250,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
     weaponData: weapon.data.data,
     attacks: [],
     type: type,
-    target: target,
+    target: target > 0 ? target : 0,
     template: "attack",
     flavor: getAttackFlavor(weapon.data.data.group, type, fireMode)
   };
@@ -280,6 +291,30 @@ async function getAttackRollOptions() {
         roll: {
           label: game.i18n.localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processAttackOptions(html[0].querySelector("form")))
+        },
+        cancel: {
+          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          callback: html => resolve({cancelled: true})
+        }
+      },
+      default: "roll",
+      close: () => resolve({cancelled: true})
+    };
+    new Dialog(data, null).render(true);
+  });
+}
+
+async function getEvadeOptions() {
+  const template = "systems/mythic/templates/chat/evade-dialog.hbs";
+  const html = await renderTemplate(template, {});
+  return new Promise(resolve => {
+    const data = {
+      title: game.i18n.format("mythic.chat.evade"),
+      content: html,
+      buttons: {
+        roll: {
+          label: game.i18n.localize("mythic.chat.actions.roll"),
+          callback: html => resolve(_processEvadeOptions(html[0].querySelector("form")))
         },
         cancel: {
           label: game.i18n.localize("mythic.chat.actions.cancel"),
@@ -370,13 +405,34 @@ async function rollBasicTest(target, test, type, actor) {
     type: type,
     test: test,
     roll: roll.total,
-    target: target,
+    target: target > 0 ? target : 0,
     critical: false,
     outcome: "",
     template: "test",
     flavor: `${test} ${game.i18n.localize("mythic.chat.test.title")}`,
     ...outcome
   };
+  await postChatMessage(result, actor);
+}
+
+async function rollEvasions(baseTarget, options, actor) {
+  let result = {
+    evasions: [],
+    flavor: `${game.i18n.localize("mythic.skillNames.evasion")} (AGI) ${game.i18n.localize("mythic.chat.test.title")}`,
+    type: "test",
+    template: "evade"
+  };
+  for (let i = 0; i < options.times; i++) {
+    const roll = await new Roll(FORMULA).roll({ async: true });
+    let target = baseTarget - (i * options.penalty);
+    let outcome = determineRollOutcome(roll.total, target);
+    result.evasions.push({
+      evasionNumber: i + 1,
+      roll: roll.total,
+      target: target > 0 ? target : 0,
+      ...outcome
+    });
+  }
   await postChatMessage(result, actor);
 }
 
@@ -407,6 +463,14 @@ function _processAttackOptions(form) {
   return {
     circumstance: form.circumstance.value
   };
+}
+
+function _processEvadeOptions(form) {
+  return {
+    circumstance: form.circumstance.value,
+    penalty: parseInt(form.penalty.value),
+    times: parseInt(form.times.value)
+  }
 }
 
 function _processTestOptions(form) {

@@ -95,8 +95,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 * Compendiums as laid out above.
 * Tooltips for everything.
-* Weapon summary QOL improvements:
-    * Evasion button should prompt a dialog window asking how many to roll (and circumstance modifier), then roll batched Evasions, with stacking penalty.
 * Fully functioning Medical page to handle injuries.
 * Add called shots, Clear Target, and Precision Strike.
 * Add hit locations for targeting vehicles.

@@ -266,17 +266,21 @@
                 "nan": "Invalid entry: please enter a whole number.",
                 "parseFailure": "The provided roll modifiers could not be parsed. Please try again, entering only whole numbers, the '+' symbol, and the '-' symbol."
             },
+            "evade": "Batched Evasions",
             "options": {
                 "circumstance": "Circumstance Modifier",
                 "dof": "Degrees of Failure",
                 "distance": "Distance from Target (meters)",
-                "isZeroG": "Zero Gravity?"
+                "isZeroG": "Zero Gravity?",
+                "times": "How many tests do you want to make?",
+                "penalty": "What is the stacking penalty?"
             },
             "scatter": {
                 "title": "Scatter"
             },
             "test": {
-                "title": "Test"
+                "title": "Test",
+                "evasion": "Evasion"
             }
         },
         "weaponGroups": {
