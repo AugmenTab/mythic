@@ -58,6 +58,7 @@ async function getScatterOptions(degrees = 0) {
 async function onScatter(event) {
   const element = event.currentTarget;
   const options = await getScatterOptions(element.dataset.dof);
+  if (options.cancelled) return;
   const distance = parseInt(options.distance);
   const dof = parseFloat(options.dof)
 
