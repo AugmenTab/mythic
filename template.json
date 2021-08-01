@@ -521,6 +521,7 @@
                 "spent": 0,
                 "current": 0,
                 "purchases": [],
+                "color": "",
                 "notes": ""
             },
             "educations": {

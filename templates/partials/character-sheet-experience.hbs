@@ -13,14 +13,16 @@
         <tr>
           <td><b>{{data.data.experience.tier}}</b></td>
           <td>
-            <div class="exp-edit">
+            <div class="exp-total">
               <b>{{localnum data.data.experience.total}}</b>
-              <input id="exp-total-value" type="number" data-dtype="Number"/>
+              <input id="exp-total-value" class="exp-submit" type="number" data-dtype="Number"/>
               <button class="exp-apply">{{localize "mythic.characterStatBlock.experience.apply"}}</button>
             </div>
           </td>
           <td><b>{{localnum data.data.experience.spent}}</b></td>
-          <td><b>{{localnum data.data.experience.current}}</b></td>
+          <td>
+            <b style="color:{{data.data.experience.color}}">{{localnum data.data.experience.current}}</b>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -34,8 +36,8 @@
     <div class="exp-purchases">
       {{#each data.data.experience.purchases as |purchase|}}
         <div class="exp-purchase">
-          <input type="text" placeholder="Purchased Ability"/>
-          <input type="number" placeholder="Price"/>
+          <input class="exp-edit" data-field="name" data-index="{{purchase.index}}" type="text" placeholder="Purchased Ability" value="{{purchase.name}}"/>
+          <input class="exp-edit" data-field="price" data-index="{{purchase.index}}" type="number" placeholder="Price" value="{{purchase.price}}"/>
           <a class="exp-delete" data-index="{{purchase.index}}"><i class="clickable fas fa-trash"></i></a>
         </div>
       {{else}}

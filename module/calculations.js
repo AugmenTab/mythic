@@ -238,11 +238,12 @@ function calculateEducationTargets(actorData) {
 function calculateExperience(actorData) {
   const totalExp = actorData.data.experience.total;
   const spent = actorData.data.experience.purchases.reduce(
-    function(x, y) { return (!isNaN(x.price) ? x.price : 0) + (!isNaN(y.price) ? y.price : 0); },
-    0
-  );;
+    (t, a) => t + (isNaN(a.price) ? 0 : a.price), 0
+  );
+  const current = totalExp - spent;
   actorData.data.experience.spent = spent;
   actorData.data.experience.current = totalExp - spent;
+  actorData.data.experience.color = current < 0 ? "red" : "black";
   if (totalExp >= 32000) {
     actorData.data.experience.tier = 7;
   } else if (totalExp >= 16000 ) {

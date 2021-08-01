@@ -194,6 +194,7 @@
                 "spent": "Spent",
                 "current": "Current",
                 "notes": "Experience Notes",
+                "err": "The provided price could not be parsed. Please enter a whole number.",
                 "empty": "<p>No experience purchases have been made yet.</p><p>You can log any purchases you make with starting or gained experience here.</p><p>Click the Purchase button above to add an experience purchase.</p>"
             }
         },

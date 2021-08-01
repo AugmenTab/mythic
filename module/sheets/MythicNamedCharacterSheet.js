@@ -78,6 +78,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".exp-apply").click(this._onExpApply.bind(this));
     html.find(".exp-create").click(this._onExpCreate.bind(this));
     html.find(".exp-delete").click(this._onExpDelete.bind(this));
+    html.find(".exp-edit").change(this._onExpEdit.bind(this));
+    html.find(".exp-submit").keyup(this._onExpSubmit.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
@@ -109,10 +111,9 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   async _onExpCreate(event) {
     event.preventDefault;
-    const element = event.currentTarget;
     let data = duplicate(this.actor.data);
     let purchases = setupExperiencePurchases(data.data.experience.purchases);
-    const purchase = { index: purchases.length, name: "", price: purchases.length };
+    const purchase = { index: purchases.length, name: null, price: null };
     data.data.experience.purchases.push(purchase);
     await this.actor.update(data);
   }
@@ -124,6 +125,20 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const purchases = data.data.experience.purchases.filter(x => x.index != element.dataset.index);
     data.data.experience.purchases = setupExperiencePurchases(purchases);
     await this.actor.update(data);
+  }
+
+  async _onExpEdit(event) {
+    event.preventDefault;
+    const element = event.currentTarget;
+    let data = duplicate(this.actor.data);
+    let val = element.dataset.field === "price" ? parseInt(element.value) : element.value;
+    if (element.dataset.field === "price" && isNaN(val)) val = 0;
+    data.data.experience.purchases[element.dataset.index][element.dataset.field] = val;
+    await this.actor.update(data);
+  }
+
+  _onExpSubmit(event) {
+    if (event.keyCode === 13) this._onExpApply(event);
   }
 
   async _onLanguageUpdate(event) {
