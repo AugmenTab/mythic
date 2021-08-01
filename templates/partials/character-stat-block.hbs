@@ -95,7 +95,7 @@
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
           <td>
-            <input name="data.wounds.current" value="{{data.data.wounds.current}}" type="number" data-dtype="Number"/>
+            <input name="data.wounds.current" value="{{data.data.wounds.current}}" type="number" data-dtype="Number" onfocus="this.select()"/>
           </td>
         </tr>
         <tr>
@@ -114,7 +114,7 @@
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
           <td>
-            <input name="data.fatigue.current" value="{{data.data.fatigue.current}}" type="number" data-dtype="Number"/>
+            <input name="data.fatigue.current" value="{{data.data.fatigue.current}}" type="number" data-dtype="Number" onfocus="this.select()"/>
           </td>
         </tr>
         <tr>
@@ -133,7 +133,7 @@
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
           <td>
-            <input name="data.luck.current" value="{{data.data.luck.current}}" type="number" data-dtype="Number"/>
+            <input name="data.luck.current" value="{{data.data.luck.current}}" type="number" data-dtype="Number" onfocus="this.select()"/>
           </td>
         </tr>
         <tr>
@@ -151,7 +151,7 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td><input name="data.supportPoints.current" value="{{data.data.supportPoints.current}}" type="number" data-dtype="Number"/></td>
+          <td><input name="data.supportPoints.current" value="{{data.data.supportPoints.current}}" type="number" data-dtype="Number" onfocus="this.select()"/></td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
@@ -168,7 +168,7 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td><input name="" value="" type="number" data-dtype="Number"/></td>
+          <td><input name="" value="" type="number" data-dtype="Number" onfocus="this.select()"/></td>
           <th>{{localize "mythic.characterStatBlock.physical.delay"}}</th>
           <td>20</td>
         </tr>
@@ -206,7 +206,7 @@
     <table style="grid-column: span 3">
       <thead>
         <tr>
-          <th colspan="7">{{localize "mythic.characterStatBlock.physical.armor"}}</th>
+          <th colspan="7">{{localize "mythic.characterStatBlock.physical.damageResistance"}}</th>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.head"}}</th>
@@ -215,17 +215,17 @@
           <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.legs.left"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.legs.right"}}</th>
-          <th>TOU DR</th>
+          <th>TOU</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>55</td>
-          <td>55</td>
-          <td>55</td>
-          <td>55</td>
-          <td>55</td>
-          <td>55</td>
+          <td><b>16</b>&nbsp;&nbsp;(10)</td>
+          <td><b>16</b>&nbsp;&nbsp;(10)</td>
+          <td><b>16</b>&nbsp;&nbsp;(10)</td>
+          <td><b>16</b>&nbsp;&nbsp;(10)</td>
+          <td><b>16</b>&nbsp;&nbsp;(10)</td>
+          <td><b>16</b>&nbsp;&nbsp;(10)</td>
           <td>{{data.data.characteristics.extra.touDR}}</td>
         </tr>
       </tbody>
