@@ -24,7 +24,7 @@
         </tr>
       </tbody>
     </table>
-    <button class="exp-purchase">{{localize "mythic.characterStatBlock.experience.purchase"}}&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+    <button class="exp-create">{{localize "mythic.characterStatBlock.experience.purchase"}}&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
   </div>
   <div class="exp-bottom">
     <div class="exp-notes">
@@ -36,7 +36,7 @@
         <div class="exp-purchase">
           <input type="text" placeholder="Purchased Ability"/>
           <input type="number" placeholder="Price"/>
-          <i class="fas fa-trash"></i>
+          <a class="exp-delete" data-index="{{purchase.index}}"><i class="clickable fas fa-trash"></i></a>
         </div>
       {{else}}
         {{{localize "mythic.characterStatBlock.experience.empty"}}}

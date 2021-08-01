@@ -150,6 +150,18 @@ export function prepareVehicleDerived(actorData) {
 }
 
 /**
+ * Updates a list of experience purchases with new indexes.
+ * @param {Array.<object>} purchases - List of experience purchases.
+ * @returns {Array.<object>} The list of experience records updated with new indexes.
+ */
+export function setupExperiencePurchases(purchases) {
+  for (let i = 0; i < purchases.length; i++) {
+    purchases[i].index = i;
+  }
+  return purchases;
+}
+
+/**
  * Filter a list of Items by their type, then sort based on a given parameter.
  * @param {Array.<number>} items - An array of Item objects.
  * @param {string} filterParam - The Item type to filter by.
@@ -225,7 +237,12 @@ function calculateEducationTargets(actorData) {
 
 function calculateExperience(actorData) {
   const totalExp = actorData.data.experience.total;
-  actorData.data.experience.current = totalExp - actorData.data.experience.spent;
+  const spent = actorData.data.experience.purchases.reduce(
+    function(x, y) { return (!isNaN(x.price) ? x.price : 0) + (!isNaN(y.price) ? y.price : 0); },
+    0
+  );;
+  actorData.data.experience.spent = spent;
+  actorData.data.experience.current = totalExp - spent;
   if (totalExp >= 32000) {
     actorData.data.experience.tier = 7;
   } else if (totalExp >= 16000 ) {

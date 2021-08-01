@@ -10,8 +10,8 @@
             "upbringing": "Upbringing",
             "environment": "Environment",
             "lifestyle": "Lifestyle",
-            "height": "Height",
-            "weight": "Weight",
+            "height": "Height (cm)",
+            "weight": "Weight (kg)",
             "age": "Age",
             "gender": "Gender"
         },
@@ -311,7 +311,7 @@
                 "training": "Faction Training",
                 "price": "Price (cR)",
                 "material": "Material",
-                "weight": "Weight (kgs)",
+                "weight": "Weight (kg)",
                 "selfSupported": "Self-Supporting?",
                 "hasShields": "Shields?",
                 "hasStats": "Characteristics?"
@@ -372,7 +372,7 @@
         "equipmentSheet": {
             "faction": "Faction",
             "price": "Price (cR)",
-            "weight": "Weight (kgs)",
+            "weight": "Weight (kg)",
             "selfSupported": "Self-Supporting?"
         },
         "skillSheet": {
@@ -480,7 +480,7 @@
                 "baseReload": "Base Reload",
                 "attackBonus": "To-Hit Bonus",
                 "type": "Type",
-                "weight": "Weight (kgs)",
+                "weight": "Weight (kg)",
                 "desc": "Write weapon description here.",
                 "nickname": "Nickname",
                 "faction": "Faction",

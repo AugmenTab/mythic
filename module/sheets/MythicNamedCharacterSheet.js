@@ -1,6 +1,6 @@
 /** @module MythicNamedCharacterSheet */
 
-import { sortAndFilterItems } from "../calculations.js";
+import { setupExperiencePurchases, sortAndFilterItems } from "../calculations.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /** Class representing the unique features of this system's Named Character sheet.
@@ -76,6 +76,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
     html.find(".evade").click(this._onEvade.bind(this));
     html.find(".exp-apply").click(this._onExpApply.bind(this));
+    html.find(".exp-create").click(this._onExpCreate.bind(this));
+    html.find(".exp-delete").click(this._onExpDelete.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
@@ -102,6 +104,25 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (isNaN(parseInt(field.value))) {
       ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     }
+    await this.actor.update(data);
+  }
+
+  async _onExpCreate(event) {
+    event.preventDefault;
+    const element = event.currentTarget;
+    let data = duplicate(this.actor.data);
+    let purchases = setupExperiencePurchases(data.data.experience.purchases);
+    const purchase = { index: purchases.length, name: "", price: purchases.length };
+    data.data.experience.purchases.push(purchase);
+    await this.actor.update(data);
+  }
+
+  async _onExpDelete(event) {
+    event.preventDefault;
+    const element = event.currentTarget;
+    let data = duplicate(this.actor.data);
+    const purchases = data.data.experience.purchases.filter(x => x.index != element.dataset.index);
+    data.data.experience.purchases = setupExperiencePurchases(purchases);
     await this.actor.update(data);
   }
 
