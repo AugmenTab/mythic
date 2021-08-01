@@ -75,8 +75,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     super.activateListeners(html);
 
     html.find(".evade").click(this._onEvade.bind(this));
-    html.find(".exp-total-apply").click(this._onExpApply.bind(this));
-    html.find(".exp-spent-apply").click(this._onExpApply.bind(this));
+    html.find(".exp-apply").click(this._onExpApply.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
@@ -97,20 +96,12 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     let data = duplicate(this.actor.data);
-    let field;
-    if (element.classList[0] === "exp-total-apply") {
-      field = document.getElementById("exp-total-value");
-      const val = Math.floor(parseInt(field.value));
-      data.data.experience.total += (!isNaN(val)) ? val : 0;
-    } else if (element.classList[0] === "exp-spent-apply") {
-      field = document.getElementById("exp-spent-value");
-      const val = Math.floor(parseInt(field.value));
-      data.data.experience.spent += (!isNaN(val)) ? val : 0;
-    }
+    const field = document.getElementById("exp-total-value");
+    const val = Math.floor(parseInt(field.value));
+    data.data.experience.total += (!isNaN(val)) ? val : 0;
     if (isNaN(parseInt(field.value))) {
       ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     }
-    field.value = "";
     await this.actor.update(data);
   }
 

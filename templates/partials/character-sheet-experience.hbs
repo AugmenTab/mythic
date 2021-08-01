@@ -1,34 +1,46 @@
 <div class="sheet-content">
-  <table class="exp">
-    <thead>
-      <tr>
-        <th>{{localize "mythic.characterStatBlock.experience.tier"}}</th>
-        <th>{{localize "mythic.characterStatBlock.experience.total"}}</th>
-        <th>{{localize "mythic.characterStatBlock.experience.spent"}}</th>
-        <th>{{localize "mythic.characterStatBlock.experience.current"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><b>{{data.data.experience.tier}}</b></td>
-        <td>
-          <div class="exp-edit">
-            <b>{{localnum data.data.experience.total}}</b>
-            <input id="exp-total-value" type="number" data-dtype="Number"/>
-            <button class="exp-total-apply">{{localize "mythic.characterStatBlock.experience.button"}}</button>
-          </div>
-        </td>
-        <td>
-          <div class="exp-edit">
-            <b>{{localnum data.data.experience.spent}}</b>
-            <input id="exp-spent-value" type="number" data-dtype="Number"/>
-            <button class="exp-spent-apply">{{localize "mythic.characterStatBlock.experience.button"}}</button>
-          </div>
-        </td>
-        <td><b>{{localnum data.data.experience.current}}</b></td>
-      </tr>
-    </tbody>
-  </table>
-  <h2>{{localize "mythic.characterStatBlock.experience.notes"}}</h2>
-  {{editor content=data.data.experience.notes target="data.experience.notes" button=true owner=owner editable=this.options.editable}}
+  <div class="exp-top">
+    <table class="exp-table">
+      <thead>
+        <tr>
+          <th style="width:42px">{{localize "mythic.characterStatBlock.experience.tier"}}</th>
+          <th style="width:370px">{{localize "mythic.characterStatBlock.experience.total"}}</th>
+          <th style="width:125px">{{localize "mythic.characterStatBlock.experience.spent"}}</th>
+          <th style="width:125px">{{localize "mythic.characterStatBlock.experience.current"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>{{data.data.experience.tier}}</b></td>
+          <td>
+            <div class="exp-edit">
+              <b>{{localnum data.data.experience.total}}</b>
+              <input id="exp-total-value" type="number" data-dtype="Number"/>
+              <button class="exp-apply">{{localize "mythic.characterStatBlock.experience.apply"}}</button>
+            </div>
+          </td>
+          <td><b>{{localnum data.data.experience.spent}}</b></td>
+          <td><b>{{localnum data.data.experience.current}}</b></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="exp-purchase">{{localize "mythic.characterStatBlock.experience.purchase"}}&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+  </div>
+  <div class="exp-bottom">
+    <div class="exp-notes">
+      <h2>{{localize "mythic.characterStatBlock.experience.notes"}}</h2>
+      <textarea name="data.experience.notes">{{data.data.experience.notes}}</textarea>
+    </div>
+    <div class="exp-purchases">
+      {{#each data.data.experience.purchases as |purchase|}}
+        <div class="exp-purchase">
+          <input type="text" placeholder="Purchased Ability"/>
+          <input type="number" placeholder="Price"/>
+          <i class="fas fa-trash"></i>
+        </div>
+      {{else}}
+        {{{localize "mythic.characterStatBlock.experience.empty"}}}
+      {{/each}}
+    </div>
+  </div>
 </div>

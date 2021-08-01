@@ -168,7 +168,7 @@
                 "fatigue": "Fatigue",
                 "luck": "Luck",
                 "support": "Support Points",
-                "armor": "Armor",
+                "damageResistance": "Damage Resistance (Armor Value)",
                 "shields": "Shields",
                 "current": "Current",
                 "max": "Max",
@@ -187,12 +187,14 @@
             },
             "experience": {
                 "label": "Experience",
-                "button": "Apply",
+                "apply": "Apply",
+                "purchase": "Purchase",
                 "tier": "Tier",
                 "total": "Total",
                 "spent": "Spent",
                 "current": "Current",
-                "notes": "Experience Notes"
+                "notes": "Experience Notes",
+                "empty": "<p>No experience purchases have been made yet.</p><p>You can log any purchases you make with starting or gained experience here.</p><p>Click the Purchase button above to add an experience purchase.</p>"
             }
         },
         "characterTalents": {
