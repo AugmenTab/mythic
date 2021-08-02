@@ -9,7 +9,7 @@
     <a class="item" data-tab="basic">{{localize "mythic.armorSheet.nav.basic"}}</a>
     <a class="item" data-tab="details">{{localize "mythic.armorSheet.nav.details"}}</a>
     <a class="item" data-tab="variant">{{localize "mythic.armorSheet.nav.variant"}}</a>
-    <a class="item" data-tab="permutations">{{localize "mythic.armorSheet.nav.permutations"}}</a>
+    <a class="item" data-tab="mods">{{localize "mythic.armorSheet.nav.mods"}}</a>
     <a class="item" data-tab="notes">{{localize "mythic.armorSheet.nav.notes"}}</a>
   </nav>
   <section class="armor-body">
@@ -28,8 +28,8 @@
       {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.variant target="data.notes.variant" link="armorSheet.notes.variant"}}
     </div>
 
-    {{!-- Permutations Page --}}
-    <div class="tab" data-group="primary" data-tab="permutations">
+    {{!-- Modifications Page --}}
+    <div class="tab" data-group="primary" data-tab="mods">
       <table>
         <thead>
           <tr>

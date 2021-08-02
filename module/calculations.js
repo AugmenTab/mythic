@@ -46,7 +46,11 @@ export function prepareBestiaryDerived(actorData) {
  * @param {ActorData} actorData - The prepared ActorData.
  */
 export function prepareCharacterEmbedded(actorData) {
-  // TODO
+  // Prepare Armors
+  let armors = actorData.items.filter(a => a.type === "armor");
+  for (let armor of Object.values(armors)) {
+    calculateArmorValues(armor.data.data);
+  }
 }
 
 /**
@@ -216,6 +220,19 @@ function calculateAbilityPool(actorData) {
     actorData.data.characteristics.ch.abilityPool +
     actorData.data.characteristics.ld.abilityPool
   );
+}
+
+function calculateArmorValues(armorData) {
+  new Array(
+    Object.entries(armorData.protection),
+    Object.entries(armorData.shields),
+    Object.entries(armorData.characteristics),
+  ).flat()
+   .filter(v => v[0] !== "has")
+   .map(x => {
+     const total = x[1].armor + x[1].variant + x[1].other;
+     x[1].total = total > 0 ? total : 0;
+   });
 }
 
 function calculateCarryWeight(actorData, str, tou) {

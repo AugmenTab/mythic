@@ -302,7 +302,7 @@
                 "basic": "Basic Info",
                 "details": "Details",
                 "variant": "Variant",
-                "permutations": "Permutations",
+                "mods": "Modifications",
                 "notes": "Notes"
             },
             "details": {

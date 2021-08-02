@@ -630,7 +630,7 @@
             },
             "material": "",
             "notes": {
-                "armor": "",
+                "armor": "<table style=\"width: 98.9267%; margin-left: auto; margin-right: auto;\" border=\"1\"><thead><tr style=\"text-align: center;\"><td style=\"width: 100%\" colspan=\"2\" scope=\"colgroup\">Suit Special Abilities</td></tr></thead><tbody><tr><td style=\"width: 25%; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td><td style=\"width: 75%; text-align: left; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td></tr><tr><td style=\"width: 25%; vertical-align: middle; padding: 4px 8px;\"></td><td style=\"width: 75%; text-align: left; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td></tr><tr><td style=\"width: 25%; vertical-align: middle; padding: 4px 8px;\"></td><td style=\"width: 75%; text-align: left; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td></tr></tbody></table>",
                 "variant": "",
                 "permutations": "",
                 "other": ""
@@ -675,8 +675,6 @@
             },
             "shields": {
                 "has": false,
-                "value": 0,
-                "max": 0,
                 "integrity": {
                     "armor": 0,
                     "variant": 0,

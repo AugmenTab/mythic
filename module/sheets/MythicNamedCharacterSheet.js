@@ -187,7 +187,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     const key = `data.${element.dataset.field}`;
-    console.log(item.id);
     if (element.type === "checkbox") {
       if (item.type === "armor" && element.dataset.field === "weight.equipped" && element.checked) {
         let armors = this.actor.items.filter(a => a.type === "armor" && a.id !== item.id);
