@@ -324,7 +324,12 @@ function calculateInventoryBars(actorData) {
   const percent = 100 * (
     actorData.data.carryingCapacity.felt / actorData.data.carryingCapacity.carry
   );
-  if (percent > 400) {
+  if (isNaN(percent)) {
+    actorData.data.carryingCapacity.bar.bgBar = "tranparent";
+    actorData.data.carryingCapacity.bar.bgFill = "transparent";
+    actorData.data.carryingCapacity.bar.width = "0%";
+    actorData.data.carryingCapacity.bar.left = "0.3em";    
+  } else if (percent > 400) {
     const adjusted = percent - 400;
     actorData.data.carryingCapacity.bar.bgBar = "darkred";
     actorData.data.carryingCapacity.bar.bgFill = "darkred";
