@@ -42,10 +42,26 @@ export function prepareBestiaryDerived(actorData) {
 }
 
 /**
+ * Prepares all embedded entity data for a Bestiary Enemy or Named Character Actor type.
+ * @param {ActorData} actorData - The prepared ActorData.
+ */
+export function prepareCharacterEmbedded(actorData) {
+  // TODO
+}
+
+/**
  * Prepares all base Actor data for a Flood Actor type.
  * @param {ActorData} actorData - The Flood Actor data.
  */
 export function prepareFloodBase(actorData) {
+  // TODO
+}
+
+/**
+ * Prepares all embedded entities for a Flood Actor type.
+ * @param {ActorData} actorData - The Flood Actor data.
+ */
+ export function prepareFloodEmbedded(actorData) {
   // TODO
 }
 
@@ -138,6 +154,14 @@ export function prepareNamedCharacterDerived(actorData) {
  * @param {ActorData} actorData - The Vehicle Actor data.
  */
 export function prepareVehicleBase(actorData) {
+  // TODO
+}
+
+/**
+ * Prepares all embedded entities for a Vehicle Actor type.
+ * @param {ActorData} actorData - The Vehicle Actor data.
+ */
+export function prepareVehicleEmbedded(actorData) {
   // TODO
 }
 

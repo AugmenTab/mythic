@@ -17,95 +17,78 @@ export class MythicActor extends Actor {
   prepareBaseData() {
     const actorData = this.data;
     const flags = actorData.flags.boilerplate || {};
-
-    this._prepareBestiaryCharacterBaseData(actorData);
-    this._prepareFloodCharacterBaseData(actorData);
-    this._prepareNamedCharacterBaseData(actorData);
-    this._prepareVehicleBaseData(actorData);
+    this._prepareCharacterBaseData(actorData);
   }
 
   /** Calculates all values for entities embedded in the Actor. */
-  prepareEmbeddedEntities() {}
+  prepareEmbeddedEntities() {
+    const actorData = this.data;
+    const flags = actorData.flags.boilerplate || {};
+    this._prepareCharacterEmbedded(actorData);
+  }
   
   /** Calculates all values derived from other entities. */
   prepareDerivedData() {
     const actorData = this.data;
     const flags = actorData.flags.boilerplate || {};
-
-    this._prepareBestiaryCharacterDerivedData(actorData);
-    this._prepareFloodCharacterDerivedData(actorData);
-    this._prepareNamedCharacterDerivedData(actorData);
-  }
-
-  /** 
-   * Prepares base character data for the Bestiary Enemy Actor type.
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareBestiaryCharacterBaseData(actorData) {
-    if (actorData.type !== "Bestiary Character") return;
-    Calc.prepareBestiaryBase(actorData);
+    this._prepareCharacterDerivedData(actorData);
   }
 
   /**
-   * Prepares derived character data for the Bestiary Enemy Actor type.
+   * Prepares base character data for an Actor.
    * @param {ActorData} actorData - The prepared ActorData.
    */
-  _prepareBestiaryCharacterDerivedData(actorData) {
-    if (actorData.type !== "Bestiary Character") return;
-    Calc.prepareBestiaryDerived(actorData);
+  _prepareCharacterBaseData(actorData) {
+    switch (actorData.type) {
+      case "Bestiary Enemy":
+        Calc.prepareBestiaryBase(actorData);
+        break;
+      case "Flood":
+        Calc.prepareFloodBase(actorData);
+        break;
+      case "Named Character":
+        Calc.prepareNamedCharacterBase(actorData);
+        break;
+      case "Vehicle":
+        Calc.prepareVehicleBase(actorData);
+        break;
+    }
   }
 
   /**
-   * Prepares base character data for the Flood Actor type.
+   * Prepares data for all embedded entities on an Actor.
    * @param {ActorData} actorData - The prepared ActorData.
    */
-  _prepareFloodCharacterBaseData(actorData) {
-    if (actorData.type !== "Flood") return;
-    Calc.prepareFloodBase(actorData);
+  _prepareCharacterEmbedded(actorData) {
+    switch (actorData.type) {
+      case "Flood":
+        Calc.prepareFloodEmbedded(actorData);
+        break;
+      case "Vehicle":
+        Calc.prepareVehicleEmbedded(actorData);
+        break;
+      default: Calc.prepareCharacterEmbedded(actorData);
+    }
   }
 
   /**
-   * Prepares derived character data for the Flood Actor type.
+   * Prepares all data for an Actor that is dependent on embedded entities.
    * @param {ActorData} actorData - The prepared ActorData.
    */
-  _prepareFloodCharacterDerivedData(actorData) {
-    if (actorData.type !== "Flood") return;
-    Calc.prepareFloodDerived(actorData);
-  }
-
-  /**
-   * Prepares base character data for the Named Character Actor type.
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareNamedCharacterBaseData(actorData) {
-    if (actorData.type !== "Named Character") return;
-    Calc.prepareNamedCharacterBase(actorData);
-  }
-
-  /**
-   * Prepares derived character data for the Named Character Actor type.
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareNamedCharacterDerivedData(actorData) {
-    if (actorData.type !== "Named Character") return;
-    Calc.prepareNamedCharacterDerived(actorData);
-  }
-
-  /**
-   * Prepares base character data for the Vehicle Actor type.
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareVehicleBaseData(actorData) {
-    if (actorData.type !== "Vehicle") return;
-    Calc.prepareVehicleBase(actorData);
-  }
-
-  /**
-   * Prepares derived character data for the Vehicle Actor type.
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareVehicleDerived(actorData) {
-    if (actorData.type !== "Vehicle") return;
-    Calc.prepareVehicleDerived(actorData);
+  _prepareCharacterDerivedData(actorData) {
+    switch (actorData.type) {
+      case "Bestiary Enemy":
+        Calc.prepareBestiaryDerived(actorData);
+        break;
+      case "Flood":
+        Calc.prepareFloodDerived(actorData);
+        break;
+      case "Named Character":
+        Calc.prepareNamedCharacterDerived(actorData);
+        break;
+      case "Vehicle":
+        Calc.prepareVehicleDerived(actorData);
+        break;
+    }
   }
 }
