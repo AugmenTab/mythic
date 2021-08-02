@@ -42,14 +42,13 @@
           {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
-          {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "extra")}}
-              <td>
-                <input class="calc-{{name}}" name="data.characteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number" onfocus="this.select()"/>
-              </td>
-            {{/unless}}
-          {{/each}}
+          <td style="height:33px">{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
+          <td>{{actor.data.data.characteristics.str.equipment}}</td>
+          <td>--</td>
+          <td>{{actor.data.data.characteristics.agi.equipment}}</td>
+          {{#times 7}}
+            <td>--</td>
+          {{/times}}
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
@@ -114,14 +113,10 @@
           {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
-          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
-              <td>
-                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.equipment" value="{{stat.equipment}}" type="number" data-dtype="Number" onfocus="this.select()"/>
-              </td>
-            {{/unless}}
-          {{/each}}
+          <td style="height:33px">{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
+          <td>{{actor.data.data.mythicCharacteristics.str.equipment}}</td>
+          <td>--</td>
+          <td>{{actor.data.data.mythicCharacteristics.agi.equipment}}</td>
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
