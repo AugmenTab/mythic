@@ -17,8 +17,8 @@ The following is a list of features offered by Mythic for Foundry.
 All available Actor types in this system. Unimplemented items are *italicized*.
 
 * Named Character: The primary Actor type for player characters, NPCs, and special Nemesis enemies. Nearly every aspect of this character sheet can be customized to fine-tune exacting stat requirements.
-* *Bestiary Character*: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies.
-* *Flood Character*: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes.
+* *Bestiary Character*: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies. **Development on this Actor type will not begin until after the release of Mythic 4.5.**
+* *Flood Character*: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes. **Development on this Actor type will not begin until after the release of Mythic 4.5.**
 * *Vehicle*: The Actor type for vehicles, permitting them to own items and weapons that can be swapped out to represent different configurations without requiring different sheets.
 
 ### Items
@@ -33,7 +33,7 @@ All available Item types in this system. Unimplemented items are *italicized*.
 
 ### Compendiums
 
-All of the compendiums that come included with this system. Unimplemented compendiums are *italicized.*.
+All of the compendiums that come included with this system. Unimplemented compendiums are *italicized.*. **Development on Compendiums will not begin until after the release of Mythic 4.5.**
 
 * Actor
     * *Bestiary - Covenant*
@@ -90,6 +90,7 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 * Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
+* Equipping a new armor while one is already equipped updates the character sheet twice. This is not so much a bug as it is a quirk of how it updates each armor in turn. This may cause unforeseen issues, but as of yet none have been observed.
 
 ## Planned Features and Stretch Goals
 
