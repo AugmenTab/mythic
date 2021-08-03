@@ -26,7 +26,7 @@ All available Actor types in this system. Unimplemented items are *italicized*.
 All available Item types in this system. Unimplemented items are *italicized*.
 
 * Ability: All purchasable abilities, as well as abilities unique to particular races or soldier types, traits, and augmentations.
-* *Armor: All wearable protective armor suits available in the game.*
+* Armor: All wearable protective armor suits available in the game.
 * Education: All purchasable educations.
 * Equipment: All other items that don't fall into any other category are represented by this item type.
 * Weapon: Anything that requires a to-hit roll or deals damage can be made into a weapon, which can be rolled from the owner's sheet to make attacks and post informative messages about the item to chat. Weapons come in three main categories: Ranged, Melee, and Thrown.

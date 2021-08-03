@@ -156,6 +156,38 @@
                     },
                     "notes": ""
                 },
+                "armor": {
+                    "head": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "chest": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "leftArm": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "rightArm": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "leftLeg": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "rightLeg": {
+                        "protection": 0,
+                        "resistance": 0
+                    }
+                },
+                "shields": {
+                    "value": 0,
+                    "max": 0,
+                    "recharge": 0,
+                    "delay": 0
+                },
                 "carryingCapacity": {
                     "doubleStr": false,
                     "doubleTou": false,

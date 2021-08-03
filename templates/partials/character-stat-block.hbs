@@ -168,15 +168,15 @@
       <tbody>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
-          <td><input name="" value="" type="number" data-dtype="Number" onfocus="this.select()"/></td>
+          <td><input name="data.shields.value" value="{{data.data.shields.value}}" type="number" data-dtype="Number" onfocus="this.select()"/></td>
           <th>{{localize "mythic.characterStatBlock.physical.delay"}}</th>
-          <td>20</td>
+          <td>{{data.data.shields.delay}}</td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
-          <td>175</td>
+          <td>{{data.data.shields.max}}</td>
           <th>{{localize "mythic.characterStatBlock.physical.charge"}}</th>
-          <td>50</td>
+          <td>{{data.data.shields.recharge}}</td>
         </tr>
       </tbody>
     </table>
@@ -210,9 +210,9 @@
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.head"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.arms.left"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.arms.right"}}</th>
-          <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.legs.left"}}</th>
           <th>{{localize "mythic.characterStatBlock.physical.legs.right"}}</th>
           <th>TOU</th>
@@ -220,12 +220,9 @@
       </thead>
       <tbody>
         <tr>
-          <td><b>16</b>&nbsp;&nbsp;(10)</td>
-          <td><b>16</b>&nbsp;&nbsp;(10)</td>
-          <td><b>16</b>&nbsp;&nbsp;(10)</td>
-          <td><b>16</b>&nbsp;&nbsp;(10)</td>
-          <td><b>16</b>&nbsp;&nbsp;(10)</td>
-          <td><b>16</b>&nbsp;&nbsp;(10)</td>
+          {{#each data.data.armor as |stats loc|}}
+            <td><b>{{stats.resistance}}</b>&nbsp;&nbsp;({{stats.protection}})</td>
+          {{/each}}
           <td>{{data.data.characteristics.extra.touDR}}</td>
         </tr>
       </tbody>

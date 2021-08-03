@@ -103,6 +103,9 @@ export function prepareNamedCharacterBase(actorData) {
  * @param {ActorData} actorData - The Named Character Actor data.
  */
 export function prepareNamedCharacterDerived(actorData) {
+  // Set Up Armor
+  applyArmorStatsToCharacter(actorData);
+  
   // Calculate Characteristics
   const f = actorData.data.fatigue;
   const feltFatigue = f.enduring ? f.current - 2 : f.current;
@@ -122,8 +125,8 @@ export function prepareNamedCharacterDerived(actorData) {
   const int = actorData.data.characteristics.int.total;
   const intMod = calculateCharacteristicModifier(int);
 
-  // Calculate Toughness DR
-  actorData.data.characteristics.extra.touDR = touMod + actorData.data.mythicCharacteristics.tou.total;
+  // Calculate DR
+  calculateDamageResistance(actorData, touMod);
 
   // Calculate Wounds
   calculateWounds(actorData, touMod);
@@ -207,6 +210,22 @@ export function sortAndFilterItems(items, filterParam, sortParam = "name") {
   }
 }
 
+function applyArmorStatsToCharacter(actorData) {
+  const armor = actorData.items.filter(a => a.type === "armor" && a.data.data.weight.equipped)[0];
+  if (armor) {
+    for (let [key, value] of Object.entries(armor.data.data.protection)) {
+      actorData.data.armor[key].protection = value.total;
+    }
+    actorData.data.shields.max = armor.data.data.shields.integrity.total;
+    actorData.data.shields.recharge = armor.data.data.shields.recharge.total;
+    actorData.data.shields.delay = armor.data.data.shields.delay.total;
+    actorData.data.characteristics.str.equipment = armor.data.data.characteristics.str.total;
+    actorData.data.characteristics.agi.equipment = armor.data.data.characteristics.agi.total;
+    actorData.data.mythicCharacteristics.str.equipment = armor.data.data.characteristics.mythicStr.total;
+    actorData.data.mythicCharacteristics.agi.equipment = armor.data.data.characteristics.mythicAgi.total;
+  };
+}
+
 function calculateAbilityPool(actorData) {
   actorData.data.characteristics.extra.poolTotal = (
     actorData.data.characteristics.str.abilityPool +
@@ -260,6 +279,14 @@ function calculateCharacteristics(actorData, feltFatigue) {
       const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
       value.roll = Math.floor(roll > 0 ? roll : 0);
     }
+  }
+}
+
+function calculateDamageResistance(actorData, touMod) {
+  const touSoak = touMod + actorData.data.mythicCharacteristics.tou.total;
+  actorData.data.characteristics.extra.touDR = touSoak;
+  for (let val of Object.values(actorData.data.armor)) {
+    val.resistance = val.protection + touSoak;
   }
 }
 
