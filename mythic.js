@@ -34,6 +34,23 @@ async function preloadHandlebarsTemplates() {
   return loadTemplates(templatePaths);
 }
 
+function registerSystemSettings() {
+  // Critical Failure Threshold
+  game.settings.register("mythic", "criticalFailureThreshold", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.criticalFailureThreshold.name",
+    hint: "SETTINGS.criticalFailureThreshold.label",
+    type: Number,
+    range: {
+      min: 1,
+      max: 100,
+      step: 1
+    },
+    default: 98
+  });
+}
+
 /** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */
 Hooks.once("init", function() {
   console.log("mythic | Initializing Mythic 4.0 System");
@@ -48,6 +65,8 @@ Hooks.once("init", function() {
   Items.registerSheet("mythic", MythicItemSheet, { makeDefault: true });
 
   preloadHandlebarsTemplates();
+
+  registerSystemSettings();
 });
 
 /** Hook to establish event listeners on the chat log. */

@@ -606,5 +606,11 @@
             },
             "vehicle": {}
         }
+    },
+    "SETTINGS": {
+        "criticalFailureThreshold": {
+            "name": "Critical Failure Threshold",
+            "label": "Rolling this number or greater will result in a Critical Failure on any Test."
+        }
     }
 }

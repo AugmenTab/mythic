@@ -92,9 +92,11 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 * Equipping a new armor while one is already equipped updates the character sheet twice. This is not so much a bug as it is a quirk of how it updates each armor in turn. This may cause unforeseen issues, but as of yet none have been observed.
 * Armor only calculates values when attached to a character.
+* Bar values can only be edited from the character sheet.
 
 ## Planned Features and Stretch Goals
 
+* Properly implement initiative for battle tracker.
 * Compendiums as laid out above.
 * Tooltips for everything.
 * Fully functioning Medical page to handle injuries.

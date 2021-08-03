@@ -15,7 +15,6 @@ const CHARACTERISTICS = {
   "ld": "Leadership"
 };
 const FORMULA = "D100";
-const THRESHOLD = 98;
 
 /**
  * Evaluates a string of simple addition and subtraction expressions.
@@ -228,7 +227,7 @@ function determineRollOutcome(roll, target) {
   let outcome = { color: "black", critical: false };
   const d = ((target > 0 ? target : 0) - roll) / 10;
   outcome.degrees = Math.abs(d).toFixed(1);
-  if (roll >= THRESHOLD) {
+  if (roll >= game.settings.get("mythic", "criticalFailureThreshold")) {
     outcome.critical = true;
     outcome.outcome = "failure";
     outcome.color = "red";
