@@ -49,6 +49,21 @@ function registerSystemSettings() {
     },
     default: 98
   });
+
+  // Enduring Version
+  game.settings.register("mythic", "enduringVersion", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.enduringVersion.name",
+    hint: "SETTINGS.enduringVersion.label",
+    type: Number,
+    range: {
+      mix: 1,
+      max: 2,
+      step: 1
+    },
+    default: 1
+  });
 }
 
 /** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */

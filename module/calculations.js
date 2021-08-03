@@ -107,8 +107,7 @@ export function prepareNamedCharacterDerived(actorData) {
   applyArmorStatsToCharacter(actorData);
   
   // Calculate Characteristics
-  const f = actorData.data.fatigue;
-  const feltFatigue = f.enduring ? f.current - 2 : f.current;
+  const feltFatigue = calculateFeltFatigue(actorData);
   calculateCharacteristics(actorData, feltFatigue);
 
   // Calculate Mythic Characteristics
@@ -329,6 +328,12 @@ function calculateExperience(actorData) {
   } else {
     actorData.data.experience.tier = 0;
   }
+}
+
+function calculateFeltFatigue(actorData) {
+  const f = actorData.data.fatigue;
+  const enduringValue = game.settings.get("mythic", "enduringVersion");
+  return f.enduring ? f.value - enduringValue : f.value;
 }
 
 function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {

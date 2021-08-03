@@ -611,6 +611,10 @@
         "criticalFailureThreshold": {
             "name": "Critical Failure Threshold",
             "label": "Rolling this number or greater will result in a Critical Failure on any Test."
+        },
+        "enduringVersion": {
+            "name": "Enduring: Levels of Fatigue Ignored",
+            "label": "The levels of Fatigue ignored by the Enduring Outlier Trait. Set to 1 for Mythic 4.0 and earlier, or 2 for Mythic 4.5 and later."
         }
     }
 }
