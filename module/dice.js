@@ -382,6 +382,11 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages)
       : 0;
     if (roll.total === 1 && min < 5) min = 5;
     if (min > 0) damage += `min${min}`;
+    const critType = game.settings.get("mythic", "criticalHitResult");
+    if (critType !== "special") {
+      const explode = weapon.data.data.special.cauterize.has ? weapon.data.data.special.cauterize.value : 10;
+      damage += `${critType}>=${explode}`;
+    }
 
     let base = weapon.data.data.attack.baseDamage;
     let pierce = weapon.data.data.attack.piercing;

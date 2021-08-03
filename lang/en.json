@@ -612,6 +612,10 @@
             "name": "Critical Failure Threshold",
             "label": "Rolling this number or greater will result in a Critical Failure on any Test."
         },
+        "criticalHitResult": {
+            "name": "Critical Hit Damage Method",
+            "label": "How the damage for a Critical Hit will resolve. NOTE: Special Damage is currently not implemented, and must be calculated by the Player."
+        },
         "enduringVersion": {
             "name": "Enduring: Levels of Fatigue Ignored",
             "label": "The levels of Fatigue ignored by the Enduring Outlier Trait. Set to 1 for Mythic 4.0 and earlier, or 2 for Mythic 4.5 and later."

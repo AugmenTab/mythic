@@ -50,6 +50,21 @@ function registerSystemSettings() {
     default: 98
   });
 
+  // Critical Hit Result
+  game.settings.register("mythic", "criticalHitResult", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.criticalHitResult.name",
+    hint: "SETTINGS.criticalHitResult.label",
+    type: String,
+    choices: {
+      "special": "Special Damage",
+      "x": "Explode",
+      "xo": "Explode Once"
+    },
+    default: "special"
+  });
+
   // Enduring Version
   game.settings.register("mythic", "enduringVersion", {
     config: true,
