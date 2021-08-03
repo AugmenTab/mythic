@@ -34,6 +34,9 @@ async function preloadHandlebarsTemplates() {
   return loadTemplates(templatePaths);
 }
 
+/**
+ * Establish all available system-specific settings for players and GMs.
+ */
 function registerSystemSettings() {
   // Critical Failure Threshold
   game.settings.register("mythic", "criticalFailureThreshold", {

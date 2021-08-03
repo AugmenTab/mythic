@@ -99,11 +99,11 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Properly implement initiative for battle tracker.
 * Compendiums as laid out above.
 * Tooltips for everything.
+* Special Damage.
 * Fully functioning Medical page to handle injuries.
 * Add called shots, Clear Target, and Precision Strike.
 * Add hit locations for targeting vehicles.
 * Add dual wielding.
 * Lock nav bar & inventory bar at the top of the Actor Sheet.
-* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Ability to add custom skills.
-* Move all instances of notes to their own "notes" section of the Actor data model.
+* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.

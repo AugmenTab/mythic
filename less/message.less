@@ -23,6 +23,16 @@
         }
     }
 
+    .outcome {
+        display: grid;
+        grid-template-columns: 15px auto 1fr;
+        column-gap: 4px;
+
+        :first-child {
+            justify-self: end;
+        }
+    }
+    
     .post-attack {
         div:not(:last-of-type) {
             border-bottom: 2px dotted black;

@@ -5,15 +5,18 @@
   </h1>
   {{#each this.attacks as |attack|}}
     <div>
-      <h3>{{localize "mythic.chat.attack.title"}} {{attack.attackNumber}}</h3>
-      <p>
-        <b style="color:{{attack.color}}">[[{{attack.roll}}]]</b><b> vs {{../this.target}}:</b>
-        {{#if attack.critical}}
-          Critical {{attack.outcome}}!
-        {{else}}
-          {{attack.degrees}} degrees of {{attack.outcome}}!
-        {{/if}}
-      </p>
+      <span class="outcome">
+        <p><b>{{attack.attackNumber}}</b></p>
+        <p><b>&vert;&vert;</b></p>
+        <p>
+          <b style="color:{{attack.color}}">[[{{attack.roll}}]]</b><b> vs {{../this.target}}:</b>
+          {{#if attack.critical}}
+            Critical {{attack.outcome}}!
+          {{else}}
+            {{attack.degrees}} degrees of {{attack.outcome}}!
+          {{/if}}
+        </p>
+      </span>
       {{#if (cond "||" (eq attack.outcome "success") attack.damageRoll)}}
         <div class="damage-block">
           {{#times attack.damages}}
