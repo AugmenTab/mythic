@@ -91,6 +91,7 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 * Equipping a new armor while one is already equipped updates the character sheet twice. This is not so much a bug as it is a quirk of how it updates each armor in turn. This may cause unforeseen issues, but as of yet none have been observed.
+* Armor only calculates values when attached to a character.
 
 ## Planned Features and Stretch Goals
 

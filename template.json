@@ -222,7 +222,7 @@
                     "leap": 0
                 },
                 "wounds": {
-                    "current": 0,
+                    "value": 0,
                     "doubleTou": false,
                     "aiDegen": 0,
                     "advancements": 0,
@@ -230,12 +230,12 @@
                     "max": 0
                 },
                 "fatigue": {
-                    "current": 0,
+                    "value": 0,
                     "max": 0,
                     "enduring": false
                 },
                 "luck": {
-                    "current": 0,
+                    "value": 0,
                     "starting": 0,
                     "advancements": 0,
                     "other": 0,
@@ -542,7 +542,7 @@
             ],
             "specialization": "",
             "supportPoints": {
-                "current": 0,
+                "value": 0,
                 "max": 0,
                 "rank": 0,
                 "other": 0
