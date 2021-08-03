@@ -27,7 +27,7 @@ export function interpretDiceRollModifiers(str) {
   let mods = str.trim().match(re);
   let num = 0;
   for (let mod of mods) num += parseInt(mod);
-  if (str.replace(re, "") !== "" || isNaN(num)) {
+  if (isNaN(num)) {
     const msg = game.i18n.localize("mythic.chat.error.parseFailure");
     ui.notifications.error(msg);
     throw new Error(msg);
