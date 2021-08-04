@@ -1,9 +1,10 @@
 /** @module mythic */
 
+import { mythic } from "./module/config.js";
 import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
-import { mythic } from "./module/config.js";
-import { MythicActor } from "./module/MythicActor.js";
+import MythicActor from "./module/MythicActor.js";
+import MythicCombat from "./module/MythicCombat.js";
 import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
 
@@ -90,6 +91,8 @@ Hooks.once("init", function() {
 
   CONFIG.mythic = mythic;
   CONFIG.Actor.documentClass = MythicActor;
+  CONFIG.Combat.documentClass = MythicCombat;
+  CONFIG.time.roundTime = 6;
 
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("mythic", MythicNamedCharacterSheet, { makeDefault: true });

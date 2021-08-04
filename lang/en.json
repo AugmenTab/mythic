@@ -286,6 +286,11 @@
                 "evasion": "Evasion"
             }
         },
+        "combat": {
+            "error": {
+                "missingInit": "No initiative could be found for this Actor."
+            }
+        },
         "weaponGroups": {
             "ranged": "Ranged",
             "melee": "Melee",

@@ -12,9 +12,7 @@
     "styles": [
         "mythic.css"
     ],
-    "packs": [
-
-    ],
+    "packs": [],
     "languages": [
         {
             "lang": "en",
@@ -25,5 +23,5 @@
     "gridDistance": 1,
     "gridUnits": "m",
     "primaryTokenAttribute": "wounds",
-    "initiative": "1d10 + @agMod"
+    "initiative": "@initiative.formula"
 }

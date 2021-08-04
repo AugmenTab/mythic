@@ -559,7 +559,8 @@
             "educations": {
                 "notes": ""
             },
-            "biography": ""
+            "biography": "",
+            "cR": 0
         },
         "Bestiary Enemy": {
             "templates": [

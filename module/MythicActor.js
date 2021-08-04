@@ -6,7 +6,7 @@ import * as Calc from "./calculations.js";
  * Prepares Actor data using callbacks.
  * @extends Actor
  */
-export class MythicActor extends Actor {
+export default class MythicActor extends Actor {
 
   /** Prepares ActorData. */
   prepareData() {
