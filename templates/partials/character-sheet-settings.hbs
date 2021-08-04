@@ -22,7 +22,7 @@
           {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.abilityPool"}} ({{data.data.characteristics.extra.poolTotal}})</td>
+          <td>{{localize "mythic.characterSettings.characteristics.abilityPool"}}&nbsp;({{data.data.characteristics.extra.poolTotal}})</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>

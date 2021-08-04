@@ -5,16 +5,16 @@
         <th colspan="3">{{localize "mythic.characterWeaponSummary.title"}}</th>
         <th>
           <button class="initiative rollable" data-roll="{{data.data.initiative.formula}}" data-label="initiative">
-            {{localize "mythic.characterWeaponSummary.initiative"}}: {{data.data.initiative.mods}}
+            {{localize "mythic.characterWeaponSummary.initiative"}}:&nbsp;{{data.data.initiative.mods}}
           </button>
       </th>
       <th colspan="3">
         <button class="evade" name="{{localize "mythic.skillNames.evasion"}} ({{data.data.skills.evasion.characteristic}})" value="{{data.data.skills.evasion.roll}}">
-          {{localize "mythic.skillNames.evasion"}}: {{data.data.skills.evasion.roll}}
+          {{localize "mythic.skillNames.evasion"}}:&nbsp;{{data.data.skills.evasion.roll}}
         </button>
       </th>
       <tr>
-        <th>{{localize "mythic.characterWeaponSummary.name"}} ({{localize "mythic.characterWeaponSummary.target"}})</th>
+        <th>{{localize "mythic.characterWeaponSummary.name"}}&nbsp;({{localize "mythic.characterWeaponSummary.target"}})</th>
         <th>{{localize "mythic.characterWeaponSummary.fireMode"}}</th>
         <th>{{localize "mythic.characterWeaponSummary.range"}}</th>
         <th>{{localize "mythic.characterWeaponSummary.mag"}}</th>
@@ -38,7 +38,7 @@
                   {{else}}
                   {{weapon.data.nickname}}
                   {{/unless}}
-                  ({{weapon.data.attack.target}})
+                  &nbsp;({{weapon.data.attack.target}})
                 </p>
                 <a class="item-edit" data-item-id="{{weapon._id}}"><i class="clickable fas fa-edit"></i></a>
                 </div>
@@ -63,17 +63,17 @@
               {{!-- Range --}}
               <td>
                 {{#if (eq weapon.data.group "thrown")}}
-                  {{weapon.data.range.thrown}} m 
+                  {{weapon.data.range.thrown}}&nbsp;m&nbsp;
                   {{#if weapon.data.special.blast.has}}
-                    ({{weapon.data.special.blast.value}} {{else}} (0
+                    ({{weapon.data.special.blast.value}} {{else}} (0&nbsp;
                   {{/if}}
                   {{#if weapon.data.special.kill.has}}
-                    / {{weapon.data.special.kill.value}}) {{else}} / 0)
+                    /&nbsp;{{weapon.data.special.kill.value}}) {{else}}&nbsp;/&nbsp;0)
                   {{/if}}
                 {{else if (eq weapon.data.group "melee")}}
-                  {{weapon.data.range.melee}} m
+                  {{weapon.data.range.melee}}&nbsp;m
                 {{else if (eq weapon.data.group "ranged")}}
-                  {{weapon.data.range.close}} - {{weapon.data.range.long}} m
+                  {{weapon.data.range.close}}&nbsp;-&nbsp;{{weapon.data.range.long}}&nbsp;m
                 {{/if}}
               </td>
               {{!-- Magazine --}}

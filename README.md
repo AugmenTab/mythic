@@ -93,6 +93,7 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Experience Purchase Price field does not focus coming off the Name field. It has to be focused a second time before the focus sticks.
 * Equipping a new armor while one is already equipped updates the character sheet n + 1 times, where n is the number of armors the user has in their inventory. This is not so much a bug as it is a quirk of how it updates each armor in turn to unequip them before finally equipping the new armor. This may cause unforeseen issues, but as of yet none have been observed. In the future, I would like to batch these changes, then update them all at once.
 * Armor only calculates values when attached to a character.
+* Cancelling an attack roll in the dialog window still drains the weapon's magazine.
 
 ## Planned Features and Stretch Goals
 

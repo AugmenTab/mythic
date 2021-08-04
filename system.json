@@ -2,7 +2,7 @@
     "name": "mythic",
     "title": "Mythic 4.0",
     "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
-    "version": "0.0.0-beta",
+    "version": "0.1.0-beta",
     "author": "Tyler Baum",
     "authors": [
         {
@@ -26,9 +26,9 @@
     "gridUnits": "m",
     "primaryTokenAttribute": "wounds",
     "secondaryTokenAttribute": null,
-    "minimumCoreVersion": "0.8.6",
-    "compatibileCoreVersion": "0.8.8",
+    "minimumCoreVersion": "0.8.7",
+    "compatibleCoreVersion": "0.8.8",
     "url": "https://github.com/AugmenTab/mythic",
-    "manifest": "",
+    "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
     "download": ""
 }
