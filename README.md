@@ -1,16 +1,23 @@
-# Mythic 4.x for Foundry
+# Mythic for Foundry
 
 An unofficial system implementation for playing the fan-made [Halo: Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
 
 This system (once complete) provides character sheet support for various Actor and Item types, mechanical support for dice and rules necessary to play games of Mythic 4.0 and later. Coming soon will be compendium content for the Bestiary, the Flood, and all in-game items.
 
+You can find video guides on how to install and use Mythic for Foundry [on my YouTube channel](https://www.youtube.com/playlist?list=PLeJTbB--c7R3tkFoFiC145CT_ykJ-FdsP).
+
 ## Installation
 
-Coming soon!
+The latest version of the Mythic for Foundry system can be installed using the manifest. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and provide the following link as the Manifest URL:
+    * [https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json](https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json)
+
+Any current or prior version can also be installed manually. You must clone or extract the system files to your `Data/systems/mythic` folder. Archives of all editions can be found in the [Releases](https://github.com/AugmenTab/mythic/releases).
+
+Always remember to back up your world files before updating.
 
 ## Features
 
-The following is a list of features offered by Mythic for Foundry.
+The following is a list of features offered by Mythic for Foundry. You can 
 
 ### Actors
 

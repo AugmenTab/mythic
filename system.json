@@ -30,5 +30,5 @@
     "compatibleCoreVersion": "0.8.8",
     "url": "https://github.com/AugmenTab/mythic",
     "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
-    "download": ""
+    "download": "https://github.com/AugmenTab/mythic/releases/latest/download/mythic.zip"
 }
