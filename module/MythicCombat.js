@@ -40,6 +40,7 @@ export default class MythicCombat extends Combat {
   /**
    * Advances the Combat to the next Turn.
    * @returns {Promise.<Combat>} The updated Combat with the Turn advanced.
+   * @override
    */
   async nextTurn() {
     const missing = this.combatants.filter(c => c.initiative === null);
@@ -55,6 +56,7 @@ export default class MythicCombat extends Combat {
   /**
    * Advances the Combat to the next Round.
    * @returns {Promise.<Combat>} The updated Combat with the Round advanced.
+   * @override
    */
   async nextRound() {
     return this.update({ advanceTime: CONFIG.time.roundTime });
