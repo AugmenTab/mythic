@@ -31,7 +31,7 @@
   <div class="exp-bottom">
     <div class="exp-notes">
       <h2>{{localize "mythic.characterStatBlock.experience.notes"}}</h2>
-      <textarea name="data.experience.notes">{{data.data.experience.notes}}</textarea>
+      <textarea name="data.experience.notes" placeholder="{{localize "mythic.characterStatBlock.experience.placeholder"}}">{{data.data.experience.notes}}</textarea>
     </div>
     <div class="exp-purchases">
       {{#each data.data.experience.purchases as |purchase|}}

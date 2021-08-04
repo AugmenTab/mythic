@@ -2,16 +2,17 @@
     "name": "mythic",
     "title": "Mythic 4.0",
     "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
-    "author": "Tyler Baum",
     "version": "0.0.0-beta",
-    "minimumCoreVersion": "0.8.6",
-    "compatbileCoreVersion": "0.8.7",
-    "esmodules": [
-        "mythic.js"
+    "author": "Tyler Baum",
+    "authors": [
+        {
+            "name": "Tyler Baum",
+            "discord": "∀ugmenTab#5063",
+            "url": "https://github.com/AugmenTab"
+        }
     ],
-    "styles": [
-        "mythic.css"
-    ],
+    "esmodules": ["mythic.js"],
+    "styles": ["mythic.css"],
     "packs": [],
     "languages": [
         {
@@ -20,8 +21,14 @@
             "path": "lang/en.json"
         }
     ],
+    "initiative": "@initiative.formula",
     "gridDistance": 1,
     "gridUnits": "m",
     "primaryTokenAttribute": "wounds",
-    "initiative": "@initiative.formula"
+    "secondaryTokenAttribute": null,
+    "minimumCoreVersion": "0.8.6",
+    "compatibileCoreVersion": "0.8.8",
+    "url": "https://github.com/AugmenTab/mythic",
+    "manifest": "",
+    "download": ""
 }

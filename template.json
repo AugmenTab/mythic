@@ -597,7 +597,11 @@
                 "description": ""
             },
             "physical": {
-                "price": 0,
+                "price": {
+                    "base": 0,
+                    "mods": 0,
+                    "total": 0
+                },
                 "breakPoints": 0,
                 "trainings": {
                     "equipment": "",

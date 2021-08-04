@@ -68,10 +68,17 @@
     </tbody>
     <thead>
       <tr>
-        <th colspan="3">
+        <th>
           {{localize "mythic.characterInventory.characterTotal"}}: {{localnum data.data.carryingCapacity.character}}
+        </th>
         <th colspan="2">
           +{{data.data.carryingCapacity.hearing}} {{localize "mythic.characterInventory.heard"}}
+        </th>
+        <th colspan="2">
+          <span class="cR-field">
+            cR
+            <input name="data.cR" type="number" data-dtype="Number" value="{{data.data.cR}}" onfocus="this.select()"/>
+          </span>
         </th>
         </th>
         <th>{{localnum data.data.carryingCapacity.felt}} kg</th>
