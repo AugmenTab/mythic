@@ -619,11 +619,18 @@
         },
         "criticalHitResult": {
             "name": "Critical Hit Damage Method",
-            "label": "How the damage for a Critical Hit will resolve. NOTE: Special Damage is currently not implemented, and must be calculated by the Player."
+            "label": "How the damage for a Critical Hit will resolve. NOTE: Special Damage is currently not implemented, and must be calculated by the Player.",
+            "special": "Special Damage",
+            "explode": "Explode",
+            "explodeOnce": "Explode Once"
         },
         "enduringVersion": {
             "name": "Enduring: Levels of Fatigue Ignored",
             "label": "The levels of Fatigue ignored by the Enduring Outlier Trait. Set to 1 for Mythic 4.0 and earlier, or 2 for Mythic 4.5 and later."
+        },
+        "strongBackVersion": {
+            "name": "Strong Back Calculation Method",
+            "label": "How the Strong Back ability is calculated. Select the Mythic edition you are playing from the menu."
         }
     }
 }

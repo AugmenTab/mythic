@@ -1,3 +1,9 @@
+/** @module MythicCombat */
+
+/**
+ * 
+ * @class
+ */
 export default class MythicCombat extends Combat {
   _sortCombatants(a, b) {
     const initA = Number.isNumeric(a.initiative) ? a.initiative : -9999;

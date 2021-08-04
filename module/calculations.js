@@ -115,8 +115,7 @@ export function prepareNamedCharacterDerived(actorData) {
 
   // Reference Characteristics and Modifiers
   const str = actorData.data.characteristics.str.total;
-  const strMod = (calculateCharacteristicModifier(str)
-    + actorData.data.mythicCharacteristics.str.total);
+  const strMod = calculateCharacteristicModifier(str);
   const tou = actorData.data.characteristics.tou.total;
   const touMod = calculateCharacteristicModifier(tou);
   const agi = actorData.data.characteristics.agi.total;
@@ -254,17 +253,20 @@ function calculateArmorValues(armorData) {
 }
 
 function calculateCarryWeight(actorData, str, tou) {
+  const strongBack = actorData.data.carryingCapacity.strongBack;
+  const edition = game.settings.get("mythic", "strongBackVersion");
   const touMod = calculateCharacteristicModifier(tou);
+  let toughness = tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1);
+  if (strongBack && edition === "v40") toughness += touMod * 3;
   const carry = (
     (actorData.data.carryingCapacity.doubleStr ? str * 2 : str) +
-    ((actorData.data.carryingCapacity.strongBack ? tou + (touMod * 3) : tou) *
-    (actorData.data.carryingCapacity.doubleTou ? 2 : 1)) +
-    (actorData.data.mythicCharacteristics.str.total * 10) +
+    (actorData.data.mythicCharacteristics.str.total * 10) + toughness +
     (actorData.data.mythicCharacteristics.tou.total * 10)
   );
-  actorData.data.carryingCapacity.carry = carry;
-  actorData.data.carryingCapacity.lift = carry * 2;
-  actorData.data.carryingCapacity.push = carry * 4;
+  const mod = (strongBack && edition === "v45") ? touMod * 10 : 0;
+  actorData.data.carryingCapacity.carry = carry + mod;
+  actorData.data.carryingCapacity.lift = (carry * 2) + mod;
+  actorData.data.carryingCapacity.push = (carry * 4) + mod;
 }
 
 function calculateCharacteristics(actorData, feltFatigue) {

@@ -62,16 +62,16 @@ function registerSystemSettings() {
     hint: "SETTINGS.criticalHitResult.label",
     type: String,
     choices: {
-      "special": "Special Damage",
-      "x": "Explode",
-      "xo": "Explode Once"
+      "special": "SETTINGS.criticalHitResult.special",
+      "x": "SETTINGS.criticalHitResult.explode",
+      "xo": "SETTINGS.criticalHitResult.explodeOnce"
     },
     default: "special"
   });
 
-  // Enduring Version
+  // Enduring Version (set config to true & default to 2 on release of 4.5)
   game.settings.register("mythic", "enduringVersion", {
-    config: true,
+    config: false,
     scope: "world",
     name: "SETTINGS.enduringVersion.name",
     hint: "SETTINGS.enduringVersion.label",
@@ -82,6 +82,20 @@ function registerSystemSettings() {
       step: 1
     },
     default: 1
+  });
+
+  // Strong Back Version (set config to true & default to v45 on release of 4.5)
+  game.settings.register("mythic", "strongBackVersion", {
+    config: false,
+    scope: "world",
+    name: "SETTINGS.strongBackVersion.name",
+    hint: "SETTINGS.strongBackVersion.label",
+    type: String,
+    choices: {
+      "v40": "Mythic 4.0",
+      "v45": "Mythic 4.5"
+    },
+    default: "v40"
   });
 }
 
