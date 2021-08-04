@@ -8,8 +8,8 @@ You can find video guides on how to install and use Mythic for Foundry [on my Yo
 
 ## Installation
 
-The latest version of the Mythic for Foundry system can be installed using the manifest. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and provide the following link as the Manifest URL:
-    * [https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json](https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json)
+The latest version of the Mythic for Foundry system can be installed using the manifest. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and provide the following link as the Manifest URL: 
+* [https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json](https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json)
 
 Any current or prior version can also be installed manually. You must clone or extract the system files to your `Data/systems/mythic` folder. Archives of all editions can be found in the [Releases](https://github.com/AugmenTab/mythic/releases).
 
