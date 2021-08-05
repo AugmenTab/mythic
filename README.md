@@ -17,7 +17,7 @@ Always remember to back up your world files before updating.
 
 ## Features
 
-The following is a list of features offered by Mythic for Foundry. You can 
+The following is a list of features offered by Mythic for Foundry.
 
 ### Actors
 
