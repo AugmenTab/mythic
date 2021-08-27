@@ -38,7 +38,7 @@ export function interpretDiceRollModifiers(str) {
  * @param {Element} element - The HTML element the listener originated from.
  * @param {Actor} actor - The Actor that fired the listener.
  */
-export async function rollAttacks(element, actor) {
+export async function rollAttacks(element, actor, weapon) {
   const attackOptions = await getAttackRollOptions();
   let mod = 0;
   if (!attackOptions.cancelled) mod = interpretDiceRollModifiers(attackOptions.circumstance);
@@ -47,11 +47,12 @@ export async function rollAttacks(element, actor) {
     attackOptions.cancelled = true;
   }
   if (!attackOptions.cancelled) {
-    const weapon = await actor.items.get(element.getAttribute("data-item-id"));
     const target = weapon.data.data.attack.target + mod;
     const type = element.value;
     await getAttackAndDamageOutcomes(actor, weapon, target, type);
+    return weapon.data.data.magazine.current - parseInt(element.innerHTML);
   }
+  return;
 }
 
 export async function rollEvasionBatch(element, actor) {

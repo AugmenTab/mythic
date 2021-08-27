@@ -228,10 +228,9 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     if (element.classList[0] === "attack") {
-      await rollAttacks(element, this.actor);
       const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-      const newMag = item.data.data.magazine.current -= parseInt(element.innerHTML);
-      await item.update({ "data.magazine.current": newMag });
+      const newMag = await rollAttacks(element, this.actor, item);
+      if (newMag) await item.update({ "data.magazine.current": newMag });
     } else {
       await rollTest(element, this.actor);
     }

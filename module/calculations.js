@@ -17,6 +17,23 @@ const MELEE_REACH_SIZE_BONUS = {
 };
 
 /**
+ * Calculates armor protection, shield, and characteristics values.
+ * @param {ItemData} armorData - The armor's ItemData.
+ */
+export function calculateArmorValues(armorData) {
+  new Array(
+    Object.entries(armorData.protection),
+    Object.entries(armorData.shields),
+    Object.entries(armorData.characteristics),
+  ).flat()
+   .filter(v => v[0] !== "has")
+   .map(x => {
+     const total = x[1].armor + x[1].variant + x[1].other;
+     x[1].total = total > 0 ? total : 0;
+   });
+}
+
+/**
  * Get the characteristic modifier for a given characteristic score.
  * @param {number} score - The characteristic score.
  * @returns {number} The characteristic modifier.
@@ -237,19 +254,6 @@ function calculateAbilityPool(actorData) {
     actorData.data.characteristics.ch.abilityPool +
     actorData.data.characteristics.ld.abilityPool
   );
-}
-
-function calculateArmorValues(armorData) {
-  new Array(
-    Object.entries(armorData.protection),
-    Object.entries(armorData.shields),
-    Object.entries(armorData.characteristics),
-  ).flat()
-   .filter(v => v[0] !== "has")
-   .map(x => {
-     const total = x[1].armor + x[1].variant + x[1].other;
-     x[1].total = total > 0 ? total : 0;
-   });
 }
 
 function calculateCarryWeight(actorData, str, tou) {

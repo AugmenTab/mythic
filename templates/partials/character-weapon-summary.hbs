@@ -51,7 +51,7 @@
                   <option value="none">--</option>
                   {{#each weapon.data.fireMode as |rate mode|}}
                     {{#if rate}}
-                    <option value="{{mode}}-{{rate}}">{{localize (concat "mythic.weaponSheet.fireMode." mode)}} ({{rate}})</option>
+                    <option value="{{mode}}-{{rate}}">{{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})</option>
                     {{/if}}
                   {{/each}}
                   {{/select}}
@@ -155,7 +155,6 @@
       {{else}}
         <td colspan="8">{{localize "mythic.characterWeaponSummary.empty"}}</td>
       {{/if }}
-
     </tbody>
   </table>
 </section>
