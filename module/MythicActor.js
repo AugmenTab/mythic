@@ -8,14 +8,16 @@ import * as Calc from "./calculations.js";
  */
 export default class MythicActor extends Actor {
 
-  /** Prepares ActorData.
+  /** 
+   * Prepares ActorData.
    * @override
    */
   prepareData() {
     super.prepareData();
   }
 
-  /** Calculates all Actor base data - anything not dependent on other entities.
+  /** 
+   * Calculates all Actor base data - anything not dependent on other entities.
    * @override
    */
   prepareBaseData() {
@@ -24,7 +26,8 @@ export default class MythicActor extends Actor {
     this._prepareCharacterBaseData(actorData);
   }
 
-  /** Calculates all values for entities embedded in the Actor.
+  /** 
+   * Calculates all values for entities embedded in the Actor.
    * @override
    */
   prepareEmbeddedEntities() {
@@ -33,7 +36,8 @@ export default class MythicActor extends Actor {
     this._prepareCharacterEmbedded(actorData);
   }
   
-  /** Calculates all values derived from other entities.
+  /** 
+   * Calculates all values derived from other entities.
    * @override
    */
   prepareDerivedData() {
