@@ -1,8 +1,16 @@
 # Changelog
 
+## 0.1.1
+
+### Changes
+
+* Armor now calculates relevant values on its own.
+* Fixed spacing issue on weapon summary fire modes.
+* Magazine no longer depletes when attack is cancelled.
+
 ## 0.1.0
 
-### Changelog
+### Changes
 
 * Created and implemented:
     * "Named Character" Actor type.
