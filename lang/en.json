@@ -292,6 +292,13 @@
                 "missingInit": "No initiative could be found for this Actor."
             }
         },
+        "difficulty": {
+            "easy": "Easy",
+            "normal": "Normal",
+            "heroic": "Heroic",
+            "legendary": "Legendary",
+            "nemesis": "Nemesis"
+        },
         "weaponGroups": {
             "ranged": "Ranged",
             "melee": "Melee",

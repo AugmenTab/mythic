@@ -46,12 +46,22 @@
       <p>
         <input name="data.weight" type="number" data-dtype="Number" value="{{data.data.weight}}" placeholder="{{localize "mythic.characterDetails.weight"}}" onfocus="this.select()"/>
       </p>
-      <p>
-        <input name="data.age" type="number" value="{{data.data.age}}" placeholder="{{localize "mythic.characterDetails.age"}}" onfocus="this.select()"/>
-      </p>
-      <p>
-        <input name="data.gender" type="text" value="{{data.data.gender}}" placeholder="{{localize "mythic.characterDetails.gender"}}" onfocus="this.select()"/>
-      </p>
+      {{#if (eq actor.type "Named Character")}}
+        <p>
+          <input name="data.age" type="number" value="{{data.data.age}}" placeholder="{{localize "mythic.characterDetails.age"}}" onfocus="this.select()"/>
+        </p>
+        <p>
+          <input name="data.gender" type="text" value="{{data.data.gender}}" placeholder="{{localize "mythic.characterDetails.gender"}}" onfocus="this.select()"/>
+        </p>
+      {{else}}
+        <select name="data.difficulty">
+          {{#select data.data.difficulty}}
+            {{#each config.difficulty as |name mult|}}
+              <option value="{{mult}}">{{localize name}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      {{/if}}
     </div>
   </div>
 </div>

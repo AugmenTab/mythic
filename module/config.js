@@ -69,6 +69,14 @@ mythic.advancements = {
   }
 }
 
+mythic.difficulty = {
+  0: "mythic.difficulty.easy",
+  1: "mythic.difficulty.normal",
+  2: "mythic.difficulty.heroic",
+  3: "mythic.difficulty.legendary",
+  4: "mythic.difficulty.nemesis"
+}
+
 mythic.educationType = {
   biological: "mythic.educationSheet.types.biological",
   computer: "mythic.educationSheet.types.computer",
