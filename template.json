@@ -2,12 +2,19 @@
     "Actor": {
         "types": [
             "Named Character",
-            "Bestiary Enemy",
+            "Bestiary Character",
             "Flood"
         ],
         "templates": {
             "basicDetails": {
                 "faction": ""
+            },
+            "bestiary": {
+                "experiencePayout": {
+                    "base": 0,
+                    "kit": 0,
+                    "total": 0
+                }
             },
             "commonStats": {
                 "size": "",
@@ -562,23 +569,19 @@
             "biography": "",
             "cR": 0
         },
-        "Bestiary Enemy": {
+        "Bestiary Character": {
             "templates": [
                 "basicDetails",
+                "bestiary",
                 "commonStats",
                 "skills"
             ],
-            "experiencePayout": 0,
-            "level": [
-                "Easy",
-                "Normal",
-                "Heroic",
-                "Legendary",
-                "Nemesis"
-            ]
+            "difficulty": ""
         },
         "Flood": {
-            "experiencePayout": 0,
+            "templates": [
+                "bestiary"
+            ],
             "contamination": 0,
             "swarm": 1
         }

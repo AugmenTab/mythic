@@ -14,7 +14,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["mythic", "sheet", "namedCharacter"],
+      classes: ["mythic", "sheet", "namedCharacter", "character"],
       height: 735,
       width: 800,
       tabs: [

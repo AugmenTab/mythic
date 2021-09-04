@@ -7,6 +7,7 @@ import MythicActor from "./module/MythicActor.js";
 import MythicCombat from "./module/MythicCombat.js";
 import MythicItem from "./module/MythicItem.js";
 import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
+import MythicBestiaryCharacterSheet from "./module/sheets/MythicBestiaryCharacterSheet.js"
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
 
 /**
@@ -111,7 +112,8 @@ Hooks.once("init", function() {
   CONFIG.time.roundTime = 6;
 
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("mythic", MythicNamedCharacterSheet, { makeDefault: true });
+  Actors.registerSheet("mythic", MythicNamedCharacterSheet, { types: ["Named Character"], makeDefault: true });
+  Actors.registerSheet("mythic", MythicBestiaryCharacterSheet, { types: ["Bestiary Character"], makeDefault: true });
 
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("mythic", MythicItemSheet, { makeDefault: true });
