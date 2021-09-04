@@ -182,27 +182,49 @@
     </table>
   </div>
   <div class="scaled">
-    <table style="grid-column: span 2">
-      <thead>
-        <tr>
-          <th colspan="4">{{localize "mythic.characterStatBlock.experience.label"}}</th>
-        </tr>
-        <tr>
-          <th>{{localize "mythic.characterStatBlock.experience.tier"}}</th>
-          <th>{{localize "mythic.characterStatBlock.experience.total"}}</th>
-          <th>{{localize "mythic.characterStatBlock.experience.spent"}}</th>
-          <th>{{localize "mythic.characterStatBlock.experience.current"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{data.data.experience.tier}}</td>
-          <td>{{localnum data.data.experience.total}}</td>
-          <td>{{localnum data.data.experience.spent}}</td>
-          <td>{{localnum data.data.experience.current}}</td>
-        </tr>
-      </tbody>
-    </table>
+    {{#if (eq actor.type "Named Character")}}
+      <table style="grid-column: span 2">
+        <thead>
+          <tr>
+            <th colspan="4">{{localize "mythic.characterStatBlock.experience.label"}}</th>
+          </tr>
+          <tr>
+            <th>{{localize "mythic.characterStatBlock.experience.tier"}}</th>
+            <th>{{localize "mythic.characterStatBlock.experience.total"}}</th>
+            <th>{{localize "mythic.characterStatBlock.experience.spent"}}</th>
+            <th>{{localize "mythic.characterStatBlock.experience.current"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{data.data.experience.tier}}</td>
+            <td>{{localnum data.data.experience.total}}</td>
+            <td>{{localnum data.data.experience.spent}}</td>
+            <td>{{localnum data.data.experience.current}}</td>
+          </tr>
+        </tbody>
+      </table>
+    {{else}}
+      <table style="grid-column: span 2">
+        <thead>
+          <tr>
+            <th colspan="3">{{localize "mythic.characterStatBlock.experience.payout"}}</th>
+          </tr>
+          <tr>
+            <th>{{localize "mythic.characterStatBlock.experience.total"}}</th>
+            <th>{{localize "mythic.characterStatBlock.experience.base"}}</th>
+            <th>{{localize "mythic.characterStatBlock.experience.kit"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>{{data.data.experiencePayout.total}}</b></td>
+            <td>{{data.data.experiencePayout.base}}</td>
+            <td>{{data.data.experiencePayout.kit}}</td>
+          </tr>
+        </tbody>
+      </table>
+    {{/if}}
     <table style="grid-column: span 3">
       <thead>
         <tr>

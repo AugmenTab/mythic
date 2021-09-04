@@ -18,7 +18,6 @@ import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
     "systems/mythic/templates/partials/armor-sheet-info.hbs",
-    "systems/mythic/templates/partials/bestiary-sheet-summary.hbs",
     "systems/mythic/templates/partials/character-details.hbs",
     "systems/mythic/templates/partials/character-sheet-ability.hbs",
     "systems/mythic/templates/partials/character-sheet-abilities.hbs",

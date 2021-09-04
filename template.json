@@ -249,6 +249,12 @@
                     "max": 0,
                     "burnt": 0
                 },
+                "supportPoints": {
+                    "value": 0,
+                    "max": 0,
+                    "rank": 0,
+                    "other": 0
+                },    
                 "initiative": {
                     "fastFoot": false,
                     "battleMind": false,
@@ -548,12 +554,6 @@
                 "skills"
             ],
             "specialization": "",
-            "supportPoints": {
-                "value": 0,
-                "max": 0,
-                "rank": 0,
-                "other": 0
-            },
             "experience": {
                 "tier": 0,
                 "total": 0,
