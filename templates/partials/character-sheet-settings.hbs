@@ -51,20 +51,29 @@
           {{/times}}
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
-          {{#each actor.data.data.characteristics as |stat name|}}
-            {{#unless (eq name "extra")}}
-              <td>
-                <select name="data.characteristics.{{name}}.advancements">
-                  {{#select stat.advancements}}
-                    {{#each ../config.advancements.characteristics as |text num|}}
-                      <option value="{{num}}">{{text}}</option>
-                    {{/each}}
-                  {{/select}}
-                </select>
-              </td>
-            {{/unless}}
-          {{/each}}
+          {{#if (eq actor.type "Named Character")}}
+            <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
+            {{#each actor.data.data.characteristics as |stat name|}}
+              {{#unless (eq name "extra")}}
+                <td>
+                  <select name="data.characteristics.{{name}}.advancements">
+                    {{#select stat.advancements}}
+                      {{#each ../config.advancements.characteristics as |text num|}}
+                        <option value="{{num}}">{{text}}</option>
+                      {{/each}}
+                    {{/select}}
+                  </select>
+                </td>
+              {{/unless}}
+            {{/each}}
+          {{else}}
+            <td style="height:33px">{{localize "mythic.characterSettings.characteristics.difficulty"}}</td>
+            {{#each actor.data.data.characteristics as |stat name|}}
+              {{#unless (eq name "extra")}}
+                <td>{{stat.difficulty}}</td>
+              {{/unless}}
+            {{/each}}
+          {{/if}}
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
@@ -119,20 +128,29 @@
           <td>{{actor.data.data.mythicCharacteristics.agi.equipment}}</td>
         </tr>
         <tr>
-          <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
-          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
-            {{#unless (eq name "notes")}}
-              <td>
-                <select name="data.mythicCharacteristics.{{name}}.advancements">
-                  {{#select stat.advancements}}
-                    {{#each ../config.advancements.mythicCharacteristics as |text num|}}
-                      <option value="{{num}}">{{text}}</option>
-                    {{/each}}
-                  {{/select}}
-                </select>
-              </td>
-            {{/unless}}
-          {{/each}}
+          {{#if (eq actor.type "Named Character")}}
+            <td>{{localize "mythic.characterSettings.characteristics.advancements"}}</td>
+            {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+              {{#unless (eq name "notes")}}
+                <td>
+                  <select name="data.mythicCharacteristics.{{name}}.advancements">
+                    {{#select stat.advancements}}
+                      {{#each ../config.advancements.mythicCharacteristics as |text num|}}
+                        <option value="{{num}}">{{text}}</option>
+                      {{/each}}
+                    {{/select}}
+                  </select>
+                </td>
+              {{/unless}}
+            {{/each}}
+          {{else}}
+            <td style="height:33px">{{localize "mythic.characterSettings.characteristics.difficulty"}}</td>
+            {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+              {{#unless (eq name "notes")}}
+                <td>{{stat.difficulty}}</td>
+              {{/unless}}
+            {{/each}}
+          {{/if}}
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
@@ -215,7 +233,13 @@
           <tr>
             <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
             <th>{{localize "mythic.characterSettings.luck.starting"}}</th>
-            <th style="width:105px">{{localize "mythic.characterSettings.luck.advancements"}}</th>
+            <th style="width:105px">
+              {{#if (eq actor.type "Named Character")}}
+                {{localize "mythic.characterSettings.luck.advancements"}}
+              {{else}}
+                {{localize "mythic.characterSettings.luck.difficulty"}}
+              {{/if}}
+            </th>
             <th>{{localize "mythic.characterSettings.other"}}</th>
             <th>{{localize "mythic.characterSettings.luck.burnt"}}</th>
           </tr>
@@ -224,7 +248,13 @@
           <tr>
             <td><b>{{data.data.luck.max}}</b></td>
             <td><input name="data.luck.starting" type="number" value="{{data.data.luck.starting}}" data-dtype="Number" onfocus="this.select()"/></td>
-            <td><input name="data.luck.advancements" type="number" value="{{data.data.luck.advancements}}" data-dtype="Number" onfocus="this.select()"/></td>
+            <td>
+              {{#if (eq actor.type "Named Character")}}
+                <input name="data.luck.advancements" type="number" value="{{data.data.luck.advancements}}" data-dtype="Number" onfocus="this.select()"/>
+              {{else}}
+                {{data.data.luck.difficulty}}
+              {{/if}}
+            </td>
             <td><input name="data.luck.other" type="number" value="{{data.data.luck.other}}" data-dtype="Number" onfocus="this.select()"/></td>
             <td><input name="data.luck.burnt" type="number" value="{{data.data.luck.burnt}}" data-dtype="Number" onfocus="this.select()"/></td>
           </tr>
@@ -242,7 +272,13 @@
               <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
               <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
               <th style="width: 140px">{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
-              <th style="width:120px">{{localize "mythic.characterSettings.wounds.advancements"}}</th>
+              <th style="width:120px">
+                {{#if (eq actor.type "Named Character")}}
+                  {{localize "mythic.characterSettings.wounds.advancements"}}
+                {{else}}
+                  {{localize "mythic.characterSettings.wounds.difficulty"}}
+                {{/if}}
+              </th>
               <th style="width:75px">{{localize "mythic.characterSettings.other"}}</th>
             </tr>
           </thead>
@@ -252,13 +288,17 @@
               <td><input name="data.wounds.doubleTou" type="checkbox" {{checked data.data.wounds.doubleTou}}/></td>
               <td><input name="data.wounds.aiDegen" type="number" data-dtype="Number" value="{{data.data.wounds.aiDegen}}" onfocus="this.select()"/></td>
               <td>
-                <select name="data.wounds.advancements">
-                  {{#select data.data.wounds.advancements}}
-                    {{#each config.advancements.wounds as |text num|}}
-                      <option value="{{num}}">{{text}}</option>
-                    {{/each}}
-                  {{/select}}
-                </select>
+                {{#if (eq actor.type "Named Character")}}
+                  <select name="data.wounds.advancements">
+                    {{#select data.data.wounds.advancements}}
+                      {{#each config.advancements.wounds as |text num|}}
+                        <option value="{{num}}">{{text}}</option>
+                      {{/each}}
+                    {{/select}}
+                  </select>
+                {{else}}
+                  {{data.data.wounds.difficulty}}
+                {{/if}}
               </td>
               <td><input name="data.wounds.other" type="number" data-dtype="Number" value="{{data.data.wounds.other}}" onfocus="this.select()"/></td>
             </tr>
@@ -283,6 +323,7 @@
         </table>
       </div>
     </div>
+  </div>
   <div class="wide">
     <h2>{{localize "mythic.characterSettings.movement.label"}}</h2>
     <table>

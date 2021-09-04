@@ -54,6 +54,7 @@
               "background": "Background",
               "equipment": "Equipment",
               "advancements": "Advancements",
+              "difficulty": "Difficulty",
               "charNotes": "Notes about characteristics.",
               "mythicsNotes": "Notes about Mythic characteristics."
             },
@@ -76,6 +77,7 @@
                 "label": "Luck Settings",
                 "starting": "Starting",
                 "advancements": "Advancements",
+                "difficulty": "Difficulty",
                 "burnt": "Burnt"
             },
             "movement": {
@@ -95,7 +97,8 @@
                 "label": "Wounds Settings",
                 "doubleTou": "Double TOU Mod?",
                 "aiDegen": "AI Destabilizations",
-                "advancements": "Advancements"
+                "advancements": "Advancements",
+                "difficulty": "Difficulty"
             }
         },
         "characterEducations": {
