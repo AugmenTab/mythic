@@ -85,8 +85,9 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".lang-add").click(this._onLanguageUpdate.bind(this));
     html.find(".lang-remove").click(this._onLanguageUpdate.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
-    html.find(".rollable").click(this._onRoll.bind(this));
+    html.find(".recharge").click(this._onShieldRecharge.bind(this));
     html.find(".reload").click(this._onReload.bind(this));
+    html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".special-focus").focus(this._onItemEditInline.bind(this));
   }
 
@@ -97,7 +98,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   async _onExpApply(event) {
     event.preventDefault();
-    const element = event.currentTarget;
     let data = duplicate(this.actor.data);
     const field = document.getElementById("exp-total-value");
     const val = Math.floor(parseInt(field.value));
@@ -222,6 +222,14 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     await item.update({ "data.magazine.current": item.data.data.magazine.max });
+  }
+
+  async _onShieldRecharge(event) {
+    event.preventDefault();
+    let data = this.actor.data;
+    const val = data.data.shields.value + data.data.shields.recharge;
+    const update = val > data.data.shields.max ? data.data.shields.max : val;
+    await this.actor.update({ "data.shields.value": update });
   }
 
   async _onRoll(event) {
