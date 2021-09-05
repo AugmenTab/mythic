@@ -1,11 +1,11 @@
 <section class="character-sheet-summary tab">
   {{#if (eq actor.type "Bestiary Character")}}
     <div>
-      <h2>Difficulty Settings</h2>
+      <h2>{{localize "mythic.characterSettings.bestiary.difficultyLabel"}}</h2>
       <table>
         <thead>
           <tr>
-            <th>Normal Only?</th>
+            <th>{{localize "mythic.characterSettings.bestiary.normalOnly"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -18,22 +18,26 @@
       </table>
     </div>
     <div>
-      <h2>Experience Payout Settings</h2>
+      <h2>{{localize "mythic.characterSettings.bestiary.expPayoutLabel"}}</h2>
       <table>
         <thead>
           <tr>
-            <th>Total</th>
-            <th>Base</th>
-            <th>Difficulty</th>
-            <th>Kit</th>
+            <th>{{localize "mythic.characterSettings.bestiary.total"}}</th>
+            <th>{{localize "mythic.characterSettings.bestiary.base"}}</th>
+            <th>{{localize "mythic.characterSettings.bestiary.multiplier"}}</th>
+            <th>{{localize "mythic.characterSettings.bestiary.kit"}}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
+            <td><b>{{localnum data.data.experiencePayout.total}}</b></td>
+            <td style="width:110px">
+              <input name="data.experiencePayout.base" value="{{data.data.experiencePayout.base}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+            </td>
+            <td style="width:110px">&times;{{localnum data.data.experiencePayout.diffMultiplier}}</td>
+            <td style="width:110px">
+              <input name="data.experiencePayout.kit" value="{{data.data.experiencePayout.kit}}" type="number" data-dtype="Number" onfocus="this.select()"/>              
+            </td>
           </tr>
         </tbody>
       </table>

@@ -45,6 +45,15 @@
         "characterSettings": {
             "total": "Total",
             "other": "Other",
+            "bestiary": {
+                "difficultyLabel": "Difficulty Settings",
+                "normalOnly": "Only One Difficulty?",
+                "expPayoutLabel": "Experience Payout Settings",
+                "total": "Total",
+                "base": "Base",
+                "multiplier": "Multiplier",
+                "kit": "Kit"
+            },
             "characteristics": {
               "charLabel": "Characteristics Settings",
               "mythicsLabel": "Mythic Characteristics Settings",
@@ -198,6 +207,7 @@
                 "spent": "Spent",
                 "current": "Current",
                 "base": "Base",
+                "multiplier": "Multiplier",
                 "kit": "Kit",
                 "notes": "Experience Notes",
                 "placeholder": "Write experience notes here.",

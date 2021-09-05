@@ -56,6 +56,9 @@ export function prepareBestiaryBase(actorData) {
   // Calculate Support Points
   calculateSupportPoints(actorData);
 
+  // Calculate Experience Payout
+  calculateExperiencePayout(actorData);
+
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
 }
@@ -334,13 +337,15 @@ function calculateCarryWeight(actorData, str, tou) {
 function calculateCharacteristics(actorData, feltFatigue) {
   for (const [key, value] of Object.entries(actorData.data.characteristics)) {
     if (key !== "extra") {
-      const diff = parseInt(actorData.data.difficulty.tier);
-      if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
-        value.difficulty = 0;
-      } else if (diff === 4) {
-        value.difficulty = 25;
-      } else {
-        value.difficulty = diff * 5;
+      if (actorData.type === "Bestiary Character") {
+        let diff = parseInt(actorData.data.difficulty.tier);
+        if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
+          value.difficulty = 0;
+        } else if (diff === 4) {
+          value.difficulty = 25;
+        } else {
+          value.difficulty = diff * 5;
+        }
       }
       const total = (
         value.soldierType + value.abilityPool + value.equipment +
@@ -401,6 +406,17 @@ function calculateExperience(actorData) {
   } else {
     actorData.data.experience.tier = 0;
   }
+}
+
+function calculateExperiencePayout(actorData) {
+  let diffMult = 1;
+  if (!actorData.data.difficulty.normalOnly) {
+    diffMult = parseInt(actorData.data.difficulty.tier) + 1;
+  }
+  actorData.data.experiencePayout.diffMultiplier = diffMult;
+  actorData.data.experiencePayout.total = (
+    (actorData.data.experiencePayout.base * diffMult) + actorData.data.experiencePayout.kit
+  );
 }
 
 function calculateFeltFatigue(actorData) {
