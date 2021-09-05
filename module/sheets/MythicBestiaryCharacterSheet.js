@@ -1,3 +1,5 @@
+import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
+
 export default class MythicBestiaryCharacterSheet extends ActorSheet {
 
   static get defaultOptions() {
