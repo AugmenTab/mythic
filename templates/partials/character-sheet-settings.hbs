@@ -1,4 +1,44 @@
 <section class="character-sheet-summary tab">
+  {{#if (eq actor.type "Bestiary Character")}}
+    <div>
+      <h2>Difficulty Settings</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Normal Only?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input name="data.difficulty.normalOnly" type="checkbox" {{checked data.data.difficulty.normalOnly}}/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>Experience Payout Settings</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Total</th>
+            <th>Base</th>
+            <th>Difficulty</th>
+            <th>Kit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
   <div class="characteristics-settings wide">
     <h2>{{localize "mythic.characterSettings.characteristics.charLabel"}}</h2>
     <table class="characteristics-settings">

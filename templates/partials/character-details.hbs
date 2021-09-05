@@ -54,11 +54,15 @@
           <input name="data.gender" type="text" value="{{data.data.gender}}" placeholder="{{localize "mythic.characterDetails.gender"}}" onfocus="this.select()"/>
         </p>
       {{else}}
-        <select name="data.difficulty">
-          {{#select data.data.difficulty}}
-            {{#each config.difficulty as |name mult|}}
-              <option value="{{mult}}">{{localize name}}</option>
-            {{/each}}
+        <select name="data.difficulty.tier">
+          {{#select data.data.difficulty.tier}}
+            {{#if data.data.difficulty.normalOnly}}
+              <option value="0">{{localize "mythic.difficulty.normal"}}</option>
+            {{else}}
+              {{#each config.difficulty as |name mult|}}
+                <option value="{{mult}}">{{localize name}}</option>
+              {{/each}}
+            {{/if}}
           {{/select}}
         </select>
       {{/if}}

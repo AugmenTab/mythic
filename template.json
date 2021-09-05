@@ -12,6 +12,7 @@
             "bestiary": {
                 "experiencePayout": {
                     "base": 0,
+                    "diffMultiplier": 0,
                     "kit": 0,
                     "total": 0
                 }
@@ -591,7 +592,10 @@
                 "commonStats",
                 "skills"
             ],
-            "difficulty": ""
+            "difficulty": {
+                "tier": "",
+                "normalOnly": false
+            }
         },
         "Flood": {
             "templates": [

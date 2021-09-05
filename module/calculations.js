@@ -332,11 +332,10 @@ function calculateCarryWeight(actorData, str, tou) {
 }
 
 function calculateCharacteristics(actorData, feltFatigue) {
-  const type = actorData.type;
   for (const [key, value] of Object.entries(actorData.data.characteristics)) {
     if (key !== "extra") {
-      const diff = parseInt(actorData.data.difficulty);
-      if (isNaN(diff)) {
+      const diff = parseInt(actorData.data.difficulty.tier);
+      if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
         value.difficulty = 0;
       } else if (diff === 4) {
         value.difficulty = 25;
