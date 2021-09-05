@@ -47,7 +47,17 @@ export function calculateCharacteristicModifier(score) {
  * @param {ActorData} actorData - The Bestiary Enemy Actor data.
  */
 export function prepareBestiaryBase(actorData) {
-  // TODO
+  // Calculate Ability Pool
+  calculateAbilityPool(actorData);
+
+  // Calculate Luck
+  calculateLuck(actorData);
+
+  // Calculate Support Points
+  calculateSupportPoints(actorData);
+
+  // Fix Talent Dependencies
+  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
 }
 
 /**
@@ -55,7 +65,55 @@ export function prepareBestiaryBase(actorData) {
  * @param {ActorData} actorData - The Bestiary Enemy Actor data.
  */
 export function prepareBestiaryDerived(actorData) {
-  // TODO
+  // Set Up Armor
+  applyArmorStatsToCharacter(actorData);
+  
+  // Calculate Characteristics
+  const feltFatigue = calculateFeltFatigue(actorData);
+  calculateCharacteristics(actorData, feltFatigue);
+
+  // Calculate Mythic Characteristics
+  calculateMythicCharacteristics(actorData);
+
+  // Reference Characteristics and Modifiers
+  const str = actorData.data.characteristics.str.total;
+  const strMod = calculateCharacteristicModifier(str);
+  const tou = actorData.data.characteristics.tou.total;
+  const touMod = calculateCharacteristicModifier(tou);
+  const agi = actorData.data.characteristics.agi.total;
+  const agiMod = calculateCharacteristicModifier(agi);
+  const int = actorData.data.characteristics.int.total;
+  const intMod = calculateCharacteristicModifier(int);
+
+  // Calculate DR
+  calculateDamageResistance(actorData, touMod);
+
+  // Calculate Wounds
+  calculateWounds(actorData, touMod);
+
+  // Calculate Max Fatigue
+  calculateMaxFatigue(actorData, touMod);
+
+  // Calculate Carry Weight
+  calculateCarryWeight(actorData, str, tou);
+
+  // Calculate Movement Distances
+  calculateMovementDistances(actorData, strMod, agiMod);
+
+  // Calculate Initiative
+  calculateInitiative(actorData, agiMod, intMod, feltFatigue);
+  
+  // Calculate Skill Test Target Numbers
+  calculateSkillTargets(actorData);
+
+  // Calculate Education Test Target Numbers
+  calculateEducationTargets(actorData);
+
+  // Calculate Weapon Attacks
+  calculateWeaponSummaryAttackData(actorData);
+
+  // Calculate Weight
+  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -274,11 +332,21 @@ function calculateCarryWeight(actorData, str, tou) {
 }
 
 function calculateCharacteristics(actorData, feltFatigue) {
+  const type = actorData.type;
   for (const [key, value] of Object.entries(actorData.data.characteristics)) {
-    if (key != "extra") {
+    if (key !== "extra") {
+      const diff = parseInt(actorData.data.difficulty);
+      if (isNaN(diff)) {
+        value.difficulty = 0;
+      } else if (diff === 4) {
+        value.difficulty = 25;
+      } else {
+        value.difficulty = diff * 5;
+      }
       const total = (
-        value.soldierType + value.abilityPool + value.background +
-        value.equipment + (parseInt(value.advancements) * 5) + value.other
+        value.soldierType + value.abilityPool + value.equipment +
+        value.background + value.difficulty + value.other +
+        (parseInt(value.advancements) * 5)
       );
       value.total = Math.floor(total >= 0 ? total : 0);
       const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));

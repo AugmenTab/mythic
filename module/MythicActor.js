@@ -52,7 +52,7 @@ export default class MythicActor extends Actor {
    */
   _prepareCharacterBaseData(actorData) {
     switch (actorData.type) {
-      case "Bestiary Enemy":
+      case "Bestiary Character":
         Calc.prepareBestiaryBase(actorData);
         break;
       case "Flood":
@@ -89,7 +89,7 @@ export default class MythicActor extends Actor {
    */
   _prepareCharacterDerivedData(actorData) {
     switch (actorData.type) {
-      case "Bestiary Enemy":
+      case "Bestiary Character":
         Calc.prepareBestiaryDerived(actorData);
         break;
       case "Flood":
