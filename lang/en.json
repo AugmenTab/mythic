@@ -289,6 +289,7 @@
             "evade": "Batched Evasions",
             "options": {
                 "circumstance": "Circumstance Modifier",
+                "targetVehicle": "Target is a Vehicle?",
                 "dof": "Degrees of Failure",
                 "distance": "Distance from Target (meters)",
                 "isZeroG": "Zero Gravity?",
@@ -633,7 +634,13 @@
                 "left": "Left",
                 "right": "Right"
             },
-            "vehicle": {}
+            "vehicle": {
+                "wep": "Weapon",
+                "mob": "Mobility",
+                "eng": "Engine",
+                "op": "Optics",
+                "crew": "Crew"
+            }
         }
     },
     "SETTINGS": {

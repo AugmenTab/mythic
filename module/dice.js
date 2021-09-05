@@ -49,7 +49,8 @@ export async function rollAttacks(element, actor, weapon) {
   if (!attackOptions.cancelled) {
     const target = weapon.data.data.attack.target + mod;
     const type = element.value;
-    await getAttackAndDamageOutcomes(actor, weapon, target, type);
+    const isVehicle = attackOptions.targetVehicle;
+    await getAttackAndDamageOutcomes(actor, weapon, target, type, isVehicle);
     return weapon.data.data.magazine.current - parseInt(element.innerHTML);
   }
   return;
@@ -116,7 +117,11 @@ async function determineHitDigit(root) {
   if (roll.total === 1) return game.i18n.localize(`${root}.digits.pinky`);
 }
 
-async function determineHitLocation(key) {
+async function determineHitLocation(key, veh) {
+  return veh ? determineHitLocationVehicle(key) : determineHitLocationCreature(key);
+}
+
+async function determineHitLocationCreature(key) {
   const root = "mythic.hitLocations.body";
   let location = "";
   if (key >= 61) {
@@ -134,6 +139,21 @@ async function determineHitLocation(key) {
   }
   const sublocation = await determineHitSublocation(key, root);
   return `${location} - ${sublocation}`;
+}
+
+async function determineHitLocationVehicle(key) {
+  const root = "mythic.hitLocations.vehicle";
+  if (key >= 81) {
+    return game.i18n.localize(`${root}.crew`);
+  } else if (key >= 61) {
+    return game.i18n.localize(`${root}.op`);
+  } else if (key >= 41) {
+    return game.i18n.localize(`${root}.eng`);
+  } else if (key >= 21) {
+    return game.i18n.localize(`${root}.mob`);
+  } else {
+    return game.i18n.localize(`${root}.wep`);
+  }
 }
 
 async function determineHitSide() {
@@ -242,7 +262,7 @@ function determineRollOutcome(roll, target) {
   return outcome;
 }
 
-async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
+async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) {
   const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let result = {
     name: weapon.data.data.nickname,
@@ -265,7 +285,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type) {
     attacks = weapon.data.data.attack[type];
   }
   for (let i = 1; i <= attacks; i++) {
-    const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack);
+    const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack, vehicle);
     result.attacks.push(attack);
   }
   await postChatMessage(result, actor);
@@ -363,7 +383,7 @@ function reverseDigits(roll) {
   return parseInt(digits.join(""));
 }
 
-async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages) {
+async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages, veh) {
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, target);
   let attack = {
@@ -376,7 +396,7 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages)
     || weapon.data.data.special.blast.has 
     || weapon.data.data.special.kill.has
   ) {
-    attack.location = await determineHitLocation(reverseDigits(roll.total));
+    attack.location = await determineHitLocation(reverseDigits(roll.total), veh);
     let damage = weapon.data.data.attack.damageRoll;
     let min = weapon.data.data.special.diceMinimum.has
       ? weapon.data.data.special.diceMinimum.value
@@ -475,7 +495,8 @@ async function postChatMessage(data, actor) {
 
 function _processAttackOptions(form) {
   return {
-    circumstance: form.circumstance.value
+    circumstance: form.circumstance.value,
+    targetVehicle: form.targetVehicle.checked
   };
 }
 
