@@ -107,7 +107,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Special Damage.
 * Fully functioning Medical page to handle injuries.
 * Add called shots, Clear Target, and Precision Strike.
-* Add hit locations for targeting vehicles.
 * Add dual wielding.
 * Lock nav bar & inventory bar at the top of the Actor Sheet.
 * Ability to add custom skills.

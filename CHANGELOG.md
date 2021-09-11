@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0
+
+### Changes
+
+* All relevant rules updated to support Mythic 4.5.
+* New settings created to allow users to selectively use rules from Mythic 4.0.
+    * The Enduring Outlier Trait
+    * The Strong Back Ability
+* Created and implemented the Bestiary Character Actor type.
+* Updated the Weapon Item sheet in preparation for the new data model.
+* Created data migration files to prevent breaking of existing Weapon items from previous versions.
+* Added hit locations for vehicles.
+
 ## 0.1.1
 
 ### Changes
