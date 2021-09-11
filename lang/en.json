@@ -1,5 +1,15 @@
 {
     "mythic": {
+        "ammoGroups": {
+            "none": "None",
+            "std": "Standard",
+            "shotgun": "Shotgun",
+            "flamethrower": "Flamethrower",
+            "sniper": "14.5x114mm",
+            "grenade": "40mm Grenade",
+            "mrc": "Missiles & Rockets",
+            "bruteShot": "Brute Shot"
+        },
         "characterDetails": {
             "rank": "Rank",
             "name": "Name",
@@ -497,6 +507,12 @@
                 "partial": "Partial",
                 "sloppy": "Sloppy"
             },
+            "nav": {
+                "basic": "Basic Info",
+                "ammo": "Special Ammo",
+                "mods": "Modifications",
+                "notes": "Notes"
+            },
             "stats": {
                 "label": "Weapon Stats",
                 "damageRoll": "Damage Roll",
@@ -507,6 +523,7 @@
                 "rangeBonus": "Range Bonus",
                 "grip": "Grip",
                 "ammo": "Ammunition",
+                "ammoGroup": "Sp. Ammo Group",
                 "price": "Price (cR)",
                 "baseReload": "Base Reload",
                 "attackBonus": "To-Hit Bonus",

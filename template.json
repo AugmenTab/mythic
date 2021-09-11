@@ -984,7 +984,22 @@
                 "thrown": 0,
                 "grip": "solid"
             },
-            "ammo": ""
+            "ammo": "",
+            "ammoGroup": "",
+            "ammoList": {
+                "STD": {
+                    "diceQuantity": 1,
+                    "diceValue": 5,
+                    "baseDamage": 0,
+                    "strDamage": 0,
+                    "piercing": 0,
+                    "strPiercing": 0,
+                    "target": 0,
+                    "currentMag": 0,
+                    "special": {},
+                    "desc": ""
+                }
+            }
         }
     }
 }

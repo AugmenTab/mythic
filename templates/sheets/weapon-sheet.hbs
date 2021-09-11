@@ -5,206 +5,31 @@
       <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
     </h1>
   </header>
-  <div class="weapon-details">
-    <p>{{localize "mythic.weaponSheet.stats.nickname"}}</p>
-    <input name="data.nickname" type="text" value="{{data.data.nickname}}" />
-    <p>{{localize "mythic.weaponSheet.stats.faction"}}</p>
-    <input name="data.faction" type="text" value="{{data.data.faction}}" />
-    <p>{{localize "mythic.weaponSheet.stats.type"}}</p>
-    <input name="data.type" type="text" value="{{data.data.type}}" />
-    <p>{{localize "mythic.weaponSheet.stats.ammo"}}</p>
-    <input name="data.ammo" type="text" value="{{data.data.ammo}}" />
-    <p>{{localize "mythic.weaponSheet.stats.factionTraining"}}</p>
-    <select name="data.trainings.faction">
-      {{#select data.data.trainings.faction}}
-        {{#each config.trainings.factions as |value key|}}
-          <option value="{{key}}">{{localize value}}</option>
-        {{/each}}
-      {{/select}}
-    </select>
-    <p>{{localize "mythic.weaponSheet.stats.equipmentTraining"}}</p>
-    <select name="data.trainings.equipment">
-      {{#select data.data.trainings.equipment}}
-        {{#each config.trainings.equipment as |value key|}}
-          <option value="{{key}}">{{localize value}}</option>
-        {{/each}}
-      {{/select}}
-    </select>
-  </div>
-  <div class="weapon-core">
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.weaponSheet.tagsLabel"}}</th>
-        </tr>
-        <tbody>
-          <tr>
-            <td>
-              {{#each data.data.tags as |has name|}}
-                <div>
-                  <input name="data.tags.{{name}}" type="checkbox" {{checked has}}/>
-                  <p>{{name}}</p>
-                </div>
-              {{/each}}
-            </td>
-          </tr>
-        </tbody>
-      </thead>
-    </table>
-    <table>
-      <thead>
-        <tr>
-          <th>{{localize "mythic.weaponSheet.fireMode.label"}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            {{#each data.data.fireMode as |v mode|}}
-              <div>
-                <p>{{localize (concat "mythic.weaponSheet.fireMode." mode)}}</p>
-                <input name="data.fireMode.{{mode}}" type="number" data-dtype="Number" value="{{v}}" onfocus="this.select()"/>
-              </div>
-            {{/each}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="5">{{localize "mythic.weaponSheet.stats.label"}}</th>
-      </tr>
-      <tr>
-        <th>{{localize "mythic.weaponSheet.groups"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.damageRoll"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.baseDamage"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.attackBonus"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <select name="data.group">
-            {{#select data.data.group}}
-              {{#each config.weaponGroups as |value key|}}
-                <option value="{{key}}">{{localize value}}</option>
-              {{/each}}
-            {{/select}}
-          </select>
-        </td>
-        <td><input name="data.attack.damageRoll" type="text" value="{{data.data.attack.damageRoll}}" placeholder="2D10" onfocus="this.select()"/></td>
-        <td>
-          {{#if (eq data.data.group "melee")}}
-            <div class="melee-double">
-              <input name="data.attack.baseDamage" type="number" data-dtype="Number" value="{{data.data.attack.baseDamage}}" onfocus="this.select()"/>
-              <p><b>&plus;</b></p>
-              <select name="data.attack.strDamage">
-                {{#select data.data.attack.strDamage}}
-                  <option value="0">--</option>
-                  <option value="0.5">&frac12; STR</option>
-                  <option value="1">STR</option>
-                  <option value="2">STR &times; 2</option>
-                {{/select}}
-              </select>
-            </div>
-          {{else}}
-            <input name="data.attack.baseDamage" type="number" data-dtype="Number" value="{{data.data.attack.baseDamage}}" onfocus="this.select()"/>
-          {{/if}}
-        </td>
-        <td>
-          {{#if (eq data.data.group "melee")}}
-            <div class="melee-double">
-              <input name="data.attack.piercing" type="number" data-dtype="Number" value="{{data.data.attack.piercing}}" onfocus="this.select()"/>
-              <p><b>&plus;</b></p>
-              <select name="data.attack.strPiercing">
-                {{#select data.data.attack.strPiercing}}
-                  <option value="0">--</option>
-                  <option value="0.5">&frac12; STR</option>
-                  <option value="1">STR</option>
-                {{/select}}
-              </select>
-            </div>
-          {{else}}
-            <input name="data.attack.piercing" type="number" data-dtype="Number" value="{{data.data.attack.piercing}}" onfocus="this.select()"/>
-          {{/if}}
-        </td>
-        <td><input name="data.attack.attackBonus" type="number" data-dtype="Number" value="{{data.data.attack.attackBonus}}" onfocus="this.select()"/></td>
-      </tr>
-    </tbody>
-    <thead>
-      <tr>
-        <th>
-          {{#if (eq data.data.group "ranged")}}
-            {{localize "mythic.weaponSheet.stats.range"}}
-          {{else if (eq data.data.group "melee")}}
-            {{localize "mythic.weaponSheet.stats.rangeBonus"}}
-          {{else if (eq data.data.group "thrown")}}
-            {{localize "mythic.weaponSheet.stats.grip"}}
-          {{/if}}
-        </th>
-        <th>{{localize "mythic.weaponSheet.stats.magazine"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.baseReload"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.price"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.weight"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          {{#if (eq data.data.group "ranged")}}
-            <div class="range">
-              <input name="data.range.close" type="number" data-dtype="Number" value="{{data.data.range.close}}" onfocus="this.select()"/>
-              <p><b>&mdash;</b></p>
-              <input name="data.range.long" type="number" data-dtype="Number" value="{{data.data.range.long}}" onfocus="this.select()"/>
-              <p>m</p>
-            </div>
-          {{else if (eq data.data.group "melee")}}
-            <input name="data.range.close" type="number" data-dtype="Number" value="{{data.data.range.close}}"/>
-          {{else if (eq data.data.group "thrown")}}
-            <select name="data.range.grip">
-              {{#select data.data.range.grip}}
-                {{#each config.grips as |value key|}}
-                  <option value="key">{{localize value}}</option>
-                {{/each}}
-              {{/select}}
-            </select>
-          {{/if}}
-        </td>
-        <td><input name="data.magazine.max" type="number" data-dtype="Number" value="{{data.data.magazine.max}}" onfocus="this.select()"/></td>
-        <td><input name="data.reload.base" type="number" data-dtype="Number" value="{{data.data.reload.base}}" onfocus="this.select()"/></td>
-        <td><input name="data.price.base" type="number" data-dtype="Number" value="{{data.data.price.base}}" onfocus="this.select()"/></td>
-        <td><input name="data.weight.each" type="number" data-dtype="Number" value="{{data.data.weight.each}}" onfocus="this.select()"/></td>
-      </tr>
-      <tr>
-        <td colspan="8">
-          <textarea name="data.description" placeholder="{{localize "mythic.weaponSheet.stats.desc"}}">{{data.data.description}}</textarea>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <table class="special-rules">
-    <thead>
-      <tr>
-        <th>{{localize "mythic.weaponSheet.specialRules.label"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          {{#each data.data.special as |details name|}}
-            <span>
-              <input name="data.special.{{name}}.has" type="checkbox" {{checked details.has}}/>
-              <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
-              {{#if details.needsInput}}
-                <input name="data.special.{{name}}.value" {{#if (eq name "flame")}} type="text" {{else}} type="number" data-dtype="Number" {{/if}} value="{{details.value}}" onfocus="this.select()"/>
-              {{/if}}
-            </span>
-          {{/each}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <nav class="item-tabs tabs" data-group="primary">
+    <a class="item" data-tab="basic">{{localize "mythic.weaponSheet.nav.basic"}}</a>
+    <a class="item" data-tab="ammo">{{localize "mythic.weaponSheet.nav.ammo"}}</a>
+    <a class="item" data-tab="mods">{{localize "mythic.weaponSheet.nav.mods"}}</a>
+    <a class="item" data-tab="notes">{{localize "mythic.weaponSheet.nav.notes"}}</a>
+  </nav>
+  <section class="item-sheet-body">
+    {{!-- Basic Info Page --}}
+    <div class="tab" data-group="primary" data-tab="basic">
+      {{> "systems/mythic/templates/partials/weapon-sheet-info.hbs"}}
+    </div>
+
+    {{!-- Special Ammo Page --}}
+    <div class="tab" data-group="primary" data-tab="ammo">
+      <p><b>Coming soon!</b></p>
+    </div>
+
+    {{!-- Modifications Page --}}
+    <div class="tab" data-group="primary" data-tab="mods">
+      <p><b>Coming soon!</b></p>
+    </div>
+
+    {{!-- Notes Page --}}
+    <div class="tab" data-group="primary" data-tab="notes">
+      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.description target="data.description" link="weaponSheet.nav.notes"}}
+    </div>
+  </section>
 </form>

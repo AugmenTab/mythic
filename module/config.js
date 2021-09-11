@@ -11,6 +11,17 @@ mythic.weaponGroups = {
   thrown: "mythic.weaponGroups.thrown",
 }
 
+mythic.ammoGroups = {
+  none: "mythic.ammoGroups.none", 
+  std: "mythic.ammoGroups.std", 
+  shotgun: "mythic.ammoGroups.shotgun", 
+  flamethrower: "mythic.ammoGroups.flamethrower", 
+  sniper: "mythic.ammoGroups.sniper", 
+  grenade: "mythic.ammoGroups.grenade", 
+  mrc: "mythic.ammoGroups.mrc", 
+  bruteShot: "mythic.ammoGroups.bruteShot", 
+}
+
 mythic.trainings = {
   equipment: {
     basic: "mythic.trainings.equipment.basic",

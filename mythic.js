@@ -32,7 +32,8 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/character-sheet-trainings.hbs",
     "systems/mythic/templates/partials/character-stat-block.hbs",
     "systems/mythic/templates/partials/character-weapon-summary.hbs",
-    "systems/mythic/templates/partials/editor.hbs"
+    "systems/mythic/templates/partials/editor.hbs",
+    "systems/mythic/templates/partials/weapon-sheet-info.hbs"
   ];
   return loadTemplates(templatePaths);
 }

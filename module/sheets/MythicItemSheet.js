@@ -15,8 +15,8 @@ export default class MythicItemSheet extends ItemSheet {
       width: 575,
       tabs: [
         {
-          navSelector: ".armor-tabs",
-          contentSelector: ".armor-body",
+          navSelector: ".item-tabs",
+          contentSelector: ".item-sheet-body",
           initial: "basic"
         }
       ]

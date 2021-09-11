@@ -5,14 +5,14 @@
       <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
     </h1>
   </header>
-  <nav class="armor-tabs tabs" data-group="primary">
+  <nav class="item-tabs tabs" data-group="primary">
     <a class="item" data-tab="basic">{{localize "mythic.armorSheet.nav.basic"}}</a>
     <a class="item" data-tab="details">{{localize "mythic.armorSheet.nav.details"}}</a>
     <a class="item" data-tab="variant">{{localize "mythic.armorSheet.nav.variant"}}</a>
     <a class="item" data-tab="mods">{{localize "mythic.armorSheet.nav.mods"}}</a>
     <a class="item" data-tab="notes">{{localize "mythic.armorSheet.nav.notes"}}</a>
   </nav>
-  <section class="armor-body">
+  <section class="item-sheet-body">
     {{!-- Basic Info Page --}}
     <div class="tab" data-group="primary" data-tab="basic">
       {{> "systems/mythic/templates/partials/armor-sheet-info.hbs"}}
