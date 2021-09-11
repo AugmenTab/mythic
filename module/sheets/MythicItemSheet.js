@@ -47,19 +47,5 @@ export default class MythicItemSheet extends ItemSheet {
    */
   activateListeners(html) {
     super.activateListeners(html);
-
-    html.find("textarea").hover(this._onUpdateTextareaContent.bind(this));
-  }
-
-  /**
-   * Increases the height of a textarea on mouseOver.
-   * @param {Event} event - The triggering event.
-   */
-  _onUpdateTextareaContent(event) {
-    event.preventDefault();
-    let element = event.currentTarget;
-    const newHeight = element.scrollHeight + 2;
-    const oldHeight = element.style.height.valueOf();
-    element.style.height = `${newHeight > oldHeight ? newHeight : oldHeight}px`;
   }
 };
