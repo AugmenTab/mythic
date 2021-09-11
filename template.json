@@ -2,8 +2,7 @@
     "Actor": {
         "types": [
             "Named Character",
-            "Bestiary Character",
-            "Flood"
+            "Bestiary Character"
         ],
         "templates": {
             "basicDetails": {
@@ -596,13 +595,6 @@
                 "tier": "",
                 "normalOnly": false
             }
-        },
-        "Flood": {
-            "templates": [
-                "bestiary"
-            ],
-            "contamination": 0,
-            "swarm": 1
         }
     },
     "Item": {
