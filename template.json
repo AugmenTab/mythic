@@ -988,6 +988,13 @@
                     "strPiercing": 0,
                     "target": 0,
                     "currentMag": 0,
+                    "range": {
+                        "close": 0,
+                        "long": 0,
+                        "melee": 0,
+                        "thrown": 0,
+                        "grip": "solid"
+                    },
                     "special": {},
                     "desc": ""
                 }
