@@ -23,20 +23,20 @@ The following is a list of features offered by Mythic for Foundry.
 
 All available Actor types in this system. Unimplemented items are *italicized*.
 
-* Named Character: The primary Actor type for player characters, NPCs, and special Nemesis enemies. Nearly every aspect of this character sheet can be customized to fine-tune exacting stat requirements.
-* *Bestiary Character*: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies. **Development on this Actor type will not begin until after the release of Mythic 4.5.**
-* *Flood Character*: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes. **Development on this Actor type will not begin until after the release of Mythic 4.5.**
+* **Named Character:** The primary Actor type for player characters, NPCs, and special Nemesis enemies. Nearly every aspect of this character sheet can be customized to fine-tune exacting stat requirements.
+* *Bestiary Character*: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies. **This Actor type will not be implemented until after the release of Mythic 4.5.**
+* *Flood Character*: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes. **This Actor type will not be implemented until after the release of Mythic 4.5.**
 * *Vehicle*: The Actor type for vehicles, permitting them to own items and weapons that can be swapped out to represent different configurations without requiring different sheets.
 
 ### Items
 
 All available Item types in this system.
 
-* Ability: All purchasable abilities, as well as abilities unique to particular races or soldier types, traits, and augmentations.
-* Armor: All wearable protective armor suits available in the game.
-* Education: All purchasable educations.
-* Equipment: All other items that don't fall into any other category are represented by this item type.
-* Weapon: Anything that requires a to-hit roll or deals damage can be made into a weapon, which can be rolled from the owner's sheet to make attacks and post informative messages about the item to chat. Weapons come in three main categories: Ranged, Melee, and Thrown.
+* **Ability:** All purchasable abilities, as well as abilities unique to particular races or soldier types, traits, and augmentations.
+* **Armor:** All wearable protective armor suits available in the game.
+* **Education:** All purchasable educations.
+* **Equipment:** All other items that don't fall into any other category are represented by this item type.
+* **Weapon:** Anything that requires a to-hit roll or deals damage can be made into a weapon, which can be rolled from the owner's sheet to make attacks and post informative messages about the item to chat. Weapons come in three main categories: Ranged, Melee, and Thrown.
 
 ### Compendiums
 
