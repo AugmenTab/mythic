@@ -80,7 +80,7 @@ function registerSystemSettings() {
     hint: "SETTINGS.enduringVersion.label",
     type: Number,
     range: {
-      mix: 1,
+      min: 1,
       max: 2,
       step: 1
     },
@@ -99,6 +99,36 @@ function registerSystemSettings() {
       "v45": "Mythic 4.5"
     },
     default: "v40"
+  });
+
+  // Flood Contamination Level
+  game.settings.register("mythic", "contaminationLevel", {
+    config: false,
+    scope: "world",
+    name: "SETTINGS.contaminationLevel.name",
+    hint: "SETTINGS.contaminationLevel.hint",
+    type: Number,
+    range: {
+      min: 0,
+      max: 100,
+      step: 1
+    },
+    default: 0
+  });
+
+  // Flood Swarm Version
+  game.settings.register("mythic", "swarmVersion", {
+    config: false,
+    scope: "world",
+    name: "SETTINGS.swarmVersion.name",
+    hint: "SETTINGS.swarmVersion.hint",
+    type: String,
+    choices: {
+      "contamination": "SETTINGS.swarmVersion.contamination",
+      "bestiary": "SETTINGS.swarmVersion.bestiary",
+      "manual": "SETTINGS.swarmVersion.manual"
+    },
+    default: "contamination"
   });
 }
 

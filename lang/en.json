@@ -679,6 +679,17 @@
         "strongBackVersion": {
             "name": "Strong Back Calculation Method",
             "label": "How the Strong Back ability is calculated. Select the Mythic edition you are playing from the menu."
+        },
+        "contaminationLevel": {
+            "name": "Flood Contamination Level",
+            "hint": "The current Contamination for a game featuring the Flood."
+        },
+        "swarmVersion": {
+            "name": "Flood Swarm Calculation Method",
+            "hint": "How a Flood Actor's Swarm value is calculated - whether by using the Contamination Level, the Bestiary Level of the Flood Actor, or manually by the GM.",
+            "contamination": "Contamination",
+            "bestiary": "Bestiary",
+            "manual": "Manual"
         }
     }
 }
