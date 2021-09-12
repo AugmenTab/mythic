@@ -50,7 +50,7 @@ function registerSystemSettings() {
     hint: "SETTINGS.criticalFailureThreshold.label",
     type: Number,
     range: {
-      min: 1,
+      min: 95,
       max: 100,
       step: 1
     },
