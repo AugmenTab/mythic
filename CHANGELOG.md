@@ -12,6 +12,7 @@
 * Updated the Weapon Item sheet in preparation for the new data model.
 * Created data migration files to prevent breaking of existing Weapon items from previous versions.
 * Added hit locations for vehicles.
+* Increased minimum Critical Failure Threshold setting to 95 due to feedback that it was too cumbersome to use a slider with 100 options for a setting with such a small range.
 
 ## 0.1.1
 
