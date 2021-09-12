@@ -685,11 +685,15 @@
             "name": "Flood Contamination Level",
             "hint": "The current Contamination for a game featuring the Flood."
         },
+        "floodDifficulty": {
+            "name": "Flood Difficulty",
+            "hint": "When using the Difficulty Swarm option, this dictates the Swarm size multiplier."
+        },
         "swarmVersion": {
             "name": "Flood Swarm Calculation Method",
-            "hint": "How a Flood Actor's Swarm value is calculated - whether by using the Contamination Level, the Bestiary Level of the Flood Actor, or manually by the GM.",
+            "hint": "How a Flood Actor's Swarm value is calculated - whether by using the Contamination Level, the current Flood Difficulty, or manually by the GM.",
             "contamination": "Contamination",
-            "bestiary": "Bestiary",
+            "difficulty": "Bestiary",
             "manual": "Manual"
         }
     }

@@ -118,7 +118,7 @@ function registerSystemSettings() {
     },
     default: 0
   });
-
+  
   // Flood Swarm Version
   game.settings.register("mythic", "swarmVersion", {
     config: false,
@@ -128,10 +128,25 @@ function registerSystemSettings() {
     type: String,
     choices: {
       "contamination": "SETTINGS.swarmVersion.contamination",
-      "bestiary": "SETTINGS.swarmVersion.bestiary",
+      "difficulty": "SETTINGS.swarmVersion.difficulty",
       "manual": "SETTINGS.swarmVersion.manual"
     },
     default: "contamination"
+  });
+
+  // Flood Difficulty
+  game.settings.register("mythic", "floodDifficulty", {
+    config: false,
+    scope: "world",
+    name: "SETTINGS.floodDifficulty.name",
+    hint: "SETTINGS.contaminationLevel.hint",
+    type: Number,
+    range: {
+      min: 1,
+      max: 5,
+      step: 1
+    },
+    default: 1
   });
 }
 
