@@ -912,6 +912,31 @@
                     "mods": 0,
                     "roll": 0
                 }
+            },
+            "trainings": {
+                "equipment": {
+                    "basic": false,
+                    "infantry": false,
+                    "advanced": false,
+                    "longRange": false,
+                    "vehicle": false,
+                    "explosive": false,
+                    "melee": false,
+                    "heavy": false
+                },
+                "faction": {
+                    "unsc": false,
+                    "covenant": false,
+                    "forerunner": false
+                },
+                "weapons": {
+                    "hth": false,
+                    "mac": false,
+                    "rapidReload": false,
+                    "unarmedCombatant": false
+                },
+                "alienTech": false
+            
             }
         }        
     },
