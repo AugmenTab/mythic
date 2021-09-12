@@ -71,10 +71,18 @@
 
             .swarm {
                 display: grid;
-                grid-template-columns: repeat(2, auto);
+                grid-template-columns: repeat(2, 1fr);
                 font-size: 1.25em;
                 font-weight: bold;
                 align-items: center;
+                border: 1px solid #7a7971;
+                border-radius: 3px;
+                padding: 1.5px 3px;
+                background: rgba(0, 0, 0, 0.05);
+
+                p {
+                    margin: 0;
+                }
                 
                 p:nth-child(1) {
                     justify-self: right;
@@ -96,6 +104,16 @@
             display: grid;
             grid-template-columns: 0.75fr 1.5fr 0.75fr;
             column-gap: 4px;
+        }
+
+        .flood-physical-stats {
+            display: grid;
+            grid-template-columns: 1fr 135px 225px;
+            column-gap: 4px;
+
+            input {
+                width: 40px;
+            }
         }
 
         .scaled {

@@ -602,20 +602,87 @@
                 "bestiary"
             ],
             "characteristics": {
-                "str": {},
-                "tou": {},
-                "agi": {},
-                "wfr": {},
-                "wfm": {},
-                "int": {},
-                "per": {}
+                "str": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "tou": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "agi": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "wfr": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "wfm": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "int": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "per": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                }
             },
             "mythicCharacteristics": {
-                "str": {},
-                "tou": {},
-                "agi": {}
+                "str": {
+                    "base": 0,
+                    "equipment": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "tou": {
+                    "base": 0,
+                    "equipment": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "agi": {
+                    "base": 0,
+                    "equipment": 0,
+                    "other": 0,
+                    "total": 0
+                }
             },
-            "wounds": {},
+            "wounds": {
+                "value": 0,
+                "max": 0
+            },
             "size": "",
             "notes": "",
             "contamination": 0,
@@ -625,12 +692,52 @@
                 "total": 0
             },
             "damageResistance": 0,
-            "armor": 0,
+            "armor": {
+                "head": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "chest": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "leftArm": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "rightArm": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "leftLeg": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "rightLeg": {
+                    "protection": 0,
+                    "resistance": 0
+                }
+            },
             "shields": {
                 "value": 0,
                 "max": 0,
                 "recharge": 0,
                 "delay": 0
+            },
+            "movement": {
+                "doubleAgiRunCharge": false,
+                "jumpMultiplier": 1,
+                "leapAgiBonus": 0,
+                "leapMultiplier": 1,
+                "rush": false,
+                "blur": false,
+                "half": 0,
+                "full": 0,
+                "charge": 0,
+                "run": 0,
+                "sprint": "--",
+                "jump": 0,
+                "leap": 0
             },
             "initiative": ""
         }        

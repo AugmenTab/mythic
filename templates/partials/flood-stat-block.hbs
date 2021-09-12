@@ -1,0 +1,153 @@
+<section class="character-stat-block">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="7">Characteristics</th>
+        <th colspan="3">Mythic</th>
+      </tr>
+      <tr>
+        <th>STR</th>
+        <th>TOU</th>
+        <th>AGI</th>
+        <th>WFR</th>
+        <th>WFM</th>
+        <th>INT</th>
+        <th>PER</th>
+        <th>STR</th>
+        <th>TOU</th>
+        <th>AGI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#each data.data.characteristics as |details stat|}}
+          {{#unless (eq stat "extra")}}
+            <td><button class="characteristic rollable" name="{{stat}}" value="{{details.roll}}">{{details.roll}}</button></td>
+          {{/unless}}
+        {{/each}}
+        {{#each data.data.mythicCharacteristics as |details stat|}}
+          {{#unless (eq stat "extra")}}
+            <td class="characteristic">{{details.total}}</td>
+          {{/unless}}
+        {{/each}}
+      </tr>
+    </tbody>
+  </table>
+  <div class="flood-physical-stats">
+    <table>
+      <thead>
+        <tr>
+          <th colspan="7">{{localize "mythic.characterStatBlock.movement.title"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.movement.half"}}</th>
+          <th>{{localize "mythic.characterStatBlock.movement.full"}}</th>
+          <th>{{localize "mythic.characterStatBlock.movement.charge"}}</th>
+          <th>{{localize "mythic.characterStatBlock.movement.run"}}</th>
+          <th>{{localize "mythic.characterStatBlock.movement.sprint"}}</th>
+          <th>{{localize "mythic.characterStatBlock.movement.jump"}}</th>
+          <th>{{localize "mythic.characterStatBlock.movement.leap"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="font-size:1.35em">
+          <td>{{localnum data.data.movement.half}}</td>
+          <td>{{data.data.movement.full}}</td>
+          <td>{{data.data.movement.charge}}</td>
+          <td>{{data.data.movement.run}}</td>
+          <td>{{data.data.movement.sprint}}</td>
+          <td>{{localnum data.data.movement.jump}}</td>
+          <td>{{data.data.movement.leap}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table >
+      <thead>
+        <tr>
+          <th colspan="2">{{localize "mythic.characterStatBlock.physical.wounds"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
+          <td>
+            <input name="data.wounds.value" value="{{data.data.wounds.value}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+          </td>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
+          <td>{{data.data.wounds.max}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table >
+      <thead>
+        <tr>
+          <th colspan="3">{{localize "mythic.characterStatBlock.physical.shields"}}</th>
+          <th style="width:45px">
+            <a class="recharge"><i class="clickable fas fa-sync-alt"></i></a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
+          <td><input name="data.shields.value" value="{{data.data.shields.value}}" type="number" data-dtype="Number" onfocus="this.select()"/></td>
+          <th>{{localize "mythic.characterStatBlock.physical.delay"}}</th>
+          <td>{{data.data.shields.delay}}</td>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
+          <td>{{data.data.shields.max}}</td>
+          <th>{{localize "mythic.characterStatBlock.physical.charge"}}</th>
+          <td>{{data.data.shields.recharge}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="scaled">
+    <table style="grid-column: span 2">
+      <thead>
+        <tr>
+          <th colspan="4">{{localize "mythic.characterStatBlock.experience.payout"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.experience.total"}}</th>
+          <th>{{localize "mythic.characterStatBlock.experience.base"}}</th>
+          <th>{{localize "mythic.characterStatBlock.experience.multiplier"}}</th>
+          <th>{{localize "mythic.characterStatBlock.experience.kit"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>{{localnum data.data.experiencePayout.total}}</b></td>
+          <td>{{localnum data.data.experiencePayout.base}}</td>
+          <td>&times;{{data.data.experiencePayout.diffMultiplier}}</td>
+          <td>{{localnum data.data.experiencePayout.kit}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table style="grid-column: span 3">
+      <thead>
+        <tr>
+          <th colspan="6">{{localize "mythic.characterStatBlock.physical.damageResistance"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterStatBlock.physical.head"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.chest"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.arms.left"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.arms.right"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.legs.left"}}</th>
+          <th>{{localize "mythic.characterStatBlock.physical.legs.right"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {{#each data.data.armor as |stats loc|}}
+            <td><b>{{stats.resistance}}</b>&nbsp;&nbsp;({{stats.protection}})</td>
+          {{/each}}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
