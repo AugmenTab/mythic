@@ -48,6 +48,45 @@
         }
     }
 
+    header .flood-details {
+        display: grid;
+        grid-template-columns: auto 1fr;
+
+        h1 input {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
+
+        img {
+            height: 90px;
+            margin-top: 8px;
+        }
+
+        .flood-physical {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            column-gap: 2px;
+            align-items: center;
+
+            .swarm {
+                display: grid;
+                grid-template-columns: repeat(2, auto);
+                font-size: 1.25em;
+                font-weight: bold;
+                align-items: center;
+                
+                p:nth-child(1) {
+                    justify-self: right;
+                }
+
+                p:nth-child(2) {
+                    justify-self: center;
+                }
+            }
+        }
+    }
+
     .character-stat-block {
         .characteristic {
             font-size: 2em;

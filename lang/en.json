@@ -23,7 +23,8 @@
             "height": "Height (cm)",
             "weight": "Weight (kg)",
             "age": "Age",
-            "gender": "Gender"
+            "gender": "Gender",
+            "swarm": "Swarm"
         },
         "characteristics": {
             "str": "Strength",

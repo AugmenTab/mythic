@@ -619,7 +619,11 @@
             "size": "",
             "notes": "",
             "contamination": 0,
-            "swarm": 1,
+            "swarm": {
+                "base": 0,
+                "mod": 0,
+                "total": 0
+            },
             "damageResistance": 0,
             "armor": 0,
             "shields": {
