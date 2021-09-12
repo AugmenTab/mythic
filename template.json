@@ -2,7 +2,8 @@
     "Actor": {
         "types": [
             "Named Character",
-            "Bestiary Character"
+            "Bestiary Character",
+            "Flood"
         ],
         "templates": {
             "basicDetails": {
@@ -595,7 +596,40 @@
                 "tier": "",
                 "normalOnly": false
             }
-        }
+        },
+        "Flood": {
+            "templates": [
+                "bestiary"
+            ],
+            "characteristics": {
+                "str": {},
+                "tou": {},
+                "agi": {},
+                "wfr": {},
+                "wfm": {},
+                "int": {},
+                "per": {}
+            },
+            "mythicCharacteristics": {
+                "str": {},
+                "tou": {},
+                "agi": {}
+            },
+            "wounds": {},
+            "size": "",
+            "notes": "",
+            "contamination": 0,
+            "swarm": 1,
+            "damageResistance": 0,
+            "armor": 0,
+            "shields": {
+                "value": 0,
+                "max": 0,
+                "recharge": 0,
+                "delay": 0
+            },
+            "initiative": ""
+        }        
     },
     "Item": {
         "types": [

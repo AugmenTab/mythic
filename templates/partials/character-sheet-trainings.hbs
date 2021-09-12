@@ -73,19 +73,21 @@
       {{/each}}
     </tbody>
   </table>
-  <div class="languages">
-    <div>
-      <h2>{{localize "mythic.characterTalents.trainings.languages"}}</h2>
+  {{#unless (eq actor.type "Flood")}}
+    <div class="languages">
       <div>
-        {{#each data.data.trainings.languages}}
-          <span class="language">{{this}}</span>
-        {{/each}}
+        <h2>{{localize "mythic.characterTalents.trainings.languages"}}</h2>
+        <div>
+          {{#each data.data.trainings.languages}}
+            <span class="language">{{this}}</span>
+          {{/each}}
+        </div>
+      </div>
+      <div class="language-edit">
+        <input id="lang-input" type="text" onfocus="this.select()"/>
+        <button class="lang-add">Add Language</button>
+        <button class="lang-remove">Remove Language</button>
       </div>
     </div>
-    <div class="language-edit">
-      <input id="lang-input" type="text" onfocus="this.select()"/>
-      <button class="lang-add">Add Language</button>
-      <button class="lang-remove">Remove Language</button>
-    </div>
-  </div>
+  {{/unless}}
 </section>
