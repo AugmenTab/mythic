@@ -739,7 +739,180 @@
                 "jump": 0,
                 "leap": 0
             },
-            "initiative": ""
+            "initiative": "",
+            "skills": {
+                "athletics": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "camouflage": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "cryptography": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "demolition": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "evasion": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "intimidation": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "investigation": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "navGroundAir": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "navSpace": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "navSlipspace": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "pilotGround": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "pilotAir": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "pilotSpace": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "security": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "stunting": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "survival": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "techHuman": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "techCovenant": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "techForerunner": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                }
+            }
         }        
     },
     "Item": {

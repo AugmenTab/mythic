@@ -27,9 +27,15 @@
               <select name="data.skills.{{skill}}.characteristic">
                 {{#select details.characteristic}}
                   {{#with (lookup ../config.skills [skill])~}}
-                    {{#each this.characteristics as |stat|}}
-                      <option value="{{stat}}">{{stat}}</option>
-                    {{/each}}
+                    {{#if (eq ../../actor.type "Flood")}}
+                      {{#each this.floodCharacteristics as |stat|}}
+                        <option value="{{stat}}">{{stat}}</option>
+                      {{/each}}
+                    {{else}}
+                      {{#each this.characteristics as |stat|}}
+                        <option value="{{stat}}">{{stat}}</option>
+                      {{/each}}
+                    {{/if}}
                   {{/with}}
                 {{/select}}
               </select>
