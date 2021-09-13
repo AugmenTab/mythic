@@ -510,8 +510,7 @@ function calculateInventoryWeight(actorData) {
   actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
   actorData.data.carryingCapacity.total = total > 0 ? total : 0;
   const characterTotal = total + actorData.data.weight;
-  let msg = `${characterTotal} kg`;
-  actorData.data.carryingCapacity.character = msg;
+  actorData.data.carryingCapacity.character = characterTotal;
   actorData.data.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
   calculateInventoryBars(actorData);
 }
