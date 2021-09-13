@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       {{#each weapons as |weapon|}}
-        {{> "systems/mythic/templates/partials/character-sheet-items.hbs" weapon}}
+        {{> "systems/mythic/templates/partials/flood-items.hbs" weapon}}
       {{else}}
         <tr>
           <td colspan="5">{{localize "mythic.characterInventory.weapon.empty"}}</td>
@@ -30,7 +30,7 @@
     </thead>
     <tbody>
       {{#each armors as |armor|}}
-        {{> "systems/mythic/templates/partials/character-sheet-items.hbs" armor}}
+        {{> "systems/mythic/templates/partials/flood-items.hbs" armor}}
       {{else}}
         <tr>
           <td colspan="5">{{localize "mythic.characterInventory.armor.empty"}}</td>
@@ -44,7 +44,7 @@
     </thead>
     <tbody>
       {{#each equipment as |equip|}}
-        {{> "systems/mythic/templates/partials/character-sheet-items.hbs" equip}}
+        {{> "systems/mythic/templates/partials/flood-items.hbs" equip}}
       {{else}}
         <tr>
           <td colspan="5">{{localize "mythic.characterInventory.equipment.empty"}}</td>
@@ -57,13 +57,13 @@
     <thead>
       <tr>
         <th colspan="2">
-          {{!-- {{localize "mythic.characterInventory.characterTotal"}}: {{localnum data.data.carryingCapacity.character}} --}}
+          {{localize "mythic.characterInventory.characterTotal"}}:&nbsp;{{localnum data.data.carryingCapacity.character}}&nbsp;kg
         </th>
         <th colspan="2">
-          +{{data.data.carryingCapacity.hearing}} {{localize "mythic.characterInventory.heard"}}
+          +{{data.data.carryingCapacity.hearing}}&nbsp;{{localize "mythic.characterInventory.heard"}}
         </th>
         <th>
-          {{!-- {{localnum data.data.carryingCapacity.total}}&nbsp;kg --}}
+          {{localnum data.data.carryingCapacity.total}}&nbsp;kg
         </th>
       </tr>
     </thead>

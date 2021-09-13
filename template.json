@@ -219,7 +219,7 @@
                     "felt": 0,
                     "total": 0,
                     "character": 0,
-                    "hearing": "",
+                    "hearing": 0,
                     "bar": {
                         "bgBar": "",
                         "bgFill": "",
@@ -936,7 +936,24 @@
                     "unarmedCombatant": false
                 },
                 "alienTech": false
-            
+            },
+            "carryingCapacity": {
+                "doubleStr": false,
+                "doubleTou": false,
+                "strongBack": false,
+                "carry": 0,
+                "lift": 0,
+                "push": 0,
+                "felt": 0,
+                "total": 0,
+                "character": 0,
+                "hearing": 0,
+                "bar": {
+                    "bgBar": "",
+                    "bgFill": "",
+                    "width": "",
+                    "left": ""
+                }
             }
         }        
     },
