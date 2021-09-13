@@ -1,0 +1,180 @@
+<section class="character-sheet-summary tab">
+  <div>
+    <h2>{{localize "mythic.characterSettings.bestiary.swarm"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.bestiary.total"}}</th>
+          <th>{{localize "mythic.characterSettings.bestiary.base"}}</th>
+          <th>{{localize "mythic.characterSettings.bestiary.modifier"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>{{data.data.swarm.total}}</b></td>
+          <td>{{data.data.swarm.base}}</td>
+          <td style="width:105px">
+            <input name="data.swarm.mod" value="{{data.data.swarm.mod}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h2>{{localize "mythic.characterSettings.bestiary.expPayoutLabel"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.bestiary.total"}}</th>
+          <th>{{localize "mythic.characterSettings.bestiary.base"}}</th>
+          <th>{{localize "mythic.characterSettings.bestiary.multiplier"}}</th>
+          <th>{{localize "mythic.characterSettings.bestiary.kit"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>{{localnum data.data.experiencePayout.total}}</b></td>
+          <td style="width:110px">
+            <input name="data.experiencePayout.base" value="{{data.data.experiencePayout.base}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+          </td>
+          <td style="width:110px">&times;{{localnum data.data.experiencePayout.diffMultiplier}}</td>
+          <td style="width:110px">
+            <input name="data.experiencePayout.kit" value="{{data.data.experiencePayout.kit}}" type="number" data-dtype="Number" onfocus="this.select()"/>              
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="characteristics-settings wide">
+    <h2>{{localize "mythic.characterSettings.characteristics.charLabel"}}</h2>
+    <table class="characteristics-settings">
+      <thead>
+        <tr>
+          <th>
+            <i class="fas fa-biohazard"></i>
+          </th>
+          <th colspan="7">{{localize "mythic.characterSettings.characteristics.chars"}}</th>
+          <th colspan="3">{{localize "mythic.characterSettings.characteristics.mythics"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.characterSettings.characteristics.source"}}</th>
+          <td>STR</td>
+          <td>TOU</td>
+          <td>AGI</td>
+          <td>WFR</td>
+          <td>WFM</td>
+          <td>INT</td>
+          <td>PER</td>
+          <td>STR</td>
+          <td>TOU</td>
+          <td>AGI</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{localize "mythic.characterSettings.characteristics.base"}}</td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "extra")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.base" value="{{stat.base}}" type="number" data-dtype="Number" placeholder="0" onfocus="this.select()"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.base" value="{{stat.base}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+        <tr>
+          <td style="height:33px">{{localize "mythic.characterSettings.characteristics.equipment"}}</td>
+          <td>{{actor.data.data.characteristics.str.equipment}}</td>
+          <td>--</td>
+          <td>{{actor.data.data.characteristics.agi.equipment}}</td>
+          {{#times 4}}
+            <td>--</td>
+          {{/times}}
+          <td>{{actor.data.data.mythicCharacteristics.str.equipment}}</td>
+          <td>--</td>
+          <td>{{actor.data.data.mythicCharacteristics.agi.equipment}}</td>
+        </tr>
+        <tr>
+          <td>{{localize "mythic.characterSettings.other"}}</td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "extra")}}
+              <td>
+                <input class="calc-{{name}}" name="data.characteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number" placeholder="0" onfocus="this.select()"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#unless (eq name "notes")}}
+              <td>
+                <input class="calc-mythic-{{name}}" name="data.mythicCharacteristics.{{name}}.other" value="{{stat.other}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+              </td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.total"}}</th>
+          {{#each actor.data.data.characteristics as |stat _|}}
+            {{#unless (eq name "extra")}}
+              <th>{{stat.total}}</th>
+            {{/unless}}
+          {{/each}}
+          {{#each actor.data.data.mythicCharacteristics as |stat _|}}
+            {{#unless (eq name "extra")}}
+              <th>{{stat.total}}</th>
+            {{/unless}}
+          {{/each}}
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div>
+    <h2>{{localize "mythic.characterSettings.movement.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:120px">{{localize "mythic.characterSettings.movement.jumpMultiplier"}}</th>
+          <th style="width:120px">{{localize "mythic.characterSettings.movement.leapMultiplier"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.blur"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.rush"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input name="data.movement.jumpMultiplier" type="number" value="{{data.data.movement.jumpMultiplier}}" data-dtype="Number" onfocus="this.select()"/></td>
+          <td><input name="data.movement.leapMultiplier" type="number" value="{{data.data.movement.leapMultiplier}}" data-dtype="Number" onfocus="this.select()"/></td>
+          <td><input name="data.movement.blur" type="checkbox" {{checked data.data.movement.blur}}/></td>
+          <td><input name="data.movement.rush" type="checkbox" {{checked data.data.movement.rush}}/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <h2>{{localize "mythic.characterSettings.wounds.label"}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.characterSettings.wounds.total"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.base"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.swarm"}}</th>
+          <th>{{localize "mythic.characterSettings.wounds.mod"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>{{data.data.wounds.max}}</b></td>
+          <td style="width:110px"><input name="data.wounds.base" type="number" value="{{data.data.wounds.base}}" data-dtype="Number" onfocus="this.select()"/></td>
+          <td>&times;{{data.data.swarm.total}}</td>
+          <td style="width:110px"><input name="data.wounds.mod" type="number" value="{{data.data.wounds.mod}}" data-dtype="Number" onfocus="this.select()"/></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

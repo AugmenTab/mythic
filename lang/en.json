@@ -60,15 +60,20 @@
                 "difficultyLabel": "Difficulty Settings",
                 "normalOnly": "Only One Difficulty?",
                 "expPayoutLabel": "Experience Payout Settings",
+                "swarm": "Swarm Settings",
                 "total": "Total",
                 "base": "Base",
                 "multiplier": "Multiplier",
+                "modifier": "Modifier",
                 "kit": "Kit"
             },
             "characteristics": {
               "charLabel": "Characteristics Settings",
               "mythicsLabel": "Mythic Characteristics Settings",
+              "chars": "Characteristics",
+              "mythics": "Mythics",
               "source": "Source",
+              "base": "Base",
               "soldierType": "Soldier Type",
               "abilityPool": "Ability Pool",
               "background": "Background",
@@ -118,7 +123,11 @@
                 "doubleTou": "Double TOU Mod?",
                 "aiDegen": "AI Destabilizations",
                 "advancements": "Advancements",
-                "difficulty": "Difficulty"
+                "difficulty": "Difficulty",
+                "total": "Total Wounds",
+                "base": "Base Wounds",
+                "swarm": "Swarm",
+                "mod": "Modifier"
             }
         },
         "characterEducations": {

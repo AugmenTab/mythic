@@ -12,7 +12,7 @@
             "bestiary": {
                 "experiencePayout": {
                     "base": 0,
-                    "diffMultiplier": 0,
+                    "diffMultiplier": 1,
                     "kit": 0,
                     "total": 0
                 }
@@ -593,7 +593,7 @@
                 "skills"
             ],
             "difficulty": {
-                "tier": "",
+                "tier": "0",
                 "normalOnly": false
             }
         },
@@ -681,7 +681,10 @@
             },
             "wounds": {
                 "value": 0,
-                "max": 0
+                "max": 0,
+                "base": 0,
+                "mod": 0
+
             },
             "size": "",
             "notes": "",
