@@ -413,9 +413,6 @@ function calculateExperiencePayout(actorData) {
   if (!actorData.data.difficulty.normalOnly) {
     diffMult = parseInt(actorData.data.difficulty.tier) + 1;
   }
-  if (isNaN(diffMult)) {
-    diffMult = 0;
-  }
   actorData.data.experiencePayout.diffMultiplier = diffMult;
   actorData.data.experiencePayout.total = (
     (actorData.data.experiencePayout.base * diffMult) + actorData.data.experiencePayout.kit
