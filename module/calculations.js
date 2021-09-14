@@ -461,30 +461,35 @@ function calculateInventoryBars(actorData) {
     actorData.data.carryingCapacity.bar.bgBar = "tranparent";
     actorData.data.carryingCapacity.bar.bgFill = "transparent";
     actorData.data.carryingCapacity.bar.width = "0%";
-    actorData.data.carryingCapacity.bar.left = "0.3em";    
-  } else if (percent > 400) {
+    actorData.data.carryingCapacity.bar.left = "0.3em";
+    actorData.data.carryingCapacity.bar.tier = "";
+  } else if (percent >= 400) {
     const adjusted = percent - 400;
     actorData.data.carryingCapacity.bar.bgBar = "darkred";
     actorData.data.carryingCapacity.bar.bgFill = "darkred";
     actorData.data.carryingCapacity.bar.width = "100%";
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+    actorData.data.carryingCapacity.bar.tier = "push";
   } else if (percent > 200) {
     const adjusted = percent - 200;
     actorData.data.carryingCapacity.bar.bgBar = "#fb8c00";
     actorData.data.carryingCapacity.bar.bgFill = "darkred";
     actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+    actorData.data.carryingCapacity.bar.tier = "push";
   } else if (percent > 100) {
     const adjusted = percent - 100;
     actorData.data.carryingCapacity.bar.bgBar = "rgba(0, 0, 0, 0.5)";
     actorData.data.carryingCapacity.bar.bgFill = "#fb8c00";
     actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+    actorData.data.carryingCapacity.bar.tier = "lift";
   } else {
     actorData.data.carryingCapacity.bar.bgBar = "transparent";
     actorData.data.carryingCapacity.bar.bgFill = "rgba(0, 0, 0, 0.5)";
     actorData.data.carryingCapacity.bar.width = `${percent.toFixed(1)}%`;
     actorData.data.carryingCapacity.bar.left = percent <= 4 ? "0.3em" : "0";
+    actorData.data.carryingCapacity.bar.tier = "carry";
   }
 }
 

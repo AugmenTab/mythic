@@ -955,7 +955,8 @@
                     "bgBar": "",
                     "bgFill": "",
                     "width": "",
-                    "left": ""
+                    "left": "",
+                    "tier": ""
                 }
             }
         }        
