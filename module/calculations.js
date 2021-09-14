@@ -143,7 +143,7 @@ export function prepareFloodBase(actorData) {
   calculateExperiencePayout(actorData);
 
   // Wounds
-  // TODO
+  calculateWoundsFlood(actorData);
 
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
@@ -760,4 +760,9 @@ function calculateWounds(actorData, touMod) {
     actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
     (parseInt(actorData.data.wounds.advancements) * 4)
   );
+}
+
+function calculateWoundsFlood(actorData) {
+  const w = actorData.data.wounds.base * actorData.data.swarm.total;
+  actorData.data.wounds.max = w + actorData.data.wounds.mod
 }
