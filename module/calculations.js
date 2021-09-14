@@ -498,9 +498,17 @@ function calculateItemWeight(item) {
     total += weight;
     item.data.data.weight.total = weight;
     if (!item.data.data.weight.selfSupported) {
-      felt += weight;
-      item.data.data.weight.felt = weight;  
-    } else item.data.data.weight.felt = 0;
+      if (item.type === "armor" && item.data.data.weight.equipped) {
+        const quarter = weight / 4;
+        felt += quarter;
+        item.data.data.weight.felt = quarter;
+      } else {
+        felt += weight;
+        item.data.data.weight.felt = weight;
+      }
+    } else {
+      item.data.data.weight.felt = 0
+    }
   } else {
     item.data.data.weight.felt = 0;
     item.data.data.weight.total = 0;
