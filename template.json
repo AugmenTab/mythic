@@ -692,7 +692,8 @@
             "swarm": {
                 "base": 0,
                 "mod": 0,
-                "total": 0
+                "total": 0,
+                "willSwarm": false
             },
             "damageResistance": 0,
             "armor": {

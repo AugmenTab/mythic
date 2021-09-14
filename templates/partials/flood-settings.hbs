@@ -7,15 +7,17 @@
           <th>{{localize "mythic.characterSettings.bestiary.total"}}</th>
           <th>{{localize "mythic.characterSettings.bestiary.base"}}</th>
           <th>{{localize "mythic.characterSettings.bestiary.modifier"}}</th>
+          <th>Swarms?</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><b>{{data.data.swarm.total}}</b></td>
           <td>{{data.data.swarm.base}}</td>
-          <td style="width:105px">
+          <td style="width:90px">
             <input name="data.swarm.mod" value="{{data.data.swarm.mod}}" type="number" data-dtype="Number" onfocus="this.select()"/>
           </td>
+          <td style="width:90px"><input name="data.swarm.willSwarm" type="checkbox" {{checked data.data.swarm.willSwarm}}/></td>
         </tr>
       </tbody>
     </table>
@@ -34,11 +36,11 @@
       <tbody>
         <tr>
           <td><b>{{localnum data.data.experiencePayout.total}}</b></td>
-          <td style="width:110px">
+          <td style="width:90px">
             <input name="data.experiencePayout.base" value="{{data.data.experiencePayout.base}}" type="number" data-dtype="Number" onfocus="this.select()"/>
           </td>
-          <td style="width:110px">&times;{{localnum data.data.experiencePayout.diffMultiplier}}</td>
-          <td style="width:110px">
+          <td style="width:90px">&times;{{localnum data.data.experiencePayout.diffMultiplier}}</td>
+          <td style="width:90px"">
             <input name="data.experiencePayout.kit" value="{{data.data.experiencePayout.kit}}" type="number" data-dtype="Number" onfocus="this.select()"/>              
           </td>
         </tr>
