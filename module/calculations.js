@@ -136,7 +136,14 @@ export function prepareCharacterEmbedded(actorData) {
  * @param {ActorData} actorData - The Flood Actor data.
  */
 export function prepareFloodBase(actorData) {
-  // TODO
+  // Swarm
+  calculateSwarm(actorData);
+
+  // Experience Payout (must be unique for multiplier)
+  // Wounds
+
+  // Fix Talent Dependencies
+  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
 }
 
 /**
@@ -593,6 +600,22 @@ function calculateSupportPoints(actorData) {
   actorData.data.supportPoints.max = (
     actorData.data.supportPoints.rank + actorData.data.supportPoints.other
   );
+}
+
+function calculateSwarm(actorData) {
+  if (actorData.data.swarm.willSwarm) {
+    const method = game.settings.get("mythic", "swarmVersion");
+    if (method === "contamination") {
+      const c = game.settings.get("mythic", "contaminationLevel");
+      actorData.data.swarm.base = 2 * c;
+    } else if (method === "difficulty") {
+      const d = game.settings.get("mythic", "floodDifficulty");
+      actorData.data.swarm.base = 10 * d;
+    } else if (method === "manual") {
+      actorData.data.swarm.base = 1;
+    }
+  }
+  actorData.data.swarm.total = actorData.data.swarm.base + actorData.data.swarm.mod;
 }
 
 function calculateWeaponAttacksMelee(actorData, weapon) {

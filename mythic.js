@@ -109,7 +109,7 @@ function registerSystemSettings() {
 
   // Flood Contamination Level
   game.settings.register("mythic", "contaminationLevel", {
-    config: false,
+    config: true,
     scope: "world",
     name: "SETTINGS.contaminationLevel.name",
     hint: "SETTINGS.contaminationLevel.hint",
@@ -124,7 +124,7 @@ function registerSystemSettings() {
   
   // Flood Swarm Version
   game.settings.register("mythic", "swarmVersion", {
-    config: false,
+    config: true,
     scope: "world",
     name: "SETTINGS.swarmVersion.name",
     hint: "SETTINGS.swarmVersion.hint",
@@ -139,7 +139,7 @@ function registerSystemSettings() {
 
   // Flood Difficulty
   game.settings.register("mythic", "floodDifficulty", {
-    config: false,
+    config: true,
     scope: "world",
     name: "SETTINGS.floodDifficulty.name",
     hint: "SETTINGS.contaminationLevel.hint",

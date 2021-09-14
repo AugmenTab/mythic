@@ -702,7 +702,7 @@
             "name": "Flood Swarm Calculation Method",
             "hint": "How a Flood Actor's Swarm value is calculated - whether by using the Contamination Level, the current Flood Difficulty, or manually by the GM.",
             "contamination": "Contamination",
-            "difficulty": "Bestiary",
+            "difficulty": "Difficulty",
             "manual": "Manual"
         }
     }
