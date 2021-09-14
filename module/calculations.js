@@ -471,7 +471,7 @@ function calculateInventoryBars(actorData) {
     actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
     actorData.data.carryingCapacity.bar.tier = "push";
   } else if (percent > 200) {
-    const adjusted = percent - 200;
+    const adjusted = (percent - 200) / 2;
     actorData.data.carryingCapacity.bar.bgBar = "#fb8c00";
     actorData.data.carryingCapacity.bar.bgFill = "darkred";
     actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
