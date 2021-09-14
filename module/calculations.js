@@ -140,7 +140,10 @@ export function prepareFloodBase(actorData) {
   calculateSwarm(actorData);
 
   // Experience Payout (must be unique for multiplier)
+  calculateExperiencePayout(actorData);
+
   // Wounds
+  // TODO
 
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
@@ -417,7 +420,9 @@ function calculateExperience(actorData) {
 
 function calculateExperiencePayout(actorData) {
   let diffMult = 1;
-  if (!actorData.data.difficulty.normalOnly) {
+  if (actorData.type === "Flood") {
+    diffMult = actorData.data.swarm.total;
+  } else if (!actorData.data.difficulty.normalOnly) {
     diffMult = parseInt(actorData.data.difficulty.tier) + 1;
   }
   actorData.data.experiencePayout.diffMultiplier = diffMult;
