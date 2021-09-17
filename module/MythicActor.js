@@ -72,14 +72,10 @@ export default class MythicActor extends Actor {
    * @param {ActorData} actorData - The prepared ActorData.
    */
   _prepareCharacterEmbedded(actorData) {
-    switch (actorData.type) {
-      case "Flood":
-        Calc.prepareFloodEmbedded(actorData);
-        break;
-      case "Vehicle":
-        Calc.prepareVehicleEmbedded(actorData);
-        break;
-      default: Calc.prepareCharacterEmbedded(actorData);
+    if (actorData.type === "Vehicle") {
+      Calc.prepareVehicleEmbedded(actorData);
+    } else {
+      Calc.prepareCharacterEmbedded(actorData);
     }
   }
 
