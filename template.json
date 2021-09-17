@@ -1,0 +1,1369 @@
+{
+    "Actor": {
+        "types": [
+            "Named Character",
+            "Bestiary Character",
+            "Flood"
+        ],
+        "templates": {
+            "basicDetails": {
+                "faction": ""
+            },
+            "bestiary": {
+                "experiencePayout": {
+                    "base": 0,
+                    "diffMultiplier": 1,
+                    "kit": 0,
+                    "total": 0
+                }
+            },
+            "commonStats": {
+                "size": "",
+                "race": "",
+                "rank": "",
+                "soldierType": "",
+                "notes": "",
+                "characteristics": {
+                    "str": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "tou": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "agi": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "wfr": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "wfm": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "int": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "per": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "cr": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "ch": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "ld": {
+                        "soldierType": 0,
+                        "abilityPool": 0,
+                        "background": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "medical": 0,
+                        "total": 0,
+                        "roll": 0
+                    },
+                    "extra": {
+                        "poolTotal": 0,
+                        "touDR": 0,
+                        "notes": ""
+                    }
+                },
+                "mythicCharacteristics": {
+                    "str": {
+                        "soldierType": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "tou": {
+                        "soldierType": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "agi": {
+                        "soldierType": 0,
+                        "equipment": 0,
+                        "advancements": 0,
+                        "difficulty": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "notes": ""
+                },
+                "armor": {
+                    "head": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "chest": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "leftArm": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "rightArm": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "leftLeg": {
+                        "protection": 0,
+                        "resistance": 0
+                    },
+                    "rightLeg": {
+                        "protection": 0,
+                        "resistance": 0
+                    }
+                },
+                "shields": {
+                    "value": 0,
+                    "max": 0,
+                    "recharge": 0,
+                    "delay": 0
+                },
+                "carryingCapacity": {
+                    "doubleStr": false,
+                    "doubleTou": false,
+                    "strongBack": false,
+                    "carry": 0,
+                    "lift": 0,
+                    "push": 0,
+                    "felt": 0,
+                    "total": 0,
+                    "character": 0,
+                    "hearing": 0,
+                    "bar": {
+                        "bgBar": "",
+                        "bgFill": "",
+                        "width": "",
+                        "left": "",
+                        "tier": "carry"
+                    }
+                },
+                "movement": {
+                    "doubleAgiRunCharge": false,
+                    "jumpMultiplier": 1,
+                    "leapAgiBonus": 0,
+                    "leapMultiplier": 1,
+                    "rush": false,
+                    "blur": false,
+                    "half": 0,
+                    "full": 0,
+                    "charge": 0,
+                    "run": 0,
+                    "sprint": "--",
+                    "jump": 0,
+                    "leap": 0
+                },
+                "wounds": {
+                    "value": 0,
+                    "doubleTou": false,
+                    "aiDegen": 0,
+                    "advancements": 0,
+                    "difficulty": 0,
+                    "other": 0,
+                    "max": 0
+                },
+                "fatigue": {
+                    "value": 0,
+                    "max": 0,
+                    "enduring": false
+                },
+                "luck": {
+                    "value": 0,
+                    "starting": 0,
+                    "advancements": 0,
+                    "difficulty": 0,
+                    "other": 0,
+                    "max": 0,
+                    "burnt": 0
+                },
+                "supportPoints": {
+                    "value": 0,
+                    "max": 0,
+                    "rank": 0,
+                    "other": 0
+                },    
+                "initiative": {
+                    "fastFoot": false,
+                    "battleMind": false,
+                    "mods": 0,
+                    "formula": "1D10"
+                },
+                "trainings": {
+                    "equipment": {
+                        "basic": false,
+                        "infantry": false,
+                        "advanced": false,
+                        "longRange": false,
+                        "vehicle": false,
+                        "explosive": false,
+                        "melee": false,
+                        "heavy": false
+                    },
+                    "faction": {
+                        "unsc": false,
+                        "covenant": false,
+                        "forerunner": false
+                    },
+                    "weapons": {
+                        "hth": false,
+                        "mac": false,
+                        "rapidReload": false,
+                        "unarmedCombatant": false
+                    },
+                    "languages": [],
+                    "alienTech": false
+                },
+                "abilityNotes": "",
+                "equipmentNotes": ""
+            },
+            "skills": {
+                "skills": {
+                    "appeal": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "athletics": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "camouflage": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "command": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "cryptography": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "deception": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "demolition": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "evasion": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "gambling": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "interrogation": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "intimidation": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "investigation": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "medHuman": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "medCovenant": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "medMgalekgolo": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "navGroundAir": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "navSpace": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "navSlipspace": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "negotiation": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "pilotGround": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "pilotAir": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "pilotSpace": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "security": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "stunting": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "survival": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 1
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "techHuman": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "techCovenant": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "techForerunner": {
+                        "characteristic": "",
+                        "training": {
+                            "tier": "",
+                            "penalty": 2
+                        },
+                        "mods": 0,
+                        "roll": 0
+                    },
+                    "notes": ""
+                }
+            }
+        },
+        "Named Character": {
+            "templates": [
+                "basicDetails",
+                "commonStats",
+                "skills"
+            ],
+            "specialization": "",
+            "experience": {
+                "tier": 0,
+                "total": 0,
+                "spent": 0,
+                "current": 0,
+                "purchases": [],
+                "color": "",
+                "notes": ""
+            },
+            "educations": {
+                "notes": ""
+            },
+            "biography": "",
+            "cR": 0
+        },
+        "Bestiary Character": {
+            "templates": [
+                "basicDetails",
+                "bestiary",
+                "commonStats",
+                "skills"
+            ],
+            "difficulty": {
+                "tier": "0",
+                "normalOnly": false
+            }
+        },
+        "Flood": {
+            "templates": [
+                "bestiary"
+            ],
+            "characteristics": {
+                "str": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "tou": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "agi": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "wfr": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "wfm": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "int": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                },
+                "per": {
+                    "base": 0,
+                    "equipment": 0,
+                    "medical": 0,
+                    "other": 0,
+                    "total": 0,
+                    "roll": 0
+                }
+            },
+            "mythicCharacteristics": {
+                "str": {
+                    "base": 0,
+                    "equipment": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "tou": {
+                    "base": 0,
+                    "equipment": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "agi": {
+                    "base": 0,
+                    "equipment": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
+            "wounds": {
+                "value": 0,
+                "max": 0,
+                "base": 0,
+                "mod": 0
+            },
+            "size": "",
+            "notes": "",
+            "contamination": 0,
+            "swarm": {
+                "base": 0,
+                "mod": 0,
+                "total": 0,
+                "willSwarm": false
+            },
+            "damageResistance": 0,
+            "armor": {
+                "head": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "chest": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "leftArm": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "rightArm": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "leftLeg": {
+                    "protection": 0,
+                    "resistance": 0
+                },
+                "rightLeg": {
+                    "protection": 0,
+                    "resistance": 0
+                }
+            },
+            "shields": {
+                "value": 0,
+                "max": 0,
+                "recharge": 0,
+                "delay": 0
+            },
+            "movement": {
+                "doubleAgiRunCharge": false,
+                "jumpMultiplier": 1,
+                "leapAgiBonus": 0,
+                "leapMultiplier": 1,
+                "rush": false,
+                "blur": false,
+                "half": 0,
+                "full": 0,
+                "charge": 0,
+                "run": 0,
+                "sprint": "--",
+                "jump": 0,
+                "leap": 0
+            },
+            "initiative": "",
+            "skills": {
+                "athletics": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "camouflage": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "cryptography": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "demolition": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "evasion": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "intimidation": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "investigation": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "navGroundAir": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "navSpace": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "navSlipspace": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "pilotGround": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "pilotAir": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "pilotSpace": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "security": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "stunting": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "survival": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "techHuman": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "techCovenant": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                },
+                "techForerunner": {
+                    "characteristic": "",
+                    "training": {
+                        "tier": "",
+                        "penalty": 1
+                    },
+                    "mods": 0,
+                    "roll": 0
+                }
+            },
+            "trainings": {
+                "equipment": {
+                    "basic": false,
+                    "infantry": false,
+                    "advanced": false,
+                    "longRange": false,
+                    "vehicle": false,
+                    "explosive": false,
+                    "melee": false,
+                    "heavy": false
+                },
+                "faction": {
+                    "unsc": false,
+                    "covenant": false,
+                    "forerunner": false
+                },
+                "weapons": {
+                    "hth": false,
+                    "mac": false,
+                    "rapidReload": false,
+                    "unarmedCombatant": false
+                },
+                "alienTech": false
+            },
+            "carryingCapacity": {
+                "doubleStr": false,
+                "doubleTou": false,
+                "strongBack": false,
+                "carry": 0,
+                "lift": 0,
+                "push": 0,
+                "felt": 0,
+                "total": 0,
+                "character": 0,
+                "hearing": 0,
+                "bar": {
+                    "bgBar": "",
+                    "bgFill": "",
+                    "width": "",
+                    "left": "",
+                    "tier": "carry"
+                }
+            }
+        }        
+    },
+    "Item": {
+        "types": [
+            "ability",
+            "armor",
+            "education",
+            "equipment",
+            "weapon"
+        ],
+        "templates": {
+            "baseItemDetails": {
+                "faction": "",
+                "description": ""
+            },
+            "physical": {
+                "price": {
+                    "base": 0,
+                    "mods": 0,
+                    "total": 0
+                },
+                "breakPoints": 0,
+                "trainings": {
+                    "equipment": "",
+                    "faction": ""
+                },
+                "weight": {
+                    "total": 0.0,
+                    "felt": 0.0,
+                    "each": 0.0,
+                    "quantity": 1,
+                    "carried": false,
+                    "equipped": false,
+                    "selfSupported": false
+                }
+            }
+        },
+        "ability": {
+            "prerequisite": "",
+            "cost": 0,
+            "summary": "",
+            "description": "",
+            "type": ""
+        },
+        "armor": {
+            "templates": [
+                "baseItemDetails",
+                "physical"
+            ],
+            "characteristics": {
+                "has": false,
+                "str": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "agi": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "mythicStr": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "mythicAgi": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
+            "hardpoints": {
+                "head": 0,
+                "chest": 0,
+                "leftArm": 0,
+                "rightArm": 0,
+                "leftLeg": 0,
+                "rightLeg": 0
+            },
+            "material": "",
+            "notes": {
+                "armor": "<table style=\"width: 98.9267%; margin-left: auto; margin-right: auto;\" border=\"1\"><thead><tr style=\"text-align: center;\"><td style=\"width: 100%\" colspan=\"2\" scope=\"colgroup\">Suit Special Abilities</td></tr></thead><tbody><tr><td style=\"width: 25%; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td><td style=\"width: 75%; text-align: left; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td></tr><tr><td style=\"width: 25%; vertical-align: middle; padding: 4px 8px;\"></td><td style=\"width: 75%; text-align: left; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td></tr><tr><td style=\"width: 25%; vertical-align: middle; padding: 4px 8px;\"></td><td style=\"width: 75%; text-align: left; vertical-align: middle; padding: 4px 8px;\">&nbsp;</td></tr></tbody></table>",
+                "variant": "",
+                "permutations": "",
+                "other": ""
+            },
+            "protection": {
+                "head": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "chest": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "leftArm": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "rightArm": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "leftLeg": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "rightLeg": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
+            "shields": {
+                "has": false,
+                "integrity": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "recharge": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "delay": {
+                    "armor": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
+            "size": "",
+            "variant": ""
+        },
+        "education": {
+            "difficulty": "",
+            "type": "",
+            "cost": {
+                "plus5": 0,
+                "plus10": 0
+            },
+            "skills": {
+                "appeal": false,
+                "athletics": false,
+                "camouflage": false,
+                "command": false,
+                "cryptography": false,
+                "deception": false,
+                "demolition": false,
+                "evasion": false,
+                "gambling": false,
+                "interrogation": false,
+                "intimidation": false,
+                "investigation": false,
+                "medHuman": false,
+                "medCovenant": false,
+                "medMgalekgolo": false,
+                "navGroundAir": false,
+                "navSpace": false,
+                "navSlipspace": false,
+                "negotiation": false,
+                "pilotGround": false,
+                "pilotAir": false,
+                "pilotSpace": false,
+                "security": false,
+                "stunting": false,
+                "survival": false,
+                "techHuman": false,
+                "techCovenant": false,
+                "techForerunner": false
+            },
+            "roll": {
+                "skill": "int",
+                "training": "none",
+                "mods": 0,
+                "roll": 0
+            }
+        },
+        "equipment": {
+            "templates": [
+                "physical"
+            ],
+            "description": ""
+        },
+        "weapon": {
+            "templates": [
+                "baseItemDetails",
+                "physical"
+            ],
+            "group": "ranged",
+            "tags": {
+                "[UD]": true,
+                "[I]": false,
+                "[OH]": false,
+                "[TH]": false,
+                "[HW]": false,
+                "[SD]": false,
+                "[PD]": false,
+                "[BD]": false
+            },
+            "special": {
+                "acid": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "blast": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "cauterize": {
+                    "has": false,
+                    "value": 9,
+                    "needsInput": true
+                },
+                "charge": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "diceMinimum": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "electrified": {
+                    "has": false
+                },
+                "emp": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "flame": {
+                    "has": false,
+                    "value": "1D5",
+                    "needsInput": true
+                },
+                "gravimetricPulse": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "gravity": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "hardlight": {
+                    "has": false
+                },
+                "headshot": {
+                    "has": false
+                },
+                "homing": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "kill": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "kinetic": {
+                    "has": false
+                },
+                "needle": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "nonlethal": {
+                    "has": false
+                },
+                "overheat": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "penetrating": {
+                    "has": false
+                },
+                "rechargeRate": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "singleLoading": {
+                    "has": false
+                },
+                "slow": {
+                    "has": false
+                },
+                "spike": {
+                    "has": false
+                },
+                "spin": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "spread": {
+                    "has": false
+                },
+                "sticky": {
+                    "has": false
+                },
+                "stun": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "tranquilize": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
+                "vehicleLock": {
+                    "has": false
+                }
+            },
+            "fireMode": {
+                "auto": 0,
+                "burst": 0,
+                "charge": 0,
+                "drawback": 0,
+                "flintlock": 0,
+                "pump": 0,
+                "semi": 0,
+                "sustained": 0
+            },
+            "attack": {
+                "fireMode": "",
+                "half": 0,
+                "full": 0,
+                "attackBonus": 0,
+                "damageRoll": "",
+                "baseDamage": 0,
+                "strDamage": 0,
+                "piercing": 0,
+                "strPiercing": 0,
+                "target": 0
+            },
+            "reload": {
+                "base": 0,
+                "total": 0
+            },
+            "nickname": "",
+            "type": "",
+            "magazine": {
+                "current": 0,
+                "max": 0
+            },
+            "range": {
+                "close": 0,
+                "long": 0,
+                "melee": 0,
+                "thrown": 0,
+                "grip": "solid"
+            },
+            "ammo": "",
+            "ammoGroup": "",
+            "ammoList": {
+                "STD": {
+                    "diceQuantity": 1,
+                    "diceValue": 5,
+                    "baseDamage": 0,
+                    "strDamage": 0,
+                    "piercing": 0,
+                    "strPiercing": 0,
+                    "target": 0,
+                    "currentMag": 0,
+                    "range": {
+                        "close": 0,
+                        "long": 0,
+                        "melee": 0,
+                        "thrown": 0,
+                        "grip": "solid"
+                    },
+                    "special": {},
+                    "desc": ""
+                }
+            }
+        }
+    }
+}
