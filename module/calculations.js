@@ -177,7 +177,7 @@ export function prepareFloodDerived(actorData) {
   // calculateInitiative(actorData, agiMod, intMod, feltFatigue);
   
   // Calculate Skill Test Target Numbers
-  // calculateSkillTargets(actorData);
+  calculateSkillTargets(actorData);
 
   // Calculate Weapon Attacks
   // calculateWeaponSummaryAttackData(actorData);
