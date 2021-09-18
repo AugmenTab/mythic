@@ -20,7 +20,7 @@ const MELEE_REACH_SIZE_BONUS = {
  * Calculates armor protection, shield, and characteristics values.
  * @param {ItemData} armorData - The armor's ItemData.
  */
-export function calculateArmorValues(armorData) {
+export function calculateArmorValues(armorData, type) {
   new Array(
     Object.entries(armorData.protection),
     Object.entries(armorData.shields),
@@ -28,8 +28,12 @@ export function calculateArmorValues(armorData) {
   ).flat()
    .filter(v => v[0] !== "has")
    .map(x => {
-     const total = x[1].armor + x[1].variant + x[1].other;
-     x[1].total = total > 0 ? total : 0;
+     let total = x[1].armor + x[1].variant + x[1].other;
+     if (type === "Flood") {
+       total = Math.floor(total / 2);
+      }
+      total = total > 0 ? total : 0;
+     x[1].total = total;
    });
 }
 
@@ -127,7 +131,7 @@ export function prepareCharacterEmbedded(actorData) {
   // Prepare Armors
   let armors = actorData.items.filter(a => a.type === "armor");
   for (let armor of Object.values(armors)) {
-    calculateArmorValues(armor.data.data);
+    calculateArmorValues(armor.data.data, actorData.type);
   }
 }
 
