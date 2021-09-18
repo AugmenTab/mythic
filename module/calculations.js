@@ -168,7 +168,7 @@ export function prepareFloodDerived(actorData) {
   calculateMythicCharacteristicsFlood(actorData);
 
   // Calculate DR
-  // calculateDamageResistance(actorData, touMod);
+  calculateDamageResistanceFlood(actorData);
 
   // Calculate Movement Distances
   // calculateMovementDistances(actorData, strMod, agiMod);
@@ -404,6 +404,23 @@ function calculateDamageResistance(actorData, touMod) {
   actorData.data.characteristics.extra.touDR = touSoak;
   for (let val of Object.values(actorData.data.armor)) {
     val.resistance = val.protection + touSoak;
+  }
+}
+
+function calculateDamageResistanceFlood(actorData) {
+  const isWearing = Array.from(actorData.items.values()).some(i => {
+    return i.type === "armor" && i.data.data.weight.equipped;
+  });
+  for (let val of Object.values(actorData.data.armor)) {
+    if (isWearing) {
+      const soak = val.protection + 6;
+      val.resistance = soak > 0 ? soak : 0;
+    } else {
+      const tou = actorData.data.characteristics.tou.total;
+      const touMod = calculateCharacteristicModifier(tou);
+      const touSoak = touMod + actorData.data.mythicCharacteristics.tou.total;
+      val.resistance = touSoak > 0 ? touSoak : 0;
+    }
   }
 }
 
