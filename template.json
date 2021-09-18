@@ -742,7 +742,10 @@
                 "jump": 0,
                 "leap": 0
             },
-            "initiative": "",
+            "initiative": {
+                "formula": "",
+                "mods": ""
+            },
             "skills": {
                 "athletics": {
                     "characteristic": "",

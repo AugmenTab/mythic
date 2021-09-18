@@ -177,7 +177,7 @@ export function prepareFloodDerived(actorData) {
   calculateMovementDistances(actorData, strMod, agiMod);
 
   // Calculate Initiative
-  // calculateInitiative(actorData, agiMod, intMod, feltFatigue);
+  calculateInitiativeFlood(actorData, agiMod);
   
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
@@ -501,6 +501,18 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   const mods = interpretDiceRollModifiers(formula.slice(1).join("+"));
   actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
   actorData.data.initiative.formula = formula.join("+");
+}
+
+function calculateInitiativeFlood(actorData, agiMod) {
+  const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
+  let bonus = 0;
+  if (mythicAgi > 0) {
+    bonus = Math.floor(mythicAgi / 2);
+    bonus += (bonus > 0 ? 0 : 1);
+  }
+  const mods = agiMod + bonus;
+  actorData.data.initiative.mods = `${mods > 0 ? "+" : ""}${mods}`;
+  actorData.data.initiative.formula = `1D10 + ${agiMod} + ${bonus}`;
 }
 
 function calculateInventoryBars(actorData) {
