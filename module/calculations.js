@@ -183,7 +183,7 @@ export function prepareFloodDerived(actorData) {
   calculateSkillTargets(actorData);
 
   // Calculate Weapon Attacks
-  // calculateWeaponSummaryAttackData(actorData);
+  calculateWeaponSummaryAttackData(actorData);
 
   // Calculate Weight
   // calculateInventoryWeight(actorData);
