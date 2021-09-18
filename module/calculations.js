@@ -167,11 +167,14 @@ export function prepareFloodDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristicsFlood(actorData);
 
+  const strMod = calculateCharacteristicModifier(actorData.data.characteristics.str.total);
+  const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
+
   // Calculate DR
   calculateDamageResistanceFlood(actorData);
 
   // Calculate Movement Distances
-  // calculateMovementDistances(actorData, strMod, agiMod);
+  calculateMovementDistances(actorData, strMod, agiMod);
 
   // Calculate Initiative
   // calculateInitiative(actorData, agiMod, intMod, feltFatigue);
