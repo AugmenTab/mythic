@@ -186,7 +186,7 @@ export function prepareFloodDerived(actorData) {
   calculateWeaponSummaryAttackData(actorData);
 
   // Calculate Weight
-  // calculateInventoryWeight(actorData);
+  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -594,12 +594,16 @@ function calculateInventoryWeight(actorData) {
     felt += weight.felt;
     total += weight.total;
   }
-  actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
   actorData.data.carryingCapacity.total = total > 0 ? total : 0;
   const characterTotal = total + actorData.data.weight;
   actorData.data.carryingCapacity.character = characterTotal;
-  actorData.data.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
-  calculateInventoryBars(actorData);
+  if (actorData.type === "Flood") {
+    actorData.data.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
+  } else {
+    actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
+    actorData.data.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
+    calculateInventoryBars(actorData);
+  }
 }
 
 function calculateLuck(actorData) {
