@@ -607,10 +607,23 @@ function calculateInventoryWeight(actorData) {
 }
 
 function calculateLuck(actorData) {
+  if (actorData.type === "Bestiary Character") {
+    const difficulty = parseInt(actorData.data.difficulty.tier);
+    if (difficulty === 4) {
+      actorData.data.luck.difficulty = 5;
+    } else if (difficulty === 3) {
+      actorData.data.luck.difficulty = 3;
+    } else if (difficulty === 2) {
+      actorData.data.luck.difficulty = 1;
+    } else {
+      actorData.data.luck.difficulty = 0;
+    }
+  } else {
+    actorData.data.luck.difficulty = 0;
+  }
   const max = (
     actorData.data.luck.starting + actorData.data.luck.advancements +
-    actorData.data.luck.other - actorData.data.luck.burnt
-  );
+    actorData.data.luck.other + actorData.data.luck.difficulty - actorData.data.luck.burnt);
   actorData.data.luck.max = max > 0 ? max : 0;
 }
 
