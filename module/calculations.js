@@ -483,8 +483,8 @@ function calculateExperiencePayout(actorData) {
 
 function calculateFeltFatigue(actorData) {
   const f = actorData.data.fatigue;
-  const enduringValue = game.settings.get("mythic", "enduringVersion");
-  return f.enduring ? f.value - enduringValue : f.value;
+  const resist = parseInt(f.enduring);
+  return isNaN(resist) ? f.value : f.value - (2 * resist);
 }
 
 function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {

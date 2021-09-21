@@ -255,7 +255,7 @@
                 "fatigue": {
                     "value": 0,
                     "max": 0,
-                    "enduring": false
+                    "enduring": "0"
                 },
                 "luck": {
                     "value": 0,

@@ -78,21 +78,6 @@ function registerSystemSettings() {
     default: "special"
   });
 
-  // Enduring Version (set config to true & default to 2 on release of 4.5)
-  game.settings.register("mythic", "enduringVersion", {
-    config: false,
-    scope: "world",
-    name: "SETTINGS.enduringVersion.name",
-    hint: "SETTINGS.enduringVersion.label",
-    type: Number,
-    range: {
-      min: 1,
-      max: 2,
-      step: 1
-    },
-    default: 1
-  });
-
   // Strong Back Version (set config to true & default to v45 on release of 4.5)
   game.settings.register("mythic", "strongBackVersion", {
     config: false,

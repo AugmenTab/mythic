@@ -246,7 +246,15 @@
         </thead>
         <tbody>
           <tr>
-            <td><input name="data.fatigue.enduring" type="checkbox" {{checked data.data.fatigue.enduring}}/></td>
+            <td>
+              <select name="data.fatigue.enduring">
+                {{#select data.data.fatigue.enduring}}
+                  <option value="0">&times;0</option>
+                  <option value="1">&times;1</option>
+                  <option value="2">&times;2</option>
+                {{/select}}
+              </select>
+            </td>
           </tr>
         </tbody>
       </table>
