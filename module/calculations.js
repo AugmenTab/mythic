@@ -7,13 +7,13 @@ const MELEE_REACH_SIZE_BONUS = {
   "small": 1,
   "normal": 1,
   "large": 2,
-  "huge": 2,
-  "hulking": 3,
-  "giant": 3,
-  "immense": 4,
-  "massive": 4,
-  "great": 5,
-  "monumental": 5
+  "huge": 3,
+  "hulking": 4,
+  "giant": 5,
+  "immense": 6,
+  "massive": 7,
+  "great": 8,
+  "monumental": 9
 };
 
 /**
