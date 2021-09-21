@@ -595,7 +595,8 @@
             ],
             "difficulty": {
                 "tier": "0",
-                "normalOnly": false
+                "normalOnly": false,
+                "advancesMythics": false
             }
         },
         "Flood": {
