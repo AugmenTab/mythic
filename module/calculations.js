@@ -659,10 +659,17 @@ function calculateMovementDistances(actorData, strMod, agiMod) {
 }
 
 function calculateMythicCharacteristics(actorData) {
+  if (actorData.type === "Bestiary Character") {
+    calculateMythicDifficulty(actorData);
+  } else {
+    actorData.data.mythicCharacteristics.str.difficulty = 0;
+    actorData.data.mythicCharacteristics.tou.difficulty = 0;
+    actorData.data.mythicCharacteristics.agi.difficulty = 0;
+  }
   for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
     if (key != "notes") {
       const total = (value.soldierType + value.equipment + value.other + 
-        parseInt(value.advancements));
+        parseInt(value.advancements) + value.difficulty);
       value.total = total >= 0 ? total : 0;
     }
   }
@@ -672,6 +679,33 @@ function calculateMythicCharacteristicsFlood(actorData) {
   for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
     const total = value.base + value.equipment + value.other;
     value.total = total >= 0 ? total : 0;
+  }
+}
+
+function calculateMythicDifficulty(actorData) {
+  if (actorData.data.difficulty.advancesMythics) {
+    const difficulty = parseInt(actorData.data.difficulty.tier);
+    if (difficulty === 4) {
+      actorData.data.mythicCharacteristics.str.difficulty = 2;
+      actorData.data.mythicCharacteristics.tou.difficulty = 1;
+      actorData.data.mythicCharacteristics.agi.difficulty = 1;
+    } else if (difficulty === 3) {
+      actorData.data.mythicCharacteristics.str.difficulty = 1;
+      actorData.data.mythicCharacteristics.tou.difficulty = 1;
+      actorData.data.mythicCharacteristics.agi.difficulty = 1;
+    } else if (difficulty === 2) {
+      actorData.data.mythicCharacteristics.str.difficulty = 1;
+      actorData.data.mythicCharacteristics.tou.difficulty = 1;
+      actorData.data.mythicCharacteristics.agi.difficulty = 0;
+    } else if (difficulty === 1) {
+      actorData.data.mythicCharacteristics.str.difficulty = 1;
+      actorData.data.mythicCharacteristics.tou.difficulty = 0;
+      actorData.data.mythicCharacteristics.agi.difficulty = 0;
+    } else {
+      actorData.data.mythicCharacteristics.str.difficulty = 0;
+      actorData.data.mythicCharacteristics.tou.difficulty = 0;
+      actorData.data.mythicCharacteristics.agi.difficulty = 0;
+    }
   }
 }
 
