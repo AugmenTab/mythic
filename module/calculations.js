@@ -13,7 +13,9 @@ const MELEE_REACH_SIZE_BONUS = {
   "immense": 6,
   "massive": 7,
   "great": 8,
-  "monumental": 9
+  "monumental": 9,
+  "colossal": 10,
+  "vast": 11
 };
 
 /**

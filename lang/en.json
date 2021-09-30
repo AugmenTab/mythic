@@ -496,7 +496,9 @@
             "immense": "Immense",
             "massive": "Massive",
             "great": "Great",
-            "monumental": "Monumental"
+            "monumental": "Monumental",
+            "colossal": "Colossal",
+            "vast": "Vast"
         },
         "weaponSheet": {
             "tagsLabel": "Weapon Tags",

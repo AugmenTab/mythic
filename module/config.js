@@ -313,7 +313,9 @@ mythic.size = {
   immense: "mythic.sizes.immense",
   massive: "mythic.sizes.massive",
   great: "mythic.sizes.great",
-  monumental: "mythic.sizes.monumental"
+  monumental: "mythic.sizes.monumental",
+  colossal: "mythic.sizes.colossal",
+  vast: "mythic.sizes.vast"
 }
 
 mythic.characteristic = {
