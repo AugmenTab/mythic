@@ -271,6 +271,7 @@
             <th>{{localize "mythic.characterSettings.carry.doubleStr"}}</th>
             <th>{{localize "mythic.characterSettings.carry.doubleTou"}}</th>
             <th>{{localize "mythic.characterSettings.carry.strongBack"}}</th>
+            <th>{{localize "mythic.characterSettings.carry.mod"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -278,6 +279,7 @@
             <td><input name="data.carryingCapacity.doubleStr" type="checkbox" {{checked data.data.carryingCapacity.doubleStr}}/></td>
             <td><input name="data.carryingCapacity.doubleTou" type="checkbox" {{checked data.data.carryingCapacity.doubleTou}}/></td>
             <td><input name="data.carryingCapacity.strongBack" type="checkbox" {{checked data.data.carryingCapacity.strongBack}}/></td>
+            <td><input style="width:60px" name="data.carryingCapacity.mod" type="number" data-dtype="Number" value="{{data.data.carryingCapacity.mod}}" onfocus="this.select()"/></td>
           </tr>
         </tbody>
       </table>

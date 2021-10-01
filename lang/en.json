@@ -88,7 +88,8 @@
                 "label": "Carrying Capacity Settings",
                 "doubleStr": "Double STR?",
                 "doubleTou": "Double TOU?",
-                "strongBack": "Strong Back?"
+                "strongBack": "Strong Back?",
+                "mod": "Modifier"
             },
             "fatigue": {
                 "label": "Fatigue Settings",

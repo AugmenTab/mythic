@@ -7,8 +7,8 @@ import MythicActor from "./module/MythicActor.js";
 import MythicCombat from "./module/MythicCombat.js";
 import MythicItem from "./module/MythicItem.js";
 import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
-import MythicBestiaryCharacterSheet from "./module/sheets/MythicBestiaryCharacterSheet.js"
-import MythicFloodCharacterSheet from "./module/sheets/MythicFloodCharacterSheet.js"
+import MythicBestiaryCharacterSheet from "./module/sheets/MythicBestiaryCharacterSheet.js";
+import MythicFloodCharacterSheet from "./module/sheets/MythicFloodCharacterSheet.js";
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
 
 /**

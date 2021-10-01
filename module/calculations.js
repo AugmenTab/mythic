@@ -362,7 +362,8 @@ function calculateCarryWeight(actorData, str, tou) {
   const carry = (
     (actorData.data.carryingCapacity.doubleStr ? str * 2 : str) +
     (actorData.data.mythicCharacteristics.str.total * 10) + toughness +
-    (actorData.data.mythicCharacteristics.tou.total * 10)
+    (actorData.data.mythicCharacteristics.tou.total * 10) +
+    actorData.data.carryingCapacity.mod
   );
   const mod = (strongBack && edition === "v45") ? touMod * 10 : 0;
   actorData.data.carryingCapacity.carry = carry + mod;
