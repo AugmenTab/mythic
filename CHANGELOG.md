@@ -4,7 +4,7 @@
 
 ### Changes
 
-* All relevant rules updated to support Mythic 4.5.
+* All relevant rules updated to support Mythic 5.0.
 * New settings created to allow users to selectively use rules from Mythic 4.0.
     * The Enduring Outlier Trait
     * The Strong Back Ability
