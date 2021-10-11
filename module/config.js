@@ -192,7 +192,7 @@ mythic.skills = {
     characteristics: ["INT"],
     floodCharacteristics: []
   },
-  medMgalekgolo: {
+  medXenophile: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
     characteristics: ["INT"],

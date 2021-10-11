@@ -435,7 +435,7 @@
                         "mods": 0,
                         "roll": 0
                     },
-                    "medMgalekgolo": {
+                    "medXenophile": {
                         "characteristic": "",
                         "training": {
                             "tier": "",
@@ -1140,7 +1140,7 @@
                 "investigation": false,
                 "medHuman": false,
                 "medCovenant": false,
-                "medMgalekgolo": false,
+                "medXenophile": false,
                 "navGroundAir": false,
                 "navSpace": false,
                 "navSlipspace": false,
