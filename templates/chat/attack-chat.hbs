@@ -21,6 +21,7 @@
         <div class="damage-block">
           {{#times attack.damages}}
             <p>
+              <i class="fas fa-bullseye"></i>
               [[{{attack.damageRoll}}]]&nbsp;P{{attack.piercing}}
               {{#unless attack.apply}}
                 :&nbsp;{{attack.location}}
