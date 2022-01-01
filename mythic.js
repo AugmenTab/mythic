@@ -127,7 +127,7 @@ function registerSystemSettings() {
     config: true,
     scope: "world",
     name: "SETTINGS.floodDifficulty.name",
-    hint: "SETTINGS.contaminationLevel.hint",
+    hint: "SETTINGS.floodDifficulty.hint",
     type: Number,
     range: {
       min: 1,

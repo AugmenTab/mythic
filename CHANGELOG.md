@@ -12,14 +12,13 @@
     * "Bestiary Character" Actor type.
     * "Flood" Actor type.
 * New settings created relating to the use of the Flood, and the new Flood Actor type.
-* Updated the Weapon Item sheet in preparation for a new data model that will be able to support Special Ammo down the line.
-* Created data migration files to prevent breaking of existing Weapon items from previous versions.
 * Added hit locations for vehicles.
-* Increased minimum Critical Failure Threshold setting to 95 due to feedback that it was too cumbersome to use a slider with 100 options for a setting with such a small range.
+* Increased minimum Critical Failure Threshold setting to 95.
 * Added a text instance of the carry weight range the character is in under the Carry Weight Bar.
 * Added a Recharge Shield button to replenish current Shield Integrity by the Recharge value, up to the Shield's maximum Integrity.
 * Fixed bug where carry weights in the Lift range where displaying incorrect percentages in the Carry Weight Bar.
 * Fixed various spacing issues on all sheets.
+* Added the previously missing Flashbang, Smoke Grenade, and Tear Gas special rules to the weapon sheet.
 
 ## 0.1.1
 
