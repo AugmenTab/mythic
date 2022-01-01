@@ -5,9 +5,6 @@
 ### Changes
 
 * All relevant rules updated to support Mythic 5.0.
-* New settings created to allow users to selectively use rules from Mythic 4.0.
-    * The Enduring Outlier Trait
-    * The Strong Back Ability
 * Created and implemented:
     * "Bestiary Character" Actor type.
     * "Flood" Actor type.
@@ -19,6 +16,7 @@
 * Fixed bug where carry weights in the Lift range where displaying incorrect percentages in the Carry Weight Bar.
 * Fixed various spacing issues on all sheets.
 * Added the previously missing Flashbang, Smoke Grenade, and Tear Gas special rules to the weapon sheet.
+* Fixed bug where Mythic characteristic contributions to carry weight were not doubled on soldier types that double STR/TOU on carry weight.
 
 ## 0.1.1
 
