@@ -784,13 +784,13 @@ function calculateWeaponAttacksRanged(weapon) {
   if (["auto", "sustained"].includes(mode)) {
     const half = Math.floor(attacks / 2);
     const mag = weapon.data.data.magazine.current;
-    weapon.data.data.attack.half = mag > half ? half : mag;
-    weapon.data.data.attack.full = mag > attacks ? attacks : mag;
+    weapon.data.data.attack.half = mag >= half ? half : mag;
+    weapon.data.data.attack.full = mag >= attacks ? attacks : mag;
   } else if (["burst", "pump", "semi"].includes(mode)) {
     const full = attacks * 2;
     const mag = weapon.data.data.magazine.current;
-    weapon.data.data.attack.half = mag > attacks ? attacks : mag;
-    weapon.data.data.attack.full = mag > full ? full : mag;
+    weapon.data.data.attack.half = mag >= attacks ? attacks : mag;
+    weapon.data.data.attack.full = mag >= full ? full : mag;
   } else if (mode === "charge") {
     weapon.data.data.attack.half = 1;
   } else if (mode === "drawback") {

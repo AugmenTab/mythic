@@ -13,10 +13,14 @@
 * Increased minimum Critical Failure Threshold setting to 95.
 * Added a text instance of the carry weight range the character is in under the Carry Weight Bar.
 * Added a Recharge Shield button to replenish current Shield Integrity by the Recharge value, up to the Shield's maximum Integrity.
-* Fixed bug where carry weights in the Lift range where displaying incorrect percentages in the Carry Weight Bar.
 * Fixed various spacing issues on all sheets.
 * Added the previously missing Flashbang, Smoke Grenade, and Tear Gas special rules to the weapon sheet.
+
+### Bug Fixes
+
+* Fixed bug where carry weights in the Lift range where displaying incorrect percentages in the Carry Weight Bar.
 * Fixed bug where Mythic characteristic contributions to carry weight were not doubled on soldier types that double STR/TOU on carry weight.
+* Fixed bug where magazines would not deplete when the amount of shots fired would bring the current magazine value to 0.
 
 ## 0.1.1
 
