@@ -1223,6 +1223,9 @@
                     "value": "1D5",
                     "needsInput": true
                 },
+                "flashbang": {
+                    "has": false
+                },
                 "gravimetricPulse": {
                     "has": false,
                     "value": 0,
@@ -1279,6 +1282,11 @@
                 "slow": {
                     "has": false
                 },
+                "smoke": {
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
+                },
                 "spike": {
                     "has": false
                 },
@@ -1297,6 +1305,9 @@
                     "has": false,
                     "value": 0,
                     "needsInput": true
+                },
+                "tearGas": {
+                    "has": false
                 },
                 "tranquilize": {
                     "has": false,

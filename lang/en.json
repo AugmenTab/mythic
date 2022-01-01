@@ -559,6 +559,7 @@
                 "electrified": "Electrified",
                 "emp": "EMP",
                 "flame": "Flame",
+                "flashbang": "Flashbang",
                 "gravimetricPulse": "Gravimetric Pulse",
                 "gravity": "Gravity",
                 "hardlight": "Hard Light",
@@ -573,11 +574,13 @@
                 "rechargeRate": "Recharge Rate",
                 "singleLoading": "Single Loading",
                 "slow": "Slow",
+                "smoke": "Smoke Grenade",
                 "spike": "Spike",
                 "spin": "Spin",
                 "spread": "Spread",
                 "sticky": "Sticky",
                 "stun": "Stun",
+                "tearGas": "Tear Gas",
                 "tranquilize": "Tranquilize",
                 "vehicleLock": "Vehicle Lock"
             }

@@ -337,7 +337,6 @@ async function rollEvasions(baseTarget, options, actor) {
 
 async function rollInitiative(element, mod, actor) {
   const dataset = element.dataset;
-  console.log(dataset);
   if (dataset.roll) {
     const circumstance = ` + ${mod}`;
     const roll = await new Roll(dataset.roll + circumstance, actor.data.data, { async: true });
