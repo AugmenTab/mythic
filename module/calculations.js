@@ -355,7 +355,10 @@ function calculateAbilityPool(actorData) {
 
 function calculateCarryWeight(actorData, str, tou) {
   const strongBack = actorData.data.carryingCapacity.strongBack;
-  const strCarry = str + (actorData.data.mythicCharacteristics.str.total * 10);
+  const strCarry = (
+    str + (actorData.data.mythicCharacteristics.str.total * 10) +
+    (actorData.data.carryingCapacity.imposing ? 10 : 0)
+  );
   const touCarry = tou + (actorData.data.mythicCharacteristics.tou.total * 10);
   const carry = (
     (actorData.data.carryingCapacity.doubleStr ? strCarry * 2 : strCarry) +

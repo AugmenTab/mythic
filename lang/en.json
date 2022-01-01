@@ -86,9 +86,10 @@
             },
             "carry": {
                 "label": "Carrying Capacity Settings",
-                "doubleStr": "Double STR?",
-                "doubleTou": "Double TOU?",
+                "doubleStr": "STR &times;2?",
+                "doubleTou": "TOU &times;2?",
                 "strongBack": "Strong Back?",
+                "imposing": "Imposing?",
                 "mod": "Modifier"
             },
             "fatigue": {

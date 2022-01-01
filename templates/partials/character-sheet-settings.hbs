@@ -268,9 +268,10 @@
       <table>
         <thead>
           <tr>
-            <th>{{localize "mythic.characterSettings.carry.doubleStr"}}</th>
-            <th>{{localize "mythic.characterSettings.carry.doubleTou"}}</th>
+            <th>{{{localize "mythic.characterSettings.carry.doubleStr"}}}</th>
+            <th>{{{localize "mythic.characterSettings.carry.doubleTou"}}}</th>
             <th>{{localize "mythic.characterSettings.carry.strongBack"}}</th>
+            <th>{{localize "mythic.characterSettings.carry.imposing"}}</th>
             <th>{{localize "mythic.characterSettings.carry.mod"}}</th>
           </tr>
         </thead>
@@ -279,6 +280,7 @@
             <td><input name="data.carryingCapacity.doubleStr" type="checkbox" {{checked data.data.carryingCapacity.doubleStr}}/></td>
             <td><input name="data.carryingCapacity.doubleTou" type="checkbox" {{checked data.data.carryingCapacity.doubleTou}}/></td>
             <td><input name="data.carryingCapacity.strongBack" type="checkbox" {{checked data.data.carryingCapacity.strongBack}}/></td>
+            <td><input name="data.carryingCapacity.imposing" type="checkbox" {{checked data.data.carryingCapacity.imposing}}/></td>
             <td><input style="width:60px" name="data.carryingCapacity.mod" type="number" data-dtype="Number" value="{{data.data.carryingCapacity.mod}}" onfocus="this.select()"/></td>
           </tr>
         </tbody>
@@ -328,7 +330,7 @@
           <thead>
             <tr>
               <th style="width:75px">{{localize "mythic.characterSettings.total"}}</th>
-              <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
+              <th>{{{localize "mythic.characterSettings.wounds.doubleTou"}}}</th>
               <th style="width: 140px">{{localize "mythic.characterSettings.wounds.aiDegen"}}</th>
               <th style="width:120px">
                 {{#if (eq actor.type "Named Character")}}
