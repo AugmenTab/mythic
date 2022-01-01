@@ -24,8 +24,8 @@ The following is a list of features offered by Mythic for Foundry.
 All available Actor types in this system. Unimplemented items are *italicized*.
 
 * **Named Character:** The primary Actor type for player characters, NPCs, and special Nemesis enemies. Nearly every aspect of this character sheet can be customized to fine-tune exacting stat requirements.
-* *Bestiary Character*: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies. **This Actor type will not be implemented until after the release of Mythic 4.5.**
-* *Flood Character*: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes. **This Actor type will not be implemented until after the release of Mythic 4.5.**
+* **Bestiary Character**: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies.
+* **Flood Character**: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes.
 * *Vehicle*: The Actor type for vehicles, permitting them to own items and weapons that can be swapped out to represent different configurations without requiring different sheets.
 
 ### Items
@@ -107,7 +107,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Special Damage.
 * Fully functioning Medical page to handle injuries.
 * Add called shots, Clear Target, and Precision Strike.
-* Add hit locations for targeting vehicles.
 * Add dual wielding.
 * Lock nav bar & inventory bar at the top of the Actor Sheet.
 * Ability to add custom skills.
