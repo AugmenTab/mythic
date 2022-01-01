@@ -896,8 +896,9 @@ function calculateWeightPenaltyThrown(mod) {
 }
 
 function calculateWounds(actorData, touMod) {
-  actorData.data.wounds.max = 20 + (
-    (2 * (actorData.data.wounds.doubleTou ? touMod * 2 : touMod)) + 
+  const touWounds = touMod + actorData.data.mythicCharacteristics.tou.total;
+  actorData.data.wounds.max = 40 + (
+    (2 * (actorData.data.wounds.doubleTou ? touWounds * 2 : touWounds)) + 
     actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
     (parseInt(actorData.data.wounds.advancements) * 4)
   );
