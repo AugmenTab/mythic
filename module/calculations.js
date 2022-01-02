@@ -831,10 +831,10 @@ function calculateWeaponReloadStandard(actorData, weapon) {
 }
 
 function calculateWeaponReloadSingleLoading(actorData, weapon) {
-  let base = 1;
   const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
   const wfrMod = calculateCharacteristicModifier(actorData.data.characteristics.wfr.total);
-  const final = base + Math.floor(agiMod / 2) + Math.floor(wfrMod / 2);
+  const rrBonus = actorData.data.trainings.weapons.rapidReload ? 1 : 0;
+  const final = 1 + Math.floor(agiMod / 2) + Math.floor(wfrMod / 2) + rrBonus;
   weapon.data.data.reload.total = final > 3 ? 3 : final;
 }
 
