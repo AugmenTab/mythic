@@ -137,7 +137,7 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     if (element.classList[0] === "attack") {
       const item = await this.actor.items.get(element.getAttribute("data-item-id"));
       const newMag = await rollAttacks(element, this.actor, item);
-      if (newMag) await item.update({ "data.magazine.current": newMag });
+      if (!isNaN(newMag)) await item.update({ "data.magazine.current": newMag });
     } else {
       await rollTest(element, this.actor);
     }
