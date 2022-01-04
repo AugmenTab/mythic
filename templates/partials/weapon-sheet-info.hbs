@@ -94,7 +94,13 @@
           {{/select}}
         </select>
       </td>
-      <td><input name="data.attack.damageRoll" type="text" value="{{data.data.attack.damageRoll}}" placeholder="2D10" onfocus="this.select()"/></td>
+      <td>
+        <span>
+          <input style="width:30px" name="data.attack.damageRoll.dieQuantity" type="number" data-dtype="Number" value="{{data.data.attack.damageRoll.dieQuantity}}" onfocus="this.select()"/>
+          D
+          <input style="width:30px" name="data.attack.damageRoll.dieValue" type="number" data-dtype="Number" value="{{data.data.attack.damageRoll.dieValue}}" onfocus="this.select()"/>
+        </span>
+      </td>
       <td>
         {{#if (eq data.data.group "melee")}}
           <div class="melee-double">

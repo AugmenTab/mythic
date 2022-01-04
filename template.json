@@ -1334,7 +1334,10 @@
                 "half": 0,
                 "full": 0,
                 "attackBonus": 0,
-                "damageRoll": "",
+                "damageRoll": {
+                    "dieQuantity": 1,
+                    "dieValue": 5 
+                },
                 "baseDamage": 0,
                 "strDamage": 0,
                 "piercing": 0,

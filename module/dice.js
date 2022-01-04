@@ -262,7 +262,9 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     || weapon.data.data.special.kill.has
   ) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), veh);
-    let damage = weapon.data.data.attack.damageRoll;
+    const dr = weapon.data.data.attack.damageRoll;
+    let damage = `${dr.dieQuantity}D${dr.dieValue}`;
+    console.log(damage);
     let min = weapon.data.data.special.diceMinimum.has
       ? weapon.data.data.special.diceMinimum.value
       : 0;
