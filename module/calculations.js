@@ -616,10 +616,8 @@ function calculateLuck(actorData) {
   if (actorData.type === "Bestiary Character") {
     const difficulty = parseInt(actorData.data.difficulty.tier);
     if (difficulty === 4) {
-      actorData.data.luck.difficulty = 5;
-    } else if (difficulty === 3) {
       actorData.data.luck.difficulty = 3;
-    } else if (difficulty === 2) {
+    } else if (difficulty === 3) {
       actorData.data.luck.difficulty = 1;
     } else {
       actorData.data.luck.difficulty = 0;
