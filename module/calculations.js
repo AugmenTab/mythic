@@ -499,7 +499,7 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   let formula = [];
   formula.push(actorData.data.initiative.fastFoot ? "2d10kh" : "1d10");
   formula.push((battlemind ? intMod : agiMod).toString());
-  if (!battlemind && mythicAgi > 0) {
+  if (mythicAgi > 0) {
     const bonus = Math.floor(mythicAgi / 2);
     formula.push(bonus > 1 ? bonus : 1);
   };
