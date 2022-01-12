@@ -22,7 +22,7 @@
           {{#times attack.damages}}
             <p>
               <i class="fas fa-bullseye"></i>
-              [[{{attack.damageRoll}}]]&nbsp;P{{attack.piercing}}
+              [[{{attack.damageRoll}}]]&nbsp;{{localize "mythic.chat.attack.pierce"}}&nbsp;{{attack.piercing}}
               {{#unless attack.apply}}
                 :&nbsp;{{attack.location}}
               {{else}}

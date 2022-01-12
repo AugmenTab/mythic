@@ -303,7 +303,8 @@
                 "roll": "Roll"
             },
             "attack": {
-                "title": "Attack"
+                "title": "Attack",
+                "pierce": "Pierce"
             },
             "error": {
                 "nan": "Invalid entry: please enter a whole number.",
