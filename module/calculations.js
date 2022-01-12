@@ -615,7 +615,9 @@ function calculateInventoryWeight(actorData) {
 function calculateLuck(actorData) {
   if (actorData.type === "Bestiary Character") {
     const difficulty = parseInt(actorData.data.difficulty.tier);
-    if (difficulty === 4) {
+    if (actorData.data.difficulty.normalOnly) {
+      actorData.data.luck.difficulty = 0;
+    } else if (difficulty === 4) {
       actorData.data.luck.difficulty = 3;
     } else if (difficulty === 3) {
       actorData.data.luck.difficulty = 1;
