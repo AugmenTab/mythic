@@ -98,7 +98,7 @@ export function prepareBestiaryDerived(actorData) {
   calculateDamageResistance(actorData, touMod);
 
   // Calculate Wounds
-  calculateWounds(actorData, touMod);
+  calculateWoundsBestiary(actorData, touMod);
 
   // Calculate Max Fatigue
   calculateMaxFatigue(actorData, touMod);
@@ -241,7 +241,7 @@ export function prepareNamedCharacterDerived(actorData) {
   calculateDamageResistance(actorData, touMod);
 
   // Calculate Wounds
-  calculateWounds(actorData, touMod);
+  calculateWoundsNamedCharacter(actorData, touMod);
 
   // Calculate Max Fatigue
   calculateMaxFatigue(actorData, touMod);
@@ -895,16 +895,29 @@ function calculateWeightPenaltyThrown(mod) {
   return penalty;
 }
 
-function calculateWounds(actorData, touMod) {
-  actorData.data.wounds.max = 40 + (
-    (2 * (actorData.data.wounds.doubleTou ? touMod * 2 : touMod)) + 
-    actorData.data.mythicCharacteristics.tou.total +
+function calculateWoundsBestiary (actorData, touMod) {
+  const mythicTou = actorData.data.mythicCharacteristics.tou.total;
+  const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
+  const diffTier = parseInt(actorData.data.difficulty.tier);
+
+  const wounds = 1 + (diffTier / 10);
+  const addition = 36 + (diffTier * 4);
+  actorData.data.wounds.max = (
     actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
-    (parseInt(actorData.data.wounds.advancements) * 4)
+    (addition + Math.floor(2 * ((doubleTou * touMod) + mythicTou) * wounds))
   );
 }
 
 function calculateWoundsFlood(actorData) {
   const w = actorData.data.wounds.base * actorData.data.swarm.total;
   actorData.data.wounds.max = w + actorData.data.wounds.mod
+}
+
+function calculateWoundsNamedCharacter(actorData, touMod) {
+  const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
+  const mythicTou = actorData.data.mythicCharacteristics.tou.total;
+  actorData.data.wounds.max = 40 + ((2 * ((doubleTou * touMod) + mythicTou)) +
+    actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
+    (parseInt(actorData.data.wounds.advancements) * 4)
+  );
 }
