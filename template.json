@@ -1333,16 +1333,7 @@
                 "fireMode": "",
                 "half": 0,
                 "full": 0,
-                "attackBonus": 0,
-                "damageRoll": {
-                    "dieQuantity": 1,
-                    "dieValue": 5 
-                },
-                "baseDamage": 0,
-                "strDamage": 0,
-                "piercing": 0,
-                "strPiercing": 0,
-                "target": 0
+                "attackBonus": 0
             },
             "reload": {
                 "base": 0,
@@ -1350,21 +1341,12 @@
             },
             "nickname": "",
             "type": "",
-            "magazine": {
-                "current": 0,
-                "max": 0
-            },
-            "range": {
-                "close": 0,
-                "long": 0,
-                "melee": 0,
-                "thrown": 0,
-                "grip": "solid"
-            },
+            "magazineCapacity": 0,
             "ammo": "",
             "ammoGroup": "",
             "ammoList": {
                 "STD": {
+                    "attackBonus": 0,
                     "diceQuantity": 1,
                     "diceValue": 5,
                     "baseDamage": 0,

@@ -48,11 +48,11 @@ export async function rollAttacks(element, actor, weapon) {
     attackOptions.cancelled = true;
   }
   if (!attackOptions.cancelled) {
-    const target = weapon.data.data.attack.target + mod;
+    const target = weapon.data.data.ammoList.STD.target + mod;
     const type = element.value;
     const isVehicle = attackOptions.targetVehicle;
     await getAttackAndDamageOutcomes(actor, weapon, target, type, isVehicle);
-    return weapon.data.data.magazine.current - parseInt(element.innerHTML);
+    return weapon.data.data.ammoList.STD.currentMag - parseInt(element.innerHTML);
   }
   return;
 }
@@ -130,7 +130,7 @@ function determineRollOutcome(roll, target) {
 async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) {
   const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let result = {
-    name: weapon.data.data.nickname,
+    name: weapon.data.data.nickname || weapon.data.name,
     img: weapon.img,
     wfm: actor.data.data.characteristics.wfm.total,
     weaponData: weapon.data.data,
@@ -262,9 +262,8 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     || weapon.data.data.special.kill.has
   ) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), veh);
-    const dr = weapon.data.data.attack.damageRoll;
-    let damage = `${dr.dieQuantity}D${dr.dieValue}`;
-    console.log(damage);
+    const std = weapon.data.data.ammoList.STD;
+    let damage = `${std.diceQuantity}D${std.diceValue}`;
     let min = weapon.data.data.special.diceMinimum.has
       ? weapon.data.data.special.diceMinimum.value
       : 0;
@@ -276,15 +275,15 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
       damage += `${critType}>=${explode}`;
     }
 
-    let base = weapon.data.data.attack.baseDamage;
-    let pierce = weapon.data.data.attack.piercing;
+    let base = weapon.data.data.ammoList.STD.baseDamage;
+    let pierce = weapon.data.data.ammoList.STD.piercing;
     if (weapon.data.data.group === "melee") {
       const str = (
         actor.data.data.mythicCharacteristics.str.total +
         calculateCharacteristicModifier(actor.data.data.characteristics.str.total)
       );
-      base += Math.floor(str * weapon.data.data.attack.strDamage);
-      pierce += Math.floor(str * weapon.data.data.attack.strPiercing);
+      base += Math.floor(str * weapon.data.data.ammoList.STD.strDamage);
+      pierce += Math.floor(str * weapon.data.data.ammoList.STD.strPiercing);
       if (actor.data.data.trainings.weapons.unarmedCombatant) {
         const wfm = calculateCharacteristicModifier(actor.data.data.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);

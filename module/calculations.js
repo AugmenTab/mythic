@@ -783,12 +783,12 @@ function calculateWeaponAttacksRanged(weapon) {
   const mode = a[0], attacks = parseInt(a[1]);
   if (["auto", "sustained"].includes(mode)) {
     const half = Math.floor(attacks / 2);
-    const mag = weapon.data.data.magazine.current;
+    const mag = weapon.data.data.ammoList.STD.currentMag;
     weapon.data.data.attack.half = mag >= half ? half : mag;
     weapon.data.data.attack.full = mag >= attacks ? attacks : mag;
   } else if (["burst", "pump", "semi"].includes(mode)) {
     const full = attacks * 2;
-    const mag = weapon.data.data.magazine.current;
+    const mag = weapon.data.data.ammoList.STD.currentMag;
     weapon.data.data.attack.half = mag >= attacks ? attacks : mag;
     weapon.data.data.attack.full = mag >= full ? full : mag;
   } else if (mode === "charge") {
@@ -844,7 +844,10 @@ function calculateWeaponTarget(actorData, weapon) {
   const stat = group === "ranged"
     ? actorData.data.characteristics.wfr.roll
     : actorData.data.characteristics.wfm.roll;
-  let mod = stat + weapon.data.data.attack.attackBonus;
+  let mod = (
+    stat + weapon.data.data.attack.attackBonus +
+    weapon.data.data.ammoList.STD.attackBonus
+  );
   if (!actorData.data.trainings.faction[weapon.data.data.trainings.faction]) {
     mod -= actorData.data.trainings.alienTech ? 10 : 20;
   }
@@ -854,13 +857,15 @@ function calculateWeaponTarget(actorData, weapon) {
   if (["burst", "semi", "sustained"].includes(mode)) {
     mod += 10;
   }
-  if (group === "melee" && actorData.data.trainings.weapons.hth) {
-    mod += 5;
+  if (group === "melee") {
+    if (actorData.data.trainings.weapons.hth) {
+      mod += 5;
+    }
+    if (actorData.data.trainings.weapons.mac) {
+      mod += 10;
+    }
   }
-  if (group === "melee" && actorData.data.trainings.weapons.mac) {
-    mod += 10;
-  }
-  weapon.data.data.attack.target = mod > 0 ? mod : 0;
+  weapon.data.data.ammoList.STD.target = mod > 0 ? mod : 0;
 }
 
 function calculateWeaponSummaryAttackData(actorData) {

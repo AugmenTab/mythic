@@ -174,7 +174,9 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    await item.update({ "data.magazine.current": item.data.data.magazine.max });
+    await item.update({
+      "data.ammoList.STD.currentMag": item.data.data.magazineCapacity
+    });
   }
 
   async _onShieldRecharge(event) {
@@ -191,7 +193,9 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     if (element.classList[0] === "attack") {
       const item = await this.actor.items.get(element.getAttribute("data-item-id"));
       const newMag = await rollAttacks(element, this.actor, item);
-      if (!isNaN(newMag)) await item.update({ "data.magazine.current": newMag });
+      if (!isNaN(newMag)) await item.update({
+        "data.ammoList.STD.currentMag": newMag
+      });
     } else {
       await rollTest(element, this.actor);
     }

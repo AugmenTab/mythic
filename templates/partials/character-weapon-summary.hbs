@@ -38,7 +38,7 @@
                   {{else}}
                   {{weapon.data.nickname}}
                   {{/unless}}
-                  &nbsp;({{weapon.data.attack.target}})
+                  &nbsp;({{weapon.data.ammoList.STD.target}})
                 </p>
                 <a class="item-edit" data-item-id="{{weapon._id}}"><i class="clickable fas fa-edit"></i></a>
                 </div>
@@ -63,7 +63,7 @@
               {{!-- Range --}}
               <td>
                 {{#if (eq weapon.data.group "thrown")}}
-                  {{weapon.data.range.thrown}}&nbsp;m&nbsp;
+                  {{weapon.data.ammoList.STD.range.thrown}}&nbsp;m&nbsp;
                   {{#if weapon.data.special.blast.has}}
                     ({{weapon.data.special.blast.value}} {{else}} (0&nbsp;
                   {{/if}}
@@ -71,24 +71,24 @@
                     /&nbsp;{{weapon.data.special.kill.value}}) {{else}}&nbsp;/&nbsp;0)
                   {{/if}}
                 {{else if (eq weapon.data.group "melee")}}
-                  {{weapon.data.range.melee}}&nbsp;m
+                  {{weapon.data.ammoList.STD.range.melee}}&nbsp;m
                 {{else if (eq weapon.data.group "ranged")}}
-                  {{weapon.data.range.close}}&nbsp;-&nbsp;{{weapon.data.range.long}}&nbsp;m
+                  {{weapon.data.ammoList.STD.range.close}}&nbsp;-&nbsp;{{weapon.data.ammoList.STD.range.long}}&nbsp;m
                 {{/if}}
               </td>
               {{!-- Magazine --}}
               <td style="width:120px">
                 {{#unless (eq weapon.data.group "melee")}}
                 <div class="magazine">
-                  <input class="item-edit-inline" data-field="magazine.current" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.magazine.current}}" onfocus="this.select()"/>
+                  <input class="item-edit-inline" data-field="ammoList.STD.currentMag" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.ammoList.STD.currentMag}}" onfocus="this.select()"/>
                   <p>/</p>
-                  <p>{{weapon.data.magazine.max}}</p>
+                  <p>{{weapon.data.magazineCapacity}}</p>
                   <div class="item-management">
                   {{#unless (eq weapon.data.group "thrown")}}
                     <p>{{weapon.data.reload.total}}</p>
                   {{else}} <p>T</p>
                   {{/unless}}
-                  <a class="reload" data-field="magazine.current" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
+                  <a class="reload" data-field="ammoList.STD.currentMag" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
                   </div>
                 </div>
                 {{else}} --
@@ -106,7 +106,7 @@
                 {{#if (eq weapon.data.attack.fireMode "none")}}
                   disabled="true" aria-disabled="true"
                 {{/if}}
-                {{#unless weapon.data.magazine.current}}
+                {{#unless weapon.data.ammoList.STD.currentMag}}
                   {{#unless (eq weapon.data.attack.fireMode "melee")}}
                   disabled="true" aria-disabled="true"
                   {{/unless}}
