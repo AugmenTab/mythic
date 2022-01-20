@@ -3,6 +3,7 @@
 import { mythic } from "./module/config.js";
 import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
+import { migrateWorld } from "./module/migrations.js";
 import MythicActor from "./module/MythicActor.js";
 import MythicCombat from "./module/MythicCombat.js";
 import MythicItem from "./module/MythicItem.js";
@@ -48,6 +49,14 @@ async function preloadHandlebarsTemplates() {
  * Establish all available system-specific settings for players and GMs.
  */
 function registerSystemSettings() {
+  // System Migration Version
+  game.settings.register("mythic", "systemMigrationVersion", {
+    config: false,
+    scope: "world",
+    type: String,
+    default: ""
+  });
+
   // Critical Failure Threshold
   game.settings.register("mythic", "criticalFailureThreshold", {
     config: true,
@@ -159,6 +168,18 @@ Hooks.once("init", function() {
   preloadHandlebarsTemplates();
 
   registerSystemSettings();
+});
+
+/** Hook to perform data migration. */
+Hooks.once("ready", function () {
+  if (game.user.isGM) {
+    const current = game.settings.get("mythic", "systemMigrationVersion");
+    const NEEDS_MIGRATION_VERSION = 0.01;
+    if (!current || isNewerVersion(NEEDS_MIGRATION_VERSION, current)) {
+      migrateWorld();
+    }
+  }
+  game.settings.set("mythic", "systemMigrationVersion", game.system.data.version);
 });
 
 /** Hook to establish event listeners on the chat log. */
