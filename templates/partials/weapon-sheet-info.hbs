@@ -172,7 +172,7 @@
           <select name="data.ammoList.STD.range.grip">
             {{#select data.data.ammoList.STD.range.grip}}
               {{#each config.grips as |value key|}}
-                <option value="key">{{localize value}}</option>
+                <option value="{{key}}">{{localize value}}</option>
               {{/each}}
             {{/select}}
           </select>

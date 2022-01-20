@@ -565,7 +565,7 @@ function calculateItemWeight(item) {
   let felt = 0, total = 0;
   if (item.data.data.weight.carried) {
     let quantity = (item.type === "weapon" && item.data.data.group === "thrown")
-      ? item.data.data.magazine.current
+      ? item.data.data.ammoList.STD.currentMag
       : item.data.data.weight.quantity;
     const weight = quantity * item.data.data.weight.each;
     total += weight;
@@ -802,8 +802,8 @@ function calculateWeaponAttacksRanged(weapon) {
 }
 
 function calculateWeaponRangeMelee(actorData, weapon) {
-  weapon.data.data.range.melee = (
-    weapon.data.data.range.close + MELEE_REACH_SIZE_BONUS[actorData.data.size]
+  weapon.data.data.ammoList.STD.range.melee = (
+    weapon.data.data.ammoList.STD.range.close + MELEE_REACH_SIZE_BONUS[actorData.data.size]
   );
 }
 
@@ -815,10 +815,10 @@ function calculateWeaponRangeThrown(actorData, weapon) {
   let mult = 15;
   const penalty = calculateWeightPenaltyThrown(base);
   mult -= Math.floor(weapon.data.data.weight.each / penalty.weight) * penalty.multiplier;
-  if (weapon.data.data.range.grip === "slight") mult -= 1;
-  if (["partial", "sloppy"].includes(weapon.data.data.range.grip)) mult -= 2;
-  const range = (base * mult) / (weapon.data.data.range.grip === "sloppy" ? 2 : 1);
-  weapon.data.data.range.thrown = range > 0.5 ? range : 0;
+  if (weapon.data.data.ammoList.STD.range.grip === "slight") mult -= 1;
+  if (["partial", "sloppy"].includes(weapon.data.data.ammoList.STD.range.grip)) mult -= 2;
+  const range = (base * mult) / (weapon.data.data.ammoList.STD.range.grip === "sloppy" ? 2 : 1);
+  weapon.data.data.ammoList.STD.range.thrown = range > 0.5 ? range : 0;
 }
 
 function calculateWeaponReloadStandard(actorData, weapon) {
