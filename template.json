@@ -1206,6 +1206,11 @@
                     "value": 0,
                     "needsInput": true
                 },
+                "cryo": {
+                    "has": false,
+                    "value": "1D5",
+                    "needsInput": true
+                },
                 "diceMinimum": {
                     "has": false,
                     "value": 0,

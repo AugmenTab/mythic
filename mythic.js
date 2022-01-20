@@ -3,7 +3,7 @@
 import { mythic } from "./module/config.js";
 import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
-import { migrateWorld } from "./module/migrations.js";
+import migrateWorld from "./module/migrations.js";
 import MythicActor from "./module/MythicActor.js";
 import MythicCombat from "./module/MythicCombat.js";
 import MythicItem from "./module/MythicItem.js";

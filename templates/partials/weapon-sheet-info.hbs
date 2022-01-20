@@ -199,7 +199,16 @@
             <input name="data.special.{{name}}.has" type="checkbox" {{checked details.has}}/>
             <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
             {{#if details.needsInput}}
-              <input name="data.special.{{name}}.value" {{#if (eq name "flame")}} type="text" {{else}} type="number" data-dtype="Number" {{/if}} value="{{details.value}}" onfocus="this.select()"/>
+              <input
+                name="data.special.{{name}}.value" 
+                {{#if (cond "||" (eq name "flame") (eq name "cryo"))}}
+                  type="text"
+                {{else}}
+                  type="number" data-dtype="Number"
+                {{/if}}
+                value="{{details.value}}"
+                onfocus="this.select()"
+              />
             {{/if}}
           </span>
         {{/each}}
