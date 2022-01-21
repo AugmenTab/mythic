@@ -50,15 +50,9 @@
   {{/each}}
   <aside class="special">
     <span class="special-damage">
-      {{#if weaponData.special.cryo.has}}
-        <p><b>{{localize "mythic.weaponSheet.specialRules.cryo"}}:</b>&nbsp;[[{{weaponData.special.cryo.value}}]]</p>
-      {{/if}}
-      {{#if weaponData.special.flame.has}}
-        <p><b>{{localize "mythic.weaponSheet.specialRules.flame"}}:</b>&nbsp;[[{{weaponData.special.flame.value}}]]</p>
-      {{/if}}
-      {{#if weaponData.special.needle.has}}
-        <p><b>{{localize "mythic.weaponSheet.specialRules.needle"}}:</b>&nbsp;[[{{weaponData.special.needle.value}}D10]]</p>
-      {{/if}}
+      {{#each this.specials as |formula name|}}
+        <p><b>{{localize (concat "mythic.weaponSheet.specialRules." name)}}:</b>&nbsp;[[{{formula}}]]</p>
+      {{/each}}
     </span>
     {{#each weaponData.special as |special name|}}
       {{#if special.has}}

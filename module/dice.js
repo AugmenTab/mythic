@@ -135,6 +135,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) 
     wfm: actor.data.data.characteristics.wfm.total,
     weaponData: weapon.data.data,
     attacks: [],
+    hits: 0,
     type: type,
     target: target > 0 ? target : 0,
     template: "attack",
@@ -151,7 +152,12 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) 
   }
   for (let i = 1; i <= attacks; i++) {
     const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack, vehicle);
+    result.hits += attack.outcome === "success" ? 1 : 0;
     result.attacks.push(attack);
+  }
+  result.hits *= damagesPerAttack;
+  if (result.hits > 0) {
+    result.specials = getSpecialRuleValues(result.hits, weapon.data.data.special);
   }
   await postChatMessage(result, actor);
 }
@@ -212,6 +218,31 @@ async function getEvadeOptions() {
     };
     new Dialog(data, null).render(true);
   });
+}
+
+function getSpecialRuleValues(hits, specialRules) {
+  // TODO: Don't forget this when it's time for special ammo. Check both weapon
+  //       and ammo for special rules.
+  let specials = {};
+  if (specialRules.cryo.has) {
+    const formula = specialRules.cryo.value.toLowerCase().split("d");
+    specials.cryo = (
+      `${hits * parseInt(formula[0])}` +
+      (formula.length === 2 ? `D${formula[1]}` : "")
+    );
+  }
+  if (specialRules.flame.has) {
+    const formula = specialRules.flame.value.toLowerCase().split("d");
+    specials.flame = (
+      `${hits * parseInt(formula[0])}` +
+      (formula.length === 2 ? `D${formula[1]}` : "")
+    );
+  }
+  if (specialRules.needle.has) {
+    const threshold = specialRules.needle.value;
+    specials.needle = `${threshold * Math.floor(hits / threshold)}D10`;
+  }
+  return specials;
 }
 
 async function getTestOptions(test) {
