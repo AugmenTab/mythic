@@ -1,3 +1,4 @@
+{{log this}}
 <div class="post-attack">
   <h1 class="post-header">
     <img alt="{{this.name}}" src="{{this.img}}"/>
@@ -55,6 +56,7 @@
           <span
             class="special-rule-dmg"
             data-rule="{{name}}"
+            data-actor_id="{{../this.actorId}}"
             {{#with (lookup ../this.weaponData.special [name])~}}
               data-formula="{{this.value}}"
             {{/with}}

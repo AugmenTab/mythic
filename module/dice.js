@@ -1,6 +1,7 @@
 /** @module dice */
 
 import { calculateCharacteristicModifier } from "./calculations.js";
+import { buildChatMessageContent, postChatMessage } from "./chat.js";
 import { determineHitLocation } from "./location.js";
 
 const CHARACTERISTICS = {
@@ -100,11 +101,6 @@ export async function rollTest(element, actor) {
   }
 }
 
-async function buildChatMessageContent(data) {
-  const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
-  return await renderTemplate(template, data);
-}
-
 function capitalize(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
@@ -130,6 +126,7 @@ function determineRollOutcome(roll, target) {
 async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) {
   const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let result = {
+    actorId: actor.id,
     name: weapon.data.data.nickname || weapon.data.name,
     img: weapon.img,
     wfm: actor.data.data.characteristics.wfm.total,
@@ -378,16 +375,6 @@ async function rollInitiative(element, mod, actor) {
       flavor: game.i18n.localize("mythic.characterWeaponSummary.initiative")
     });
   }
-}
-
-async function postChatMessage(data, actor) {
-  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
-  await ChatMessage.create({
-    user: game.user.id,
-    speaker: ChatMessage.getSpeaker({ actor: actor }),
-    flavor: data.flavor,
-    content: await buildChatMessageContent(data)
-  }, {});
 }
 
 function _processAttackOptions(form) {

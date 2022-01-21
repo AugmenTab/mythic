@@ -11,6 +11,21 @@ export function addChatListeners(html) {
   html.on("click", ".special-rule-dmg", onSpecial);
 }
 
+export async function buildChatMessageContent(data) {
+  const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
+  return await renderTemplate(template, data);
+}
+
+export async function postChatMessage(data, actor) {
+  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
+  await ChatMessage.create({
+    user: game.user.id,
+    speaker: ChatMessage.getSpeaker({ actor: actor }),
+    flavor: data.flavor,
+    content: await buildChatMessageContent(data)
+  }, {});
+}
+
 function getArrow(str) {
   const compass = {
     "N": "up",
@@ -129,7 +144,15 @@ async function onSpecial(event) {
       newFormula += `${options.hits * parseInt(formula[0])}D`;
       newFormula += formula.length === 2 ? formula[1] : "1";
     }
-    console.log(newFormula);
+    const roll = await new Roll(newFormula).roll({ async: true });
+
+    const data = {
+      hits: options.hits || 1,
+      render: await roll.render(),
+      rule: element.dataset.rule,
+      template: "special-rule"
+    };
+    await postChatMessage(data, game.actors.get(element.dataset.actor_id));
   }
 }
 

@@ -15,7 +15,7 @@
 * Added a Recharge Shield button to replenish current Shield Integrity by the Recharge value, up to the Shield's maximum Integrity.
 * Fixed various spacing issues on all sheets.
 * Added the Cryo, Flashbang, Smoke Grenade, and Tear Gas special rules to the Weapon Item sheet.
-* The Cryo, Flame, and Needle special rules now roll their damage in the attack chat message based on the number of hits the attacker landed.
+* The Cryo, Flame, and Needle special rules now roll their damage in the attack chat message based on the number of hits the attacker landed. Each is also a link that will roll its typical damage on its own.
 * Updated the Weapon Item sheet in preparation for a new data model that will be able to support Special Ammo down the line.
 
 ### Bug Fixes

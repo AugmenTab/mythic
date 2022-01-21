@@ -325,7 +325,11 @@
                 "title": "Scatter"
             },
             "special": {
-                "title": "Roll Special Rule Damage"
+                "title": "Roll Special Rule Damage",
+                "hits": "Hits",
+                "cryo": "Rolling damage for a Cryo attack!",
+                "flame": "Rolling damage for a Flame attack!",
+                "needle": "Rolling damage for a Needle Supercombine!"
             },
             "test": {
                 "title": "Test",
