@@ -8,6 +8,7 @@ import { calculateCharacteristicModifier } from "./calculations.js";
  */
 export function addChatListeners(html) {
   html.on("click", ".scatter", onScatter);
+  html.on("click", ".special-rule-dmg", onSpecial);
 }
 
 function getArrow(str) {
@@ -55,13 +56,35 @@ async function getScatterOptions(degrees = 0) {
   });
 }
 
+async function getSpecialOptions(rule) {
+  const template = "systems/mythic/templates/chat/special-rule-dialog.hbs";
+  const html = await renderTemplate(template, {rule: rule});
+  const name = game.i18n.localize("mythic.weaponSheet.specialRules." + rule);
+  return new Promise(resolve => {
+    const data = {
+      title: `${game.i18n.localize("mythic.chat.special.title")}: ${name}`,
+      content: html,
+      buttons: {
+        roll: {
+          label: game.i18n.localize("mythic.chat.actions.roll"),
+          callback: html => resolve(_processSpecialOptions(html[0].querySelector("form")))
+        },
+        cancel: {
+          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          callback: html => resolve({cancelled: true})
+        }
+      },
+      default: "roll",
+      close: () => resolve({cancelled: true})
+    };
+    new Dialog(data, null).render(true);
+  });
+}
+
 async function onScatter(event) {
   const element = event.currentTarget;
   const options = await getScatterOptions(element.dataset.dof);
   if (options.cancelled) return;
-  const distance = parseInt(options.distance);
-  const dof = parseFloat(options.dof)
-
   if (isNaN(distance) || isNaN(dof)) {
     ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
     options.cancelled = true;
@@ -90,10 +113,34 @@ async function onScatter(event) {
   }
 }
 
+async function onSpecial(event) {
+  const element = event.currentTarget;
+  const options = element.dataset.rule !== "needle"
+    ? await getSpecialOptions(element.dataset.rule) : { cancelled: false };
+  if (options.cancelled) return;
+  if (element.dataset.rule !== "needle" && isNaN(options.hits)) {
+    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+  } else {
+    const formula = element.dataset.formula.toLowerCase().split("d");
+    let newFormula = "";
+    if (element.dataset.rule === "needle") {
+      newFormula = `${formula[0]}D10`;
+    } else if (["cryo", "flame"].includes(element.dataset.rule)) {
+      newFormula += `${options.hits * parseInt(formula[0])}D`;
+      newFormula += formula.length === 2 ? formula[1] : "1";
+    }
+    console.log(newFormula);
+  }
+}
+
+function _processSpecialOptions(form) {
+  return { hits: parseInt(form.hits.value) };
+}
+
 function _processTestOptions(form) {
   return {
-    dof: form.dof.value,
-    distance: form.distance.value,
+    dof: parseInt(form.dof.value),
+    distance: parseInt(form.distance.value),
     isZeroG: form.isZeroG.checked
   };
 }

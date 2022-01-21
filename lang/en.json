@@ -318,10 +318,14 @@
                 "distance": "Distance from Target (meters)",
                 "isZeroG": "Zero Gravity?",
                 "times": "How many tests do you want to make?",
-                "penalty": "What is the stacking penalty?"
+                "penalty": "What is the stacking penalty?",
+                "hits": "How many successful hits?"
             },
             "scatter": {
                 "title": "Scatter"
+            },
+            "special": {
+                "title": "Roll Special Rule Damage"
             },
             "test": {
                 "title": "Test",

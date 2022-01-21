@@ -29,13 +29,13 @@
                 {{#if (eq attack.outcome "failure")}}
                   :&nbsp;
                   <span 
-                    class="scatter"
+                    class="chat-link scatter"
                     data-wfm="{{../../this.wfm}}"
                     data-dof="{{attack.degrees}}"
-                    {{#if (eq ../../this.weaponData.group "thrown")}}
-                      data-range="{{../../this.weaponData.range.thrown}}"
+                    {{#if (eq ../../this.weaponData.ammoList.STD.group "thrown")}}
+                      data-range="{{../../this.weaponData.ammoList.STD.range.thrown}}"
                     {{else}}
-                      data-range="{{../../this.weaponData.range.long}}"
+                      data-range="{{../../this.weaponData.ammoList.STD.range.long}}"
                     {{/if}}
                   >
                     {{localize "mythic.chat.scatter.title"}}!
@@ -51,14 +51,25 @@
   <aside class="special">
     <span class="special-damage">
       {{#each this.specials as |formula name|}}
-        <p><b>{{localize (concat "mythic.weaponSheet.specialRules." name)}}:</b>&nbsp;[[{{formula}}]]</p>
+        <p>
+          <span
+            class="special-rule-dmg"
+            data-rule="{{name}}"
+            {{#with (lookup ../this.weaponData.special [name])~}}
+              data-formula="{{this.value}}"
+            {{/with}}
+          >
+            <b class="chat-link">{{localize (concat "mythic.weaponSheet.specialRules." name)}}</b>
+          </span>
+          :&nbsp;[[{{formula}}]]
+        </p>
       {{/each}}
     </span>
     {{#each weaponData.special as |special name|}}
       {{#if special.has}}
         <span class="special-rule">
           {{localize (concat "mythic.weaponSheet.specialRules." name)}}
-          {{#if special.value}}&nbsp;({{special.value}}) {{/if}}
+          {{#if special.value}}&nbsp;({{special.value}}){{/if}}
         </span>
       {{/if}}
     {{/each}}
