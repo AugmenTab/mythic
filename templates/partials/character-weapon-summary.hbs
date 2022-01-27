@@ -65,10 +65,12 @@
                 {{#if (eq weapon.data.group "thrown")}}
                   {{weapon.data.ammoList.STD.range.thrown}}&nbsp;m&nbsp;
                   {{#if weapon.data.special.blast.has}}
-                    ({{weapon.data.special.blast.value}} {{else}} (0&nbsp;
+                    ({{weapon.data.special.blast.value}} {{else}} (0&nbsp;/&nbsp;
                   {{/if}}
                   {{#if weapon.data.special.kill.has}}
-                    /&nbsp;{{weapon.data.special.kill.value}}) {{else}}&nbsp;/&nbsp;0)
+                    {{weapon.data.special.kill.value}})
+                  {{else}}
+                    0)
                   {{/if}}
                 {{else if (eq weapon.data.group "melee")}}
                   {{weapon.data.ammoList.STD.range.melee}}&nbsp;m
