@@ -7,7 +7,20 @@ export default async function migrateWorld() {
 
 function migrateActorData(actor) {
   let updateData = {};
-  // TODO: Call to migrateItemData with all items attached to Actor.
+  let actorData = actor.data;
+
+  updateData["data.carryingCapacity.imposing"] = false;
+  updateData["data.carryingCapacity.mod"] = 0;
+  updateData["data.carryingCapacity.bar.tier"] = "carry";
+  updateData["data.carryingCapacity.hearing"] = (
+    parseInt(actorData.carryingCapacity.hearing) || 0
+  );
+
+  updateData["data.fatigue.enduring"] = actorData.fatigue.enduring ? 1 : 0
+
+  updateData["data.skills.medXenophile"] = actorData.skills.medMgalekgolo;
+
+  return updateData;
 }
 
 async function migrateActors() {
@@ -59,6 +72,41 @@ async function migrateCompendia() {
 
 async function migrateItemData(item) {
   let updateData = {};
+  let itemData = item.data;
+
+  updateData["ammoGroup"] = "";
+  updateData["magazineCapacity"] = itemData.magazine.max;
+
+  updateData["data.special.flashbang"] = {"has": false};
+  updateData["data.special.tearGas"] = {"has": false};
+  updateData["data.special.cryo"] = {
+    "has": false,
+    "value": "1D5",
+    "needsInput": true
+  };
+  updateData["data.special.smoke"] = {
+    "has": false,
+    "value": 0,
+    "needsInput": true
+  };
+
+  const dice = itemData.attack.damageRoll.toLowerCase().split("d");
+  updateData["ammoList.STD"] = {
+    "attackBonus": 0,
+    "diceQuantity": parseInt(dice[0]) || 1,
+    "diceValue": parseInt(dice[1]) || 5,
+    "baseDamage": itemData.attack.baseDamage,
+    "strDamage": itemData.attack.strDamage,
+    "piercing": itemData.attack.piercing,
+    "strPiercing": itemData.attack.strPiercing,
+    "target": itemData.attack.target,
+    "currentMag": itemData.magazine.current,
+    "range": itemData.range,
+    "special": {},
+    "desc": ""
+  };
+
+  return updateData;
 }
 
 async function migrateItems() {
