@@ -23,6 +23,7 @@ const MELEE_REACH_SIZE_BONUS = {
  * @param {ItemData} armorData - The armor's ItemData.
  */
 export function calculateArmorValues(armorData, type) {
+  const canBeNegative = ["str", "agi", "mythicStr", "mythicAgi"];
   new Array(
     Object.entries(armorData.protection),
     Object.entries(armorData.shields),
@@ -30,12 +31,15 @@ export function calculateArmorValues(armorData, type) {
   ).flat()
    .filter(v => v[0] !== "has")
    .map(x => {
-     let total = x[1].armor + x[1].variant + x[1].other;
-     if (type === "Flood") {
-       total = Math.floor(total / 2);
+      const total = x[1].armor + x[1].variant + x[1].other;
+      if (type === "Flood") {
+        const floodTotal = Math.floor(total / 2);
+        x[1].total = floodTotal < 0 && !canBeNegative.includes(x[0]) ? 0 : floodTotal;
+      } else if (x < 0 && !canBeNegative.includes(x[0])) {
+        x[1].total = 0;
+      } else {
+        x[1].total = total;
       }
-      total = total > 0 ? total : 0;
-     x[1].total = total;
    });
 }
 
