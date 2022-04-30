@@ -36,29 +36,4 @@ export default class MythicCombat extends Combat {
 
     return agilityB - agilityA;
   }
-
-  /**
-   * Advances the Combat to the next Turn.
-   * @returns {Promise.<Combat>} The updated Combat with the Turn advanced.
-   * @override
-   */
-  async nextTurn() {
-    const missing = this.combatants.filter(c => c.initiative === null);
-    if (missing.length > 0) {
-      missing.forEach(c => ui.notifications.error(
-        game.i18n.format("mythic.combat.error.missingInit"),
-        { token: c.token.name }
-      ));
-      return this;
-    }
-  }
-
-  /**
-   * Advances the Combat to the next Round.
-   * @returns {Promise.<Combat>} The updated Combat with the Round advanced.
-   * @override
-   */
-  async nextRound() {
-    return this.update({ advanceTime: CONFIG.time.roundTime });
-  }
 }

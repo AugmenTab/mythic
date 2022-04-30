@@ -27,7 +27,7 @@
     "primaryTokenAttribute": "wounds",
     "secondaryTokenAttribute": null,
     "minimumCoreVersion": "0.8.7",
-    "compatibleCoreVersion": "0.8.8",
+    "compatibleCoreVersion": "9.269",
     "url": "https://github.com/AugmenTab/mythic",
     "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
     "download": "https://github.com/AugmenTab/mythic/releases/latest/download/mythic.zip",

@@ -38,9 +38,9 @@ All available Item types in this system.
 * **Equipment:** All other items that don't fall into any other category are represented by this item type.
 * **Weapon:** Anything that requires a to-hit roll or deals damage can be made into a weapon, which can be rolled from the owner's sheet to make attacks and post informative messages about the item to chat. Weapons come in three main categories: Ranged, Melee, and Thrown.
 
-### Compendiums
+### Compendia
 
-All of the compendiums that come included with this system. Unimplemented compendiums are *italicized.*. **Development on Compendiums will not begin until after the release of Mythic 4.5.**
+All of the compendia that come included with this system. Unimplemented compendia are *italicized.*. **Development on some Compendia will rely on as-of-yet unimplemented features or bug fixes, and thus won't be introduced until those dependencies are resolved.**
 
 * Actor
     * *Bestiary - Covenant*
@@ -99,15 +99,19 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 * Experience Purchase Price field does not focus coming off the Name field. It has to be focused a second time before the focus sticks.
 * Equipping a new armor while one is already equipped updates the character sheet n + 1 times, where n is the number of armors the user has in their inventory. This is not so much a bug as it is a quirk of how it updates each armor in turn to unequip them before finally equipping the new armor. This may cause unforeseen issues, but as of yet none have been observed. In the future, I would like to batch these changes, then update them all at once.
+* Not all Wound and Luck calculations are accurate for all soldier types with the 5.0 update.
 
 ## Planned Features and Stretch Goals
 
-* Compendiums as laid out above.
+For a real-time record of what I'm working on, you can check the project's [Trello board](https://trello.com/b/y80KFteH/mythic-for-foundry).
+
+* Compendia as laid out above.
 * Tooltips for everything.
-* Special Damage.
-* Fully functioning Medical page to handle injuries.
+* Fully functioning Medical page to handle Special Damage.
+* Vehicle Actor type.
+* A supporting API to handle weapon stat and price calculation using the [Mythic and 100DOS Community Development Tools](https://docs.google.com/spreadsheets/d/1e5gepoZg_IZvupVw-rCKNMz42xMxGlF--oJluaa9Ljo/edit?usp=sharing).
+* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Add called shots, Clear Target, and Precision Strike.
 * Add dual wielding.
 * Lock nav bar & inventory bar at the top of the Actor Sheet.
 * Ability to add custom skills.
-* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.

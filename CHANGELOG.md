@@ -15,7 +15,7 @@
 * Added a Recharge Shield button to replenish current Shield Integrity by the Recharge value, up to the Shield's maximum Integrity.
 * Fixed various spacing issues on all sheets.
 * Added the Cryo, Flashbang, Smoke Grenade, and Tear Gas special rules to the Weapon Item sheet.
-* The Cryo, Flame, and Needle special rules now roll their damage in the attack chat message based on the number of hits the attacker landed. Each is also a link that will roll its typical damage on its own.
+* The Cryo, Flame, and Needle special rules now roll their damage in the attack chat message based on the number of hits the attacker landed. Each is also a link that will roll its typical damage to the chat on its own.
 * Updated the Weapon Item sheet in preparation for a new data model that will be able to support Special Ammo down the line.
 
 ### Bug Fixes
@@ -23,6 +23,8 @@
 * Fixed bug where carry weights in the Lift range were displaying incorrect percentages in the Carry Weight Bar.
 * Fixed bug where Mythic characteristic contributions to carry weight were not doubled on soldier types that double STR/TOU on carry weight.
 * Fixed bug where magazines would not deplete when the amount of shots fired would bring the current magazine value to 0.
+* Fixed bug where combat turns and rounds could not be advanced.
+* Fixed bug where penalties to characteristics imposed by armor would not apply to the wearer's characteristics.
 
 ## 0.1.1
 
