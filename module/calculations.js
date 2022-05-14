@@ -80,7 +80,7 @@ export function prepareBestiaryBase(actorData) {
 export function prepareBestiaryDerived(actorData) {
   // Set Up Armor
   applyArmorStatsToCharacter(actorData);
-  
+
   // Calculate Characteristics
   const feltFatigue = calculateFeltFatigue(actorData);
   calculateCharacteristics(actorData, feltFatigue);
@@ -115,7 +115,7 @@ export function prepareBestiaryDerived(actorData) {
 
   // Calculate Initiative
   calculateInitiative(actorData, agiMod, intMod, feltFatigue);
-  
+
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
 
@@ -166,7 +166,7 @@ export function prepareFloodBase(actorData) {
 export function prepareFloodDerived(actorData) {
   // Set Up Armor
   applyArmorStatsToCharacter(actorData);
-  
+
   // Calculate Characteristics
   calculateCharacteristicsFlood(actorData);
 
@@ -184,7 +184,7 @@ export function prepareFloodDerived(actorData) {
 
   // Calculate Initiative
   calculateInitiativeFlood(actorData, agiMod);
-  
+
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
 
@@ -223,7 +223,7 @@ export function prepareNamedCharacterBase(actorData) {
 export function prepareNamedCharacterDerived(actorData) {
   // Set Up Armor
   applyArmorStatsToCharacter(actorData);
-  
+
   // Calculate Characteristics
   const feltFatigue = calculateFeltFatigue(actorData);
   calculateCharacteristics(actorData, feltFatigue);
@@ -258,7 +258,7 @@ export function prepareNamedCharacterDerived(actorData) {
 
   // Calculate Initiative
   calculateInitiative(actorData, agiMod, intMod, feltFatigue);
-  
+
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
 
@@ -370,7 +370,7 @@ function calculateCarryWeight(actorData, str, tou) {
     actorData.data.carryingCapacity.mod
   );
   const mod =
-    strongBack 
+    strongBack
       ? tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1)
       : 0;
   actorData.data.carryingCapacity.carry = carry;
@@ -678,7 +678,7 @@ function calculateMythicCharacteristics(actorData) {
   }
   for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
     if (key != "notes") {
-      const total = (value.soldierType + value.equipment + value.other + 
+      const total = (value.soldierType + value.equipment + value.other +
         parseInt(value.advancements) + value.difficulty);
       value.total = total >= 0 ? total : 0;
     }
@@ -879,7 +879,7 @@ function calculateWeaponSummaryAttackData(actorData) {
       calculateWeaponRangeThrown(actorData, weapon);
       weapon.data.data.attack.half = 1;
       weapon.data.data.attack.full = 1;
-      weapon.data.data.attack.fireMode = "thrown"; 
+      weapon.data.data.attack.fireMode = "thrown";
     } else if (weapon.data.data.group === "melee") {
       calculateWeaponRangeMelee(actorData, weapon);
       calculateWeaponAttacksMelee(actorData, weapon);

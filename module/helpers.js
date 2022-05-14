@@ -27,7 +27,7 @@ Handlebars.registerHelper("cond", function(...var_args) {
   return var_args.slice(1)
     .map(x => {if (x) { return true } else { return false }})
     .reduce(_compare);
-  
+
   function _compare(v1, v2) {
     switch (operator) {
       case '==': return (v1 == v2);

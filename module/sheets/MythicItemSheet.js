@@ -1,10 +1,10 @@
-/** 
+/**
  * Class representing the unique features of this system's ItemSheet.
  * @extends ItemSheet
  */
 export default class MythicItemSheet extends ItemSheet {
 
-  /** 
+  /**
    * Establish default size and class options for the ItemSheet.
    * @returns {object} The original source object including updated, inserted, or overwritten records.
    */
@@ -23,7 +23,7 @@ export default class MythicItemSheet extends ItemSheet {
     });
   }
 
-  /** 
+  /**
    * Get the Handlebars template for the ItemSheet.
    * @returns {string} The path to the Handlebars template.
    */
@@ -31,7 +31,7 @@ export default class MythicItemSheet extends ItemSheet {
     return `systems/mythic/templates/sheets/${this.item.data.type}-sheet.hbs`;
   }
 
-  /** 
+  /**
    * Prepares the ItemData.
    * @returns {ItemData} The prepared ItemData.
    */

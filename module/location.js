@@ -109,7 +109,7 @@ async function determineHitSublocation(key, root) {
   if (key >= 23) return game.i18n.localize(`${root}.arm.forearm`);
   if (key >= 22) return game.i18n.localize(`${root}.arm.hand`);
   if (key >= 21) {
-    const digit = await determineHitDigit(root); 
+    const digit = await determineHitDigit(root);
     return `${digit} ${game.i18n.localize(`${root}.arm.finger`)}`;
   }
 

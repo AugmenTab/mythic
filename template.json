@@ -273,7 +273,7 @@
                     "max": 0,
                     "rank": 0,
                     "other": 0
-                },    
+                },
                 "initiative": {
                     "fastFoot": false,
                     "battleMind": false,
@@ -966,7 +966,7 @@
                     "tier": "carry"
                 }
             }
-        }        
+        }
     },
     "Item": {
         "types": [

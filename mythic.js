@@ -115,7 +115,7 @@ function registerSystemSettings() {
     },
     default: 0
   });
-  
+
   // Flood Swarm Version
   game.settings.register("mythic", "swarmVersion", {
     config: true,
@@ -161,7 +161,7 @@ Hooks.once("init", function() {
   Actors.registerSheet("mythic", MythicBestiaryCharacterSheet, { types: ["Bestiary Character"], makeDefault: true });
   Actors.registerSheet("mythic", MythicFloodCharacterSheet, { types: ["Flood"], makeDefault: true });
   Actors.registerSheet("mythic", MythicNamedCharacterSheet, { types: ["Named Character"], makeDefault: true });
-  
+
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("mythic", MythicItemSheet, { makeDefault: true });
 

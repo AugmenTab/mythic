@@ -78,10 +78,10 @@ export async function rollEvasionBatch(element, actor) {
  */
 export async function rollTest(element, actor) {
   const type = element.classList[0];
-  const test = type === "initiative" 
-    ? capitalize(type) 
-    : (CHARACTERISTICS[element.name] != undefined 
-        ? CHARACTERISTICS[element.name] 
+  const test = type === "initiative"
+    ? capitalize(type)
+    : (CHARACTERISTICS[element.name] != undefined
+        ? CHARACTERISTICS[element.name]
         : element.name
     );
   const target = parseInt(element.value);
@@ -247,8 +247,8 @@ async function getTestOptions(test) {
   const html = await renderTemplate(template, {});
   return new Promise(resolve => {
     const data = {
-      title: `${CHARACTERISTICS[test] != undefined 
-        ? CHARACTERISTICS[test] 
+      title: `${CHARACTERISTICS[test] != undefined
+        ? CHARACTERISTICS[test]
         : test} ${game.i18n.format("mythic.chat.test.title")}`,
       content: html,
       buttons: {
@@ -286,7 +286,7 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     ...outcome
   };
   if (attack.outcome === "success"
-    || weapon.data.data.special.blast.has 
+    || weapon.data.data.special.blast.has
     || weapon.data.data.special.kill.has
   ) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), veh);

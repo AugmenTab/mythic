@@ -3,7 +3,7 @@
 import { setupExperiencePurchases, sortAndFilterItems } from "../calculations.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
-/** 
+/**
  * Class representing the unique features of this system's Named Character sheet.
  * @extends ActorSheet
  */

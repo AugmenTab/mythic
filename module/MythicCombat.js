@@ -24,11 +24,11 @@ export default class MythicCombat extends Combat {
     const agilityB = b.actor.data.data.characteristics.agi.roll;
 
     const agiModA = (
-      calculateCharacteristicModifier(agilityA) + 
+      calculateCharacteristicModifier(agilityA) +
       a.actor.data.data.mythicCharacteristics.agi.total
     );
     const agiModB = (
-      calculateCharacteristicModifier(agilityB) + 
+      calculateCharacteristicModifier(agilityB) +
       b.actor.data.data.mythicCharacteristics.agi.total
     );
     const modDifference = agiModB - agiModA;

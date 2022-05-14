@@ -8,7 +8,7 @@ import * as Calc from "./calculations.js";
  */
 export default class MythicActor extends Actor {
 
-  /** 
+  /**
    * Prepares ActorData.
    * @override
    */
@@ -16,7 +16,7 @@ export default class MythicActor extends Actor {
     super.prepareData();
   }
 
-  /** 
+  /**
    * Calculates all Actor base data - anything not dependent on other entities.
    * @override
    */
@@ -26,7 +26,7 @@ export default class MythicActor extends Actor {
     this._prepareCharacterBaseData(actorData);
   }
 
-  /** 
+  /**
    * Calculates all values for entities embedded in the Actor.
    * @override
    */
@@ -35,8 +35,8 @@ export default class MythicActor extends Actor {
     const flags = actorData.flags.boilerplate || {};
     this._prepareCharacterEmbedded(actorData);
   }
-  
-  /** 
+
+  /**
    * Calculates all values derived from other entities.
    * @override
    */
