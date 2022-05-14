@@ -1,0 +1,36 @@
+{
+  "name": "mythic",
+  "version": "0.2.0",
+  "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
+  "main": "mythic.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AugmenTab/mythic.git"
+  },
+  "keywords": [
+    "javascript",
+    "game",
+    "less",
+    "handlebars",
+    "ttrpg",
+    "foundry-vtt"
+  ],
+  "author": "Tyler Baum",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/AugmenTab/mythic/issues"
+  },
+  "homepage": "https://github.com/AugmenTab/mythic#readme",
+  "dependencies": {
+    "grunt": "^1.5.3"
+  },
+  "devDependencies": {
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-less": "^3.0.0",
+    "grunt-contrib-uglify": "^5.2.1",
+    "grunt-contrib-watch": "^1.1.0"
+  }
+}
