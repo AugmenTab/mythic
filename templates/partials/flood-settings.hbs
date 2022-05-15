@@ -15,7 +15,19 @@
           <td><b>{{data.data.swarm.total}}</b></td>
           <td>{{data.data.swarm.base}}</td>
           <td style="width:90px">
-            <input name="data.swarm.mod" value="{{data.data.swarm.mod}}" type="number" data-dtype="Number" onfocus="this.select()"/>
+            {{log data.data.swarm.willSwarm}}
+            <input
+              name="data.swarm.mod"
+              type="number"
+              data-dtype="Number"
+              onfocus="this.select()"
+              {{#unless data.data.swarm.willSwarm}}
+                value="0"
+                disabled=true
+              {{else}}
+                value="{{data.data.swarm.mod}}"
+              {{/unless}}
+            />
           </td>
           <td style="width:90px"><input name="data.swarm.willSwarm" type="checkbox" {{checked data.data.swarm.willSwarm}}/></td>
         </tr>
@@ -41,7 +53,7 @@
           </td>
           <td style="width:90px">&times;{{localnum data.data.experiencePayout.diffMultiplier}}</td>
           <td style="width:90px"">
-            <input name="data.experiencePayout.kit" value="{{data.data.experiencePayout.kit}}" type="number" data-dtype="Number" onfocus="this.select()"/>              
+            <input name="data.experiencePayout.kit" value="{{data.data.experiencePayout.kit}}" type="number" data-dtype="Number" onfocus="this.select()"/>
           </td>
         </tr>
       </tbody>
