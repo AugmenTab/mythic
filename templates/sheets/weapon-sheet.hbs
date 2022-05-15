@@ -29,6 +29,9 @@
     <a class="item" data-tab="notes">
       {{localize "mythic.weaponSheet.nav.notes"}}
     </a>
+    <a class="item" data-tab="settings">
+      {{localize "mythic.weaponSheet.nav.settings"}}
+    </a>
   </nav>
   <section class="item-sheet-body">
     {{!-- Basic Info Page --}}
@@ -59,6 +62,11 @@
     {{!-- Notes Page --}}
     <div class="tab" data-group="primary" data-tab="notes">
       {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.description target="data.description" link="weaponSheet.nav.notes"}}
+    </div>
+
+    {{!-- Settings Page --}}
+    <div class="tab" data-group="primary" data-tab="settings">
+      <p><b>Coming soon!</b></p>
     </div>
   </section>
 </form>
