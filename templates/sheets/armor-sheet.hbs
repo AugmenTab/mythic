@@ -1,16 +1,37 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <img
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      height="64"
+      width="64"
+    />
     <h1>
-      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+      <input
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="{{localize "mythic.armorSheet.name"}}"
+      />
     </h1>
   </header>
   <nav class="item-tabs tabs" data-group="primary">
-    <a class="item" data-tab="basic">{{localize "mythic.armorSheet.nav.basic"}}</a>
-    <a class="item" data-tab="details">{{localize "mythic.armorSheet.nav.details"}}</a>
-    <a class="item" data-tab="variant">{{localize "mythic.armorSheet.nav.variant"}}</a>
-    <a class="item" data-tab="mods">{{localize "mythic.armorSheet.nav.mods"}}</a>
-    <a class="item" data-tab="notes">{{localize "mythic.armorSheet.nav.notes"}}</a>
+    <a class="item" data-tab="basic">
+      {{localize "mythic.armorSheet.nav.basic"}}
+    </a>
+    <a class="item" data-tab="details">
+      {{localize "mythic.armorSheet.nav.details"}}
+    </a>
+    <a class="item" data-tab="variant">
+      {{localize "mythic.armorSheet.nav.variant"}}
+    </a>
+    <a class="item" data-tab="mods">
+      {{localize "mythic.armorSheet.nav.mods"}}
+    </a>
+    <a class="item" data-tab="notes">
+      {{localize "mythic.armorSheet.nav.notes"}}
+    </a>
   </nav>
   <section class="item-sheet-body">
     {{!-- Basic Info Page --}}
@@ -48,32 +69,74 @@
           <tr>
             <td>
               <span>
-                <input style="width:40px" name="data.hardpoints.head" type="number" data-dtype="Number" value="{{data.data.hardpoints.head}}" onfocus="this.select()"> / 3
+                <input
+                  style="width:40px"
+                  name="data.hardpoints.head"
+                  type="number"
+                  data-dtype="Number"
+                  value="{{data.data.hardpoints.head}}"
+                  onfocus="this.select()"
+                >&nbsp;/&nbsp;3
               </span>
             </td>
             <td>
               <span>
-                <input style="width:40px" name="data.hardpoints.chest" type="number" data-dtype="Number" value="{{data.data.hardpoints.chest}}" onfocus="this.select()"> / 6
+                <input
+                  style="width:40px"
+                  name="data.hardpoints.chest"
+                  type="number"
+                  data-dtype="Number"
+                  value="{{data.data.hardpoints.chest}}"
+                  onfocus="this.select()"
+                >&nbsp;/&nbsp;6
               </span>
             </td>
             <td>
               <span>
-                <input style="width:40px" name="data.hardpoints.leftArm" type="number" data-dtype="Number" value="{{data.data.hardpoints.leftArm}}" onfocus="this.select()"> / 2
+                <input
+                  style="width:40px"
+                  name="data.hardpoints.leftArm"
+                  type="number"
+                  data-dtype="Number"
+                  value="{{data.data.hardpoints.leftArm}}"
+                  onfocus="this.select()"
+                >&nbsp;/&nbsp;2
               </span>
             </td>
             <td>
               <span>
-                <input style="width:40px" name="data.hardpoints.rightArm" type="number" data-dtype="Number" value="{{data.data.hardpoints.rightArm}}" onfocus="this.select()"> / 2
+                <input
+                  style="width:40px"
+                  name="data.hardpoints.rightArm"
+                  type="number"
+                  data-dtype="Number"
+                  value="{{data.data.hardpoints.rightArm}}"
+                  onfocus="this.select()"
+                >&nbsp;/&nbsp;2
               </span>
             </td>
             <td>
               <span>
-                <input style="width:40px" name="data.hardpoints.leftLeg" type="number" data-dtype="Number" value="{{data.data.hardpoints.leftLeg}}" onfocus="this.select()"> / 2
+                <input
+                  style="width:40px"
+                  name="data.hardpoints.leftLeg"
+                  type="number"
+                  data-dtype="Number"
+                  value="{{data.data.hardpoints.leftLeg}}"
+                  onfocus="this.select()"
+                >&nbsp;/&nbsp;2
               </span>
             </td>
             <td>
               <span>
-                <input style="width:40px" name="data.hardpoints.rightLeg" type="number" data-dtype="Number" value="{{data.data.hardpoints.rightLeg}}" onfocus="this.select()"> / 2
+                <input
+                  style="width:40px"
+                  name="data.hardpoints.rightLeg"
+                  type="number"
+                  data-dtype="Number"
+                  value="{{data.data.hardpoints.rightLeg}}"
+                  onfocus="this.select()"
+                >&nbsp;/&nbsp;2
               </span>
             </td>
           </tr>

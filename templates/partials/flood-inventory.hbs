@@ -11,7 +11,9 @@
     </thead>
     <thead>
       <tr>
-        <th colspan="5">{{localize "mythic.characterInventory.weapon.label"}}</th>
+        <th colspan="5">
+          {{localize "mythic.characterInventory.weapon.label"}}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -19,13 +21,17 @@
         {{> "systems/mythic/templates/partials/flood-items.hbs" weapon}}
       {{else}}
         <tr>
-          <td colspan="5">{{localize "mythic.characterInventory.weapon.empty"}}</td>
+          <td colspan="5">
+            {{localize "mythic.characterInventory.weapon.empty"}}
+          </td>
         </tr>
       {{/each}}
     </tbody>
     <thead>
       <tr>
-        <th colspan="5">{{localize "mythic.characterInventory.armor.label"}}</th>
+        <th colspan="5">
+          {{localize "mythic.characterInventory.armor.label"}}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -33,13 +39,17 @@
         {{> "systems/mythic/templates/partials/flood-items.hbs" armor}}
       {{else}}
         <tr>
-          <td colspan="5">{{localize "mythic.characterInventory.armor.empty"}}</td>
+          <td colspan="5">
+            {{localize "mythic.characterInventory.armor.empty"}}
+          </td>
         </tr>
       {{/each}}
     </tbody>
     <thead>
       <tr>
-        <th colspan="5">{{localize "mythic.characterInventory.equipment.label"}}</th>
+        <th colspan="5">
+          {{localize "mythic.characterInventory.equipment.label"}}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -47,11 +57,18 @@
         {{> "systems/mythic/templates/partials/flood-items.hbs" equip}}
       {{else}}
         <tr>
-          <td colspan="5">{{localize "mythic.characterInventory.equipment.empty"}}</td>
+          <td colspan="5">
+            {{localize "mythic.characterInventory.equipment.empty"}}
+          </td>
         </tr>
       {{/each}}
       <td colspan="5">
-        <textarea name="data.equipmentNotes" placeholder="Write equipment notes here.">{{data.data.equipmentNotes}}</textarea>
+        <textarea
+          name="data.equipmentNotes"
+          placeholder="{{localize "mythic.characterInventory.equipment.notes"}}"
+        >
+          {{data.data.equipmentNotes}}
+        </textarea>
       </td>
     </tbody>
     <thead>

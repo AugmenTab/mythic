@@ -49,14 +49,36 @@
                 {{/select}}
               </select>
             </td>
-            <td><input name={{concat "data.skills." skill ".mods"}} type="number" data-dtype="Number" value="{{details.mods}}" onfocus="this.select()"/></td>
-            <td><button class="skill rollable" name="{{localize (concat "mythic.skillNames." skill)}} ({{details.characteristic}})" value="{{details.roll}}"><b>{{details.roll}}</b></button></td>
+            <td>
+              <input
+                name={{concat "data.skills." skill ".mods"}}
+                type="number"
+                data-dtype="Number"
+                value="{{details.mods}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <button
+                class="skill
+                rollable"
+                name="{{localize (concat "mythic.skillNames." skill)}} ({{details.characteristic}})"
+                value="{{details.roll}}"
+              >
+                <b>{{details.roll}}</b>
+              </button>
+            </td>
           </tr>
         {{/unless}}
       {{/each}}
       <tr>
         <td colspan="7">
-          <textarea name="data.skills.notes" placeholder="{{localize "mythic.characterSkills.skillNotes"}}">{{data.data.skills.notes}}</textarea>
+          <textarea
+            name="data.skills.notes"
+            placeholder="{{localize "mythic.characterSkills.skillNotes"}}"
+          >
+            {{data.data.skills.notes}}
+          </textarea>
         </td>
       </tr>
     </tbody>

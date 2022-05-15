@@ -4,17 +4,27 @@
       <tr>
         <th colspan="3">{{localize "mythic.characterWeaponSummary.title"}}</th>
         <th>
-          <button class="initiative rollable" data-roll="{{data.data.initiative.formula}}" data-label="initiative">
+          <button
+            class="initiative rollable"
+            data-roll="{{data.data.initiative.formula}}"
+            data-label="initiative"
+          >
             {{localize "mythic.characterWeaponSummary.initiative"}}:&nbsp;{{data.data.initiative.mods}}
           </button>
       </th>
       <th colspan="3">
-        <button class="evade" name="{{localize "mythic.skillNames.evasion"}} ({{data.data.skills.evasion.characteristic}})" value="{{data.data.skills.evasion.roll}}">
+        <button
+          class="evade"
+          name="{{localize "mythic.skillNames.evasion"}} ({{data.data.skills.evasion.characteristic}})"
+          value="{{data.data.skills.evasion.roll}}"
+        >
           {{localize "mythic.skillNames.evasion"}}:&nbsp;{{data.data.skills.evasion.roll}}
         </button>
       </th>
       <tr>
-        <th>{{localize "mythic.characterWeaponSummary.name"}}&nbsp;({{localize "mythic.characterWeaponSummary.target"}})</th>
+        <th>
+          {{localize "mythic.characterWeaponSummary.name"}}&nbsp;({{localize "mythic.characterWeaponSummary.target"}})
+        </th>
         <th>{{localize "mythic.characterWeaponSummary.fireMode"}}</th>
         <th>{{localize "mythic.characterWeaponSummary.range"}}</th>
         <th>{{localize "mythic.characterWeaponSummary.mag"}}</th>
@@ -40,18 +50,26 @@
                   {{/unless}}
                   &nbsp;({{weapon.data.ammoList.STD.target}})
                 </p>
-                <a class="item-edit" data-item-id="{{weapon._id}}"><i class="clickable fas fa-edit"></i></a>
+                <a class="item-edit" data-item-id="{{weapon._id}}">
+                  <i class="clickable fas fa-edit"></i>
+                </a>
                 </div>
               </td>
               {{!-- Fire Mode --}}
               <td>
                 {{#if (eq weapon.data.group "ranged")}}
-                <select class="item-edit-inline special-focus" data-field="attack.fireMode" data-item-id="{{weapon._id}}">
+                <select
+                  class="item-edit-inline special-focus"
+                  data-field="attack.fireMode"
+                  data-item-id="{{weapon._id}}"
+                >
                   {{#select weapon.data.attack.fireMode}}
                   <option value="none">--</option>
                   {{#each weapon.data.fireMode as |rate mode|}}
                     {{#if rate}}
-                    <option value="{{mode}}-{{rate}}">{{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})</option>
+                    <option value="{{mode}}-{{rate}}">
+                      {{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})
+                    </option>
                     {{/if}}
                   {{/each}}
                   {{/select}}
@@ -65,7 +83,9 @@
                 {{#if (eq weapon.data.group "thrown")}}
                   {{weapon.data.ammoList.STD.range.thrown}}&nbsp;m&nbsp;
                   {{#if weapon.data.special.blast.has}}
-                    ({{weapon.data.special.blast.value}} {{else}} (0&nbsp;/&nbsp;
+                    ({{weapon.data.special.blast.value}}
+                  {{else}}
+                    (0&nbsp;/&nbsp;
                   {{/if}}
                   {{#if weapon.data.special.kill.has}}
                     {{weapon.data.special.kill.value}})
@@ -82,7 +102,15 @@
               <td style="width:120px">
                 {{#unless (eq weapon.data.group "melee")}}
                 <div class="magazine">
-                  <input class="item-edit-inline" data-field="ammoList.STD.currentMag" data-item-id="{{weapon._id}}" type="number" data-dtype="Number" value="{{weapon.data.ammoList.STD.currentMag}}" onfocus="this.select()"/>
+                  <input
+                    class="item-edit-inline"
+                    data-field="ammoList.STD.currentMag"
+                    data-item-id="{{weapon._id}}"
+                    type="number"
+                    data-dtype="Number"
+                    value="{{weapon.data.ammoList.STD.currentMag}}"
+                    onfocus="this.select()"
+                  />
                   <p>/</p>
                   <p>{{weapon.data.magazineCapacity}}</p>
                   <div class="item-management">
@@ -90,7 +118,13 @@
                     <p>{{weapon.data.reload.total}}</p>
                   {{else}} <p>T</p>
                   {{/unless}}
-                  <a class="reload" data-field="ammoList.STD.currentMag" data-item-id="{{weapon._id}}"><i class="clickable fas fa-sync-alt"></i></a>
+                  <a
+                    class="reload"
+                    data-field="ammoList.STD.currentMag"
+                    data-item-id="{{weapon._id}}"
+                  >
+                    <i class="clickable fas fa-sync-alt"></i>
+                  </a>
                   </div>
                 </div>
                 {{else}} --
@@ -152,7 +186,9 @@
             </tr>
           {{/each}}
         {{else}}
-          <td colspan="8">{{localize "mythic.characterWeaponSummary.unequipped"}}</td>
+          <td colspan="8">
+            {{localize "mythic.characterWeaponSummary.unequipped"}}
+          </td>
         {{/if}}
       {{else}}
         <td colspan="8">{{localize "mythic.characterWeaponSummary.empty"}}</td>

@@ -4,19 +4,45 @@
       <img alt="{{this.name}}" src="{{this.img}}"/>
       <p>{{this.name}}</p>
       <div class="item-management">
-        <a class="item-edit" data-item-id="{{this._id}}"><i class="clickable fas fa-edit"></i></a>
-        <a class="item-delete" data-item-id="{{this._id}}"><i class="clickable fas fa-trash"></i></a>
+        <a class="item-edit" data-item-id="{{this._id}}">
+          <i class="clickable fas fa-edit"></i>
+        </a>
+        <a class="item-delete" data-item-id="{{this._id}}">
+          <i class="clickable fas fa-trash"></i>
+        </a>
       </div>
     </div>
   </td>
   <td>
-    <input class="item-edit-inline" data-field="weight.carried" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.carried}}/>
+    <input
+      class="item-edit-inline"
+      data-field="weight.carried"
+      data-item-id="{{this._id}}"
+      type="checkbox"
+      {{checked this.data.weight.carried}}
+    />
   </td>
   <td>
-    <input class="item-edit-inline" data-field="weight.equipped" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.equipped}} {{#unless this.data.weight.carried}} disabled="true" aria-disabled="true" {{/unless}}/>
+    <input
+      class="item-edit-inline"
+      data-field="weight.equipped"
+      data-item-id="{{this._id}}"
+      type="checkbox"
+      {{checked this.data.weight.equipped}}
+      {{#unless this.data.weight.carried}}
+        disabled="true"
+        aria-disabled="true"
+      {{/unless}}
+    />
   </td>
   <td>
-    <input class="item-edit-inline" data-field="weight.selfSupported" data-item-id="{{this._id}}" type="checkbox" {{checked this.data.weight.selfSupported}}/>
+    <input
+      class="item-edit-inline"
+      data-field="weight.selfSupported"
+      data-item-id="{{this._id}}"
+      type="checkbox"
+      {{checked this.data.weight.selfSupported}}
+    />
   </td>
   <td>
     <input

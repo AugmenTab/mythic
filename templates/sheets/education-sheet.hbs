@@ -1,8 +1,19 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <img
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      height="64"
+      width="64"
+    />
     <h1>
-      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+      <input
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="{{localize "mythic.educationSheet.name"}}"
+      />
     </h1>
   </header>
   <div class="sheet-content">
@@ -40,10 +51,20 @@
             </select>
           </td>
           <td>
-            <input name="data.cost.plus5" type="text" value="{{data.data.cost.plus5}}" onfocus="this.select()"/>
+            <input
+              name="data.cost.plus5"
+              type="text"
+              value="{{data.data.cost.plus5}}"
+              onfocus="this.select()"
+            />
           </td>
           <td>
-            <input name="data.cost.plus10" type="text" value="{{data.data.cost.plus10}}" onfocus="this.select()"/>
+            <input
+              name="data.cost.plus10"
+              type="text"
+              value="{{data.data.cost.plus10}}"
+              onfocus="this.select()"
+            />
           </td>
         </tr>
       </tbody>
@@ -59,7 +80,11 @@
           <td>
             {{#each data.data.skills as |has key|}}
               <div>
-                <input name="data.skills.{{key}}" type="checkbox" {{checked has}}/>
+                <input
+                  name="data.skills.{{key}}"
+                  type="checkbox"
+                  {{checked has}}
+                />
                 <p>{{localize (concat "mythic.skillNames." key)}}</p>
               </div>
             {{/each}}

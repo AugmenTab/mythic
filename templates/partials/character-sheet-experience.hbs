@@ -3,10 +3,18 @@
     <table class="exp-table">
       <thead>
         <tr>
-          <th style="width:42px">{{localize "mythic.characterStatBlock.experience.tier"}}</th>
-          <th style="width:370px">{{localize "mythic.characterStatBlock.experience.total"}}</th>
-          <th style="width:125px">{{localize "mythic.characterStatBlock.experience.spent"}}</th>
-          <th style="width:125px">{{localize "mythic.characterStatBlock.experience.current"}}</th>
+          <th style="width:42px">
+            {{localize "mythic.characterStatBlock.experience.tier"}}
+          </th>
+          <th style="width:370px">
+            {{localize "mythic.characterStatBlock.experience.total"}}
+          </th>
+          <th style="width:125px">
+            {{localize "mythic.characterStatBlock.experience.spent"}}
+          </th>
+          <th style="width:125px">
+            {{localize "mythic.characterStatBlock.experience.current"}}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -15,30 +23,62 @@
           <td>
             <div class="exp-total">
               <b>{{localnum data.data.experience.total}}</b>
-              <input id="exp-total-value" class="exp-submit" type="number" data-dtype="Number"/>
-              <button class="exp-apply">{{localize "mythic.characterStatBlock.experience.apply"}}</button>
+              <input
+                id="exp-total-value"
+                class="exp-submit"
+                type="number"
+                data-dtype="Number"
+              />
+              <button class="exp-apply">
+                {{localize "mythic.characterStatBlock.experience.apply"}}
+              </button>
             </div>
           </td>
           <td><b>{{localnum data.data.experience.spent}}</b></td>
           <td>
-            <b style="color:{{data.data.experience.color}}">{{localnum data.data.experience.current}}</b>
+            <b style="color:{{data.data.experience.color}}">
+              {{localnum data.data.experience.current}}
+            </b>
           </td>
         </tr>
       </tbody>
     </table>
-    <button class="exp-create">{{localize "mythic.characterStatBlock.experience.purchase"}}&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+    <button class="exp-create">
+      {{localize "mythic.characterStatBlock.experience.purchase"}}&nbsp;&nbsp;&nbsp;<i class="fas fa-plus"></i>
+    </button>
   </div>
   <div class="exp-bottom">
     <div class="exp-notes">
       <h2>{{localize "mythic.characterStatBlock.experience.notes"}}</h2>
-      <textarea name="data.experience.notes" placeholder="{{localize "mythic.characterStatBlock.experience.placeholder"}}">{{data.data.experience.notes}}</textarea>
+      <textarea
+        name="data.experience.notes"
+        placeholder="{{localize "mythic.characterStatBlock.experience.expNotes"}}"
+      >
+        {{data.data.experience.notes}}
+      </textarea>
     </div>
     <div class="exp-purchases">
       {{#each data.data.experience.purchases as |purchase|}}
         <div class="exp-purchase">
-          <input class="exp-edit" data-field="name" data-index="{{purchase.index}}" type="text" placeholder="Purchased Ability" value="{{purchase.name}}"/>
-          <input class="exp-edit" data-field="price" data-index="{{purchase.index}}" type="number" placeholder="Price" value="{{purchase.price}}"/>
-          <a class="exp-delete" data-index="{{purchase.index}}"><i class="clickable fas fa-trash"></i></a>
+          <input
+            class="exp-edit"
+            data-field="name"
+            data-index="{{purchase.index}}"
+            type="text"
+            placeholder="{{localize "mythic.characterStatBlock.experience.ability"}}"
+            value="{{purchase.name}}"
+          />
+          <input
+            class="exp-edit"
+            data-field="price"
+            data-index="{{purchase.index}}"
+            type="number"
+            placeholder="{{localize "mythic.characterStatBlock.experience.price"}}"
+            value="{{purchase.price}}"
+          />
+          <a class="exp-delete" data-index="{{purchase.index}}">
+            <i class="clickable fas fa-trash"></i>
+          </a>
         </div>
       {{else}}
         {{{localize "mythic.characterStatBlock.experience.empty"}}}

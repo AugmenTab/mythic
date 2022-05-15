@@ -32,9 +32,32 @@
     </thead>
     <tbody>
       <tr>
-        <td><input name="data.weight.each" type="number" data-dtype="Number" value="{{data.data.weight.each}}" onfocus="this.select()"/></td>
-        <td><input name="data.price.base" type="number" data-dtype="Number" value="{{data.data.price.base}}" onfocus="this.select()"/></td>
-        <td><input name="data.material" type="text" value="{{data.data.material}}" onfocus="this.select()"/></td>
+        <td>
+          <input
+            name="data.weight.each"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.weight.each}}"
+            onfocus="this.select()"
+          />
+        </td>
+        <td>
+          <input
+            name="data.price.base"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.price.base}}"
+            onfocus="this.select()"
+          />
+        </td>
+        <td>
+          <input
+            name="data.material"
+            type="text"
+            value="{{data.data.material}}"
+            onfocus="this.select()"
+          />
+        </td>
       </tr>
     </tbody>
     <thead>
@@ -46,9 +69,27 @@
     </thead>
     <tbody>
       <tr>
-        <td><input name="data.weight.selfSupported" type="checkbox" {{checked data.data.weight.selfSupported}}/></td>
-        <td><input name="data.shields.has" type="checkbox" {{checked data.data.shields.has}}/></td>
-        <td><input name="data.characteristics.has" type="checkbox" {{checked data.data.characteristics.has}}/></td>
+        <td>
+          <input
+            name="data.weight.selfSupported"
+            type="checkbox"
+            {{checked data.data.weight.selfSupported}}
+          />
+        </td>
+        <td>
+          <input
+            name="data.shields.has"
+            type="checkbox"
+            {{checked data.data.shields.has}}
+          />
+        </td>
+        <td>
+          <input
+            name="data.characteristics.has"
+            type="checkbox"
+            {{checked data.data.characteristics.has}}
+          />
+        </td>
       </tr>
     </tbody>
   </table>
@@ -70,7 +111,13 @@
         <td>{{localize "mythic.armorSheet.source.armor"}}</td>
         {{#each data.data.protection as |values loc|}}
           <td>
-            <input name="data.protection.{{loc}}.armor" type="number" data-dtype="Number" value="{{values.armor}}" onfocus="this.select()"/>
+            <input
+              name="data.protection.{{loc}}.armor"
+              type="number"
+              data-dtype="Number"
+              value="{{values.armor}}"
+              onfocus="this.select()"
+            />
           </td>
         {{/each}}
       </tr>
@@ -78,7 +125,13 @@
         <td>{{localize "mythic.armorSheet.source.variant"}}</td>
         {{#each data.data.protection as |values loc|}}
           <td>
-            <input name="data.protection.{{loc}}.variant" type="number" data-dtype="Number" value="{{values.variant}}" onfocus="this.select()"/>
+            <input
+              name="data.protection.{{loc}}.variant"
+              type="number"
+              data-dtype="Number"
+              value="{{values.variant}}"
+              onfocus="this.select()"
+            />
           </td>
         {{/each}}
       </tr>
@@ -86,7 +139,13 @@
         <td>{{localize "mythic.armorSheet.source.other"}}</td>
         {{#each data.data.protection as |values loc|}}
           <td>
-            <input name="data.protection.{{loc}}.other" type="number" data-dtype="Number" value="{{values.other}}" onfocus="this.select()"/>
+            <input
+              name="data.protection.{{loc}}.other"
+              type="number"
+              data-dtype="Number"
+              value="{{values.other}}"
+              onfocus="this.select()"
+            />
           </td>
         {{/each}}
       </tr>
@@ -101,7 +160,10 @@
     </thead>
   </table>
   {{!-- Shields --}}
-  <table class="armor-shields" {{#unless data.data.shields.has}} hidden {{/unless}}>
+  <table
+    class="armor-shields"
+    {{#unless data.data.shields.has}} hidden {{/unless}}
+  >
     <thead>
       <tr>
         <th colspan="4">{{localize "mythic.armorSheet.shields.label"}}</th>
@@ -121,7 +183,13 @@
         {{#each data.data.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <td>
-              <input name="data.shields.{{key}}.armor" type="number" data-dtype="Number" value="{{values.armor}}" onfocus="this.select()"/>
+              <input
+                name="data.shields.{{key}}.armor"
+                type="number"
+                data-dtype="Number"
+                value="{{values.armor}}"
+                onfocus="this.select()"
+              />
             </td>
           {{/unless}}
         {{/each}}
@@ -131,7 +199,13 @@
         {{#each data.data.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <td>
-              <input name="data.shields.{{key}}.variant" type="number" data-dtype="Number" value="{{values.variant}}" onfocus="this.select()"/>
+              <input
+                name="data.shields.{{key}}.variant"
+                type="number"
+                data-dtype="Number"
+                value="{{values.variant}}"
+                onfocus="this.select()"
+              />
             </td>
           {{/unless}}
         {{/each}}
@@ -141,7 +215,13 @@
         {{#each data.data.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <td>
-              <input name="data.shields.{{key}}.other" type="number" data-dtype="Number" value="{{values.other}}" onfocus="this.select()"/>
+              <input
+                name="data.shields.{{key}}.other"
+                type="number"
+                data-dtype="Number"
+                value="{{values.other}}"
+                onfocus="this.select()"
+              />
             </td>
           {{/unless}}
         {{/each}}
@@ -159,7 +239,10 @@
     </thead>
   </table>
   {{!-- Characteristic Adjustments --}}
-  <table class="armor-stats" {{#unless data.data.characteristics.has}} hidden {{/unless}}>
+  <table
+    class="armor-stats"
+    {{#unless data.data.characteristics.has}} hidden {{/unless}}
+  >
     <thead>
       <tr>
         <th colspan="5">{{localize "mythic.armorSheet.characteristics"}}</th>
@@ -178,7 +261,13 @@
         {{#each data.data.characteristics as |values stat|}}
           {{#unless (eq stat "has")}}
             <td>
-              <input name="data.characteristics.{{stat}}.armor" type="number" data-dtype="Number" value="{{values.armor}}" onfocus="this.select()"/>
+              <input
+                name="data.characteristics.{{stat}}.armor"
+                type="number"
+                data-dtype="Number"
+                value="{{values.armor}}"
+                onfocus="this.select()"
+              />
             </td>
           {{/unless}}
         {{/each}}
@@ -188,7 +277,13 @@
         {{#each data.data.characteristics as |values stat|}}
           {{#unless (eq stat "has")}}
             <td>
-              <input name="data.characteristics.{{stat}}.variant" type="number" data-dtype="Number" value="{{values.variant}}" onfocus="this.select()"/>
+              <input
+                name="data.characteristics.{{stat}}.variant"
+                type="number"
+                data-dtype="Number"
+                value="{{values.variant}}"
+                onfocus="this.select()"
+              />
             </td>
           {{/unless}}
         {{/each}}
@@ -198,7 +293,13 @@
         {{#each data.data.characteristics as |values stat|}}
           {{#unless (eq stat "has")}}
             <td>
-              <input name="data.characteristics.{{stat}}.other" type="number" data-dtype="Number" value="{{values.other}}" onfocus="this.select()"/>
+              <input
+                name="data.characteristics.{{stat}}.other"
+                type="number"
+                data-dtype="Number"
+                value="{{values.other}}"
+                onfocus="this.select()"
+              />
             </td>
           {{/unless}}
         {{/each}}
@@ -208,10 +309,8 @@
       <tr>
         <th>{{localize "mythic.armorSheet.total"}}</th>
         {{#each data.data.characteristics as |values stat|}}
-          {{#unless (eq stat "has")}}
-            <th>{{values.total}}</th>
-          {{/unless}}
-        {{/each}}          
+          {{#unless (eq stat "has")}} <th>{{values.total}}</th> {{/unless}}
+        {{/each}}
       </tr>
     </thead>
   </table>

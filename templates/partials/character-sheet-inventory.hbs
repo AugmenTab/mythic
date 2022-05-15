@@ -1,6 +1,9 @@
 <section>
-  <div class="weight-tracker" style="background:{{data.data.carryingCapacity.bar.bgBar}}">
-    <div 
+  <div
+    class="weight-tracker"
+    style="background:{{data.data.carryingCapacity.bar.bgBar}}"
+  >
+    <div
       class="encumbrance"
       style="background:{{data.data.carryingCapacity.bar.bgFill}};width:{{data.data.carryingCapacity.bar.width}}"
     >
@@ -9,7 +12,10 @@
       </p>
     </div>
   </div>
-  <p style="text-align:center"><b>{{localize (concat "mythic.characterStatBlock.capacity." data.data.carryingCapacity.bar.tier)}}</b></p>
+  <p style="text-align:center">
+    {{log data.data.carryingCapacity.bar.tier}}
+    <b>{{localize (concat "mythic.characterStatBlock.capacity." data.data.carryingCapacity.bar.tier)}}</b>
+  </p>
   <table>
     <thead>
       <tr>
@@ -24,7 +30,9 @@
     </thead>
     <thead>
       <tr>
-        <th colspan="7">{{localize "mythic.characterInventory.weapon.label"}}</th>
+        <th colspan="7">
+          {{localize "mythic.characterInventory.weapon.label"}}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -32,13 +40,17 @@
         {{> "systems/mythic/templates/partials/character-sheet-items.hbs" weapon}}
       {{else}}
         <tr>
-          <td colspan="7">{{localize "mythic.characterInventory.weapon.empty"}}</td>
+          <td colspan="7">
+            {{localize "mythic.characterInventory.weapon.empty"}}
+          </td>
         </tr>
       {{/each}}
     </tbody>
     <thead>
       <tr>
-        <th colspan="7">{{localize "mythic.characterInventory.armor.label"}}</th>
+        <th colspan="7">
+          {{localize "mythic.characterInventory.armor.label"}}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -46,13 +58,17 @@
         {{> "systems/mythic/templates/partials/character-sheet-items.hbs" armor}}
       {{else}}
         <tr>
-          <td colspan="7">{{localize "mythic.characterInventory.armor.empty"}}</td>
+          <td colspan="7">
+            {{localize "mythic.characterInventory.armor.empty"}}
+          </td>
         </tr>
       {{/each}}
     </tbody>
     <thead>
       <tr>
-        <th colspan="7">{{localize "mythic.characterInventory.equipment.label"}}</th>
+        <th colspan="7">
+          {{localize "mythic.characterInventory.equipment.label"}}
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -60,11 +76,18 @@
         {{> "systems/mythic/templates/partials/character-sheet-items.hbs" equip}}
       {{else}}
         <tr>
-          <td colspan="7">{{localize "mythic.characterInventory.equipment.empty"}}</td>
+          <td colspan="7">
+            {{localize "mythic.characterInventory.equipment.empty"}}
+          </td>
         </tr>
       {{/each}}
       <td colspan="7">
-        <textarea name="data.equipmentNotes" placeholder="Write equipment notes here.">{{data.data.equipmentNotes}}</textarea>
+        <textarea
+          name="data.equipmentNotes"
+          placeholder="{{localize "mythic.characterInventory.equipment.notes"}}"
+        >
+            {{data.data.equipmentNotes}}
+        </textarea>
       </td>
     </tbody>
     <thead>
@@ -78,7 +101,13 @@
         <th colspan="2">
           <span class="cR-field">
             cR
-            <input name="data.cR" type="number" data-dtype="Number" value="{{data.data.cR}}" onfocus="this.select()"/>
+            <input
+              name="data.cR"
+              type="number"
+              data-dtype="Number"
+              value="{{data.data.cR}}"
+              onfocus="this.select()"
+            />
           </span>
         </th>
         </th>

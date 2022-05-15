@@ -9,7 +9,9 @@
         <th>{{localize "mythic.characterEducations.details"}}</th>
         <th>{{localize "mythic.characterEducations.skill"}}</th>
         <th>{{localize "mythic.characterEducations.training"}}</th>
-        <th style="width:90px">{{localize "mythic.characterEducations.mods"}}</th>
+        <th style="width:90px">
+          {{localize "mythic.characterEducations.mods"}}
+        </th>
         <th>{{localize "mythic.characterEducations.roll"}}</th>
       </tr>
     </thead>
@@ -21,8 +23,12 @@
               <img alt="{{edu.name}}" src="{{edu.img}}"/>
               <p>{{edu.name}}</p>
               <div class="item-management">
-                <a class="item-edit" data-item-id="{{edu._id}}"><i class="clickable fas fa-edit"></i></a>
-                <a class="item-delete" data-item-id="{{edu._id}}"><i class="clickable fas fa-trash"></i></a>
+                <a class="item-edit" data-item-id="{{edu._id}}">
+                  <i class="clickable fas fa-edit"></i>
+                </a>
+                <a class="item-delete" data-item-id="{{edu._id}}">
+                  <i class="clickable fas fa-trash"></i>
+                </a>
               </div>
             </div>
           </td>
@@ -31,19 +37,29 @@
             <p>{{localize (concat "mythic.educationSheet.types." edu.data.type)}}</p>
           </td>
           <td>
-            <select class="item-edit-inline" data-field="roll.skill" data-item-id="{{edu._id}}">
+            <select
+              class="item-edit-inline"
+              data-field="roll.skill"
+              data-item-id="{{edu._id}}"
+            >
               {{#select edu.data.roll.skill}}
                 <option value="int">INT</option>
                 {{#each edu.data.skills as |skill key|}}
                   {{#if skill}}
-                    <option value="{{key}}">{{localize (concat "mythic.skillNames." key)}}</option>
+                    <option value="{{key}}">
+                      {{localize (concat "mythic.skillNames." key)}}
+                    </option>
                   {{/if}}
                 {{/each}}
               {{/select}}
             </select>
           </td>
           <td>
-            <select class="item-edit-inline" data-field="roll.training" data-item-id="{{edu._id}}">
+            <select
+              class="item-edit-inline"
+              data-field="roll.training"
+              data-item-id="{{edu._id}}"
+            >
               {{#select edu.data.roll.training}}
                 {{#each ../config.educationTraining as |value key|}}
                   <option value="{{key}}">{{localize value}}</option>
@@ -52,10 +68,17 @@
             </select>
           </td>
           <td style="width:90px">
-            <input class="item-edit-inline" data-field="roll.mods" data-item-id="{{edu._id}}" type="number" data-dtype="Number" value="{{edu.data.roll.mods}}" onfocus="this.select()"/>
+            <input
+              class="item-edit-inline"
+              data-field="roll.mods"
+              data-item-id="{{edu._id}}"
+              type="number" data-dtype="Number"
+              value="{{edu.data.roll.mods}}"
+              onfocus="this.select()"
+            />
           </td>
           <td style="width:48px">
-            <button 
+            <button
               class="education rollable"
               name="{{edu.name}}"
               value="{{edu.data.roll.roll}}"
@@ -74,7 +97,12 @@
       {{/each}}
       <tr>
         <td colspan="6">
-          <textarea name="data.educations.notes" placeholder="{{localize "mythic.characterEducations.notes"}}">{{data.data.educations.notes}}</textarea>
+          <textarea
+            name="data.educations.notes"
+            placeholder="{{localize "mythic.characterEducations.notes"}}"
+          >
+            {{data.data.educations.notes}}
+          </textarea>
         </td>
       </tr>
     </tbody>

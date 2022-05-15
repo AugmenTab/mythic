@@ -2,7 +2,9 @@
   <table>
     <thead>
       <tr>
-        <th colspan="4">{{localize "mythic.characterTalents.trainings.factionTraining"}}</th>
+        <th colspan="4">
+          {{localize "mythic.characterTalents.trainings.factionTraining"}}
+        </th>
       </tr>
       <tr>
         {{#each config.trainings.factions as |value _|}}
@@ -14,27 +16,49 @@
     <tbody>
       <tr>
         {{#each data.data.trainings.faction as |trained faction|}}
-          <td><input name="data.trainings.faction.{{faction}}" type="checkbox" {{checked trained}}/></td>
+          <td>
+            <input
+              name="data.trainings.faction.{{faction}}"
+              type="checkbox"
+              {{checked trained}}
+            />
+          </td>
         {{/each}}
-        <td><input name="data.trainings.alienTech" type="checkbox" {{checked data.data.trainings.alienTech}}/></td>
+        <td>
+          <input
+            name="data.trainings.alienTech"
+            type="checkbox"
+            {{checked data.data.trainings.alienTech}}
+          />
+        </td>
       </tr>
     </tbody>
   </table>
   <table>
     <thead>
       <tr>
-        <th colspan="4">{{localize "mythic.characterTalents.trainings.abilities"}}</th>
+        <th colspan="4">
+          {{localize "mythic.characterTalents.trainings.abilities"}}
+        </th>
       </tr>
       <tr>
         <th>{{localize "mythic.characterTalents.trainings.hth"}}</th>
         <th>{{localize "mythic.characterTalents.trainings.mac"}}</th>
         <th>{{localize "mythic.characterTalents.trainings.rapidReload"}}</th>
-        <th>{{localize "mythic.characterTalents.trainings.unarmedCombatant"}}</th>
+        <th>
+          {{localize "mythic.characterTalents.trainings.unarmedCombatant"}}
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><input name="data.trainings.weapons.hth" type="checkbox" {{checked data.data.trainings.weapons.hth}}/></td>
+        <td>
+          <input
+            name="data.trainings.weapons.hth"
+            type="checkbox"
+            {{checked data.data.trainings.weapons.hth}}
+          />
+        </td>
         <td>
           <input
             name="data.trainings.weapons.mac"
@@ -45,9 +69,19 @@
             {{checked data.data.trainings.weapons.mac}}
           />
         </td>
-        <td><input name="data.trainings.weapons.rapidReload" type="checkbox" {{checked data.data.trainings.weapons.rapidReload}}/></td>
         <td>
-          <input name="data.trainings.weapons.unarmedCombatant" type="checkbox" {{checked data.data.trainings.weapons.unarmedCombatant}}/>
+          <input
+            name="data.trainings.weapons.rapidReload"
+            type="checkbox"
+            {{checked data.data.trainings.weapons.rapidReload}}
+          />
+        </td>
+        <td>
+          <input
+            name="data.trainings.weapons.unarmedCombatant"
+            type="checkbox"
+            {{checked data.data.trainings.weapons.unarmedCombatant}}
+          />
         </td>
       </tr>
     </tbody>
@@ -55,7 +89,9 @@
   <table>
     <thead>
       <tr>
-        <th colspan="3">{{localize "mythic.characterTalents.trainings.equipmentTraining"}}</th>
+        <th colspan="3">
+          {{localize "mythic.characterTalents.trainings.equipmentTraining"}}
+        </th>
       </tr>
       <tr>
         <th>{{localize "mythic.characterTalents.trainings.equipmentGroup"}}</th>
@@ -68,7 +104,13 @@
         <tr>
           <td>{{localize (concat "mythic.trainings.equipment." group)}}</td>
           <td>{{localize (concat "mythic.trainings.examples." group)}}</td>
-          <td><input name="data.trainings.equipment.{{group}}" type="checkbox" {{checked trained}}/></td>
+          <td>
+            <input
+              name="data.trainings.equipment.{{group}}"
+              type="checkbox"
+              {{checked trained}}
+            />
+          </td>
         </tr>
       {{/each}}
     </tbody>

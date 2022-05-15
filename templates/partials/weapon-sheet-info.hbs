@@ -1,10 +1,10 @@
 <div class="weapon-details">
   <p>{{localize "mythic.weaponSheet.stats.nickname"}}</p>
-  <input name="data.nickname" type="text" value="{{data.data.nickname}}" />
+  <input name="data.nickname" type="text" value="{{data.data.nickname}}"/>
   <p>{{localize "mythic.weaponSheet.stats.type"}}</p>
-  <input name="data.type" type="text" value="{{data.data.type}}" />
+  <input name="data.type" type="text" value="{{data.data.type}}"/>
   <p>{{localize "mythic.weaponSheet.stats.ammo"}}</p>
-  <input name="data.ammo" type="text" value="{{data.data.ammo}}" />
+  <input name="data.ammo" type="text" value="{{data.data.ammo}}"/>
   <p>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</p>
   <select name="data.ammoGroup">
     {{#select data.data.ammoGroup}}
@@ -41,7 +41,11 @@
           <td>
             {{#each data.data.tags as |has name|}}
               <div>
-                <input name="data.tags.{{name}}" type="checkbox" {{checked has}}/>
+                <input
+                  name="data.tags.{{name}}"
+                  type="checkbox"
+                  {{checked has}}
+                />
                 <p>{{name}}</p>
               </div>
             {{/each}}
@@ -62,7 +66,13 @@
           {{#each data.data.fireMode as |v mode|}}
             <div>
               <p>{{localize (concat "mythic.weaponSheet.fireMode." mode)}}</p>
-              <input name="data.fireMode.{{mode}}" type="number" data-dtype="Number" value="{{v}}" onfocus="this.select()"/>
+              <input
+                name="data.fireMode.{{mode}}"
+                type="number"
+                data-dtype="Number"
+                value="{{v}}"
+                onfocus="this.select()"
+              />
             </div>
           {{/each}}
         </td>
@@ -96,15 +106,35 @@
       </td>
       <td>
         <span>
-          <input style="width:30px" name="data.ammoList.STD.diceQuantity" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.diceQuantity}}" onfocus="this.select()"/>
+          <input
+            style="width:30px"
+            name="data.ammoList.STD.diceQuantity"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.diceQuantity}}"
+            onfocus="this.select()"
+          />
           D
-          <input style="width:30px" name="data.ammoList.STD.diceValue" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.diceValue}}" onfocus="this.select()"/>
+          <input
+            style="width:30px"
+            name="data.ammoList.STD.diceValue"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.diceValue}}"
+            onfocus="this.select()"
+          />
         </span>
       </td>
       <td>
         {{#if (eq data.data.group "melee")}}
           <div class="melee-double">
-            <input name="data.ammoList.STD.baseDamage" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.baseDamage}}" onfocus="this.select()"/>
+            <input
+              name="data.ammoList.STD.baseDamage"
+              type="number"
+              data-dtype="Number"
+              value="{{data.data.ammoList.STD.baseDamage}}"
+              onfocus="this.select()"
+            />
             <p><b>&plus;</b></p>
             <select name="data.ammoList.STD.strDamage">
               {{#select data.data.ammoList.STD.strDamage}}
@@ -116,13 +146,25 @@
             </select>
           </div>
         {{else}}
-          <input name="data.ammoList.STD.baseDamage" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.baseDamage}}" onfocus="this.select()"/>
+          <input
+            name="data.ammoList.STD.baseDamage"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.baseDamage}}"
+            onfocus="this.select()"
+          />
         {{/if}}
       </td>
       <td>
         {{#if (eq data.data.group "melee")}}
           <div class="melee-double">
-            <input name="data.ammoList.STD.piercing" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.piercing}}" onfocus="this.select()"/>
+            <input
+              name="data.ammoList.STD.piercing"
+              type="number"
+              data-dtype="Number"
+              value="{{data.data.ammoList.STD.piercing}}"
+              onfocus="this.select()"
+            />
             <p><b>&plus;</b></p>
             <select name="data.ammoList.STD.strPiercing">
               {{#select data.data.ammoList.STD.strPiercing}}
@@ -133,10 +175,23 @@
             </select>
           </div>
         {{else}}
-          <input name="data.ammoList.STD.piercing" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.piercing}}" onfocus="this.select()"/>
+          <input
+            name="data.ammoList.STD.piercing"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.piercing}}"
+            onfocus="this.select()"
+          />
         {{/if}}
       </td>
-      <td><input name="data.attack.attackBonus" type="number" data-dtype="Number" value="{{data.data.attack.attackBonus}}" onfocus="this.select()"/></td>
+      <td>
+        <input
+          name="data.attack.attackBonus"
+          type="number" data-dtype="Number"
+          value="{{data.data.attack.attackBonus}}"
+          onfocus="this.select()"
+        />
+      </td>
     </tr>
   </tbody>
   <thead>
@@ -161,13 +216,30 @@
       <td>
         {{#if (eq data.data.group "ranged")}}
           <div class="range">
-            <input name="data.ammoList.STD.range.close" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.range.close}}" onfocus="this.select()"/>
+            <input
+              name="data.ammoList.STD.range.close"
+              type="number"
+              data-dtype="Number"
+              value="{{data.data.ammoList.STD.range.close}}"
+              onfocus="this.select()"
+            />
             <p><b>&mdash;</b></p>
-            <input name="data.ammoList.STD.range.long" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.range.long}}" onfocus="this.select()"/>
+            <input
+              name="data.ammoList.STD.range.long"
+              type="number"
+              data-dtype="Number"
+              value="{{data.data.ammoList.STD.range.long}}"
+              onfocus="this.select()"
+            />
             <p>m</p>
           </div>
         {{else if (eq data.data.group "melee")}}
-          <input name="data.ammoList.STD.range.close" type="number" data-dtype="Number" value="{{data.data.ammoList.STD.range.close}}"/>
+          <input
+            name="data.ammoList.STD.range.close"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.range.close}}"
+          />
         {{else if (eq data.data.group "thrown")}}
           <select name="data.ammoList.STD.range.grip">
             {{#select data.data.ammoList.STD.range.grip}}
@@ -178,10 +250,42 @@
           </select>
         {{/if}}
       </td>
-      <td><input name="data.magazineCapacity" type="number" data-dtype="Number" value="{{data.data.magazineCapacity}}" onfocus="this.select()"/></td>
-      <td><input name="data.reload.base" type="number" data-dtype="Number" value="{{data.data.reload.base}}" onfocus="this.select()"/></td>
-      <td><input name="data.price.base" type="number" data-dtype="Number" value="{{data.data.price.base}}" onfocus="this.select()"/></td>
-      <td><input name="data.weight.each" type="number" data-dtype="Number" value="{{data.data.weight.each}}" onfocus="this.select()"/></td>
+      <td>
+        <input
+          name="data.magazineCapacity"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.magazineCapacity}}"
+          onfocus="this.select()"
+        />
+      </td>
+      <td>
+        <input
+          name="data.reload.base"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.reload.base}}"
+          onfocus="this.select()"
+        />
+      </td>
+      <td>
+        <input
+          name="data.price.base"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.price.base}}"
+          onfocus="this.select()"
+        />
+      </td>
+      <td>
+        <input
+          name="data.weight.each"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.weight.each}}"
+          onfocus="this.select()"
+        />
+      </td>
     </tr>
   </tbody>
 </table>
@@ -196,11 +300,15 @@
       <td>
         {{#each data.data.special as |details name|}}
           <span>
-            <input name="data.special.{{name}}.has" type="checkbox" {{checked details.has}}/>
+            <input
+              name="data.special.{{name}}.has"
+              type="checkbox"
+              {{checked details.has}}
+            />
             <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
             {{#if details.needsInput}}
               <input
-                name="data.special.{{name}}.value" 
+                name="data.special.{{name}}.value"
                 {{#if (cond "||" (eq name "flame") (eq name "cryo"))}}
                   type="text"
                 {{else}}

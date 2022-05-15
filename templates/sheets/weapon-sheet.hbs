@@ -1,15 +1,34 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <img
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      height="64"
+      width="64"
+    />
     <h1>
-      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+      <input
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="{{localize "mythic.weaponSheet.name"}}"
+      />
     </h1>
   </header>
   <nav class="item-tabs tabs" data-group="primary">
-    <a class="item" data-tab="basic">{{localize "mythic.weaponSheet.nav.basic"}}</a>
-    <a class="item" data-tab="ammo">{{localize "mythic.weaponSheet.nav.ammo"}}</a>
-    <a class="item" data-tab="mods">{{localize "mythic.weaponSheet.nav.mods"}}</a>
-    <a class="item" data-tab="notes">{{localize "mythic.weaponSheet.nav.notes"}}</a>
+    <a class="item" data-tab="basic">
+      {{localize "mythic.weaponSheet.nav.basic"}}
+    </a>
+    <a class="item" data-tab="ammo">
+      {{localize "mythic.weaponSheet.nav.ammo"}}
+    </a>
+    <a class="item" data-tab="mods">
+      {{localize "mythic.weaponSheet.nav.mods"}}
+    </a>
+    <a class="item" data-tab="notes">
+      {{localize "mythic.weaponSheet.nav.notes"}}
+    </a>
   </nav>
   <section class="item-sheet-body">
     {{!-- Basic Info Page --}}

@@ -163,7 +163,8 @@
             },
             "equipment": {
                 "label": "Equipment",
-                "empty": "No equipment has been added yet."
+                "empty": "No equipment has been added yet.",
+                "notes": "Write equipment notes here."
             },
             "characterTotal": "Character Total Weight",
             "equipmentNotes": "Write equipment notes here.",
@@ -233,7 +234,9 @@
                 "multiplier": "Multiplier",
                 "kit": "Kit",
                 "notes": "Experience Notes",
-                "placeholder": "Write experience notes here.",
+                "expNotes": "Write experience notes here.",
+                "ability": "Purchased Ability",
+                "price": "Price",
                 "err": "The provided price could not be parsed. Please enter a whole number.",
                 "empty": "<p>No experience purchases have been made yet.</p><p>You can log any purchases you make with starting or gained experience here.</p><p>Click the Purchase button above to add an experience purchase.</p>"
             }
@@ -354,12 +357,14 @@
             "thrown": "Thrown"
         },
         "abilitySheet": {
+            "name": "Name",
             "summary": "Summary",
             "prerequisite": "Prerequisites",
             "cost": "EXP Cost",
             "type": "Type"
         },
         "armorSheet": {
+            "name": "Name",
             "nav": {
                 "basic": "Basic Info",
                 "details": "Details",
@@ -411,6 +416,7 @@
             }
         },
         "educationSheet": {
+            "name": "Name",
             "details": "Details",
             "cost": "EXP Cost",
             "difficulty": "Difficulty",
@@ -433,6 +439,7 @@
             "skills": "Applicable Skills"
         },
         "equipmentSheet": {
+            "name": "Name",
             "faction": "Faction",
             "price": "Price (cR)",
             "weight": "Weight (kg)",
@@ -512,6 +519,7 @@
             "vast": "Vast"
         },
         "weaponSheet": {
+            "name": "Name",
             "tagsLabel": "Weapon Tags",
             "groups": "Weapon Group",
             "fireMode": {

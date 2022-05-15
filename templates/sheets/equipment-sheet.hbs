@@ -1,8 +1,19 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
-    <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+    <img
+      src="{{item.img}}"
+      data-edit="img"
+      title="{{item.name}}"
+      height="64"
+      width="64"
+    />
     <h1>
-      <input name="name" type="text" value="{{item.name}}" placeholder="Name"/>
+      <input
+        name="name"
+        type="text"
+        value="{{item.name}}"
+        placeholder="{{localize "mythic.equipmentSheet.name"}}"
+      />
     </h1>
   </header>
   <table>
@@ -25,9 +36,31 @@
             {{/select}}
           </select>
         </td>
-        <td><input name="data.price.base" type="number" data-dtype="Number" value="{{data.data.price.base}}" onfocus="this.select()"/></td>
-        <td><input name="data.weight.each" type="number" data-dtype="Number" value="{{data.data.weight.each}}" onfocus="this.select()"/></td>
-        <td><input name="data.weight.selfSupported" type="checkbox" {{checked data.data.weight.selfSupported}}/></td>
+        <td>
+          <input
+            name="data.price.base"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.price.base}}"
+            onfocus="this.select()"
+          />
+        </td>
+        <td>
+          <input
+            name="data.weight.each"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.weight.each}}"
+            onfocus="this.select()"
+          />
+        </td>
+        <td>
+          <input
+            name="data.weight.selfSupported"
+            type="checkbox"
+            {{checked data.data.weight.selfSupported}}
+          />
+        </td>
       </tr>
     </tbody>
   </table>

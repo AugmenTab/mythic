@@ -2,11 +2,22 @@
   <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
   <div>
     <h1>
-      <input name="name" type="text" value="{{actor.name}}" onfocus="this.select()"/>
+      <input
+        name="name"
+        type="text"
+        value="{{actor.name}}"
+        onfocus="this.select()"
+      />
     </h1>
     <div class="flood-physical">
       <p>
-        <input name="data.soldierType" type="text" value="{{data.data.soldierType}}" placeholder="{{localize "mythic.characterDetails.soldierType"}}" onfocus="this.select()"/>
+        <input
+          name="data.soldierType"
+          type="text"
+          value="{{data.data.soldierType}}"
+          placeholder="{{localize "mythic.characterDetails.soldierType"}}"
+          onfocus="this.select()"
+        />
       </p>
       <select name="data.size">
         {{#select data.data.size}}
@@ -16,10 +27,24 @@
         {{/select}}
       </select>
       <p>
-        <input name="data.height" type="number" data-dtype="Number" value="{{data.data.height}}" placeholder="{{localize "mythic.characterDetails.height"}}" onfocus="this.select()"/>
+        <input
+          name="data.height"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.height}}"
+          placeholder="{{localize "mythic.characterDetails.height"}}"
+          onfocus="this.select()"
+        />
       </p>
       <p>
-        <input name="data.weight" type="number" data-dtype="Number" value="{{data.data.weight}}" placeholder="{{localize "mythic.characterDetails.weight"}}" onfocus="this.select()"/>
+        <input
+          name="data.weight"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.weight}}"
+          placeholder="{{localize "mythic.characterDetails.weight"}}"
+          onfocus="this.select()"
+        />
       </p>
       <div class="swarm">
         <p>{{localize "mythic.characterDetails.swarm"}}:</p>
