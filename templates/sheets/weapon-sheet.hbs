@@ -39,6 +39,16 @@
     {{!-- Special Ammo Page --}}
     <div class="tab" data-group="primary" data-tab="ammo">
       <p><b>Coming soon!</b></p>
+      <div class="weapon-details">
+        <p>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</p>
+        <select name="data.ammoGroup">
+          {{#select data.data.ammoGroup}}
+            {{#each config.ammoGroups as |value key|}}
+              <option value="{{key}}">{{localize value}}</option>
+            {{/each}}
+          {{/select}}
+        </select>
+      </div>
     </div>
 
     {{!-- Modifications Page --}}

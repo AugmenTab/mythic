@@ -12,7 +12,7 @@ export default class MythicItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "item"],
       height: 620,
-      width: 575,
+      width: 585,
       tabs: [
         {
           navSelector: ".item-tabs",

@@ -1,8 +1,28 @@
-export default async function migrateWorld() {
+export async function migrateWorld() {
   await migrateActors();
   await migrateItems();
   await migrateScenes();
   await migrateCompendia();
+}
+
+export async function migrateCauterize() {
+  for (let item of game.items) {
+    if (item.type === "weapon") {
+      let updateData = {};
+      let itemData = item.data.data;
+
+      updateData["data.ammoList.STD.critsOn"] = 10;
+      updateData["data.special.cauterize"] = {
+        "has": itemData.special.cauterize.has,
+        "needsInput": false
+      };
+
+      if (!foundry.utils.isObjectEmpty(updateData)) {
+        console.log(`Migrating Item entity ${item.name}...`);
+        await item.update(updateData);
+      }
+    }
+  }
 }
 
 function migrateActorData(actor) {
@@ -89,6 +109,10 @@ async function migrateItemData(item) {
     "value": 0,
     "needsInput": true
   };
+  updateData["data.special.cauterize"] = {
+    "has": itemData.special.cauterize.has,
+    "needsInput": false
+  };
 
   const dice = itemData.attack.damageRoll.toLowerCase().split("d");
   updateData["ammoList.STD"] = {
@@ -101,6 +125,7 @@ async function migrateItemData(item) {
     "strPiercing": itemData.attack.strPiercing,
     "target": itemData.attack.target,
     "currentMag": itemData.magazine.current,
+    "critsOn": 10,
     "range": itemData.range,
     "special": {},
     "desc": ""

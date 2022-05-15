@@ -1198,8 +1198,7 @@
                 },
                 "cauterize": {
                     "has": false,
-                    "value": 9,
-                    "needsInput": true
+                    "needsInput": false
                 },
                 "charge": {
                     "has": false,
@@ -1360,6 +1359,7 @@
                     "strPiercing": 0,
                     "target": 0,
                     "currentMag": 0,
+                    "critsOn": 10,
                     "range": {
                         "close": 0,
                         "long": 0,

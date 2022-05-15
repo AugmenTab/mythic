@@ -543,7 +543,8 @@
                 "basic": "Basic Info",
                 "ammo": "Special Ammo",
                 "mods": "Modifications",
-                "notes": "Notes"
+                "notes": "Notes",
+                "settings": "Settings"
             },
             "stats": {
                 "label": "Weapon Stats",
@@ -565,7 +566,8 @@
                 "nickname": "Nickname",
                 "faction": "Faction",
                 "factionTraining": "Faction Training",
-                "equipmentTraining": "Equipment Training"
+                "equipmentTraining": "Equipment Training",
+                "critsOn": "Crits On"
             },
             "specialRules": {
                 "label": "Weapon Special Rules",
