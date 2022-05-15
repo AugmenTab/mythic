@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+### Bug Fixes
+
+* Empties and disables the Swarms Modifier field on the Flood Actor sheet when the unit does not swarm (the "Swarms?" checkbox is unchecked).
+* Fixes a bug where the carrying capacity tier label for the bar at the top of the Inventory tab on the Named Character and Bestiary Enemy Actor sheets would break when the inventory total weight as 0 kg.
+
 ## 0.2.0
 
 ### Changes

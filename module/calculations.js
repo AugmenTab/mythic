@@ -534,7 +534,7 @@ function calculateInventoryBars(actorData) {
     actorData.data.carryingCapacity.bar.bgFill = "transparent";
     actorData.data.carryingCapacity.bar.width = "0%";
     actorData.data.carryingCapacity.bar.left = "0.3em";
-    actorData.data.carryingCapacity.bar.tier = "";
+    actorData.data.carryingCapacity.bar.tier = "carry";
   } else if (percent >= 400) {
     const adjusted = percent - 400;
     actorData.data.carryingCapacity.bar.bgBar = "darkred";
