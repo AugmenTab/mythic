@@ -1,79 +1,79 @@
 .dialog {
-    .mythic-dialog .form-group {
-        display: grid;
-        grid-template-columns: 1fr 150px;
+  .mythic-dialog .form-group {
+    display: grid;
+    grid-template-columns: 1fr 150px;
 
-        input {
-            place-self: center;
-            text-align: center;
-        }
+    input {
+      place-self: center;
+      text-align: center;
     }
+  }
 }
 
 .message-content {
-    .post-header {
-        display: inline-grid;
-        grid-template-columns: 45px auto;
-        column-gap: 8px;
-        width: 100%;
-        align-items: center;
+  .post-header {
+    display: inline-grid;
+    grid-template-columns: 45px auto;
+    column-gap: 8px;
+    width: 100%;
+    align-items: center;
 
-        img {
-            height: 45px;
-        }
+    img {
+      height: 45px;
+    }
+  }
+
+  .outcome {
+    display: grid;
+    grid-template-columns: 15px auto 1fr;
+    column-gap: 4px;
+
+    :first-child {
+      justify-self: end;
+    }
+  }
+
+  .post-attack {
+    div:not(:last-of-type) {
+      border-bottom: 2px dotted black;
     }
 
-    .outcome {
+    div:not(:first-of-type) {
+      margin-top: 0.5em;
+    }
+
+    .damage-block {
+      text-align: center;
+    }
+
+    .chat-link {
+      text-decoration: underline;
+    }
+
+    .chat-link:hover {
+      font-weight: 800;
+      text-shadow: 0 0 8px red;
+      cursor: pointer;
+    }
+
+    .special {
+      .special-damage {
         display: grid;
-        grid-template-columns: 15px auto 1fr;
-        column-gap: 4px;
+        grid-template-columns: repeat(2, 1fr);
+        place-items: center;
+        width: 100%;
+      }
 
-        :first-child {
-            justify-self: end;
-        }
+      .special-rule {
+        display: inline-block;
+        font-size: 0.75em;
+        color: white;
+        margin: 2px 1px;
+        padding: 2px;
+        border: 2px solid gray;
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
     }
-
-    .post-attack {
-        div:not(:last-of-type) {
-            border-bottom: 2px dotted black;
-        }
-
-        div:not(:first-of-type) {
-            margin-top: 0.5em;
-        }
-
-        .damage-block {
-            text-align: center;
-        }
-
-        .chat-link {
-            text-decoration: underline;
-        }
-
-        .chat-link:hover {
-            font-weight: 800;
-            text-shadow: 0 0 8px red;
-            cursor: pointer;
-        }
-
-        .special {
-            .special-damage {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                place-items: center;
-                width: 100%;
-            }
-
-            .special-rule {
-                display: inline-block;
-                font-size: 0.75em;
-                color: white;
-                margin: 2px 1px;
-                padding: 2px;
-                border: 2px solid gray;
-                border-radius: 4px;
-                background-color: rgba(0, 0, 0, 0.5);
-            }
-        }
-    }
+  }
 }

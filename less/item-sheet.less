@@ -1,139 +1,139 @@
 .mythic.sheet.item {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .editable {
     height: 100%;
-    display: flex;
-    flex-direction: column;
 
-    .editable {
+    section {
+      height: 100%;
+    }
+
+    .item-tabs {
+      padding-top: 0.3em;
+    }
+
+    .tab {
+      padding-top: 0.5em;
+      height: 100%;
+
+      .editor {
         height: 100%;
+      }
+    }
+  }
 
-        section {
-            height: 100%;
-        }
-
-        .item-tabs {
-            padding-top: 0.3em;
-        }
-
-        .tab {
-            padding-top: 0.5em;
-            height: 100%;
-
-            .editor {
-                height: 100%;
-            }
-        }
+  .armor-tables {
+    .armor-locations {
+      td:not(:first-of-type) {
+        width: 75px;
+      }
     }
 
-    .armor-tables {
-        .armor-locations {
-            td:not(:first-of-type) {
-                width: 75px;
-            }
-        }
-
-        .armor-shields {
-            td:not(:first-of-type) {
-                width: 100px;
-            }
-        }
-
-        .armor-stats {
-            td:not(:first-of-type) {
-                width: 100px;
-            }
-        }
-
-        div {
-            height: 0.1em;
-        }
+    .armor-shields {
+      td:not(:first-of-type) {
+        width: 100px;
+      }
     }
 
-    .weapon-details {
+    .armor-stats {
+      td:not(:first-of-type) {
+        width: 100px;
+      }
+    }
+
+    div {
+      height: 0.1em;
+    }
+  }
+
+  .weapon-details {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    column-gap: 12px;
+    padding-top: 4px;
+
+    p {
+      text-align: end;
+    }
+  }
+
+  .weapon-core {
+    display: grid;
+    grid-template-columns: 38% 60%;
+    column-gap: 2%;
+
+    td {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 4px;
+
+      div {
         display: grid;
-        grid-template-columns: repeat(4, auto);
-        column-gap: 12px;
-        padding-top: 4px;
-
-        p {
-            text-align: end;
-        }
-    }
-
-    .weapon-core {
-        display: grid;
-        grid-template-columns: 38% 60%;
-        column-gap: 2%;
-
-        td {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            column-gap: 4px;
-
-            div {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                column-gap: 4px;
-                place-items: center;
-
-                input {
-                    width: 40px
-                }
-            }
-        }
-    }
-
-    .weapon-info {
-        td:nth-of-type(1) div {
-            display: grid;
-            grid-template-columns: repeat(2, auto 1fr);
-        }
-
-        td:nth-of-type(2) div {
-            display: grid;
-            grid-template-columns: auto 1fr;
-        }
-    }
-
-    .melee-double {
-        display: grid;
-        grid-template-columns: 45px auto auto;
-        column-gap: 2px;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 4px;
         place-items: center;
+
+        input {
+          width: 40px
+        }
+      }
+    }
+  }
+
+  .weapon-info {
+    td:nth-of-type(1) div {
+      display: grid;
+      grid-template-columns: repeat(2, auto 1fr);
     }
 
-    .range {
+    td:nth-of-type(2) div {
+      display: grid;
+      grid-template-columns: auto 1fr;
+    }
+  }
+
+  .melee-double {
+    display: grid;
+    grid-template-columns: 45px auto auto;
+    column-gap: 2px;
+    place-items: center;
+  }
+
+  .range {
+    display: grid;
+    grid-template-columns: 50px auto 65px auto;
+    column-gap: 2px;
+    padding: 0 4px;
+  }
+
+  .special-rules {
+    td {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      column-gap: 10px;
+
+      span {
         display: grid;
-        grid-template-columns: 50px auto 65px auto;
-        column-gap: 2px;
-        padding: 0 4px;
+        grid-template-columns: 30px auto 45px;
+      }
     }
+  }
 
-    .special-rules {
-        td {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            column-gap: 10px;
+  .skill-list {
+    td {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 4px;
 
-            span {
-                display: grid;
-                grid-template-columns: 30px auto 45px;
-            }
-        }
+      div {
+        display: grid;
+        grid-template-columns: 25px auto;
+        column-gap: 8px;
+        align-items: center;
+        justify-items: start;
+      }
     }
-
-    .skill-list {
-        td {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            column-gap: 4px;
-
-            div {
-                display: grid;
-                grid-template-columns: 25px auto;
-                column-gap: 8px;
-                align-items: center;
-                justify-items: start;
-            }
-        }
-    }
+  }
 }
