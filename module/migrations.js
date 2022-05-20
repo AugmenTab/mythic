@@ -17,6 +17,14 @@ export async function migrateCauterize() {
         "needsInput": false
       };
 
+      updateData["data.settings"] = {
+        "firearmType": "firearms",
+        "barrel": "xs",
+        "bulletDiameter": 0.0,
+        "caseLength": 0,
+        "singleUse": false
+      };
+
       if (!foundry.utils.isObjectEmpty(updateData)) {
         console.log(`Migrating Item entity ${item.name}...`);
         await item.update(updateData);
