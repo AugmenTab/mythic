@@ -1370,6 +1370,13 @@
                     "special": {},
                     "desc": ""
                 }
+            },
+            "settings": {
+              "firearmType": "firearms",
+              "barrel": "xs",
+              "bulletDiameter": 0.0,
+              "caseLength": 0,
+              "singleUse": false
             }
         }
     }

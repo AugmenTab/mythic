@@ -40,7 +40,8 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/flood-items.hbs",
     "systems/mythic/templates/partials/flood-settings.hbs",
     "systems/mythic/templates/partials/flood-stat-block.hbs",
-    "systems/mythic/templates/partials/weapon-sheet-info.hbs"
+    "systems/mythic/templates/partials/weapon-sheet-info.hbs",
+    "systems/mythic/templates/partials/weapon-sheet-settings.hbs"
   ];
   return loadTemplates(templatePaths);
 }

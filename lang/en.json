@@ -604,6 +604,61 @@
                 "tearGas": "Tear Gas",
                 "tranquilize": "Tranquilize",
                 "vehicleLock": "Vehicle Lock"
+            },
+            "settings": {
+                "context": {
+                    "blurb": "The context for these fields can be found here",
+                    "linkText": "100DOS and Mythic Development Tools",
+                    "link": "https://docs.google.com/spreadsheets/d/1e5gepoZg_IZvupVw-rCKNMz42xMxGlF--oJluaa9Ljo/edit?usp=sharing"
+                },
+                "firearmType": {
+                    "field": "Firearm Type",
+                    "firearms": "Firearms",
+                    "cannons": "Cannons",
+                    "shotguns": "Shotguns"
+                },
+                "firearmTypeDescriptions": {
+                    "firearms": "Firearms are the standard setting and allow up to 20x200mm in size. These cover pistols, SMGs, Rifles, Snipers, etc.",
+                    "cannons": "Cannons are the largest and cover autocannons, cannons, and artillery.",
+                    "shotguns": "Shotguns cover shotguns."
+                },
+                "barrel": {
+                    "field": "Firearm Barrel",
+                    "xs": "Extra-Small",
+                    "s": "Small",
+                    "m": "Medium",
+                    "l": "Large",
+                    "xl": "Extra-Large",
+                    "xxl": "Extreme"
+                },
+                "barrelLengths": {
+                    "xs": "11 cm and smaller",
+                    "s": "12 cm - 35 cm",
+                    "m": "36 cm - 40 cm",
+                    "l": "41 cm - 200 cm",
+                    "xl": "201 cm - 548 cm",
+                    "xxl": "549 cm and larger"
+                },
+                "barrelDescriptions": {
+                    "xs": "Derringers, small pistols, cut-down SMGs",
+                    "s": "Standard and larger pistol barrels, SMGs, short-barrel carbines",
+                    "m": "Shotguns, rifles, carbines, short-barrel LMGs",
+                    "l": "Snipers, machine guns, LMGs",
+                    "xl": "Autocannons, short cannons",
+                    "xxl": "Cannons, long-barrel autocannons, artillery"
+                },
+                "bulletDiameter": {
+                    "field": "Bullet Diameter",
+                    "description": "Diameter of the bullet in millimeters, or gauge of the shotgun shell."
+                },
+                "caseLength": {
+                    "field": "Case Length",
+                    "description": "Length of the case in millimeters."
+                },
+                "singleUse": {
+                    "field": "Single Use",
+                    "description": "Given to explosives that can only be used once, such as grenades."
+                }
             }
         },
         "trainings": {

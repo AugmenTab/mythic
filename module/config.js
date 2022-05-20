@@ -330,3 +330,32 @@ mythic.characteristic = {
   ch: "CH",
   ld: "LD"
 }
+
+mythic.weaponSettings = {
+  firearmType: {
+    firearms: "mythic.weaponSheet.settings.firearmType.firearms",
+    cannons: "mythic.weaponSheet.settings.firearmType.cannons",
+    shotguns: "mythic.weaponSheet.settings.firearmType.shotguns"
+  },
+  firearmTypeDescriptions: {
+    firearms: "mythic.weaponSheet.settings.firearmTypeDescriptions.firearms",
+    cannons: "mythic.weaponSheet.settings.firearmTypeDescriptions.cannons",
+    shotguns: "mythic.weaponSheet.settings.firearmTypeDescriptions.shotguns"
+  },
+  barrel: {
+    xs: "mythic.weaponSheet.settings.barrel.xs",
+    s: "mythic.weaponSheet.settings.barrel.s",
+    m: "mythic.weaponSheet.settings.barrel.m",
+    l: "mythic.weaponSheet.settings.barrel.l",
+    xl: "mythic.weaponSheet.settings.barrel.xl",
+    xxl: "mythic.weaponSheet.settings.barrel.xxl",
+  },
+  barrelDescriptions: {
+    xs: "mythic.weaponSheet.settings.barrelDescriptions.xs",
+    s: "mythic.weaponSheet.settings.barrelDescriptions.s",
+    m: "mythic.weaponSheet.settings.barrelDescriptions.m",
+    l: "mythic.weaponSheet.settings.barrelDescriptions.l",
+    xl: "mythic.weaponSheet.settings.barrelDescriptions.xl",
+    xxl: "mythic.weaponSheet.settings.barrelDescriptions.xxl",
+  }
+}
