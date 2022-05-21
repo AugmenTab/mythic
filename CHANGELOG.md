@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.2
+
+### Bug Fixes
+
+* Fixes a bug where `textarea` elements were adding unnecessary whitespace.
+* Exposes system setting to choose which edition of Mythic's rules for the Strong Back ability to use.
+
 ## 0.2.1
 
 ### Bug Fixes

@@ -2,7 +2,7 @@
     "name": "mythic",
     "title": "Mythic 5.0",
     "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "author": "Tyler Baum",
     "authors": [
         {

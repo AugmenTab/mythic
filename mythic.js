@@ -55,7 +55,7 @@ function registerSystemSettings() {
     config: false,
     scope: "world",
     type: String,
-    default: "0.2.1"
+    default: "0.2.2"
   });
 
   // Critical Failure Threshold
@@ -88,18 +88,18 @@ function registerSystemSettings() {
     default: "special"
   });
 
-  // Strong Back Version (set config to true & default to v45 on release of 4.5)
+  // Strong Back Version
   game.settings.register("mythic", "strongBackVersion", {
-    config: false,
+    config: true,
     scope: "world",
     name: "SETTINGS.strongBackVersion.name",
     hint: "SETTINGS.strongBackVersion.label",
     type: String,
     choices: {
       "v40": "Mythic 4.0",
-      "v45": "Mythic 4.5"
+      "v45": "Mythic 4.5+"
     },
-    default: "v40"
+    default: "v45"
   });
 
   // Flood Contamination Level
