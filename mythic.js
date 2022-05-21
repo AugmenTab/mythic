@@ -3,7 +3,7 @@
 import { mythic } from "./module/config.js";
 import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
-import { migrateCauterize, migrateWorld } from "./module/migrations.js";
+import { migrateCauterize, migrateV2_1, migrateWorld } from "./module/migrations.js";
 import MythicActor from "./module/MythicActor.js";
 import MythicCombat from "./module/MythicCombat.js";
 import MythicItem from "./module/MythicItem.js";
@@ -55,7 +55,7 @@ function registerSystemSettings() {
     config: false,
     scope: "world",
     type: String,
-    default: ""
+    default: "0.2.1"
   });
 
   // Critical Failure Threshold
@@ -150,7 +150,7 @@ function registerSystemSettings() {
 
 /** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */
 Hooks.once("init", function() {
-  console.log("mythic | Initializing Mythic 4.0 System");
+  console.log("mythic | Initializing Mythic 5.0 System");
 
   CONFIG.mythic = mythic;
   CONFIG.Actor.documentClass = MythicActor;
@@ -175,11 +175,14 @@ Hooks.once("init", function() {
 Hooks.once("ready", function () {
   if (game.user.isGM) {
     const current = game.settings.get("mythic", "systemMigrationVersion");
+
+    migrateCauterize();
     if (!current) {
       if (isNewerVersion("0.01", current)) migrateWorld();
-      if (isNewerVersion ("0.2.1", current)) migrateCauterize();
+      if (isNewerVersion("0.2.1", current)) migrateV2_1();
     }
   }
+
   game.settings.set("mythic", "systemMigrationVersion", game.system.data.version);
 });
 

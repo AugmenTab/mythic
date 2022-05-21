@@ -4,9 +4,10 @@
 
 ### Bug Fixes
 
-* Empties and disables the Swarms Modifier field on the Flood Actor sheet when the unit does not swarm (the "Swarms?" checkbox is unchecked).
-* Fixes a bug where the carrying capacity tier label for the bar at the top of the Inventory tab on the Named Character and Bestiary Enemy Actor sheets would break when the inventory total weight as 0 kg.
+* Empties and disables the Swarm Modifier field on the Flood Actor sheet when the unit does not swarm (the "Swarms?" checkbox is unchecked).
+* Fixes a bug where the carrying capacity tier label for the bar at the top of the Inventory tab on the Named Character and Bestiary Enemy Actor sheets would break when the inventory total weight is 0 kg.
 * Updates the Cauterize special rule on the Weapon Item sheet for the new 5.0 rules. This means removing the numerical value it carried that previously represented the die result required to score a critical hit for a given weapon.
+* Adds a few fields to the Weapon Item that may be required in the future. These are on a new Settings tab, and have no bearing on play.
 
 ## 0.2.0
 

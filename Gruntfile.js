@@ -23,7 +23,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: RELEASE_PATH,
           src: "**/*",
-          dest: "/"
+          dest: "/mythic"
         }]
       }
     },

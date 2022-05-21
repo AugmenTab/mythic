@@ -9,6 +9,24 @@ export async function migrateCauterize() {
   for (let item of game.items) {
     if (item.type === "weapon") {
       let updateData = {};
+
+      updateData["data.special.cauterize"] = {
+        "has": item.data.data.special.cauterize.has,
+        "needsInput": false
+      };
+
+      if (!foundry.utils.isObjectEmpty(updateData)) {
+        console.log(`Migrating Item entity ${item.name}...`);
+        await item.update(updateData);
+      }
+    }
+  }
+};
+
+export async function migrateV2_1() {
+  for (let item of game.items) {
+    if (item.type === "weapon") {
+      let updateData = {};
       let itemData = item.data.data;
 
       updateData["data.ammoList.STD.critsOn"] = 10;
