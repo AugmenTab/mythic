@@ -1,0 +1,22 @@
+<div>
+  <table style="text-align:center">
+    <thead>
+      <tr>
+        <th>{{localize "mythic.chat.factions.faction"}}</th>
+        <th>{{localize "mythic.chat.factions.isTrained"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each this.data.data.trainings.faction as |has faction|}}
+        <tr>
+          <td>{{localize (concat "mythic.trainings.factions." faction)}}</td>
+          {{#if has}}
+            <td><i class="fas fa-check"></i></td>
+          {{else}}
+            <td><i class="fas fa-times"></i></td>
+          {{/if}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
