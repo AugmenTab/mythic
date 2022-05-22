@@ -118,7 +118,13 @@
   {{#unless (eq actor.type "Flood")}}
     <div class="languages">
       <div>
-        <h2>{{localize "mythic.characterTalents.trainings.languages"}}</h2>
+        <h2>
+          {{localize "mythic.characterTalents.trainings.languages"}}
+          &nbsp;&nbsp;
+          <a class="postable-details" data-roll="lang">
+            <i class="clickable fas fa-dice-d20"></i>
+          </a>
+        </h2>
         <div>
           {{#each data.data.trainings.languages}}
             <span class="language clickable lang-remove" data-lang="{{this}}">

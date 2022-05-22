@@ -314,6 +314,10 @@
                 "parseFailure": "The provided roll modifiers could not be parsed. Please try again, entering only whole numbers, the '+' symbol, and the '-' symbol."
             },
             "evade": "Batched Evasions",
+            "lang": {
+                "flavor": "Known Languages",
+                "empty": "This character speaks no languages."
+            },
             "options": {
                 "circumstance": "Circumstance Modifier",
                 "targetVehicle": "Target is a Vehicle?",

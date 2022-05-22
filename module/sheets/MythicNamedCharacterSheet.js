@@ -85,7 +85,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
     html.find(".lang-add").click(this._onLanguageAdd.bind(this));
     html.find(".lang-remove").click(this._onLanguageRemove.bind(this));
-    html.find(".postable").click(this._onPostItem.bind(this));
+    html.find(".postable-details").click(this._onPostDetails.bind(this));
+    html.find(".postable-item").click(this._onPostItem.bind(this));
     html.find(".recharge").click(this._onShieldRecharge.bind(this));
     html.find(".reload").click(this._onReload.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
@@ -215,6 +216,20 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       const val = parseInt(element.value);
       await item.update({ [key]: isNaN(val) ? element.value : val });
     }
+  }
+
+  async _onPostDetails(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const postable = element.dataset.roll;
+    const template = `systems/mythic/templates/chat/postable-${postable}.hbs`;
+    console.log(template);
+    await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: game.i18n.localize(`mythic.chat.${postable}.flavor`),
+      content: await renderTemplate(template, this.actor)
+    });
   }
 
   async _onPostItem(event) {
