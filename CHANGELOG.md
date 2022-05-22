@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3
+
+## Changes
+
+* Known languages can now be removed from a character simply by clicking on them.
+
 ## 0.2.2
 
 ### Bug Fixes

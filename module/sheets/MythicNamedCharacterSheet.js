@@ -16,7 +16,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "namedCharacter", "character"],
-      height: 735,
+      height: 745,
       width: 800,
       tabs: [
         {
@@ -83,8 +83,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
-    html.find(".lang-add").click(this._onLanguageUpdate.bind(this));
-    html.find(".lang-remove").click(this._onLanguageUpdate.bind(this));
+    html.find(".lang-add").click(this._onLanguageAdd.bind(this));
+    html.find(".lang-remove").click(this._onLanguageRemove.bind(this));
     html.find(".postable").click(this._onPostItem.bind(this));
     html.find(".recharge").click(this._onShieldRecharge.bind(this));
     html.find(".reload").click(this._onReload.bind(this));
@@ -141,10 +141,10 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (event.keyCode === 13) this._onExpApply(event);
   }
 
-  async _onLanguageUpdate(event) {
+  async _onLanguageAdd(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const field = document.getElementById("lang-input");
+    let field = document.getElementById("lang-input");
     if (field.value === "") {
       ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.emptyLang"));
       return;
@@ -152,18 +152,29 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
     let data = duplicate(this.actor.data);
     let langs = new Set(data.data.trainings.languages);
-    if (element.classList[0] === "lang-add") {
-      if (langs.has(field.value)) {
-        ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.hasLang"));
-        return;
-      } else langs.add(field.value);
-    } else if (element.classList[0] === "lang-remove") {
-      if (langs.has(field.value)) {
-        langs.delete(field.value);
-      } else {
-        ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.noLang"));
-        return;
-      }
+    if (langs.has(field.value)) {
+      ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.hasLang"));
+      field.value = "";
+      return;
+    } else {
+      langs.add(field.value);
+    }
+    data.data.trainings.languages = [...langs];
+    await this.actor.update(data);
+  }
+
+  async _onLanguageRemove(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const lang = element.dataset.lang;
+
+    let data = duplicate(this.actor.data);
+    let langs = new Set(data.data.trainings.languages);
+    if (langs.has(lang)) {
+      langs.delete(lang);
+    } else {
+      ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.noLang"));
+      return;
     }
     data.data.trainings.languages = [...langs];
     await this.actor.update(data);

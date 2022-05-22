@@ -280,7 +280,7 @@
                 "unarmedCombatant": "Unarmed Combatant?",
                 "languages": "Languages",
                 "addLanguage": "Add Language",
-                "removeLanguage": "Remove Language",
+                "removeLanguage": "Click languages to remove them.",
                 "noLang": "No languages exist by that name for this character.",
                 "emptyLang": "Please enter a language.",
                 "hasLang": "This character already knows that language."
