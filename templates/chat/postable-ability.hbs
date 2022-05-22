@@ -3,5 +3,25 @@
     <img alt="{{this.name}}" src="{{this.img}}"/>
     {{this.name}}
   </h1>
+  <table>
+    <thead>
+      <tr>
+        {{log this}}
+        <th>{{localize "mythic.abilitySheet.type"}}</th>
+        <th>{{localize "mythic.abilitySheet.cost"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{localize (concat "mythic.characterTalents.abilities.type." this.data.type)}}</td>
+        <td>{{localnum this.data.cost}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    <b>{{localize "mythic.abilitySheet.prerequisite"}}:</b>
+    &nbsp;
+    {{this.data.prerequisite}}
+  </p>
   {{{this.data.description}}}
 </div>

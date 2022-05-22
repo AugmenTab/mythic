@@ -5,6 +5,9 @@
 ## Changes
 
 * Known languages can now be removed from a character simply by clicking on them.
+* The following were given post-to-chat functionality:
+  * Known Languages
+  * Faction Trainings
 
 ## 0.2.2
 
