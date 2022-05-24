@@ -46,7 +46,16 @@ Handlebars.registerHelper("cond", function(...var_args) {
 });
 
 /**
- * Translated a number into a string representation of that number in the local format.
+ * Determine if an object is "empty" - contains only false or null values.
+ * @param {object} data - The data object to check for emptiness.
+ * @returns {boolean} Whehther or not the object is empty.
+ */
+Handlebars.registerHelper("isEmptyDataObject", function(data) {
+  return Object.values(data).every(x => x === null || !x);
+});
+
+/**
+ * Translates a number into a string representation of that number in the local format.
  * @param {number} num - The number to be converted.
  * @returns {string} The string representing the provided number in local format.
  */

@@ -8,6 +8,7 @@
 * The following were given post-to-chat functionality:
   * Known Languages
   * Faction Trainings
+  * Equipment Trainings
 
 ## 0.2.2
 

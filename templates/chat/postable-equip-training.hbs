@@ -1,0 +1,16 @@
+<div>
+  {{#if (isEmptyDataObject data.data.trainings.equipment)}}
+    <p>This character has no equipment trainings.</p>
+  {{else}}
+    <ul>
+      {{#each data.data.trainings.equipment as |trained group|}}
+        {{#if trained}}
+          <li>
+            <b>{{localize (concat "mythic.trainings.equipment." group)}}:&nbsp;</b>
+            {{localize (concat "mythic.trainings.examples." group)}}
+          </li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>
