@@ -1,6 +1,7 @@
 /** @module chat */
 
 import { calculateCharacteristicModifier } from "./calculations.js";
+import { localize, makeUIError } from "./common.js";
 
 /**
  * Add event listeners to chat messages.
@@ -52,15 +53,15 @@ async function getScatterOptions(degrees = 0) {
   const html = await renderTemplate(template, {dof: degrees});
   return new Promise(resolve => {
     const data = {
-      title: game.i18n.localize("mythic.chat.scatter.title"),
+      title: localize("mythic.chat.scatter.title"),
       content: html,
       buttons: {
         roll: {
-          label: game.i18n.localize("mythic.chat.actions.roll"),
+          label: localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processTestOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          label: localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -74,18 +75,18 @@ async function getScatterOptions(degrees = 0) {
 async function getSpecialOptions(rule) {
   const template = "systems/mythic/templates/chat/special-rule-dialog.hbs";
   const html = await renderTemplate(template, {rule: rule});
-  const name = game.i18n.localize("mythic.weaponSheet.specialRules." + rule);
+  const name = localize("mythic.weaponSheet.specialRules." + rule);
   return new Promise(resolve => {
     const data = {
-      title: `${game.i18n.localize("mythic.chat.special.title")}: ${name}`,
+      title: `${localize("mythic.chat.special.title")}: ${name}`,
       content: html,
       buttons: {
         roll: {
-          label: game.i18n.localize("mythic.chat.actions.roll"),
+          label: localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processSpecialOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          label: localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -101,7 +102,7 @@ async function onScatter(event) {
   const options = await getScatterOptions(element.dataset.dof);
   if (options.cancelled) return;
   if (isNaN(distance) || isNaN(dof)) {
-    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    makeUIError("mythic.chat.error.nan");
     options.cancelled = true;
   }
   if (!options.cancelled) {
@@ -134,7 +135,7 @@ async function onSpecial(event) {
     ? await getSpecialOptions(element.dataset.rule) : { cancelled: false };
   if (options.cancelled) return;
   if (element.dataset.rule !== "needle" && isNaN(options.hits)) {
-    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    makeUIError("mythic.chat.error.nan");
   } else {
     const formula = element.dataset.formula.toLowerCase().split("d");
     let newFormula = "";

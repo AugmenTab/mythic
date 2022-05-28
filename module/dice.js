@@ -2,6 +2,7 @@
 
 import { calculateCharacteristicModifier } from "./calculations.js";
 import { buildChatMessageContent, postChatMessage } from "./chat.js";
+import { localize, makeUIError } from "./common.js";
 import { determineHitLocation } from "./location.js";
 
 const CHARACTERISTICS = {
@@ -25,12 +26,11 @@ const FORMULA = "D100";
  */
 export function interpretDiceRollModifiers(str) {
   let re = /\s*[+\-]?\s*\d+\s*/g;
-  let mods = str.trim().match(re);
+  let mods = str.trim().match(re) || [0];
   let num = 0;
   for (let mod of mods) num += parseInt(mod);
   if (isNaN(num)) {
-    const msg = game.i18n.localize("mythic.chat.error.parseFailure");
-    ui.notifications.error(msg);
+    makeUIError("mythic.chat.error.parseFailure");
     throw new Error(msg);
   } else return num;
 }
@@ -45,7 +45,7 @@ export async function rollAttacks(element, actor, weapon) {
   let mod = 0;
   if (!attackOptions.cancelled) mod = interpretDiceRollModifiers(attackOptions.circumstance);
   if (isNaN(mod)) {
-    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    makeUIError("mythic.chat.error.nan");
     attackOptions.cancelled = true;
   }
   if (!attackOptions.cancelled) {
@@ -65,7 +65,7 @@ export async function rollEvasionBatch(element, actor) {
     return;
   } else mod = interpretDiceRollModifiers(options.circumstance);
   if (isNaN(mod) || isNaN(options.penalty) || isNaN(options.times)) {
-    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    makeUIError("mythic.chat.error.nan");
     options.cancelled = true;
   }
   if (!options.cancelled) await rollEvasions(parseInt(element.value) + mod, options, actor);
@@ -89,7 +89,7 @@ export async function rollTest(element, actor) {
   let mod = 0;
   if (!testOptions.cancelled) mod = interpretDiceRollModifiers(testOptions.circumstance);
   if (isNaN(mod)) {
-    ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+    makeUIError("mythic.chat.error.nan");
     testOptions.cancelled = true;
   }
   if (!testOptions.cancelled) {
@@ -161,10 +161,10 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) 
 
 function getAttackFlavor(group, type, fireMode) {
   let message = `${capitalize(group)} ${capitalize(type)}
-  ${game.i18n.localize("mythic.chat.attack.title")}`;
+  ${localize("mythic.chat.attack.title")}`;
   if (group === "ranged") {
     message += " - ";
-    message += game.i18n.localize(`mythic.weaponSheet.fireMode.${fireMode}`);
+    message += localize(`mythic.weaponSheet.fireMode.${fireMode}`);
   }
   return message;
 }
@@ -178,11 +178,11 @@ async function getAttackRollOptions() {
       content: html,
       buttons: {
         roll: {
-          label: game.i18n.localize("mythic.chat.actions.roll"),
+          label: localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processAttackOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          label: localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -202,11 +202,11 @@ async function getEvadeOptions() {
       content: html,
       buttons: {
         roll: {
-          label: game.i18n.localize("mythic.chat.actions.roll"),
+          label: localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processEvadeOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          label: localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -253,11 +253,11 @@ async function getTestOptions(test) {
       content: html,
       buttons: {
         roll: {
-          label: game.i18n.localize("mythic.chat.actions.roll"),
+          label: localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processTestOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: game.i18n.localize("mythic.chat.actions.cancel"),
+          label: localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -337,7 +337,7 @@ async function rollBasicTest(target, test, type, actor) {
     critical: false,
     outcome: "",
     template: "test",
-    flavor: `${test} ${game.i18n.localize("mythic.chat.test.title")}`,
+    flavor: `${test} ${localize("mythic.chat.test.title")}`,
     ...outcome
   };
   await postChatMessage(result, actor);
@@ -346,7 +346,7 @@ async function rollBasicTest(target, test, type, actor) {
 async function rollEvasions(baseTarget, options, actor) {
   let result = {
     evasions: [],
-    flavor: `${game.i18n.localize("mythic.skillNames.evasion")} (AGI) ${game.i18n.localize("mythic.chat.test.title")}`,
+    flavor: `${localize("mythic.skillNames.evasion")} (AGI) ${localize("mythic.chat.test.title")}`,
     type: "test",
     template: "evade"
   };
@@ -372,7 +372,7 @@ async function rollInitiative(element, mod, actor) {
     const result = await roll.roll({ async: true });
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: actor }),
-      flavor: game.i18n.localize("mythic.characterWeaponSummary.initiative")
+      flavor: localize("mythic.characterWeaponSummary.initiative")
     });
   }
 }

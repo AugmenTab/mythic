@@ -1,6 +1,7 @@
 /** @module MythicNamedCharacterSheet */
 
 import { setupExperiencePurchases, sortAndFilterItems } from "../calculations.js";
+import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /**
@@ -105,7 +106,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const val = Math.floor(parseInt(field.value));
     data.data.experience.total += (!isNaN(val)) ? val : 0;
     if (isNaN(parseInt(field.value))) {
-      ui.notifications.error(game.i18n.localize("mythic.chat.error.nan"));
+      makeUIError("mythic.chat.error.nan");
     }
     await this.actor.update(data);
   }
@@ -147,14 +148,14 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     let field = document.getElementById("lang-input");
     if (field.value === "") {
-      ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.emptyLang"));
+      makeUIError("mythic.characterTalents.trainings.emptyLang");
       return;
     }
 
     let data = duplicate(this.actor.data);
     let langs = new Set(data.data.trainings.languages);
     if (langs.has(field.value)) {
-      ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.hasLang"));
+      makeUIError("mythic.characterTalents.trainings.hasLang");
       field.value = "";
       return;
     } else {
@@ -174,7 +175,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (langs.has(lang)) {
       langs.delete(lang);
     } else {
-      ui.notifications.error(game.i18n.localize("mythic.characterTalents.trainings.noLang"));
+      makeUIError("mythic.characterTalents.trainings.noLang");
       return;
     }
     data.data.trainings.languages = [...langs];
@@ -226,7 +227,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: game.i18n.localize(`mythic.chat.${postable}.flavor`),
+      flavor: localize(`mythic.chat.${postable}.flavor`),
       content: await renderTemplate(template, this.actor)
     });
   }
@@ -239,7 +240,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: game.i18n.localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
+      flavor: localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
       content: await renderTemplate(template, item.data)
     });
   }

@@ -1,4 +1,5 @@
 import { sortAndFilterItems } from "../calculations.js";
+import { localize } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 export default class MythicFloodCharacterSheet extends ActorSheet {
@@ -113,7 +114,7 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: game.i18n.localize(`mythic.chat.${postable}.flavor`),
+      flavor: localize(`mythic.chat.${postable}.flavor`),
       content: await renderTemplate(template, this.actor)
     });
   }
@@ -126,7 +127,7 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: game.i18n.localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
+      flavor: localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
       content: await renderTemplate(template, item.data)
     });
   }
