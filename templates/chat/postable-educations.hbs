@@ -1,0 +1,15 @@
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td class="education-list-chat">
+          {{#each (itemsOfType "education" this.data.items) as |edu|}}
+            <div>{{edu.name}}</div>
+          {{else}}
+            <div>{{localize "mythic.chat.educations.empty"}}</div>
+          {{/each}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

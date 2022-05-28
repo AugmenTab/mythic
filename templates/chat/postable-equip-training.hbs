@@ -1,6 +1,6 @@
 <div>
   {{#if (isEmptyDataObject data.data.trainings.equipment)}}
-    <p>This character has no equipment trainings.</p>
+    <p>{{localize "mythic.chat.equip-training.empty"}}</p>
   {{else}}
     <ul>
       {{#each data.data.trainings.equipment as |trained group|}}

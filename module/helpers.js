@@ -55,6 +55,16 @@ Handlebars.registerHelper("isEmptyDataObject", function(data) {
 });
 
 /**
+ * Filter a list of Items to get only those of a requested type.
+ * @param {string} type - The type of item desired.
+ * @param {Array.<object>} items - The list of Items.
+ * @returns {Array.<object>} The list of Items matching the requested type.
+ */
+Handlebars.registerHelper("itemsOfType", function(type, items) {
+  return items.filter(x => x.type === type);
+});
+
+/**
  * Translates a number into a string representation of that number in the local format.
  * @param {number} num - The number to be converted.
  * @returns {string} The string representing the provided number in local format.

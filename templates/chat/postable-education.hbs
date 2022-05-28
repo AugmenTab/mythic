@@ -1,5 +1,4 @@
 <div>
-  {{log this}}
   <h1 class="post-header">
     <img alt="{{this.name}}" src="{{this.img}}"/>
     {{this.name}}
@@ -34,7 +33,7 @@
     </thead>
     <tbody>
       <tr>
-        <td class="applicable-skills-chat">
+        <td class="education-list-chat">
           {{#if (isEmptyDataObject this.data.skills)}}
             <div>{{localize "mythic.chat.education.empty"}}</div>
           {{else}}

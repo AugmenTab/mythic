@@ -242,7 +242,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       flavor: localize(getPostableItemFlavorPath(item)),
-      // flavor: localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
       content: await renderTemplate(template, item.data)
     });
   }

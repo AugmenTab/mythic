@@ -318,10 +318,12 @@
                 "empty": "This Education is not linked to any Skills."
             },
             "educations": {
-                "flavor": "Educations"
+                "flavor": "Educations",
+                "empty": "This character has no Educations."
             },
             "equip-training": {
-                "flavor": "Equipment Trainings"
+                "flavor": "Equipment Trainings",
+                "empty": "This character has no equipment trainings."
             },
             "evade": "Batched Evasions",
             "factions": {

@@ -113,7 +113,6 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const postable = element.dataset.roll;
     const template = `systems/mythic/templates/chat/postable-${postable}.hbs`;
-    console.log(template);
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
