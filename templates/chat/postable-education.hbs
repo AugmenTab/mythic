@@ -1,0 +1,51 @@
+<div>
+  {{log this}}
+  <h1 class="post-header">
+    <img alt="{{this.name}}" src="{{this.img}}"/>
+    {{this.name}}
+  </h1>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">{{localize "mythic.educationSheet.details"}}</th>
+        <th colspan="2">{{localize "mythic.educationSheet.cost"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.educationSheet.difficulty"}}</th>
+        <th>{{localize "mythic.educationSheet.type"}}</th>
+        <th>+5</th>
+        <th>+10</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{localize (concat "mythic.educationSheet.difficulties." this.data.difficulty)}}</td>
+        <td>{{localize (concat "mythic.educationSheet.types." this.data.type)}}</td>
+        <td>{{localnum this.data.cost.plus5}}</td>
+        <td>{{localnum this.data.cost.plus10}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.educationSheet.skills"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="applicable-skills-chat">
+          {{#if (isEmptyDataObject this.data.skills)}}
+            <div>{{localize "mythic.chat.education.empty"}}</div>
+          {{else}}
+            {{#each this.data.skills as |has skill|}}
+              {{#if has}}
+                <div>{{localize (concat "mythic.skillNames." skill)}}</div>
+              {{/if}}
+            {{/each}}
+          {{/if}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

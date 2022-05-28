@@ -12,13 +12,45 @@ export function addChatListeners(html) {
   html.on("click", ".special-rule-dmg", onSpecial);
 }
 
+/**
+ * Build the content for a chat message.
+ * @param {object} data - The data that will be passed to the Handlebars template.
+ * @returns {string} The HTML of the chat message to be posted.
+ */
 export async function buildChatMessageContent(data) {
   const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
   return await renderTemplate(template, data);
 }
 
+/*
+ * Provides the localization path for postable item flavor text.
+ * @param {object} item - The Item that is being rolled to chat.
+ * @returns {string} The localization path.
+ */
+export function getPostableItemFlavorPath(item) {
+  switch(item.type) {
+    case "ability":
+      return `mythic.characterTalents.abilities.type.${item.data.data.type}`;
+    case "education":
+      return `mythic.chat.education.flavor`;
+    default: return "";
+  }
+}
+
+/*
+ * Post a message to chat.
+ * @param {object} data - The data that will be passed to the Handlebars template.
+ * @param {object} actor - The Actor that is rolling the message to chat.
+ */
 export async function postChatMessage(data, actor) {
-  await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
+  const audioOptions = {
+    src: "sounds/dice.wav",
+    volume: 0.8,
+    autoplay: true,
+    loop: false
+  };
+
+  await AudioHelper.play(audioOptions, true);
   await ChatMessage.create({
     user: game.user.id,
     speaker: ChatMessage.getSpeaker({ actor: actor }),

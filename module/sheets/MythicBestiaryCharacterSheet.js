@@ -1,6 +1,7 @@
 /** @module MythicBestiaryCharacterSheet */
 
 import { sortAndFilterItems } from "../calculations.js";
+import { getPostableItemFlavorPath } from "../chat.js";
 import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
@@ -192,7 +193,7 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: localize(`mythic.characterTalents.abilities.type.${item.data.data.type}`),
+      flavor: localize(getPostableItemFlavorPath(item)),
       content: await renderTemplate(template, item.data)
     });
   }

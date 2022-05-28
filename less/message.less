@@ -80,4 +80,16 @@
       }
     }
   }
+
+  .applicable-skills-chat {
+    display: inline-grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 8px;
+    row-gap: 8px;
+    width: 100%;
+
+    div:nth-of-type(odd):last-of-type {
+      grid-column: span 2;
+    }
+  }
 }

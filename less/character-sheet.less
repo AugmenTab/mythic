@@ -213,13 +213,20 @@
 
   .education-name {
     display: inline-grid;
-    grid-template-columns: 3em auto 16px;
+    grid-template-columns: 1fr 16px;
     column-gap: 8px;
     text-align: start;
     align-items: center;
     padding: 0 8px;
     width: 100%;
     height: 100%;
+
+    .education-link {
+      display: grid;
+      grid-template-columns: 3em auto;
+      column-gap: 8px;
+      align-items: center;
+    }
 
     img {
       height: 3em;
