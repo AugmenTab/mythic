@@ -1,3 +1,8 @@
+/** @module MythicItemSheet */
+
+import { getPostableItemFlavorPath } from "../chat.js";
+import { localize } from "../common.js";
+
 /**
  * Class representing the unique features of this system's ItemSheet.
  * @extends ItemSheet
@@ -47,5 +52,19 @@ export default class MythicItemSheet extends ItemSheet {
    */
   activateListeners(html) {
     super.activateListeners(html);
+
+    html.find(".postable-item-sheet").click(this._onPostItem.bind(this));
+  }
+
+  async _onPostItem(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const template = `systems/mythic/templates/chat/postable-${this.item.type}.hbs`;
+    await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker ({ actor: this.item.actor }),
+      flavor: localize(getPostableItemFlavorPath(this.item)),
+      content: await renderTemplate(template, this.item.data)
+    });
   }
 };
