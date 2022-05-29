@@ -9,6 +9,7 @@
   * Known Languages
   * Faction Trainings
   * Equipment Trainings
+  * Ability Item
   * Education Item
 
 ## 0.2.2
