@@ -5,7 +5,16 @@ import { getPostableItemFlavorPath } from "../chat.js";
 import { localize } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
+/**
+ * Class representing the unique features of this system's Flood Character sheet.
+ * @extends ActorSheet
+ */
 export default class MythicFloodCharacterSheet extends ActorSheet {
+
+  /**
+   * Establish default size and class options for the ActorSheet, establish tab navigation on the sheet, and define the path to the Handlebars template.
+   * @returns {object} The original source object including updated, inserted, or overwritten records.
+   */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "flood", "character"],
@@ -27,6 +36,10 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     });
   }
 
+  /**
+   * Prepares the ActorData.
+   * @returns {ActorData} The prepared ActorData.
+   */
   getData() {
     const data = super.getData();
     data.config = CONFIG.mythic;
@@ -46,11 +59,19 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     return data;
   }
 
+  /**
+   * Prepares the RollData so attributes can be referenced in the game.
+   * @returns {RollData} The prepared RollData.
+   */
   getRollData() {
     const data = super.getRollData();
     return data;
   }
 
+  /**
+   * Establishes event listeners on the ActorSheet.
+   * @param {jQuery.fn} html - The HTML hook.
+   */
   activateListeners(html) {
     super.activateListeners(html);
 
