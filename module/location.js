@@ -6,6 +6,8 @@ import { localize } from "./common.js";
  * Determines the hit location of a successful attack using the provided key
  * (the result of reversing the digits on the die from the attack roll) and
  * whether or not the target is a vehicle.
+ *
+ * @async
  * @param {number} key - The hit location key value.
  * @param {boolean} veh - Whether or not the attack target is a Vehicle.
  * @returns {string} The complete hit location to display in the chat.

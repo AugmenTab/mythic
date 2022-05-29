@@ -5,6 +5,7 @@ import { localize, makeUIError } from "./common.js";
 
 /**
  * Add event listeners to chat messages.
+ *
  * @param {jQuery.fn} html - The HTML hook.
  */
 export function addChatListeners(html) {
@@ -14,7 +15,10 @@ export function addChatListeners(html) {
 
 /**
  * Build the content for a chat message.
- * @param {object} data - The data that will be passed to the Handlebars template.
+ *
+ * @async
+ * @param {object} data - The data that will be passed to the Handlebars
+ * template.
  * @returns {string} The HTML of the chat message to be posted.
  */
 export async function buildChatMessageContent(data) {
@@ -24,6 +28,7 @@ export async function buildChatMessageContent(data) {
 
 /*
  * Provides the localization path for postable item flavor text.
+ *
  * @param {object} item - The Item that is being rolled to chat.
  * @returns {string} The localization path.
  */
@@ -39,7 +44,10 @@ export function getPostableItemFlavorPath(item) {
 
 /*
  * Post a message to chat.
- * @param {object} data - The data that will be passed to the Handlebars template.
+ *
+ * @async
+ * @param {object} data - The data that will be passed to the Handlebars
+ * template.
  * @param {object} actor - The Actor that is rolling the message to chat.
  */
 export async function postChatMessage(data, actor) {

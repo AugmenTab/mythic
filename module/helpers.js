@@ -2,13 +2,14 @@
 
 /**
  * Register Handlebars helper to concatenate strings.
+ *
  * @param {...string} arguments - The strings to be concatenated.
  * @returns {string} The concatenated string.
  */
 Handlebars.registerHelper("concat", function() {
   let str = "";
-  for(let arg in arguments){
-    if(typeof arguments[arg] != "object"){
+  for (let arg in arguments) {
+    if (typeof arguments[arg] != "object") {
       str += arguments[arg];
     }
   }
@@ -17,8 +18,11 @@ Handlebars.registerHelper("concat", function() {
 
 /**
  * Register Handlebars helper to perform comparisons.
+ *
  * @param {string} operator - A string representation of a comparison operator.
- * @param {...*} var_args - An array of arguments containing a string representation of the comparison operator, the booleans to be compared, and optionally an object containing the HTML block from Handlebars.
+ * @param {...*} var_args - An array of arguments containing a string
+ * representation of the comparison operator, the booleans to be compared, and
+ * optionally an object containing the HTML block from Handlebars.
  * @returns {boolean} The outcome of the comparison operations.
  */
 Handlebars.registerHelper("cond", function(...var_args) {
@@ -47,6 +51,7 @@ Handlebars.registerHelper("cond", function(...var_args) {
 
 /**
  * Determine if an object is "empty" - contains only false or null values.
+ *
  * @param {object} data - The data object to check for emptiness.
  * @returns {boolean} Whehther or not the object is empty.
  */
@@ -56,6 +61,7 @@ Handlebars.registerHelper("isEmptyDataObject", function(data) {
 
 /**
  * Filter a list of Items to get only those of a requested type.
+ *
  * @param {string} type - The type of item desired.
  * @param {Array.<object>} items - The list of Items.
  * @returns {Array.<object>} The list of Items matching the requested type.
@@ -65,9 +71,12 @@ Handlebars.registerHelper("itemsOfType", function(type, items) {
 });
 
 /**
- * Translates a number into a string representation of that number in the local format.
+ * Translates a number into a string representation of that number in the local
+ * format.
+ *
  * @param {number} num - The number to be converted.
- * @returns {string} The string representing the provided number in local format.
+ * @returns {string} The string representing the provided number in local
+ * format.
  */
 Handlebars.registerHelper("localnum", function(num) {
   return num.toLocaleString();
@@ -75,6 +84,7 @@ Handlebars.registerHelper("localnum", function(num) {
 
 /**
  * Invert the given boolean value.
+ *
  * @param {boolean} - The boolean value to invert.
  * @returns {boolean} The inverted boolean value.
  */
@@ -84,6 +94,7 @@ Handlebars.registerHelper("not", function(arg) {
 
 /**
  * Repeat a section of code n times.
+ *
  * @param {number} n - The number of times to repeat the code block.
  * @param {Block} block - The Handlebars block.
  * @returns {string} A string of the repeated HTML code.

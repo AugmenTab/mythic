@@ -6,14 +6,20 @@ import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /**
- * Class representing the unique features of this system's Named Character sheet.
+ * Class representing the unique features of this system's Named Character
+ * sheet.
+ *
  * @extends ActorSheet
  */
 export default class MythicNamedCharacterSheet extends ActorSheet {
 
   /**
-   * Establish default size and class options for the ActorSheet, establish tab navigation on the sheet, and define the path to the Handlebars template.
-   * @returns {object} The original source object including updated, inserted, or overwritten records.
+   * Establish default size and class options for the ActorSheet, establish tab
+   * navigation on the sheet, and define the path to the Handlebars template.
+   *
+   * @override
+   * @returns {object} The original source object including updated, inserted,
+   * or overwritten records.
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -38,6 +44,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   /**
    * Prepares the ActorData.
+   *
+   * @override
    * @returns {ActorData} The prepared ActorData.
    */
   getData() {
@@ -62,6 +70,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   /**
    * Prepares the RollData so attributes can be referenced in the game.
+   *
+   * @override
    * @returns {RollData} The prepared RollData.
    */
   getRollData() {
@@ -71,6 +81,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   /**
    * Establishes event listeners on the ActorSheet.
+   *
+   * @override
    * @param {jQuery.fn} html - The HTML hook.
    */
   activateListeners(html) {

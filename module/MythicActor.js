@@ -4,12 +4,14 @@ import * as Calc from "./calculations.js";
 
 /**
  * Prepares Actor data using callbacks.
+ *
  * @extends Actor
  */
 export default class MythicActor extends Actor {
 
   /**
    * Prepares ActorData.
+   *
    * @override
    */
   prepareData() {
@@ -18,6 +20,7 @@ export default class MythicActor extends Actor {
 
   /**
    * Calculates all Actor base data - anything not dependent on other entities.
+   *
    * @override
    */
   prepareBaseData() {
@@ -28,6 +31,7 @@ export default class MythicActor extends Actor {
 
   /**
    * Calculates all values for entities embedded in the Actor.
+   *
    * @override
    */
   prepareEmbeddedEntities() {
@@ -38,6 +42,7 @@ export default class MythicActor extends Actor {
 
   /**
    * Calculates all values derived from other entities.
+   *
    * @override
    */
   prepareDerivedData() {
@@ -48,6 +53,7 @@ export default class MythicActor extends Actor {
 
   /**
    * Prepares base character data for an Actor.
+   *
    * @param {ActorData} actorData - The prepared ActorData.
    */
   _prepareCharacterBaseData(actorData) {
@@ -69,6 +75,7 @@ export default class MythicActor extends Actor {
 
   /**
    * Prepares data for all embedded entities on an Actor.
+   *
    * @param {ActorData} actorData - The prepared ActorData.
    */
   _prepareCharacterEmbedded(actorData) {
@@ -81,6 +88,7 @@ export default class MythicActor extends Actor {
 
   /**
    * Prepares all data for an Actor that is dependent on embedded entities.
+   *
    * @param {ActorData} actorData - The prepared ActorData.
    */
   _prepareCharacterDerivedData(actorData) {

@@ -5,13 +5,17 @@ import { localize } from "../common.js";
 
 /**
  * Class representing the unique features of this system's ItemSheet.
+ *
  * @extends ItemSheet
  */
 export default class MythicItemSheet extends ItemSheet {
 
   /**
    * Establish default size and class options for the ItemSheet.
-   * @returns {object} The original source object including updated, inserted, or overwritten records.
+   *
+   * @override
+   * @returns {object} The original source object including updated, inserted,
+   * or overwritten records.
    */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -30,6 +34,8 @@ export default class MythicItemSheet extends ItemSheet {
 
   /**
    * Get the Handlebars template for the ItemSheet.
+   *
+   * @override
    * @returns {string} The path to the Handlebars template.
    */
   get template(){
@@ -38,6 +44,8 @@ export default class MythicItemSheet extends ItemSheet {
 
   /**
    * Prepares the ItemData.
+   *
+   * @override
    * @returns {ItemData} The prepared ItemData.
    */
   getData() {
@@ -48,6 +56,8 @@ export default class MythicItemSheet extends ItemSheet {
 
   /**
    * Establishes event listeners on the ItemSheet.
+   *
+   * @override
    * @param {jQuery.fn} html - The HTML hook.
    */
   activateListeners(html) {

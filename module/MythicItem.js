@@ -4,12 +4,14 @@ import * as Calc from "./calculations.js";
 
 /**
  * Prepares Item data using callbacks.
+ *
  * @extends Item
  */
 export default class MythicItem extends Item {
 
   /**
    * Prepares ItemData.
+   *
    * @override
    */
   prepareData() {
@@ -24,6 +26,7 @@ export default class MythicItem extends Item {
 
   /**
    * Prepares armor values.
+   *
    * @param {ITemData} data - The prepared armor ItemData.
    */
   _prepareArmor(data) {

@@ -21,6 +21,7 @@ const FORMULA = "D100";
 
 /**
  * Evaluates a string of simple addition and subtraction expressions.
+ *
  * @param {string} str - The string representation of the expression.
  * @returns {number} The number value of the evaluated expression.
  */
@@ -37,6 +38,8 @@ export function interpretDiceRollModifiers(str) {
 
 /**
  * Roll attacks from an Actor sheet.
+ *
+ * @async
  * @param {Element} element - The HTML element the listener originated from.
  * @param {Actor} actor - The Actor that fired the listener.
  */
@@ -58,6 +61,13 @@ export async function rollAttacks(element, actor, weapon) {
   return;
 }
 
+/**
+ * Roll a number of Evasion tests from an Actor sheet.
+ *
+ * @async
+ * @param {Element} element - The HTMl element the listener originated from.
+ * @param {Actor} actor - The Actor that fired the listener.
+ */
 export async function rollEvasionBatch(element, actor) {
   const options = await getEvadeOptions();
   let mod = 0;
@@ -73,6 +83,8 @@ export async function rollEvasionBatch(element, actor) {
 
 /**
  * Roll tests from an Actor sheet.
+ *
+ * @async
  * @param {Element} element - The HTML element the listener originated from.
  * @param {Actor} actor - The Actor that fired the listener.
  */

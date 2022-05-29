@@ -1,3 +1,10 @@
+/** @module migrations */
+
+/**
+ * Migrate the world from previous editions to v0.2.0.
+ *
+ * @async
+ */
 export async function migrateWorld() {
   await migrateActors();
   await migrateItems();
@@ -5,6 +12,11 @@ export async function migrateWorld() {
   await migrateCompendia();
 }
 
+/**
+ * Migrate all Weapon Items to satisfy the new rules for Cauterize.
+ *
+ * @async
+ */
 export async function migrateCauterize() {
   for (let item of game.items) {
     if (item.type === "weapon") {
@@ -23,6 +35,11 @@ export async function migrateCauterize() {
   }
 };
 
+/**
+ * Migrate the world from v0.2.0 to v0.2.1.
+ *
+ * @async
+ */
 export async function migrateV2_1() {
   for (let item of game.items) {
     if (item.type === "weapon") {

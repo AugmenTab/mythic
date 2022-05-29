@@ -20,6 +20,7 @@ const MELEE_REACH_SIZE_BONUS = {
 
 /**
  * Calculates armor protection, shield, and characteristics values.
+ *
  * @param {ItemData} armorData - The armor's ItemData.
  */
 export function calculateArmorValues(armorData, type) {
@@ -45,6 +46,7 @@ export function calculateArmorValues(armorData, type) {
 
 /**
  * Get the characteristic modifier for a given characteristic score.
+ *
  * @param {number} score - The characteristic score.
  * @returns {number} The characteristic modifier.
  */
@@ -54,6 +56,7 @@ export function calculateCharacteristicModifier(score) {
 
 /**
  * Prepares all base Actor data for a Bestiary Enemy Actor type.
+ *
  * @param {ActorData} actorData - The Bestiary Enemy Actor data.
  */
 export function prepareBestiaryBase(actorData) {
@@ -75,6 +78,7 @@ export function prepareBestiaryBase(actorData) {
 
 /**
  * Prepares all derived Actor data for a Bestiary Enemy Actor type.
+ *
  * @param {ActorData} actorData - The Bestiary Enemy Actor data.
  */
 export function prepareBestiaryDerived(actorData) {
@@ -130,7 +134,9 @@ export function prepareBestiaryDerived(actorData) {
 }
 
 /**
- * Prepares all embedded entity data for a Bestiary Enemy or Named Character Actor type.
+ * Prepares all embedded entity data for a Bestiary Enemy or Named Character
+ * Actor type.
+ *
  * @param {ActorData} actorData - The prepared ActorData.
  */
 export function prepareCharacterEmbedded(actorData) {
@@ -143,6 +149,7 @@ export function prepareCharacterEmbedded(actorData) {
 
 /**
  * Prepares all base Actor data for a Flood Actor type.
+ *
  * @param {ActorData} actorData - The Flood Actor data.
  */
 export function prepareFloodBase(actorData) {
@@ -161,6 +168,7 @@ export function prepareFloodBase(actorData) {
 
 /**
  * Prepares all derived Actor Data for a Flood Actor type.
+ *
  * @param {ActorData} actorData - The Flood Actor data.
  */
 export function prepareFloodDerived(actorData) {
@@ -197,6 +205,7 @@ export function prepareFloodDerived(actorData) {
 
 /**
  * Prepares all base Actor data for a Named Character Actor type.
+ *
  * @param {ActorData} actorData - The Named Character Actor data.
  */
 export function prepareNamedCharacterBase(actorData) {
@@ -218,6 +227,7 @@ export function prepareNamedCharacterBase(actorData) {
 
 /**
  * Prepares all derived Actor data for a Named Character Actor type.
+ *
  * @param {ActorData} actorData - The Named Character Actor data.
  */
 export function prepareNamedCharacterDerived(actorData) {
@@ -274,6 +284,7 @@ export function prepareNamedCharacterDerived(actorData) {
 
 /**
  * Prepares all base Actor data for a Vehicle Actor type.
+ *
  * @param {ActorData} actorData - The Vehicle Actor data.
  */
 export function prepareVehicleBase(actorData) {
@@ -282,6 +293,7 @@ export function prepareVehicleBase(actorData) {
 
 /**
  * Prepares all embedded entities for a Vehicle Actor type.
+ *
  * @param {ActorData} actorData - The Vehicle Actor data.
  */
 export function prepareVehicleEmbedded(actorData) {
@@ -290,6 +302,7 @@ export function prepareVehicleEmbedded(actorData) {
 
 /**
  * Prepares all derived Actor data for a Vehicle Actor type.
+ *
  * @param {ActorData} actorData - The Vehicle Actor data.
  */
 export function prepareVehicleDerived(actorData) {
@@ -298,8 +311,10 @@ export function prepareVehicleDerived(actorData) {
 
 /**
  * Updates a list of experience purchases with new indexes.
+ *
  * @param {Array.<object>} purchases - List of experience purchases.
- * @returns {Array.<object>} The list of experience records updated with new indexes.
+ * @returns {Array.<object>} The list of experience records updated with new
+ * indexes.
  */
 export function setupExperiencePurchases(purchases) {
   for (let i = 0; i < purchases.length; i++) {
@@ -310,6 +325,7 @@ export function setupExperiencePurchases(purchases) {
 
 /**
  * Filter a list of Items by their type, then sort based on a given parameter.
+ *
  * @param {Array.<number>} items - An array of Item objects.
  * @param {string} filterParam - The Item type to filter by.
  * @param {string} sortParam - The Item key sort parameter.
