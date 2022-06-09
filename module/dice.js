@@ -311,8 +311,7 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     if (min > 0) damage += `min${min}`;
     const critType = game.settings.get("mythic", "criticalHitResult");
     if (critType !== "special") {
-      const explode = weapon.data.data.special.cauterize.has ? weapon.data.data.special.cauterize.value : 10;
-      damage += `${critType}>=${explode}`;
+      damage += `${critType}>=${std.critsOn}`;
     }
 
     let base = weapon.data.data.ammoList.STD.baseDamage;

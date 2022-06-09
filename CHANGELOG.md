@@ -12,6 +12,10 @@
   * Ability Item
   * Education Item
 
+## Bug Fixes
+
+* Fixes the Explode and Explode Once alternate settings for Special Damage to use the correct weapon "Crits On" value.
+
 ## 0.2.2
 
 ### Bug Fixes
