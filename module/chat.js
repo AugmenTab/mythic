@@ -141,7 +141,7 @@ async function onScatter(event) {
   const element = event.currentTarget;
   const options = await getScatterOptions(element.dataset.dof);
   if (options.cancelled) return;
-  if (isNaN(distance) || isNaN(dof)) {
+  if (isNaN(options.distance) || isNaN(options.dof)) {
     makeUIError("mythic.chat.error.nan");
     options.cancelled = true;
   }
@@ -152,10 +152,10 @@ async function onScatter(event) {
       const roll = await new Roll("1D10").roll({ async: true });
       if (i === 2) msg += " | ";
       let mod = 0;
-      mod += Math.floor(dof);
-      mod += Math.floor(distance / 100);
-      if (distance > element.dataset.range) {
-        if (distance > element.dataset.range * 2) { mod *= 5 }
+      mod += Math.floor(options.dof);
+      mod += Math.floor(options.distance / 100);
+      if (options.distance > element.dataset.range) {
+        if (options.distance > element.dataset.range * 2) { mod *= 5 }
         else { mod *= 2 }
       }
       mod -= calculateCharacteristicModifier(parseInt(element.dataset.wfm));

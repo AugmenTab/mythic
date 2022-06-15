@@ -15,6 +15,7 @@
 ## Bug Fixes
 
 * Fixes the Explode and Explode Once alternate settings for Special Damage to use the correct weapon "Crits On" value.
+* Fixes the broken Scatter link for weapon chat dialogs.
 
 ## 0.2.2
 
