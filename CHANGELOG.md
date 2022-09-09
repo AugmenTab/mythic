@@ -16,6 +16,7 @@
     * Known Languages
     * Faction Trainings
     * Equipment Trainings
+* Scatter arrows are now rotated into the proper direction rather than using differing numbers of arrows.
 
 ## Bug Fixes
 

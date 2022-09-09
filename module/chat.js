@@ -67,25 +67,21 @@ export async function postChatMessage(data, actor) {
   }, {});
 }
 
-function getArrow(str) {
+function getScatterArrow(roll) {
   const compass = {
-    "N": "up",
-    "E": "right",
-    "S": "down",
-    "W": "left"
+    10: 315,
+     9: 270,
+     8: 225,
+     7: 225,
+     6: 180,
+     5: 135,
+     4: 90,
+     3: 45,
+     2: 45,
+     1: 0
   }
-  return `<i class="fas fa-arrow-circle-${compass[str]}"></i>`;
-}
-
-function getScatterDirection(roll) {
-  if (roll >= 10) return "NW";
-  if (roll >= 9) return "W";
-  if (roll >= 8) return "SW";
-  if (roll >= 6) return "S";
-  if (roll >= 5) return "SE";
-  if (roll >= 4) return "E";
-  if (roll >= 3) return "NE";
-  if (roll >= 1) return "N";
+  const rotation = `transform: rotate(${compass[roll]}deg)`;
+  return `<i class="fas fa-arrow-circle-up" style="${rotation}"></i>`;
 }
 
 async function getScatterOptions(degrees = 0) {
@@ -160,8 +156,7 @@ async function onScatter(event) {
       }
       mod -= calculateCharacteristicModifier(parseInt(element.dataset.wfm));
       const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
-      msg += getScatterDirection(roll.total).split("").map(x => getArrow(x)).join("");
-      msg += ` ${dice.total} m`;
+      msg += `${getScatterArrow(roll.total)} ${dice.total} m`;
     }
     await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
     element.classList.remove("scatter");
