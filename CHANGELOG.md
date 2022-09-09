@@ -6,11 +6,16 @@
 
 * Known languages can now be removed from a character simply by clicking on them.
 * The following were given post-to-chat functionality:
-  * Known Languages
-  * Faction Trainings
-  * Equipment Trainings
-  * Ability Item
-  * Education Item
+  * Items
+    * Ability Item
+    * Armor Item
+    * Education Item
+    * Equipment Item
+    * Weapon Item
+  * Trainings
+    * Known Languages
+    * Faction Trainings
+    * Equipment Trainings
 
 ## Bug Fixes
 

@@ -575,6 +575,7 @@
                 "baseDamage": "Base Damage",
                 "piercing": "Piercing",
                 "magazine": "Magazine",
+                "magsCarried": "Mags Carried",
                 "range": "Range",
                 "rangeBonus": "Range Bonus",
                 "grip": "Grip",

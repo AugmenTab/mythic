@@ -22,14 +22,24 @@ export default class MythicItem extends Item {
     const data = itemData.data;
 
     if (itemData.type === "armor") this._prepareArmor(data);
+    if (itemData.type === "weapon") this._prepareWeapon(data);
   }
 
   /**
    * Prepares armor values.
    *
-   * @param {ITemData} data - The prepared armor ItemData.
+   * @param {ItemData} data - The prepared armor ItemData.
    */
   _prepareArmor(data) {
     Calc.calculateArmorValues(data)
+  }
+
+  /**
+   * Prepares weapon values.
+   *
+   * @param {ItemData} data - The prepared weapon ItemData.
+   */
+  _prepareWeapon(data) {
+    Calc.calculateWeaponValues(data);
   }
 }

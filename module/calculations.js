@@ -55,6 +55,15 @@ export function calculateCharacteristicModifier(score) {
 }
 
 /**
+ * Calculates weapon values.
+ *
+ * @param {ItemData} weaponData - The weapon's ItemData.
+ */
+export function calculateWeaponValues(weaponData) {
+  weaponData.price.total = weaponData.price.base + weaponData.price.mods;
+}
+
+/**
  * Prepares all base Actor data for a Bestiary Enemy Actor type.
  *
  * @param {ActorData} actorData - The Bestiary Enemy Actor data.

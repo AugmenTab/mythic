@@ -1,0 +1,122 @@
+<div>
+  <h1 class="post-header">
+    <img alt="{{this.name}}" src="{{this.img}}"/>
+    {{this.name}}
+  </h1>
+  <div>
+    {{#each this.data.tags as |tag name|}}
+      {{#if tag}}
+        <span style="padding: 0px 2px">{{name}}</span>
+      {{/if}}
+    {{/each}}
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          {{localize "mythic.weaponSheet.stats.price"}}
+          :&nbsp;
+          {{this.data.price.total}}
+        </td>
+        <td>
+          {{localize "mythic.weaponSheet.stats.weight"}}
+          :&nbsp;
+          {{this.data.weight.total}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="weapon-split">
+    {{#with this.data.ammoList.STD}}
+      <div>
+        {{this.diceQuantity}}D{{this.diceValue}}&plus;{{this.baseDamage}}
+        &nbsp;{{localize "mythic.weaponSheet.stats.piercing"}}
+        &nbsp;{{this.piercing}}
+      </div>
+    {{/with}}
+      <div>
+        {{localize "mythic.weaponSheet.stats.range"}}:&nbsp;
+        {{#if (eq this.data.group "ranged")}}
+          {{#with this.data.ammoList.STD}}
+            {{localnum this.range.close}}
+            &nbsp;&ndash;&nbsp;
+            {{localnum this.range.long}}&nbsp;m
+          {{/with}}
+        {{else if (eq this.data.group "melee")}}
+          {{this.data.ammoList.STD.range.melee}}&nbsp;m
+        {{else if (eq this.data.group "thrown")}}
+          {{this.data.ammoList.STD.range.thrown}}&nbsp;m
+        {{/if}}
+      </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.weaponSheet.groups"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</th>
+      </tr>
+      <tbody>
+        <tr>
+          <td>{{localize (concat "mythic.weaponGroups." this.data.group)}}</td>
+          <td>{{localize (concat "mythic.ammoGroups." this.data.ammoGroup)}}</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.weaponSheet.stats.factionTraining"}}</th>
+          <th>{{localize "mythic.weaponSheet.stats.equipmentTraining"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{localize (concat "mythic.trainings.factions." this.data.trainings.faction)}}</td>
+        <td>{{localize (concat "mythic.trainings.equipment." this.data.trainings.equipment)}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="weapon-split">
+    <div>
+      {{localize "mythic.weaponSheet.stats.magazine"}}:&nbsp;
+      {{localnum this.data.ammoList.STD.currentMag}}
+      &nbsp;/&nbsp;
+      {{localnum this.data.magazineCapacity}}
+    </div>
+    <div>
+      {{localize "mythic.weaponSheet.stats.magsCarried"}}:&nbsp;
+      {{this.data.ammoList.STD.magsCarried}}
+    </div>
+  </div>
+  <div class="fire-modes">
+    {{#each this.data.fireMode as |fireMode name|}}
+      {{#if fireMode}}
+        <p
+          {{#if (contains ../this.data.attack.fireMode name)}}
+            style="font-weight: bold"
+          {{/if}}
+        >
+          {{localize (concat "mythic.weaponSheet.fireMode." name)}}
+          &nbsp;({{fireMode}})
+        </p>
+      {{/if}}
+    {{/each}}
+  </div>
+  <aside class="special">
+    {{#each this.data.special as |special name|}}
+      {{#if special.has}}
+        <span class="special-rule">
+          {{localize (concat "mythic.weaponSheet.specialRules." name)}}
+          {{#if special.value}}&nbsp;({{special.value}}){{/if}}
+        </span>
+      {{/if}}
+    {{/each}}
+    {{#each this.data.ammoList.STD.special as |special name|}}
+      {{#if special.has}}
+        <span class="special-rule">
+          {{localize (concat "mythic.weaponSheet.specialRules." name)}}
+          {{#if special.value}}&nbsp;({{special.value}}){{/if}}
+        </span>
+      {{/if}}
+    {{/each}}
+  </aside>
+  {{{this.data.description}}}
+</div>

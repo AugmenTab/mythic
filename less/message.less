@@ -59,26 +59,44 @@
       text-shadow: 0 0 8px red;
       cursor: pointer;
     }
+  }
 
-    .special {
-      .special-damage {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        place-items: center;
-        width: 100%;
-      }
-
-      .special-rule {
-        display: inline-block;
-        font-size: 0.75em;
-        color: white;
-        margin: 2px 1px;
-        padding: 2px;
-        border: 2px solid gray;
-        border-radius: 4px;
-        background-color: rgba(0, 0, 0, 0.5);
-      }
+  .special {
+    .special-damage {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      place-items: center;
+      width: 100%;
     }
+
+    .special-rule {
+      display: inline-block;
+      font-size: 0.75em;
+      color: white;
+      margin: 2px 1px;
+      padding: 2px;
+      border: 2px solid gray;
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .weapon-split {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    place-items: center;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .fire-modes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 8px;
+    place-items: center;
+    text-align: center;
+    font-size: 0.95em;
   }
 
   .education-list-chat {

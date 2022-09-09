@@ -17,6 +17,19 @@ Handlebars.registerHelper("concat", function() {
 });
 
 /**
+ *  Register Handlebars helper to check if a string is a substring of another
+ *  string.
+ *
+ *  @param {string} string - A string to check for the presence of a substring
+ *  in.
+ *  @param {string} substring - The substring to check for in the main string.
+ *  @returns {boolean} Whether or not the string contains the substring.
+ */
+Handlebars.registerHelper("contains", function(string, substring) {
+  return string.includes(substring);
+});
+
+/**
  * Register Handlebars helper to perform comparisons.
  *
  * @param {string} operator - A string representation of a comparison operator.
