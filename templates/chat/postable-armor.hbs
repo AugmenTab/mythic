@@ -1,0 +1,133 @@
+{{log this}}
+<div>
+  <h1 class="post-header">
+    <img alt="{{this.name}}" src="{{this.img}}"/>
+    {{this.name}}
+  </h1>
+  {{#if this.data.weight.selfSupported}}
+    <p><b>{{localize "mythic.armorSheet.details.chatSelfSupported"}}</b></p>
+  {{/if}}
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          {{localize "mythic.armorSheet.details.weight"}}
+          :&nbsp;
+          {{this.data.weight.total}}
+        </td>
+        <td>
+          {{localize "mythic.armorSheet.details.price"}}
+          :&nbsp;
+          {{this.data.price.total}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{localize "mythic.armorSheet.details.size"}}
+          :&nbsp;
+          {{localize (concat "mythic.sizes." this.data.size)}}
+        </td>
+        <td>
+          {{localize "mythic.armorSheet.details.training"}}
+          :&nbsp;
+          {{localize (concat "mythic.trainings.factions." this.data.trainings.faction)}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">{{localize "mythic.armorSheet.locations.label"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{localize "mythic.armorSheet.locations.head"}}
+          :&nbsp;
+          {{this.data.protection.head.total}}
+        </td>
+        <td>
+          {{localize "mythic.armorSheet.locations.leftArm"}}
+          :&nbsp;
+          {{this.data.protection.leftArm.total}}
+        </td>
+        <td>
+          {{localize "mythic.armorSheet.locations.leftLeg"}}
+          :&nbsp;
+          {{this.data.protection.leftLeg.total}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{localize "mythic.armorSheet.locations.chest"}}
+          :&nbsp;
+          {{this.data.protection.chest.total}}
+        </td>
+        <td>
+          {{localize "mythic.armorSheet.locations.rightArm"}}
+          :&nbsp;
+          {{this.data.protection.rightArm.total}}
+        </td>
+        <td>
+          {{localize "mythic.armorSheet.locations.rightLeg"}}
+          :&nbsp;
+          {{this.data.protection.rightLeg.total}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  {{#if this.data.shields.has}}
+    <table>
+      <thead>
+        <tr>
+          <th colspan="3">{{localize "mythic.armorSheet.shields.label"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{localize "mythic.armorSheet.shields.integrity"}}
+            :&nbsp;
+            {{this.data.shields.integrity.total}}
+          </td>
+          <td>
+            {{localize "mythic.armorSheet.shields.recharge"}}
+            :&nbsp;
+            {{this.data.shields.recharge.total}}
+          </td>
+          <td>
+            {{localize "mythic.armorSheet.shields.delay"}}
+            :&nbsp;
+            {{this.data.shields.delay.total}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  {{/if}}
+  {{#if this.data.characteristics.has}}
+    <table>
+      <thead>
+        <tr>
+          <th colspan="4">{{localize "mythic.armorSheet.characteristics"}}</th>
+        </tr>
+        <tr>
+          <th>STR</th>
+          <th>AGI</th>
+          <th>{{localize "mythic.armorSheet.mythic"}}&nbsp;STR</th>
+          <th>{{localize "mythic.armorSheet.mythic"}}&nbsp;AGI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{this.data.characteristics.str.total}}</td>
+          <td>{{this.data.characteristics.agi.total}}</td>
+          <td>{{this.data.characteristics.mythicStr.total}}</td>
+          <td>{{this.data.characteristics.mythicAgi.total}}</td>
+        </tr>
+      </tbody>
+    </table>
+  {{/if}}
+  {{{this.data.notes.armor}}}
+</div>

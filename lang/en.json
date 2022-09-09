@@ -403,7 +403,8 @@
                 "weight": "Weight (kg)",
                 "selfSupported": "Self-Supporting?",
                 "hasShields": "Shields?",
-                "hasStats": "Characteristics?"
+                "hasStats": "Characteristics?",
+                "chatSelfSupported": "This armor supports its own weight."
             },
             "locations": {
                 "label": "Armor Locations",
