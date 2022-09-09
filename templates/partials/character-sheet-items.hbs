@@ -1,8 +1,10 @@
 <tr>
   <td>
     <div class="item-name">
-      <img alt="{{this.name}}" src="{{this.img}}"/>
-      <p>{{this.name}}</p>
+      <a class="item-link postable-item clickable" data-item-id="{{this._id}}">
+        <img alt="{{this.name}}" src="{{this.img}}"/>
+        <p>{{this.name}}</p>
+      </a>
       <div class="item-management">
         <a class="item-edit" data-item-id="{{this._id}}">
           <i class="clickable fas fa-edit"></i>

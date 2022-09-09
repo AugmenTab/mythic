@@ -235,13 +235,20 @@
 
   .item-name {
     display: inline-grid;
-    grid-template-columns: 1.75em minmax(auto, 230px) 36px;
+    grid-template-columns: 1fr 36px;
     column-gap: 8px;
     text-align: start;
     align-items: center;
     padding: 0 8px;
     width: 100%;
     height: 100%;
+
+    .item-link {
+      display: inline-grid;
+      grid-template-columns: 1.75em minmax(auto, 230px);
+      column-gap: 8px;
+      align-items: center;
+    }
 
     img {
       height: 1.75em;

@@ -1,0 +1,26 @@
+<div>
+  <h1 class="post-header">
+    <img alt="{{this.name}}" src="{{this.img}}"/>
+    {{this.name}}
+  </h1>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">{{localize "mythic.equipmentSheet.details"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.equipmentSheet.faction"}}</th>
+        <th>{{localize "mythic.equipmentSheet.price"}}</th>
+        <th>{{localize "mythic.equipmentSheet.weight"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{localize (concat "mythic.trainings.factions." this.data.trainings.faction)}}</td>
+        <td>{{this.data.price.total}}</td>
+        <td>{{this.data.weight.total}}</td>
+      </tr>
+    </tbody>
+  </table>
+  {{{this.data.description}}}
+</div>

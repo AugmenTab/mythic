@@ -461,6 +461,7 @@
         },
         "equipmentSheet": {
             "name": "Name",
+            "details": "Details",
             "faction": "Faction",
             "price": "Price (cR)",
             "weight": "Weight (kg)",
