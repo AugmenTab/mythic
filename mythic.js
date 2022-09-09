@@ -176,10 +176,10 @@ Hooks.once("ready", function () {
   if (game.user.isGM) {
     const current = game.settings.get("mythic", "systemMigrationVersion");
 
-    migrateCauterize();
     if (!current) {
-      if (isNewerVersion("0.01", current)) migrateWorld();
+      if (isNewerVersion("0.01",  current)) migrateWorld();
       if (isNewerVersion("0.2.1", current)) migrateV2_1();
+      if (isNewerVersion("0.2.2", current)) migrateCauterize();
     }
   }
 
