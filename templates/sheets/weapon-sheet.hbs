@@ -54,7 +54,13 @@
             {{/each}}
           {{/select}}
         </select>
-      </div>
+        <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
+        <input
+          name="data.ammoList.STD.magsCarried"
+          type="number"
+          data-dtype="Number"
+          value="{{data.data.ammoList.STD.magsCarried}}"
+        />
     </div>
 
     {{!-- Modifications Page --}}

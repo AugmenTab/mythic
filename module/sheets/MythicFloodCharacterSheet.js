@@ -2,7 +2,7 @@
 
 import { sortAndFilterItems } from "../calculations.js";
 import { getPostableItemFlavorPath } from "../chat.js";
-import { localize } from "../common.js";
+import { localize, makeUIError, makeUIWarning } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /**
@@ -171,9 +171,17 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    await item.update({
-      "data.ammoList.STD.currentMag": item.data.data.magazineCapacity
-    });
+
+    if (item.data.data.ammoList.STD.magsCarried > 0) {
+      const newMagsCarried = item.data.data.ammoList.STD.magsCarried - 1;
+      if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
+      await item.update({
+        "data.ammoList.STD.currentMag": item.data.data.magazineCapacity,
+        "data.ammoList.STD.magsCarried": newMagsCarried
+      });
+    } else {
+      makeUIError("mythic.chat.error.outOfMags");
+    };
   }
 
   async _onShieldRecharge(event) {

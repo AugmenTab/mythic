@@ -17,6 +17,7 @@
     * Faction Trainings
     * Equipment Trainings
 * Scatter arrows are now rotated into the proper direction rather than using differing numbers of arrows.
+* A value to track how many loaded magazines are carried for a weapon was added to the Special Ammo tab on the Weapon Item sheet. This value is automatically decremented with each reload, and blocks reloads when the character has run out of loaded magazines for the weapon.
 
 ## Bug Fixes
 

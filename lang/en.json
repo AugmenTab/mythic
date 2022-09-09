@@ -311,7 +311,9 @@
             },
             "error": {
                 "nan": "Invalid entry: please enter a whole number.",
-                "parseFailure": "The provided roll modifiers could not be parsed. Please try again, entering only whole numbers, the '+' symbol, and the '-' symbol."
+                "parseFailure": "The provided roll modifiers could not be parsed. Please try again, entering only whole numbers, the '+' symbol, and the '-' symbol.",
+                "lastMag": "Last mag!",
+                "outOfMags": "You're out of magazines for this weapon."
             },
             "education": {
                 "flavor": "Education",

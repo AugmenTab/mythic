@@ -25,5 +25,5 @@ export function makeUIError(path) {
  * @param {string} path - The path to the warning message localization text.
  */
 export function makeUIWarning(path) {
-  ui.notifications.warning(localize(path));
+  ui.notifications.warn(localize(path));
 }
