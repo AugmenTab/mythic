@@ -70,11 +70,36 @@ export function calculateWeaponValues(weaponData) {
  * @param {ItemData} weaponData - The Weapon Item data.
  */
 export function handleReloadMagCount(weaponData) {
-  if (weaponData.data.special.singleLoading.has) {
-    return calculateReloadSingleLoading(weaponData);
-  } else {
-    return calculateReloadMagFed(weaponData);
+  const magCurrent = weaponData.data.ammoList.STD.currentMag;
+  const magCapacity = weaponData.data.magazineCapacity;
+  const tracking = game.settings.get("mythic", "ammoTracking");
+  const isSingleLoading = weaponData.data.special.singleLoading.has;
+  const defaultData = {
+    "data.ammoList.STD.currentMag": weaponData.data.ammoList.STD.currentMag,
+    "data.ammoList.STD.ammoTracking.mags": weaponData.data.ammoList.STD.ammoTracking.mags,
+    "data.ammoList.STD.ammoTracking.pool": weaponData.data.ammoList.STD.ammoTracking.pool
+  };
+
+  if (magCurrent === magCapacity) {
+    makeUIWarning("mythic.chat.error.noNeedToReload");
+    return defaultData;
   }
+
+  if (tracking === "selfManaged") {
+    return {
+      "data.ammoList.STD.currentMag": weaponData.data.magazineCapacity,
+    };
+  }
+
+  if (tracking === "magazines" && !isSingleLoading) {
+    return calculateReloadMagFed(weaponData, defaultData);
+  }
+
+  if (tracking === "ammoPool" || isSingleLoading) {
+    return calculateReloadAmmoPool(weaponData, defaultData);
+  }
+
+  return defaultData;
 }
 
 /**
@@ -970,22 +995,21 @@ function calculateWoundsNamedCharacter(actorData, touMod) {
   );
 }
 
-function calculateReloadMagFed(weaponData) {
-  const newMagsCarried = weaponData.data.ammoList.STD.magsCarried - 1;
-  if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
-  return {
-    "data.ammoList.STD.currentMag": weaponData.data.magazineCapacity,
-    "data.ammoList.STD.magsCarried": newMagsCarried
-  };
+function calculateReloadAmmoPool(weaponData, defaultData) {
+  return defaultData;
 }
 
-function calculateReloadSingleLoading(weaponData) {
-  console.log(weaponData);
-  let updateData = {
-    "data.ammoList.STD.currentMag": weaponData.data.ammoList.STD.currentMag,
-    "data.ammoList.STD.magsCarried": weaponData.data.ammoList.STD.magsCarried
-  };
-
-  return updateData;
+function calculateReloadMagFed(weaponData, defaultData) {
+  const magsCarried = weaponData.data.ammoList.STD.ammoTracking.mags;
+  if (magsCarried > 0) {
+    const newMagsCarried = magsCarried - 1;
+    if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
+    return {
+      "data.ammoList.STD.currentMag": weaponData.data.magazineCapacity,
+      "data.ammoList.STD.ammoTracking.mags": newMagsCarried
+    };
+  } else {
+    makeUIError("mythic.chat.error.outOfMags");
+    return defaultData;
+  }
 }
-

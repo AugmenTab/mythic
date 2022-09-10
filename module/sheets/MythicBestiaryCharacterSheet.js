@@ -213,12 +213,7 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-
-    if (item.data.data.ammoList.STD.magsCarried > 0) {
-      await item.update(handleReloadMagCount(item.data));
-    } else {
-      makeUIError("mythic.chat.error.outOfMags");
-    }
+    await item.update(handleReloadMagCount(item.data));
   }
 
   async _onShieldRecharge(event) {
