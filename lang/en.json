@@ -578,6 +578,7 @@
                 "piercing": "Piercing",
                 "magazine": "Magazine",
                 "magsCarried": "Mags Carried",
+                "roundsCarried": "Rounds Carried",
                 "range": "Range",
                 "rangeBonus": "Range Bonus",
                 "grip": "Grip",
@@ -813,6 +814,13 @@
             "contamination": "Contamination",
             "difficulty": "Difficulty",
             "manual": "Manual"
+        },
+        "ammoTracking": {
+            "name": "Ammo Tracking",
+            "hint": "How weapons track their available ammunition. Note: weapons with the Single-Loading special trait use the Ammo Pool logic in Magazines mode, too.",
+            "magazines": "Magazines - rounds remaining in magazine are lost",
+            "ammoPool": "Ammo Pool - mags are topped off, like the games",
+            "selfManaged": "Self-Managed - No automation will be applied"
         }
     }
 }

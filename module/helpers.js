@@ -63,6 +63,16 @@ Handlebars.registerHelper("cond", function(...var_args) {
 });
 
 /**
+ * Retrieve a system setting.
+ *
+ * @param {string} setting - The name for the system setting to retrieve.
+ * @returns {number, string} The system setting value.
+ */
+Handlebars.registerHelper("getSetting", function(setting) {
+  return game.settings.get("mythic", setting);
+});
+
+/**
  * Determine if an object is "empty" - contains only false or null values.
  *
  * @param {object} data - The data object to check for emptiness.

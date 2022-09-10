@@ -82,8 +82,14 @@
       {{localnum this.data.magazineCapacity}}
     </div>
     <div>
-      {{localize "mythic.weaponSheet.stats.magsCarried"}}:&nbsp;
-      {{this.data.ammoList.STD.magsCarried}}
+      {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
+                       this.data.special.singleLoading.has)}}
+        {{localize "mythic.weaponSheet.stats.roundsCarried"}}:&nbsp;
+        {{this.data.ammoList.STD.ammoTracking.pool}}
+      {{else}}
+        {{localize "mythic.weaponSheet.stats.magsCarried"}}:&nbsp;
+        {{this.data.ammoList.STD.ammoTracking.mags}}
+      {{/if}}
     </div>
   </div>
   <div class="fire-modes">

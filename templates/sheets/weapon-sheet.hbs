@@ -54,13 +54,24 @@
             {{/each}}
           {{/select}}
         </select>
-        <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
-        <input
-          name="data.ammoList.STD.magsCarried"
-          type="number"
-          data-dtype="Number"
-          value="{{data.data.ammoList.STD.magsCarried}}"
-        />
+        {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
+                         data.data.special.singleLoading.has)}}
+          <p>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</p>
+          <input
+            name="data.ammoList.STD.ammoTracking.pool"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.ammoTracking.pool}}"
+          />
+        {{else}}
+          <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
+          <input
+            name="data.ammoList.STD.ammoTracking.mags"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.ammoList.STD.ammoTracking.mags}}"
+          />
+        {{/if}}
     </div>
 
     {{!-- Modifications Page --}}

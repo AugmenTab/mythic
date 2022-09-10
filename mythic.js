@@ -55,7 +55,7 @@ function registerSystemSettings() {
     config: false,
     scope: "world",
     type: String,
-    default: "0.2.2"
+    default: "0.2.5"
   });
 
   // Critical Failure Threshold
@@ -145,6 +145,21 @@ function registerSystemSettings() {
       step: 1
     },
     default: 1
+  });
+
+  // Magazine / Ammo Pool Management
+  game.settings.register("mythic", "ammoTracking", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.ammoTracking.name",
+    hint: "SETTINGS.ammoTracking.hint",
+    type: String,
+    choices: {
+      "magazines": "SETTINGS.ammoTracking.magazines",
+      "ammoPool": "SETTINGS.ammoTracking.ammoPool",
+      "selfManaged": "SETTINGS.ammoTracking.selfManaged"
+    },
+    default: "magazines"
   });
 }
 
