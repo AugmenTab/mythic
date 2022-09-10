@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4
+
+## Changes
+
+* Removes incomplete magazine count feature. This will require a different, more involved re-implementation and this removal will prevent the current buggy implementation from breaking the update for those that want to use it.
+
 ## 0.2.3
 
 ## Changes

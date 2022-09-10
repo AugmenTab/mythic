@@ -213,17 +213,9 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-
-    if (item.data.data.ammoList.STD.magsCarried > 0) {
-      const newMagsCarried = item.data.data.ammoList.STD.magsCarried - 1;
-      if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
-      await item.update({
-        "data.ammoList.STD.currentMag": item.data.data.magazineCapacity,
-        "data.ammoList.STD.magsCarried": newMagsCarried
-      });
-    } else {
-      makeUIError("mythic.chat.error.outOfMags");
-    };
+    await item.update({
+      "data.ammoList.STD.currentMag": item.data.data.magazineCapacity
+    });
   }
 
   async _onShieldRecharge(event) {
