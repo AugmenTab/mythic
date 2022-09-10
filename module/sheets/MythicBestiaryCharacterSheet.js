@@ -1,8 +1,8 @@
 /** @module MythicBestiaryCharacterSheet */
 
-import { sortAndFilterItems } from "../calculations.js";
+import { handleReloadMagCount, sortAndFilterItems } from "../calculations.js";
 import { getPostableItemFlavorPath } from "../chat.js";
-import { localize, makeUIError, makeUIWarning } from "../common.js";
+import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /**
@@ -213,9 +213,12 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    await item.update({
-      "data.ammoList.STD.currentMag": item.data.data.magazineCapacity
-    });
+
+    if (item.data.data.ammoList.STD.magsCarried > 0) {
+      await item.update(handleReloadMagCount(item.data));
+    } else {
+      makeUIError("mythic.chat.error.outOfMags");
+    }
   }
 
   async _onShieldRecharge(event) {

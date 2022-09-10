@@ -1,6 +1,7 @@
 /** @module calculations */
 
 import { interpretDiceRollModifiers } from "./dice.js";
+import { makeUIError, makeUIWarning } from "./common.js";
 
 const MELEE_REACH_SIZE_BONUS = {
   "mini": 1,
@@ -61,6 +62,19 @@ export function calculateCharacteristicModifier(score) {
  */
 export function calculateWeaponValues(weaponData) {
   weaponData.price.total = weaponData.price.base + weaponData.price.mods;
+}
+
+/**
+ * Process current magazine and mag count values for a weapon upon reloading.
+ *
+ * @param {ItemData} weaponData - The Weapon Item data.
+ */
+export function handleReloadMagCount(weaponData) {
+  if (weaponData.data.special.singleLoading.has) {
+    return calculateReloadSingleLoading(weaponData);
+  } else {
+    return calculateReloadMagFed(weaponData);
+  }
 }
 
 /**
@@ -955,3 +969,23 @@ function calculateWoundsNamedCharacter(actorData, touMod) {
     (parseInt(actorData.data.wounds.advancements) * 4)
   );
 }
+
+function calculateReloadMagFed(weaponData) {
+  const newMagsCarried = weaponData.data.ammoList.STD.magsCarried - 1;
+  if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
+  return {
+    "data.ammoList.STD.currentMag": weaponData.data.magazineCapacity,
+    "data.ammoList.STD.magsCarried": newMagsCarried
+  };
+}
+
+function calculateReloadSingleLoading(weaponData) {
+  console.log(weaponData);
+  let updateData = {
+    "data.ammoList.STD.currentMag": weaponData.data.ammoList.STD.currentMag,
+    "data.ammoList.STD.magsCarried": weaponData.data.ammoList.STD.magsCarried
+  };
+
+  return updateData;
+}
+

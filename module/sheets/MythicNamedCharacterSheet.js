@@ -1,8 +1,8 @@
 /** @module MythicNamedCharacterSheet */
 
-import { setupExperiencePurchases, sortAndFilterItems } from "../calculations.js";
+import * as Calc from "../calculations.js";
 import { getPostableItemFlavorPath } from "../chat.js";
-import { localize, makeUIError, makeUIWarning } from "../common.js";
+import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /**
@@ -52,7 +52,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const data = super.getData();
     data.config = CONFIG.mythic;
 
-    const a = sortAndFilterItems(data.items, "ability");
+    const a = Calc.sortAndFilterItems(data.items, "ability");
     data.abilities = a.filter(i => i.data.type === "ability");
     data.augmentations = a.filter(function(i) {
       return i.data.type === "augmentation"
@@ -60,10 +60,10 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.racials = a.filter(function(i) { return i.data.type === "racial" });
     data.traits = a.filter(function(i) { return i.data.type === "trait" });
 
-    data.armors = sortAndFilterItems(data.items, "armor");
-    data.educations = sortAndFilterItems(data.items, "education");
-    data.equipment = sortAndFilterItems(data.items, "equipment");
-    data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
+    data.armors = Calc.sortAndFilterItems(data.items, "armor");
+    data.educations = Calc.sortAndFilterItems(data.items, "education");
+    data.equipment = Calc.sortAndFilterItems(data.items, "equipment");
+    data.weapons = Calc.sortAndFilterItems(data.items, "weapon", "nickname");
     data.equippedWeapons = data.weapons.filter(w => w.data.weight.equipped);
     return data;
   }
@@ -127,7 +127,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
   async _onExpCreate(event) {
     event.preventDefault;
     let data = duplicate(this.actor.data);
-    let purchases = setupExperiencePurchases(data.data.experience.purchases);
+    let purchases = Calc.setupExperiencePurchases(data.data.experience.purchases);
     const purchase = { index: purchases.length, name: null, price: null };
     data.data.experience.purchases.push(purchase);
     await this.actor.update(data);
@@ -138,7 +138,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     let data = duplicate(this.actor.data);
     const purchases = data.data.experience.purchases.filter(x => x.index != element.dataset.index);
-    data.data.experience.purchases = setupExperiencePurchases(purchases);
+    data.data.experience.purchases = Calc.setupExperiencePurchases(purchases);
     await this.actor.update(data);
   }
 
@@ -262,9 +262,12 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    await item.update({
-      "data.ammoList.STD.currentMag": item.data.data.magazineCapacity
-    });
+
+    if (item.data.data.ammoList.STD.magsCarried > 0) {
+      await item.update(Calc.handleReloadMagCount(item.data));
+    } else {
+      makeUIError("mythic.chat.error.outOfMags");
+    }
   }
 
   async _onShieldRecharge(event) {

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.5
+
+## Changes
+
+* None
+
+## Bug Fixes
+
+* None
+
 ## 0.2.4
 
 ## Changes
