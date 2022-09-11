@@ -96,7 +96,11 @@ export function handleReloadMagCount(weaponData) {
   }
 
   if (tracking === "ammoPool" || isSingleLoading) {
-    return calculateReloadAmmoPool(weaponData, defaultData);
+    return calculateReloadAmmoPool(weaponData, defaultData, {
+      magCurrent: magCurrent,
+      magCapacity: magCapacity,
+      isSingleLoading: isSingleLoading
+    });
   }
 
   return defaultData;
@@ -995,8 +999,39 @@ function calculateWoundsNamedCharacter(actorData, touMod) {
   );
 }
 
-function calculateReloadAmmoPool(weaponData, defaultData) {
-  return defaultData;
+function calculateReloadAmmoPool(weaponData, defaultData, extraData) {
+  const pool = weaponData.data.ammoList.STD.ammoTracking.pool;
+  const missingRounds = extraData.magCapacity - extraData.magCurrent;
+  const roundsToReload = extraData.isSingleLoading
+                       ? weaponData.data.reload.total
+                       : missingRounds;
+  const reload = Math.min(missingRounds, roundsToReload);
+
+  if (pool === 0) {
+    makeUIError("mythic.chat.error.ammoPoolEmpty");
+    return defaultData;
+  }
+
+  if (pool >= reload) {
+    const newPool = pool - reload;
+    if (newPool === 0) {
+      makeUIWarning("mythic.chat.error.reloadEmptiesPool");
+    } else if (newPool <= extraData.magCapacity) {
+      makeUIWarning("mythic.chat.error.poolDownToOneMag");
+    }
+    return {
+      "data.ammoList.STD.currentMag": extraData.magCurrent + reload,
+      "data.ammoList.STD.ammoTracking.pool": newPool
+    };
+  }
+
+  if (reload > pool) {
+    makeUIWarning("mythic.chat.error.reloadEmptiesPool");
+    return {
+      "data.ammoList.STD.currentMag": extraData.magCurrent + pool,
+      "data.ammoList.STD.ammoTracking.pool": 0
+    };
+  }
 }
 
 function calculateReloadMagFed(weaponData, defaultData) {

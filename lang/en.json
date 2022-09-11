@@ -314,7 +314,10 @@
                 "parseFailure": "The provided roll modifiers could not be parsed. Please try again, entering only whole numbers, the '+' symbol, and the '-' symbol.",
                 "noNeedToReload": "There's no need to reload - your magazine is already full!",
                 "lastMag": "Last mag!",
-                "outOfMags": "You're out of magazines for this weapon."
+                "outOfMags": "You're out of magazines for this weapon.",
+                "ammoPoolEmpty": "Your ammo pool is empty!",
+                "poolDownToOneMag": "You have one mag or less worth of ammo remaining in your ammo pool!",
+                "reloadEmptiesPool": "Your ammo pool has been emptied."
             },
             "education": {
                 "flavor": "Education",
