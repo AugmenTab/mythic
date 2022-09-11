@@ -262,7 +262,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    await item.update(Calc.handleReloadMagCount(item.data));
+    await item.update({ "data": Calc.handleReloadMagCount(item.data.data) });
   }
 
   async _onShieldRecharge(event) {
@@ -279,9 +279,10 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     if (element.classList[0] === "attack") {
       const item = await this.actor.items.get(element.getAttribute("data-item-id"));
       const newMag = await rollAttacks(element, this.actor, item);
-      if (!isNaN(newMag)) await item.update({
-        "data.ammoList.STD.currentMag": newMag
-      });
+      if (!isNaN(newMag)) {
+        item.data.data.ammoList[item.data.data.currentAmmo].currentMag = newMag;
+        await item.update({ "data": item.data.data });
+      }
     } else {
       await rollTest(element, this.actor);
     }

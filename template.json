@@ -1348,6 +1348,7 @@
             "magazineCapacity": 0,
             "ammo": "",
             "ammoGroup": "",
+            "currentAmmo": "STD",
             "ammoList": {
                 "STD": {
                     "attackBonus": 0,

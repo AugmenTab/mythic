@@ -52,11 +52,12 @@ export async function rollAttacks(element, actor, weapon) {
     attackOptions.cancelled = true;
   }
   if (!attackOptions.cancelled) {
-    const target = weapon.data.data.ammoList.STD.target + mod;
+    const currentAmmo = weapon.data.data.currentAmmo;
+    const target = weapon.data.data.ammoList[currentAmmo].target + mod;
     const type = element.value;
     const isVehicle = attackOptions.targetVehicle;
     await getAttackAndDamageOutcomes(actor, weapon, target, type, isVehicle);
-    return weapon.data.data.ammoList.STD.currentMag - parseInt(element.innerHTML);
+    return weapon.data.data.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
   }
   return;
 }
@@ -289,6 +290,7 @@ function reverseDigits(roll) {
 }
 
 async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages, veh) {
+  const currentAmmo = weapon.data.data.currentAmmo;
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, target);
   let attack = {
@@ -302,8 +304,8 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     || weapon.data.data.special.kill.has
   ) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), veh);
-    const std = weapon.data.data.ammoList.STD;
-    let damage = `${std.diceQuantity}D${std.diceValue}`;
+    const ammo = weapon.data.data.ammoList[currentAmmo];
+    let damage = `${ammo.diceQuantity}D${ammo.diceValue}`;
     let min = weapon.data.data.special.diceMinimum.has
       ? weapon.data.data.special.diceMinimum.value
       : 0;
@@ -311,18 +313,18 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     if (min > 0) damage += `min${min}`;
     const critType = game.settings.get("mythic", "criticalHitResult");
     if (critType !== "special") {
-      damage += `${critType}>=${std.critsOn}`;
+      damage += `${critType}>=${ammo.critsOn}`;
     }
 
-    let base = weapon.data.data.ammoList.STD.baseDamage;
-    let pierce = weapon.data.data.ammoList.STD.piercing;
+    let base = weapon.data.data.ammoList[currentAmmo].baseDamage;
+    let pierce = weapon.data.data.ammoList[currentAmmo].piercing;
     if (weapon.data.data.group === "melee") {
       const str = (
         actor.data.data.mythicCharacteristics.str.total +
         calculateCharacteristicModifier(actor.data.data.characteristics.str.total)
       );
-      base += Math.floor(str * weapon.data.data.ammoList.STD.strDamage);
-      pierce += Math.floor(str * weapon.data.data.ammoList.STD.strPiercing);
+      base += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strDamage);
+      pierce += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strPiercing);
       if (actor.data.data.trainings.weapons.unarmedCombatant) {
         const wfm = calculateCharacteristicModifier(actor.data.data.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);

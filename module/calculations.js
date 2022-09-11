@@ -62,48 +62,47 @@ export function calculateCharacteristicModifier(score) {
  */
 export function calculateWeaponValues(weaponData) {
   weaponData.price.total = weaponData.price.base + weaponData.price.mods;
+
+  // TODO: Remove this once special ammo is implemented.
+  weaponData.currentAmmo = "STD";
 }
 
 /**
- * Process current magazine and mag count values for a weapon upon reloading.
+ * Process current magazine and ammo pool values for a weapon upon reloading.
  *
  * @param {ItemData} weaponData - The Weapon Item data.
  */
 export function handleReloadMagCount(weaponData) {
-  const magCurrent = weaponData.data.ammoList.STD.currentMag;
-  const magCapacity = weaponData.data.magazineCapacity;
+  const currentAmmo = weaponData.currentAmmo;
+  const magCurrent = weaponData.ammoList[currentAmmo].currentMag;
+  const magCapacity = weaponData.magazineCapacity;
   const tracking = game.settings.get("mythic", "ammoTracking");
-  const isSingleLoading = weaponData.data.special.singleLoading.has;
-  const defaultData = {
-    "data.ammoList.STD.currentMag": weaponData.data.ammoList.STD.currentMag,
-    "data.ammoList.STD.ammoTracking.mags": weaponData.data.ammoList.STD.ammoTracking.mags,
-    "data.ammoList.STD.ammoTracking.pool": weaponData.data.ammoList.STD.ammoTracking.pool
-  };
+  const isSingleLoading = weaponData.special.singleLoading.has;
 
   if (magCurrent === magCapacity) {
     makeUIWarning("mythic.chat.error.noNeedToReload");
-    return defaultData;
+    return weaponData;
   }
 
   if (tracking === "selfManaged") {
-    return {
-      "data.ammoList.STD.currentMag": weaponData.data.magazineCapacity,
-    };
+    weaponData.ammoList[currentAmmo].current = magCapacity
+    return weaponData;
   }
 
   if (tracking === "magazines" && !isSingleLoading) {
-    return calculateReloadMagFed(weaponData, defaultData);
+    return calculateReloadMagFed(weaponData, currentAmmo);
   }
 
   if (tracking === "ammoPool" || isSingleLoading) {
-    return calculateReloadAmmoPool(weaponData, defaultData, {
-      magCurrent: magCurrent,
+    return calculateReloadAmmoPool(weaponData, {
+      currentAmmo: currentAmmo,
       magCapacity: magCapacity,
+      magCurrent: magCurrent,
       isSingleLoading: isSingleLoading
     });
   }
 
-  return defaultData;
+  return weaponData;
 }
 
 /**
@@ -637,7 +636,7 @@ function calculateItemWeight(item) {
   let felt = 0, total = 0;
   if (item.data.data.weight.carried) {
     let quantity = (item.type === "weapon" && item.data.data.group === "thrown")
-      ? item.data.data.ammoList.STD.currentMag
+      ? item.data.data.ammoList[item.data.data.currentAmmo].currentMag
       : item.data.data.weight.quantity;
     const weight = quantity * item.data.data.weight.each;
     total += weight;
@@ -851,16 +850,17 @@ function calculateWeaponAttacksMelee(actorData, weapon) {
 }
 
 function calculateWeaponAttacksRanged(weapon) {
+  const currentAmmo = weapon.data.data.currentAmmo;
   const a = weapon.data.data.attack.fireMode.split("-");
   const mode = a[0], attacks = parseInt(a[1]);
   if (["auto", "sustained"].includes(mode)) {
     const half = Math.floor(attacks / 2);
-    const mag = weapon.data.data.ammoList.STD.currentMag;
+    const mag = weapon.data.data.ammoList[currentAmmo].currentMag;
     weapon.data.data.attack.half = mag >= half ? half : mag;
     weapon.data.data.attack.full = mag >= attacks ? attacks : mag;
   } else if (["burst", "pump", "semi"].includes(mode)) {
     const full = attacks * 2;
-    const mag = weapon.data.data.ammoList.STD.currentMag;
+    const mag = weapon.data.data.ammoList[currentAmmo].currentMag;
     weapon.data.data.attack.half = mag >= attacks ? attacks : mag;
     weapon.data.data.attack.full = mag >= full ? full : mag;
   } else if (mode === "charge") {
@@ -874,23 +874,27 @@ function calculateWeaponAttacksRanged(weapon) {
 }
 
 function calculateWeaponRangeMelee(actorData, weapon) {
-  weapon.data.data.ammoList.STD.range.melee = (
-    weapon.data.data.ammoList.STD.range.close + MELEE_REACH_SIZE_BONUS[actorData.data.size]
+  const currentAmmo = weapon.data.data.currentAmmo;
+  weapon.data.data.ammoList[currentAmmo].range.melee = (
+      weapon.data.data.ammoList[currentAmmo].range.close
+    + MELEE_REACH_SIZE_BONUS[actorData.data.size]
   );
 }
 
 function calculateWeaponRangeThrown(actorData, weapon) {
+  const currentAmmo = weapon.data.data.currentAmmo;
   const base = (
-    calculateCharacteristicModifier(actorData.data.characteristics.str.total) +
-    actorData.data.mythicCharacteristics.str.total
+      calculateCharacteristicModifier(actorData.data.characteristics.str.total)
+    + actorData.data.mythicCharacteristics.str.total
   );
+
   let mult = 15;
   const penalty = calculateWeightPenaltyThrown(base);
   mult -= Math.floor(weapon.data.data.weight.each / penalty.weight) * penalty.multiplier;
-  if (weapon.data.data.ammoList.STD.range.grip === "slight") mult -= 1;
-  if (["partial", "sloppy"].includes(weapon.data.data.ammoList.STD.range.grip)) mult -= 2;
-  const range = (base * mult) / (weapon.data.data.ammoList.STD.range.grip === "sloppy" ? 2 : 1);
-  weapon.data.data.ammoList.STD.range.thrown = range > 0.5 ? range : 0;
+  if (weapon.data.data.ammoList[currentAmmo].range.grip === "slight") mult -= 1;
+  if (["partial", "sloppy"].includes(weapon.data.data.ammoList[currentAmmo].range.grip)) mult -= 2;
+  const range = (base * mult) / (weapon.data.data.ammoList[currentAmmo].range.grip === "sloppy" ? 2 : 1);
+  weapon.data.data.ammoList[currentAmmo].range.thrown = range > 0.5 ? range : 0;
 }
 
 function calculateWeaponReloadStandard(actorData, weapon) {
@@ -911,6 +915,7 @@ function calculateWeaponReloadSingleLoading(actorData, weapon) {
 }
 
 function calculateWeaponTarget(actorData, weapon) {
+  const currentAmmo = weapon.data.data.currentAmmo;
   const group = weapon.data.data.group;
   const mode = weapon.data.data.attack.fireMode.split("-")[0];
   const stat = group === "ranged"
@@ -918,7 +923,7 @@ function calculateWeaponTarget(actorData, weapon) {
     : actorData.data.characteristics.wfm.roll;
   let mod = (
     stat + weapon.data.data.attack.attackBonus +
-    weapon.data.data.ammoList.STD.attackBonus
+    weapon.data.data.ammoList[currentAmmo].attackBonus
   );
   if (!actorData.data.trainings.faction[weapon.data.data.trainings.faction]) {
     mod -= actorData.data.trainings.alienTech ? 10 : 20;
@@ -937,7 +942,7 @@ function calculateWeaponTarget(actorData, weapon) {
       mod += 10;
     }
   }
-  weapon.data.data.ammoList.STD.target = mod > 0 ? mod : 0;
+  weapon.data.data.ammoList[currentAmmo].target = mod > 0 ? mod : 0;
 }
 
 function calculateWeaponSummaryAttackData(actorData) {
@@ -999,19 +1004,19 @@ function calculateWoundsNamedCharacter(actorData, touMod) {
   );
 }
 
-function calculateReloadAmmoPool(weaponData, defaultData, extraData) {
-  const pool = weaponData.data.ammoList.STD.ammoTracking.pool;
+function calculateReloadAmmoPool(weaponData, extraData) {
+  const pool = weaponData.ammoList[extraData.currentAmmo].ammoTracking.pool;
   const missingRounds = extraData.magCapacity - extraData.magCurrent;
   const roundsToReload = extraData.isSingleLoading
-                       ? weaponData.data.reload.total
+                       ? weaponData.reload.total
                        : missingRounds;
-  const reload = Math.min(missingRounds, roundsToReload);
 
   if (pool === 0) {
     makeUIError("mythic.chat.error.ammoPoolEmpty");
-    return defaultData;
+    return weaponData;
   }
 
+  const reload = Math.min(missingRounds, roundsToReload);
   if (pool >= reload) {
     const newPool = pool - reload;
     if (newPool === 0) {
@@ -1019,32 +1024,27 @@ function calculateReloadAmmoPool(weaponData, defaultData, extraData) {
     } else if (newPool <= extraData.magCapacity) {
       makeUIWarning("mythic.chat.error.poolDownToOneMag");
     }
-    return {
-      "data.ammoList.STD.currentMag": extraData.magCurrent + reload,
-      "data.ammoList.STD.ammoTracking.pool": newPool
-    };
-  }
-
-  if (reload > pool) {
+    weaponData.ammoList[extraData.currentAmmo].ammoTracking.pool = newPool;
+    weaponData.ammoList[extraData.currentAmmo].currentMag =
+      extraData.magCurrent + reload;
+  } else if (reload > pool) {
     makeUIWarning("mythic.chat.error.reloadEmptiesPool");
-    return {
-      "data.ammoList.STD.currentMag": extraData.magCurrent + pool,
-      "data.ammoList.STD.ammoTracking.pool": 0
-    };
+    weaponData.ammoList[extraData.currentAmmo].ammoTracking.pool = 0;
+    weaponData.ammoList[extraData.currentAmmo].currentMag =
+      extraData.magCurrent + pool;
   }
+  return weaponData;
 }
 
-function calculateReloadMagFed(weaponData, defaultData) {
-  const magsCarried = weaponData.data.ammoList.STD.ammoTracking.mags;
+function calculateReloadMagFed(weaponData, currentAmmo) {
+  const magsCarried = weaponData.ammoList[currentAmmo].ammoTracking.mags;
   if (magsCarried > 0) {
     const newMagsCarried = magsCarried - 1;
     if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
-    return {
-      "data.ammoList.STD.currentMag": weaponData.data.magazineCapacity,
-      "data.ammoList.STD.ammoTracking.mags": newMagsCarried
-    };
+    weaponData.ammoList[currentAmmo].currentMag = weaponData.magazineCapacity;
+    weaponData.ammoList[currentAmmo].ammoTracking.mags = newMagsCarried;
   } else {
     makeUIError("mythic.chat.error.outOfMags");
-    return defaultData;
   }
+  return weaponData;
 }
