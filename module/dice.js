@@ -61,21 +61,22 @@ export function interpretDiceRollModifiers(str) {
  */
 export async function rollAttacks(element, actor, weapon) {
   const attackOptions = await getAttackRollOptions();
-  let mod = 0;
-  if (!attackOptions.cancelled) mod = interpretDiceRollModifiers(attackOptions.circumstance);
-  if (isNaN(mod)) {
+  if (attackOptions.cancelled) return;
+
+  const atkMod = interpretDiceRollModifiers(attackOptions.circumstance.attack);
+  const dmgMod = interpretDiceRollModifiers(attackOptions.circumstance.damage);
+
+  if ([ atkMod, dmgMod ].some(isNaN)) {
     makeUIError("mythic.chat.error.nan");
-    attackOptions.cancelled = true;
+    return;
   }
-  if (!attackOptions.cancelled) {
-    const currentAmmo = weapon.data.data.currentAmmo;
-    const target = weapon.data.data.ammoList[currentAmmo].target + mod;
-    const type = element.value;
-    const isVehicle = attackOptions.targetVehicle;
-    await getAttackAndDamageOutcomes(actor, weapon, target, type, isVehicle);
-    return weapon.data.data.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
-  }
-  return;
+
+  const currentAmmo = weapon.data.data.currentAmmo;
+  const target = weapon.data.data.ammoList[currentAmmo].target + atkMod;
+  const type = element.value;
+  const isVehicle = attackOptions.targetVehicle;
+  await getAttackAndDamageOutcomes(actor, weapon, target, type, isVehicle, dmgMod);
+  return weapon.data.data.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
 /**
@@ -153,7 +154,7 @@ function determineRollOutcome(roll, target) {
   return outcome;
 }
 
-async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) {
+async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle, circDmg) {
   const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
@@ -178,7 +179,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle) 
     attacks = weapon.data.data.attack[type];
   }
   for (let i = 1; i <= attacks; i++) {
-    const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack, vehicle);
+    const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack, vehicle, circDmg);
     result.hits += attack.outcome === "success" ? 1 : 0;
     result.attacks.push(attack);
   }
@@ -308,7 +309,7 @@ function reverseDigits(roll) {
   return parseInt(digits.join(""));
 }
 
-async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages, veh) {
+async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages, veh, circDmg) {
   const currentAmmo = weapon.data.data.currentAmmo;
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, target);
@@ -357,7 +358,7 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
 
     const sizeBonus = weapon.data.data.group === "melee"
                     ? SIZE_DAMAGE_BONUS[actor.data.data.size] : 0;
-    attack.damageRoll = `${damage} + ${base} + ${sizeBonus}`;
+    attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${circDmg}`;
     attack.piercing = pierce;
 
     if (weapon.data.data.special.blast.has || weapon.data.data.special.kill.has) {
@@ -424,7 +425,10 @@ async function rollInitiative(element, mod, actor) {
 
 function _processAttackOptions(form) {
   return {
-    circumstance: form.circumstance.value,
+    circumstance: {
+      attack: form.attackBonus.value,
+      damage: form.damageBonus.value
+    },
     targetVehicle: form.targetVehicle.checked
   };
 }

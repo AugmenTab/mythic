@@ -344,6 +344,8 @@
             },
             "options": {
                 "circumstance": "Circumstance Modifier",
+                "attackBonus": "To-Hit",
+                "damageBonus": "Damage",
                 "targetVehicle": "Target is a Vehicle?",
                 "dof": "Degrees of Failure",
                 "distance": "Distance from Target (meters)",
