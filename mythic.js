@@ -70,7 +70,7 @@ function registerSystemSettings() {
       max: 100,
       step: 1
     },
-    default: 98
+    default: 100
   });
 
   // Critical Hit Result
