@@ -5,6 +5,7 @@ import { buildChatMessageContent, postChatMessage } from "./chat.js";
 import { localize, makeUIError } from "./common.js";
 import { determineHitLocation } from "./location.js";
 
+const FORMULA = "D100";
 const CHARACTERISTICS = {
   "str": "Strength",
   "tou": "Toughness",
@@ -17,7 +18,22 @@ const CHARACTERISTICS = {
   "ch": "Charisma",
   "ld": "Leadership"
 };
-const FORMULA = "D100";
+
+const SIZE_DAMAGE_BONUS = {
+  "mini": -2,
+  "small": 0,
+  "normal": 0,
+  "large": 2,
+  "huge": 3,
+  "hulking": 4,
+  "giant": 5,
+  "immense": 6,
+  "massive": 8,
+  "great": 10,
+  "monumental": 15,
+  "colossal": 20,
+  "vast": 30
+};
 
 /**
  * Evaluates a string of simple addition and subtraction expressions.
@@ -296,12 +312,14 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
   const currentAmmo = weapon.data.data.currentAmmo;
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, target);
+
   let attack = {
     attackNumber: attackNumber,
     damages: damages,
     roll: roll.total,
     ...outcome
   };
+
   if (attack.outcome === "success"
     || weapon.data.data.special.blast.has
     || weapon.data.data.special.kill.has
@@ -310,17 +328,20 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     const ammo = weapon.data.data.ammoList[currentAmmo];
     let damage = `${ammo.diceQuantity}D${ammo.diceValue}`;
     let min = weapon.data.data.special.diceMinimum.has
-      ? weapon.data.data.special.diceMinimum.value
-      : 0;
+            ? weapon.data.data.special.diceMinimum.value
+            : 0;
+
     if (roll.total === 1 && min < 5) min = 5;
     if (min > 0) damage += `min${min}`;
     const critType = game.settings.get("mythic", "criticalHitResult");
+
     if (critType !== "special") {
       damage += `${critType}>=${ammo.critsOn}`;
     }
 
     let base = weapon.data.data.ammoList[currentAmmo].baseDamage;
     let pierce = weapon.data.data.ammoList[currentAmmo].piercing;
+
     if (weapon.data.data.group === "melee") {
       const str = (
         actor.data.data.mythicCharacteristics.str.total +
@@ -333,8 +354,12 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
         pierce += Math.floor(wfm / 2);
       }
     }
-    attack.damageRoll = `${damage} + ${base}`;
+
+    const sizeBonus = weapon.data.data.group === "melee"
+                    ? SIZE_DAMAGE_BONUS[actor.data.data.size] : 0;
+    attack.damageRoll = `${damage} + ${base} + ${sizeBonus}`;
     attack.piercing = pierce;
+
     if (weapon.data.data.special.blast.has || weapon.data.data.special.kill.has) {
       attack.apply = true;
     }

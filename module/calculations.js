@@ -793,6 +793,7 @@ function calculateSkillTargets(actorData) {
       const stats = actorData.data.characteristics;
       target += stats[value.characteristic.toLowerCase()].roll;
       const tier = value.training.tier;
+
       if (tier === "none") {
         target -= (20 * value.training.penalty);
       } else if (tier === "plus10") {
@@ -800,13 +801,20 @@ function calculateSkillTargets(actorData) {
       } else if (tier === "plus20") {
         target += 20;
       }
+
       if ( (key === "techHuman" && !actorData.data.trainings.faction.unsc)
         || (key === "techCovenant" && !actorData.data.trainings.faction.covenant)
         || (key === "techForerunner" && !actorData.data.trainings.faction.forerunner)
       ) {
         target -= actorData.data.trainings.alienTech ? 10 : 20;
+      } else if ( key === "evasion"
+               && value.characteristic === "WFM"
+               && actorData.data.trainings.weapons.hth
+                ) {
+        target += 5;
       }
-      value.roll = target <= 0 ? 0 : target;
+
+      value.roll = target > 0 ? target : 0;
     }
   }
 }
@@ -836,16 +844,17 @@ function calculateSwarm(actorData) {
 }
 
 function calculateWeaponAttacksMelee(actorData, weapon) {
-  const mod = calculateCharacteristicModifier(actorData.data.characteristics.wfm.total);
-  let half = mod > 7 ? 4 : Math.ceil(mod / 2);
-  let full = half * 2;
-  if (actorData.data.trainings.weapons.hth) {
-    half += 1;
-    full += 2;
-  }
-  if (actorData.data.trainings.weapons.mac) full += full >= 10 ? 0 : 1;
-  weapon.data.data.attack.half = half;
-  weapon.data.data.attack.full = full;
+  const mkBase = n => Math.floor(
+    (n + getCharacteristicModifier(actorData.data.characteristics.wfm.total)) / 2
+  );
+
+  const macMod = (
+       actorData.data.trainings.weapons.hth
+    && actorData.data.trainings.weapons.mac
+  ) ? 1 : 0;
+
+  weapon.data.data.attack.half = Math.min(4, Math.max(1, mkBase(0)));
+  weapon.data.data.attack.full = Math.min(8, 2 * mkBase(macMod));
   weapon.data.data.attack.fireMode = "melee";
 }
 
@@ -935,12 +944,9 @@ function calculateWeaponTarget(actorData, weapon) {
     mod += 10;
   }
   if (group === "melee") {
-    if (actorData.data.trainings.weapons.hth) {
-      mod += 5;
-    }
-    if (actorData.data.trainings.weapons.mac) {
-      mod += 10;
-    }
+    const hasHTH = actorData.data.trainings.weapons.hth;
+    if (hasHTH) mod += 5;
+    if (hasHTH && actorData.data.trainings.weapons.mac) mod += 5;
   }
   weapon.data.data.ammoList[currentAmmo].target = mod > 0 ? mod : 0;
 }
