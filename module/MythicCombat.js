@@ -17,25 +17,15 @@ export default class MythicCombat extends Combat {
    * @returns {number} The result of the comparison between the two Combatants.
    */
   _sortCombatants(a, b) {
+    const getTieBreaker = actor => {
+      return .001 * (
+          actor.data.data.characteristics.agi.roll
+        + (10 * actor.data.data.mythicCharacteristics.agi.total)
+      );
+    };
+
     const initA = Number.isNumeric(a.initiative) ? a.initiative : -9999;
     const initB = Number.isNumeric(b.initiative) ? b.initiative : -9999;
-    const initDifference = initB - initA;
-    if (initDifference !== 0) return initDifference;
-
-    const agilityA = a.actor.data.data.characteristics.agi.roll;
-    const agilityB = b.actor.data.data.characteristics.agi.roll;
-
-    const agiModA = (
-      getCharacteristicModifier(agilityA) +
-      a.actor.data.data.mythicCharacteristics.agi.total
-    );
-    const agiModB = (
-      getCharacteristicModifier(agilityB) +
-      b.actor.data.data.mythicCharacteristics.agi.total
-    );
-    const modDifference = agiModB - agiModA;
-    if (modDifference !== 0) return modDifference;
-
-    return agilityB - agilityA;
+    return (initB + getTieBreaker(b.actor)) - (initA + getTieBreaker(a.actor));
   }
 }
