@@ -332,6 +332,7 @@
                 "empty": "This character has no equipment trainings."
             },
             "evade": "Batched Evasions",
+            "parry": "Batched Parries",
             "factions": {
                 "flavor": "Trained Factions",
                 "faction": "Faction",
@@ -361,10 +362,7 @@
                 "flame": "Rolling damage for a Flame attack!",
                 "needle": "Rolling damage for a Needle Supercombine!"
             },
-            "test": {
-                "title": "Test",
-                "evasion": "Evasion"
-            }
+            "test": "Test"
         },
         "combat": {
             "error": {
@@ -511,6 +509,7 @@
             "navSpace": "Navigation (Space)",
             "navSlipspace": "Navigation (Slipspace)",
             "negotiation": "Negotiation",
+            "parry": "Parry",
             "pilotGround": "Pilot (Ground)",
             "pilotAir": "Pilot (Air)",
             "pilotSpace": "Pilot (Space)",

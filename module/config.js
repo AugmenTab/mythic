@@ -153,8 +153,8 @@ mythic.skills = {
   evasion: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.move",
-    characteristics: ["AGI"],
-    floodCharacteristics: ["AGI"]
+    characteristics: ["AGI", "WFM"],
+    floodCharacteristics: ["AGI", "WFM"]
   },
   gambling: {
     difficulty: "mythic.skillSheet.difficulties.basic",

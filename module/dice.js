@@ -1,6 +1,6 @@
 /** @module dice */
 
-import { calculateCharacteristicModifier } from "./calculations.js";
+import { getCharacteristicModifier } from "./calculations.js";
 import { buildChatMessageContent, postChatMessage } from "./chat.js";
 import { localize, makeUIError } from "./common.js";
 import { determineHitLocation } from "./location.js";
@@ -70,7 +70,7 @@ export async function rollAttacks(element, actor, weapon) {
  * @param {Actor} actor - The Actor that fired the listener.
  */
 export async function rollEvasionBatch(element, actor) {
-  const options = await getEvadeOptions();
+  const options = await getEvadeOptions(actor.data.data.skills.evasion.characteristic);
   let mod = 0;
   if (options.cancelled) {
     return;
@@ -86,7 +86,8 @@ export async function rollEvasionBatch(element, actor) {
  * Roll tests from an Actor sheet.
  *
  * @async
- * @param {Element} element - The HTML element the listener originated from.
+ * @param {Element} element - The HTML element from which the listener
+ * originated.
  * @param {Actor} actor - The Actor that fired the listener.
  */
 export async function rollTest(element, actor) {
@@ -206,12 +207,13 @@ async function getAttackRollOptions() {
   });
 }
 
-async function getEvadeOptions() {
+async function getEvadeOptions(stat) {
+  const i18nPath = stat === "AGI" ? "evade" : "parry";
   const template = "systems/mythic/templates/chat/evade-dialog.hbs";
   const html = await renderTemplate(template, {});
   return new Promise(resolve => {
     const data = {
-      title: game.i18n.format("mythic.chat.evade"),
+      title: game.i18n.format(`mythic.chat.${i18nPath}`),
       content: html,
       buttons: {
         roll: {
@@ -258,11 +260,12 @@ function getSpecialRuleValues(hits, specialRules) {
 async function getTestOptions(test) {
   const template = "systems/mythic/templates/chat/test-dialog.hbs";
   const html = await renderTemplate(template, {});
+  const title = CHARACTERISTICS[test] != undefined
+              ? CHARACTERISTICS[test]
+              : test;
   return new Promise(resolve => {
     const data = {
-      title: `${CHARACTERISTICS[test] != undefined
-        ? CHARACTERISTICS[test]
-        : test} ${game.i18n.format("mythic.chat.test.title")}`,
+      title: `${game.i18n.format("mythic.chat.test")}: ${title}`,
       content: html,
       buttons: {
         roll: {
@@ -321,12 +324,12 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
     if (weapon.data.data.group === "melee") {
       const str = (
         actor.data.data.mythicCharacteristics.str.total +
-        calculateCharacteristicModifier(actor.data.data.characteristics.str.total)
+        getCharacteristicModifier(actor.data.data.characteristics.str.total)
       );
       base += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strDamage);
       pierce += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strPiercing);
       if (actor.data.data.trainings.weapons.unarmedCombatant) {
-        const wfm = calculateCharacteristicModifier(actor.data.data.characteristics.wfm.total);
+        const wfm = getCharacteristicModifier(actor.data.data.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);
       }
     }
@@ -350,19 +353,23 @@ async function rollBasicTest(target, test, type, actor) {
     critical: false,
     outcome: "",
     template: "test",
-    flavor: `${test} ${localize("mythic.chat.test.title")}`,
+    flavor: `${localize("mythic.chat.test")}: ${test}`,
     ...outcome
   };
   await postChatMessage(result, actor);
 }
 
 async function rollEvasions(baseTarget, options, actor) {
+  const stat = actor.data.data.skills.evasion.characteristic;
+  const i18n = "mythic.skillNames." + (stat === "AGI" ? "evasion" : "parry");
+
   let result = {
     evasions: [],
-    flavor: `${localize("mythic.skillNames.evasion")} (AGI) ${localize("mythic.chat.test.title")}`,
+    flavor: `${localize("mythic.chat.test")}: ${localize(i18n)} (${stat})`,
     type: "test",
     template: "evade"
   };
+
   for (let i = 0; i < options.times; i++) {
     const roll = await new Roll(FORMULA).roll({ async: true });
     let target = baseTarget - (i * options.penalty);

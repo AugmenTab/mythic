@@ -62,7 +62,11 @@
               <button
                 class="skill
                 rollable"
-                name="{{localize (concat "mythic.skillNames." skill)}} ({{details.characteristic}})"
+                {{#if (cond "&&" (eq skill "evasion") (eq details.characteristic "WFM"))}}
+                  name="{{localize "mythic.skillNames.parry"}} ({{details.characteristic}})"
+                {{else}}
+                  name="{{localize (concat "mythic.skillNames." skill)}} ({{details.characteristic}})"
+                {{/if}}
                 value="{{details.roll}}"
               >
                 <b>{{details.roll}}</b>

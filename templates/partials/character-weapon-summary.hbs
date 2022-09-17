@@ -18,7 +18,11 @@
           name="{{localize "mythic.skillNames.evasion"}} ({{data.data.skills.evasion.characteristic}})"
           value="{{data.data.skills.evasion.roll}}"
         >
-          {{localize "mythic.skillNames.evasion"}}:&nbsp;{{data.data.skills.evasion.roll}}
+          {{#if (eq data.data.skills.evasion.characteristic "AGI")}}
+            {{localize "mythic.skillNames.evasion"}}:&nbsp;{{data.data.skills.evasion.roll}}
+          {{else}}
+            {{localize "mythic.skillNames.parry"}}:&nbsp;{{data.data.skills.evasion.roll}}
+          {{/if}}
         </button>
       </th>
       <tr>

@@ -51,7 +51,7 @@ export function calculateArmorValues(armorData, type) {
  * @param {number} score - The characteristic score.
  * @returns {number} The characteristic modifier.
  */
-export function calculateCharacteristicModifier(score) {
+export function getCharacteristicModifier(score) {
   return score < 0 ? 0 : Math.floor(score / 10);
 }
 
@@ -145,13 +145,13 @@ export function prepareBestiaryDerived(actorData) {
 
   // Reference Characteristics and Modifiers
   const str = actorData.data.characteristics.str.total;
-  const strMod = calculateCharacteristicModifier(str);
+  const strMod = getCharacteristicModifier(str);
   const tou = actorData.data.characteristics.tou.total;
-  const touMod = calculateCharacteristicModifier(tou);
+  const touMod = getCharacteristicModifier(tou);
   const agi = actorData.data.characteristics.agi.total;
-  const agiMod = calculateCharacteristicModifier(agi);
+  const agiMod = getCharacteristicModifier(agi);
   const int = actorData.data.characteristics.int.total;
-  const intMod = calculateCharacteristicModifier(int);
+  const intMod = getCharacteristicModifier(int);
 
   // Calculate DR
   calculateDamageResistance(actorData, touMod);
@@ -232,8 +232,8 @@ export function prepareFloodDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristicsFlood(actorData);
 
-  const strMod = calculateCharacteristicModifier(actorData.data.characteristics.str.total);
-  const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
+  const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total);
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
 
   // Calculate DR
   calculateDamageResistanceFlood(actorData);
@@ -294,13 +294,13 @@ export function prepareNamedCharacterDerived(actorData) {
 
   // Reference Characteristics and Modifiers
   const str = actorData.data.characteristics.str.total;
-  const strMod = calculateCharacteristicModifier(str);
+  const strMod = getCharacteristicModifier(str);
   const tou = actorData.data.characteristics.tou.total;
-  const touMod = calculateCharacteristicModifier(tou);
+  const touMod = getCharacteristicModifier(tou);
   const agi = actorData.data.characteristics.agi.total;
-  const agiMod = calculateCharacteristicModifier(agi);
+  const agiMod = getCharacteristicModifier(agi);
   const int = actorData.data.characteristics.int.total;
-  const intMod = calculateCharacteristicModifier(int);
+  const intMod = getCharacteristicModifier(int);
 
   // Calculate DR
   calculateDamageResistance(actorData, touMod);
@@ -497,7 +497,7 @@ function calculateDamageResistanceFlood(actorData) {
       val.resistance = soak > 0 ? soak : 0;
     } else {
       const tou = actorData.data.characteristics.tou.total;
-      const touMod = calculateCharacteristicModifier(tou);
+      const touMod = getCharacteristicModifier(tou);
       const touSoak = touMod + actorData.data.mythicCharacteristics.tou.total;
       val.resistance = touSoak > 0 ? touSoak : 0;
     }
@@ -884,7 +884,7 @@ function calculateWeaponRangeMelee(actorData, weapon) {
 function calculateWeaponRangeThrown(actorData, weapon) {
   const currentAmmo = weapon.data.data.currentAmmo;
   const base = (
-      calculateCharacteristicModifier(actorData.data.characteristics.str.total)
+      getCharacteristicModifier(actorData.data.characteristics.str.total)
     + actorData.data.mythicCharacteristics.str.total
   );
 
@@ -900,15 +900,15 @@ function calculateWeaponRangeThrown(actorData, weapon) {
 function calculateWeaponReloadStandard(actorData, weapon) {
   let base = weapon.data.data.reload.base;
   if (actorData.data.trainings.weapons.rapidReload) base = Math.ceil(base / 2);
-  const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
-  const wfrMod = calculateCharacteristicModifier(actorData.data.characteristics.wfr.total);
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
+  const wfrMod = getCharacteristicModifier(actorData.data.characteristics.wfr.total);
   const final = base - Math.floor(agiMod / 2) - Math.floor(wfrMod / 2);
   weapon.data.data.reload.total = final > 0 ? final : 1;
 }
 
 function calculateWeaponReloadSingleLoading(actorData, weapon) {
-  const agiMod = calculateCharacteristicModifier(actorData.data.characteristics.agi.total);
-  const wfrMod = calculateCharacteristicModifier(actorData.data.characteristics.wfr.total);
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
+  const wfrMod = getCharacteristicModifier(actorData.data.characteristics.wfr.total);
   const rrBonus = actorData.data.trainings.weapons.rapidReload ? 1 : 0;
   const final = 1 + Math.floor(agiMod / 2) + Math.floor(wfrMod / 2) + rrBonus;
   weapon.data.data.reload.total = final > 3 ? 3 : final;

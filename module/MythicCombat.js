@@ -1,6 +1,6 @@
 /** @module MythicCombat */
 
-import { calculateCharacteristicModifier } from "./calculations.js";
+import { getCharacteristicModifier } from "./calculations.js";
 
 /**
  * Class representing the unique features of this system's Combat mechanics.
@@ -26,11 +26,11 @@ export default class MythicCombat extends Combat {
     const agilityB = b.actor.data.data.characteristics.agi.roll;
 
     const agiModA = (
-      calculateCharacteristicModifier(agilityA) +
+      getCharacteristicModifier(agilityA) +
       a.actor.data.data.mythicCharacteristics.agi.total
     );
     const agiModB = (
-      calculateCharacteristicModifier(agilityB) +
+      getCharacteristicModifier(agilityB) +
       b.actor.data.data.mythicCharacteristics.agi.total
     );
     const modDifference = agiModB - agiModA;

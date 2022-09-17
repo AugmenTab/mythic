@@ -1,6 +1,6 @@
 /** @module chat */
 
-import { calculateCharacteristicModifier } from "./calculations.js";
+import { getCharacteristicModifier } from "./calculations.js";
 import { localize, makeUIError } from "./common.js";
 
 /**
@@ -154,7 +154,7 @@ async function onScatter(event) {
         if (options.distance > element.dataset.range * 2) { mod *= 5 }
         else { mod *= 2 }
       }
-      mod -= calculateCharacteristicModifier(parseInt(element.dataset.wfm));
+      mod -= getCharacteristicModifier(parseInt(element.dataset.wfm));
       const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
       msg += `${getScatterArrow(roll.total)} ${dice.total} m`;
     }
