@@ -4,7 +4,7 @@ import { interpretDiceRollModifiers } from "./dice.js";
 import { makeUIError, makeUIWarning } from "./common.js";
 
 const MELEE_REACH_SIZE_BONUS = {
-  "mini": 1,
+  "mini": 0,
   "small": 1,
   "normal": 1,
   "large": 2,
@@ -12,11 +12,11 @@ const MELEE_REACH_SIZE_BONUS = {
   "hulking": 4,
   "giant": 5,
   "immense": 6,
-  "massive": 7,
-  "great": 8,
-  "monumental": 9,
-  "colossal": 10,
-  "vast": 11
+  "massive": 8,
+  "great": 10,
+  "monumental": 20,
+  "colossal": 50,
+  "vast": 100
 };
 
 /**

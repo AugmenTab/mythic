@@ -35,16 +35,18 @@
       </div>
     {{/with}}
       <div>
-        {{localize "mythic.weaponSheet.stats.range"}}:&nbsp;
         {{#if (eq this.data.group "ranged")}}
+          {{localize "mythic.weaponSheet.stats.range"}}:&nbsp;
           {{#with this.data.ammoList.STD}}
             {{localnum this.range.close}}
             &nbsp;&ndash;&nbsp;
             {{localnum this.range.long}}&nbsp;m
           {{/with}}
         {{else if (eq this.data.group "melee")}}
+          {{localize "mythic.weaponSheet.stats.reach"}}:&nbsp;
           {{this.data.ammoList.STD.range.melee}}&nbsp;m
         {{else if (eq this.data.group "thrown")}}
+          {{localize "mythic.weaponSheet.stats.range"}}:&nbsp;
           {{this.data.ammoList.STD.range.thrown}}&nbsp;m
         {{/if}}
       </div>
@@ -74,38 +76,40 @@
       </tr>
     </tbody>
   </table>
-  <div class="weapon-split">
-    <div>
-      {{localize "mythic.weaponSheet.stats.magazine"}}:&nbsp;
-      {{localnum this.data.ammoList.STD.currentMag}}
-      &nbsp;/&nbsp;
-      {{localnum this.data.magazineCapacity}}
+  {{#if (eq this.data.group "ranged")}}
+    <div class="weapon-split">
+      <div>
+        {{localize "mythic.weaponSheet.stats.magazine"}}:&nbsp;
+        {{localnum this.data.ammoList.STD.currentMag}}
+        &nbsp;/&nbsp;
+        {{localnum this.data.magazineCapacity}}
+      </div>
+      <div>
+        {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
+                         this.data.special.singleLoading.has)}}
+          {{localize "mythic.weaponSheet.stats.roundsCarried"}}:&nbsp;
+          {{this.data.ammoList.STD.ammoTracking.pool}}
+        {{else}}
+          {{localize "mythic.weaponSheet.stats.magsCarried"}}:&nbsp;
+          {{this.data.ammoList.STD.ammoTracking.mags}}
+        {{/if}}
+      </div>
     </div>
-    <div>
-      {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                       this.data.special.singleLoading.has)}}
-        {{localize "mythic.weaponSheet.stats.roundsCarried"}}:&nbsp;
-        {{this.data.ammoList.STD.ammoTracking.pool}}
-      {{else}}
-        {{localize "mythic.weaponSheet.stats.magsCarried"}}:&nbsp;
-        {{this.data.ammoList.STD.ammoTracking.mags}}
-      {{/if}}
+    <div class="fire-modes">
+      {{#each this.data.fireMode as |fireMode name|}}
+        {{#if fireMode}}
+          <p
+            {{#if (contains ../this.data.attack.fireMode name)}}
+              style="font-weight: bold"
+            {{/if}}
+          >
+            {{localize (concat "mythic.weaponSheet.fireMode." name)}}
+            &nbsp;({{fireMode}})
+          </p>
+        {{/if}}
+      {{/each}}
     </div>
-  </div>
-  <div class="fire-modes">
-    {{#each this.data.fireMode as |fireMode name|}}
-      {{#if fireMode}}
-        <p
-          {{#if (contains ../this.data.attack.fireMode name)}}
-            style="font-weight: bold"
-          {{/if}}
-        >
-          {{localize (concat "mythic.weaponSheet.fireMode." name)}}
-          &nbsp;({{fireMode}})
-        </p>
-      {{/if}}
-    {{/each}}
-  </div>
+  {{/if}}
   <aside class="special">
     {{#each this.data.special as |special name|}}
       {{#if special.has}}
