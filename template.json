@@ -1216,7 +1216,9 @@
                     "needsInput": true
                 },
                 "electrified": {
-                    "has": false
+                    "has": false,
+                    "value": 0,
+                    "needsInput": true
                 },
                 "emp": {
                     "has": false,

@@ -3,7 +3,7 @@
 import { mythic } from "./module/config.js";
 import * as Chat from "./module/chat.js";
 import * as Helpers from "./module/helpers.js";
-import { migrateCauterize, migrateV2_1, migrateWorld } from "./module/migrations.js";
+import * as Migrations from "./module/migrations.js";
 import MythicActor from "./module/MythicActor.js";
 import MythicCombat from "./module/MythicCombat.js";
 import MythicItem from "./module/MythicItem.js";
@@ -192,9 +192,9 @@ Hooks.once("ready", function () {
     const current = game.settings.get("mythic", "systemMigrationVersion");
 
     if (!current) {
-      if (isNewerVersion("0.01",  current)) migrateWorld();
-      if (isNewerVersion("0.2.1", current)) migrateV2_1();
-      if (isNewerVersion("0.2.2", current)) migrateCauterize();
+      if (isNewerVersion("0.01",  current)) Migrations.migrateWorld();
+      if (isNewerVersion("0.2.1", current)) Migrations.migrateV2_1();
+      if (isNewerVersion("0.2.2", current)) Migrations.migrateCauterize();
     }
   }
 

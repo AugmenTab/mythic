@@ -306,9 +306,10 @@
               {{checked details.has}}
             />
             <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
-            {{#if details.needsInput}}
+            {{#if (cond "||" details.needsInput (eq name "electrified"))}}
               <input
                 name="data.special.{{name}}.value"
+                {{!-- TODO: Write a migration after the move to Foundry v10. --}}
                 {{#if (cond "||" (eq name "flame") (eq name "cryo"))}}
                   type="text"
                 {{else}}
