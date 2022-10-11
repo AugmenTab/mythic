@@ -701,19 +701,19 @@
                 "advanced": "Advanced",
                 "longRange": "Long-Range",
                 "vehicle": "Vehicle",
-                "explosive": "Explosive/Ordnance",
+                "explosive": "Explosive Ordnance",
                 "melee": "Melee",
                 "heavy": "Heavy"
             },
             "examples": {
-                "basic": "Pistols, Revolvers, Shotguns, Knives.",
-                "infantry": "Rifles, Carbines, SMGs, Grenades, Satchel Charges.",
-                "advanced": "Energy Weapons, Railguns, Flame Throwers.",
+                "basic": "Pistols, Shotguns, and Knives.",
+                "infantry": "Rifles, Carbines, SMGs, Grenades, and Satchel Charges.",
+                "advanced": "Energy Weapons, Railguns, Flame Throwers, Cryosprayers.",
                 "longRange": "Sniper Rifles and other Extreme-Range Weapons.",
-                "vehicle": "Any and all vehicle weapons.",
-                "explosive": "Grenade, Missile, and Rocket Launchers, Demolition and Ordinance Explosives.",
+                "vehicle": "Any and all vehicle weapons. Cannons, Autocannons, and Coilguns",
+                "explosive": "Grenade, Rocket, and Missile Launchers. Demolition, Ordinance, and Landmines.",
                 "melee": "All available Melee Weapons.",
-                "heavy": "Light Machine Guns, Machine Guns, Heavy Machine Guns."
+                "heavy": "Light, Medium, and Heavy Machine Guns."
             },
             "factions": {
                 "unsc": "UNSC",
