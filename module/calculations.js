@@ -728,6 +728,10 @@ function calculateMovementDistances(actorData) {
   const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total);
   const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
   const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
+  const chargeRunBonus =
+    isNaN(actorData.data.movement.agiBonusRunCharge)
+      ? 0 : actorData.data.movement.agiBonusRunCharge;
+
   if (base <= 0) {
     actorData.data.movement.half = 0.5;
     actorData.data.movement.full = 1;
@@ -737,12 +741,9 @@ function calculateMovementDistances(actorData) {
     actorData.data.movement.half = base;
     actorData.data.movement.full = base * 2;
     actorData.data.movement.charge = (
-      ((actorData.data.movement.doubleAgiRunCharge ? base * 2 : base) * 3) +
-      (actorData.data.movement.rush ? base : 0)
+      ((base + chargeRunBonus) * 3) + (actorData.data.movement.rush ? agiMod : 0)
     );
-    actorData.data.movement.run = (
-      (actorData.data.movement.doubleAgiRunCharge ? base * 2 : base) * 6
-    );
+    actorData.data.movement.run = 6 * (base + chargeRunBonus);
     actorData.data.movement.sprint = actorData.data.movement.blur ? base * 8 : "--";
   }
   const strLeap = Math.floor(strMod / 2);

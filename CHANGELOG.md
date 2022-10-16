@@ -10,6 +10,8 @@
   * Updated values and logic handling melee reach, to-hit, and damage.
   * Updated the rules for calculating throwing distance.
   * Updated the rules for calculating carry, lift, and push weight.
+  * Changed the "Double AGI Mod to Run/Charge" field to "AGI Bonus for Run/Charge."
+    * This is to support the new rule for Hunters, where they were changed from doubling their AGI mod for figuring Charge and Run to instead gain a +3 bonus to their AGI mod when calculating those movement speeds. This field can take a number input, which will allow players to use either the new or old rules, as well as for use in like abilities, both for homebrew content and possible future official content.
   * Updated a number of system terms that have been changed for 5.1.
 * Re-introduced the ammunition management feature, with a new system setting offering the following three modes:
   * Magazines - weapons track full magazines, and reloaded weapons lose the held ammunition in the current magazine.

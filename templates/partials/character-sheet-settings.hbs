@@ -628,7 +628,7 @@
             {{localize "mythic.characterSettings.movement.leapMultiplier"}}
           </th>
           <th>
-            {{localize "mythic.characterSettings.movement.doubleAgiRunCharge"}}
+            {{localize "mythic.characterSettings.movement.agiBonusRunCharge"}}
           </th>
           <th>{{localize "mythic.characterSettings.movement.blur"}}</th>
           <th>{{localize "mythic.characterSettings.movement.rush"}}</th>
@@ -665,9 +665,11 @@
           </td>
           <td>
             <input
-              name="data.movement.doubleAgiRunCharge"
-              type="checkbox"
-              {{checked data.data.movement.doubleAgiRunCharge}}
+              name="data.movement.agiBonusRunCharge"
+              type="number"
+              value="{{data.data.movement.agiBonusRunCharge}}"
+              data-dtype="Number"
+              onfocus="this.select()"
             />
           </td>
           <td>

@@ -110,7 +110,7 @@
             },
             "movement": {
                 "label": "Movement Settings",
-                "doubleAgiRunCharge": "Double AGI for Run/Charge?",
+                "agiBonusRunCharge": "AGI Bonus for Run/Charge",
                 "jumpMultiplier": "Jump Multiplier",
                 "leapAgiBonus": "Leap AGI Mod Bonus",
                 "leapMultiplier": "Leap Multiplier",
