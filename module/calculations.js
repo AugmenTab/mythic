@@ -143,33 +143,23 @@ export function prepareBestiaryDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actorData);
 
-  // Reference Characteristics and Modifiers
-  const str = actorData.data.characteristics.str.total;
-  const strMod = getCharacteristicModifier(str);
-  const tou = actorData.data.characteristics.tou.total;
-  const touMod = getCharacteristicModifier(tou);
-  const agi = actorData.data.characteristics.agi.total;
-  const agiMod = getCharacteristicModifier(agi);
-  const int = actorData.data.characteristics.int.total;
-  const intMod = getCharacteristicModifier(int);
-
   // Calculate DR
-  calculateDamageResistance(actorData, touMod);
+  calculateDamageResistance(actorData);
 
   // Calculate Wounds
-  calculateWoundsBestiary(actorData, touMod);
+  calculateWoundsBestiary(actorData);
 
   // Calculate Max Fatigue
-  calculateMaxFatigue(actorData, touMod);
+  calculateMaxFatigue(actorData);
 
   // Calculate Carry Weight
-  calculateCarryWeight(actorData, str, tou);
+  calculateCarryWeight(actorData);
 
   // Calculate Movement Distances
-  calculateMovementDistances(actorData, strMod, agiMod);
+  calculateMovementDistances(actorData);
 
   // Calculate Initiative
-  calculateInitiative(actorData, agiMod, intMod, feltFatigue);
+  calculateInitiative(actorData, feltFatigue);
 
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
@@ -232,17 +222,14 @@ export function prepareFloodDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristicsFlood(actorData);
 
-  const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total);
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
-
   // Calculate DR
   calculateDamageResistanceFlood(actorData);
 
   // Calculate Movement Distances
-  calculateMovementDistances(actorData, strMod, agiMod);
+  calculateMovementDistances(actorData);
 
   // Calculate Initiative
-  calculateInitiativeFlood(actorData, agiMod);
+  calculateInitiativeFlood(actorData);
 
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
@@ -292,33 +279,23 @@ export function prepareNamedCharacterDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actorData);
 
-  // Reference Characteristics and Modifiers
-  const str = actorData.data.characteristics.str.total;
-  const strMod = getCharacteristicModifier(str);
-  const tou = actorData.data.characteristics.tou.total;
-  const touMod = getCharacteristicModifier(tou);
-  const agi = actorData.data.characteristics.agi.total;
-  const agiMod = getCharacteristicModifier(agi);
-  const int = actorData.data.characteristics.int.total;
-  const intMod = getCharacteristicModifier(int);
-
   // Calculate DR
-  calculateDamageResistance(actorData, touMod);
+  calculateDamageResistance(actorData);
 
   // Calculate Wounds
-  calculateWoundsNamedCharacter(actorData, touMod);
+  calculateWoundsNamedCharacter(actorData);
 
   // Calculate Max Fatigue
-  calculateMaxFatigue(actorData, touMod);
+  calculateMaxFatigue(actorData);
 
   // Calculate Carry Weight
-  calculateCarryWeight(actorData, str, tou);
+  calculateCarryWeight(actorData);
 
   // Calculate Movement Distances
-  calculateMovementDistances(actorData, strMod, agiMod);
+  calculateMovementDistances(actorData);
 
   // Calculate Initiative
-  calculateInitiative(actorData, agiMod, intMod, feltFatigue);
+  calculateInitiative(actorData, feltFatigue);
 
   // Calculate Skill Test Target Numbers
   calculateSkillTargets(actorData);
@@ -424,7 +401,9 @@ function calculateAbilityPool(actorData) {
   );
 }
 
-function calculateCarryWeight(actorData, str, tou) {
+function calculateCarryWeight(actorData) {
+  const str = actorData.data.characteristics.str.total;
+  const tou = actorData.data.characteristics.tou.total;
   const strongBack = actorData.data.carryingCapacity.strongBack;
   const strCarry = (
     str + (actorData.data.mythicCharacteristics.str.total * 10) +
@@ -479,7 +458,8 @@ function calculateCharacteristicsFlood(actorData) {
   }
 }
 
-function calculateDamageResistance(actorData, touMod) {
+function calculateDamageResistance(actorData) {
+  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
   const touSoak = touMod + actorData.data.mythicCharacteristics.tou.total;
   actorData.data.characteristics.extra.touDR = touSoak;
   for (let val of Object.values(actorData.data.armor)) {
@@ -575,7 +555,9 @@ function calculateGripPenaltyThrown(grip) {
   return 0;
 }
 
-function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
+function calculateInitiative(actorData, feltFatigue) {
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total;
+  const intMod = getCharacteristicModifier(actorData.data.characteristics.int.total;
   const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
   const battlemind = actorData.data.initiative.battleMind;
   let formula = [];
@@ -591,7 +573,8 @@ function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   actorData.data.initiative.formula = formula.join("+");
 }
 
-function calculateInitiativeFlood(actorData, agiMod) {
+function calculateInitiativeFlood(actorData) {
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
   const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
   let bonus = 0;
   if (mythicAgi > 0) {
@@ -715,11 +698,14 @@ function calculateLuck(actorData) {
   actorData.data.luck.max = max > 0 ? max : 0;
 }
 
-function calculateMaxFatigue(actorData, touMod) {
-  actorData.data.fatigue.max = 2 * touMod;
+function calculateMaxFatigue(actorData) {
+  actorData.data.fatigue.max =
+    2 * getCharacteristicModifier(actorData.data.characteristics.tou.total);
 }
 
-function calculateMovementDistances(actorData, strMod, agiMod) {
+function calculateMovementDistances(actorData) {
+  const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total;
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total;
   const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
   if (base <= 0) {
     actorData.data.movement.half = 0.5;
@@ -996,7 +982,8 @@ function calculateWeightPenaltyThrown(mod, weight) {
   return 0;
 }
 
-function calculateWoundsBestiary (actorData, touMod) {
+function calculateWoundsBestiary (actorData) {
+  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total;
   const mythicTou = actorData.data.mythicCharacteristics.tou.total;
   const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
   const diffTier = parseInt(actorData.data.difficulty.tier);
@@ -1014,7 +1001,8 @@ function calculateWoundsFlood(actorData) {
   actorData.data.wounds.max = w + actorData.data.wounds.mod
 }
 
-function calculateWoundsNamedCharacter(actorData, touMod) {
+function calculateWoundsNamedCharacter(actorData) {
+  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
   const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
   const mythicTou = actorData.data.mythicCharacteristics.tou.total;
   actorData.data.wounds.max = 40 + ((2 * ((doubleTou * touMod) + mythicTou)) +
