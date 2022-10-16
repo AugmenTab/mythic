@@ -261,6 +261,8 @@ export function prepareNamedCharacterBase(actorData) {
 
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+
+  // TODO: Move inventory weight calculation here.
 }
 
 /**
@@ -402,8 +404,27 @@ function calculateAbilityPool(actorData) {
 }
 
 function calculateCarryWeight(actorData) {
-  const str = actorData.data.characteristics.str.total;
   const tou = actorData.data.characteristics.tou.total;
+  const str = (
+      actorData.data.characteristics.str.total
+    + actorData.data.carryingCapacity.imposing ? 5 : 0
+  );
+
+  const touBase = tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1);
+  const liftPullTou = touBase * (actorData.data.carryingCapacity.strongBack ? 2 : 1);
+  const carryBase = (
+      (str * (actorData.data.carryingCapacity.doubleStr ? 2 : 1)) // STR
+    + (actorData.data.mythicCharacteristics.str.total * 10) // Mythic STR
+    + (actorData.data.mythicCharacteristics.tou.total * 10) // Mythic TOU
+    + actorData.data.carryingCapacity.mod // Modifier
+  );
+
+  actorData.data.carryingCapacity.carry = carryBase + touBase;
+  actorData.data.carryingCapacity.lift = 2 * (carryBase + liftPullTou);
+  actorData.data.carryingCapacity.push = 4 * (carryBase + liftPullTou);
+}
+
+function calculateCarryWeightOld(actorData, str, tou) {
   const strongBack = actorData.data.carryingCapacity.strongBack;
   const strCarry = (
     str + (actorData.data.mythicCharacteristics.str.total * 10) +
@@ -556,8 +577,8 @@ function calculateGripPenaltyThrown(grip) {
 }
 
 function calculateInitiative(actorData, feltFatigue) {
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total;
-  const intMod = getCharacteristicModifier(actorData.data.characteristics.int.total;
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
+  const intMod = getCharacteristicModifier(actorData.data.characteristics.int.total);
   const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
   const battlemind = actorData.data.initiative.battleMind;
   let formula = [];
@@ -704,8 +725,8 @@ function calculateMaxFatigue(actorData) {
 }
 
 function calculateMovementDistances(actorData) {
-  const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total;
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total;
+  const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total);
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
   const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
   if (base <= 0) {
     actorData.data.movement.half = 0.5;
@@ -983,7 +1004,7 @@ function calculateWeightPenaltyThrown(mod, weight) {
 }
 
 function calculateWoundsBestiary (actorData) {
-  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total;
+  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
   const mythicTou = actorData.data.mythicCharacteristics.tou.total;
   const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
   const diffTier = parseInt(actorData.data.difficulty.tier);
