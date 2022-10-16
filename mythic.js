@@ -159,7 +159,7 @@ function registerSystemSettings() {
       "ammoPool": "SETTINGS.ammoTracking.ammoPool",
       "selfManaged": "SETTINGS.ammoTracking.selfManaged"
     },
-    default: "magazines"
+    default: "selfManaged"
   });
 }
 

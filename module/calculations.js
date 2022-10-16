@@ -85,7 +85,7 @@ export function handleReloadMagCount(weaponData) {
   }
 
   if (tracking === "selfManaged") {
-    weaponData.ammoList[currentAmmo].current = magCapacity
+    weaponData.ammoList[currentAmmo].currentMag = magCapacity
     return weaponData;
   }
 
