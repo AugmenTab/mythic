@@ -85,9 +85,10 @@
               {{!-- Range --}}
               <td>
                 {{#if (eq weapon.data.group "thrown")}}
-                  {{weapon.data.ammoList.STD.range.thrown}}&nbsp;m&nbsp;
+                  {{weapon.data.ammoList.STD.range.thrown}}&nbsp;/&nbsp;
+                  {{weapon.data.ammoList.STD.range.thrownMax}}&nbsp;m&nbsp;
                   {{#if weapon.data.special.blast.has}}
-                    ({{weapon.data.special.blast.value}}
+                    ({{weapon.data.special.blast.value}}&nbsp;/&nbsp;
                   {{else}}
                     (0&nbsp;/&nbsp;
                   {{/if}}

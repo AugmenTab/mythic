@@ -564,6 +564,17 @@ function calculateFeltFatigue(actorData) {
   return isNaN(resist) ? f.value : f.value - (2 * resist);
 }
 
+function calculateGripPenaltyThrown(grip) {
+  if (grip === "solid") return 0;
+  if (grip === "slight") return 1;
+  if ([ "partial", "sloppy" ].includes(grip)) return 2;
+
+  // This should never happen since the grip value is chosen from a select menu,
+  // but if it does, we should produce an error.
+  makeUIError("mythic.chat.error.unrecognizedGrip");
+  return 0;
+}
+
 function calculateInitiative(actorData, agiMod, intMod, feltFatigue) {
   const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
   const battlemind = actorData.data.initiative.battleMind;
@@ -897,13 +908,15 @@ function calculateWeaponRangeThrown(actorData, weapon) {
     + actorData.data.mythicCharacteristics.str.total
   );
 
-  let mult = 15;
-  const penalty = calculateWeightPenaltyThrown(base);
-  mult -= Math.floor(weapon.data.data.weight.each / penalty.weight) * penalty.multiplier;
-  if (weapon.data.data.ammoList[currentAmmo].range.grip === "slight") mult -= 1;
-  if (["partial", "sloppy"].includes(weapon.data.data.ammoList[currentAmmo].range.grip)) mult -= 2;
-  const range = (base * mult) / (weapon.data.data.ammoList[currentAmmo].range.grip === "sloppy" ? 2 : 1);
-  weapon.data.data.ammoList[currentAmmo].range.thrown = range > 0.5 ? range : 0;
+  let mult = 20;
+  const grip = weapon.data.data.ammoList[currentAmmo].range.grip;
+  mult -= calculateWeightPenaltyThrown(base, weapon.data.data.weight.each);
+  mult -= calculateGripPenaltyThrown(grip);
+
+  weapon.data.data.ammoList[currentAmmo].range.thrownMax = Math.floor(base * 20);
+  weapon.data.data.ammoList[currentAmmo].range.thrown = Math.floor(
+    (base * mult) / (grip === "sloppy" ? 2 : 1)
+  );
 }
 
 function calculateWeaponReloadStandard(actorData, weapon) {
@@ -972,15 +985,15 @@ function calculateWeaponSummaryAttackData(actorData) {
   }
 }
 
-function calculateWeightPenaltyThrown(mod) {
-  let penalty = { weight: 1, multiplier: 1 };
-  if (mod >= 19) penalty.weight = 7;
-  else if (mod >= 13) penalty.weight = 6;
-  else if (mod >= 10) penalty.weight = 5;
-  else if (mod >= 8) penalty.weight = 2;
-  else if (mod >= 3) penalty.multiplier = 2;
-  else penalty.multiplier = 3;
-  return penalty;
+function calculateWeightPenaltyThrown(mod, weight) {
+  if (mod >= 19) return Math.floor(weight / 20);
+  if (mod >= 13) return Math.floor(weight / 10);
+  if (mod >= 10) return Math.floor(weight / 5);
+  if (mod >=  7) return Math.floor(weight / 2);
+  if (mod >=  5) return Math.floor(weight / 1);
+  if (mod >=  3) return Math.floor(weight / 1) * 2;
+  if (mod >=  1) return Math.floor(weight / 0.5) * 2;
+  return 0;
 }
 
 function calculateWoundsBestiary (actorData, touMod) {

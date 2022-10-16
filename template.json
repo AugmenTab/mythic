@@ -1372,6 +1372,7 @@
                         "long": 0,
                         "melee": 0,
                         "thrown": 0,
+                        "thrownMax": 0,
                         "grip": "solid"
                     },
                     "special": {},

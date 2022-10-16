@@ -317,7 +317,8 @@
                 "outOfMags": "You're out of magazines for this weapon.",
                 "ammoPoolEmpty": "Your ammo pool is empty!",
                 "poolDownToOneMag": "You have one mag or less worth of ammo remaining in your ammo pool!",
-                "reloadEmptiesPool": "Your ammo pool has been depleted."
+                "reloadEmptiesPool": "Your ammo pool has been depleted.",
+                "unrecognizedGrip": "Unrecognized grip value."
             },
             "education": {
                 "flavor": "Education",
