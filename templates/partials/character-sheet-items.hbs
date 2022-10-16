@@ -54,8 +54,8 @@
       data-item-id="{{this._id}}"
       onfocus="this.select()"
       {{#if (cond "&&" (eq this.type "weapon") (eq this.data.group "thrown"))}}
-        data-field="magazine.current"
-        value="{{this.data.magazine.current}}"
+        data-field="ammoList.STD.currentMag"
+        value="{{this.data.ammoList.STD.currentMag}}"
       {{else}}
         data-field="weight.quantity"
         value="{{this.data.weight.quantity}}"

@@ -87,7 +87,7 @@
     </tr>
     <tr>
       <th>{{localize "mythic.weaponSheet.groups"}}</th>
-      <th>{{localize "mythic.weaponSheet.stats.damageRoll"}}</th>
+      <th width="105px">{{localize "mythic.weaponSheet.stats.damageRoll"}}</th>
       <th>{{localize "mythic.weaponSheet.stats.baseDamage"}}</th>
       <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
       <th>{{localize "mythic.weaponSheet.stats.attackBonus"}}</th>
@@ -196,16 +196,14 @@
   </tbody>
   <thead>
     <tr>
-      <th>
-        {{#if (eq data.data.group "ranged")}}
-          {{localize "mythic.weaponSheet.stats.range"}}
-        {{else if (eq data.data.group "melee")}}
-          {{localize "mythic.weaponSheet.stats.reachBonus"}}
-        {{else if (eq data.data.group "thrown")}}
-          {{localize "mythic.weaponSheet.stats.grip"}}
-        {{/if}}
-      </th>
-      <th>{{localize "mythic.weaponSheet.stats.magazine"}}</th>
+      {{#if (eq data.data.group "ranged")}}
+        <th>{{localize "mythic.weaponSheet.stats.range"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.magazine"}}</th>
+      {{else if (eq data.data.group "melee")}}
+        <th colspan="2">{{localize "mythic.weaponSheet.stats.reachBonus"}}</th>
+      {{else if (eq data.data.group "thrown")}}
+        <th colspan="2">{{localize "mythic.weaponSheet.stats.grip"}}</th>
+      {{/if}}
       <th>{{localize "mythic.weaponSheet.stats.baseReload"}}</th>
       <th>{{localize "mythic.weaponSheet.stats.critsOn"}}</th>
       <th>{{localize "mythic.weaponSheet.stats.weight"}}</th>
@@ -213,8 +211,8 @@
   </thead>
   <tbody>
     <tr>
-      <td>
-        {{#if (eq data.data.group "ranged")}}
+      {{#if (eq data.data.group "ranged")}}
+        <td>
           <div class="range">
             <input
               name="data.ammoList.STD.range.close"
@@ -233,14 +231,27 @@
             />
             <p>m</p>
           </div>
-        {{else if (eq data.data.group "melee")}}
+        </td>
+        <td>
+          <input
+            name="data.magazineCapacity"
+            type="number"
+            data-dtype="Number"
+            value="{{data.data.magazineCapacity}}"
+            onfocus="this.select()"
+          />
+        </td>
+      {{else if (eq data.data.group "melee")}}
+        <td colspan="2">
           <input
             name="data.ammoList.STD.range.close"
             type="number"
             data-dtype="Number"
             value="{{data.data.ammoList.STD.range.close}}"
           />
-        {{else if (eq data.data.group "thrown")}}
+        </td>
+      {{else if (eq data.data.group "thrown")}}
+        <td colspan="2">
           <select name="data.ammoList.STD.range.grip">
             {{#select data.data.ammoList.STD.range.grip}}
               {{#each config.grips as |value key|}}
@@ -248,17 +259,8 @@
               {{/each}}
             {{/select}}
           </select>
-        {{/if}}
-      </td>
-      <td>
-        <input
-          name="data.magazineCapacity"
-          type="number"
-          data-dtype="Number"
-          value="{{data.data.magazineCapacity}}"
-          onfocus="this.select()"
-        />
-      </td>
+        </td>
+      {{/if}}
       <td>
         <input
           name="data.reload.base"

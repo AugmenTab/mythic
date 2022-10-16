@@ -105,7 +105,7 @@
               </td>
               {{!-- Magazine --}}
               <td style="width:120px">
-                {{#unless (eq weapon.data.group "melee")}}
+                {{#if (eq weapon.data.group "ranged")}}
                   <div class="magazine">
                     <input
                       class="item-edit-inline"
@@ -119,9 +119,7 @@
                     <p>/</p>
                     <p>{{weapon.data.magazineCapacity}}</p>
                     <div class="item-management">
-                      {{#if (eq weapon.data.group "thrown")}}
-                        <p>T</p>
-                      {{else if weapon.data.special.singleLoading.has}}
+                      {{#if weapon.data.special.singleLoading.has}}
                         <p>&plus;{{weapon.data.reload.total}}</p>
                       {{else}}
                         <p>{{weapon.data.reload.total}}</p>
@@ -135,9 +133,24 @@
                       </a>
                     </div>
                   </div>
-                {{else}}
+                {{else if (eq weapon.data.group "melee")}}
                   --
-                {{/unless}}
+                {{else if (eq weapon.data.group "thrown")}}
+                  <div class="magazine">
+                    <input
+                      class="item-edit-inline"
+                      data-field="ammoList.STD.currentMag"
+                      data-item-id="{{weapon._id}}"
+                      type="number"
+                      data-dtype="Number"
+                      value="{{weapon.data.ammoList.STD.currentMag}}"
+                      onfocus="this.select()"
+                    />
+                    <p style="grid-column:3">
+                      &nbsp;{{localize "mythic.characterWeaponSummary.carried"}}
+                    </p>
+                  </div>
+                {{/if}}
               </td>
               {{!-- Buttons --}}
               <td
