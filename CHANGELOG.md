@@ -8,6 +8,8 @@
   * Set the default critical failure threshold to only natural 100s.
   * Added a value field for editing the Electrified special rule for Weapons.
   * Updated values and logic handling melee reach, to-hit, and damage.
+  * Updated the rules for calculating throwing distance.
+  * Updated the rules for calculating carry, lift, and push weight.
   * Updated a number of system terms that have been changed for 5.1.
 * Re-introduced the ammunition management feature, with a new system setting offering the following three modes:
   * Magazines - weapons track full magazines, and reloaded weapons lose the held ammunition in the current magazine.
@@ -19,7 +21,7 @@
 
 ## Bug Fixes
 
-* None
+* Weapon Item sheet tabs for Settings and Notes are now displaying properly.
 
 ## 0.2.4
 
