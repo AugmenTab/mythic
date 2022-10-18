@@ -784,7 +784,7 @@
                 "mob": "Mobility",
                 "eng": "Engine",
                 "op": "Optics",
-                "crew": "Crew"
+                "hull": "Hull"
             }
         }
     },

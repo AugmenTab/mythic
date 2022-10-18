@@ -207,7 +207,7 @@
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.total"}}</th>
-          {{#each actor.data.data.characteristics as |stat _|}}
+          {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <th>{{stat.total}}</th>
             {{/unless}}

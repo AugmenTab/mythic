@@ -47,17 +47,11 @@ async function determineHitLocationCreature(key) {
 
 async function determineHitLocationVehicle(key) {
   const root = "mythic.hitLocations.vehicle";
-  if (key >= 81) {
-    return localize(`${root}.crew`);
-  } else if (key >= 61) {
-    return localize(`${root}.op`);
-  } else if (key >= 41) {
-    return localize(`${root}.eng`);
-  } else if (key >= 21) {
-    return localize(`${root}.mob`);
-  } else {
-    return localize(`${root}.wep`);
-  }
+  if (key >= 61) return localize(`${root}.hull`);
+  if (key >= 46) return localize(`${root}.op`);
+  if (key >= 31) return localize(`${root}.eng`);
+  if (key >= 16) return localize(`${root}.mob`);
+  return localize(`${root}.wep`);
 }
 
 async function determineHitSide() {
