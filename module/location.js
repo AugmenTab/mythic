@@ -13,16 +13,8 @@ import { localize } from "./common.js";
  * @returns {string} The complete hit location to display in the chat.
  */
 export async function determineHitLocation(key, veh) {
-  return veh ? determineHitLocationVehicle(key) : determineHitLocationCreature(key);
-}
-
-async function determineHitDigit(root) {
-  const roll = await new Roll("1D5").roll({ async: true });
-  if (roll.total === 5) return localize(`${root}.digits.thumb`);
-  if (roll.total === 4) return localize(`${root}.digits.index`);
-  if (roll.total === 3) return localize(`${root}.digits.middle`);
-  if (roll.total === 2) return localize(`${root}.digits.ring`);
-  if (roll.total === 1) return localize(`${root}.digits.pinky`);
+  return veh ? determineHitLocationVehicle(key)
+             : determineHitLocationCreature(key);
 }
 
 async function determineHitLocationCreature(key) {
@@ -51,7 +43,7 @@ async function determineHitLocationVehicle(key) {
   if (key >= 46) return localize(`${root}.op`);
   if (key >= 31) return localize(`${root}.eng`);
   if (key >= 16) return localize(`${root}.mob`);
-  return localize(`${root}.wep`);
+  if (key >=  1) return localize(`${root}.wep`);
 }
 
 async function determineHitSide() {
@@ -73,54 +65,36 @@ async function determineHitSublocation(key, root) {
     const side = await determineHitSide();
     return `${side} ${localize(`${root}.chest.kidney`)}`;
   }
-  if (key >= 67) return localize(`${root}.chest.small`);
-  if (key >= 61) return localize(`${root}.chest.large`);
+  if (key >= 67) return localize(`${root}.chest.large`);
+  if (key >= 61) return localize(`${root}.chest.small`);
 
   // Right Leg
   if (key >= 59) return localize(`${root}.leg.pelvis`);
   if (key >= 55) return localize(`${root}.leg.thigh`);
   if (key >= 54) return localize(`${root}.leg.knee`);
-  if (key >= 49) return localize(`${root}.leg.shin`);
-  if (key >= 48) return localize(`${root}.leg.ankle`);
-  if (key >= 47) return localize(`${root}.leg.foot`);
-  if (key >= 46) {
-    const digit = await determineHitDigit(root);
-    return `${digit} ${game.i18n.localize(`${root}.leg.toe`)}`;
-  }
+  if (key >= 48) return localize(`${root}.leg.shin`);
+  if (key >= 46) return localize(`${root}.leg.foot`);
 
   // Left Leg
   if (key >= 44) return localize(`${root}.leg.pelvis`);
   if (key >= 39) return localize(`${root}.leg.thigh`);
   if (key >= 38) return localize(`${root}.leg.knee`);
-  if (key >= 34) return localize(`${root}.leg.shin`);
-  if (key >= 33) return localize(`${root}.leg.ankle`);
-  if (key >= 32) return localize(`${root}.leg.foot`);
-  if (key >= 31) {
-    const digit = await determineHitDigit(root);
-    return `${digit} ${game.i18n.localize(`${root}.leg.toe`)}`;
-  }
+  if (key >= 33) return localize(`${root}.leg.shin`);
+  if (key >= 31) return localize(`${root}.leg.foot`);
 
   // Right Arm
   if (key >= 30) return localize(`${root}.arm.shoulder`);
   if (key >= 27) return localize(`${root}.arm.bicep`);
   if (key >= 26) return localize(`${root}.arm.elbow`);
   if (key >= 23) return localize(`${root}.arm.forearm`);
-  if (key >= 22) return localize(`${root}.arm.hand`);
-  if (key >= 21) {
-    const digit = await determineHitDigit(root);
-    return `${digit} ${game.i18n.localize(`${root}.arm.finger`)}`;
-  }
+  if (key >= 21) return localize(`${root}.arm.hand`);
 
   // Left Arm
   if (key >= 20) return localize(`${root}.arm.shoulder`);
   if (key >= 17) return localize(`${root}.arm.bicep`);
   if (key >= 16) return localize(`${root}.arm.elbow`);
   if (key >= 13) return localize(`${root}.arm.forearm`);
-  if (key >= 12) return localize(`${root}.arm.hand`);
-  if (key >= 11) {
-    const digit = await determineHitDigit(root)
-    return `${digit} ${localize(`${root}.arm.finger`)}`;
-  }
+  if (key >= 11) return localize(`${root}.arm.hand`);
 
   // Head
   if (key >= 10) {
@@ -132,12 +106,8 @@ async function determineHitSublocation(key, root) {
     const side = await determineHitSide();
     return `${side} ${localize(`${root}.head.eye`)}`;
   }
-  if (key >= 6) {
-    const side = await determineHitSide();
-    return `${side} ${localize(`${root}.head.cheek`)}`;
-  }
-  if (key >= 4) return localize(`${root}.head.nose`);
+  if (key >= 6) return localize(`${root}.head.nose`);
   if (key >= 3) return localize(`${root}.head.mouth`);
-  if (key >= 2) return localize(`${root}.head.chin`);
+  if (key >= 2) return localize(`${root}.head.jaw`);
   if (key >= 1) return localize(`${root}.head.neck`);
 }

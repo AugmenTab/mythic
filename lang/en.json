@@ -742,9 +742,7 @@
                     "thigh": "Thigh",
                     "knee": "Knee",
                     "shin": "Shin",
-                    "ankle": "Ankle",
-                    "foot": "Foot",
-                    "toe": "Toe"
+                    "foot": "Foot"
                 },
                 "arm": {
                     "left": "Left Arm",
@@ -753,26 +751,17 @@
                     "bicep": "Bicep",
                     "elbow": "Elbow",
                     "forearm": "Forearm",
-                    "hand": "Hand",
-                    "finger": "Finger"
+                    "hand": "Hand"
                 },
                 "head": {
                     "location": "Head",
                     "ear": "Ear",
                     "forehead": "Forehead",
                     "eye": "Eye",
-                    "cheek": "Cheek",
                     "nose": "Nose",
                     "mouth": "Mouth",
-                    "chin": "Chin",
+                    "jaw": "Jaw",
                     "neck": "Neck"
-                },
-                "digits": {
-                    "thumb": "Thumb",
-                    "index": "Index",
-                    "middle": "Middle",
-                    "ring": "Ring",
-                    "pinky": "Pinky"
                 }
             },
             "side": {
