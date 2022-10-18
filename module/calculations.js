@@ -125,6 +125,9 @@ export function prepareBestiaryBase(actorData) {
 
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+
+  // Calculate Weight
+  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -169,9 +172,6 @@ export function prepareBestiaryDerived(actorData) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actorData);
-
-  // Calculate Weight
-  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -205,6 +205,9 @@ export function prepareFloodBase(actorData) {
 
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+
+  // Calculate Weight
+  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -236,9 +239,6 @@ export function prepareFloodDerived(actorData) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actorData);
-
-  // Calculate Weight
-  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -262,7 +262,8 @@ export function prepareNamedCharacterBase(actorData) {
   // Fix Talent Dependencies
   if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
 
-  // TODO: Move inventory weight calculation here.
+  // Calculate Weight
+  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -307,9 +308,6 @@ export function prepareNamedCharacterDerived(actorData) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actorData);
-
-  // Calculate Weight
-  calculateInventoryWeight(actorData);
 }
 
 /**
@@ -407,7 +405,7 @@ function calculateCarryWeight(actorData) {
   const tou = actorData.data.characteristics.tou.total;
   const str = (
       actorData.data.characteristics.str.total
-    + actorData.data.carryingCapacity.imposing ? 5 : 0
+    + (actorData.data.carryingCapacity.imposing ? 5 : 0)
   );
 
   const touBase = tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1);
@@ -422,52 +420,43 @@ function calculateCarryWeight(actorData) {
   actorData.data.carryingCapacity.carry = carryBase + touBase;
   actorData.data.carryingCapacity.lift = 2 * (carryBase + liftPullTou);
   actorData.data.carryingCapacity.push = 4 * (carryBase + liftPullTou);
-}
 
-function calculateCarryWeightOld(actorData, str, tou) {
-  const strongBack = actorData.data.carryingCapacity.strongBack;
-  const strCarry = (
-    str + (actorData.data.mythicCharacteristics.str.total * 10) +
-    (actorData.data.carryingCapacity.imposing ? 10 : 0)
-  );
-  const touCarry = tou + (actorData.data.mythicCharacteristics.tou.total * 10);
-  const carry = (
-    (actorData.data.carryingCapacity.doubleStr ? strCarry * 2 : strCarry) +
-    (actorData.data.carryingCapacity.doubleTou ? touCarry * 2 : touCarry) +
-    actorData.data.carryingCapacity.mod
-  );
-  const mod =
-    strongBack
-      ? tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1)
-      : 0;
-  actorData.data.carryingCapacity.carry = carry;
-  actorData.data.carryingCapacity.lift = (carry + mod) * 2;
-  actorData.data.carryingCapacity.push = (carry + mod) * 4;
+  if (actorData.type !== "Flood") calculateInventoryBars(actorData);
 }
 
 function calculateCharacteristics(actorData, feltFatigue) {
-  for (const [key, value] of Object.entries(actorData.data.characteristics)) {
-    if (key !== "extra") {
-      if (actorData.type === "Bestiary Character") {
-        let diff = parseInt(actorData.data.difficulty.tier);
-        if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
-          value.difficulty = 0;
-        } else if (diff === 4) {
-          value.difficulty = 25;
-        } else {
-          value.difficulty = diff * 5;
-        }
-      }
-      const total = (
-        value.soldierType + value.abilityPool + value.equipment +
-        value.background + value.difficulty + value.other +
-        (parseInt(value.advancements) * 5)
-      );
-      value.total = Math.floor(total >= 0 ? total : 0);
-      const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
-      value.roll = Math.floor(roll > 0 ? roll : 0);
+  const allStats = Object.entries(actorData.data.characteristics);
+  const firstStats = allStats.slice(0, 2);
+  const restStats = allStats.slice(2, 10);
+
+  firstStats.forEach(x => calculateCharacteristic(actorData, feltFatigue, x));
+
+  // TODO: Add encumbrance penalties to AGI
+
+  restStats.forEach(x => calculateCharacteristic(actorData, feltFatigue, x));
+  }
+
+function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
+  if (actorData.type === "Bestiary Character") {
+    let diff = parseInt(actorData.data.difficulty.tier);
+    if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
+      value.difficulty = 0;
+    } else if (diff === 4) {
+      value.difficulty = 25;
+    } else {
+      value.difficulty = diff * 5;
     }
   }
+
+  const total = (
+    value.soldierType + value.abilityPool + value.equipment +
+    value.background + value.difficulty + value.other +
+    (parseInt(value.advancements) * 5)
+  );
+
+  value.total = Math.floor(total >= 0 ? total : 0);
+  const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
+  value.roll = Math.floor(roll > 0 ? roll : 0);
 }
 
 function calculateCharacteristicsFlood(actorData) {
@@ -679,6 +668,7 @@ function calculateInventoryWeight(actorData) {
   let items = actorData.items.filter(function(item) {
     return ["armor", "equipment", "weapon"].includes(item.type);
   });
+
   let felt = 0, total = 0;
   for (let item of items) {
     if (!item.data.data.weight.carried) item.data.data.weight.equipped = false;
@@ -694,7 +684,6 @@ function calculateInventoryWeight(actorData) {
   } else {
     actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
     actorData.data.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
-    calculateInventoryBars(actorData);
   }
 }
 
