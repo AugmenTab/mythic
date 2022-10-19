@@ -74,7 +74,9 @@
       {{#if special.has}}
         <span class="special-rule">
           {{localize (concat "mythic.weaponSheet.specialRules." name)}}
-          {{#if special.value}}&nbsp;({{special.value}}){{/if}}
+          {{#unless (eq name "cauterize")}}
+            {{#if special.value}}&nbsp;({{special.value}}){{/if}}
+          {{/unless}}
         </span>
       {{/if}}
     {{/each}}
