@@ -638,13 +638,17 @@ function calculateInventoryBars(actorData) {
 
 function calculateItemWeight(item) {
   let felt = 0, total = 0;
+
   if (item.data.data.weight.carried) {
-    let quantity = (item.type === "weapon" && item.data.data.group === "thrown")
-      ? item.data.data.ammoList[item.data.data.currentAmmo].currentMag
-      : item.data.data.weight.quantity;
-    const weight = quantity * item.data.data.weight.each;
+    const weight = item.data.data.weight.each * (
+      (item.type === "weapon" && item.data.data.group === "thrown")
+        ? item.data.data.ammoList[item.data.data.currentAmmo].currentMag
+        : item.data.data.weight.quantity
+    );
+
     total += weight;
     item.data.data.weight.total = weight;
+
     if (!item.data.data.weight.selfSupported) {
       if (item.type === "armor" && item.data.data.weight.equipped) {
         const quarter = weight / 4;
@@ -665,20 +669,20 @@ function calculateItemWeight(item) {
 }
 
 function calculateInventoryWeight(actorData) {
-  let items = actorData.items.filter(function(item) {
-    return ["armor", "equipment", "weapon"].includes(item.type);
-  });
-
   let felt = 0, total = 0;
-  for (let item of items) {
+
+  actorData.items.filter(
+    item => ["armor", "equipment", "weapon"].includes(item.type)
+  ).forEach(item => {
     if (!item.data.data.weight.carried) item.data.data.weight.equipped = false;
     const weight = calculateItemWeight(item);
     felt += weight.felt;
     total += weight.total;
-  }
+  });
+
   actorData.data.carryingCapacity.total = total > 0 ? total : 0;
-  const characterTotal = total + actorData.data.weight;
-  actorData.data.carryingCapacity.character = characterTotal;
+  actorData.data.carryingCapacity.character = total + actorData.data.weight;
+
   if (actorData.type === "Flood") {
     actorData.data.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
   } else {
@@ -702,9 +706,11 @@ function calculateLuck(actorData) {
   } else {
     actorData.data.luck.difficulty = 0;
   }
+
   const max = (
     actorData.data.luck.starting + actorData.data.luck.advancements +
-    actorData.data.luck.other + actorData.data.luck.difficulty - actorData.data.luck.burnt);
+    actorData.data.luck.other + actorData.data.luck.difficulty - actorData.data.luck.burnt
+  );
   actorData.data.luck.max = max > 0 ? max : 0;
 }
 
