@@ -146,6 +146,12 @@ export function prepareBestiaryDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actorData);
 
+  // Calculate Carry Weight
+  calculateCarryWeight(actorData);
+
+  // Calculate Encumbrance
+  calculateEncumbrance(actorData);
+
   // Calculate DR
   calculateDamageResistance(actorData);
 
@@ -154,9 +160,6 @@ export function prepareBestiaryDerived(actorData) {
 
   // Calculate Max Fatigue
   calculateMaxFatigue(actorData);
-
-  // Calculate Carry Weight
-  calculateCarryWeight(actorData);
 
   // Calculate Movement Distances
   calculateMovementDistances(actorData);
@@ -282,6 +285,12 @@ export function prepareNamedCharacterDerived(actorData) {
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actorData);
 
+  // Calculate Carry Weight
+  calculateCarryWeight(actorData);
+
+  // Calculate Encumbrance
+  calculateEncumbrance(actorData);
+
   // Calculate DR
   calculateDamageResistance(actorData);
 
@@ -290,9 +299,6 @@ export function prepareNamedCharacterDerived(actorData) {
 
   // Calculate Max Fatigue
   calculateMaxFatigue(actorData);
-
-  // Calculate Carry Weight
-  calculateCarryWeight(actorData);
 
   // Calculate Movement Distances
   calculateMovementDistances(actorData);
@@ -425,38 +431,30 @@ function calculateCarryWeight(actorData) {
 }
 
 function calculateCharacteristics(actorData, feltFatigue) {
-  const allStats = Object.entries(actorData.data.characteristics);
-  const firstStats = allStats.slice(0, 2);
-  const restStats = allStats.slice(2, 10);
+  Object.entries(actorData.data.characteristics)
+    .splice(0, 10) // Strip off the last "extra" object in this array.
+    .forEach(([ key, value ]) => {
+      if (actorData.type === "Bestiary Character") {
+        const diff = parseInt(actorData.data.difficulty.tier);
+        if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
+          value.difficulty = 0;
+        } else if (diff === 4) {
+          value.difficulty = 25;
+        } else {
+          value.difficulty = diff * 5;
+        }
+      }
 
-  firstStats.forEach(x => calculateCharacteristic(actorData, feltFatigue, x));
+      const total = (
+        value.soldierType + value.abilityPool + value.equipment +
+        value.background + value.difficulty + value.other +
+        (parseInt(value.advancements) * 5)
+      );
 
-  // TODO: Add encumbrance penalties to AGI
-
-  restStats.forEach(x => calculateCharacteristic(actorData, feltFatigue, x));
-  }
-
-function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
-  if (actorData.type === "Bestiary Character") {
-    let diff = parseInt(actorData.data.difficulty.tier);
-    if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
-      value.difficulty = 0;
-    } else if (diff === 4) {
-      value.difficulty = 25;
-    } else {
-      value.difficulty = diff * 5;
-    }
-  }
-
-  const total = (
-    value.soldierType + value.abilityPool + value.equipment +
-    value.background + value.difficulty + value.other +
-    (parseInt(value.advancements) * 5)
-  );
-
-  value.total = Math.floor(total >= 0 ? total : 0);
-  const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
-  value.roll = Math.floor(roll > 0 ? roll : 0);
+      value.total = Math.floor(total >= 0 ? total : 0);
+      const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
+      value.roll = Math.floor(roll > 0 ? roll : 0);
+  });
 }
 
 function calculateCharacteristicsFlood(actorData) {
@@ -505,6 +503,10 @@ function calculateEducationTargets(actorData) {
       : 0;
     e.data.data.roll.roll = base + training + e.data.data.roll.mods;
   }
+}
+
+function calculateEncumbrance(actorData) {
+  // TODO
 }
 
 function calculateExperience(actorData) {
@@ -757,13 +759,17 @@ function calculateMythicCharacteristics(actorData) {
     actorData.data.mythicCharacteristics.tou.difficulty = 0;
     actorData.data.mythicCharacteristics.agi.difficulty = 0;
   }
-  for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
-    if (key != "notes") {
-      const total = (value.soldierType + value.equipment + value.other +
-        parseInt(value.advancements) + value.difficulty);
+
+  Object.entries(actorData.data.mythicCharacteristics)
+    .splice(0, 3) // Strip off the last "notes" object in this array.
+    .forEach(([ key, value ]) => {
+      const total = value.soldierType
+                  + value.equipment
+                  + value.other
+                  + parseInt(value.advancements)
+                  + value.difficulty;
       value.total = total >= 0 ? total : 0;
-    }
-  }
+    });
 }
 
 function calculateMythicCharacteristicsFlood(actorData) {
