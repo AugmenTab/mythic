@@ -12,9 +12,16 @@
       </p>
     </div>
   </div>
-  <p style="text-align:center">
-    <b>{{localize (concat "mythic.characterStatBlock.capacity." data.data.carryingCapacity.bar.tier)}}</b>
-  </p>
+  <div class="inventory-bar-labels">
+    <p>
+      {{#if (eq data.data.carryingCapacity.bar.tier "push")}}
+        {{localize "mythic.characterStatBlock.capacity.lift"}}
+      {{else if (eq data.data.carryingCapacity.bar.tier "lift")}}
+        {{localize "mythic.characterStatBlock.capacity.carry"}}
+      {{/if}}
+    </p>
+    <p>{{localize (concat "mythic.characterStatBlock.capacity." data.data.carryingCapacity.bar.tier)}}</p>
+  </div>
   <table>
     <thead>
       <tr>

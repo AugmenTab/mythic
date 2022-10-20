@@ -289,6 +289,23 @@
     }
   }
 
+  .inventory-bar-labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    p {
+      font-weight: bold;
+    }
+
+    :nth-child(1) {
+      text-align: left;
+    }
+
+    :nth-child(2) {
+      text-align: right;
+    }
+  }
+
   .cR-field {
     display: grid;
     grid-template-columns: repeat(2, auto);
