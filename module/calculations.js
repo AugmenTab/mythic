@@ -773,10 +773,12 @@ function calculateMythicCharacteristics(actorData) {
 }
 
 function calculateMythicCharacteristicsFlood(actorData) {
-  for (const [key, value] of Object.entries(actorData.data.mythicCharacteristics)) {
-    const total = value.base + value.equipment + value.other;
-    value.total = total >= 0 ? total : 0;
-  }
+  Object.entries(actorData.data.mythicCharacteristics)
+    .splice(0, 3) // Strip off the last "notes" object in this array.
+    .forEach(([ key, value ]) => {
+      const total = value.base + value.equipment + value.other;
+      value.total = total >= 0 ? total : 0;
+    });
 }
 
 function calculateMythicDifficulty(actorData) {
@@ -807,36 +809,36 @@ function calculateMythicDifficulty(actorData) {
 }
 
 function calculateSkillTargets(actorData) {
-  for (const [key, value] of Object.entries(actorData.data.skills)) {
-    if (key != "notes") {
-      let target = value.mods;
-      const stats = actorData.data.characteristics;
-      target += stats[value.characteristic.toLowerCase()].roll;
-      const tier = value.training.tier;
+  Object.entries(actorData.data.skills).forEach(([ key, value ]) => {
+    if (key === "notes") return;
 
-      if (tier === "none") {
-        target -= (20 * value.training.penalty);
-      } else if (tier === "plus10") {
-        target += 10;
-      } else if (tier === "plus20") {
-        target += 20;
-      }
+    let target = value.mods;
+    const stats = actorData.data.characteristics;
+    target += stats[value.characteristic.toLowerCase()].roll;
+    const tier = value.training.tier;
 
-      if ( (key === "techHuman" && !actorData.data.trainings.faction.unsc)
-        || (key === "techCovenant" && !actorData.data.trainings.faction.covenant)
-        || (key === "techForerunner" && !actorData.data.trainings.faction.forerunner)
-      ) {
-        target -= actorData.data.trainings.alienTech ? 10 : 20;
-      } else if ( key === "evasion"
-               && value.characteristic === "WFM"
-               && actorData.data.trainings.weapons.hth
-                ) {
-        target += 5;
-      }
-
-      value.roll = target > 0 ? target : 0;
+    if (tier === "none") {
+      target -= (20 * value.training.penalty);
+    } else if (tier === "plus10") {
+      target += 10;
+    } else if (tier === "plus20") {
+      target += 20;
     }
-  }
+
+    if ( (key === "techHuman" && !actorData.data.trainings.faction.unsc)
+      || (key === "techCovenant" && !actorData.data.trainings.faction.covenant)
+      || (key === "techForerunner" && !actorData.data.trainings.faction.forerunner)
+    ) {
+      target -= actorData.data.trainings.alienTech ? 10 : 20;
+    } else if ( key === "evasion"
+             && value.characteristic === "WFM"
+             && actorData.data.trainings.weapons.hth
+              ) {
+      target += 5;
+    }
+
+    value.roll = target > 0 ? target : 0;
+  });
 }
 
 function calculateSupportPoints(actorData) {
