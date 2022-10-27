@@ -20,6 +20,11 @@
         {{localize "mythic.characterStatBlock.capacity.carry"}}
       {{/if}}
     </p>
+    <p>
+      {{#if data.data.carryingCapacity.overencumbered}}
+        {{localize "mythic.characterInventory.overencumbered"}}
+      {{/if}}
+    </p>
     <p>{{localize (concat "mythic.characterStatBlock.capacity." data.data.carryingCapacity.bar.tier)}}</p>
   </div>
   <table>

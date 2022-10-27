@@ -291,7 +291,7 @@
 
   .inventory-bar-labels {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 75px 1fr 75px;
 
     p {
       font-weight: bold;
@@ -302,6 +302,10 @@
     }
 
     :nth-child(2) {
+      text-align: center;
+    }
+
+    :nth-child(3) {
       text-align: right;
     }
   }

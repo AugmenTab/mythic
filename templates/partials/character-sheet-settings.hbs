@@ -186,6 +186,26 @@
           {{/if}}
         </tr>
         <tr>
+          <td style="height:33px">
+            {{localize "mythic.characterSettings.characteristics.medical"}}
+          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "extra")}}
+              <td>{{stat.medical}}</td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+        <tr>
+          <td style="height:33px">
+            {{localize "mythic.characterSettings.characteristics.penalty"}}
+          </td>
+          {{#each actor.data.data.characteristics as |stat name|}}
+            {{#unless (eq name "extra")}}
+              <td>(&nbsp;&ndash;{{stat.penalty}}&nbsp;)</td>
+            {{/unless}}
+          {{/each}}
+        </tr>
+        <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
           {{#each actor.data.data.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}

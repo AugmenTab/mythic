@@ -80,6 +80,8 @@
               "background": "Background",
               "equipment": "Equipment",
               "advancements": "Advancements",
+              "medical": "Medical",
+              "penalty": "Penalties",
               "difficulty": "Difficulty",
               "charNotes": "Notes about characteristics.",
               "mythicsNotes": "Notes about Mythic characteristics."
@@ -153,6 +155,7 @@
             "selfSupported": "Self-Supporting?",
             "felt": "Felt Weight",
             "total": "Total Weight",
+            "overencumbered": "OVER ENCUMBERED",
             "weapon": {
                 "label": "Weapons",
                 "empty": "No weapons have been added yet."

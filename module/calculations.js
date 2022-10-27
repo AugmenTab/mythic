@@ -461,8 +461,8 @@ function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
   );
 
   value.total = Math.floor(total >= 0 ? total : 0);
-  const fatiguePenalty = -5 * (feltFatigue < 0 ? 0 : feltFatigue);
-  const roll = value.total + fatiguePenalty + value.penalty;
+  const fatiguePenalty = 5 * (feltFatigue < 0 ? 0 : feltFatigue);
+  const roll = value.total - fatiguePenalty - value.penalty;
   value.roll = Math.floor(roll > 0 ? roll : 0);
 }
 
@@ -515,10 +515,33 @@ function calculateEducationTargets(actorData) {
 }
 
 function calculateEncumbrance(actorData) {
-  switch(game.settings.get("mythic", "encumbrance")) {
-    case "standard":   return;
-    case "simplified": return;
-    default: return;
+  const method = game.settings.get("mythic", "encumbrance");
+  if (method === "off") return;
+
+  const str = actorData.data.characteristics.str.total;
+  const felt = actorData.data.carryingCapacity.felt;
+  const carry = actorData.data.carryingCapacity.carry;
+  const overCarry = felt - carry;
+
+  actorData.data.carryingCapacity.overencumbered = felt > carry;
+
+  if (method === "standard") {
+    actorData.data.characteristics.agi.penalty += (
+      str > 0
+        ? 10 * Math.floor((overCarry > 0 ? overCarry : 0) / str)
+        : 1000 // Some arbitrarily high number to ensure AGI is set to 0.
+    );
+  } else if (method === "simplified") {
+    const strMod = (
+        actorData.data.mythicCharacteristics.str.total
+      + getCharacteristicModifier(str)
+    );
+
+    actorData.data.characteristics.agi.penalty += (
+      strMod > 0
+        ? 10 * Math.ceil((overCarry > 0 ? overCarry : 0) / strMod)
+        : 1000 // Some arbitrarily high number to ensure AGI is set to 0.
+    );
   }
 }
 
@@ -756,12 +779,38 @@ function calculateMovementDistances(actorData) {
     actorData.data.movement.run = 6 * (base + chargeRunBonus);
     actorData.data.movement.sprint = actorData.data.movement.blur ? base * 8 : "--";
   }
+
   const strLeap = Math.floor(strMod / 2);
   const agiLeap = Math.floor(agiMod / 2) + actorData.data.movement.leapAgiBonus;
   actorData.data.movement.jump = (strMod * actorData.data.movement.jumpMultiplier) / 4;
   actorData.data.movement.leap = (
     (strLeap > agiLeap ? strLeap : agiLeap) * actorData.data.movement.leapMultiplier
   );
+
+  // Standard Encumbrance Rules
+  // If the weight is greater than Carry, the Character cannot make Run or
+  // Charge actions.
+  //
+  // If the weight reaches the Character’s Pushing Weight or the Character can
+  // no longer move, the Character gains a Degree of Fatigue and cannot move any
+  // further until weight is dropped.
+  //
+  // -40 penalty to tests that require physical movements; doubled if >= 125%.
+  //
+  // The Character cannot move if they have 150% or more over their weights.
+
+  // Simplified Encumbrance Rules
+  // Once a Character becomes Over Encumbered, the Character can no longer make
+  // Run or Charge actions.
+  //
+  // For every 10 minutes the Character spends over encumbered, they take a
+  // Degree of Fatigue.
+  //
+  // If the amount of weight the Character is carrying exceeds their Lift
+  // Weight, or their Agility characteristic has been reduced to 0 from the
+  // above penalties, the Character takes a Degree of Fatigue and becomes
+  // unable to move - all of their movement speeds and jumping and leaping
+  // distances drop to 0 meters.
 }
 
 function calculateMythicCharacteristics(actorData) {
