@@ -33,6 +33,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -45,6 +46,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -57,6 +59,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -69,6 +72,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -81,6 +85,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -93,6 +98,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -105,6 +111,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -117,6 +124,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -129,6 +137,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -141,6 +150,7 @@
                         "difficulty": 0,
                         "other": 0,
                         "medical": 0,
+                        "penalty": 0,
                         "total": 0,
                         "roll": 0
                     },
@@ -218,6 +228,7 @@
                     "carry": 0,
                     "lift": 0,
                     "push": 0,
+                    "encumbrance": 0,
                     "felt": 0,
                     "total": 0,
                     "character": 0,

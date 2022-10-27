@@ -128,6 +128,9 @@ export function prepareBestiaryBase(actorData) {
 
   // Calculate Weight
   calculateInventoryWeight(actorData);
+
+  // Reset characteristic penalties
+  resetCharacteristicPenalties(actorData);
 }
 
 /**
@@ -139,18 +142,12 @@ export function prepareBestiaryDerived(actorData) {
   // Set Up Armor
   applyArmorStatsToCharacter(actorData);
 
-  // Calculate Characteristics
-  const feltFatigue = calculateFeltFatigue(actorData);
-  calculateCharacteristics(actorData, feltFatigue);
-
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actorData);
 
-  // Calculate Carry Weight
-  calculateCarryWeight(actorData);
-
-  // Calculate Encumbrance
-  calculateEncumbrance(actorData);
+  // Calculate Characteristics
+  const feltFatigue = calculateFeltFatigue(actorData);
+  calculateCharacteristics(actorData, feltFatigue);
 
   // Calculate DR
   calculateDamageResistance(actorData);
@@ -267,6 +264,9 @@ export function prepareNamedCharacterBase(actorData) {
 
   // Calculate Weight
   calculateInventoryWeight(actorData);
+
+  // Reset characteristic penalties
+  resetCharacteristicPenalties(actorData);
 }
 
 /**
@@ -278,18 +278,12 @@ export function prepareNamedCharacterDerived(actorData) {
   // Set Up Armor
   applyArmorStatsToCharacter(actorData);
 
-  // Calculate Characteristics
-  const feltFatigue = calculateFeltFatigue(actorData);
-  calculateCharacteristics(actorData, feltFatigue);
-
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actorData);
 
-  // Calculate Carry Weight
-  calculateCarryWeight(actorData);
-
-  // Calculate Encumbrance
-  calculateEncumbrance(actorData);
+  // Calculate Characteristics
+  const feltFatigue = calculateFeltFatigue(actorData);
+  calculateCharacteristics(actorData, feltFatigue);
 
   // Calculate DR
   calculateDamageResistance(actorData);
@@ -431,30 +425,45 @@ function calculateCarryWeight(actorData) {
 }
 
 function calculateCharacteristics(actorData, feltFatigue) {
-  Object.entries(actorData.data.characteristics)
-    .splice(0, 10) // Strip off the last "extra" object in this array.
-    .forEach(([ key, value ]) => {
-      if (actorData.type === "Bestiary Character") {
-        const diff = parseInt(actorData.data.difficulty.tier);
-        if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
-          value.difficulty = 0;
-        } else if (diff === 4) {
-          value.difficulty = 25;
-        } else {
-          value.difficulty = diff * 5;
-        }
-      }
-
-      const total = (
-        value.soldierType + value.abilityPool + value.equipment +
-        value.background + value.difficulty + value.other +
-        (parseInt(value.advancements) * 5)
-      );
-
-      value.total = Math.floor(total >= 0 ? total : 0);
-      const roll = value.total + (-5 * (feltFatigue < 0 ? 0 : feltFatigue));
-      value.roll = Math.floor(roll > 0 ? roll : 0);
+  // Process STR and TOU first.
+  Object.entries(actorData.data.characteristics).splice(0, 2).forEach(stat => {
+    calculateCharacteristic(actorData, feltFatigue, stat)
   });
+
+  // Calculate carry weight.
+  calculateCarryWeight(actorData);
+
+  // Calculate encumbrance.
+  calculateEncumbrance(actorData);
+
+  // Process remaining stats.
+  Object.entries(actorData.data.characteristics).splice(2, 8).forEach(stat => {
+    calculateCharacteristic(actorData, feltFatigue, stat)
+  });
+}
+
+function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
+  if (actorData.type === "Bestiary Character") {
+    const diff = parseInt(actorData.data.difficulty.tier);
+    if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
+      value.difficulty = 0;
+    } else if (diff === 4) {
+      value.difficulty = 25;
+    } else {
+      value.difficulty = diff * 5;
+    }
+  }
+
+  const total = (
+    value.soldierType + value.abilityPool + value.equipment +
+    value.background + value.difficulty + value.other +
+    (parseInt(value.advancements) * 5) + value.medical
+  );
+
+  value.total = Math.floor(total >= 0 ? total : 0);
+  const fatiguePenalty = -5 * (feltFatigue < 0 ? 0 : feltFatigue);
+  const roll = value.total + fatiguePenalty + value.penalty;
+  value.roll = Math.floor(roll > 0 ? roll : 0);
 }
 
 function calculateCharacteristicsFlood(actorData) {
@@ -493,7 +502,7 @@ function calculateDamageResistanceFlood(actorData) {
 }
 
 function calculateEducationTargets(actorData) {
-  let educations = actorData.items.filter(function(item) { return item.type === "education" });
+  let educations = actorData.items.filter(item => item.type === "education");
   for (let e of Object.values(educations)) {
     const base = e.data.data.roll.skill === "int"
       ? actorData.data.characteristics.int.roll
@@ -506,7 +515,11 @@ function calculateEducationTargets(actorData) {
 }
 
 function calculateEncumbrance(actorData) {
-  // TODO
+  switch(game.settings.get("mythic", "encumbrance")) {
+    case "standard":   return;
+    case "simplified": return;
+    default: return;
+  }
 }
 
 function calculateExperience(actorData) {
@@ -1079,4 +1092,9 @@ function calculateReloadMagFed(weaponData, currentAmmo) {
     makeUIError("mythic.chat.error.outOfMags");
   }
   return weaponData;
+}
+
+function resetCharacteristicPenalties(actorData) {
+  Object.entries(actorData.data.characteristics)
+    .splice(0, 10).forEach(([ _, value ]) => value.penalty = 0);
 }

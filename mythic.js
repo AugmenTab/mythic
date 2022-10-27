@@ -161,6 +161,21 @@ function registerSystemSettings() {
     },
     default: "selfManaged"
   });
+
+  // Encumbrance Calculation
+  game.settings.register("mythic", "encumbrance", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.encumbrance.name",
+    hint: "SETTINGS.encumbrance.hint",
+    type: String,
+    choices: {
+      "standard": "SETTINGS.encumbrance.standard",
+      "simplified": "SETTINGS.encumbrance.simplified",
+      "off": "SETTINGS.encumbrance.off"
+    },
+    default: "standard"
+  });
 }
 
 /** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */

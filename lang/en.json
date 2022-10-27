@@ -819,5 +819,12 @@
             "ammoPool": "Ammo Pool - mags are topped off, like the games",
             "selfManaged": "Self-Managed - No automation will be applied"
         }
+        , "encumbrance": {
+            "name": "Encumbrance Calculation Method",
+            "hint": "How the system calculates encumbrance penalties based on carry weight.",
+            "standard": "Standard",
+            "simplified": "Simplified",
+            "off": "Off"
+        }
     }
 }
