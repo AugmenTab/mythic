@@ -19,6 +19,15 @@ const MELEE_REACH_SIZE_BONUS = {
   "vast": 100
 };
 
+const PHYSICAL_SKILLS = new Set([
+  "athletics",
+  "evasion",
+  "pilotGround",
+  "pilotAir",
+  "pilotSpace",
+  "stunting"
+]);
+
 /**
  * Calculates armor protection, shield, and characteristics values.
  *
@@ -159,7 +168,7 @@ export function prepareBestiaryDerived(actorData) {
   calculateMaxFatigue(actorData);
 
   // Calculate Movement Distances
-  calculateMovementDistances(actorData);
+  calculateMovementDistancesWithEncumbrance(actorData);
 
   // Calculate Initiative
   calculateInitiative(actorData, feltFatigue);
@@ -229,7 +238,7 @@ export function prepareFloodDerived(actorData) {
   calculateDamageResistanceFlood(actorData);
 
   // Calculate Movement Distances
-  calculateMovementDistances(actorData);
+  calculateMovementDistancesBase(actorData);
 
   // Calculate Initiative
   calculateInitiativeFlood(actorData);
@@ -295,7 +304,7 @@ export function prepareNamedCharacterDerived(actorData) {
   calculateMaxFatigue(actorData);
 
   // Calculate Movement Distances
-  calculateMovementDistances(actorData);
+  calculateMovementDistancesWithEncumbrance(actorData);
 
   // Calculate Initiative
   calculateInitiative(actorData, feltFatigue);
@@ -757,9 +766,48 @@ function calculateMaxFatigue(actorData) {
     2 * getCharacteristicModifier(actorData.data.characteristics.tou.total);
 }
 
-function calculateMovementDistances(actorData) {
+function calculateMovementDistancesWithEncumbrance(actorData) {
+  const felt = actorData.data.carryingCapacity.felt;
+  const carry = actorData.data.carryingCapacity.carry;
+  const push = actorData.data.carryingCapacity.push;
+  const agi  = actorData.data.characteristics.agi.roll;
+
+  switch (game.settings.get("mythic", "encumbrance")) {
+    case "standard":
+      if (agi === 0 || felt >= push || (felt / carry) >= 1.5) {
+        actorData.data.fatigue.encumbrance = true;
+        calculateMovementDistancesEmpty(actorData);
+        return;
+      }
+
+      calculateMovementDistancesBase(actorData);
+      if (actorData.data.carryingCapacity.overencumbered) {
+        actorData.data.movement.charge = 0;
+        actorData.data.movement.run = 0;
+      }
+      return;
+
+    case "simplified":
+      if (agi === 0 || felt > actorData.data.carryingCapacity.lift) {
+        actorData.data.fatigue.encumbrance = true;
+        calculateMovementDistancesEmpty(actorData);
+        return;
+      }
+
+      calculateMovementDistancesBase(actorData);
+      if (actorData.data.carryingCapacity.overencumbered) {
+        actorData.data.movement.charge = 0;
+        actorData.data.movement.run = 0;
+      }
+      return;
+
+    default: calculateMovementDistancesBase(actorData);
+  }
+}
+
+function calculateMovementDistancesBase(actorData) {
   const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total);
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
+  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.roll);
   const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
   const chargeRunBonus =
     isNaN(actorData.data.movement.agiBonusRunCharge)
@@ -786,31 +834,16 @@ function calculateMovementDistances(actorData) {
   actorData.data.movement.leap = (
     (strLeap > agiLeap ? strLeap : agiLeap) * actorData.data.movement.leapMultiplier
   );
+}
 
-  // Standard Encumbrance Rules
-  // If the weight is greater than Carry, the Character cannot make Run or
-  // Charge actions.
-  //
-  // If the weight reaches the Character’s Pushing Weight or the Character can
-  // no longer move, the Character gains a Degree of Fatigue and cannot move any
-  // further until weight is dropped.
-  //
-  // -40 penalty to tests that require physical movements; doubled if >= 125%.
-  //
-  // The Character cannot move if they have 150% or more over their weights.
-
-  // Simplified Encumbrance Rules
-  // Once a Character becomes Over Encumbered, the Character can no longer make
-  // Run or Charge actions.
-  //
-  // For every 10 minutes the Character spends over encumbered, they take a
-  // Degree of Fatigue.
-  //
-  // If the amount of weight the Character is carrying exceeds their Lift
-  // Weight, or their Agility characteristic has been reduced to 0 from the
-  // above penalties, the Character takes a Degree of Fatigue and becomes
-  // unable to move - all of their movement speeds and jumping and leaping
-  // distances drop to 0 meters.
+function calculateMovementDistancesEmpty(actorData) {
+  actorData.data.movement.half = 0;
+  actorData.data.movement.full = 0;
+  actorData.data.movement.charge = 0;
+  actorData.data.movement.run = 0;
+  actorData.data.movement.sprint = actorData.data.movement.blur ? 0 : "--";
+  actorData.data.movement.jump = 0;
+  actorData.data.movement.leap = 0;
 }
 
 function calculateMythicCharacteristics(actorData) {
@@ -870,6 +903,16 @@ function calculateMythicDifficulty(actorData) {
   }
 }
 
+function calculateSkillTargetEncumbrancePenalty(actorData) {
+  const percentOfCarry = (
+    actorData.data.carryingCapacity.felt / actorData.data.carryingCapacity.carry
+  );
+
+  if (percentOfCarry >= 1.25) return 80;
+  if (percentOfCarry > 1) return 40;
+  return 0;
+}
+
 function calculateSkillTargets(actorData) {
   Object.entries(actorData.data.skills).forEach(([ key, value ]) => {
     if (key === "notes") return;
@@ -897,6 +940,12 @@ function calculateSkillTargets(actorData) {
              && actorData.data.trainings.weapons.hth
               ) {
       target += 5;
+    }
+
+    const method = game.settings.get("mythic", "encumbrance");
+    const encumbered = actorData.data.carryingCapacity.overencumbered;
+    if (method === "standard" && encumbered && PHYSICAL_SKILLS.has(key)) {
+      target -= calculateSkillTargetEncumbrancePenalty(actorData);
     }
 
     value.roll = target > 0 ? target : 0;

@@ -21,6 +21,10 @@
 * Added a field for circumstance modifiers on damage for attacks.
 * Simplified initiative tie-breaking when sorting combatants.
 * Changes the "Enduring?" select field to the "Fatigue Levels Ignored" number field.
+* Factors encumbrance penalties into characteristics with three methods (as system settings):
+  * Standard, which uses the rules in the book.
+  * Simplified, which uses a simplified version of the rules.
+  * Off, which does no encumbrance penalty automation.
 
 ## Bug Fixes
 
