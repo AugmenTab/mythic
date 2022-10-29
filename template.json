@@ -268,7 +268,8 @@
                 "fatigue": {
                     "value": 0,
                     "max": 0,
-                    "enduring": "0"
+                    "enduring": 0,
+                    "encumbrance": false
                 },
                 "luck": {
                     "value": 0,

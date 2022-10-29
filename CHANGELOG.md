@@ -20,6 +20,7 @@
 * Added Parry as an alternative to Evasion by widening the available characteristics for Evasion tests to WFM and updating sheet copy.
 * Added a field for circumstance modifiers on damage for attacks.
 * Simplified initiative tie-breaking when sorting combatants.
+* Changes the "Enduring?" select field to the "Fatigue Levels Ignored" number field.
 
 ## Bug Fixes
 

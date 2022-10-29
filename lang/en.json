@@ -96,7 +96,7 @@
             },
             "fatigue": {
                 "label": "Fatigue Settings",
-                "enduring": "Enduring?"
+                "enduring": "Fatigue Levels Ignored"
             },
             "initiative": {
                 "label": "Initiative Settings",

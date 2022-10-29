@@ -588,8 +588,8 @@ function calculateExperiencePayout(actorData) {
 
 function calculateFeltFatigue(actorData) {
   const f = actorData.data.fatigue;
-  const resist = parseInt(f.enduring);
-  return isNaN(resist) ? f.value : f.value - (2 * resist);
+  const current = f.value + (f.encumbrance ? 1 : 0);
+  return isNaN(f.enduring) ? current : current - (2 * f.enduring);
 }
 
 function calculateGripPenaltyThrown(grip) {
