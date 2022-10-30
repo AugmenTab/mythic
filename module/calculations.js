@@ -494,18 +494,23 @@ function calculateDamageResistance(actorData) {
 }
 
 function calculateDamageResistanceFlood(actorData) {
+  const touDamageResistance = (
+      getCharacteristicModifier(actorData.data.characteristics.tou.total)
+    + actorData.data.mythicCharacteristics.tou.total
+  );
+
   const isWearing = Array.from(actorData.items.values()).some(i => {
     return i.type === "armor" && i.data.data.weight.equipped;
   });
+
   for (let val of Object.values(actorData.data.armor)) {
     if (isWearing) {
-      const soak = val.protection + 6;
+      const newProtection = Math.floor(val.protection / 2);
+      val.protection = newProtection;
+      const soak = touDamageResistance + newProtection;
       val.resistance = soak > 0 ? soak : 0;
     } else {
-      const tou = actorData.data.characteristics.tou.total;
-      const touMod = getCharacteristicModifier(tou);
-      const touSoak = touMod + actorData.data.mythicCharacteristics.tou.total;
-      val.resistance = touSoak > 0 ? touSoak : 0;
+      val.resistance = touDamageResistance > 0 ? touDamageResistance : 0;
     }
   }
 }
