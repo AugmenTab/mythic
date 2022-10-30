@@ -33,7 +33,7 @@ const PHYSICAL_SKILLS = new Set([
  *
  * @param {ItemData} armorData - The armor's ItemData.
  */
-export function calculateArmorValues(armorData, type) {
+export function calculateArmorValues(armorData) {
   const canBeNegative = ["str", "agi", "mythicStr", "mythicAgi"];
   new Array(
     Object.entries(armorData.protection),
@@ -43,10 +43,7 @@ export function calculateArmorValues(armorData, type) {
    .filter(v => v[0] !== "has")
    .map(x => {
       const total = x[1].armor + x[1].variant + x[1].other;
-      if (type === "Flood") {
-        const floodTotal = Math.floor(total / 2);
-        x[1].total = floodTotal < 0 && !canBeNegative.includes(x[0]) ? 0 : floodTotal;
-      } else if (x < 0 && !canBeNegative.includes(x[0])) {
+      if (x < 0 && !canBeNegative.includes(x[0])) {
         x[1].total = 0;
       } else {
         x[1].total = total;
@@ -193,7 +190,7 @@ export function prepareCharacterEmbedded(actorData) {
   // Prepare Armors
   let armors = actorData.items.filter(a => a.type === "armor");
   for (let armor of Object.values(armors)) {
-    calculateArmorValues(armor.data.data, actorData.type);
+    calculateArmorValues(armor.data.data);
   }
 }
 
@@ -385,13 +382,23 @@ function applyArmorStatsToCharacter(actorData) {
     for (let [key, value] of Object.entries(armor.data.data.protection)) {
       actorData.data.armor[key].protection = value.total;
     }
-    actorData.data.shields.max = armor.data.data.shields.integrity.total;
-    actorData.data.shields.recharge = armor.data.data.shields.recharge.total;
-    actorData.data.shields.delay = armor.data.data.shields.delay.total;
-    actorData.data.characteristics.str.equipment = armor.data.data.characteristics.str.total;
-    actorData.data.characteristics.agi.equipment = armor.data.data.characteristics.agi.total;
-    actorData.data.mythicCharacteristics.str.equipment = armor.data.data.characteristics.mythicStr.total;
-    actorData.data.mythicCharacteristics.agi.equipment = armor.data.data.characteristics.mythicAgi.total;
+
+    if (armor.data.data.shields.has) {
+      actorData.data.shields.max = armor.data.data.shields.integrity.total;
+      actorData.data.shields.recharge = armor.data.data.shields.recharge.total;
+      actorData.data.shields.delay = armor.data.data.shields.delay.total;
+    } else {
+      emptyArmorShields(actorData);
+    }
+
+    if (armor.data.data.characteristics.has) {
+      actorData.data.characteristics.str.equipment = armor.data.data.characteristics.str.total;
+      actorData.data.characteristics.agi.equipment = armor.data.data.characteristics.agi.total;
+      actorData.data.mythicCharacteristics.str.equipment = armor.data.data.characteristics.mythicStr.total;
+      actorData.data.mythicCharacteristics.agi.equipment = armor.data.data.characteristics.mythicAgi.total;
+    } else {
+      emptyArmorCharacteristics(actorData);
+    }
   };
 }
 
@@ -1195,6 +1202,19 @@ function calculateReloadMagFed(weaponData, currentAmmo) {
     makeUIError("mythic.chat.error.outOfMags");
   }
   return weaponData;
+}
+
+function emptyArmorCharacteristics(actorData) {
+  actorData.data.characteristics.str.equipment = 0;
+  actorData.data.characteristics.agi.equipment = 0;
+  actorData.data.mythicCharacteristics.str.equipment = 0;
+  actorData.data.mythicCharacteristics.agi.equipment = 0;
+}
+
+function emptyArmorShields(actorData) {
+  actorData.data.shields.max = 0;
+  actorData.data.shields.recharge = 0;
+  actorData.data.shields.delay = 0;
 }
 
 function resetCharacteristicPenalties(actorData) {
