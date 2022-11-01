@@ -137,6 +137,9 @@ export function prepareBestiaryBase(actorData) {
 
   // Reset characteristic penalties
   resetCharacteristicPenalties(actorData);
+
+  // Set characteristics advance values; TODO: Remove in 0.3.0
+  setCharacteristicAdvancesDifficulty(actorData);
 }
 
 /**
@@ -454,14 +457,17 @@ function calculateCharacteristics(actorData, feltFatigue) {
 
   // Process remaining stats.
   Object.entries(actorData.data.characteristics).splice(2, 8).forEach(stat => {
-    calculateCharacteristic(actorData, feltFatigue, stat)
+    calculateCharacteristic(actorData, feltFatigue, stat);
   });
 }
 
 function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
   if (actorData.type === "Bestiary Character") {
     const diff = parseInt(actorData.data.difficulty.tier);
-    if (isNaN(diff) || actorData.data.difficulty.normalOnly) {
+    if (    isNaN(diff)
+         || actorData.data.difficulty.normalOnly
+         || !actorData.data.characteristics[key].advances
+       ) {
       value.difficulty = 0;
     } else if (diff === 4) {
       value.difficulty = 25;
@@ -1237,4 +1243,13 @@ function getCharacteristicKey(stat) {
 function resetCharacteristicPenalties(actorData) {
   Object.entries(actorData.data.characteristics)
     .splice(0, 10).forEach(([ _, value ]) => value.penalty = 0);
+}
+
+function setCharacteristicAdvancesDifficulty(actorData) {
+  Object.entries(actorData.data.characteristics)
+    .splice(0, 10).forEach(([ key, value ]) => {
+      if (key !== "extra" && value.advances === undefined) {
+        value.advances = true;
+      }
+    });
 }

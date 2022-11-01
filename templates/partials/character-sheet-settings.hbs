@@ -180,7 +180,20 @@
             </td>
             {{#each actor.data.data.characteristics as |stat name|}}
               {{#unless (eq name "extra")}}
-                <td>{{stat.difficulty}}</td>
+                {{#if ../this.data.data.difficulty.normalOnly}}
+                  <td>{{stat.difficulty}}</td>
+                {{else}}
+                  <td>
+                    <div class="check-cell">
+                      <input
+                        name="data.characteristics.{{name}}.advances"
+                        type="checkbox"
+                        {{checked stat.advances}}
+                      />
+                      {{stat.difficulty}}
+                    </div>
+                  </td>
+                {{/if}}
               {{/unless}}
             {{/each}}
           {{/if}}
