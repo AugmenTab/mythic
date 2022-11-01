@@ -931,7 +931,7 @@ function calculateSkillTargets(actorData) {
 
     let target = value.mods;
     const stats = actorData.data.characteristics;
-    target += stats[value.characteristic.toLowerCase()].roll;
+    target += stats[getCharacteristicKey(value.characteristic)].roll;
     const tier = value.training.tier;
 
     if (tier === "none") {
@@ -1215,6 +1215,23 @@ function emptyArmorShields(actorData) {
   actorData.data.shields.max = 0;
   actorData.data.shields.recharge = 0;
   actorData.data.shields.delay = 0;
+}
+
+// TODO: Write a migration to eliminate the need for this.
+function getCharacteristicKey(stat) {
+  const charMap = {
+    "STR": "str",
+    "TOU": "tou",
+    "AGI": "agi",
+    "WFR": "wfr",
+    "WFM": "wfm",
+    "INT": "int",
+    "PER": "per",
+    "CRG": "cr",
+    "CHA": "ch",
+    "LDR": "ld"
+  }
+  return charMap[stat];
 }
 
 function resetCharacteristicPenalties(actorData) {

@@ -111,7 +111,7 @@ mythic.skills = {
   appeal: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CH"],
+    characteristics: ["CHA"],
     floodCharacteristics: []
   },
   athletics: {
@@ -129,7 +129,7 @@ mythic.skills = {
   command: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["LD"],
+    characteristics: ["LDR"],
     floodCharacteristics: []
   },
   cryptography: {
@@ -141,7 +141,7 @@ mythic.skills = {
   deception: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CH"],
+    characteristics: ["CHA"],
     floodCharacteristics: []
   },
   demolition: {
@@ -159,19 +159,19 @@ mythic.skills = {
   gambling: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["INT", "CH"],
+    characteristics: ["INT", "CHA"],
     floodCharacteristics: []
   },
   interrogation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CH", "LD", "INT"],
+    characteristics: ["CHA", "LDR", "INT"],
     floodCharacteristics: []
   },
   intimidation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["STR", "CH", "LD", "INT"],
+    characteristics: ["STR", "CHA", "LDR", "INT"],
     floodCharacteristics: ["STR", "INT"]
   },
   investigation: {
@@ -219,7 +219,7 @@ mythic.skills = {
   negotiation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CH"],
+    characteristics: ["CHA"],
     floodCharacteristics: []
   },
   pilotGround: {
@@ -326,9 +326,9 @@ mythic.characteristic = {
   wfm: "WFM",
   int: "INT",
   per: "PER",
-  cr: "CR",
-  ch: "CH",
-  ld: "LD"
+  cr: "CRG",
+  ch: "CHA",
+  ld: "LDR"
 }
 
 mythic.weaponSettings = {
