@@ -757,24 +757,17 @@ function calculateInventoryWeight(actorData) {
 }
 
 function calculateLuck(actorData) {
+  let difficulty = 0;
   if (actorData.type === "Bestiary Character") {
-    const difficulty = parseInt(actorData.data.difficulty.tier);
-    if (actorData.data.difficulty.normalOnly) {
-      actorData.data.luck.difficulty = 0;
-    } else if (difficulty === 4) {
-      actorData.data.luck.difficulty = 3;
-    } else if (difficulty === 3) {
-      actorData.data.luck.difficulty = 1;
-    } else {
-      actorData.data.luck.difficulty = 0;
-    }
-  } else {
-    actorData.data.luck.difficulty = 0;
+    actorData.data.luck.tier = getDifficultyFromTier(
+      actorData.data.difficulty.normalOnly ? "1" : actorData.data.difficulty.tier
+    );
+    difficulty = actorData.data.luck.difficulty[actorData.data.luck.tier];
   }
 
   const max = (
     actorData.data.luck.starting + actorData.data.luck.advancements +
-    actorData.data.luck.other + actorData.data.luck.difficulty - actorData.data.luck.burnt
+    actorData.data.luck.other + difficulty - actorData.data.luck.burnt
   );
   actorData.data.luck.max = max > 0 ? max : 0;
 }
@@ -1238,6 +1231,17 @@ function getCharacteristicKey(stat) {
     "LDR": "ld"
   }
   return charMap[stat];
+}
+
+function getDifficultyFromTier(tier) {
+  const tierMap = {
+    "0": "easy",
+    "1": "normal",
+    "2": "heroic",
+    "3": "legendary",
+    "4": "nemesis",
+  };
+  return tierMap[tier];
 }
 
 function resetCharacteristicPenalties(actorData) {

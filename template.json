@@ -285,7 +285,14 @@
                     "value": 0,
                     "starting": 0,
                     "advancements": 0,
-                    "difficulty": 0,
+                    "difficulty": {
+                      "easy": 0,
+                      "normal": 0,
+                      "heroic": 0,
+                      "legendary": 0,
+                      "nemesis": 0
+                    },
+                    "tier": "",
                     "other": 0,
                     "max": 0,
                     "burnt": 0

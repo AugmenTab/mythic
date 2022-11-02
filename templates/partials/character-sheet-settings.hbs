@@ -475,17 +475,19 @@
       <table>
         <thead>
           <tr>
-            <th style="width:75px">
+            <th style="width:50px">
               {{localize "mythic.characterSettings.total"}}
             </th>
             <th>{{localize "mythic.characterSettings.luck.starting"}}</th>
-            <th style="width:105px">
-              {{#if (eq actor.type "Named Character")}}
+            {{#if (eq actor.type "Named Character")}}
+              <th style="width:105px">
                 {{localize "mythic.characterSettings.luck.advancements"}}
-              {{else}}
+              </th>
+            {{else}}
+              <th style="width:105px">
                 {{localize "mythic.characterSettings.luck.difficulty"}}
-              {{/if}}
-            </th>
+              </th>
+            {{/if}}
             <th>{{localize "mythic.characterSettings.other"}}</th>
             <th>{{localize "mythic.characterSettings.luck.burnt"}}</th>
           </tr>
@@ -495,6 +497,7 @@
             <td><b>{{data.data.luck.max}}</b></td>
             <td>
               <input
+                style="width:60px"
                 name="data.luck.starting"
                 type="number"
                 value="{{data.data.luck.starting}}"
@@ -512,11 +515,85 @@
                   onfocus="this.select()"
                 />
               {{else}}
-                {{data.data.luck.difficulty}}
+                {{#if data.data.difficulty.normalOnly}}
+                  <input
+                    style="width:60px"
+                    name="data.luck.difficulty.normal"
+                    type="number"
+                    value="{{data.data.luck.difficulty.normal}}"
+                    data-dtype="Number"
+                    onfocus="this.select()"
+                  />
+                {{else}}
+                  {{!-- TODO: #each data.data.luck.difficulty as |luck tier| --}}
+                  <div class="luck-difficulty">
+                    <input
+                      {{#if (eq data.data.luck.tier "easy")}}
+                        style="width:25px;font-weight:bold"
+                      {{else}}
+                        style="width:25px"
+                      {{/if}}
+                      name="data.luck.difficulty.easy"
+                      type="number"
+                      value="{{data.data.luck.difficulty.easy}}"
+                      data-dtype="Number"
+                      onfocus="this.select()"
+                    />
+                    <input
+                      {{#if (eq data.data.luck.tier "normal")}}
+                        style="width:25px;font-weight:bold"
+                      {{else}}
+                        style="width:25px"
+                      {{/if}}
+                      name="data.luck.difficulty.normal"
+                      type="number"
+                      value="{{data.data.luck.difficulty.normal}}"
+                      data-dtype="Number"
+                      onfocus="this.select()"
+                    />
+                    <input
+                      {{#if (eq data.data.luck.tier "heroic")}}
+                        style="width:25px;font-weight:bold"
+                      {{else}}
+                        style="width:25px"
+                      {{/if}}
+                      name="data.luck.difficulty.heroic"
+                      type="number"
+                      value="{{data.data.luck.difficulty.heroic}}"
+                      data-dtype="Number"
+                      onfocus="this.select()"
+                    />
+                    <input
+                      {{#if (eq data.data.luck.tier "legendary")}}
+                        style="width:25px;font-weight:bold"
+                      {{else}}
+                        style="width:25px"
+                      {{/if}}
+                      name="data.luck.difficulty.legendary"
+                      type="number"
+                      value="{{data.data.luck.difficulty.legendary}}"
+                      data-dtype="Number"
+                      onfocus="this.select()"
+                    />
+                    <input
+                      {{#if (eq data.data.luck.tier "nemesis")}}
+                        style="width:25px;font-weight:bold"
+                      {{else}}
+                        style="width:25px"
+                      {{/if}}
+                      name="data.luck.difficulty.nemesis"
+                      type="number"
+                      value="{{data.data.luck.difficulty.nemesis}}"
+                      data-dtype="Number"
+                      onfocus="this.select()"
+                    />
+                  </div>
+                {{/if}}
               {{/if}}
             </td>
             <td>
               <input
+                style="width:60px"
                 name="data.luck.other"
                 type="number"
                 value="{{data.data.luck.other}}"
@@ -526,6 +603,7 @@
             </td>
             <td>
               <input
+                style="width:60px"
                 name="data.luck.burnt"
                 type="number"
                 value="{{data.data.luck.burnt}}"
