@@ -601,15 +601,23 @@ function calculateExperience(actorData) {
 }
 
 function calculateExperiencePayout(actorData) {
+  let base = 0;
   let diffMult = 1;
   if (actorData.type === "Flood") {
+    base = actorData.data.experiencePayout.base;
     diffMult = actorData.data.swarm.total;
-  } else if (!actorData.data.difficulty.normalOnly) {
-    diffMult = parseInt(actorData.data.difficulty.tier) + 1;
+  } else {
+    const tier = getDifficultyFromTier(
+      actorData.data.difficulty.normalOnly ? "1" : actorData.data.difficulty.tier
+    );
+    actorData.data.experiencePayout.tier = tier;
+    base = actorData.data.experiencePayout.difficulty[tier];
   }
+
+  actorData.data.experiencePayout.base = base;
   actorData.data.experiencePayout.diffMultiplier = diffMult;
   actorData.data.experiencePayout.total = (
-    (actorData.data.experiencePayout.base * diffMult) + actorData.data.experiencePayout.kit
+    (base * diffMult) + actorData.data.experiencePayout.kit
   );
 }
 

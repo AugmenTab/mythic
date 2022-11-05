@@ -12,6 +12,14 @@
             "bestiary": {
                 "experiencePayout": {
                     "base": 0,
+                    "difficulty": {
+                      "easy": 0,
+                      "normal": 0,
+                      "heroic": 0,
+                      "legendary": 0,
+                      "nemesis": 0
+                    },
+                    "tier": "",
                     "diffMultiplier": 1,
                     "kit": 0,
                     "total": 0

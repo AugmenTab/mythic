@@ -58,7 +58,7 @@
             "other": "Other",
             "bestiary": {
                 "difficultyLabel": "Difficulty Settings",
-                "normalOnly": "Only One Difficulty?",
+                "normalOnly": "Single Difficulty?",
                 "advancesMythics": "Advances Mythic Stats?",
                 "expPayoutLabel": "Experience Payout Settings",
                 "swarm": "Swarm Settings",
