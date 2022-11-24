@@ -552,8 +552,9 @@ function calculateEncumbrance(actorData) {
 
   actorData.data.carryingCapacity.overencumbered = felt > carry;
 
+  let penalty = actorData.data.characteristics.agi.penalty;
   if (method === "standard") {
-    actorData.data.characteristics.agi.penalty += (
+    penalty = (
       str > 0
         ? 10 * Math.floor((overCarry > 0 ? overCarry : 0) / str)
         : 1000 // Some arbitrarily high number to ensure AGI is set to 0.
@@ -564,12 +565,16 @@ function calculateEncumbrance(actorData) {
       + getCharacteristicModifier(str)
     );
 
-    actorData.data.characteristics.agi.penalty += (
+    penalty = (
       strMod > 0
         ? 10 * Math.ceil((overCarry > 0 ? overCarry : 0) / strMod)
         : 1000 // Some arbitrarily high number to ensure AGI is set to 0.
     );
   }
+
+  actorData.data.characteristics.agi.penalty = Math.floor(
+    penalty / (actorData.data.carryingCapacity.strongman ? 2 : 1)
+  );
 }
 
 function calculateExperience(actorData) {
