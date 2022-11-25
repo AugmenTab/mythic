@@ -355,7 +355,7 @@
                 "targetVehicle": "Target is a Vehicle?",
                 "dof": "Degrees of Failure",
                 "distance": "Distance from Target (meters)",
-                "isZeroG": "Zero Gravity?",
+                "isZeroG": "Combat in Zero Gravity?",
                 "times": "How many tests do you want to make?",
                 "penalty": "What is the stacking penalty?",
                 "hits": "How many successful hits?"

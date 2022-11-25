@@ -65,17 +65,24 @@ export async function rollAttacks(element, actor, weapon) {
 
   const atkMod = interpretDiceRollModifiers(attackOptions.circumstance.attack);
   const dmgMod = interpretDiceRollModifiers(attackOptions.circumstance.damage);
+  const distanceFromTarget = parseFloat(attackOptions.distanceFromTarget);
 
-  if ([ atkMod, dmgMod ].some(isNaN)) {
+  if ([ atkMod, dmgMod, distanceFromTarget ].some(isNaN)) {
     makeUIError("mythic.chat.error.nan");
     return;
   }
 
   const currentAmmo = weapon.data.data.currentAmmo;
-  const target = weapon.data.data.ammoList[currentAmmo].target + atkMod;
-  const type = element.value;
-  const isVehicle = attackOptions.targetVehicle;
-  await getAttackAndDamageOutcomes(actor, weapon, target, type, isVehicle, dmgMod);
+  const data = {
+    circDmg: dmgMod,
+    distanceFromTarget: distanceFromTarget,
+    isZeroG: attackOptions.isZeroG,
+    isVehicle: attackOptions.targetVehicle,
+    target: weapon.data.data.ammoList[currentAmmo].target + atkMod,
+    type: element.value
+  };
+
+  await getAttackAndDamageOutcomes(actor, weapon, data);
   return weapon.data.data.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
@@ -154,7 +161,7 @@ function determineRollOutcome(roll, target) {
   return outcome;
 }
 
-async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle, circDmg) {
+async function getAttackAndDamageOutcomes(actor, weapon, data) {
   const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
@@ -164,22 +171,22 @@ async function getAttackAndDamageOutcomes(actor, weapon, target, type, vehicle, 
     weaponData: weapon.data.data,
     attacks: [],
     hits: 0,
-    type: type,
-    target: target > 0 ? target : 0,
+    type: data.type,
+    target: data.target > 0 ? data.target : 0,
     template: "attack",
-    flavor: getAttackFlavor(weapon.data.data.group, type, fireMode)
+    flavor: getAttackFlavor(weapon.data.data.group, data.type, fireMode)
   };
   let attacks = 1, damagesPerAttack = 1;
-  if (type !== "single" && fireMode === "sustained") {
-    damagesPerAttack = weapon.data.data.attack[type];
-  } else if (type !== "single" && fireMode === "burst") {
-    attacks = type === "full" ? 2 : 1;
+  if (data.type !== "single" && fireMode === "sustained") {
+    damagesPerAttack = weapon.data.data.attack[data.type];
+  } else if (data.type !== "single" && fireMode === "burst") {
+    attacks = data.type === "full" ? 2 : 1;
     damagesPerAttack = weapon.data.data.attack.half;
-  } else if (type !== "single") {
-    attacks = weapon.data.data.attack[type];
+  } else if (data.type !== "single") {
+    attacks = weapon.data.data.attack[data.type];
   }
   for (let i = 1; i <= attacks; i++) {
-    const attack = await rollAttackAndDamage(actor, weapon, target, i, damagesPerAttack, vehicle, circDmg);
+    const attack = await rollAttackAndDamage(actor, weapon, data.target, i, damagesPerAttack, data.vehicle, data.circDmg);
     result.hits += attack.outcome === "success" ? 1 : 0;
     result.attacks.push(attack);
   }
@@ -429,6 +436,8 @@ function _processAttackOptions(form) {
       attack: form.attackBonus.value,
       damage: form.damageBonus.value
     },
+    distanceFromTarget: form.distance.value,
+    isZeroG: form.isZeroG.checked,
     targetVehicle: form.targetVehicle.checked
   };
 }
