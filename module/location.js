@@ -46,6 +46,16 @@ async function determineHitLocationVehicle(key) {
   if (key >=  1) return localize(`${root}.wep`);
 }
 
+async function determineHitOrgan() {
+  function findOrgan(key) {
+    if (key >= 8) return "liver";
+    if (key >= 4) return "kidney";
+    if (key >= 1) return "stomach";
+  }
+  const roll = await new Roll("1D10").roll({ async: true });
+  return localize(`mythic.hitLocations.organ.${findOrgan(roll.total)}`);
+}
+
 async function determineHitSide() {
   const roll = await new Roll("1D2").roll({ async: true });
   const root = "mythic.hitLocations.side";
@@ -60,23 +70,20 @@ async function determineHitSublocation(key, root) {
     return `${side} ${localize(`${root}.chest.lung`)}`;
   }
   if (key >= 85) return localize(`${root}.chest.heart`);
-  if (key >= 79) return localize(`${root}.chest.splanchnic`);
-  if (key >= 73) {
-    const side = await determineHitSide();
-    return `${side} ${localize(`${root}.chest.kidney`)}`;
-  }
-  if (key >= 67) return localize(`${root}.chest.large`);
-  if (key >= 61) return localize(`${root}.chest.small`);
+  if (key >= 79) return await determineHitOrgan();
+  if (key >= 73) return localize(`${root}.chest.spine`);
+  if (key >= 66) return localize(`${root}.chest.intestines`);
+  if (key >= 61) return localize(`${root}.chest.pelvis`);
 
   // Right Leg
-  if (key >= 59) return localize(`${root}.leg.pelvis`);
+  if (key >= 59) return localize(`${root}.leg.hip`);
   if (key >= 55) return localize(`${root}.leg.thigh`);
   if (key >= 54) return localize(`${root}.leg.knee`);
   if (key >= 48) return localize(`${root}.leg.shin`);
   if (key >= 46) return localize(`${root}.leg.foot`);
 
   // Left Leg
-  if (key >= 44) return localize(`${root}.leg.pelvis`);
+  if (key >= 44) return localize(`${root}.leg.hip`);
   if (key >= 39) return localize(`${root}.leg.thigh`);
   if (key >= 38) return localize(`${root}.leg.knee`);
   if (key >= 33) return localize(`${root}.leg.shin`);
@@ -97,17 +104,16 @@ async function determineHitSublocation(key, root) {
   if (key >= 11) return localize(`${root}.arm.hand`);
 
   // Head
-  if (key >= 10) {
+  if (key >= 10) return localize(`${root}.head.forehead`);
+  if (key >= 9) {
     const side = await determineHitSide();
     return `${side} ${localize(`${root}.head.ear`)}`;
   }
-  if (key >= 9) return localize(`${root}.head.forehead`);
   if (key >= 8) {
     const side = await determineHitSide();
     return `${side} ${localize(`${root}.head.eye`)}`;
   }
   if (key >= 6) return localize(`${root}.head.nose`);
   if (key >= 3) return localize(`${root}.head.mouth`);
-  if (key >= 2) return localize(`${root}.head.jaw`);
   if (key >= 1) return localize(`${root}.head.neck`);
 }

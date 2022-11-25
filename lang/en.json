@@ -731,18 +731,17 @@
             "body": {
                 "chest": {
                     "location": "Chest",
-                    "noOrgan": "No Organ Hit",
+                    "noOrgan": "Ribcage, No Organ Struck",
                     "lung": "Lung",
                     "heart": "Heart",
-                    "splanchnic": "Stomach/Liver",
-                    "kidney": "Kidney",
-                    "large": "Large Intestines",
-                    "small": "Small Intestines"
+                    "spine": "Spine",
+                    "intestines": "Intestines",
+                    "pelvis": "Pelvis"
                 },
                 "leg": {
                     "left": "Left Leg",
                     "right": "Right Leg",
-                    "pelvis": "Pelvis",
+                    "hip": "Hip",
                     "thigh": "Thigh",
                     "knee": "Knee",
                     "shin": "Shin",
@@ -764,9 +763,13 @@
                     "eye": "Eye",
                     "nose": "Nose",
                     "mouth": "Mouth",
-                    "jaw": "Jaw",
                     "neck": "Neck"
                 }
+            },
+            "organ": {
+              "kidney": "Kidney",
+              "liver": "Liver",
+              "stomach": "Stomach"
             },
             "side": {
                 "left": "Left",
