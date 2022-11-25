@@ -1,7 +1,7 @@
 /** @module dice */
 
 import { getCharacteristicModifier } from "./calculations.js";
-import { buildChatMessageContent, postChatMessage } from "./chat.js";
+import * as Chat from "./chat.js";
 import { localize, makeUIError } from "./common.js";
 import { determineHitLocation } from "./location.js";
 
@@ -146,7 +146,7 @@ function capitalize(str) {
 function determineRollOutcome(roll, target) {
   let outcome = { color: "black", critical: false };
   const d = ((target > 0 ? target : 0) - roll) / 10;
-  outcome.degrees = Math.abs(d).toFixed(1);
+  outcome.degrees = parseFloat(Math.abs(d).toFixed(1));
   if (roll >= game.settings.get("mythic", "criticalFailureThreshold")) {
     outcome.critical = true;
     outcome.outcome = "failure";
@@ -186,7 +186,17 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
     attacks = weapon.data.data.attack[data.type];
   }
   for (let i = 1; i <= attacks; i++) {
-    const attack = await rollAttackAndDamage(actor, weapon, data.target, i, damagesPerAttack, data.vehicle, data.circDmg);
+    const attackData = {
+      target: data.target,
+      attackNumber: i,
+      damages: damagesPerAttack,
+      distanceFromTarget: data.distanceFromTarget,
+      isZeroG: data.isZeroG,
+      vehicle: data.vehicle,
+      circDmg: data.circDmg,
+    };
+
+    const attack = await rollAttackAndDamage(actor, weapon, attackData);
     result.hits += attack.outcome === "success" ? 1 : 0;
     result.attacks.push(attack);
   }
@@ -194,7 +204,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
   if (result.hits > 0) {
     result.specials = getSpecialRuleValues(result.hits, weapon.data.data.special);
   }
-  await postChatMessage(result, actor);
+  await Chat.postChatMessage(result, actor);
 }
 
 function getAttackFlavor(group, type, fireMode) {
@@ -316,23 +326,23 @@ function reverseDigits(roll) {
   return parseInt(digits.join(""));
 }
 
-async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages, veh, circDmg) {
+async function rollAttackAndDamage(actor, weapon, data) {
   const currentAmmo = weapon.data.data.currentAmmo;
   const roll = await new Roll(FORMULA).roll({ async: true });
-  const outcome = determineRollOutcome(roll.total, target);
+  const outcome = determineRollOutcome(roll.total, data.target);
 
   let attack = {
-    attackNumber: attackNumber,
-    damages: damages,
+    attackNumber: data.attackNumber,
+    damages: data.damages,
     roll: roll.total,
     ...outcome
   };
 
-  if (attack.outcome === "success"
-    || weapon.data.data.special.blast.has
-    || weapon.data.data.special.kill.has
+  if (    attack.outcome === "success"
+       || weapon.data.data.special.blast.has
+       || weapon.data.data.special.kill.has
   ) {
-    attack.location = await determineHitLocation(reverseDigits(roll.total), veh);
+    attack.location = await determineHitLocation(reverseDigits(roll.total), data.vehicle);
     const ammo = weapon.data.data.ammoList[currentAmmo];
     let damage = `${ammo.diceQuantity}D${ammo.diceValue}`;
     let min = weapon.data.data.special.diceMinimum.has
@@ -365,10 +375,18 @@ async function rollAttackAndDamage(actor, weapon, target, attackNumber, damages,
 
     const sizeBonus = weapon.data.data.group === "melee"
                     ? SIZE_DAMAGE_BONUS[actor.data.data.size] : 0;
-    attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${circDmg}`;
+    attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
     attack.piercing = pierce;
 
     if (weapon.data.data.special.blast.has || weapon.data.data.special.kill.has) {
+      const scatterData = {
+        distance: data.distanceFromTarget,
+        degrees: outcome.degrees,
+        isZeroG: data.isZeroG,
+        vehicle: data.vehicle
+      };
+
+      attack.scatter = await scatterAttack(scatterData, weapon);
       attack.apply = true;
     }
   }
@@ -389,7 +407,7 @@ async function rollBasicTest(target, test, type, actor) {
     flavor: `${localize("mythic.chat.test")}: ${test}`,
     ...outcome
   };
-  await postChatMessage(result, actor);
+  await Chat.postChatMessage(result, actor);
 }
 
 async function rollEvasions(baseTarget, options, actor) {
@@ -414,7 +432,7 @@ async function rollEvasions(baseTarget, options, actor) {
       ...outcome
     });
   }
-  await postChatMessage(result, actor);
+  await Chat.postChatMessage(result, actor);
 }
 
 async function rollInitiative(element, mod, actor) {
@@ -428,6 +446,29 @@ async function rollInitiative(element, mod, actor) {
       flavor: localize("mythic.characterWeaponSummary.initiative")
     });
   }
+}
+
+async function scatterAttack(data, weapon) {
+  const currentAmmo = weapon.data.data.currentAmmo;
+  const range = weapon.data.data.attack.fireMode === "thrown"
+              ? weapon.data.data.ammoList[currentAmmo].range.thrown
+              : weapon.data.data.ammoList[currentAmmo].range.long;
+
+  let msg = "";
+  for (let i = 1; i <= (data.isZeroG ? 2 : 1); i++) {
+    const direction = await new Roll("1D10").roll({ async: true });
+    if (i === 2) msg += " | ";
+
+    let mod = Math.floor(data.degrees) + Math.floor(data.distance / 100);
+    if (mod > (range * 3)) {
+      mod *= 4;
+    } else if (mod > (range * 2)) {
+      mod *= 2;
+    }
+    const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
+    msg += `${Chat.getScatterArrow(direction.total)} ${dice.total} m`;
+  }
+  return msg;
 }
 
 function _processAttackOptions(form) {

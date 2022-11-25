@@ -32,13 +32,7 @@
                   :&nbsp;
                   <span
                     class="chat-link scatter"
-                    data-wfm="{{../../this.wfm}}"
-                    data-dof="{{attack.degrees}}"
-                    {{#if (eq ../../this.weaponData.ammoList.STD.group "thrown")}}
-                      data-range="{{../../this.weaponData.ammoList.STD.range.thrown}}"
-                    {{else}}
-                      data-range="{{../../this.weaponData.ammoList.STD.range.long}}"
-                    {{/if}}
+                    data-scatter="{{attack.scatter}}"
                   >
                     {{localize "mythic.chat.scatter.title"}}!
                   </span>

@@ -26,6 +26,29 @@ export async function buildChatMessageContent(data) {
   return await renderTemplate(template, data);
 }
 
+/**
+ * Builds the i tag holding the scatter direction arrow.
+ *
+ * @param {number} roll - The roll result for the scatter direction.
+ * @returns {string} The HTML i tag with the rotated scatter arrow.
+ */
+export function getScatterArrow(roll) {
+  const compass = {
+    10: 315,
+     9: 270,
+     8: 225,
+     7: 180,
+     6: 180,
+     5: 135,
+     4: 90,
+     3: 45,
+     2: 0,
+     1: 0
+  }
+  const rotation = `transform: rotate(${compass[roll]}deg)`;
+  return `<i class="fas fa-arrow-circle-up" style="${rotation}"></i>`;
+}
+
 /*
  * Provides the localization path for postable item flavor text.
  *
@@ -65,23 +88,6 @@ export async function postChatMessage(data, actor) {
     flavor: data.flavor,
     content: await buildChatMessageContent(data)
   }, {});
-}
-
-function getScatterArrow(roll) {
-  const compass = {
-    10: 315,
-     9: 270,
-     8: 225,
-     7: 225,
-     6: 180,
-     5: 135,
-     4: 90,
-     3: 45,
-     2: 45,
-     1: 0
-  }
-  const rotation = `transform: rotate(${compass[roll]}deg)`;
-  return `<i class="fas fa-arrow-circle-up" style="${rotation}"></i>`;
 }
 
 async function getScatterOptions(degrees = 0) {
@@ -134,34 +140,16 @@ async function getSpecialOptions(rule) {
 }
 
 async function onScatter(event) {
+  await AudioHelper.play({
+    src: "sounds/dice.wav",
+    volume: 0.8,
+    autoplay: true,
+    loop: false
+  }, true);
+
   const element = event.currentTarget;
-  const options = await getScatterOptions(element.dataset.dof);
-  if (options.cancelled) return;
-  if (isNaN(options.distance) || isNaN(options.dof)) {
-    makeUIError("mythic.chat.error.nan");
-    options.cancelled = true;
-  }
-  if (!options.cancelled) {
-    let msg = "";
-    let times = options.isZeroG ? 2 : 1;
-    for (let i = 1; i <= times; i++) {
-      const roll = await new Roll("1D10").roll({ async: true });
-      if (i === 2) msg += " | ";
-      let mod = 0;
-      mod += Math.floor(options.dof);
-      mod += Math.floor(options.distance / 100);
-      if (options.distance > element.dataset.range) {
-        if (options.distance > element.dataset.range * 2) { mod *= 5 }
-        else { mod *= 2 }
-      }
-      mod -= getCharacteristicModifier(parseInt(element.dataset.wfm));
-      const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
-      msg += `${getScatterArrow(roll.total)} ${dice.total} m`;
-    }
-    await AudioHelper.play({src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false}, true);
-    element.classList.remove("scatter");
-    element.innerHTML = msg;
-  }
+  element.classList.remove("scatter");
+  element.innerHTML = element.dataset.scatter;
 }
 
 async function onSpecial(event) {

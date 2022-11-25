@@ -25,6 +25,7 @@
   * Standard, which uses the rules in the book.
   * Simplified, which uses a simplified version of the rules.
   * Off, which does no encumbrance penalty automation.
+* Scatter is now determined at the time the attack is made, so it can persist between server instances.
 
 ## Bug Fixes
 
