@@ -13,6 +13,7 @@
   * Changed the "Double AGI Mod to Run/Charge" field to "AGI Bonus for Run/Charge."
     * This is to support the new rule for Hunters, where they were changed from doubling their AGI mod for figuring Charge and Run to instead gain a +3 bonus to their AGI mod when calculating those movement speeds. This field can take a number input, which will allow players to use either the new or old rules, as well as for use in like abilities, both for homebrew content and possible future official content.
   * Updated a number of system terms that have been changed for 5.1.
+  * Fixed wound calculation to now be accurate for both Named Characters and Bestiary.
 * Re-introduced the ammunition management feature, with a new system setting offering the following three modes:
   * Magazines - weapons track full magazines, and reloaded weapons lose the held ammunition in the current magazine.
   * Ammo Pool - a count of total rounds are tracked, with magazines always topped off. This works like how the games handle ammunition, and is how single-loading weapons will work even in Magazines mode.

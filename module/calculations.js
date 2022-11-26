@@ -901,30 +901,19 @@ function calculateMythicCharacteristicsFlood(actorData) {
 }
 
 function calculateMythicDifficulty(actorData) {
-  if (actorData.data.difficulty.advancesMythics) {
-    const difficulty = parseInt(actorData.data.difficulty.tier);
-    if (difficulty === 4) {
-      actorData.data.mythicCharacteristics.str.difficulty = 2;
-      actorData.data.mythicCharacteristics.tou.difficulty = 1;
-      actorData.data.mythicCharacteristics.agi.difficulty = 1;
-    } else if (difficulty === 3) {
-      actorData.data.mythicCharacteristics.str.difficulty = 1;
-      actorData.data.mythicCharacteristics.tou.difficulty = 1;
-      actorData.data.mythicCharacteristics.agi.difficulty = 1;
-    } else if (difficulty === 2) {
-      actorData.data.mythicCharacteristics.str.difficulty = 1;
-      actorData.data.mythicCharacteristics.tou.difficulty = 1;
-      actorData.data.mythicCharacteristics.agi.difficulty = 0;
-    } else if (difficulty === 1) {
-      actorData.data.mythicCharacteristics.str.difficulty = 1;
-      actorData.data.mythicCharacteristics.tou.difficulty = 0;
-      actorData.data.mythicCharacteristics.agi.difficulty = 0;
-    } else {
-      actorData.data.mythicCharacteristics.str.difficulty = 0;
-      actorData.data.mythicCharacteristics.tou.difficulty = 0;
-      actorData.data.mythicCharacteristics.agi.difficulty = 0;
-    }
+  function applyDifficulty(diff) {
+    actorData.data.mythicCharacteristics.str.difficulty = diff;
+    actorData.data.mythicCharacteristics.tou.difficulty = diff;
+    actorData.data.mythicCharacteristics.agi.difficulty = diff;
   }
+
+  if (!actorData.data.difficulty.advancesMythics) return;
+  if (actorData.data.difficulty.normalOnly) return applyDifficulty(0);
+
+  const difficulty = parseInt(actorData.data.difficulty.tier);
+  if (difficulty === 4) return applyDifficulty(2);
+  if (difficulty >=  1) return applyDifficulty(1);
+  return applyDifficulty(0);
 }
 
 function calculateSkillTargetEncumbrancePenalty(actorData) {
@@ -1146,13 +1135,14 @@ function calculateWoundsBestiary (actorData) {
   const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
   const mythicTou = actorData.data.mythicCharacteristics.tou.total;
   const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
-  const diffTier = parseInt(actorData.data.difficulty.tier);
+  const diffTier = actorData.data.difficulty.normalOnly
+                 ? 1 : parseInt(actorData.data.difficulty.tier);
 
-  const wounds = 1 + (diffTier / 10);
-  const addition = 36 + (diffTier * 4);
   actorData.data.wounds.max = (
-    actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
-    (addition + Math.floor(2 * ((doubleTou * touMod) + mythicTou) * wounds))
+      (36 + (diffTier * 4))
+    + (2 * doubleTou * (touMod + mythicTou))
+    + actorData.data.wounds.other
+    + (actorData.data.wounds.aiDegen * -5)
   );
 }
 
@@ -1165,9 +1155,11 @@ function calculateWoundsNamedCharacter(actorData) {
   const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
   const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
   const mythicTou = actorData.data.mythicCharacteristics.tou.total;
-  actorData.data.wounds.max = 40 + ((2 * ((doubleTou * touMod) + mythicTou)) +
-    actorData.data.wounds.other + (actorData.data.wounds.aiDegen * -5) +
-    (parseInt(actorData.data.wounds.advancements) * 4)
+  actorData.data.wounds.max = (
+      (40 + (2 * doubleTou * (touMod + mythicTou)))
+    + actorData.data.wounds.other
+    + (actorData.data.wounds.aiDegen * -5)
+    + (parseInt(actorData.data.wounds.advancements) * 4)
   );
 }
 
