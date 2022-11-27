@@ -145,42 +145,42 @@ export function prepareBestiaryBase(actor) {
 /**
  * Prepares all derived Actor data for a Bestiary Enemy Actor type.
  *
- * @param {ActorData} actorData - The Bestiary Enemy Actor data.
+ * @param {Actor} actor - The Bestiary Enemy Actor data.
  */
-export function prepareBestiaryDerived(actorData) {
+export function prepareBestiaryDerived(actor) {
   // Set Up Armor
-  applyArmorStatsToCharacter(actorData);
+  applyArmorStatsToCharacter(actor);
 
   // Calculate Mythic Characteristics
-  calculateMythicCharacteristics(actorData);
+  calculateMythicCharacteristics(actor);
 
   // Calculate Characteristics
-  const feltFatigue = calculateFeltFatigue(actorData);
-  calculateCharacteristics(actorData, feltFatigue);
+  const feltFatigue = calculateFeltFatigue(actor.system.fatigue);
+  calculateCharacteristics(actor, feltFatigue);
 
   // Calculate DR
-  calculateDamageResistance(actorData);
+  calculateDamageResistance(actor.system);
 
   // Calculate Wounds
-  calculateWoundsBestiary(actorData);
+  calculateWoundsBestiary(actor.system);
 
   // Calculate Max Fatigue
-  calculateMaxFatigue(actorData);
+  calculateMaxFatigue(actor.system);
 
   // Calculate Movement Distances
-  calculateMovementDistancesWithEncumbrance(actorData);
+  calculateMovementDistancesWithEncumbrance(actor.system);
 
   // Calculate Initiative
-  calculateInitiative(actorData, feltFatigue);
+  calculateInitiative(actor.system, feltFatigue);
 
   // Calculate Skill Test Target Numbers
-  calculateSkillTargets(actorData);
+  calculateSkillTargets(actor.system);
 
   // Calculate Education Test Target Numbers
-  calculateEducationTargets(actorData);
+  calculateEducationTargets(actor);
 
   // Calculate Weapon Attacks
-  calculateWeaponSummaryAttackData(actorData);
+  calculateWeaponSummaryAttackData(actor);
 }
 
 /**
@@ -222,32 +222,32 @@ export function prepareFloodBase(actor) {
 /**
  * Prepares all derived Actor Data for a Flood Actor type.
  *
- * @param {ActorData} actorData - The Flood Actor data.
+ * @param {Actor} actor - The Flood Actor data.
  */
-export function prepareFloodDerived(actorData) {
+export function prepareFloodDerived(actor) {
   // Set Up Armor
-  applyArmorStatsToCharacter(actorData);
+  applyArmorStatsToCharacter(actor);
 
   // Calculate Characteristics
-  calculateCharacteristicsFlood(actorData);
+  calculateCharacteristicsFlood(actor.system);
 
   // Calculate Mythic Characteristics
-  calculateMythicCharacteristicsFlood(actorData);
+  calculateMythicCharacteristicsFlood(actor.system);
 
   // Calculate DR
-  calculateDamageResistanceFlood(actorData);
+  calculateDamageResistanceFlood(actor);
 
   // Calculate Movement Distances
-  calculateMovementDistancesBase(actorData);
+  calculateMovementDistancesBase(actor.system);
 
   // Calculate Initiative
-  calculateInitiativeFlood(actorData);
+  calculateInitiativeFlood(actor.system);
 
   // Calculate Skill Test Target Numbers
-  calculateSkillTargets(actorData);
+  calculateSkillTargets(actor.system);
 
   // Calculate Weapon Attacks
-  calculateWeaponSummaryAttackData(actorData);
+  calculateWeaponSummaryAttackData(actor);
 }
 
 /**
@@ -256,7 +256,6 @@ export function prepareFloodDerived(actorData) {
  * @param {Actor} actor - The Named Character Actor data.
  */
 export function prepareNamedCharacterBase(actor) {
-  const actorData = actor.data;
   // Calculate Ability Pool
   calculateAbilityPool(actor.system);
 
@@ -270,7 +269,7 @@ export function prepareNamedCharacterBase(actor) {
   calculateSupportPoints(actor.system);
 
   // Fix Talent Dependencies
-  if (!actor.system.trainings.weapons.hth) actor.system.trainings.weapons.mac = false;
+  fixTalentDependencies(actor.system);
 
   // Calculate Weight
   calculateInventoryWeight(actor);
@@ -282,42 +281,42 @@ export function prepareNamedCharacterBase(actor) {
 /**
  * Prepares all derived Actor data for a Named Character Actor type.
  *
- * @param {ActorData} actorData - The Named Character Actor data.
+ * @param {Actor} actor - The Named Character Actor data.
  */
-export function prepareNamedCharacterDerived(actorData) {
+export function prepareNamedCharacterDerived(actor) {
   // Set Up Armor
-  applyArmorStatsToCharacter(actorData);
+  applyArmorStatsToCharacter(actor);
 
   // Calculate Mythic Characteristics
-  calculateMythicCharacteristics(actorData);
+  calculateMythicCharacteristics(actor);
 
   // Calculate Characteristics
-  const feltFatigue = calculateFeltFatigue(actorData);
-  calculateCharacteristics(actorData, feltFatigue);
+  const feltFatigue = calculateFeltFatigue(actor.system.fatigue);
+  calculateCharacteristics(actor, feltFatigue);
 
   // Calculate DR
-  calculateDamageResistance(actorData);
+  calculateDamageResistance(actor.system);
 
   // Calculate Wounds
-  calculateWoundsNamedCharacter(actorData);
+  calculateWoundsNamedCharacter(actor.system);
 
   // Calculate Max Fatigue
-  calculateMaxFatigue(actorData);
+  calculateMaxFatigue(actor.system);
 
   // Calculate Movement Distances
-  calculateMovementDistancesWithEncumbrance(actorData);
+  calculateMovementDistancesWithEncumbrance(actor.system);
 
   // Calculate Initiative
-  calculateInitiative(actorData, feltFatigue);
+  calculateInitiative(actor.system, feltFatigue);
 
   // Calculate Skill Test Target Numbers
-  calculateSkillTargets(actorData);
+  calculateSkillTargets(actor.system);
 
   // Calculate Education Test Target Numbers
-  calculateEducationTargets(actorData);
+  calculateEducationTargets(actor);
 
   // Calculate Weapon Attacks
-  calculateWeaponSummaryAttackData(actorData);
+  calculateWeaponSummaryAttackData(actor);
 }
 
 /**
@@ -341,9 +340,9 @@ export function prepareVehicleEmbedded(actorData) {
 /**
  * Prepares all derived Actor data for a Vehicle Actor type.
  *
- * @param {ActorData} actorData - The Vehicle Actor data.
+ * @param {Actor} actor - The Vehicle Actor data.
  */
-export function prepareVehicleDerived(actorData) {
+export function prepareVehicleDerived(actor) {
   // TODO
 }
 
@@ -380,28 +379,28 @@ export function sortAndFilterItems(items, filterParam, sortParam = "name") {
   }
 }
 
-function applyArmorStatsToCharacter(actorData) {
-  const armor = actorData.items.filter(a => a.type === "armor" && a.data.data.weight.equipped)[0];
+function applyArmorStatsToCharacter(actor) {
+  const armor = actor.items.filter(a => a.type === "armor" && a.data.data.weight.equipped)[0];
   if (armor) {
     for (let [key, value] of Object.entries(armor.data.data.protection)) {
-      actorData.data.armor[key].protection = value.total;
+      actor.system.armor[key].protection = value.total;
     }
 
     if (armor.data.data.shields.has) {
-      actorData.data.shields.max = armor.data.data.shields.integrity.total;
-      actorData.data.shields.recharge = armor.data.data.shields.recharge.total;
-      actorData.data.shields.delay = armor.data.data.shields.delay.total;
+      actor.system.shields.max = armor.data.data.shields.integrity.total;
+      actor.system.shields.recharge = armor.data.data.shields.recharge.total;
+      actor.system.shields.delay = armor.data.data.shields.delay.total;
     } else {
-      emptyArmorShields(actorData);
+      emptyArmorShields(actor.system);
     }
 
     if (armor.data.data.characteristics.has) {
-      actorData.data.characteristics.str.equipment = armor.data.data.characteristics.str.total;
-      actorData.data.characteristics.agi.equipment = armor.data.data.characteristics.agi.total;
-      actorData.data.mythicCharacteristics.str.equipment = armor.data.data.characteristics.mythicStr.total;
-      actorData.data.mythicCharacteristics.agi.equipment = armor.data.data.characteristics.mythicAgi.total;
+      actor.system.characteristics.str.equipment = armor.data.data.characteristics.str.total;
+      actor.system.characteristics.agi.equipment = armor.data.data.characteristics.agi.total;
+      actor.system.mythicCharacteristics.str.equipment = armor.data.data.characteristics.mythicStr.total;
+      actor.system.mythicCharacteristics.agi.equipment = armor.data.data.characteristics.mythicAgi.total;
     } else {
-      emptyArmorCharacteristics(actorData);
+      emptyArmorCharacteristics(actor.system);
     }
   };
 }
@@ -421,53 +420,53 @@ function calculateAbilityPool(actorData) {
   );
 }
 
-function calculateCarryWeight(actorData) {
-  const tou = actorData.data.characteristics.tou.total;
+function calculateCarryWeight(actor) {
+  const tou = actor.system.characteristics.tou.total;
   const str = (
-      actorData.data.characteristics.str.total
-    + (actorData.data.carryingCapacity.imposing ? 5 : 0)
+      actor.system.characteristics.str.total
+    + (actor.system.carryingCapacity.imposing ? 5 : 0)
   );
 
-  const touBase = tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1);
-  const liftPullTou = touBase * (actorData.data.carryingCapacity.strongBack ? 2 : 1);
+  const touBase = tou * (actor.system.carryingCapacity.doubleTou ? 2 : 1);
+  const liftPullTou = touBase * (actor.system.carryingCapacity.strongBack ? 2 : 1);
   const carryBase = (
-      (str * (actorData.data.carryingCapacity.doubleStr ? 2 : 1)) // STR
-    + (actorData.data.mythicCharacteristics.str.total * 10) // Mythic STR
-    + (actorData.data.mythicCharacteristics.tou.total * 10) // Mythic TOU
-    + actorData.data.carryingCapacity.mod // Modifier
+      (str * (actor.system.carryingCapacity.doubleStr ? 2 : 1)) // STR
+    + (actor.system.mythicCharacteristics.str.total * 10) // Mythic STR
+    + (actor.system.mythicCharacteristics.tou.total * 10) // Mythic TOU
+    + actor.system.carryingCapacity.mod // Modifier
   );
 
-  actorData.data.carryingCapacity.carry = carryBase + touBase;
-  actorData.data.carryingCapacity.lift = 2 * (carryBase + liftPullTou);
-  actorData.data.carryingCapacity.push = 4 * (carryBase + liftPullTou);
+  actor.system.carryingCapacity.carry = carryBase + touBase;
+  actor.system.carryingCapacity.lift = 2 * (carryBase + liftPullTou);
+  actor.system.carryingCapacity.push = 4 * (carryBase + liftPullTou);
 
-  if (actorData.type !== "Flood") calculateInventoryBars(actorData);
+  if (actor.type !== "Flood") calculateInventoryBars(actor.system);
 }
 
-function calculateCharacteristics(actorData, feltFatigue) {
+function calculateCharacteristics(actor, feltFatigue) {
   // Process STR and TOU first.
-  Object.entries(actorData.data.characteristics).splice(0, 2).forEach(stat => {
-    calculateCharacteristic(actorData, feltFatigue, stat)
+  Object.entries(actor.system.characteristics).splice(0, 2).forEach(stat => {
+    calculateCharacteristic(actor, feltFatigue, stat)
   });
 
   // Calculate carry weight.
-  calculateCarryWeight(actorData);
+  calculateCarryWeight(actor);
 
   // Calculate encumbrance.
-  calculateEncumbrance(actorData);
+  calculateEncumbrance(actor.system);
 
   // Process remaining stats.
-  Object.entries(actorData.data.characteristics).splice(2, 8).forEach(stat => {
-    calculateCharacteristic(actorData, feltFatigue, stat);
+  Object.entries(actor.system.characteristics).splice(2, 8).forEach(stat => {
+    calculateCharacteristic(actor, feltFatigue, stat);
   });
 }
 
-function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
-  if (actorData.type === "Bestiary Character") {
-    const diff = parseInt(actorData.data.difficulty.tier);
+function calculateCharacteristic(actor, feltFatigue, [ key, value ]) {
+  if (actor.type === "Bestiary Character") {
+    const diff = parseInt(actor.system.difficulty.tier);
     if (    isNaN(diff)
-         || actorData.data.difficulty.normalOnly
-         || !actorData.data.characteristics[key].advances
+         || actor.system.difficulty.normalOnly
+         || !actor.system.characteristics[key].advances
        ) {
       value.difficulty = 0;
     } else if (diff === 4) {
@@ -490,7 +489,7 @@ function calculateCharacteristic(actorData, feltFatigue, [ key, value ]) {
 }
 
 function calculateCharacteristicsFlood(actorData) {
-  for (const [key, value] of Object.entries(actorData.data.characteristics)) {
+  for (const [key, value] of Object.entries(actorData.characteristics)) {
     const calc = value.base + value.equipment + value.medical + value.other;
     const total = Math.floor(calc >= 0 ? calc : 0);
     value.total = total;
@@ -499,25 +498,25 @@ function calculateCharacteristicsFlood(actorData) {
 }
 
 function calculateDamageResistance(actorData) {
-  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
-  const touSoak = touMod + actorData.data.mythicCharacteristics.tou.total;
-  actorData.data.characteristics.extra.touDR = touSoak;
-  for (let val of Object.values(actorData.data.armor)) {
+  const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
+  const touSoak = touMod + actorData.mythicCharacteristics.tou.total;
+  actorData.characteristics.extra.touDR = touSoak;
+  for (let val of Object.values(actorData.armor)) {
     val.resistance = val.protection + touSoak;
   }
 }
 
-function calculateDamageResistanceFlood(actorData) {
+function calculateDamageResistanceFlood(actor) {
   const touDamageResistance = (
-      getCharacteristicModifier(actorData.data.characteristics.tou.total)
-    + actorData.data.mythicCharacteristics.tou.total
+      getCharacteristicModifier(actor.system.characteristics.tou.total)
+    + actor.system.mythicCharacteristics.tou.total
   );
 
-  const isWearing = Array.from(actorData.items.values()).some(i => {
+  const isWearing = Array.from(actor.items.values()).some(i => {
     return i.type === "armor" && i.data.data.weight.equipped;
   });
 
-  for (let val of Object.values(actorData.data.armor)) {
+  for (let val of Object.values(actor.system.armor)) {
     if (isWearing) {
       const newProtection = Math.floor(val.protection / 2);
       val.protection = newProtection;
@@ -529,12 +528,12 @@ function calculateDamageResistanceFlood(actorData) {
   }
 }
 
-function calculateEducationTargets(actorData) {
-  let educations = actorData.items.filter(item => item.type === "education");
+function calculateEducationTargets(actor) {
+  let educations = actor.items.filter(item => item.type === "education");
   for (let e of Object.values(educations)) {
     const base = e.data.data.roll.skill === "int"
-      ? actorData.data.characteristics.int.roll
-      : actorData.data.skills[e.data.data.roll.skill].roll;
+      ? actor.system.characteristics.int.roll
+      : actor.system.skills[e.data.data.roll.skill].roll;
     const training = e.data.data.roll.training !== "none"
       ? parseInt(e.data.data.roll.training.replace("plus", ""))
       : 0;
@@ -546,14 +545,14 @@ function calculateEncumbrance(actorData) {
   const method = game.settings.get("mythic", "encumbrance");
   if (method === "off") return;
 
-  const str = actorData.data.characteristics.str.total;
-  const felt = actorData.data.carryingCapacity.felt;
-  const carry = actorData.data.carryingCapacity.carry;
+  const str = actorData.characteristics.str.total;
+  const felt = actorData.carryingCapacity.felt;
+  const carry = actorData.carryingCapacity.carry;
   const overCarry = felt - carry;
 
-  actorData.data.carryingCapacity.overencumbered = felt > carry;
+  actorData.carryingCapacity.overencumbered = felt > carry;
 
-  let penalty = actorData.data.characteristics.agi.penalty;
+  let penalty = actorData.characteristics.agi.penalty;
   if (method === "standard") {
     penalty = (
       str > 0
@@ -562,7 +561,7 @@ function calculateEncumbrance(actorData) {
     );
   } else if (method === "simplified") {
     const strMod = (
-        actorData.data.mythicCharacteristics.str.total
+        actorData.mythicCharacteristics.str.total
       + getCharacteristicModifier(str)
     );
 
@@ -573,8 +572,8 @@ function calculateEncumbrance(actorData) {
     );
   }
 
-  actorData.data.characteristics.agi.penalty = Math.floor(
-    penalty / (actorData.data.carryingCapacity.strongman ? 2 : 1)
+  actorData.characteristics.agi.penalty = Math.floor(
+    penalty / (actorData.carryingCapacity.strongman ? 2 : 1)
   );
 }
 
@@ -631,8 +630,7 @@ function calculateExperiencePayout(actor) {
   );
 }
 
-function calculateFeltFatigue(actorData) {
-  const f = actorData.data.fatigue;
+function calculateFeltFatigue(f) {
   const current = f.value + (f.encumbrance ? 1 : 0);
   return isNaN(f.enduring) ? current : current - (2 * f.enduring);
 }
@@ -649,12 +647,12 @@ function calculateGripPenaltyThrown(grip) {
 }
 
 function calculateInitiative(actorData, feltFatigue) {
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
-  const intMod = getCharacteristicModifier(actorData.data.characteristics.int.total);
-  const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
-  const battlemind = actorData.data.initiative.battleMind;
+  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
+  const intMod = getCharacteristicModifier(actorData.characteristics.int.total);
+  const mythicAgi = actorData.mythicCharacteristics.agi.total;
+  const battlemind = actorData.initiative.battleMind;
   let formula = [];
-  formula.push(actorData.data.initiative.fastFoot ? "2d10kh" : "1d10");
+  formula.push(actorData.initiative.fastFoot ? "2d10kh" : "1d10");
   formula.push((battlemind ? intMod : agiMod).toString());
   if (mythicAgi > 0) {
     const bonus = Math.floor(mythicAgi / 2);
@@ -662,60 +660,60 @@ function calculateInitiative(actorData, feltFatigue) {
   };
   formula.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
   const mods = interpretDiceRollModifiers(formula.slice(1).join("+"));
-  actorData.data.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
-  actorData.data.initiative.formula = formula.join("+");
+  actorData.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
+  actorData.initiative.formula = formula.join("+");
 }
 
 function calculateInitiativeFlood(actorData) {
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
-  const mythicAgi = actorData.data.mythicCharacteristics.agi.total;
+  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
+  const mythicAgi = actorData.mythicCharacteristics.agi.total;
   let bonus = 0;
   if (mythicAgi > 0) {
     bonus = Math.floor(mythicAgi / 2);
     bonus += (bonus > 0 ? 0 : 1);
   }
   const mods = agiMod + bonus;
-  actorData.data.initiative.mods = `${mods > 0 ? "+" : ""}${mods}`;
-  actorData.data.initiative.formula = `1D10 + ${agiMod} + ${bonus}`;
+  actorData.initiative.mods = `${mods > 0 ? "+" : ""}${mods}`;
+  actorData.initiative.formula = `1D10 + ${agiMod} + ${bonus}`;
 }
 
 function calculateInventoryBars(actorData) {
   const percent = 100 * (
-    actorData.data.carryingCapacity.felt / actorData.data.carryingCapacity.carry
+    actorData.carryingCapacity.felt / actorData.carryingCapacity.carry
   );
   if (isNaN(percent)) {
-    actorData.data.carryingCapacity.bar.bgBar = "tranparent";
-    actorData.data.carryingCapacity.bar.bgFill = "transparent";
-    actorData.data.carryingCapacity.bar.width = "0%";
-    actorData.data.carryingCapacity.bar.left = "0.3em";
-    actorData.data.carryingCapacity.bar.tier = "carry";
+    actorData.carryingCapacity.bar.bgBar = "tranparent";
+    actorData.carryingCapacity.bar.bgFill = "transparent";
+    actorData.carryingCapacity.bar.width = "0%";
+    actorData.carryingCapacity.bar.left = "0.3em";
+    actorData.carryingCapacity.bar.tier = "carry";
   } else if (percent >= 400) {
     const adjusted = percent - 400;
-    actorData.data.carryingCapacity.bar.bgBar = "darkred";
-    actorData.data.carryingCapacity.bar.bgFill = "darkred";
-    actorData.data.carryingCapacity.bar.width = "100%";
-    actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
-    actorData.data.carryingCapacity.bar.tier = "push";
+    actorData.carryingCapacity.bar.bgBar = "darkred";
+    actorData.carryingCapacity.bar.bgFill = "darkred";
+    actorData.carryingCapacity.bar.width = "100%";
+    actorData.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+    actorData.carryingCapacity.bar.tier = "push";
   } else if (percent > 200) {
     const adjusted = (percent - 200) / 2;
-    actorData.data.carryingCapacity.bar.bgBar = "#fb8c00";
-    actorData.data.carryingCapacity.bar.bgFill = "darkred";
-    actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
-    actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
-    actorData.data.carryingCapacity.bar.tier = "push";
+    actorData.carryingCapacity.bar.bgBar = "#fb8c00";
+    actorData.carryingCapacity.bar.bgFill = "darkred";
+    actorData.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
+    actorData.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+    actorData.carryingCapacity.bar.tier = "push";
   } else if (percent > 100) {
     const adjusted = percent - 100;
-    actorData.data.carryingCapacity.bar.bgBar = "rgba(0, 0, 0, 0.5)";
-    actorData.data.carryingCapacity.bar.bgFill = "#fb8c00";
-    actorData.data.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
-    actorData.data.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
-    actorData.data.carryingCapacity.bar.tier = "lift";
+    actorData.carryingCapacity.bar.bgBar = "rgba(0, 0, 0, 0.5)";
+    actorData.carryingCapacity.bar.bgFill = "#fb8c00";
+    actorData.carryingCapacity.bar.width = `${adjusted.toFixed(1)}%`;
+    actorData.carryingCapacity.bar.left = adjusted <= 4 ? "0.3em" : "0";
+    actorData.carryingCapacity.bar.tier = "lift";
   } else {
-    actorData.data.carryingCapacity.bar.bgBar = "transparent";
-    actorData.data.carryingCapacity.bar.bgFill = "rgba(0, 0, 0, 0.5)";
-    actorData.data.carryingCapacity.bar.width = `${percent.toFixed(1)}%`;
-    actorData.data.carryingCapacity.bar.left = percent <= 4 ? "0.3em" : "0";
-    actorData.data.carryingCapacity.bar.tier = "carry";
+    actorData.carryingCapacity.bar.bgBar = "transparent";
+    actorData.carryingCapacity.bar.bgFill = "rgba(0, 0, 0, 0.5)";
+    actorData.carryingCapacity.bar.width = `${percent.toFixed(1)}%`;
+    actorData.carryingCapacity.bar.left = percent <= 4 ? "0.3em" : "0";
+    actorData.carryingCapacity.bar.tier = "carry";
   }
 }
 
@@ -794,42 +792,42 @@ function calculateLuck(actor) {
 }
 
 function calculateMaxFatigue(actorData) {
-  actorData.data.fatigue.max =
-    2 * getCharacteristicModifier(actorData.data.characteristics.tou.total);
+  actorData.fatigue.max =
+    2 * getCharacteristicModifier(actorData.characteristics.tou.total);
 }
 
 function calculateMovementDistancesWithEncumbrance(actorData) {
-  const felt = actorData.data.carryingCapacity.felt;
-  const carry = actorData.data.carryingCapacity.carry;
-  const push = actorData.data.carryingCapacity.push;
-  const agi  = actorData.data.characteristics.agi.roll;
+  const felt = actorData.carryingCapacity.felt;
+  const carry = actorData.carryingCapacity.carry;
+  const push = actorData.carryingCapacity.push;
+  const agi  = actorData.characteristics.agi.roll;
 
   switch (game.settings.get("mythic", "encumbrance")) {
     case "standard":
       if (agi === 0 || felt >= push || (felt / carry) >= 1.5) {
-        actorData.data.fatigue.encumbrance = true;
+        actorData.fatigue.encumbrance = true;
         calculateMovementDistancesEmpty(actorData);
         return;
       }
 
       calculateMovementDistancesBase(actorData);
-      if (actorData.data.carryingCapacity.overencumbered) {
-        actorData.data.movement.charge = 0;
-        actorData.data.movement.run = 0;
+      if (actorData.carryingCapacity.overencumbered) {
+        actorData.movement.charge = 0;
+        actorData.movement.run = 0;
       }
       return;
 
     case "simplified":
-      if (agi === 0 || felt > actorData.data.carryingCapacity.lift) {
-        actorData.data.fatigue.encumbrance = true;
+      if (agi === 0 || felt > actorData.carryingCapacity.lift) {
+        actorData.fatigue.encumbrance = true;
         calculateMovementDistancesEmpty(actorData);
         return;
       }
 
       calculateMovementDistancesBase(actorData);
-      if (actorData.data.carryingCapacity.overencumbered) {
-        actorData.data.movement.charge = 0;
-        actorData.data.movement.run = 0;
+      if (actorData.carryingCapacity.overencumbered) {
+        actorData.movement.charge = 0;
+        actorData.movement.run = 0;
       }
       return;
 
@@ -838,56 +836,56 @@ function calculateMovementDistancesWithEncumbrance(actorData) {
 }
 
 function calculateMovementDistancesBase(actorData) {
-  const strMod = getCharacteristicModifier(actorData.data.characteristics.str.total);
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.roll);
-  const base = agiMod + actorData.data.mythicCharacteristics.agi.total;
+  const strMod = getCharacteristicModifier(actorData.characteristics.str.total);
+  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.roll);
+  const base = agiMod + actorData.mythicCharacteristics.agi.total;
   const chargeRunBonus =
-    isNaN(actorData.data.movement.agiBonusRunCharge)
-      ? 0 : actorData.data.movement.agiBonusRunCharge;
+    isNaN(actorData.movement.agiBonusRunCharge)
+      ? 0 : actorData.movement.agiBonusRunCharge;
 
   if (base <= 0) {
-    actorData.data.movement.half = 0.5;
-    actorData.data.movement.full = 1;
-    actorData.data.movement.charge = 2;
-    actorData.data.movement.run = 3;
+    actorData.movement.half = 0.5;
+    actorData.movement.full = 1;
+    actorData.movement.charge = 2;
+    actorData.movement.run = 3;
   } else {
-    actorData.data.movement.half = base;
-    actorData.data.movement.full = base * 2;
-    actorData.data.movement.charge = (
-      ((base + chargeRunBonus) * 3) + (actorData.data.movement.rush ? agiMod : 0)
+    actorData.movement.half = base;
+    actorData.movement.full = base * 2;
+    actorData.movement.charge = (
+      ((base + chargeRunBonus) * 3) + (actorData.movement.rush ? agiMod : 0)
     );
-    actorData.data.movement.run = 6 * (base + chargeRunBonus);
-    actorData.data.movement.sprint = actorData.data.movement.blur ? base * 8 : "--";
+    actorData.movement.run = 6 * (base + chargeRunBonus);
+    actorData.movement.sprint = actorData.movement.blur ? base * 8 : "--";
   }
 
   const strLeap = Math.floor(strMod / 2);
-  const agiLeap = Math.floor(agiMod / 2) + actorData.data.movement.leapAgiBonus;
-  actorData.data.movement.jump = (strMod * actorData.data.movement.jumpMultiplier) / 4;
-  actorData.data.movement.leap = (
-    (strLeap > agiLeap ? strLeap : agiLeap) * actorData.data.movement.leapMultiplier
+  const agiLeap = Math.floor(agiMod / 2) + actorData.movement.leapAgiBonus;
+  actorData.movement.jump = (strMod * actorData.movement.jumpMultiplier) / 4;
+  actorData.movement.leap = (
+    (strLeap > agiLeap ? strLeap : agiLeap) * actorData.movement.leapMultiplier
   );
 }
 
 function calculateMovementDistancesEmpty(actorData) {
-  actorData.data.movement.half = 0;
-  actorData.data.movement.full = 0;
-  actorData.data.movement.charge = 0;
-  actorData.data.movement.run = 0;
-  actorData.data.movement.sprint = actorData.data.movement.blur ? 0 : "--";
-  actorData.data.movement.jump = 0;
-  actorData.data.movement.leap = 0;
+  actorData.movement.half = 0;
+  actorData.movement.full = 0;
+  actorData.movement.charge = 0;
+  actorData.movement.run = 0;
+  actorData.movement.sprint = actorData.movement.blur ? 0 : "--";
+  actorData.movement.jump = 0;
+  actorData.movement.leap = 0;
 }
 
-function calculateMythicCharacteristics(actorData) {
-  if (actorData.type === "Bestiary Character") {
-    calculateMythicDifficulty(actorData);
+function calculateMythicCharacteristics(actor) {
+  if (actor.type === "Bestiary Character") {
+    calculateMythicDifficulty(actor.system);
   } else {
-    actorData.data.mythicCharacteristics.str.difficulty = 0;
-    actorData.data.mythicCharacteristics.tou.difficulty = 0;
-    actorData.data.mythicCharacteristics.agi.difficulty = 0;
+    actor.system.mythicCharacteristics.str.difficulty = 0;
+    actor.system.mythicCharacteristics.tou.difficulty = 0;
+    actor.system.mythicCharacteristics.agi.difficulty = 0;
   }
 
-  Object.entries(actorData.data.mythicCharacteristics)
+  Object.entries(actor.system.mythicCharacteristics)
     .splice(0, 3) // Strip off the last "notes" object in this array.
     .forEach(([ key, value ]) => {
       const total = value.soldierType
@@ -900,7 +898,7 @@ function calculateMythicCharacteristics(actorData) {
 }
 
 function calculateMythicCharacteristicsFlood(actorData) {
-  Object.entries(actorData.data.mythicCharacteristics)
+  Object.entries(actorData.mythicCharacteristics)
     .splice(0, 3) // Strip off the last "notes" object in this array.
     .forEach(([ key, value ]) => {
       const total = value.base + value.equipment + value.other;
@@ -910,15 +908,15 @@ function calculateMythicCharacteristicsFlood(actorData) {
 
 function calculateMythicDifficulty(actorData) {
   function applyDifficulty(diff) {
-    actorData.data.mythicCharacteristics.str.difficulty = diff;
-    actorData.data.mythicCharacteristics.tou.difficulty = diff;
-    actorData.data.mythicCharacteristics.agi.difficulty = diff;
+    actorData.mythicCharacteristics.str.difficulty = diff;
+    actorData.mythicCharacteristics.tou.difficulty = diff;
+    actorData.mythicCharacteristics.agi.difficulty = diff;
   }
 
-  if (!actorData.data.difficulty.advancesMythics) return;
-  if (actorData.data.difficulty.normalOnly) return applyDifficulty(0);
+  if (!actorData.difficulty.advancesMythics) return;
+  if (actorData.difficulty.normalOnly) return applyDifficulty(0);
 
-  const difficulty = parseInt(actorData.data.difficulty.tier);
+  const difficulty = parseInt(actorData.difficulty.tier);
   if (difficulty === 4) return applyDifficulty(2);
   if (difficulty >=  1) return applyDifficulty(1);
   return applyDifficulty(0);
@@ -935,11 +933,11 @@ function calculateSkillTargetEncumbrancePenalty(actorData) {
 }
 
 function calculateSkillTargets(actorData) {
-  Object.entries(actorData.data.skills).forEach(([ key, value ]) => {
+  Object.entries(actorData.skills).forEach(([ key, value ]) => {
     if (key === "notes") return;
 
     let target = value.mods;
-    const stats = actorData.data.characteristics;
+    const stats = actorData.characteristics;
     target += stats[getCharacteristicKey(value.characteristic)].roll;
     const tier = value.training.tier;
 
@@ -951,20 +949,20 @@ function calculateSkillTargets(actorData) {
       target += 20;
     }
 
-    if ( (key === "techHuman" && !actorData.data.trainings.faction.unsc)
-      || (key === "techCovenant" && !actorData.data.trainings.faction.covenant)
-      || (key === "techForerunner" && !actorData.data.trainings.faction.forerunner)
+    if ( (key === "techHuman" && !actorData.trainings.faction.unsc)
+      || (key === "techCovenant" && !actorData.trainings.faction.covenant)
+      || (key === "techForerunner" && !actorData.trainings.faction.forerunner)
     ) {
-      target -= actorData.data.trainings.alienTech ? 10 : 20;
+      target -= actorData.trainings.alienTech ? 10 : 20;
     } else if ( key === "evasion"
              && value.characteristic === "WFM"
-             && actorData.data.trainings.weapons.hth
+             && actorData.trainings.weapons.hth
               ) {
       target += 5;
     }
 
     const method = game.settings.get("mythic", "encumbrance");
-    const encumbered = actorData.data.carryingCapacity.overencumbered;
+    const encumbered = actorData.carryingCapacity.overencumbered;
     if (method === "standard" && encumbered && PHYSICAL_SKILLS.has(key)) {
       target -= calculateSkillTargetEncumbrancePenalty(actorData);
     }
@@ -999,12 +997,12 @@ function calculateSwarm(actorData) {
 
 function calculateWeaponAttacksMelee(actorData, weapon) {
   const mkBase = n => Math.floor(
-    (n + getCharacteristicModifier(actorData.data.characteristics.wfm.total)) / 2
+    (n + getCharacteristicModifier(actorData.characteristics.wfm.total)) / 2
   );
 
   const macMod = (
-       actorData.data.trainings.weapons.hth
-    && actorData.data.trainings.weapons.mac
+       actorData.trainings.weapons.hth
+    && actorData.trainings.weapons.mac
   ) ? 1 : 0;
 
   weapon.data.data.attack.half = Math.min(4, Math.max(1, mkBase(0)));
@@ -1040,15 +1038,15 @@ function calculateWeaponRangeMelee(actorData, weapon) {
   const currentAmmo = weapon.data.data.currentAmmo;
   weapon.data.data.ammoList[currentAmmo].range.melee = (
       weapon.data.data.ammoList[currentAmmo].range.close
-    + MELEE_REACH_SIZE_BONUS[actorData.data.size]
+    + MELEE_REACH_SIZE_BONUS[actorData.size]
   );
 }
 
 function calculateWeaponRangeThrown(actorData, weapon) {
   const currentAmmo = weapon.data.data.currentAmmo;
   const base = (
-      getCharacteristicModifier(actorData.data.characteristics.str.total)
-    + actorData.data.mythicCharacteristics.str.total
+      getCharacteristicModifier(actorData.characteristics.str.total)
+    + actorData.mythicCharacteristics.str.total
   );
 
   let mult = 20;
@@ -1064,17 +1062,17 @@ function calculateWeaponRangeThrown(actorData, weapon) {
 
 function calculateWeaponReloadStandard(actorData, weapon) {
   let base = weapon.data.data.reload.base;
-  if (actorData.data.trainings.weapons.rapidReload) base = Math.ceil(base / 2);
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
-  const wfrMod = getCharacteristicModifier(actorData.data.characteristics.wfr.total);
+  if (actorData.trainings.weapons.rapidReload) base = Math.ceil(base / 2);
+  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
+  const wfrMod = getCharacteristicModifier(actorData.characteristics.wfr.total);
   const final = base - Math.floor(agiMod / 2) - Math.floor(wfrMod / 2);
   weapon.data.data.reload.total = final > 0 ? final : 1;
 }
 
 function calculateWeaponReloadSingleLoading(actorData, weapon) {
-  const agiMod = getCharacteristicModifier(actorData.data.characteristics.agi.total);
-  const wfrMod = getCharacteristicModifier(actorData.data.characteristics.wfr.total);
-  const rrBonus = actorData.data.trainings.weapons.rapidReload ? 1 : 0;
+  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
+  const wfrMod = getCharacteristicModifier(actorData.characteristics.wfr.total);
+  const rrBonus = actorData.trainings.weapons.rapidReload ? 1 : 0;
   const final = 1 + Math.floor(agiMod / 2) + Math.floor(wfrMod / 2) + rrBonus;
   weapon.data.data.reload.total = final > 3 ? 3 : final;
 }
@@ -1084,47 +1082,47 @@ function calculateWeaponTarget(actorData, weapon) {
   const group = weapon.data.data.group;
   const mode = weapon.data.data.attack.fireMode.split("-")[0];
   const stat = group === "ranged"
-    ? actorData.data.characteristics.wfr.roll
-    : actorData.data.characteristics.wfm.roll;
+    ? actorData.characteristics.wfr.roll
+    : actorData.characteristics.wfm.roll;
   let mod = (
     stat + weapon.data.data.attack.attackBonus +
     weapon.data.data.ammoList[currentAmmo].attackBonus
   );
-  if (!actorData.data.trainings.faction[weapon.data.data.trainings.faction]) {
-    mod -= actorData.data.trainings.alienTech ? 10 : 20;
+  if (!actorData.trainings.faction[weapon.data.data.trainings.faction]) {
+    mod -= actorData.trainings.alienTech ? 10 : 20;
   }
-  if (!actorData.data.trainings.equipment[weapon.data.data.trainings.equipment]) {
+  if (!actorData.trainings.equipment[weapon.data.data.trainings.equipment]) {
     mod -= 10;
   }
   if (["burst", "semi", "sustained"].includes(mode)) {
     mod += 10;
   }
   if (group === "melee") {
-    const hasHTH = actorData.data.trainings.weapons.hth;
+    const hasHTH = actorData.trainings.weapons.hth;
     if (hasHTH) mod += 5;
-    if (hasHTH && actorData.data.trainings.weapons.mac) mod += 5;
+    if (hasHTH && actorData.trainings.weapons.mac) mod += 5;
   }
   weapon.data.data.ammoList[currentAmmo].target = mod > 0 ? mod : 0;
 }
 
-function calculateWeaponSummaryAttackData(actorData) {
-  let weapons = actorData.items.filter(function(item) { return item.type === "weapon" });
+function calculateWeaponSummaryAttackData(actor) {
+  let weapons = actor.items.filter(function(item) { return item.type === "weapon" });
   for (let weapon of Object.values(weapons)) {
     if (weapon.data.data.group === "thrown") {
-      calculateWeaponRangeThrown(actorData, weapon);
+      calculateWeaponRangeThrown(actor.system, weapon);
       weapon.data.data.attack.half = 1;
       weapon.data.data.attack.full = 1;
       weapon.data.data.attack.fireMode = "thrown";
     } else if (weapon.data.data.group === "melee") {
-      calculateWeaponRangeMelee(actorData, weapon);
-      calculateWeaponAttacksMelee(actorData, weapon);
+      calculateWeaponRangeMelee(actor.system, weapon);
+      calculateWeaponAttacksMelee(actor.system, weapon);
     } else if (weapon.data.data.group === "ranged") {
       calculateWeaponAttacksRanged(weapon);
       if (weapon.data.data.special.singleLoading.has) {
-        calculateWeaponReloadSingleLoading(actorData, weapon);
-      } else calculateWeaponReloadStandard(actorData, weapon);
+        calculateWeaponReloadSingleLoading(actor.system, weapon);
+      } else calculateWeaponReloadStandard(actor.system, weapon);
     }
-    calculateWeaponTarget(actorData, weapon);
+    calculateWeaponTarget(actor.system, weapon);
   }
 }
 
@@ -1139,18 +1137,18 @@ function calculateWeightPenaltyThrown(mod, weight) {
   return 0;
 }
 
-function calculateWoundsBestiary (actorData) {
-  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
-  const mythicTou = actorData.data.mythicCharacteristics.tou.total;
-  const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
-  const diffTier = actorData.data.difficulty.normalOnly
-                 ? 1 : parseInt(actorData.data.difficulty.tier);
+function calculateWoundsBestiary(actorData) {
+  const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
+  const mythicTou = actorData.mythicCharacteristics.tou.total;
+  const doubleTou = actorData.wounds.doubleTou ? 2 : 1;
+  const diffTier = actorData.difficulty.normalOnly
+                 ? 1 : parseInt(actorData.difficulty.tier);
 
-  actorData.data.wounds.max = (
+  actorData.wounds.max = (
       (36 + (diffTier * 4))
     + (2 * doubleTou * (touMod + mythicTou))
-    + actorData.data.wounds.other
-    + (actorData.data.wounds.aiDegen * -5)
+    + actorData.wounds.other
+    + (actorData.wounds.aiDegen * -5)
   );
 }
 
@@ -1161,14 +1159,14 @@ function calculateWoundsFlood(actorData) {
 }
 
 function calculateWoundsNamedCharacter(actorData) {
-  const touMod = getCharacteristicModifier(actorData.data.characteristics.tou.total);
-  const doubleTou = actorData.data.wounds.doubleTou ? 2 : 1;
-  const mythicTou = actorData.data.mythicCharacteristics.tou.total;
-  actorData.data.wounds.max = (
+  const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
+  const doubleTou = actorData.wounds.doubleTou ? 2 : 1;
+  const mythicTou = actorData.mythicCharacteristics.tou.total;
+  actorData.wounds.max = (
       (40 + (2 * doubleTou * (touMod + mythicTou)))
-    + actorData.data.wounds.other
-    + (actorData.data.wounds.aiDegen * -5)
-    + (parseInt(actorData.data.wounds.advancements) * 4)
+    + actorData.wounds.other
+    + (actorData.wounds.aiDegen * -5)
+    + (parseInt(actorData.wounds.advancements) * 4)
   );
 }
 
@@ -1218,16 +1216,16 @@ function calculateReloadMagFed(weaponData, currentAmmo) {
 }
 
 function emptyArmorCharacteristics(actorData) {
-  actorData.data.characteristics.str.equipment = 0;
-  actorData.data.characteristics.agi.equipment = 0;
-  actorData.data.mythicCharacteristics.str.equipment = 0;
-  actorData.data.mythicCharacteristics.agi.equipment = 0;
+  actorData.characteristics.str.equipment = 0;
+  actorData.characteristics.agi.equipment = 0;
+  actorData.mythicCharacteristics.str.equipment = 0;
+  actorData.mythicCharacteristics.agi.equipment = 0;
 }
 
 function emptyArmorShields(actorData) {
-  actorData.data.shields.max = 0;
-  actorData.data.shields.recharge = 0;
-  actorData.data.shields.delay = 0;
+  actorData.shields.max = 0;
+  actorData.shields.recharge = 0;
+  actorData.shields.delay = 0;
 }
 
 function fixTalentDependencies(actorData) {
