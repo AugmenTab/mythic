@@ -39,9 +39,11 @@ export default class MythicActor extends Actor {
    * @override
    */
   prepareEmbeddedEntities() {
-    const actorData = this.data;
-    const flags = actorData.flags.boilerplate || {};
-    this._prepareCharacterEmbedded(actorData);
+    const flags = this.flags.boilerplate || {};
+    switch (this.type) {
+      case "Vehicle": return Calc.prepareVehicleEmbedded(this);
+      default:        return Calc.prepareCharacterEmbedded(this);
+    }
   }
 
   /**
@@ -56,19 +58,6 @@ export default class MythicActor extends Actor {
       case "Flood":              return Calc.prepareFloodDerived(this);
       case "Named Character":    return Calc.prepareNamedCharacterDerived(this);
       case "Vehicle":            return Calc.prepareVehicleDerived(this);
-    }
-  }
-
-  /**
-   * Prepares data for all embedded entities on an Actor.
-   *
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareCharacterEmbedded(actorData) {
-    if (actorData.type === "Vehicle") {
-      Calc.prepareVehicleEmbedded(actorData);
-    } else {
-      Calc.prepareCharacterEmbedded(actorData);
     }
   }
 }

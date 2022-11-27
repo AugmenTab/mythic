@@ -187,14 +187,13 @@ export function prepareBestiaryDerived(actor) {
  * Prepares all embedded entity data for a Bestiary Enemy or Named Character
  * Actor type.
  *
- * @param {ActorData} actorData - The prepared ActorData.
+ * @param {Actor} actor - The prepared Actor data.
  */
-export function prepareCharacterEmbedded(actorData) {
+export function prepareCharacterEmbedded(actor) {
   // Prepare Armors
-  let armors = actorData.items.filter(a => a.type === "armor");
-  for (let armor of Object.values(armors)) {
+  Object.values(actor.items.filter(a => a.type === "armor")).forEach(armor => {
     calculateArmorValues(armor.data.data);
-  }
+  });
 }
 
 /**
@@ -331,9 +330,9 @@ export function prepareVehicleBase(actor) {
 /**
  * Prepares all embedded entities for a Vehicle Actor type.
  *
- * @param {ActorData} actorData - The Vehicle Actor data.
+ * @param {Actor} actor - The Vehicle Actor data.
  */
-export function prepareVehicleEmbedded(actorData) {
+export function prepareVehicleEmbedded(actor) {
   // TODO
 }
 
@@ -924,7 +923,7 @@ function calculateMythicDifficulty(actorData) {
 
 function calculateSkillTargetEncumbrancePenalty(actorData) {
   const percentOfCarry = (
-    actorData.data.carryingCapacity.felt / actorData.data.carryingCapacity.carry
+    actorData.carryingCapacity.felt / actorData.carryingCapacity.carry
   );
 
   if (percentOfCarry >= 1.25) return 80;
