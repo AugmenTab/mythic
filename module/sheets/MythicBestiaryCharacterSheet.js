@@ -116,8 +116,8 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
       return;
     }
 
-    let data = duplicate(this.actor.data);
-    let langs = new Set(data.data.trainings.languages);
+    let data = duplicate(this.actor.system);
+    let langs = new Set(data.trainings.languages);
     if (langs.has(field.value)) {
       makeUIError("mythic.characterTalents.trainings.hasLang");
       field.value = "";
@@ -125,8 +125,8 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     } else {
       langs.add(field.value);
     }
-    data.data.trainings.languages = [...langs];
-    await this.actor.update(data);
+    data.trainings.languages = [...langs];
+    await this.actor.update({ "system": data });
   }
 
   async _onLanguageRemove(event) {
@@ -134,16 +134,16 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const lang = element.dataset.lang;
 
-    let data = duplicate(this.actor.data);
-    let langs = new Set(data.data.trainings.languages);
+    let data = duplicate(this.actor.system);
+    let langs = new Set(data.trainings.languages);
     if (langs.has(lang)) {
       langs.delete(lang);
     } else {
       makeUIError("mythic.characterTalents.trainings.noLang");
       return;
     }
-    data.data.trainings.languages = [...langs];
-    await this.actor.update(data);
+    data.trainings.languages = [...langs];
+    await this.actor.update({ "system": data });
   }
 
   async _onItemDelete(event) {
