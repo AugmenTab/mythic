@@ -583,10 +583,14 @@ function calculateExperience(actorData) {
     (t, a) => t + (isNaN(a.price) ? 0 : a.price), 0
   );
   const current = totalExp - spent;
+
   actorData.data.experience.spent = spent;
   actorData.data.experience.current = totalExp - spent;
   actorData.data.experience.color = current < 0 ? "red" : "black";
-  if (totalExp >= 32000) {
+
+  if (totalExp >= 64000) {
+    actorData.data.experience.tier = 8;
+  } else if (totalExp >= 32000) {
     actorData.data.experience.tier = 7;
   } else if (totalExp >= 16000 ) {
     actorData.data.experience.tier = 6;
