@@ -114,32 +114,32 @@ export function handleReloadMagCount(weaponData) {
 /**
  * Prepares all base Actor data for a Bestiary Enemy Actor type.
  *
- * @param {ActorData} actorData - The Bestiary Enemy Actor data.
+ * @param {Actor} actor - The Bestiary Enemy Actor data.
  */
-export function prepareBestiaryBase(actorData) {
+export function prepareBestiaryBase(actor) {
   // Calculate Ability Pool
-  calculateAbilityPool(actorData);
+  calculateAbilityPool(actor.system);
 
   // Calculate Luck
-  calculateLuck(actorData);
+  calculateLuck(actor);
 
   // Calculate Support Points
-  calculateSupportPoints(actorData);
+  calculateSupportPoints(actor.system);
 
   // Calculate Experience Payout
-  calculateExperiencePayout(actorData);
+  calculateExperiencePayout(actor);
 
   // Fix Talent Dependencies
-  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+  fixTalentDependencies(actor.system);
 
   // Calculate Weight
-  calculateInventoryWeight(actorData);
+  calculateInventoryWeight(actor);
 
   // Reset characteristic penalties
-  resetCharacteristicPenalties(actorData);
+  resetCharacteristicPenalties(actor.system);
 
   // Set characteristics advance values; TODO: Remove in 0.3.0
-  setCharacteristicAdvancesDifficulty(actorData);
+  setCharacteristicAdvancesDifficulty(actor.system);
 }
 
 /**
@@ -200,23 +200,23 @@ export function prepareCharacterEmbedded(actorData) {
 /**
  * Prepares all base Actor data for a Flood Actor type.
  *
- * @param {ActorData} actorData - The Flood Actor data.
+ * @param {Actor} actor - The Flood Actor data.
  */
-export function prepareFloodBase(actorData) {
+export function prepareFloodBase(actor) {
   // Swarm
-  calculateSwarm(actorData);
+  calculateSwarm(actor.system);
 
   // Experience Payout (must be unique for multiplier)
-  calculateExperiencePayout(actorData);
+  calculateExperiencePayout(actor);
 
   // Wounds
-  calculateWoundsFlood(actorData);
+  calculateWoundsFlood(actor.system);
 
   // Fix Talent Dependencies
-  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+  fixTalentDependencies(actor.system);
 
   // Calculate Weight
-  calculateInventoryWeight(actorData);
+  calculateInventoryWeight(actor);
 }
 
 /**
@@ -253,29 +253,30 @@ export function prepareFloodDerived(actorData) {
 /**
  * Prepares all base Actor data for a Named Character Actor type.
  *
- * @param {ActorData} actorData - The Named Character Actor data.
+ * @param {Actor} actor - The Named Character Actor data.
  */
-export function prepareNamedCharacterBase(actorData) {
+export function prepareNamedCharacterBase(actor) {
+  const actorData = actor.data;
   // Calculate Ability Pool
-  calculateAbilityPool(actorData);
+  calculateAbilityPool(actor.system);
 
   // Calculate Experience
-  calculateExperience(actorData);
+  calculateExperience(actor.system);
 
   // Calculate Luck
-  calculateLuck(actorData);
+  calculateLuck(actor);
 
   // Calculate Support Points
-  calculateSupportPoints(actorData);
+  calculateSupportPoints(actor.system);
 
   // Fix Talent Dependencies
-  if (!actorData.data.trainings.weapons.hth) actorData.data.trainings.weapons.mac = false;
+  if (!actor.system.trainings.weapons.hth) actor.system.trainings.weapons.mac = false;
 
   // Calculate Weight
-  calculateInventoryWeight(actorData);
+  calculateInventoryWeight(actor);
 
   // Reset characteristic penalties
-  resetCharacteristicPenalties(actorData);
+  resetCharacteristicPenalties(actor.system);
 }
 
 /**
@@ -322,9 +323,9 @@ export function prepareNamedCharacterDerived(actorData) {
 /**
  * Prepares all base Actor data for a Vehicle Actor type.
  *
- * @param {ActorData} actorData - The Vehicle Actor data.
+ * @param {Actor} actor - The Vehicle Actor data.
  */
-export function prepareVehicleBase(actorData) {
+export function prepareVehicleBase(actor) {
   // TODO
 }
 
@@ -406,17 +407,17 @@ function applyArmorStatsToCharacter(actorData) {
 }
 
 function calculateAbilityPool(actorData) {
-  actorData.data.characteristics.extra.poolTotal = (
-    actorData.data.characteristics.str.abilityPool +
-    actorData.data.characteristics.tou.abilityPool +
-    actorData.data.characteristics.agi.abilityPool +
-    actorData.data.characteristics.wfr.abilityPool +
-    actorData.data.characteristics.wfm.abilityPool +
-    actorData.data.characteristics.int.abilityPool +
-    actorData.data.characteristics.per.abilityPool +
-    actorData.data.characteristics.cr.abilityPool +
-    actorData.data.characteristics.ch.abilityPool +
-    actorData.data.characteristics.ld.abilityPool
+  actorData.characteristics.extra.poolTotal = (
+      actorData.characteristics.str.abilityPool
+    + actorData.characteristics.tou.abilityPool
+    + actorData.characteristics.agi.abilityPool
+    + actorData.characteristics.wfr.abilityPool
+    + actorData.characteristics.wfm.abilityPool
+    + actorData.characteristics.int.abilityPool
+    + actorData.characteristics.per.abilityPool
+    + actorData.characteristics.cr.abilityPool
+    + actorData.characteristics.ch.abilityPool
+    + actorData.characteristics.ld.abilityPool
   );
 }
 
@@ -578,55 +579,55 @@ function calculateEncumbrance(actorData) {
 }
 
 function calculateExperience(actorData) {
-  const totalExp = actorData.data.experience.total;
-  const spent = actorData.data.experience.purchases.reduce(
+  const totalExp = actorData.experience.total;
+  const spent = actorData.experience.purchases.reduce(
     (t, a) => t + (isNaN(a.price) ? 0 : a.price), 0
   );
   const current = totalExp - spent;
 
-  actorData.data.experience.spent = spent;
-  actorData.data.experience.current = totalExp - spent;
-  actorData.data.experience.color = current < 0 ? "red" : "black";
+  actorData.experience.spent = spent;
+  actorData.experience.current = totalExp - spent;
+  actorData.experience.color = current < 0 ? "red" : "black";
 
   if (totalExp >= 64000) {
-    actorData.data.experience.tier = 8;
+    actorData.experience.tier = 8;
   } else if (totalExp >= 32000) {
-    actorData.data.experience.tier = 7;
+    actorData.experience.tier = 7;
   } else if (totalExp >= 16000 ) {
-    actorData.data.experience.tier = 6;
+    actorData.experience.tier = 6;
   } else if (totalExp >= 8000) {
-    actorData.data.experience.tier = 5;
+    actorData.experience.tier = 5;
   } else if (totalExp >= 4000) {
-    actorData.data.experience.tier = 4;
+    actorData.experience.tier = 4;
   } else if (totalExp >= 2000) {
-    actorData.data.experience.tier = 3;
+    actorData.experience.tier = 3;
   } else if (totalExp >= 1000) {
-    actorData.data.experience.tier = 2;
+    actorData.experience.tier = 2;
   } else if (totalExp >= 500) {
-    actorData.data.experience.tier = 1;
+    actorData.experience.tier = 1;
   } else {
-    actorData.data.experience.tier = 0;
+    actorData.experience.tier = 0;
   }
 }
 
-function calculateExperiencePayout(actorData) {
+function calculateExperiencePayout(actor) {
   let base = 0;
   let diffMult = 1;
-  if (actorData.type === "Flood") {
-    base = actorData.data.experiencePayout.base;
-    diffMult = actorData.data.swarm.total;
+  if (actor.type === "Flood") {
+    base = actor.system.experiencePayout.base;
+    diffMult = actor.system.swarm.total;
   } else {
     const tier = getDifficultyFromTier(
-      actorData.data.difficulty.normalOnly ? "1" : actorData.data.difficulty.tier
+      actor.system.difficulty.normalOnly ? "1" : actor.system.difficulty.tier
     );
-    actorData.data.experiencePayout.tier = tier;
-    base = actorData.data.experiencePayout.difficulty[tier];
+    actor.system.experiencePayout.tier = tier;
+    base = actor.system.experiencePayout.difficulty[tier];
   }
 
-  actorData.data.experiencePayout.base = base;
-  actorData.data.experiencePayout.diffMultiplier = diffMult;
-  actorData.data.experiencePayout.total = (
-    (base * diffMult) + actorData.data.experiencePayout.kit
+  actor.system.experiencePayout.base = base;
+  actor.system.experiencePayout.diffMultiplier = diffMult;
+  actor.system.experiencePayout.total = (
+    (base * diffMult) + actor.system.experiencePayout.kit
   );
 }
 
@@ -750,10 +751,10 @@ function calculateItemWeight(item) {
   return {felt: felt, total: total};
 }
 
-function calculateInventoryWeight(actorData) {
+function calculateInventoryWeight(actor) {
   let felt = 0, total = 0;
 
-  actorData.items.filter(
+  actor.items.filter(
     item => ["armor", "equipment", "weapon"].includes(item.type)
   ).forEach(item => {
     if (!item.data.data.weight.carried) item.data.data.weight.equipped = false;
@@ -762,31 +763,34 @@ function calculateInventoryWeight(actorData) {
     total += weight.total;
   });
 
-  actorData.data.carryingCapacity.total = total > 0 ? total : 0;
-  actorData.data.carryingCapacity.character = total + actorData.data.weight;
+  actor.system.carryingCapacity.total = total > 0 ? total : 0;
+  actor.system.carryingCapacity.character = total + actor.system.weight;
 
-  if (actorData.type === "Flood") {
-    actorData.data.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
+  if (actor.type === "Flood") {
+    actor.system.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
   } else {
-    actorData.data.carryingCapacity.felt = felt > 0 ? felt : 0;
-    actorData.data.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
+    actor.system.carryingCapacity.felt = felt > 0 ? felt : 0;
+    actor.system.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
   }
 }
 
-function calculateLuck(actorData) {
+function calculateLuck(actor) {
   let difficulty = 0;
-  if (actorData.type === "Bestiary Character") {
-    actorData.data.luck.tier = getDifficultyFromTier(
-      actorData.data.difficulty.normalOnly ? "1" : actorData.data.difficulty.tier
+  if (actor.type === "Bestiary Character") {
+    actor.system.luck.tier = getDifficultyFromTier(
+      actor.system.difficulty.normalOnly ? "1" : actor.system.difficulty.tier
     );
-    difficulty = actorData.data.luck.difficulty[actorData.data.luck.tier];
+    difficulty = actor.system.luck.difficulty[actor.system.luck.tier];
   }
 
   const max = (
-    actorData.data.luck.starting + actorData.data.luck.advancements +
-    actorData.data.luck.other + difficulty - actorData.data.luck.burnt
+      actor.system.luck.starting
+    + actor.system.luck.advancements
+    + actor.system.luck.other
+    + difficulty
+    - actor.system.luck.burnt
   );
-  actorData.data.luck.max = max > 0 ? max : 0;
+  actor.system.luck.max = max > 0 ? max : 0;
 }
 
 function calculateMaxFatigue(actorData) {
@@ -970,26 +974,26 @@ function calculateSkillTargets(actorData) {
 }
 
 function calculateSupportPoints(actorData) {
-  actorData.data.supportPoints.max = (
-    actorData.data.supportPoints.rank + actorData.data.supportPoints.other
+  actorData.supportPoints.max = (
+    actorData.supportPoints.rank + actorData.supportPoints.other
   );
 }
 
 function calculateSwarm(actorData) {
-  if (actorData.data.swarm.willSwarm) {
+  if (actorData.swarm.willSwarm) {
     const method = game.settings.get("mythic", "swarmVersion");
     if (method === "contamination") {
       const c = game.settings.get("mythic", "contaminationLevel");
-      actorData.data.swarm.base = 2 * c;
+      actorData.swarm.base = 2 * c;
     } else if (method === "difficulty") {
       const d = game.settings.get("mythic", "floodDifficulty");
-      actorData.data.swarm.base = 10 * d;
+      actorData.swarm.base = 10 * d;
     } else if (method === "manual") {
-      actorData.data.swarm.base = 1;
+      actorData.swarm.base = 1;
     }
-    actorData.data.swarm.total = actorData.data.swarm.base + actorData.data.swarm.mod;
+    actorData.swarm.total = actorData.swarm.base + actorData.swarm.mod;
   } else {
-    actorData.data.swarm.total = 1;
+    actorData.swarm.total = 1;
   }
 }
 
@@ -1151,8 +1155,9 @@ function calculateWoundsBestiary (actorData) {
 }
 
 function calculateWoundsFlood(actorData) {
-  const w = actorData.data.wounds.base * actorData.data.swarm.total;
-  actorData.data.wounds.max = w + actorData.data.wounds.mod
+  actorData.wounds.max = (
+    actorData.wounds.mod + (actorData.wounds.base * actorData.swarm.total)
+  );;
 }
 
 function calculateWoundsNamedCharacter(actorData) {
@@ -1225,6 +1230,10 @@ function emptyArmorShields(actorData) {
   actorData.data.shields.delay = 0;
 }
 
+function fixTalentDependencies(actorData) {
+  if (!actorData.trainings.weapons.hth) actorData.trainings.weapons.mac = false;
+}
+
 // TODO: Write a migration to eliminate the need for this.
 function getCharacteristicKey(stat) {
   const charMap = {
@@ -1254,12 +1263,12 @@ function getDifficultyFromTier(tier) {
 }
 
 function resetCharacteristicPenalties(actorData) {
-  Object.entries(actorData.data.characteristics)
+  Object.entries(actorData.characteristics)
     .splice(0, 10).forEach(([ _, value ]) => value.penalty = 0);
 }
 
 function setCharacteristicAdvancesDifficulty(actorData) {
-  Object.entries(actorData.data.characteristics)
+  Object.entries(actorData.characteristics)
     .splice(0, 10).forEach(([ key, value ]) => {
       if (key !== "extra" && value.advances === undefined) {
         value.advances = true;

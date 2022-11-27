@@ -24,9 +24,13 @@ export default class MythicActor extends Actor {
    * @override
    */
   prepareBaseData() {
-    const actorData = this.data;
-    const flags = actorData.flags.boilerplate || {};
-    this._prepareCharacterBaseData(actorData);
+    const flags = this.flags.boilerplate || {};
+    switch (this.type) {
+      case "Bestiary Character": return Calc.prepareBestiaryBase(this);
+      case "Flood":              return Calc.prepareFloodBase(this);
+      case "Named Character":    return Calc.prepareNamedCharacterBase(this);
+      case "Vehicle":            return Calc.prepareVehicleBase(this);
+    }
   }
 
   /**
@@ -49,28 +53,6 @@ export default class MythicActor extends Actor {
     const actorData = this.data;
     const flags = actorData.flags.boilerplate || {};
     this._prepareCharacterDerivedData(actorData);
-  }
-
-  /**
-   * Prepares base character data for an Actor.
-   *
-   * @param {ActorData} actorData - The prepared ActorData.
-   */
-  _prepareCharacterBaseData(actorData) {
-    switch (actorData.type) {
-      case "Bestiary Character":
-        Calc.prepareBestiaryBase(actorData);
-        break;
-      case "Flood":
-        Calc.prepareFloodBase(actorData);
-        break;
-      case "Named Character":
-        Calc.prepareNamedCharacterBase(actorData);
-        break;
-      case "Vehicle":
-        Calc.prepareVehicleBase(actorData);
-        break;
-    }
   }
 
   /**
