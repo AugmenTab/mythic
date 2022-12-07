@@ -26,22 +26,24 @@ mythic.trainings = {
   equipment: {
     basic: "mythic.trainings.equipment.basic",
     infantry: "mythic.trainings.equipment.infantry",
+    heavy: "mythic.trainings.equipment.heavy",
     advanced: "mythic.trainings.equipment.advanced",
-    longRange: "mythic.trainings.equipment.longRange",
-    vehicle: "mythic.trainings.equipment.vehicle",
-    explosive: "mythic.trainings.equipment.explosive",
-    melee: "mythic.trainings.equipment.melee",
-    heavy: "mythic.trainings.equipment.heavy"
+    launcher: "mythic.trainings.equipment.launcher",
+    range: "mythic.trainings.equipment.range",
+    ordnance: "mythic.trainings.equipment.ordnance",
+    cannon: "mythic.trainings.equipment.cannon",
+    melee: "mythic.trainings.equipment.melee"
   },
   examples: {
     basic: "mythic.trainings.examples.basic",
     infantry: "mythic.trainings.examples.infantry",
+    heavy: "mythic.trainings.examples.heavy",
     advanced: "mythic.trainings.examples.advanced",
-    longRange: "mythic.trainings.examples.longRange",
-    vehicle: "mythic.trainings.examples.vehicle",
-    explosive: "mythic.trainings.examples.explosive",
-    melee: "mythic.trainings.examples.melee",
-    heavy: "mythic.trainings.examples.heavy"
+    launcher: "mythic.trainings.examples.launcher",
+    range: "mythic.trainings.examples.range",
+    ordnance: "mythic.trainings.examples.ordnance",
+    cannon: "mythic.trainings.examples.cannon",
+    melee: "mythic.trainings.examples.melee"
   },
   factions: {
     unsc: "mythic.trainings.factions.unsc",

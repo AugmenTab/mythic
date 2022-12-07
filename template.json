@@ -322,12 +322,13 @@
                     "equipment": {
                         "basic": false,
                         "infantry": false,
+                        "heavy": false,
                         "advanced": false,
-                        "longRange": false,
-                        "vehicle": false,
-                        "explosive": false,
-                        "melee": false,
-                        "heavy": false
+                        "launcher": false,
+                        "range": false,
+                        "ordnance": false,
+                        "cannon": false,
+                        "melee": false
                     },
                     "faction": {
                         "unsc": false,
@@ -964,12 +965,13 @@
                 "equipment": {
                     "basic": false,
                     "infantry": false,
+                    "heavy": false,
                     "advanced": false,
-                    "longRange": false,
-                    "vehicle": false,
-                    "explosive": false,
-                    "melee": false,
-                    "heavy": false
+                    "launcher": false,
+                    "range": false,
+                    "ordnance": false,
+                    "cannon": false,
+                    "melee": false
                 },
                 "faction": {
                     "unsc": false,

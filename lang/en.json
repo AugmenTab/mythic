@@ -704,22 +704,24 @@
             "equipment": {
                 "basic": "Basic",
                 "infantry": "Infantry",
+                "heavy": "Heavy",
                 "advanced": "Advanced",
-                "longRange": "Long-Range",
-                "vehicle": "Vehicle",
-                "explosive": "Explosive Ordnance",
-                "melee": "Melee",
-                "heavy": "Heavy"
+                "launcher": "Launcher",
+                "range": "Range",
+                "ordnance": "Ordnance",
+                "cannon": "Cannon",
+                "melee": "Melee"
             },
             "examples": {
-                "basic": "Pistols, Shotguns, and Knives.",
-                "infantry": "Rifles, Carbines, SMGs, Grenades, and Satchel Charges.",
-                "advanced": "Energy Weapons, Railguns, Flame Throwers, Cryosprayers.",
-                "longRange": "Sniper Rifles and other Extreme-Range Weapons.",
-                "vehicle": "Any and all vehicle weapons. Cannons, Autocannons, and Coilguns",
-                "explosive": "Grenade, Rocket, and Missile Launchers. Demolition, Ordinance, and Landmines.",
-                "melee": "All available Melee Weapons.",
-                "heavy": "Light, Medium, and Heavy Machine Guns."
+                "basic": "Pistol, Knife, Shotgun",
+                "infantry": "Rifle, Carbine, SMG, Grenade",
+                "heavy": "Light Machine Gun, Machine Gun, Heavy Machine Gun",
+                "advanced": "Energy Weapon, Railgun, Chemical Sprayer, Beam",
+                "launcher": "Missile Launcher, Rocket Launcher, Grenade Launcher",
+                "range": "Sniper Rifle",
+                "ordnance": "Satchel Charge, Demolition, Ordnance, Landmine",
+                "cannon": "Cannon, Mortar Cannon, Autocannon, Coilgun",
+                "melee": "All non-knife Melee Weapons and Physical Shields"
             },
             "factions": {
                 "unsc": "UNSC",
