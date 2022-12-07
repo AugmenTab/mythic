@@ -424,7 +424,7 @@ function calculateCarryWeight(actorData) {
   const tou = actorData.data.characteristics.tou.total;
   const str = (
       actorData.data.characteristics.str.total
-    + (actorData.data.carryingCapacity.imposing ? 5 : 0)
+    + (actorData.data.carryingCapacity.imposing ? 10 : 0)
   );
 
   const touBase = tou * (actorData.data.carryingCapacity.doubleTou ? 2 : 1);
@@ -957,7 +957,10 @@ function calculateSkillTargets(actorData) {
              && actorData.data.trainings.weapons.hth
               ) {
       target += 5;
+    } else if (key === "intimidation") {
+      target += actorData.data.carryingCapacity.imposing ? 5 : 0;
     }
+
 
     const method = game.settings.get("mythic", "encumbrance");
     const encumbered = actorData.data.carryingCapacity.overencumbered;
