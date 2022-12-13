@@ -114,42 +114,42 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   async _onExpApply(event) {
     event.preventDefault();
-    let data = duplicate(this.actor.data);
+    let data = duplicate(this.actor.system);
     const field = document.getElementById("exp-total-value");
     const val = Math.floor(parseInt(field.value));
-    data.data.experience.total += (!isNaN(val)) ? val : 0;
+    data.experience.total += (!isNaN(val)) ? val : 0;
     if (isNaN(parseInt(field.value))) {
       makeUIError("mythic.chat.error.nan");
     }
-    await this.actor.update(data);
+    await this.actor.update({ "system": data });
   }
 
   async _onExpCreate(event) {
     event.preventDefault;
-    let data = duplicate(this.actor.data);
-    let purchases = Calc.setupExperiencePurchases(data.data.experience.purchases);
+    let data = duplicate(this.actor.system);
+    let purchases = Calc.setupExperiencePurchases(data.experience.purchases);
     const purchase = { index: purchases.length, name: null, price: null };
-    data.data.experience.purchases.push(purchase);
-    await this.actor.update(data);
+    data.experience.purchases.push(purchase);
+    await this.actor.update({ "system": data });
   }
 
   async _onExpDelete(event) {
     event.preventDefault;
     const element = event.currentTarget;
-    let data = duplicate(this.actor.data);
-    const purchases = data.data.experience.purchases.filter(x => x.index != element.dataset.index);
-    data.data.experience.purchases = Calc.setupExperiencePurchases(purchases);
-    await this.actor.update(data);
+    let data = duplicate(this.actor.system);
+    const purchases = data.experience.purchases.filter(x => x.index != element.dataset.index);
+    data.experience.purchases = Calc.setupExperiencePurchases(purchases);
+    await this.actor.update({ "system": data });
   }
 
   async _onExpEdit(event) {
     event.preventDefault;
     const element = event.currentTarget;
-    let data = duplicate(this.actor.data);
+    let data = duplicate(this.actor.system);
     let val = element.dataset.field === "price" ? parseInt(element.value) : element.value;
     if (element.dataset.field === "price" && isNaN(val)) val = 0;
-    data.data.experience.purchases[element.dataset.index][element.dataset.field] = val;
-    await this.actor.update(data);
+    data.experience.purchases[element.dataset.index][element.dataset.field] = val;
+    await this.actor.update({ "system": data });
   }
 
   _onExpSubmit(event) {
@@ -161,12 +161,11 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     let field = document.getElementById("lang-input");
     if (field.value === "") {
-      makeUIError("mythic.characterTalents.trainings.emptyLang");
-      return;
+      return makeUIError("mythic.characterTalents.trainings.emptyLang");
     }
 
-    let data = duplicate(this.actor.data);
-    let langs = new Set(data.data.trainings.languages);
+    let data = duplicate(this.actor.system);
+    let langs = new Set(data.trainings.languages);
     if (langs.has(field.value)) {
       makeUIError("mythic.characterTalents.trainings.hasLang");
       field.value = "";
@@ -174,8 +173,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     } else {
       langs.add(field.value);
     }
-    data.data.trainings.languages = [...langs];
-    await this.actor.update(data);
+    data.trainings.languages = [...langs];
+    await this.actor.update({ "system": data });
   }
 
   async _onLanguageRemove(event) {
@@ -183,16 +182,16 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const lang = element.dataset.lang;
 
-    let data = duplicate(this.actor.data);
-    let langs = new Set(data.data.trainings.languages);
+    let data = duplicate(this.actor.system);
+    let langs = new Set(data.trainings.languages);
     if (langs.has(lang)) {
       langs.delete(lang);
     } else {
       makeUIError("mythic.characterTalents.trainings.noLang");
       return;
     }
-    data.data.trainings.languages = [...langs];
-    await this.actor.update(data);
+    data.trainings.languages = [...langs];
+    await this.actor.update({ "system": data });
   }
 
   async _onItemDelete(event) {
