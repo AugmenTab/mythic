@@ -130,7 +130,7 @@
                         "total": 0,
                         "roll": 0
                     },
-                    "cr": {
+                    "crg": {
                         "soldierType": 0,
                         "abilityPool": 0,
                         "background": 0,
@@ -144,7 +144,7 @@
                         "total": 0,
                         "roll": 0
                     },
-                    "ch": {
+                    "cha": {
                         "soldierType": 0,
                         "abilityPool": 0,
                         "background": 0,
@@ -158,7 +158,7 @@
                         "total": 0,
                         "roll": 0
                     },
-                    "ld": {
+                    "ldr": {
                         "soldierType": 0,
                         "abilityPool": 0,
                         "background": 0,

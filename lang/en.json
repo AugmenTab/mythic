@@ -34,9 +34,9 @@
             "wfm": "Warfare Melee",
             "int": "Intellect",
             "per": "Perception",
-            "cr": "Courage",
-            "ch": "Charisma",
-            "ld": "Leadership"
+            "crg": "Courage",
+            "cha": "Charisma",
+            "ldr": "Leadership"
         },
         "characterNav": {
             "summary": "Summary",

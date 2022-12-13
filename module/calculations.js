@@ -137,9 +137,6 @@ export function prepareBestiaryBase(actorData) {
 
   // Reset characteristic penalties
   resetCharacteristicPenalties(actorData);
-
-  // Set characteristics advance values; TODO: Remove in 0.3.0
-  setCharacteristicAdvancesDifficulty(actorData);
 }
 
 /**
@@ -414,9 +411,9 @@ function calculateAbilityPool(actorData) {
     actorData.data.characteristics.wfm.abilityPool +
     actorData.data.characteristics.int.abilityPool +
     actorData.data.characteristics.per.abilityPool +
-    actorData.data.characteristics.cr.abilityPool +
-    actorData.data.characteristics.ch.abilityPool +
-    actorData.data.characteristics.ld.abilityPool
+    actorData.data.characteristics.crg.abilityPool +
+    actorData.data.characteristics.cha.abilityPool +
+    actorData.data.characteristics.ldr.abilityPool
   );
 }
 
@@ -936,7 +933,7 @@ function calculateSkillTargets(actorData) {
 
     let target = value.mods;
     const stats = actorData.data.characteristics;
-    target += stats[getCharacteristicKey(value.characteristic)].roll;
+    target += stats[value.characteristic.toLowerCase()].roll;
     const tier = value.training.tier;
 
     if (tier === "none") {
@@ -1228,23 +1225,6 @@ function emptyArmorShields(actorData) {
   actorData.data.shields.delay = 0;
 }
 
-// TODO: Write a migration to eliminate the need for this.
-function getCharacteristicKey(stat) {
-  const charMap = {
-    "STR": "str",
-    "TOU": "tou",
-    "AGI": "agi",
-    "WFR": "wfr",
-    "WFM": "wfm",
-    "INT": "int",
-    "PER": "per",
-    "CRG": "cr",
-    "CHA": "ch",
-    "LDR": "ld"
-  }
-  return charMap[stat];
-}
-
 function getDifficultyFromTier(tier) {
   const tierMap = {
     "0": "easy",
@@ -1259,13 +1239,4 @@ function getDifficultyFromTier(tier) {
 function resetCharacteristicPenalties(actorData) {
   Object.entries(actorData.data.characteristics)
     .splice(0, 10).forEach(([ _, value ]) => value.penalty = 0);
-}
-
-function setCharacteristicAdvancesDifficulty(actorData) {
-  Object.entries(actorData.data.characteristics)
-    .splice(0, 10).forEach(([ key, value ]) => {
-      if (key !== "extra" && value.advances === undefined) {
-        value.advances = true;
-      }
-    });
 }
