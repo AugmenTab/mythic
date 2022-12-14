@@ -50,6 +50,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
    */
   getData() {
     const data = super.getData();
+
+    data.system = data.actor.system;
     data.config = CONFIG.mythic;
 
     const a = Calc.sortAndFilterItems(data.items, "ability");

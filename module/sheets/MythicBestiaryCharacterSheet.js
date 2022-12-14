@@ -50,6 +50,8 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
    */
   getData() {
     const data = super.getData();
+
+    data.system = data.actor.system;
     data.config = CONFIG.mythic;
 
     const a = sortAndFilterItems(data.items, "ability");
