@@ -1,31 +1,31 @@
 <section>
   <div
     class="weight-tracker"
-    style="background:{{data.data.carryingCapacity.bar.bgBar}}"
+    style="background:{{system.carryingCapacity.bar.bgBar}}"
   >
     <div
       class="encumbrance"
-      style="background:{{data.data.carryingCapacity.bar.bgFill}};width:{{data.data.carryingCapacity.bar.width}}"
+      style="background:{{system.carryingCapacity.bar.bgFill}};width:{{system.carryingCapacity.bar.width}}"
     >
-      <p style="margin-left:{{data.data.carryingCapacity.bar.left}}">
-        {{data.data.carryingCapacity.bar.width}}
+      <p style="margin-left:{{system.carryingCapacity.bar.left}}">
+        {{system.carryingCapacity.bar.width}}
       </p>
     </div>
   </div>
   <div class="inventory-bar-labels">
     <p>
-      {{#if (eq data.data.carryingCapacity.bar.tier "push")}}
+      {{#if (eq system.carryingCapacity.bar.tier "push")}}
         {{localize "mythic.characterStatBlock.capacity.lift"}}
-      {{else if (eq data.data.carryingCapacity.bar.tier "lift")}}
+      {{else if (eq system.carryingCapacity.bar.tier "lift")}}
         {{localize "mythic.characterStatBlock.capacity.carry"}}
       {{/if}}
     </p>
     <p>
-      {{#if data.data.carryingCapacity.overencumbered}}
+      {{#if system.carryingCapacity.overencumbered}}
         {{localize "mythic.characterInventory.overencumbered"}}
       {{/if}}
     </p>
-    <p>{{localize (concat "mythic.characterStatBlock.capacity." data.data.carryingCapacity.bar.tier)}}</p>
+    <p>{{localize (concat "mythic.characterStatBlock.capacity." system.carryingCapacity.bar.tier)}}</p>
   </div>
   <table>
     <thead>
@@ -94,34 +94,34 @@
       {{/each}}
       <td colspan="7">
         <textarea
-          name="data.equipmentNotes"
+          name="system.equipmentNotes"
           placeholder="{{localize "mythic.characterInventory.equipment.notes"}}"
-        >{{data.data.equipmentNotes}}</textarea>
+        >{{system.equipmentNotes}}</textarea>
       </td>
     </tbody>
     <thead>
       <tr>
         <th>
-          {{localize "mythic.characterInventory.characterTotal"}}:&nbsp;{{localnum data.data.carryingCapacity.character}}&nbsp;kg
+          {{localize "mythic.characterInventory.characterTotal"}}:&nbsp;{{localnum system.carryingCapacity.character}}&nbsp;kg
         </th>
         <th colspan="2">
-          +{{data.data.carryingCapacity.hearing}}&nbsp;{{localize "mythic.characterInventory.heard"}}
+          +{{system.carryingCapacity.hearing}}&nbsp;{{localize "mythic.characterInventory.heard"}}
         </th>
         <th colspan="2">
           <span class="cR-field">
             cR
             <input
-              name="data.cR"
+              name="system.cR"
               type="number"
               data-dtype="Number"
-              value="{{data.data.cR}}"
+              value="{{system.cR}}"
               onfocus="this.select()"
             />
           </span>
         </th>
         </th>
-        <th>{{localnum data.data.carryingCapacity.felt}}&nbsp;kg</th>
-        <th>{{localnum data.data.carryingCapacity.total}}&nbsp;kg</th>
+        <th>{{localnum system.carryingCapacity.felt}}&nbsp;kg</th>
+        <th>{{localnum system.carryingCapacity.total}}&nbsp;kg</th>
       </tr>
     </thead>
   </table>

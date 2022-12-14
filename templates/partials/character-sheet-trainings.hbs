@@ -19,10 +19,10 @@
     </thead>
     <tbody>
       <tr>
-        {{#each data.data.trainings.faction as |trained faction|}}
+        {{#each system.trainings.faction as |trained faction|}}
           <td>
             <input
-              name="data.trainings.faction.{{faction}}"
+              name="system.trainings.faction.{{faction}}"
               type="checkbox"
               {{checked trained}}
             />
@@ -30,9 +30,9 @@
         {{/each}}
         <td>
           <input
-            name="data.trainings.alienTech"
+            name="system.trainings.alienTech"
             type="checkbox"
-            {{checked data.data.trainings.alienTech}}
+            {{checked system.trainings.alienTech}}
           />
         </td>
       </tr>
@@ -58,33 +58,33 @@
       <tr>
         <td>
           <input
-            name="data.trainings.weapons.hth"
+            name="system.trainings.weapons.hth"
             type="checkbox"
-            {{checked data.data.trainings.weapons.hth}}
+            {{checked system.trainings.weapons.hth}}
           />
         </td>
         <td>
           <input
-            name="data.trainings.weapons.mac"
+            name="system.trainings.weapons.mac"
             type="checkbox"
-            {{#unless data.data.trainings.weapons.hth}}
+            {{#unless system.trainings.weapons.hth}}
               disabled="true" aria-disabled="true"
             {{/unless}}
-            {{checked data.data.trainings.weapons.mac}}
+            {{checked system.trainings.weapons.mac}}
           />
         </td>
         <td>
           <input
-            name="data.trainings.weapons.rapidReload"
+            name="system.trainings.weapons.rapidReload"
             type="checkbox"
-            {{checked data.data.trainings.weapons.rapidReload}}
+            {{checked system.trainings.weapons.rapidReload}}
           />
         </td>
         <td>
           <input
-            name="data.trainings.weapons.unarmedCombatant"
+            name="system.trainings.weapons.unarmedCombatant"
             type="checkbox"
-            {{checked data.data.trainings.weapons.unarmedCombatant}}
+            {{checked system.trainings.weapons.unarmedCombatant}}
           />
         </td>
       </tr>
@@ -108,13 +108,13 @@
       </tr>
     </thead>
     <tbody>
-      {{#each data.data.trainings.equipment as |trained group|}}
+      {{#each system.trainings.equipment as |trained group|}}
         <tr>
           <td>{{localize (concat "mythic.trainings.equipment." group)}}</td>
           <td>{{localize (concat "mythic.trainings.examples." group)}}</td>
           <td>
             <input
-              name="data.trainings.equipment.{{group}}"
+              name="system.trainings.equipment.{{group}}"
               type="checkbox"
               {{checked trained}}
             />
@@ -134,7 +134,7 @@
           </a>
         </h2>
         <div>
-          {{#each data.data.trainings.languages}}
+          {{#each system.trainings.languages}}
             <span class="language clickable lang-remove" data-lang="{{this}}">
               {{this}}
             </span>

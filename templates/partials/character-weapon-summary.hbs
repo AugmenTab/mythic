@@ -6,22 +6,22 @@
         <th>
           <button
             class="initiative rollable"
-            data-roll="{{data.data.initiative.formula}}"
+            data-roll="{{system.initiative.formula}}"
             data-label="initiative"
           >
-            {{localize "mythic.characterWeaponSummary.initiative"}}:&nbsp;{{data.data.initiative.mods}}
+            {{localize "mythic.characterWeaponSummary.initiative"}}:&nbsp;{{system.initiative.mods}}
           </button>
       </th>
       <th colspan="3">
         <button
           class="evade"
-          name="{{localize "mythic.skillNames.evasion"}} ({{data.data.skills.evasion.characteristic}})"
-          value="{{data.data.skills.evasion.roll}}"
+          name="{{localize "mythic.skillNames.evasion"}} ({{system.skills.evasion.characteristic}})"
+          value="{{system.skills.evasion.roll}}"
         >
-          {{#if (eq data.data.skills.evasion.characteristic "AGI")}}
-            {{localize "mythic.skillNames.evasion"}}:&nbsp;{{data.data.skills.evasion.roll}}
+          {{#if (eq system.skills.evasion.characteristic "AGI")}}
+            {{localize "mythic.skillNames.evasion"}}:&nbsp;{{system.skills.evasion.roll}}
           {{else}}
-            {{localize "mythic.skillNames.parry"}}:&nbsp;{{data.data.skills.evasion.roll}}
+            {{localize "mythic.skillNames.parry"}}:&nbsp;{{system.skills.evasion.roll}}
           {{/if}}
         </button>
       </th>

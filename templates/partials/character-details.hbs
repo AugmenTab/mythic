@@ -2,15 +2,15 @@
   <img
     src="{{actor.img}}"
     data-edit="img"
-    title="{{data.data.rank}}&nbsp;{{actor.name}}"
+    title="{{system.rank}}&nbsp;{{actor.name}}"
   />
   <div class="basic-info">
     <div class="identity">
       <h1 id="rank">
         <input
-          name="data.rank"
+          name="system.rank"
           type="text"
-          value="{{data.data.rank}}"
+          value="{{system.rank}}"
           placeholder="{{localize "mythic.characterDetails.rank"}}"
           onfocus="this.select()"
         />
@@ -26,9 +26,9 @@
       </h1>
       <h1 id="faction">
         <input
-          name="data.faction"
+          name="system.faction"
           type="text"
-          value="{{data.data.faction}}"
+          value="{{system.faction}}"
           placeholder="{{localize "mythic.characterDetails.faction"}}"
           onfocus="this.select()"
         />
@@ -37,62 +37,62 @@
     <div class="background">
       <p>
         <input
-          name="data.soldierType"
+          name="system.soldierType"
           type="text"
-          value="{{data.data.soldierType}}"
+          value="{{system.soldierType}}"
           placeholder="{{localize "mythic.characterDetails.soldierType"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.race"
+          name="system.race"
           type="text"
-          value="{{data.data.race}}"
+          value="{{system.race}}"
           placeholder="{{localize "mythic.characterDetails.race"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.specialization"
+          name="system.specialization"
           type="text"
-          value="{{data.data.specialization}}"
+          value="{{system.specialization}}"
           placeholder="{{localize "mythic.characterDetails.specialization"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.upbringing"
+          name="system.upbringing"
           type="text"
-          value="{{data.data.upbringing}}"
+          value="{{system.upbringing}}"
           placeholder="{{localize "mythic.characterDetails.upbringing"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.environment"
+          name="system.environment"
           type="text"
-          value="{{data.data.environment}}"
+          value="{{system.environment}}"
           placeholder="{{localize "mythic.characterDetails.environment"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.lifestyle"
+          name="system.lifestyle"
           type="text"
-          value="{{data.data.lifestyle}}"
+          value="{{system.lifestyle}}"
           placeholder="{{localize "mythic.characterDetails.lifestyle"}}"
           onfocus="this.select()"
         />
       </p>
     </div>
     <div class="physical">
-      <select name="data.size">
-        {{#select data.data.size}}
+      <select name="system.size">
+        {{#select system.size}}
           {{#each config.size as |name size|}}
             <option value="{{size}}">{{localize name}}</option>
           {{/each}}
@@ -100,20 +100,20 @@
       </select>
       <p>
         <input
-          name="data.height"
+          name="system.height"
           type="number"
           data-dtype="Number"
-          value="{{data.data.height}}"
+          value="{{system.height}}"
           placeholder="{{localize "mythic.characterDetails.height"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.weight"
+          name="system.weight"
           type="number"
           data-dtype="Number"
-          value="{{data.data.weight}}"
+          value="{{system.weight}}"
           placeholder="{{localize "mythic.characterDetails.weight"}}"
           onfocus="this.select()"
         />
@@ -121,26 +121,26 @@
       {{#if (eq actor.type "Named Character")}}
         <p>
           <input
-            name="data.age"
+            name="system.age"
             type="number"
-            value="{{data.data.age}}"
+            value="{{system.age}}"
             placeholder="{{localize "mythic.characterDetails.age"}}"
             onfocus="this.select()"
           />
         </p>
         <p>
           <input
-            name="data.gender"
+            name="system.gender"
             type="text"
-            value="{{data.data.gender}}"
+            value="{{system.gender}}"
             placeholder="{{localize "mythic.characterDetails.gender"}}"
             onfocus="this.select()"
           />
         </p>
       {{else}}
-        <select name="data.difficulty.tier">
-          {{#select data.data.difficulty.tier}}
-            {{#if data.data.difficulty.normalOnly}}
+        <select name="system.difficulty.tier">
+          {{#select system.difficulty.tier}}
+            {{#if system.difficulty.normalOnly}}
               <option value="0">
                 {{localize "mythic.difficulty.normal"}}
               </option>

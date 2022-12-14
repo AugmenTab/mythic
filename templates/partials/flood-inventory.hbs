@@ -64,21 +64,21 @@
       {{/each}}
       <td colspan="5">
         <textarea
-          name="data.equipmentNotes"
+          name="system.equipmentNotes"
           placeholder="{{localize "mythic.characterInventory.equipment.notes"}}"
-        >{{data.data.equipmentNotes}}</textarea>
+        >{{system.equipmentNotes}}</textarea>
       </td>
     </tbody>
     <thead>
       <tr>
         <th colspan="2">
-          {{localize "mythic.characterInventory.characterTotal"}}:&nbsp;{{localnum data.data.carryingCapacity.character}}&nbsp;kg
+          {{localize "mythic.characterInventory.characterTotal"}}:&nbsp;{{localnum system.carryingCapacity.character}}&nbsp;kg
         </th>
         <th colspan="2">
-          +{{data.data.carryingCapacity.hearing}}&nbsp;{{localize "mythic.characterInventory.heard"}}
+          +{{system.carryingCapacity.hearing}}&nbsp;{{localize "mythic.characterInventory.heard"}}
         </th>
         <th>
-          {{localnum data.data.carryingCapacity.total}}&nbsp;kg
+          {{localnum system.carryingCapacity.total}}&nbsp;kg
         </th>
       </tr>
     </thead>

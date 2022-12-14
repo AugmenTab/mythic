@@ -12,15 +12,15 @@
     <div class="flood-physical">
       <p>
         <input
-          name="data.soldierType"
+          name="system.soldierType"
           type="text"
-          value="{{data.data.soldierType}}"
+          value="{{system.soldierType}}"
           placeholder="{{localize "mythic.characterDetails.soldierType"}}"
           onfocus="this.select()"
         />
       </p>
-      <select name="data.size">
-        {{#select data.data.size}}
+      <select name="system.size">
+        {{#select system.size}}
           {{#each config.size as |name size|}}
             <option value="{{size}}">{{localize name}}</option>
           {{/each}}
@@ -28,27 +28,27 @@
       </select>
       <p>
         <input
-          name="data.height"
+          name="system.height"
           type="number"
           data-dtype="Number"
-          value="{{data.data.height}}"
+          value="{{system.height}}"
           placeholder="{{localize "mythic.characterDetails.height"}}"
           onfocus="this.select()"
         />
       </p>
       <p>
         <input
-          name="data.weight"
+          name="system.weight"
           type="number"
           data-dtype="Number"
-          value="{{data.data.weight}}"
+          value="{{system.weight}}"
           placeholder="{{localize "mythic.characterDetails.weight"}}"
           onfocus="this.select()"
         />
       </p>
       <div class="swarm">
         <p>{{localize "mythic.characterDetails.swarm"}}:</p>
-        <p>{{data.data.swarm.total}}</p>
+        <p>{{system.swarm.total}}</p>
       </div>
     </div>
   </div>

@@ -19,10 +19,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><b>{{data.data.experience.tier}}</b></td>
+          <td><b>{{system.experience.tier}}</b></td>
           <td>
             <div class="exp-total">
-              <b>{{localnum data.data.experience.total}}</b>
+              <b>{{localnum system.experience.total}}</b>
               <input
                 id="exp-total-value"
                 class="exp-submit"
@@ -34,10 +34,10 @@
               </button>
             </div>
           </td>
-          <td><b>{{localnum data.data.experience.spent}}</b></td>
+          <td><b>{{localnum system.experience.spent}}</b></td>
           <td>
-            <b style="color:{{data.data.experience.color}}">
-              {{localnum data.data.experience.current}}
+            <b style="color:{{system.experience.color}}">
+              {{localnum system.experience.current}}
             </b>
           </td>
         </tr>
@@ -51,12 +51,12 @@
     <div class="exp-notes">
       <h2>{{localize "mythic.characterStatBlock.experience.notes"}}</h2>
       <textarea
-        name="data.experience.notes"
+        name="system.experience.notes"
         placeholder="{{localize "mythic.characterStatBlock.experience.expNotes"}}"
-      >{{data.data.experience.notes}}</textarea>
+      >{{system.experience.notes}}</textarea>
     </div>
     <div class="exp-purchases">
-      {{#each data.data.experience.purchases as |purchase|}}
+      {{#each system.experience.purchases as |purchase|}}
         <div class="exp-purchase">
           <input
             class="exp-edit"

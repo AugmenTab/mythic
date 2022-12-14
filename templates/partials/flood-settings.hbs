@@ -12,27 +12,27 @@
       </thead>
       <tbody>
         <tr>
-          <td><b>{{data.data.swarm.total}}</b></td>
-          <td>{{data.data.swarm.base}}</td>
+          <td><b>{{system.swarm.total}}</b></td>
+          <td>{{system.swarm.base}}</td>
           <td style="width:90px">
             <input
-              name="data.swarm.mod"
+              name="system.swarm.mod"
               type="number"
               data-dtype="Number"
               onfocus="this.select()"
-              {{#unless data.data.swarm.willSwarm}}
+              {{#unless system.swarm.willSwarm}}
                 value="0"
                 disabled=true
               {{else}}
-                value="{{data.data.swarm.mod}}"
+                value="{{system.swarm.mod}}"
               {{/unless}}
             />
           </td>
           <td style="width:90px">
             <input
-              name="data.swarm.willSwarm"
+              name="system.swarm.willSwarm"
               type="checkbox"
-              {{checked data.data.swarm.willSwarm}}
+              {{checked system.swarm.willSwarm}}
             />
           </td>
         </tr>
@@ -52,23 +52,23 @@
       </thead>
       <tbody>
         <tr>
-          <td><b>{{localnum data.data.experiencePayout.total}}</b></td>
+          <td><b>{{localnum system.experiencePayout.total}}</b></td>
           <td style="width:90px">
             <input
-              name="data.experiencePayout.base"
-              value="{{data.data.experiencePayout.base}}"
+              name="system.experiencePayout.base"
+              value="{{system.experiencePayout.base}}"
               type="number"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <td style="width:90px">
-            &times;{{localnum data.data.experiencePayout.diffMultiplier}}
+            &times;{{localnum system.experiencePayout.diffMultiplier}}
           </td>
-          <td style="width:90px"">
+          <td style="width:90px">
             <input
-              name="data.experiencePayout.kit"
-              value="{{data.data.experiencePayout.kit}}"
+              name="system.experiencePayout.kit"
+              value="{{system.experiencePayout.kit}}"
               type="number"
               data-dtype="Number"
               onfocus="this.select()"
@@ -112,12 +112,12 @@
       <tbody>
         <tr>
           <td>{{localize "mythic.characterSettings.characteristics.base"}}</td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
                 <input
                   class="calc-{{name}}"
-                  name="data.characteristics.{{name}}.base"
+                  name="system.characteristics.{{name}}.base"
                   value="{{stat.base}}"
                   type="number"
                   data-dtype="Number"
@@ -127,12 +127,12 @@
               </td>
             {{/unless}}
           {{/each}}
-          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+          {{#each actor.system.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
                 <input
                   class="calc-mythic-{{name}}"
-                  name="data.mythicCharacteristics.{{name}}.base"
+                  name="system.mythicCharacteristics.{{name}}.base"
                   value="{{stat.base}}"
                   type="number"
                   data-dtype="Number"
@@ -146,24 +146,24 @@
           <td style="height:33px">
             {{localize "mythic.characterSettings.characteristics.equipment"}}
           </td>
-          <td>{{actor.data.data.characteristics.str.equipment}}</td>
+          <td>{{actor.system.characteristics.str.equipment}}</td>
           <td>--</td>
-          <td>{{actor.data.data.characteristics.agi.equipment}}</td>
+          <td>{{actor.system.characteristics.agi.equipment}}</td>
           {{#times 4}}
             <td>--</td>
           {{/times}}
-          <td>{{actor.data.data.mythicCharacteristics.str.equipment}}</td>
+          <td>{{actor.system.mythicCharacteristics.str.equipment}}</td>
           <td>--</td>
-          <td>{{actor.data.data.mythicCharacteristics.agi.equipment}}</td>
+          <td>{{actor.system.mythicCharacteristics.agi.equipment}}</td>
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
                 <input
                   class="calc-{{name}}"
-                  name="data.characteristics.{{name}}.other"
+                  name="system.characteristics.{{name}}.other"
                   value="{{stat.other}}"
                   type="number"
                   data-dtype="Number"
@@ -173,12 +173,12 @@
               </td>
             {{/unless}}
           {{/each}}
-          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+          {{#each actor.system.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
                 <input
                   class="calc-mythic-{{name}}"
-                  name="data.mythicCharacteristics.{{name}}.other"
+                  name="system.mythicCharacteristics.{{name}}.other"
                   value="{{stat.other}}"
                   type="number"
                   data-dtype="Number"
@@ -192,12 +192,12 @@
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.total"}}</th>
-          {{#each actor.data.data.characteristics as |stat _|}}
+          {{#each actor.system.characteristics as |stat _|}}
             {{#unless (eq name "extra")}}
               <th>{{stat.total}}</th>
             {{/unless}}
           {{/each}}
-          {{#each actor.data.data.mythicCharacteristics as |stat _|}}
+          {{#each actor.system.mythicCharacteristics as |stat _|}}
             {{#unless (eq name "extra")}}
               <th>{{stat.total}}</th>
             {{/unless}}
@@ -225,33 +225,33 @@
         <tr>
           <td>
             <input
-              name="data.movement.jumpMultiplier"
+              name="system.movement.jumpMultiplier"
               type="number"
-              value="{{data.data.movement.jumpMultiplier}}"
+              value="{{system.movement.jumpMultiplier}}"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.movement.leapMultiplier"
+              name="system.movement.leapMultiplier"
               type="number"
-              value="{{data.data.movement.leapMultiplier}}"
+              value="{{system.movement.leapMultiplier}}"
               data-dtype="Number" onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.movement.blur"
+              name="system.movement.blur"
               type="checkbox"
-              {{checked data.data.movement.blur}}
+              {{checked system.movement.blur}}
             />
           </td>
           <td>
             <input
-              name="data.movement.rush"
+              name="system.movement.rush"
               type="checkbox"
-              {{checked data.data.movement.rush}}
+              {{checked system.movement.rush}}
             />
           </td>
         </tr>
@@ -271,22 +271,22 @@
       </thead>
       <tbody>
         <tr>
-          <td><b>{{data.data.wounds.max}}</b></td>
+          <td><b>{{system.wounds.max}}</b></td>
           <td style="width:110px">
             <input
-              name="data.wounds.base"
+              name="system.wounds.base"
               type="number"
-              value="{{data.data.wounds.base}}"
+              value="{{system.wounds.base}}"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
-          <td>&times;{{data.data.swarm.total}}</td>
+          <td>&times;{{system.swarm.total}}</td>
           <td style="width:110px">
             <input
-              name="data.wounds.mod"
+              name="system.wounds.mod"
               type="number"
-              value="{{data.data.wounds.mod}}"
+              value="{{system.wounds.mod}}"
               data-dtype="Number"
               onfocus="this.select()"
             />

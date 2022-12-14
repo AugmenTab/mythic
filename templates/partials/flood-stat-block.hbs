@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <tr>
-        {{#each data.data.characteristics as |details stat|}}
+        {{#each system.characteristics as |details stat|}}
           {{#unless (eq stat "extra")}}
             <td>
               <button
@@ -33,7 +33,7 @@
             </td>
           {{/unless}}
         {{/each}}
-        {{#each data.data.mythicCharacteristics as |details stat|}}
+        {{#each system.mythicCharacteristics as |details stat|}}
           {{#unless (eq stat "extra")}}
             <td class="characteristic">{{details.total}}</td>
           {{/unless}}
@@ -61,13 +61,13 @@
       </thead>
       <tbody>
         <tr style="font-size:1.35em;height:33px">
-          <td>{{localnum data.data.movement.half}}</td>
-          <td>{{data.data.movement.full}}</td>
-          <td>{{data.data.movement.charge}}</td>
-          <td>{{data.data.movement.run}}</td>
-          <td>{{data.data.movement.sprint}}</td>
-          <td>{{localnum data.data.movement.jump}}</td>
-          <td>{{data.data.movement.leap}}</td>
+          <td>{{localnum system.movement.half}}</td>
+          <td>{{system.movement.full}}</td>
+          <td>{{system.movement.charge}}</td>
+          <td>{{system.movement.run}}</td>
+          <td>{{system.movement.sprint}}</td>
+          <td>{{localnum system.movement.jump}}</td>
+          <td>{{system.movement.leap}}</td>
         </tr>
       </tbody>
     </table>
@@ -84,8 +84,8 @@
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
           <td>
             <input
-              name="data.wounds.value"
-              value="{{data.data.wounds.value}}"
+              name="system.wounds.value"
+              value="{{system.wounds.value}}"
               type="number"
               data-dtype="Number"
               onfocus="this.select()"
@@ -94,7 +94,7 @@
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
-          <td>{{data.data.wounds.max}}</td>
+          <td>{{system.wounds.max}}</td>
         </tr>
       </tbody>
     </table>
@@ -114,21 +114,21 @@
           <th>{{localize "mythic.characterStatBlock.physical.current"}}</th>
           <td>
             <input
-              name="data.shields.value"
-              value="{{data.data.shields.value}}"
+              name="system.shields.value"
+              value="{{system.shields.value}}"
               type="number"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <th>{{localize "mythic.characterStatBlock.physical.delay"}}</th>
-          <td>{{data.data.shields.delay}}</td>
+          <td>{{system.shields.delay}}</td>
         </tr>
         <tr>
           <th>{{localize "mythic.characterStatBlock.physical.max"}}</th>
-          <td>{{data.data.shields.max}}</td>
+          <td>{{system.shields.max}}</td>
           <th>{{localize "mythic.characterStatBlock.physical.charge"}}</th>
-          <td>{{data.data.shields.recharge}}</td>
+          <td>{{system.shields.recharge}}</td>
         </tr>
       </tbody>
     </table>
@@ -152,10 +152,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><b>{{localnum data.data.experiencePayout.total}}</b></td>
-          <td>{{localnum data.data.experiencePayout.base}}</td>
-          <td>&times;{{data.data.experiencePayout.diffMultiplier}}</td>
-          <td>{{localnum data.data.experiencePayout.kit}}</td>
+          <td><b>{{localnum system.experiencePayout.total}}</b></td>
+          <td>{{localnum system.experiencePayout.base}}</td>
+          <td>&times;{{system.experiencePayout.diffMultiplier}}</td>
+          <td>{{localnum system.experiencePayout.kit}}</td>
         </tr>
       </tbody>
     </table>
@@ -177,7 +177,7 @@
       </thead>
       <tbody>
         <tr>
-          {{#each data.data.armor as |stats loc|}}
+          {{#each system.armor as |stats loc|}}
             <td>
               <b>{{stats.resistance}}</b>&nbsp;&nbsp;({{stats.protection}})
             </td>

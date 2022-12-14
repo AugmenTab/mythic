@@ -15,16 +15,16 @@
           <tr>
             <td>
               <input
-                name="data.difficulty.normalOnly"
+                name="system.difficulty.normalOnly"
                 type="checkbox"
-                {{checked data.data.difficulty.normalOnly}}
+                {{checked system.difficulty.normalOnly}}
               />
             </td>
             <td>
               <input
-                name="data.difficulty.advancesMythics"
+                name="system.difficulty.advancesMythics"
                 type="checkbox"
-                {{checked data.data.difficulty.advancesMythics}}
+                {{checked system.difficulty.advancesMythics}}
               />
             </td>
           </tr>
@@ -44,72 +44,72 @@
         <tbody>
           <tr>
             <td style="width:100px">
-              <b>{{localnum data.data.experiencePayout.total}}</b>
+              <b>{{localnum system.experiencePayout.total}}</b>
             </td>
             <td>
-              {{#if data.data.difficulty.normalOnly}}
+              {{#if system.difficulty.normalOnly}}
                 <input
                   style="width:60px"
-                  name="data.experiencePayout.difficulty.normal"
-                  value="{{data.data.experiencePayout.difficulty.normal}}"
+                  name="system.experiencePayout.difficulty.normal"
+                  value="{{system.experiencePayout.difficulty.normal}}"
                   type="number"
                   data-dtype="Number"
                   onfocus="this.select()"
                 />
               {{else}}
-                {{!-- TODO: #each data.data.experiencePayout.difficulty as |payout tier| --}}
+                {{!-- TODO: #each system.experiencePayout.difficulty as |payout tier| --}}
                 <div class="by-difficulty-tier">
                   <input
-                    {{#if (eq data.data.experiencePayout.tier "easy")}}
+                    {{#if (eq system.experiencePayout.tier "easy")}}
                       style="font-weight:bold"
                     {{/if}}
                     class="exp-input"
-                    name="data.experiencePayout.difficulty.easy"
-                    value="{{data.data.experiencePayout.difficulty.easy}}"
+                    name="system.experiencePayout.difficulty.easy"
+                    value="{{system.experiencePayout.difficulty.easy}}"
                     type="number"
                     data-dtype="Number"
                     onfocus="this.select()"
                   />
                   <input
-                    {{#if (eq data.data.experiencePayout.tier "normal")}}
+                    {{#if (eq system.experiencePayout.tier "normal")}}
                       style="font-weight:bold"
                     {{/if}}
                     class="exp-input"
-                    name="data.experiencePayout.difficulty.normal"
-                    value="{{data.data.experiencePayout.difficulty.normal}}"
+                    name="system.experiencePayout.difficulty.normal"
+                    value="{{system.experiencePayout.difficulty.normal}}"
                     type="number"
                     data-dtype="Number"
                     onfocus="this.select()"
                   />
                   <input
-                    {{#if (eq data.data.experiencePayout.tier "heroic")}}
+                    {{#if (eq system.experiencePayout.tier "heroic")}}
                       style="font-weight:bold"
                     {{/if}}
                     class="exp-input"
-                    name="data.experiencePayout.difficulty.heroic"
-                    value="{{data.data.experiencePayout.difficulty.heroic}}"
+                    name="system.experiencePayout.difficulty.heroic"
+                    value="{{system.experiencePayout.difficulty.heroic}}"
                     type="number"
                     data-dtype="Number"
                     onfocus="this.select()"
                   />
                   <input
-                    {{#if (eq data.data.experiencePayout.tier "legendary")}}
+                    {{#if (eq system.experiencePayout.tier "legendary")}}
                       style="font-weight:bold"
                     {{/if}}
                     class="exp-input"
-                    name="data.experiencePayout.difficulty.legendary"
-                    value="{{data.data.experiencePayout.difficulty.legendary}}"
+                    name="system.experiencePayout.difficulty.legendary"
+                    value="{{system.experiencePayout.difficulty.legendary}}"
                     type="number"
                     data-dtype="Number"
                     onfocus="this.select()"
                   />
                   <input
-                    {{#if (eq data.data.experiencePayout.tier "nemesis")}}
+                    {{#if (eq system.experiencePayout.tier "nemesis")}}
                       style="font-weight:bold"
                     {{/if}}
                     class="exp-input"
-                    name="data.experiencePayout.difficulty.nemesis"
-                    value="{{data.data.experiencePayout.difficulty.nemesis}}"
+                    name="system.experiencePayout.difficulty.nemesis"
+                    value="{{system.experiencePayout.difficulty.nemesis}}"
                     type="number"
                     data-dtype="Number"
                     onfocus="this.select()"
@@ -119,8 +119,8 @@
             </td>
             <td style="width:110px">
               <input
-                name="data.experiencePayout.kit"
-                value="{{data.data.experiencePayout.kit}}"
+                name="system.experiencePayout.kit"
+                value="{{system.experiencePayout.kit}}"
                 type="number"
                 data-dtype="Number"
                 onfocus="this.select()"
@@ -149,12 +149,12 @@
           <td>
             {{localize "mythic.characterSettings.characteristics.soldierType"}}
           </td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
                 <input
                   class="calc-{{name}}"
-                  name="data.characteristics.{{name}}.soldierType"
+                  name="system.characteristics.{{name}}.soldierType"
                   value="{{stat.soldierType}}"
                   type="number"
                   data-dtype="Number"
@@ -168,15 +168,15 @@
         <tr>
           <td>
             {{localize "mythic.characterSettings.characteristics.creationPoints"}}
-            &nbsp;({{data.data.characteristics.extra.poolTotal}})
+            &nbsp;({{system.characteristics.extra.poolTotal}})
           </td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
                 <input
                   class="calc-{{name}}
                   calc-pool"
-                  name="data.characteristics.{{name}}.abilityPool"
+                  name="system.characteristics.{{name}}.abilityPool"
                   value="{{stat.abilityPool}}"
                   type="number"
                   data-dtype="Number"
@@ -190,12 +190,12 @@
           <td>
             {{localize "mythic.characterSettings.characteristics.background"}}
           </td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
                 <input
                   class="calc-{{name}}"
-                  name="data.characteristics.{{name}}.background"
+                  name="system.characteristics.{{name}}.background"
                   value="{{stat.background}}"
                   type="number"
                   data-dtype="Number"
@@ -209,9 +209,9 @@
           <td style="height:33px">
             {{localize "mythic.characterSettings.characteristics.equipment"}}
           </td>
-          <td>{{actor.data.data.characteristics.str.equipment}}</td>
+          <td>{{actor.system.characteristics.str.equipment}}</td>
           <td>--</td>
-          <td>{{actor.data.data.characteristics.agi.equipment}}</td>
+          <td>{{actor.system.characteristics.agi.equipment}}</td>
           {{#times 7}}
             <td>--</td>
           {{/times}}
@@ -221,10 +221,10 @@
             <td>
               {{localize "mythic.characterSettings.characteristics.advancements"}}
             </td>
-            {{#each actor.data.data.characteristics as |stat name|}}
+            {{#each actor.system.characteristics as |stat name|}}
               {{#unless (eq name "extra")}}
                 <td>
-                  <select name="data.characteristics.{{name}}.advancements">
+                  <select name="system.characteristics.{{name}}.advancements">
                     {{#select stat.advancements}}
                       {{#each ../config.advancements.characteristics as |text num|}}
                         <option value="{{num}}">{{text}}</option>
@@ -238,15 +238,15 @@
             <td style="height:33px">
               {{localize "mythic.characterSettings.characteristics.difficulty"}}
             </td>
-            {{#each actor.data.data.characteristics as |stat name|}}
+            {{#each actor.system.characteristics as |stat name|}}
               {{#unless (eq name "extra")}}
-                {{#if ../this.data.data.difficulty.normalOnly}}
+                {{#if ../this.system.difficulty.normalOnly}}
                   <td>{{stat.difficulty}}</td>
                 {{else}}
                   <td>
                     <div class="check-cell">
                       <input
-                        name="data.characteristics.{{name}}.advances"
+                        name="system.characteristics.{{name}}.advances"
                         type="checkbox"
                         {{checked stat.advances}}
                       />
@@ -262,7 +262,7 @@
           <td style="height:33px">
             {{localize "mythic.characterSettings.characteristics.medical"}}
           </td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>{{stat.medical}}</td>
             {{/unless}}
@@ -272,7 +272,7 @@
           <td style="height:33px">
             {{localize "mythic.characterSettings.characteristics.penalty"}}
           </td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>(&nbsp;&ndash;{{stat.penalty}}&nbsp;)</td>
             {{/unless}}
@@ -280,12 +280,12 @@
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <td>
                 <input
                   class="calc-{{name}}"
-                  name="data.characteristics.{{name}}.other"
+                  name="system.characteristics.{{name}}.other"
                   value="{{stat.other}}"
                   type="number"
                   data-dtype="Number"
@@ -299,7 +299,7 @@
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.total"}}</th>
-          {{#each actor.data.data.characteristics as |stat name|}}
+          {{#each actor.system.characteristics as |stat name|}}
             {{#unless (eq name "extra")}}
               <th>{{stat.total}}</th>
             {{/unless}}
@@ -308,9 +308,9 @@
       </thead>
     </table>
     <textarea
-      name="data.characteristics.extra.notes"
+      name="system.characteristics.extra.notes"
       placeholder="{{localize "mythic.characterSettings.characteristics.charNotes"}}"
-    >{{data.data.characteristics.extra.notes}}</textarea>
+    >{{system.characteristics.extra.notes}}</textarea>
   </div>
   <div class="characteristics-settings">
     <h2>
@@ -332,12 +332,12 @@
           <td>
             {{localize "mythic.characterSettings.characteristics.soldierType"}}
           </td>
-          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+          {{#each actor.system.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
                 <input
                   class="calc-mythic-{{name}}"
-                  name="data.mythicCharacteristics.{{name}}.soldierType"
+                  name="system.mythicCharacteristics.{{name}}.soldierType"
                   value="{{stat.soldierType}}"
                   type="number"
                   data-dtype="Number"
@@ -351,19 +351,19 @@
           <td style="height:33px">
             {{localize "mythic.characterSettings.characteristics.equipment"}}
           </td>
-          <td>{{actor.data.data.mythicCharacteristics.str.equipment}}</td>
+          <td>{{actor.system.mythicCharacteristics.str.equipment}}</td>
           <td>--</td>
-          <td>{{actor.data.data.mythicCharacteristics.agi.equipment}}</td>
+          <td>{{actor.system.mythicCharacteristics.agi.equipment}}</td>
         </tr>
         <tr>
           {{#if (eq actor.type "Named Character")}}
             <td>
               {{localize "mythic.characterSettings.characteristics.advancements"}}
             </td>
-            {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#each actor.system.mythicCharacteristics as |stat name|}}
               {{#unless (eq name "notes")}}
                 <td>
-                  <select name="data.mythicCharacteristics.{{name}}.advancements">
+                  <select name="system.mythicCharacteristics.{{name}}.advancements">
                     {{#select stat.advancements}}
                       {{#each ../config.advancements.mythicCharacteristics as |text num|}}
                         <option value="{{num}}">{{text}}</option>
@@ -377,7 +377,7 @@
             <td style="height:33px">
               {{localize "mythic.characterSettings.characteristics.difficulty"}}
             </td>
-            {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+            {{#each actor.system.mythicCharacteristics as |stat name|}}
               {{#unless (eq name "notes")}}
                 <td>{{stat.difficulty}}</td>
               {{/unless}}
@@ -386,12 +386,12 @@
         </tr>
         <tr>
           <td>{{localize "mythic.characterSettings.other"}}</td>
-          {{#each actor.data.data.mythicCharacteristics as |stat name|}}
+          {{#each actor.system.mythicCharacteristics as |stat name|}}
             {{#unless (eq name "notes")}}
               <td>
                 <input
                   class="calc-mythic-{{name}}"
-                  name="data.mythicCharacteristics.{{name}}.other"
+                  name="system.mythicCharacteristics.{{name}}.other"
                   value="{{stat.other}}"
                   type="number"
                   data-dtype="Number"
@@ -405,16 +405,16 @@
       <thead>
         <tr>
           <th>{{localize "mythic.characterSettings.total"}}</th>
-          <th>{{data.data.mythicCharacteristics.str.total}}</th>
-          <th>{{data.data.mythicCharacteristics.tou.total}}</th>
-          <th>{{data.data.mythicCharacteristics.agi.total}}</th>
+          <th>{{system.mythicCharacteristics.str.total}}</th>
+          <th>{{system.mythicCharacteristics.tou.total}}</th>
+          <th>{{system.mythicCharacteristics.agi.total}}</th>
         </tr>
       </thead>
     </table>
     <textarea
-      name="data.mythicCharacteristics.notes"
+      name="system.mythicCharacteristics.notes"
       placeholder="{{localize "mythic.characterSettings.characteristics.mythicsNotes"}}"
-    >{{data.data.mythicCharacteristics.notes}}</textarea>
+    >{{system.mythicCharacteristics.notes}}</textarea>
   </div>
   <div class="character-sheet-summary">
     <div>
@@ -434,16 +434,16 @@
           <tr>
             <td>
               <input
-                name="data.initiative.battleMind"
+                name="system.initiative.battleMind"
                 type="checkbox"
-                {{checked data.data.initiative.battleMind}}
+                {{checked system.initiative.battleMind}}
               />
             </td>
             <td>
               <input
-                name="data.initiative.fastFoot"
+                name="system.initiative.fastFoot"
                 type="checkbox"
-                {{checked data.data.initiative.fastFoot}}
+                {{checked system.initiative.fastFoot}}
               />
             </td>
           </tr>
@@ -463,10 +463,10 @@
             <td>
               <input
                 style="width:60px"
-                name="data.fatigue.enduring"
+                name="system.fatigue.enduring"
                 type="number"
                 data-dtype="Number"
-                value="{{data.data.fatigue.enduring}}"
+                value="{{system.fatigue.enduring}}"
                 onfocus="this.select()"
               />
             </td>
@@ -491,46 +491,46 @@
           <tr>
             <td>
               <input
-                name="data.carryingCapacity.doubleStr"
+                name="system.carryingCapacity.doubleStr"
                 type="checkbox"
-                {{checked data.data.carryingCapacity.doubleStr}}
+                {{checked system.carryingCapacity.doubleStr}}
               />
             </td>
             <td>
               <input
-                name="data.carryingCapacity.doubleTou"
+                name="system.carryingCapacity.doubleTou"
                 type="checkbox"
-                {{checked data.data.carryingCapacity.doubleTou}}
+                {{checked system.carryingCapacity.doubleTou}}
               />
             </td>
             <td>
               <input
-                name="data.carryingCapacity.strongBack"
+                name="system.carryingCapacity.strongBack"
                 type="checkbox"
-                {{checked data.data.carryingCapacity.strongBack}}
+                {{checked system.carryingCapacity.strongBack}}
               />
             </td>
             <td>
               <input
-                name="data.carryingCapacity.strongman"
+                name="system.carryingCapacity.strongman"
                 type="checkbox"
-                {{checked data.data.carryingCapacity.strongman}}
+                {{checked system.carryingCapacity.strongman}}
               />
             </td>
             <td>
               <input
-                name="data.carryingCapacity.imposing"
+                name="system.carryingCapacity.imposing"
                 type="checkbox"
-                {{checked data.data.carryingCapacity.imposing}}
+                {{checked system.carryingCapacity.imposing}}
               />
             </td>
             <td>
               <input
                 style="width:60px"
-                name="data.carryingCapacity.mod"
+                name="system.carryingCapacity.mod"
                 type="number"
                 data-dtype="Number"
-                value="{{data.data.carryingCapacity.mod}}"
+                value="{{system.carryingCapacity.mod}}"
                 onfocus="this.select()"
               />
             </td>
@@ -562,13 +562,13 @@
         </thead>
         <tbody>
           <tr>
-            <td><b>{{data.data.luck.max}}</b></td>
+            <td><b>{{system.luck.max}}</b></td>
             <td>
               <input
                 style="width:60px"
-                name="data.luck.starting"
+                name="system.luck.starting"
                 type="number"
-                value="{{data.data.luck.starting}}"
+                value="{{system.luck.starting}}"
                 data-dtype="Number"
                 onfocus="this.select()"
               />
@@ -576,77 +576,77 @@
             <td>
               {{#if (eq actor.type "Named Character")}}
                 <input
-                  name="data.luck.advancements"
+                  name="system.luck.advancements"
                   type="number"
-                  value="{{data.data.luck.advancements}}"
+                  value="{{system.luck.advancements}}"
                   data-dtype="Number"
                   onfocus="this.select()"
                 />
               {{else}}
-                {{#if data.data.difficulty.normalOnly}}
+                {{#if system.difficulty.normalOnly}}
                   <input
                     style="width:60px"
-                    name="data.luck.difficulty.normal"
+                    name="system.luck.difficulty.normal"
                     type="number"
-                    value="{{data.data.luck.difficulty.normal}}"
+                    value="{{system.luck.difficulty.normal}}"
                     data-dtype="Number"
                     onfocus="this.select()"
                   />
                 {{else}}
-                  {{!-- TODO: #each data.data.luck.difficulty as |luck tier| --}}
+                  {{!-- TODO: #each system.luck.difficulty as |luck tier| --}}
                   <div class="by-difficulty-tier">
                     <input
-                      {{#if (eq data.data.luck.tier "easy")}}
+                      {{#if (eq system.luck.tier "easy")}}
                         style="font-weight:bold"
                       {{/if}}
                       class="luck-input"
-                      name="data.luck.difficulty.easy"
+                      name="system.luck.difficulty.easy"
                       type="number"
-                      value="{{data.data.luck.difficulty.easy}}"
+                      value="{{system.luck.difficulty.easy}}"
                       data-dtype="Number"
                       onfocus="this.select()"
                     />
                     <input
-                      {{#if (eq data.data.luck.tier "normal")}}
+                      {{#if (eq system.luck.tier "normal")}}
                         style="font-weight:bold"
                       {{/if}}
                       class="luck-input"
-                      name="data.luck.difficulty.normal"
+                      name="system.luck.difficulty.normal"
                       type="number"
-                      value="{{data.data.luck.difficulty.normal}}"
+                      value="{{system.luck.difficulty.normal}}"
                       data-dtype="Number"
                       onfocus="this.select()"
                     />
                     <input
-                      {{#if (eq data.data.luck.tier "heroic")}}
+                      {{#if (eq system.luck.tier "heroic")}}
                         style="font-weight:bold"
                       {{/if}}
                       class="luck-input"
-                      name="data.luck.difficulty.heroic"
+                      name="system.luck.difficulty.heroic"
                       type="number"
-                      value="{{data.data.luck.difficulty.heroic}}"
+                      value="{{system.luck.difficulty.heroic}}"
                       data-dtype="Number"
                       onfocus="this.select()"
                     />
                     <input
-                      {{#if (eq data.data.luck.tier "legendary")}}
+                      {{#if (eq system.luck.tier "legendary")}}
                         style="font-weight:bold"
                       {{/if}}
                       class="luck-input"
-                      name="data.luck.difficulty.legendary"
+                      name="system.luck.difficulty.legendary"
                       type="number"
-                      value="{{data.data.luck.difficulty.legendary}}"
+                      value="{{system.luck.difficulty.legendary}}"
                       data-dtype="Number"
                       onfocus="this.select()"
                     />
                     <input
-                      {{#if (eq data.data.luck.tier "nemesis")}}
+                      {{#if (eq system.luck.tier "nemesis")}}
                         style="font-weight:bold"
                       {{/if}}
                       class="luck-input"
-                      name="data.luck.difficulty.nemesis"
+                      name="system.luck.difficulty.nemesis"
                       type="number"
-                      value="{{data.data.luck.difficulty.nemesis}}"
+                      value="{{system.luck.difficulty.nemesis}}"
                       data-dtype="Number"
                       onfocus="this.select()"
                     />
@@ -657,9 +657,9 @@
             <td>
               <input
                 style="width:60px"
-                name="data.luck.other"
+                name="system.luck.other"
                 type="number"
-                value="{{data.data.luck.other}}"
+                value="{{system.luck.other}}"
                 data-dtype="Number"
                 onfocus="this.select()"
               />
@@ -667,9 +667,9 @@
             <td>
               <input
                 style="width:60px"
-                name="data.luck.burnt"
+                name="system.luck.burnt"
                 type="number"
-                value="{{data.data.luck.burnt}}"
+                value="{{system.luck.burnt}}"
                 data-dtype="Number"
                 onfocus="this.select()"
               />
@@ -707,42 +707,42 @@
           </thead>
           <tbody>
             <tr>
-              <td><b>{{data.data.wounds.max}}</b></td>
+              <td><b>{{system.wounds.max}}</b></td>
               <td>
                 <input
-                  name="data.wounds.doubleTou"
+                  name="system.wounds.doubleTou"
                   type="checkbox"
-                  {{checked data.data.wounds.doubleTou}}
+                  {{checked system.wounds.doubleTou}}
                 />
               </td>
               <td>
                 <input
-                  name="data.wounds.aiDegen"
+                  name="system.wounds.aiDegen"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.wounds.aiDegen}}"
+                  value="{{system.wounds.aiDegen}}"
                   onfocus="this.select()"
                 />
               </td>
               <td>
                 {{#if (eq actor.type "Named Character")}}
-                  <select name="data.wounds.advancements">
-                    {{#select data.data.wounds.advancements}}
+                  <select name="system.wounds.advancements">
+                    {{#select system.wounds.advancements}}
                       {{#each config.advancements.wounds as |text num|}}
                         <option value="{{num}}">{{text}}</option>
                       {{/each}}
                     {{/select}}
                   </select>
                 {{else}}
-                  {{data.data.wounds.difficulty}}
+                  {{system.wounds.difficulty}}
                 {{/if}}
               </td>
               <td>
                 <input
-                  name="data.wounds.other"
+                  name="system.wounds.other"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.wounds.other}}"
+                  value="{{system.wounds.other}}"
                   onfocus="this.select()"
                 />
               </td>
@@ -765,19 +765,19 @@
             <tr>
               <td>
                 <input
-                  name="data.supportPoints.rank"
+                  name="system.supportPoints.rank"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.supportPoints.rank}}"
+                  value="{{system.supportPoints.rank}}"
                   onfocus="this.select()"
                 />
               </td>
               <td>
                 <input
-                  name="data.supportPoints.other"
+                  name="system.supportPoints.other"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.supportPoints.other}}"
+                  value="{{system.supportPoints.other}}"
                   onfocus="this.select()"
                 />
               </td>
@@ -812,52 +812,52 @@
         <tr>
           <td>
             <input
-              name="data.movement.jumpMultiplier"
+              name="system.movement.jumpMultiplier"
               type="number"
-              value="{{data.data.movement.jumpMultiplier}}"
+              value="{{system.movement.jumpMultiplier}}"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.movement.leapAgiBonus"
+              name="system.movement.leapAgiBonus"
               type="number"
-              value="{{data.data.movement.leapAgiBonus}}"
+              value="{{system.movement.leapAgiBonus}}"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.movement.leapMultiplier"
+              name="system.movement.leapMultiplier"
               type="number"
-              value="{{data.data.movement.leapMultiplier}}"
+              value="{{system.movement.leapMultiplier}}"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.movement.agiBonusRunCharge"
+              name="system.movement.agiBonusRunCharge"
               type="number"
-              value="{{data.data.movement.agiBonusRunCharge}}"
+              value="{{system.movement.agiBonusRunCharge}}"
               data-dtype="Number"
               onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.movement.blur"
+              name="system.movement.blur"
               type="checkbox"
-              {{checked data.data.movement.blur}}
+              {{checked system.movement.blur}}
             />
           </td>
           <td>
             <input
-              name="data.movement.rush"
+              name="system.movement.rush"
               type="checkbox"
-              {{checked data.data.movement.rush}}
+              {{checked system.movement.rush}}
             />
           </td>
         </tr>
