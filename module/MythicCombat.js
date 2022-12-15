@@ -19,8 +19,8 @@ export default class MythicCombat extends Combat {
   _sortCombatants(a, b) {
     const getTieBreaker = actor => {
       return .001 * (
-          actor.data.data.characteristics.agi.roll
-        + (10 * actor.data.data.mythicCharacteristics.agi.total)
+          actor.system.characteristics.agi.roll
+        + (10 * actor.system.mythicCharacteristics.agi.total)
       );
     };
 

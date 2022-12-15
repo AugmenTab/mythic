@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#each this.data.data.trainings.faction as |has faction|}}
+      {{#each this.system.trainings.faction as |has faction|}}
         <tr>
           <td>{{localize (concat "mythic.trainings.factions." faction)}}</td>
           {{#if has}}

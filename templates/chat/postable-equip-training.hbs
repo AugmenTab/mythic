@@ -1,9 +1,9 @@
 <div>
-  {{#if (isEmptyDataObject data.data.trainings.equipment)}}
+  {{#if (isEmptyDataObject system.trainings.equipment)}}
     <p>{{localize "mythic.chat.equip-training.empty"}}</p>
   {{else}}
     <ul>
-      {{#each data.data.trainings.equipment as |trained group|}}
+      {{#each system.trainings.equipment as |trained group|}}
         {{#if trained}}
           <li>
             <b>{{localize (concat "mythic.trainings.equipment." group)}}:&nbsp;</b>

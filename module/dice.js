@@ -94,7 +94,7 @@ export async function rollAttacks(element, actor, weapon) {
  * @param {Actor} actor - The Actor that fired the listener.
  */
 export async function rollEvasionBatch(element, actor) {
-  const options = await getEvadeOptions(actor.data.data.skills.evasion.characteristic);
+  const options = await getEvadeOptions(actor.system.skills.evasion.characteristic);
   let mod = 0;
   if (options.cancelled) {
     return;
@@ -167,7 +167,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
     actorId: actor.id,
     name: weapon.data.data.nickname || weapon.data.name,
     img: weapon.img,
-    wfm: actor.data.data.characteristics.wfm.total,
+    wfm: actor.system.characteristics.wfm.total,
     weaponData: weapon.data.data,
     attacks: [],
     hits: 0,
@@ -362,19 +362,19 @@ async function rollAttackAndDamage(actor, weapon, data) {
 
     if (weapon.data.data.group === "melee") {
       const str = (
-        actor.data.data.mythicCharacteristics.str.total +
-        getCharacteristicModifier(actor.data.data.characteristics.str.total)
+        actor.system.mythicCharacteristics.str.total +
+        getCharacteristicModifier(actor.system.characteristics.str.total)
       );
       base += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strDamage);
       pierce += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strPiercing);
-      if (actor.data.data.trainings.weapons.unarmedCombatant) {
-        const wfm = getCharacteristicModifier(actor.data.data.characteristics.wfm.total);
+      if (actor.system.trainings.weapons.unarmedCombatant) {
+        const wfm = getCharacteristicModifier(actor.system.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);
       }
     }
 
     const sizeBonus = weapon.data.data.group === "melee"
-                    ? SIZE_DAMAGE_BONUS[actor.data.data.size] : 0;
+                    ? SIZE_DAMAGE_BONUS[actor.system.size] : 0;
     attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
     attack.piercing = pierce;
 
@@ -411,7 +411,7 @@ async function rollBasicTest(target, test, type, actor) {
 }
 
 async function rollEvasions(baseTarget, options, actor) {
-  const stat = actor.data.data.skills.evasion.characteristic;
+  const stat = actor.system.skills.evasion.characteristic;
   const i18n = "mythic.skillNames." + (stat === "AGI" ? "evasion" : "parry");
 
   let result = {
@@ -439,7 +439,7 @@ async function rollInitiative(element, mod, actor) {
   const dataset = element.dataset;
   if (dataset.roll) {
     const circumstance = ` + ${mod}`;
-    const roll = await new Roll(dataset.roll + circumstance, actor.data.data, { async: true });
+    const roll = await new Roll(dataset.roll + circumstance, actor.system, { async: true });
     const result = await roll.roll({ async: true });
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: actor }),
