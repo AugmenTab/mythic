@@ -22,9 +22,9 @@
   <div class="sheet-content">
     <p>
       <input
-        name="data.summary"
+        name="system.summary"
         type="text"
-        value="{{data.data.summary}}"
+        value="{{system.summary}}"
         placeholder="{{localize "mythic.abilitySheet.summary"}}"
       />
     </p>
@@ -40,25 +40,25 @@
         <tr>
           <td>
             <input
-              name="data.prerequisite"
+              name="system.prerequisite"
               type="text"
-              value="{{data.data.prerequisite}}"
+              value="{{system.prerequisite}}"
               placeholder="{{localize "mythic.abilitySheet.prerequisite"}}"
             />
           </td>
           <td>
             <input
-              name="data.cost"
+              name="system.cost"
               type="number"
-              value="{{data.data.cost}}"
+              value="{{system.cost}}"
               data-dtype="Number"
               placeholder="{{localize "mythic.abilitySheet.cost"}}"
               onfocus="this.select()"
             />
           </td>
           <td>
-            <select name="data.type">
-              {{#select data.data.type}}
+            <select name="system.type">
+              {{#select system.type}}
                 {{#each config.abilityTypes as |value key|}}
                   <option value="{{key}}">{{localize value}}</option>
                 {{/each}}
@@ -68,6 +68,6 @@
         </tr>
       </tbody>
     </table>
-    {{editor content=data.data.description target="data.description" button=true owner=owner editable=this.options.editable}}
+    {{editor content=system.description target="system.description" button=true owner=owner editable=this.options.editable}}
   </div>
 </form>

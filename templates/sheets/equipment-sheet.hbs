@@ -31,8 +31,8 @@
     <tbody>
       <tr>
         <td>
-          <select name="data.trainings.faction">
-            {{#select data.data.trainings.faction}}
+          <select name="system.trainings.faction">
+            {{#select system.trainings.faction}}
               {{#each config.trainings.factions as |value key|}}
                 <option value="{{key}}">{{localize value}}</option>
               {{/each}}
@@ -41,33 +41,33 @@
         </td>
         <td>
           <input
-            name="data.price.base"
+            name="system.price.base"
             type="number"
             data-dtype="Number"
-            value="{{data.data.price.base}}"
+            value="{{system.price.base}}"
             onfocus="this.select()"
           />
         </td>
         <td>
           <input
-            name="data.weight.each"
+            name="system.weight.each"
             type="number"
             data-dtype="Number"
-            value="{{data.data.weight.each}}"
+            value="{{system.weight.each}}"
             onfocus="this.select()"
           />
         </td>
         <td>
           <input
-            name="data.weight.selfSupported"
+            name="system.weight.selfSupported"
             type="checkbox"
-            {{checked data.data.weight.selfSupported}}
+            {{checked system.weight.selfSupported}}
           />
         </td>
       </tr>
     </tbody>
   </table>
   <div class="sheet-content">
-    {{editor content=data.data.description target="data.description" button=true owner=owner editable=this.options.editable}}
+    {{editor content=system.description target="system.description" button=true owner=owner editable=this.options.editable}}
   </div>
 </form>

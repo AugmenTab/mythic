@@ -8,26 +8,26 @@
   </span>
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.firearmType.field"}}</h4>
-    <select name="data.settings.firearmType">
-      {{#select data.data.settings.firearmType}}
+    <select name="system.settings.firearmType">
+      {{#select system.settings.firearmType}}
         {{#each config.weaponSettings.firearmType as |value key|}}
           <option value="{{key}}">{{localize value}}</option>
         {{/each}}
       {{/select}}
     </select>
-    <p>{{localize (concat "mythic.weaponSheet.settings.firearmTypeDescriptions." data.data.settings.firearmType)}}</p>
+    <p>{{localize (concat "mythic.weaponSheet.settings.firearmTypeDescriptions." system.settings.firearmType)}}</p>
   </div>
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.barrel.field"}}</h4>
-    <select name="data.settings.barrel">
-      {{#select data.data.settings.barrel}}
+    <select name="system.settings.barrel">
+      {{#select system.settings.barrel}}
         {{#each config.weaponSettings.barrel as |value key|}}
           <option value="{{key}}">{{localize value}}</option>
         {{/each}}
       {{/select}}
     </select>
     <div class="weapon-setting-descriptions">
-      {{#with data.data.settings.barrel}}
+      {{#with system.settings.barrel}}
         <p>{{localize (concat "mythic.weaponSheet.settings.barrelLengths." this)}}</p>
         <p>{{localize (concat "mythic.weaponSheet.settings.barrelDescriptions." this)}}</p>
       {{/with}}
@@ -36,10 +36,10 @@
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.bulletDiameter.field"}}</h4>
     <input
-      name="data.settings.bulletDiameter"
+      name="system.settings.bulletDiameter"
       type="number"
       data-dtype="Number"
-      value="{{data.data.settings.bulletDiameter}}"
+      value="{{system.settings.bulletDiameter}}"
       onfocus="this.select()"
     />
     <p>{{localize "mythic.weaponSheet.settings.bulletDiameter.description"}}</p>
@@ -47,10 +47,10 @@
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.caseLength.field"}}</h4>
     <input
-      name="data.settings.caseLength"
+      name="system.settings.caseLength"
       type="number"
       data-dtype="Number"
-      value="{{data.data.settings.caseLength}}"
+      value="{{system.settings.caseLength}}"
       onfocus="this.select()"
     />
     <p>{{localize "mythic.weaponSheet.settings.caseLength.description"}}</p>
@@ -58,9 +58,9 @@
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.singleUse.field"}}</h4>
     <input
-      name="data.settings.singleUse"
+      name="system.settings.singleUse"
       type="checkbox"
-      {{checked data.data.settings.singleUse}}
+      {{checked system.settings.singleUse}}
     />
     <p>{{localize "mythic.weaponSheet.settings.singleUse.description"}}</p>
   </div>

@@ -44,8 +44,8 @@
             </div>
           </td>
           <td>
-            <p>{{localize (concat "mythic.educationSheet.difficulties." edu.data.difficulty)}}</p>
-            <p>{{localize (concat "mythic.educationSheet.types." edu.data.type)}}</p>
+            <p>{{localize (concat "mythic.educationSheet.difficulties." edu.system.difficulty)}}</p>
+            <p>{{localize (concat "mythic.educationSheet.types." edu.system.type)}}</p>
           </td>
           <td>
             <select
@@ -53,9 +53,9 @@
               data-field="roll.skill"
               data-item-id="{{edu._id}}"
             >
-              {{#select edu.data.roll.skill}}
+              {{#select edu.system.roll.skill}}
                 <option value="int">INT</option>
-                {{#each edu.data.skills as |skill key|}}
+                {{#each edu.system.skills as |skill key|}}
                   {{#if skill}}
                     <option value="{{key}}">
                       {{localize (concat "mythic.skillNames." key)}}
@@ -71,7 +71,7 @@
               data-field="roll.training"
               data-item-id="{{edu._id}}"
             >
-              {{#select edu.data.roll.training}}
+              {{#select edu.system.roll.training}}
                 {{#each ../config.educationTraining as |value key|}}
                   <option value="{{key}}">{{localize value}}</option>
                 {{/each}}
@@ -84,7 +84,7 @@
               data-field="roll.mods"
               data-item-id="{{edu._id}}"
               type="number" data-dtype="Number"
-              value="{{edu.data.roll.mods}}"
+              value="{{edu.system.roll.mods}}"
               onfocus="this.select()"
             />
           </td>
@@ -92,12 +92,12 @@
             <button
               class="education rollable"
               name="{{edu.name}}"
-              value="{{edu.data.roll.roll}}"
-              {{#if (eq edu.data.roll.training "none")}}
+              value="{{edu.system.roll.roll}}"
+              {{#if (eq edu.system.roll.training "none")}}
                 disabled="true" aria-disabled="true"
               {{/if}}
             >
-              <b>{{edu.data.roll.roll}}</b>
+              <b>{{edu.system.roll.roll}}</b>
             </button>
           </td>
         </tr>

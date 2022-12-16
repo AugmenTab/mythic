@@ -47,29 +47,29 @@
       <p><b>Coming soon!</b></p>
       <div class="weapon-details">
         <p>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</p>
-        <select name="data.ammoGroup">
-          {{#select data.data.ammoGroup}}
+        <select name="system.ammoGroup">
+          {{#select system.ammoGroup}}
             {{#each config.ammoGroups as |value key|}}
               <option value="{{key}}">{{localize value}}</option>
             {{/each}}
           {{/select}}
         </select>
         {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                         data.data.special.singleLoading.has)}}
+                         system.special.singleLoading.has)}}
           <p>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</p>
           <input
-            name="data.ammoList.STD.ammoTracking.pool"
+            name="system.ammoList.STD.ammoTracking.pool"
             type="number"
             data-dtype="Number"
-            value="{{data.data.ammoList.STD.ammoTracking.pool}}"
+            value="{{system.ammoList.STD.ammoTracking.pool}}"
           />
         {{else}}
           <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
           <input
-            name="data.ammoList.STD.ammoTracking.mags"
+            name="system.ammoList.STD.ammoTracking.mags"
             type="number"
             data-dtype="Number"
-            value="{{data.data.ammoList.STD.ammoTracking.mags}}"
+            value="{{system.ammoList.STD.ammoTracking.mags}}"
           />
         {{/if}}
       </div>
@@ -82,7 +82,7 @@
 
     {{!-- Notes Page --}}
     <div class="tab" data-group="primary" data-tab="notes">
-      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.description target="data.description" link="weaponSheet.nav.notes"}}
+      {{> "systems/mythic/templates/partials/editor.hbs" content=system.description target="system.description" link="weaponSheet.nav.notes"}}
     </div>
 
     {{!-- Settings Page --}}

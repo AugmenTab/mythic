@@ -44,12 +44,12 @@
 
     {{!-- Armor Details Page --}}
     <div class="tab" data-group="primary" data-tab="details">
-      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.armor target="data.notes.armor" link="armorSheet.notes.armor"}}
+      {{> "systems/mythic/templates/partials/editor.hbs" content=system.notes.armor target="system.notes.armor" link="armorSheet.notes.armor"}}
     </div>
 
     {{!-- Variant Page --}}
     <div class="tab" data-group="primary" data-tab="variant">
-      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.variant target="data.notes.variant" link="armorSheet.notes.variant"}}
+      {{> "systems/mythic/templates/partials/editor.hbs" content=system.notes.variant target="system.notes.variant" link="armorSheet.notes.variant"}}
     </div>
 
     {{!-- Modifications Page --}}
@@ -74,10 +74,10 @@
               <span>
                 <input
                   style="width:40px"
-                  name="data.hardpoints.head"
+                  name="system.hardpoints.head"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.hardpoints.head}}"
+                  value="{{system.hardpoints.head}}"
                   onfocus="this.select()"
                 >&nbsp;/&nbsp;3
               </span>
@@ -86,10 +86,10 @@
               <span>
                 <input
                   style="width:40px"
-                  name="data.hardpoints.chest"
+                  name="system.hardpoints.chest"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.hardpoints.chest}}"
+                  value="{{system.hardpoints.chest}}"
                   onfocus="this.select()"
                 >&nbsp;/&nbsp;6
               </span>
@@ -98,10 +98,10 @@
               <span>
                 <input
                   style="width:40px"
-                  name="data.hardpoints.leftArm"
+                  name="system.hardpoints.leftArm"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.hardpoints.leftArm}}"
+                  value="{{system.hardpoints.leftArm}}"
                   onfocus="this.select()"
                 >&nbsp;/&nbsp;2
               </span>
@@ -110,10 +110,10 @@
               <span>
                 <input
                   style="width:40px"
-                  name="data.hardpoints.rightArm"
+                  name="system.hardpoints.rightArm"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.hardpoints.rightArm}}"
+                  value="{{system.hardpoints.rightArm}}"
                   onfocus="this.select()"
                 >&nbsp;/&nbsp;2
               </span>
@@ -122,10 +122,10 @@
               <span>
                 <input
                   style="width:40px"
-                  name="data.hardpoints.leftLeg"
+                  name="system.hardpoints.leftLeg"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.hardpoints.leftLeg}}"
+                  value="{{system.hardpoints.leftLeg}}"
                   onfocus="this.select()"
                 >&nbsp;/&nbsp;2
               </span>
@@ -134,10 +134,10 @@
               <span>
                 <input
                   style="width:40px"
-                  name="data.hardpoints.rightLeg"
+                  name="system.hardpoints.rightLeg"
                   type="number"
                   data-dtype="Number"
-                  value="{{data.data.hardpoints.rightLeg}}"
+                  value="{{system.hardpoints.rightLeg}}"
                   onfocus="this.select()"
                 >&nbsp;/&nbsp;2
               </span>
@@ -146,13 +146,13 @@
         </tbody>
       </table>
       <div class="sheet-content">
-        {{editor content=data.data.notes.permutations target="data.notes.permutations" button=true owner=owner editable=this.options.editable}}
+        {{editor content=system.notes.permutations target="system.notes.permutations" button=true owner=owner editable=this.options.editable}}
       </div>
     </div>
 
     {{!-- Notes Page --}}
     <div class="tab" data-group="primary" data-tab="notes">
-      {{> "systems/mythic/templates/partials/editor.hbs" content=data.data.notes.other target="data.notes.other" link="armorSheet.notes.other"}}
+      {{> "systems/mythic/templates/partials/editor.hbs" content=system.notes.other target="system.notes.other" link="armorSheet.notes.other"}}
     </div>
   </section>
 </form>

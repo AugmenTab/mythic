@@ -36,8 +36,8 @@
       <tbody>
         <tr>
           <td>
-            <select name="data.difficulty">
-              {{#select data.data.difficulty}}
+            <select name="system.difficulty">
+              {{#select system.difficulty}}
                 {{#each config.skillDifficulty as |name diff|}}
                   <option value="{{diff}}">{{localize name}}</option>
                 {{/each}}
@@ -45,8 +45,8 @@
             </select>
           </td>
           <td>
-            <select name="data.type">
-              {{#select data.data.type}}
+            <select name="system.type">
+              {{#select system.type}}
                 {{#each config.educationType as |name type|}}
                   <option value="{{type}}">{{localize name}}</option>
                 {{/each}}
@@ -55,17 +55,17 @@
           </td>
           <td>
             <input
-              name="data.cost.plus5"
+              name="system.cost.plus5"
               type="text"
-              value="{{data.data.cost.plus5}}"
+              value="{{system.cost.plus5}}"
               onfocus="this.select()"
             />
           </td>
           <td>
             <input
-              name="data.cost.plus10"
+              name="system.cost.plus10"
               type="text"
-              value="{{data.data.cost.plus10}}"
+              value="{{system.cost.plus10}}"
               onfocus="this.select()"
             />
           </td>
@@ -81,10 +81,10 @@
       <tbody>
         <tr>
           <td>
-            {{#each data.data.skills as |has key|}}
+            {{#each system.skills as |has key|}}
               <div>
                 <input
-                  name="data.skills.{{key}}"
+                  name="system.skills.{{key}}"
                   type="checkbox"
                   {{checked has}}
                 />

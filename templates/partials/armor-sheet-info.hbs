@@ -1,19 +1,19 @@
 <div class="weapon-details">
   <p>{{localize "mythic.armorSheet.details.variant"}}</p>
-  <input name="data.variant" type="text" value="{{data.data.variant}}"/>
+  <input name="system.variant" type="text" value="{{system.variant}}"/>
   <p>{{localize "mythic.armorSheet.details.faction"}}</p>
-  <input name="data.faction" type="text" value="{{data.data.faction}}"/>
+  <input name="system.faction" type="text" value="{{system.faction}}"/>
   <p>{{localize "mythic.armorSheet.details.size"}}</p>
-  <select name="data.size">
-    {{#select data.data.size}}
+  <select name="system.size">
+    {{#select system.size}}
       {{#each config.size as |size key|}}
         <option value="{{key}}">{{localize size}}</option>
       {{/each}}
     {{/select}}
   </select>
   <p>{{localize "mythic.armorSheet.details.training"}}</p>
-  <select name="data.trainings.faction">
-    {{#select data.data.trainings.faction}}
+  <select name="system.trainings.faction">
+    {{#select system.trainings.faction}}
       {{#each config.trainings.factions as |value key|}}
         <option value="{{key}}">{{localize value}}</option>
       {{/each}}
@@ -34,27 +34,27 @@
       <tr>
         <td>
           <input
-            name="data.weight.each"
+            name="system.weight.each"
             type="number"
             data-dtype="Number"
-            value="{{data.data.weight.each}}"
+            value="{{system.weight.each}}"
             onfocus="this.select()"
           />
         </td>
         <td>
           <input
-            name="data.price.base"
+            name="system.price.base"
             type="number"
             data-dtype="Number"
-            value="{{data.data.price.base}}"
+            value="{{system.price.base}}"
             onfocus="this.select()"
           />
         </td>
         <td>
           <input
-            name="data.material"
+            name="system.material"
             type="text"
-            value="{{data.data.material}}"
+            value="{{system.material}}"
             onfocus="this.select()"
           />
         </td>
@@ -71,23 +71,23 @@
       <tr>
         <td>
           <input
-            name="data.weight.selfSupported"
+            name="system.weight.selfSupported"
             type="checkbox"
-            {{checked data.data.weight.selfSupported}}
+            {{checked system.weight.selfSupported}}
           />
         </td>
         <td>
           <input
-            name="data.shields.has"
+            name="system.shields.has"
             type="checkbox"
-            {{checked data.data.shields.has}}
+            {{checked system.shields.has}}
           />
         </td>
         <td>
           <input
-            name="data.characteristics.has"
+            name="system.characteristics.has"
             type="checkbox"
-            {{checked data.data.characteristics.has}}
+            {{checked system.characteristics.has}}
           />
         </td>
       </tr>
@@ -101,7 +101,7 @@
       </tr>
       <tr>
         <th>{{localize "mythic.armorSheet.source.label"}}</th>
-        {{#each data.data.protection as |_ loc|}}
+        {{#each system.protection as |_ loc|}}
           <th>{{localize (concat "mythic.armorSheet.locations." loc)}}</th>
         {{/each}}
       </tr>
@@ -109,10 +109,10 @@
     <tbody>
       <tr>
         <td>{{localize "mythic.armorSheet.source.armor"}}</td>
-        {{#each data.data.protection as |values loc|}}
+        {{#each system.protection as |values loc|}}
           <td>
             <input
-              name="data.protection.{{loc}}.armor"
+              name="system.protection.{{loc}}.armor"
               type="number"
               data-dtype="Number"
               value="{{values.armor}}"
@@ -123,10 +123,10 @@
       </tr>
       <tr>
         <td>{{localize "mythic.armorSheet.source.variant"}}</td>
-        {{#each data.data.protection as |values loc|}}
+        {{#each system.protection as |values loc|}}
           <td>
             <input
-              name="data.protection.{{loc}}.variant"
+              name="system.protection.{{loc}}.variant"
               type="number"
               data-dtype="Number"
               value="{{values.variant}}"
@@ -137,10 +137,10 @@
       </tr>
       <tr>
         <td>{{localize "mythic.armorSheet.source.other"}}</td>
-        {{#each data.data.protection as |values loc|}}
+        {{#each system.protection as |values loc|}}
           <td>
             <input
-              name="data.protection.{{loc}}.other"
+              name="system.protection.{{loc}}.other"
               type="number"
               data-dtype="Number"
               value="{{values.other}}"
@@ -153,7 +153,7 @@
     <thead>
       <tr>
         <th>{{localize "mythic.armorSheet.total"}}</th>
-        {{#each data.data.protection as |values|}}
+        {{#each system.protection as |values|}}
           <th>{{values.total}}</th>
         {{/each}}
       </tr>
@@ -162,7 +162,7 @@
   {{!-- Shields --}}
   <table
     class="armor-shields"
-    {{#unless data.data.shields.has}} hidden {{/unless}}
+    {{#unless system.shields.has}} hidden {{/unless}}
   >
     <thead>
       <tr>
@@ -170,7 +170,7 @@
       </tr>
       <tr>
         <th>{{localize "mythic.armorSheet.source.label"}}</th>
-        {{#each data.data.shields as |values key|}}
+        {{#each system.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <th>{{localize (concat "mythic.armorSheet.shields." key)}}</th>
           {{/unless}}
@@ -180,11 +180,11 @@
     <tbody>
       <tr>
         <td>{{localize "mythic.armorSheet.source.armor"}}</td>
-        {{#each data.data.shields as |values key|}}
+        {{#each system.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <td>
               <input
-                name="data.shields.{{key}}.armor"
+                name="system.shields.{{key}}.armor"
                 type="number"
                 data-dtype="Number"
                 value="{{values.armor}}"
@@ -196,11 +196,11 @@
       </tr>
       <tr>
         <td>{{localize "mythic.armorSheet.source.variant"}}</td>
-        {{#each data.data.shields as |values key|}}
+        {{#each system.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <td>
               <input
-                name="data.shields.{{key}}.variant"
+                name="system.shields.{{key}}.variant"
                 type="number"
                 data-dtype="Number"
                 value="{{values.variant}}"
@@ -212,11 +212,11 @@
       </tr>
       <tr>
         <td>{{localize "mythic.armorSheet.source.other"}}</td>
-        {{#each data.data.shields as |values key|}}
+        {{#each system.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <td>
               <input
-                name="data.shields.{{key}}.other"
+                name="system.shields.{{key}}.other"
                 type="number"
                 data-dtype="Number"
                 value="{{values.other}}"
@@ -230,7 +230,7 @@
     <thead>
       <tr>
         <th>{{localize "mythic.armorSheet.total"}}</th>
-        {{#each data.data.shields as |values key|}}
+        {{#each system.shields as |values key|}}
           {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
             <th>{{values.total}}</th>
           {{/unless}}
@@ -241,7 +241,7 @@
   {{!-- Characteristic Adjustments --}}
   <table
     class="armor-stats"
-    {{#unless data.data.characteristics.has}} hidden {{/unless}}
+    {{#unless system.characteristics.has}} hidden {{/unless}}
   >
     <thead>
       <tr>
@@ -258,11 +258,11 @@
     <tbody>
       <tr>
         <td>{{localize "mythic.armorSheet.source.armor"}}</td>
-        {{#each data.data.characteristics as |values stat|}}
+        {{#each system.characteristics as |values stat|}}
           {{#unless (eq stat "has")}}
             <td>
               <input
-                name="data.characteristics.{{stat}}.armor"
+                name="system.characteristics.{{stat}}.armor"
                 type="number"
                 data-dtype="Number"
                 value="{{values.armor}}"
@@ -274,11 +274,11 @@
       </tr>
       <tr>
         <td>{{localize "mythic.armorSheet.source.variant"}}</td>
-        {{#each data.data.characteristics as |values stat|}}
+        {{#each system.characteristics as |values stat|}}
           {{#unless (eq stat "has")}}
             <td>
               <input
-                name="data.characteristics.{{stat}}.variant"
+                name="system.characteristics.{{stat}}.variant"
                 type="number"
                 data-dtype="Number"
                 value="{{values.variant}}"
@@ -290,11 +290,11 @@
       </tr>
       <tr>
         <td>{{localize "mythic.armorSheet.source.other"}}</td>
-        {{#each data.data.characteristics as |values stat|}}
+        {{#each system.characteristics as |values stat|}}
           {{#unless (eq stat "has")}}
             <td>
               <input
-                name="data.characteristics.{{stat}}.other"
+                name="system.characteristics.{{stat}}.other"
                 type="number"
                 data-dtype="Number"
                 value="{{values.other}}"
@@ -308,7 +308,7 @@
     <thead>
       <tr>
         <th>{{localize "mythic.armorSheet.total"}}</th>
-        {{#each data.data.characteristics as |values stat|}}
+        {{#each system.characteristics as |values stat|}}
           {{#unless (eq stat "has")}} <th>{{values.total}}</th> {{/unless}}
         {{/each}}
       </tr>

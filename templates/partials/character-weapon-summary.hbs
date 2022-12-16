@@ -47,12 +47,12 @@
                 <div class="weapon-name">
                 <img alt="{{weapon.name}}" src="{{weapon.img}}"/>
                 <p>
-                  {{#unless weapon.data.nickname}}
+                  {{#unless weapon.system.nickname}}
                   {{weapon.name}}
                   {{else}}
-                  {{weapon.data.nickname}}
+                  {{weapon.system.nickname}}
                   {{/unless}}
-                  &nbsp;({{weapon.data.ammoList.STD.target}})
+                  &nbsp;({{weapon.system.ammoList.STD.target}})
                 </p>
                 <a class="item-edit" data-item-id="{{weapon._id}}">
                   <i class="clickable fas fa-edit"></i>
@@ -61,15 +61,15 @@
               </td>
               {{!-- Fire Mode --}}
               <td>
-                {{#if (eq weapon.data.group "ranged")}}
+                {{#if (eq weapon.system.group "ranged")}}
                 <select
                   class="item-edit-inline special-focus"
                   data-field="attack.fireMode"
                   data-item-id="{{weapon._id}}"
                 >
-                  {{#select weapon.data.attack.fireMode}}
+                  {{#select weapon.system.attack.fireMode}}
                   <option value="none">--</option>
-                  {{#each weapon.data.fireMode as |rate mode|}}
+                  {{#each weapon.system.fireMode as |rate mode|}}
                     {{#if rate}}
                     <option value="{{mode}}-{{rate}}">
                       {{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})
@@ -79,33 +79,33 @@
                   {{/select}}
                 </select>
                 {{else}}
-                {{localize (concat "mythic.weaponGroups." weapon.data.group)}}
+                {{localize (concat "mythic.weaponGroups." weapon.system.group)}}
                 {{/if}}
               </td>
               {{!-- Range --}}
               <td>
-                {{#if (eq weapon.data.group "thrown")}}
-                  {{weapon.data.ammoList.STD.range.thrown}}&nbsp;/&nbsp;
-                  {{weapon.data.ammoList.STD.range.thrownMax}}&nbsp;m&nbsp;
-                  {{#if weapon.data.special.blast.has}}
-                    ({{weapon.data.special.blast.value}}&nbsp;/&nbsp;
+                {{#if (eq weapon.system.group "thrown")}}
+                  {{weapon.system.ammoList.STD.range.thrown}}&nbsp;/&nbsp;
+                  {{weapon.system.ammoList.STD.range.thrownMax}}&nbsp;m&nbsp;
+                  {{#if weapon.system.special.blast.has}}
+                    ({{weapon.system.special.blast.value}}&nbsp;/&nbsp;
                   {{else}}
                     (0&nbsp;/&nbsp;
                   {{/if}}
-                  {{#if weapon.data.special.kill.has}}
-                    {{weapon.data.special.kill.value}})
+                  {{#if weapon.system.special.kill.has}}
+                    {{weapon.system.special.kill.value}})
                   {{else}}
                     0)
                   {{/if}}
-                {{else if (eq weapon.data.group "melee")}}
-                  {{weapon.data.ammoList.STD.range.melee}}&nbsp;m
-                {{else if (eq weapon.data.group "ranged")}}
-                  {{weapon.data.ammoList.STD.range.close}}&nbsp;-&nbsp;{{weapon.data.ammoList.STD.range.long}}&nbsp;m
+                {{else if (eq weapon.system.group "melee")}}
+                  {{weapon.system.ammoList.STD.range.melee}}&nbsp;m
+                {{else if (eq weapon.system.group "ranged")}}
+                  {{weapon.system.ammoList.STD.range.close}}&nbsp;-&nbsp;{{weapon.system.ammoList.STD.range.long}}&nbsp;m
                 {{/if}}
               </td>
               {{!-- Magazine --}}
               <td style="width:120px">
-                {{#if (eq weapon.data.group "ranged")}}
+                {{#if (eq weapon.system.group "ranged")}}
                   <div class="magazine">
                     <input
                       class="item-edit-inline"
@@ -113,16 +113,16 @@
                       data-item-id="{{weapon._id}}"
                       type="number"
                       data-dtype="Number"
-                      value="{{weapon.data.ammoList.STD.currentMag}}"
+                      value="{{weapon.system.ammoList.STD.currentMag}}"
                       onfocus="this.select()"
                     />
                     <p>/</p>
-                    <p>{{weapon.data.magazineCapacity}}</p>
+                    <p>{{weapon.system.magazineCapacity}}</p>
                     <div class="item-management">
-                      {{#if weapon.data.special.singleLoading.has}}
-                        <p>&plus;{{weapon.data.reload.total}}</p>
+                      {{#if weapon.system.special.singleLoading.has}}
+                        <p>&plus;{{weapon.system.reload.total}}</p>
                       {{else}}
-                        <p>{{weapon.data.reload.total}}</p>
+                        <p>{{weapon.system.reload.total}}</p>
                       {{/if}}
                       <a
                         class="reload"
@@ -133,9 +133,9 @@
                       </a>
                     </div>
                   </div>
-                {{else if (eq weapon.data.group "melee")}}
+                {{else if (eq weapon.system.group "melee")}}
                   --
-                {{else if (eq weapon.data.group "thrown")}}
+                {{else if (eq weapon.system.group "thrown")}}
                   <div class="magazine">
                     <input
                       class="item-edit-inline"
@@ -143,7 +143,7 @@
                       data-item-id="{{weapon._id}}"
                       type="number"
                       data-dtype="Number"
-                      value="{{weapon.data.ammoList.STD.currentMag}}"
+                      value="{{weapon.system.ammoList.STD.currentMag}}"
                       onfocus="this.select()"
                     />
                     <p style="grid-column:3">
@@ -155,17 +155,17 @@
               {{!-- Buttons --}}
               <td
                 style="width:40px"
-                {{#if (eq weapon.data.group "thrown")}} colspan="3" {{/if}}
+                {{#if (eq weapon.system.group "thrown")}} colspan="3" {{/if}}
               >
                 <button
                 class="attack rollable"
                 data-item-id="{{weapon._id}}"
                 value="single"
-                {{#if (eq weapon.data.attack.fireMode "none")}}
+                {{#if (eq weapon.system.attack.fireMode "none")}}
                   disabled="true" aria-disabled="true"
                 {{/if}}
-                {{#unless weapon.data.ammoList.STD.currentMag}}
-                  {{#unless (eq weapon.data.attack.fireMode "melee")}}
+                {{#unless weapon.system.ammoList.STD.currentMag}}
+                  {{#unless (eq weapon.system.attack.fireMode "melee")}}
                   disabled="true" aria-disabled="true"
                   {{/unless}}
                 {{/unless}}
@@ -173,20 +173,20 @@
                 1
                 </button>
               </td>
-              {{#unless (eq weapon.data.group "thrown")}}
+              {{#unless (eq weapon.system.group "thrown")}}
                 <td style="width:40px">
                 <button
                   class="attack rollable"
                   data-item-id="{{weapon._id}}"
                   value="half"
-                  {{#if (eq weapon.data.attack.fireMode "none")}}
+                  {{#if (eq weapon.system.attack.fireMode "none")}}
                   disabled="true" aria-disabled="true"
                   {{/if}}
-                  {{#unless weapon.data.attack.half}}
+                  {{#unless weapon.system.attack.half}}
                   disabled="true" aria-disabled="true"
                   {{/unless}}
                 >
-                  {{weapon.data.attack.half}}
+                  {{weapon.system.attack.half}}
                 </button>
                 </td>
                 <td style="width:40px">
@@ -194,14 +194,14 @@
                   class="attack rollable"
                   data-item-id="{{weapon._id}}"
                   value="full"
-                  {{#if (eq weapon.data.attack.fireMode "none")}}
+                  {{#if (eq weapon.system.attack.fireMode "none")}}
                   disabled="true" aria-disabled="true"
                   {{/if}}
-                  {{#unless weapon.data.attack.full}}
+                  {{#unless weapon.system.attack.full}}
                   disabled="true" aria-disabled="true"
                   {{/unless}}
                 >
-                  {{weapon.data.attack.full}}
+                  {{weapon.system.attack.full}}
                 </button>
                 </td>
               {{/unless}}
