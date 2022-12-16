@@ -12,15 +12,15 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{localize (concat "mythic.characterTalents.abilities.type." this.data.type)}}</td>
-        <td>{{localnum this.data.cost}}</td>
+        <td>{{localize (concat "mythic.characterTalents.abilities.type." this.system.type)}}</td>
+        <td>{{localnum this.system.cost}}</td>
       </tr>
     </tbody>
   </table>
   <p>
     <b>{{localize "mythic.abilitySheet.prerequisite"}}:</b>
     &nbsp;
-    {{this.data.prerequisite}}
+    {{this.system.prerequisite}}
   </p>
-  {{{this.data.description}}}
+  {{{this.system.description}}}
 </div>

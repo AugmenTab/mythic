@@ -18,10 +18,10 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{localize (concat "mythic.educationSheet.difficulties." this.data.difficulty)}}</td>
-        <td>{{localize (concat "mythic.educationSheet.types." this.data.type)}}</td>
-        <td>{{localnum this.data.cost.plus5}}</td>
-        <td>{{localnum this.data.cost.plus10}}</td>
+        <td>{{localize (concat "mythic.educationSheet.difficulties." this.system.difficulty)}}</td>
+        <td>{{localize (concat "mythic.educationSheet.types." this.system.type)}}</td>
+        <td>{{localnum this.system.cost.plus5}}</td>
+        <td>{{localnum this.system.cost.plus10}}</td>
       </tr>
     </tbody>
   </table>
@@ -34,10 +34,10 @@
     <tbody>
       <tr>
         <td class="education-list-chat">
-          {{#if (isEmptyDataObject this.data.skills)}}
+          {{#if (isEmptyDataObject this.system.skills)}}
             <div>{{localize "mythic.chat.education.empty"}}</div>
           {{else}}
-            {{#each this.data.skills as |has skill|}}
+            {{#each this.system.skills as |has skill|}}
               {{#if has}}
                 <div>{{localize (concat "mythic.skillNames." skill)}}</div>
               {{/if}}

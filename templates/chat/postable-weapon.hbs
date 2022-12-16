@@ -4,7 +4,7 @@
     {{this.name}}
   </h1>
   <div>
-    {{#each this.data.tags as |tag name|}}
+    {{#each this.system.tags as |tag name|}}
       {{#if tag}}
         <span style="padding: 0px 2px">{{name}}</span>
       {{/if}}
@@ -16,18 +16,18 @@
         <td>
           {{localize "mythic.weaponSheet.stats.price"}}
           :&nbsp;
-          {{this.data.price.total}}
+          {{this.system.price.total}}
         </td>
         <td>
           {{localize "mythic.weaponSheet.stats.weight"}}
           :&nbsp;
-          {{this.data.weight.total}}
+          {{this.system.weight.total}}
         </td>
       </tr>
     </tbody>
   </table>
   <div class="weapon-split">
-    {{#with this.data.ammoList.STD}}
+    {{#with this.system.ammoList.STD}}
       <div>
         {{this.diceQuantity}}D{{this.diceValue}}&plus;{{this.baseDamage}}
         &nbsp;{{localize "mythic.weaponSheet.stats.piercing"}}
@@ -35,19 +35,19 @@
       </div>
     {{/with}}
       <div>
-        {{#if (eq this.data.group "ranged")}}
+        {{#if (eq this.system.group "ranged")}}
           {{localize "mythic.weaponSheet.stats.range"}}:&nbsp;
-          {{#with this.data.ammoList.STD}}
+          {{#with this.system.ammoList.STD}}
             {{localnum this.range.close}}
             &nbsp;&ndash;&nbsp;
             {{localnum this.range.long}}&nbsp;m
           {{/with}}
-        {{else if (eq this.data.group "melee")}}
+        {{else if (eq this.system.group "melee")}}
           {{localize "mythic.weaponSheet.stats.reach"}}:&nbsp;
-          {{this.data.ammoList.STD.range.melee}}&nbsp;m
-        {{else if (eq this.data.group "thrown")}}
+          {{this.system.ammoList.STD.range.melee}}&nbsp;m
+        {{else if (eq this.system.group "thrown")}}
           {{localize "mythic.weaponSheet.stats.range"}}:&nbsp;
-          {{this.data.ammoList.STD.range.thrown}}&nbsp;m
+          {{this.system.ammoList.STD.range.thrown}}&nbsp;m
         {{/if}}
       </div>
   </div>
@@ -59,8 +59,8 @@
       </tr>
       <tbody>
         <tr>
-          <td>{{localize (concat "mythic.weaponGroups." this.data.group)}}</td>
-          <td>{{localize (concat "mythic.ammoGroups." this.data.ammoGroup)}}</td>
+          <td>{{localize (concat "mythic.weaponGroups." this.system.group)}}</td>
+          <td>{{localize (concat "mythic.ammoGroups." this.system.ammoGroup)}}</td>
         </tr>
       </tbody>
       <thead>
@@ -71,35 +71,35 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{localize (concat "mythic.trainings.factions." this.data.trainings.faction)}}</td>
-        <td>{{localize (concat "mythic.trainings.equipment." this.data.trainings.equipment)}}</td>
+        <td>{{localize (concat "mythic.trainings.factions." this.system.trainings.faction)}}</td>
+        <td>{{localize (concat "mythic.trainings.equipment." this.system.trainings.equipment)}}</td>
       </tr>
     </tbody>
   </table>
-  {{#if (eq this.data.group "ranged")}}
+  {{#if (eq this.system.group "ranged")}}
     <div class="weapon-split">
       <div>
         {{localize "mythic.weaponSheet.stats.magazine"}}:&nbsp;
-        {{localnum this.data.ammoList.STD.currentMag}}
+        {{localnum this.system.ammoList.STD.currentMag}}
         &nbsp;/&nbsp;
-        {{localnum this.data.magazineCapacity}}
+        {{localnum this.system.magazineCapacity}}
       </div>
       <div>
         {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                         this.data.special.singleLoading.has)}}
+                         this.system.special.singleLoading.has)}}
           {{localize "mythic.weaponSheet.stats.roundsCarried"}}:&nbsp;
-          {{this.data.ammoList.STD.ammoTracking.pool}}
+          {{this.system.ammoList.STD.ammoTracking.pool}}
         {{else}}
           {{localize "mythic.weaponSheet.stats.magsCarried"}}:&nbsp;
-          {{this.data.ammoList.STD.ammoTracking.mags}}
+          {{this.system.ammoList.STD.ammoTracking.mags}}
         {{/if}}
       </div>
     </div>
     <div class="fire-modes">
-      {{#each this.data.fireMode as |fireMode name|}}
+      {{#each this.system.fireMode as |fireMode name|}}
         {{#if fireMode}}
           <p
-            {{#if (contains ../this.data.attack.fireMode name)}}
+            {{#if (contains ../this.system.attack.fireMode name)}}
               style="font-weight: bold"
             {{/if}}
           >
@@ -111,7 +111,7 @@
     </div>
   {{/if}}
   <aside class="special">
-    {{#each this.data.special as |special name|}}
+    {{#each this.system.special as |special name|}}
       {{#if special.has}}
         <span class="special-rule">
           {{localize (concat "mythic.weaponSheet.specialRules." name)}}
@@ -121,7 +121,7 @@
         </span>
       {{/if}}
     {{/each}}
-    {{#each this.data.ammoList.STD.special as |special name|}}
+    {{#each this.system.ammoList.STD.special as |special name|}}
       {{#if special.has}}
         <span class="special-rule">
           {{localize (concat "mythic.weaponSheet.specialRules." name)}}
@@ -132,5 +132,5 @@
       {{/if}}
     {{/each}}
   </aside>
-  {{{this.data.description}}}
+  {{{this.system.description}}}
 </div>

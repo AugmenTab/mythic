@@ -3,7 +3,7 @@
     <img alt="{{this.name}}" src="{{this.img}}"/>
     {{this.name}}
   </h1>
-  {{#if this.data.weight.selfSupported}}
+  {{#if this.system.weight.selfSupported}}
     <p><b>{{localize "mythic.armorSheet.details.chatSelfSupported"}}</b></p>
   {{/if}}
   <table>
@@ -12,24 +12,24 @@
         <td>
           {{localize "mythic.armorSheet.details.weight"}}
           :&nbsp;
-          {{this.data.weight.total}}
+          {{this.system.weight.total}}
         </td>
         <td>
           {{localize "mythic.armorSheet.details.price"}}
           :&nbsp;
-          {{this.data.price.total}}
+          {{this.system.price.total}}
         </td>
       </tr>
       <tr>
         <td>
           {{localize "mythic.armorSheet.details.size"}}
           :&nbsp;
-          {{localize (concat "mythic.sizes." this.data.size)}}
+          {{localize (concat "mythic.sizes." this.system.size)}}
         </td>
         <td>
           {{localize "mythic.armorSheet.details.training"}}
           :&nbsp;
-          {{localize (concat "mythic.trainings.factions." this.data.trainings.faction)}}
+          {{localize (concat "mythic.trainings.factions." this.system.trainings.faction)}}
         </td>
       </tr>
     </tbody>
@@ -45,39 +45,39 @@
         <td>
           {{localize "mythic.armorSheet.locations.head"}}
           :&nbsp;
-          {{this.data.protection.head.total}}
+          {{this.system.protection.head.total}}
         </td>
         <td>
           {{localize "mythic.armorSheet.locations.leftArm"}}
           :&nbsp;
-          {{this.data.protection.leftArm.total}}
+          {{this.system.protection.leftArm.total}}
         </td>
         <td>
           {{localize "mythic.armorSheet.locations.leftLeg"}}
           :&nbsp;
-          {{this.data.protection.leftLeg.total}}
+          {{this.system.protection.leftLeg.total}}
         </td>
       </tr>
       <tr>
         <td>
           {{localize "mythic.armorSheet.locations.chest"}}
           :&nbsp;
-          {{this.data.protection.chest.total}}
+          {{this.system.protection.chest.total}}
         </td>
         <td>
           {{localize "mythic.armorSheet.locations.rightArm"}}
           :&nbsp;
-          {{this.data.protection.rightArm.total}}
+          {{this.system.protection.rightArm.total}}
         </td>
         <td>
           {{localize "mythic.armorSheet.locations.rightLeg"}}
           :&nbsp;
-          {{this.data.protection.rightLeg.total}}
+          {{this.system.protection.rightLeg.total}}
         </td>
       </tr>
     </tbody>
   </table>
-  {{#if this.data.shields.has}}
+  {{#if this.system.shields.has}}
     <table>
       <thead>
         <tr>
@@ -89,23 +89,23 @@
           <td>
             {{localize "mythic.armorSheet.shields.integrity"}}
             :&nbsp;
-            {{this.data.shields.integrity.total}}
+            {{this.system.shields.integrity.total}}
           </td>
           <td>
             {{localize "mythic.armorSheet.shields.recharge"}}
             :&nbsp;
-            {{this.data.shields.recharge.total}}
+            {{this.system.shields.recharge.total}}
           </td>
           <td>
             {{localize "mythic.armorSheet.shields.delay"}}
             :&nbsp;
-            {{this.data.shields.delay.total}}
+            {{this.system.shields.delay.total}}
           </td>
         </tr>
       </tbody>
     </table>
   {{/if}}
-  {{#if this.data.characteristics.has}}
+  {{#if this.system.characteristics.has}}
     <table>
       <thead>
         <tr>
@@ -120,13 +120,13 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{this.data.characteristics.str.total}}</td>
-          <td>{{this.data.characteristics.agi.total}}</td>
-          <td>{{this.data.characteristics.mythicStr.total}}</td>
-          <td>{{this.data.characteristics.mythicAgi.total}}</td>
+          <td>{{this.system.characteristics.str.total}}</td>
+          <td>{{this.system.characteristics.agi.total}}</td>
+          <td>{{this.system.characteristics.mythicStr.total}}</td>
+          <td>{{this.system.characteristics.mythicAgi.total}}</td>
         </tr>
       </tbody>
     </table>
   {{/if}}
-  {{{this.data.notes.armor}}}
+  {{{this.system.notes.armor}}}
 </div>
