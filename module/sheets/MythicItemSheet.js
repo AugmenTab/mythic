@@ -50,7 +50,10 @@ export default class MythicItemSheet extends ItemSheet {
    */
   getData() {
     const data = super.getData();
+
+    data.system = data.item.system;
     data.config = CONFIG.mythic;
+
     return data;
   }
 

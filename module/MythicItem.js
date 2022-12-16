@@ -17,12 +17,11 @@ export default class MythicItem extends Item {
   prepareData() {
     super.prepareData();
 
-    const itemData = this.data;
+    const itemData = this.system;
     const actorData = this.actor ? this.actor.data : {};
-    const data = itemData.data;
 
-    if (itemData.type === "armor") this._prepareArmor(data);
-    if (itemData.type === "weapon") this._prepareWeapon(data);
+    if (this.type === "armor") this._prepareArmor(itemData);
+    if (this.type === "weapon") this._prepareWeapon(itemData);
   }
 
   /**

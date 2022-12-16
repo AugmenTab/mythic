@@ -72,18 +72,18 @@ export async function rollAttacks(element, actor, weapon) {
     return;
   }
 
-  const currentAmmo = weapon.data.data.currentAmmo;
+  const currentAmmo = weapon.system.currentAmmo;
   const data = {
     circDmg: dmgMod,
     distanceFromTarget: distanceFromTarget,
     isZeroG: attackOptions.isZeroG,
     isVehicle: attackOptions.targetVehicle,
-    target: weapon.data.data.ammoList[currentAmmo].target + atkMod,
+    target: weapon.system.ammoList[currentAmmo].target + atkMod,
     type: element.value
   };
 
   await getAttackAndDamageOutcomes(actor, weapon, data);
-  return weapon.data.data.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
+  return weapon.system.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
 /**
@@ -162,28 +162,28 @@ function determineRollOutcome(roll, target) {
 }
 
 async function getAttackAndDamageOutcomes(actor, weapon, data) {
-  const fireMode = weapon.data.data.attack.fireMode.split("-")[0];
+  const fireMode = weapon.system.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
-    name: weapon.data.data.nickname || weapon.data.name,
+    name: weapon.system.nickname || weapon.data.name,
     img: weapon.img,
     wfm: actor.system.characteristics.wfm.total,
-    weaponData: weapon.data.data,
+    weaponData: weapon.system,
     attacks: [],
     hits: 0,
     type: data.type,
     target: data.target > 0 ? data.target : 0,
     template: "attack",
-    flavor: getAttackFlavor(weapon.data.data.group, data.type, fireMode)
+    flavor: getAttackFlavor(weapon.system.group, data.type, fireMode)
   };
   let attacks = 1, damagesPerAttack = 1;
   if (data.type !== "single" && fireMode === "sustained") {
-    damagesPerAttack = weapon.data.data.attack[data.type];
+    damagesPerAttack = weapon.system.attack[data.type];
   } else if (data.type !== "single" && fireMode === "burst") {
     attacks = data.type === "full" ? 2 : 1;
-    damagesPerAttack = weapon.data.data.attack.half;
+    damagesPerAttack = weapon.system.attack.half;
   } else if (data.type !== "single") {
-    attacks = weapon.data.data.attack[data.type];
+    attacks = weapon.system.attack[data.type];
   }
   for (let i = 1; i <= attacks; i++) {
     const attackData = {
@@ -202,7 +202,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
   }
   result.hits *= damagesPerAttack;
   if (result.hits > 0) {
-    result.specials = getSpecialRuleValues(result.hits, weapon.data.data.special);
+    result.specials = getSpecialRuleValues(result.hits, weapon.system.special);
   }
   await Chat.postChatMessage(result, actor);
 }
@@ -327,7 +327,7 @@ function reverseDigits(roll) {
 }
 
 async function rollAttackAndDamage(actor, weapon, data) {
-  const currentAmmo = weapon.data.data.currentAmmo;
+  const currentAmmo = weapon.system.currentAmmo;
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, data.target);
 
@@ -339,14 +339,14 @@ async function rollAttackAndDamage(actor, weapon, data) {
   };
 
   if (    attack.outcome === "success"
-       || weapon.data.data.special.blast.has
-       || weapon.data.data.special.kill.has
+       || weapon.system.special.blast.has
+       || weapon.system.special.kill.has
   ) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), data.vehicle);
-    const ammo = weapon.data.data.ammoList[currentAmmo];
+    const ammo = weapon.system.ammoList[currentAmmo];
     let damage = `${ammo.diceQuantity}D${ammo.diceValue}`;
-    let min = weapon.data.data.special.diceMinimum.has
-            ? weapon.data.data.special.diceMinimum.value
+    let min = weapon.system.special.diceMinimum.has
+            ? weapon.system.special.diceMinimum.value
             : 0;
 
     if (roll.total === 1 && min < 5) min = 5;
@@ -357,28 +357,28 @@ async function rollAttackAndDamage(actor, weapon, data) {
       damage += `${critType}>=${ammo.critsOn}`;
     }
 
-    let base = weapon.data.data.ammoList[currentAmmo].baseDamage;
-    let pierce = weapon.data.data.ammoList[currentAmmo].piercing;
+    let base = weapon.system.ammoList[currentAmmo].baseDamage;
+    let pierce = weapon.system.ammoList[currentAmmo].piercing;
 
-    if (weapon.data.data.group === "melee") {
+    if (weapon.system.group === "melee") {
       const str = (
         actor.system.mythicCharacteristics.str.total +
         getCharacteristicModifier(actor.system.characteristics.str.total)
       );
-      base += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strDamage);
-      pierce += Math.floor(str * weapon.data.data.ammoList[currentAmmo].strPiercing);
+      base += Math.floor(str * weapon.system.ammoList[currentAmmo].strDamage);
+      pierce += Math.floor(str * weapon.system.ammoList[currentAmmo].strPiercing);
       if (actor.system.trainings.weapons.unarmedCombatant) {
         const wfm = getCharacteristicModifier(actor.system.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);
       }
     }
 
-    const sizeBonus = weapon.data.data.group === "melee"
+    const sizeBonus = weapon.system.group === "melee"
                     ? SIZE_DAMAGE_BONUS[actor.system.size] : 0;
     attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
     attack.piercing = pierce;
 
-    if (weapon.data.data.special.blast.has || weapon.data.data.special.kill.has) {
+    if (weapon.system.special.blast.has || weapon.system.special.kill.has) {
       const scatterData = {
         distance: data.distanceFromTarget,
         degrees: outcome.degrees,
@@ -449,10 +449,10 @@ async function rollInitiative(element, mod, actor) {
 }
 
 async function scatterAttack(data, weapon) {
-  const currentAmmo = weapon.data.data.currentAmmo;
-  const range = weapon.data.data.attack.fireMode === "thrown"
-              ? weapon.data.data.ammoList[currentAmmo].range.thrown
-              : weapon.data.data.ammoList[currentAmmo].range.long;
+  const currentAmmo = weapon.system.currentAmmo;
+  const range = weapon.system.attack.fireMode === "thrown"
+              ? weapon.system.ammoList[currentAmmo].range.thrown
+              : weapon.system.ammoList[currentAmmo].range.long;
 
   let msg = "";
   for (let i = 1; i <= (data.isZeroG ? 2 : 1); i++) {

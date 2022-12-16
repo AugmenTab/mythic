@@ -58,7 +58,7 @@ export function getScatterArrow(roll) {
 export function getPostableItemFlavorPath(item) {
   switch(item.type) {
     case "ability":
-      return `mythic.characterTalents.abilities.type.${item.data.data.type}`;
+      return `mythic.characterTalents.abilities.type.${item.system.type}`;
     case "education":
       return `mythic.chat.education.flavor`;
     default: return "";
