@@ -77,7 +77,7 @@ export default class MythicItemSheet extends ItemSheet {
       user: game.user.id,
       speaker: ChatMessage.getSpeaker ({ actor: this.item.actor }),
       flavor: localize(getPostableItemFlavorPath(this.item)),
-      content: await renderTemplate(template, this.item.data)
+      content: await renderTemplate(template, this.item)
     });
   }
 };
