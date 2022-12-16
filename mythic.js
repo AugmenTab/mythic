@@ -203,17 +203,8 @@ Hooks.once("init", function() {
 
 /** Hook to perform data migration. */
 Hooks.once("ready", function () {
-  if (game.user.isGM) {
-    const current = game.settings.get("mythic", "systemMigrationVersion");
-
-    if (!current) {
-      if (isNewerVersion("0.01",  current)) Migrations.migrateWorld();
-      if (isNewerVersion("0.2.1", current)) Migrations.migrateV2_1();
-      if (isNewerVersion("0.2.2", current)) Migrations.migrateCauterize();
-    }
-  }
-
-  game.settings.set("mythic", "systemMigrationVersion", game.system.data.version);
+  // if (game.user.isGM) {}
+  // game.settings.set("mythic", "systemMigrationVersion", game.system.data.version);
 });
 
 /** Hook to establish event listeners on the chat log. */
