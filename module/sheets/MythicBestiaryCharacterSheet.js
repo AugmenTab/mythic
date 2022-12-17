@@ -55,18 +55,16 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     data.config = CONFIG.mythic;
 
     const a = sortAndFilterItems(data.items, "ability");
-    data.abilities = a.filter(i => i.data.type === "ability");
-    data.augmentations = a.filter(function(i) {
-      return i.data.type === "augmentation"
-    });
-    data.racials = a.filter(function(i) { return i.data.type === "racial" });
-    data.traits = a.filter(function(i) { return i.data.type === "trait" });
+    data.abilities = a.filter(i => i.type === "ability");
+    data.augmentations = a.filter(i => i.type === "augmentation");
+    data.racials = a.filter(i => i.type === "racial");
+    data.traits = a.filter(i => i.type === "trait");
 
     data.armors = sortAndFilterItems(data.items, "armor");
     data.educations = sortAndFilterItems(data.items, "education");
     data.equipment = sortAndFilterItems(data.items, "equipment");
     data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
-    data.equippedWeapons = data.weapons.filter(w => w.data.weight.equipped);
+    data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
     return data;
   }
 
