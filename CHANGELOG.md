@@ -35,6 +35,7 @@
 * Item postables now use the correct values.
 * Inventory items now calculate and display weight values correctly.
 * Fixes Actor data preparation failing at the time of Actor creation.
+* Self-supporting items now only apply their benefit when they are equipped.
 
 ## 0.2.4
 
