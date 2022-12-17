@@ -488,21 +488,22 @@ function calculateCharacteristic(actor, feltFatigue, [ key, value ]) {
 }
 
 function calculateCharacteristicsFlood(actorData) {
-  for (const [key, value] of Object.entries(actorData.characteristics)) {
+  Object.entries(actorData.characteristics).forEach(([ key, value ]) => {
     const calc = value.base + value.equipment + value.medical + value.other;
     const total = Math.floor(calc >= 0 ? calc : 0);
     value.total = total;
     value.roll = total;
-  }
+  });
 }
 
 function calculateDamageResistance(actorData) {
   const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
   const touSoak = touMod + actorData.mythicCharacteristics.tou.total;
   actorData.characteristics.extra.touDR = touSoak;
-  for (let val of Object.values(actorData.armor)) {
+
+  Object.values(actorData.armor).forEach(val => {
     val.resistance = val.protection + touSoak;
-  }
+  });
 }
 
 function calculateDamageResistanceFlood(actor) {

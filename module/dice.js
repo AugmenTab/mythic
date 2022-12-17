@@ -42,10 +42,9 @@ const SIZE_DAMAGE_BONUS = {
  * @returns {number} The number value of the evaluated expression.
  */
 export function interpretDiceRollModifiers(str) {
-  let re = /\s*[+\-]?\s*\d+\s*/g;
-  let mods = str.trim().match(re) || [0];
-  let num = 0;
-  for (let mod of mods) num += parseInt(mod);
+  const mods = str.trim().match(/\s*[+\-]?\s*\d+\s*/g);
+  const num = mods.reduce((acc, mod) => acc + parseInt(mod), 0);
+
   if (isNaN(num)) {
     makeUIError("mythic.chat.error.parseFailure");
     throw new Error(msg);
