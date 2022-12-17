@@ -137,9 +137,6 @@ export function prepareBestiaryBase(actor) {
 
   // Reset characteristic penalties
   resetCharacteristicPenalties(actor.system);
-
-  // Set characteristics advance values; TODO: Remove in 0.3.0
-  setCharacteristicAdvancesDifficulty(actor.system);
 }
 
 /**
@@ -940,7 +937,10 @@ function calculateSkillTargets(actorData) {
 
     let target = value.mods;
     const stats = actorData.characteristics;
-    target += stats[value.characteristic.toLowerCase()].roll;
+
+    if (stats[value.characteristic.toLowerCase()]) {
+      target += stats[value.characteristic.toLowerCase()].roll;
+    }
 
     const tier = value.training.tier;
     if (tier === "none") {

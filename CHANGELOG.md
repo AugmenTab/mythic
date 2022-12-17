@@ -34,6 +34,7 @@
 * Fixed an instance where Armor that held values for Shields or Characteristics modifiers, but had those fields not checked as "has," were still applying those values to the Actor.
 * Item postables now use the correct values.
 * Inventory items now calculate and display weight values correctly.
+* Fixes Actor data preparation failing at the time of Actor creation.
 
 ## 0.2.4
 
