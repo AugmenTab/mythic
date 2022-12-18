@@ -369,8 +369,9 @@ export function sortAndFilterItems(items, filterParam, sortParam = "name") {
   if (sortParam === "name") {
     return f.sort((a, b) => a.name < b.name ? -1 : (a.name > b.name ? 1 : 0));
   } else if (sortParam === "nickname") {
-    return f.sort((a, b) => (
-      a.data.nickname < b.data.nickname ? -1 : (a.data.nickname > b.data.nickname ? 1 : 0))
+    return f.sort((a, b) =>
+      a.system.nickname < b.system.nickname
+        ? -1 : (a.system.nickname > b.system.nickname ? 1 : 0)
     );
   }
 }

@@ -1,10 +1,11 @@
 # Changelog
 
-## 0.2.5
+## 0.3.0
 
 ## Changes
 
-* Updated the system to Mythic 5.1, with the following adjustments:
+* Full migration to Foundry v10.
+* Updated the system to Mythic 6.0, with the following adjustments:
   * Set the default critical failure threshold to only natural 100s.
   * Added a value field for editing the Electrified special rule for Weapons.
   * Updated values and logic handling melee reach, to-hit, and damage.

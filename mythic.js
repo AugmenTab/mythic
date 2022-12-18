@@ -55,7 +55,7 @@ function registerSystemSettings() {
     config: false,
     scope: "world",
     type: String,
-    default: "0.2.5"
+    default: "0.3.0"
   });
 
   // Critical Failure Threshold
@@ -180,7 +180,7 @@ function registerSystemSettings() {
 
 /** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */
 Hooks.once("init", function() {
-  console.log("mythic | Initializing Mythic 5.0 System");
+  console.log("mythic | Initializing Mythic 6.0 System");
 
   CONFIG.mythic = mythic;
   CONFIG.Actor.documentClass = MythicActor;
@@ -204,7 +204,7 @@ Hooks.once("init", function() {
 /** Hook to perform data migration. */
 Hooks.once("ready", function () {
   // if (game.user.isGM) {}
-  // game.settings.set("mythic", "systemMigrationVersion", game.system.data.version);
+  // game.settings.set("mythic", "systemMigrationVersion", game.system.version);
 });
 
 /** Hook to establish event listeners on the chat log. */

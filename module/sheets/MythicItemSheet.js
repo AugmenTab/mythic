@@ -39,7 +39,7 @@ export default class MythicItemSheet extends ItemSheet {
    * @returns {string} The path to the Handlebars template.
    */
   get template(){
-    return `systems/mythic/templates/sheets/${this.item.data.type}-sheet.hbs`;
+    return `systems/mythic/templates/sheets/${this.item.type}-sheet.hbs`;
   }
 
   /**

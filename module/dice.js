@@ -164,7 +164,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
   const fireMode = weapon.system.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
-    name: weapon.system.nickname || weapon.data.name,
+    name: weapon.system.nickname || weapon.name,
     img: weapon.img,
     wfm: actor.system.characteristics.wfm.total,
     weaponData: weapon.system,
