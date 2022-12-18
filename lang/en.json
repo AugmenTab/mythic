@@ -802,10 +802,6 @@
             "name": "Enduring: Levels of Fatigue Ignored",
             "label": "The levels of Fatigue ignored by the Enduring Outlier Trait. Set to 1 for Mythic 4.0 and earlier, or 2 for Mythic 4.5 and later."
         },
-        "strongBackVersion": {
-            "name": "Strong Back Calculation Method",
-            "label": "How the Strong Back ability is calculated. Select the Mythic edition you are playing from the menu."
-        },
         "contaminationLevel": {
             "name": "Flood Contamination Level",
             "hint": "The current Contamination for a game featuring the Flood."

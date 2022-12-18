@@ -88,20 +88,6 @@ function registerSystemSettings() {
     default: "special"
   });
 
-  // Strong Back Version
-  game.settings.register("mythic", "strongBackVersion", {
-    config: true,
-    scope: "world",
-    name: "SETTINGS.strongBackVersion.name",
-    hint: "SETTINGS.strongBackVersion.label",
-    type: String,
-    choices: {
-      "v40": "Mythic 4.0",
-      "v45": "Mythic 4.5+"
-    },
-    default: "v45"
-  });
-
   // Flood Contamination Level
   game.settings.register("mythic", "contaminationLevel", {
     config: true,
