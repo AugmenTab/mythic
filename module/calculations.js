@@ -34,6 +34,8 @@ const PHYSICAL_SKILLS = new Set([
  * @param {ItemData} armorData - The armor's ItemData.
  */
 export function calculateArmorValues(armorData) {
+  armorData.price.total = armorData.price.base + armorData.price.mods;
+
   const canBeNegative = ["str", "agi", "mythicStr", "mythicAgi"];
   new Array(
     Object.entries(armorData.protection),
@@ -719,35 +721,27 @@ function calculateInventoryBars(actorData) {
 }
 
 function calculateItemWeight(item) {
-  let felt = 0, total = 0;
-
-  if (item.system.weight.carried) {
-    const weight = item.system.weight.each * (
-      (item.type === "weapon" && item.system.group === "thrown")
-        ? item.system.ammoList[item.system.currentAmmo].currentMag
-        : item.system.weight.quantity
-    );
-
-    total += weight;
-    item.system.weight.total = weight;
-
-    if (item.system.weight.equipped && item.system.weight.selfSupported) {
-      item.system.weight.felt = 0
-    } else {
-      if (item.type === "armor" && item.system.weight.equipped) {
-        const quarter = weight / 4;
-        felt += quarter;
-        item.system.weight.felt = quarter;
-      } else {
-        felt += weight;
-        item.system.weight.felt = weight;
-      }
-    }
-  } else {
+  if (!item.system.weight.carried) {
     item.system.weight.felt = 0;
     item.system.weight.total = 0;
+    return { felt: 0, total: 0 };
   }
-  return {felt: felt, total: total};
+
+  const total = item.system.weight.each * (
+    (item.type === "weapon" && item.system.group === "thrown")
+      ? item.system.ammoList[item.system.currentAmmo].currentMag
+      : item.system.weight.quantity
+  );
+
+  if (item.system.weight.equipped && item.system.weight.selfSupported) {
+    return { felt: 0, total: total };
+  }
+
+  if (item.type === "armor" && item.system.weight.equipped) {
+    return { felt: total / 4, total: total };
+  }
+
+  return { felt: total, total: total };
 }
 
 function calculateInventoryWeight(actor) {
@@ -756,8 +750,12 @@ function calculateInventoryWeight(actor) {
   actor.items.filter(
     item => ["armor", "equipment", "weapon"].includes(item.type)
   ).forEach(item => {
-    if (!item.system.weight.carried) item.system.weight.equipped = false;
     const weight = calculateItemWeight(item);
+
+    if (!item.system.weight.carried) item.system.weight.equipped = false;
+    item.system.weight.felt = weight.felt;
+    item.system.weight.total = weight.total;
+
     felt += weight.felt;
     total += weight.total;
   });
