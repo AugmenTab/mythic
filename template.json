@@ -231,6 +231,7 @@
                         "resistance": 0
                     }
                 },
+                "naturalArmor": 0,
                 "shields": {
                     "value": 0,
                     "max": 0,

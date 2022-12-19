@@ -95,9 +95,10 @@
                 "imposing": "Imposing?",
                 "mod": "Modifier"
             },
-            "fatigue": {
-                "label": "Fatigue Settings",
-                "enduring": "Fatigue Levels Ignored"
+            "defense": {
+                "label": "Defense Settings",
+                "enduring": "Fatigue Ignored",
+                "naturalArmor": "Natural Armor"
             },
             "initiative": {
                 "label": "Initiative Settings",

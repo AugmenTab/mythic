@@ -451,11 +451,12 @@
       </table>
     </div>
     <div>
-      <h2>{{localize "mythic.characterSettings.fatigue.label"}}</h2>
+      <h2>{{localize "mythic.characterSettings.defense.label"}}</h2>
       <table>
         <thead>
           <tr>
-            <th>{{localize "mythic.characterSettings.fatigue.enduring"}}</th>
+            <th>{{localize "mythic.characterSettings.defense.enduring"}}</th>
+            <th>{{localize "mythic.characterSettings.defense.naturalArmor"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -467,6 +468,16 @@
                 type="number"
                 data-dtype="Number"
                 value="{{system.fatigue.enduring}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                style="width:60px"
+                name="system.naturalArmor"
+                type="number"
+                data-dtype="Number"
+                value="{{system.naturalArmor}}"
                 onfocus="this.select()"
               />
             </td>

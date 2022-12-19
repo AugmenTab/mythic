@@ -379,32 +379,37 @@ export function sortAndFilterItems(items, filterParam, sortParam = "name") {
 }
 
 function applyArmorStatsToCharacter(actor) {
-  const armor = actor.items.filter(a =>
-    a.type === "armor" && a.system.weight.equipped
-  )[0];
+  const armor = actor.items.filter(a => a.type === "armor" && a.system.weight.equipped)[0];
+  const naturalArmor = actor.system.naturalArmor < 0 ? 0 : actor.system.naturalArmor;
 
-  if (armor) {
-    Object.entries(armor.system.protection).forEach(([ key, value ]) =>
-      actor.system.armor[key].protection = value.total
-    );
+  if (!armor) {
+    Object.values(actor.system.armor).forEach(loc => loc.protection = naturalArmor);
+    return;
+  }
 
-    if (armor.system.shields.has) {
-      actor.system.shields.max = armor.system.shields.integrity.total;
-      actor.system.shields.recharge = armor.system.shields.recharge.total;
-      actor.system.shields.delay = armor.system.shields.delay.total;
-    } else {
-      emptyArmorShields(actor.system);
-    }
+  Object.entries(armor.system.protection).forEach(([ key, value ]) =>
+    actor.system.armor[key].protection =
+      value.total === 0
+        ? naturalArmor
+        : value.total + Math.floor(naturalArmor / 2)
+  );
 
-    if (armor.system.characteristics.has) {
-      actor.system.characteristics.str.equipment = armor.system.characteristics.str.total;
-      actor.system.characteristics.agi.equipment = armor.system.characteristics.agi.total;
-      actor.system.mythicCharacteristics.str.equipment = armor.system.characteristics.mythicStr.total;
-      actor.system.mythicCharacteristics.agi.equipment = armor.system.characteristics.mythicAgi.total;
-    } else {
-      emptyArmorCharacteristics(actor.system);
-    }
-  };
+  if (armor.system.shields.has) {
+    actor.system.shields.max = armor.system.shields.integrity.total;
+    actor.system.shields.recharge = armor.system.shields.recharge.total;
+    actor.system.shields.delay = armor.system.shields.delay.total;
+  } else {
+    emptyArmorShields(actor.system);
+  }
+
+  if (armor.system.characteristics.has) {
+    actor.system.characteristics.str.equipment = armor.system.characteristics.str.total;
+    actor.system.characteristics.agi.equipment = armor.system.characteristics.agi.total;
+    actor.system.mythicCharacteristics.str.equipment = armor.system.characteristics.mythicStr.total;
+    actor.system.mythicCharacteristics.agi.equipment = armor.system.characteristics.mythicAgi.total;
+  } else {
+    emptyArmorCharacteristics(actor.system);
+  }
 }
 
 function calculateAbilityPool(actorData) {
