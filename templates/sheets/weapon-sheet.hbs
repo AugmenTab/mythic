@@ -54,24 +54,26 @@
             {{/each}}
           {{/select}}
         </select>
-        {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                         system.special.singleLoading.has)}}
-          <p>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</p>
-          <input
-            name="system.ammoList.STD.ammoTracking.pool"
-            type="number"
-            data-dtype="Number"
-            value="{{system.ammoList.STD.ammoTracking.pool}}"
-          />
-        {{else}}
-          <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
-          <input
-            name="system.ammoList.STD.ammoTracking.mags"
-            type="number"
-            data-dtype="Number"
-            value="{{system.ammoList.STD.ammoTracking.mags}}"
-          />
-        {{/if}}
+        {{#with (lookup system.ammoList system.currentAmmo)}}
+          {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
+                           ../this.system.special.singleLoading.has)}}
+            <p>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</p>
+            <input
+              name="system.ammoList.{{../this.system.currentAmmo}}.ammoTracking.pool"
+              type="number"
+              data-dtype="Number"
+              value="{{this.ammoTracking.pool}}"
+            />
+          {{else}}
+            <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
+            <input
+              name="system.ammoList.{{../this.system.currentAmmo}}.ammoTracking.mags"
+              type="number"
+              data-dtype="Number"
+              value="{{this.ammoTracking.mags}}"
+            />
+          {{/if}}
+        {{/with}}
       </div>
     </div>
 
