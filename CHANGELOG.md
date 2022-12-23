@@ -29,6 +29,7 @@
   * Off, which does no encumbrance penalty automation.
 * Scatter is now determined at the time the attack is made, so it can persist between server instances.
 * Natural Armor is now supported.
+* Effects for attacking at different ranges (bonuses and penalties to attack, damage, and pierce) are applied based on distance to target. This can be toggled on and off with a system setting.
 
 ## Bug Fixes
 

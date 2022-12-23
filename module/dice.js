@@ -2,7 +2,7 @@
 
 import { getCharacteristicModifier } from "./calculations.js";
 import * as Chat from "./chat.js";
-import { localize, makeUIError } from "./common.js";
+import { localize, makeUIError, makeUIWarning } from "./common.js";
 import { determineHitLocation } from "./location.js";
 
 const FORMULA = "D100";
@@ -66,19 +66,37 @@ export async function rollAttacks(element, actor, weapon) {
   const dmgMod = interpretDiceRollModifiers(attackOptions.circumstance.damage);
   const distanceFromTarget = parseFloat(attackOptions.distanceFromTarget);
 
-  if ([ atkMod, dmgMod, distanceFromTarget ].some(isNaN)) {
+  if ([ atkMod, dmgMod ].some(isNaN)) {
     makeUIError("mythic.chat.error.nan");
     return;
   }
 
+  if (isNaN(distanceFromTarget) || distanceFromTarget < 0) {
+    makeUIWarning("mythic.chat.error.distanceFromTargetDefaulted");
+  }
+
   const currentAmmo = weapon.system.currentAmmo;
+  const rangeEffects =
+    calculateRangeEffects(weapon, currentAmmo, distanceFromTarget);
+
+  if (rangeEffects.error) {
+    makeUIError(rangeEffects.error);
+    return;
+  }
+
+  const target = (
+    weapon.system.ammoList[currentAmmo].target + atkMod + rangeEffects.target
+  );
+
   const data = {
     circDmg: dmgMod,
+    rangeDamage: rangeEffects.damage,
     distanceFromTarget: distanceFromTarget,
     isZeroG: attackOptions.isZeroG,
     isVehicle: attackOptions.targetVehicle,
-    target: weapon.system.ammoList[currentAmmo].target + atkMod,
-    type: element.value
+    target: target,
+    type: element.value,
+    pierce: rangeEffects.pierce
   };
 
   await getAttackAndDamageOutcomes(actor, weapon, data);
@@ -138,6 +156,85 @@ export async function rollTest(element, actor) {
   }
 }
 
+function calculateDamageModifier(weapon, dmgMod) {}
+
+function calculateRangeEffects(weapon, currentAmmo, distanceFromTarget) {
+  const noChanges = { target: 0, pierce: "full", damage: "0" };
+
+  if (!game.settings.get("mythic", "rangeEffects")) return noChanges;
+
+  const ammo = weapon.system.ammoList[currentAmmo];
+  const spread = weapon.system.special.spread.has;
+  switch(weapon.system.group) {
+    case "melee":
+      if (1 >= distanceFromTarget) {
+        return { target: 10, pierce: "full", damage: "0" };
+      }
+
+      if (ammo.range.melee >= distanceFromTarget) return noChanges;
+      break;
+
+    case "thrown":
+      if (ammo.range.thrown >= distanceFromTarget) return noChanges;
+      break;
+
+    case "ranged":
+      if (weapon.system.trainings.equipment === "range") {
+        switch(weapon.system.trainings.faction) {
+          case "unsc":
+            if (20 >= distanceFromTarget) {
+              return { target: -20, pierce: "full", damage: "0" };
+            }
+
+            if (50 >= distanceFromTarget && ammo.range.close >= 50) {
+              return noChanges;
+            }
+            break;
+
+          case "covenant":
+            if (10 >= distanceFromTarget) {
+              return { target: -20, pierce: "full", damage: "0" };
+            }
+
+            if (20 >= distanceFromTarget && ammo.range.close >= 20) {
+              return noChanges;
+            }
+            break;
+
+          case "forerunner":
+            if (20 >= distanceFromTarget) {
+              return { target: -20, pierce: "full", damage: "0" };
+            }
+
+            if (30 >= distanceFromTarget && ammo.range.close >= 30) {
+              return noChanges;
+            }
+            break;
+        }
+      }
+
+      if (ammo.range.close >= 3 && 3 >= distanceFromTarget) {
+        return { target: 20, pierce: "full", damage: spread ? "2D10" : "0" };
+      }
+
+      if (ammo.range.close >= distanceFromTarget) {
+        return { target: 5, pierce: "full", damage: spread ? "1D10" : "0" };
+      }
+
+      if (ammo.range.long >= distanceFromTarget) return noChanges;
+
+      if ((2 * ammo.range.long) >= distanceFromTarget) {
+        return { target: -40, pierce: "half", damage: spread ? "-1D10" : "0" };
+      }
+
+      if ((3 * ammo.range.long) >= distanceFromTarget) {
+        return { target: -80, pierce: "none", damage: spread ? "-2D10" : "0" };
+      }
+      break;
+  }
+  return { error: "mythic.chat.error.targetOutOfRange" };
+}
+
 function capitalize(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
@@ -193,6 +290,8 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
       isZeroG: data.isZeroG,
       vehicle: data.vehicle,
       circDmg: data.circDmg,
+      rangeDamage: data.rangeDamage,
+      pierce: data.pierce
     };
 
     const attack = await rollAttackAndDamage(actor, weapon, attackData);
@@ -343,18 +442,27 @@ async function rollAttackAndDamage(actor, weapon, data) {
   ) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), data.vehicle);
     const ammo = weapon.system.ammoList[currentAmmo];
-    let damage = `${ammo.diceQuantity}D${ammo.diceValue}`;
-    let min = weapon.system.special.diceMinimum.has
-            ? weapon.system.special.diceMinimum.value
-            : 0;
-
-    if (roll.total === 1 && min < 5) min = 5;
-    if (min > 0) damage += `min${min}`;
     const critType = game.settings.get("mythic", "criticalHitResult");
 
-    if (critType !== "special") {
-      damage += `${critType}>=${ammo.critsOn}`;
-    }
+    let damage =
+      [ `${ammo.diceQuantity}D${ammo.diceValue}` , data.rangeDamage ].map(pool => {
+        if (!pool.toLowerCase().includes("d")) return pool;
+
+        let min = weapon.system.special.diceMinimum.has
+                ? weapon.system.special.diceMinimum.value
+                : 0;
+
+        if (roll.total === 1 && min < 5) min = 5;
+        if (min > 0) pool += `min${min}`;
+
+        if (critType !== "special") {
+          pool += `${critType}>=${ammo.critsOn}`;
+        }
+
+        return pool;
+      }).reduce((acc, formula) => {
+        return acc === "" ? formula : `${acc}+${formula}`;
+      });
 
     let base = weapon.system.ammoList[currentAmmo].baseDamage;
     let pierce = weapon.system.ammoList[currentAmmo].piercing;
@@ -375,7 +483,20 @@ async function rollAttackAndDamage(actor, weapon, data) {
     const sizeBonus = weapon.system.group === "melee"
                     ? SIZE_DAMAGE_BONUS[actor.system.size] : 0;
     attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
-    attack.piercing = pierce;
+
+    switch(data.pierce) {
+      case "full":
+        attack.piercing = pierce;
+        break;
+
+      case "half":
+        attack.piercing = Math.floor(pierce / 2);
+        break;
+
+      case "none":
+        attack.piercing = 0;
+        break;
+    }
 
     if (weapon.system.special.blast.has || weapon.system.special.kill.has) {
       const scatterData = {

@@ -324,7 +324,9 @@
                 "ammoPoolEmpty": "Your ammo pool is empty!",
                 "poolDownToOneMag": "You have one mag or less worth of ammo remaining in your ammo pool!",
                 "reloadEmptiesPool": "Your ammo pool has been depleted.",
-                "unrecognizedGrip": "Unrecognized grip value."
+                "unrecognizedGrip": "Unrecognized grip value.",
+                "distancefromTargetDefaulted": "The distance from target value provided is invalid. No range values applied to attack.",
+                "targetOutOfRange": "Target is out of range for this weapon."
             },
             "education": {
                 "flavor": "Education",
@@ -824,13 +826,17 @@
             "magazines": "Magazines - rounds remaining in magazine are lost",
             "ammoPool": "Ammo Pool - mags are topped off, like the games",
             "selfManaged": "Self-Managed - No automation will be applied"
-        }
-        , "encumbrance": {
+        },
+        "encumbrance": {
             "name": "Encumbrance Calculation Method",
             "hint": "How the system calculates encumbrance penalties based on carry weight.",
             "standard": "Standard",
             "simplified": "Simplified",
             "off": "Off"
+        },
+        "rangeEffects": {
+          "name": "Apply Range Effects Automatically",
+          "hint": "When checked, bonuses and penalties on attack rolls, attack damage, and weapon pierce due to range from target will be applied automatically."
         }
     }
 }

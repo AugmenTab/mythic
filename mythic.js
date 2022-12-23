@@ -88,6 +88,46 @@ function registerSystemSettings() {
     default: "special"
   });
 
+  // Magazine / Ammo Pool Management
+  game.settings.register("mythic", "ammoTracking", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.ammoTracking.name",
+    hint: "SETTINGS.ammoTracking.hint",
+    type: String,
+    choices: {
+      "magazines": "SETTINGS.ammoTracking.magazines",
+      "ammoPool": "SETTINGS.ammoTracking.ammoPool",
+      "selfManaged": "SETTINGS.ammoTracking.selfManaged"
+    },
+    default: "selfManaged"
+  });
+
+  // Encumbrance Calculation
+  game.settings.register("mythic", "encumbrance", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.encumbrance.name",
+    hint: "SETTINGS.encumbrance.hint",
+    type: String,
+    choices: {
+      "standard": "SETTINGS.encumbrance.standard",
+      "simplified": "SETTINGS.encumbrance.simplified",
+      "off": "SETTINGS.encumbrance.off"
+    },
+    default: "standard"
+  });
+
+  // Apply Range Effects Automatically
+  game.settings.register("mythic", "rangeEffects", {
+    config: true,
+    scope: "world",
+    name: "SETTINGS.rangeEffects.name",
+    hint: "SETTINGS.rangeEffects.hint",
+    type: Boolean,
+    default: true
+  });
+
   // Flood Contamination Level
   game.settings.register("mythic", "contaminationLevel", {
     config: true,
@@ -131,36 +171,6 @@ function registerSystemSettings() {
       step: 1
     },
     default: 1
-  });
-
-  // Magazine / Ammo Pool Management
-  game.settings.register("mythic", "ammoTracking", {
-    config: true,
-    scope: "world",
-    name: "SETTINGS.ammoTracking.name",
-    hint: "SETTINGS.ammoTracking.hint",
-    type: String,
-    choices: {
-      "magazines": "SETTINGS.ammoTracking.magazines",
-      "ammoPool": "SETTINGS.ammoTracking.ammoPool",
-      "selfManaged": "SETTINGS.ammoTracking.selfManaged"
-    },
-    default: "selfManaged"
-  });
-
-  // Encumbrance Calculation
-  game.settings.register("mythic", "encumbrance", {
-    config: true,
-    scope: "world",
-    name: "SETTINGS.encumbrance.name",
-    hint: "SETTINGS.encumbrance.hint",
-    type: String,
-    choices: {
-      "standard": "SETTINGS.encumbrance.standard",
-      "simplified": "SETTINGS.encumbrance.simplified",
-      "off": "SETTINGS.encumbrance.off"
-    },
-    default: "standard"
   });
 }
 
