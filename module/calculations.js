@@ -157,6 +157,9 @@ export function prepareBestiaryDerived(actor) {
   const feltFatigue = calculateFeltFatigue(actor.system.fatigue);
   calculateCharacteristics(actor, feltFatigue);
 
+  // Calculate Perceptive Range
+  calculatePerceptiveRange(actor.system);
+
   // Calculate DR
   calculateDamageResistance(actor.system);
 
@@ -291,6 +294,9 @@ export function prepareNamedCharacterDerived(actor) {
   // Calculate Characteristics
   const feltFatigue = calculateFeltFatigue(actor.system.fatigue);
   calculateCharacteristics(actor, feltFatigue);
+
+  // Calculate Perceptive Range
+  calculatePerceptiveRange(actor.system);
 
   // Calculate DR
   calculateDamageResistance(actor.system);
@@ -924,6 +930,12 @@ function calculateMythicDifficulty(actorData) {
   if (difficulty === 4) return applyDifficulty(2);
   if (difficulty >=  1) return applyDifficulty(1);
   return applyDifficulty(0);
+}
+
+function calculatePerceptiveRange(actorData) {
+  actorData.perceptiveRange.total = actorData.perceptiveRange.mod + (
+    5 * actorData.characteristics.per.total
+  );
 }
 
 function calculateSkillTargetEncumbrancePenalty(actorData) {

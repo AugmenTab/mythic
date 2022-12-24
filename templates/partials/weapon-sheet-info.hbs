@@ -225,7 +225,7 @@
         {{else}}
           <th>{{localize "mythic.weaponSheet.stats.magsCarried"}}</th>
         {{/if}}
-        <th>{{localize "mythic.weaponSheet.stats.scopeMag"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.scopeMagnification"}}</th>
       {{else if (eq system.group "melee")}}
         <th colspan="2">{{localize "mythic.weaponSheet.stats.reachBonus"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
@@ -352,10 +352,10 @@
         </td>
         <td>
           <input
-            name="system.scopeMag"
+            name="system.scopeMagnification"
             type="number"
             data-dtype="Number"
-            value="{{system.scopeMag}}"
+            value="{{system.scopeMagnification}}"
             onfocus="this.select()"
           />
         </td>

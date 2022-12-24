@@ -319,6 +319,10 @@
                     "mods": 0,
                     "formula": "1D10"
                 },
+                "perceptiveRange": {
+                  "total": 0,
+                  "mod": 0
+                },
                 "trainings": {
                     "equipment": {
                         "basic": false,

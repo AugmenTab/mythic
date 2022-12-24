@@ -610,7 +610,7 @@
                 "factionTraining": "Faction Training",
                 "equipmentTraining": "Equipment Training",
                 "critsOn": "Crits On",
-                "scopeMag": "Scope Mag."
+                "scopeMagnification": "Scope Mag."
             },
             "specialRules": {
                 "label": "Weapon Special Rules",

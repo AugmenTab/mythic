@@ -77,7 +77,7 @@ export async function rollAttacks(element, actor, weapon) {
 
   const currentAmmo = weapon.system.currentAmmo;
   const rangeEffects =
-    calculateRangeEffects(weapon, currentAmmo, distanceFromTarget);
+    calculateRangeEffects(weapon, distanceFromTarget);
 
   if (rangeEffects.error) {
     makeUIError(rangeEffects.error);
@@ -85,7 +85,10 @@ export async function rollAttacks(element, actor, weapon) {
   }
 
   const target = (
-    weapon.system.ammoList[currentAmmo].target + atkMod + rangeEffects.target
+      weapon.system.ammoList[currentAmmo].target
+    + atkMod
+    + rangeEffects.target
+    + calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget)
   );
 
   const data = {
@@ -156,13 +159,23 @@ export async function rollTest(element, actor) {
   }
 }
 
-function calculateDamageModifier(weapon, dmgMod) {}
+function calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget) {
+  if (!game.settings.get("mythic", "rangeEffects")) return 0;
 
-function calculateRangeEffects(weapon, currentAmmo, distanceFromTarget) {
+  const pRange = actor.system.perceptiveRange.total * (
+    isNaN(weapon.system.scopeMagnification) ? 1 : weapon.system.scopeMagnification
+  );
+
+  if (pRange >= distanceFromTarget) return 0;
+  return 10 * Math.floor((pRange - distanceFromTarget) / 50);
+}
+
+function calculateRangeEffects(weapon, distanceFromTarget) {
   const noChanges = { target: 0, pierce: "full", damage: "0" };
 
   if (!game.settings.get("mythic", "rangeEffects")) return noChanges;
 
+  const currentAmmo = weapon.system.currentAmmo;
   const ammo = weapon.system.ammoList[currentAmmo];
   const spread = weapon.system.special.spread.has;
   switch(weapon.system.group) {
