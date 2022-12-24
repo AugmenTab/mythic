@@ -45,36 +45,6 @@
     {{!-- Special Ammo Page --}}
     <div class="tab" data-group="primary" data-tab="ammo">
       <p><b>Coming soon!</b></p>
-      <div class="weapon-details">
-        <p>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</p>
-        <select name="system.ammoGroup">
-          {{#select system.ammoGroup}}
-            {{#each config.ammoGroups as |value key|}}
-              <option value="{{key}}">{{localize value}}</option>
-            {{/each}}
-          {{/select}}
-        </select>
-        {{#with (lookup system.ammoList system.currentAmmo)}}
-          {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                           ../this.system.special.singleLoading.has)}}
-            <p>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</p>
-            <input
-              name="system.ammoList.{{../this.system.currentAmmo}}.ammoTracking.pool"
-              type="number"
-              data-dtype="Number"
-              value="{{this.ammoTracking.pool}}"
-            />
-          {{else}}
-            <p>{{localize "mythic.weaponSheet.stats.magsCarried"}}</p>
-            <input
-              name="system.ammoList.{{../this.system.currentAmmo}}.ammoTracking.mags"
-              type="number"
-              data-dtype="Number"
-              value="{{this.ammoTracking.mags}}"
-            />
-          {{/if}}
-        {{/with}}
-      </div>
     </div>
 
     {{!-- Modifications Page --}}

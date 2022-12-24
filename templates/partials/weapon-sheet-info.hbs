@@ -5,14 +5,14 @@
   <input name="system.type" type="text" value="{{system.type}}"/>
   <p>{{localize "mythic.weaponSheet.stats.ammo"}}</p>
   <input name="system.ammo" type="text" value="{{system.ammo}}"/>
-  <p>{{localize "mythic.weaponSheet.stats.price"}}</p>
-  <input
-    name="system.price.base"
-    type="number"
-    data-dtype="Number"
-    value="{{system.price.base}}"
-    onfocus="this.select()"
-  />
+  <p>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</p>
+  <select name="system.ammoGroup">
+    {{#select system.ammoGroup}}
+      {{#each config.ammoGroups as |value key|}}
+        <option value="{{key}}">{{localize value}}</option>
+      {{/each}}
+    {{/select}}
+  </select>
   <p>{{localize "mythic.weaponSheet.stats.factionTraining"}}</p>
   <select name="system.trainings.faction">
     {{#select system.trainings.faction}}
@@ -29,6 +29,22 @@
       {{/each}}
     {{/select}}
   </select>
+  <p>{{localize "mythic.weaponSheet.stats.price"}}</p>
+  <input
+    name="system.price.base"
+    type="number"
+    data-dtype="Number"
+    value="{{system.price.base}}"
+    onfocus="this.select()"
+  />
+  <p>{{localize "mythic.weaponSheet.stats.weight"}}</p>
+  <input
+    name="system.weight.each"
+    type="number"
+    data-dtype="Number"
+    value="{{system.weight.each}}"
+    onfocus="this.select()"
+  />
 </div>
 <div class="weapon-core">
   <table>
@@ -86,10 +102,18 @@
       <th colspan="5">{{localize "mythic.weaponSheet.stats.label"}}</th>
     </tr>
     <tr>
-      <th>{{localize "mythic.weaponSheet.groups"}}</th>
+      <th style="width:160px">{{localize "mythic.weaponSheet.groups"}}</th>
       <th width="105px">{{localize "mythic.weaponSheet.stats.damageRoll"}}</th>
       <th>{{localize "mythic.weaponSheet.stats.baseDamage"}}</th>
-      <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
+      {{#if (eq system.group "ranged")}}
+        <th style="width:125px">
+          <span>
+            {{localize "mythic.weaponSheet.stats.magazine"}}
+            &sol;
+            {{localize "mythic.weaponSheet.stats.reload"}}
+          </span>
+        </th>
+      {{/if}}
       <th>{{localize "mythic.weaponSheet.stats.attackBonus"}}</th>
     </tr>
   </thead>
@@ -127,15 +151,16 @@
       </td>
       <td>
         {{#if (eq system.group "melee")}}
-          <div class="melee-double">
+          <span>
             <input
+              style="width:30px;"
               name="system.ammoList.STD.baseDamage"
               type="number"
               data-dtype="Number"
               value="{{system.ammoList.STD.baseDamage}}"
               onfocus="this.select()"
             />
-            <p><b>&plus;</b></p>
+            <b>&plus;</b>
             <select name="system.ammoList.STD.strDamage">
               {{#select system.ammoList.STD.strDamage}}
                 <option value="0">--</option>
@@ -144,7 +169,7 @@
                 <option value="2">STR &times; 2</option>
               {{/select}}
             </select>
-          </div>
+          </span>
         {{else}}
           <input
             name="system.ammoList.STD.baseDamage"
@@ -155,35 +180,29 @@
           />
         {{/if}}
       </td>
-      <td>
-        {{#if (eq system.group "melee")}}
-          <div class="melee-double">
+      {{#if (eq system.group "ranged")}}
+        <td>
+          <span>
             <input
-              name="system.ammoList.STD.piercing"
+              style="width:60px"
+              name="system.magazineCapacity"
               type="number"
               data-dtype="Number"
-              value="{{system.ammoList.STD.piercing}}"
+              value="{{system.magazineCapacity}}"
               onfocus="this.select()"
             />
-            <p><b>&plus;</b></p>
-            <select name="system.ammoList.STD.strPiercing">
-              {{#select system.ammoList.STD.strPiercing}}
-                <option value="0">--</option>
-                <option value="0.5">&frac12; STR</option>
-                <option value="1">STR</option>
-              {{/select}}
-            </select>
-          </div>
-        {{else}}
-          <input
-            name="system.ammoList.STD.piercing"
-            type="number"
-            data-dtype="Number"
-            value="{{system.ammoList.STD.piercing}}"
-            onfocus="this.select()"
-          />
-        {{/if}}
-      </td>
+            &sol;
+            <input
+              style="width:30px"
+              name="system.reload.base"
+              type="number"
+              data-dtype="Number"
+              value="{{system.reload.base}}"
+              onfocus="this.select()"
+            />
+          </span>
+        </td>
+      {{/if}}
       <td>
         <input
           name="system.attack.attackBonus"
@@ -198,48 +217,50 @@
     <tr>
       {{#if (eq system.group "ranged")}}
         <th>{{localize "mythic.weaponSheet.stats.range"}}</th>
-        <th>{{localize "mythic.weaponSheet.stats.magazine"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.critsOn"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
+        {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
+                         system.special.singleLoading.has)}}
+          <th>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</th>
+        {{else}}
+          <th>{{localize "mythic.weaponSheet.stats.magsCarried"}}</th>
+        {{/if}}
+        <th>{{localize "mythic.weaponSheet.stats.scopeMag"}}</th>
       {{else if (eq system.group "melee")}}
         <th colspan="2">{{localize "mythic.weaponSheet.stats.reachBonus"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.critsOn"}}</th>
       {{else if (eq system.group "thrown")}}
         <th colspan="2">{{localize "mythic.weaponSheet.stats.grip"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
+        <th>{{localize "mythic.weaponSheet.stats.critsOn"}}</th>
       {{/if}}
-      <th>{{localize "mythic.weaponSheet.stats.baseReload"}}</th>
-      <th>{{localize "mythic.weaponSheet.stats.critsOn"}}</th>
-      <th>{{localize "mythic.weaponSheet.stats.weight"}}</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       {{#if (eq system.group "ranged")}}
         <td>
-          <div class="range">
+          <span>
             <input
+              style="width:50px"
               name="system.ammoList.STD.range.close"
               type="number"
               data-dtype="Number"
               value="{{system.ammoList.STD.range.close}}"
               onfocus="this.select()"
             />
-            <p><b>&mdash;</b></p>
+            <b>&mdash;</b>
             <input
+              style="width:65px"
               name="system.ammoList.STD.range.long"
               type="number"
               data-dtype="Number"
               value="{{system.ammoList.STD.range.long}}"
               onfocus="this.select()"
             />
-            <p>m</p>
-          </div>
-        </td>
-        <td>
-          <input
-            name="system.magazineCapacity"
-            type="number"
-            data-dtype="Number"
-            value="{{system.magazineCapacity}}"
-            onfocus="this.select()"
-          />
+            m
+          </span>
         </td>
       {{else if (eq system.group "melee")}}
         <td colspan="2">
@@ -261,33 +282,94 @@
           </select>
         </td>
       {{/if}}
+      {{#if (eq system.group "ranged")}}
+        <td>
+          <input
+            name="system.ammoList.STD.critsOn"
+            type="number"
+            data-dtype="Number"
+            value="{{system.ammoList.STD.critsOn}}"
+            onfocus="this.select()"
+            />
+        </td>
+      {{/if}}
       <td>
-        <input
-          name="system.reload.base"
-          type="number"
-          data-dtype="Number"
-          value="{{system.reload.base}}"
-          onfocus="this.select()"
-        />
-      </td>
-      <td>
-        <input
-          name="system.ammoList.STD.critsOn"
-          type="number"
-          data-dtype="Number"
-          value="{{system.ammoList.STD.critsOn}}"
-          onfocus="this.select()"
+        {{#if (eq system.group "melee")}}
+          <span>
+            <input
+              style="width:30px"
+              name="system.ammoList.STD.piercing"
+              type="number"
+              data-dtype="Number"
+              value="{{system.ammoList.STD.piercing}}"
+              onfocus="this.select()"
+            />
+            <b>&plus;</b>
+            <select name="system.ammoList.STD.strPiercing">
+              {{#select system.ammoList.STD.strPiercing}}
+                <option value="0">--</option>
+                <option value="0.5">&frac12; STR</option>
+                <option value="1">STR</option>
+              {{/select}}
+            </select>
+          </span>
+        {{else if (eq system.group "thrown")}}
+          <input
+            name="system.ammoList.STD.piercing"
+            type="number"
+            data-dtype="Number"
+            value="{{system.ammoList.STD.piercing}}"
+            onfocus="this.select()"
           />
+        {{else if (eq system.group "ranged")}}
+          <input
+            name="system.ammoList.STD.piercing"
+            type="number"
+            data-dtype="Number"
+            value="{{system.ammoList.STD.piercing}}"
+            onfocus="this.select()"
+          />
+        {{/if}}
       </td>
-      <td>
-        <input
-          name="system.weight.each"
-          type="number"
-          data-dtype="Number"
-          value="{{system.weight.each}}"
-          onfocus="this.select()"
-        />
-      </td>
+      {{#if (eq system.group "ranged")}}
+        <td>
+          {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
+                               ../this.system.special.singleLoading.has)}}
+            <input
+              name="system.ammoList.STD.ammoTracking.pool"
+              type="number"
+              data-dtype="Number"
+              value="{{system.ammoList.STD.ammoTracking.pool}}"
+            />
+          {{else}}
+            <input
+              name="system.ammoList.STD.ammoTracking.mags"
+              type="number"
+              data-dtype="Number"
+              value="{{system.ammoList.STD.ammoTracking.mags}}"
+            />
+          {{/if}}
+        </td>
+        <td>
+          <input
+            name="system.scopeMag"
+            type="number"
+            data-dtype="Number"
+            value="{{system.scopeMag}}"
+            onfocus="this.select()"
+          />
+        </td>
+      {{else}}
+        <td>
+          <input
+            name="system.ammoList.STD.critsOn"
+            type="number"
+            data-dtype="Number"
+            value="{{system.ammoList.STD.critsOn}}"
+            onfocus="this.select()"
+          />
+        </td>
+      {{/if}}
     </tr>
   </tbody>
 </table>

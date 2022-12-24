@@ -1391,6 +1391,7 @@
             "magazineCapacity": 0,
             "ammo": "",
             "ammoGroup": "",
+            "scopeMagnification": 1.0,
             "currentAmmo": "STD",
             "ammoList": {
                 "STD": {

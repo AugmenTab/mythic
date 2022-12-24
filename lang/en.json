@@ -590,7 +590,7 @@
                 "damageRoll": "Damage Roll",
                 "baseDamage": "Base Damage",
                 "piercing": "Piercing",
-                "magazine": "Magazine",
+                "magazine": "Mag. Cap.",
                 "magsCarried": "Mags Carried",
                 "roundsCarried": "Rounds Carried",
                 "range": "Range",
@@ -600,7 +600,7 @@
                 "ammo": "Ammunition",
                 "ammoGroup": "Sp. Ammo Group",
                 "price": "Price (cR)",
-                "baseReload": "Base Reload",
+                "reload": "Reload",
                 "attackBonus": "To-Hit Bonus",
                 "type": "Type",
                 "weight": "Weight (kg)",
@@ -609,7 +609,8 @@
                 "faction": "Faction",
                 "factionTraining": "Faction Training",
                 "equipmentTraining": "Equipment Training",
-                "critsOn": "Crits On"
+                "critsOn": "Crits On",
+                "scopeMag": "Scope Mag."
             },
             "specialRules": {
                 "label": "Weapon Special Rules",
