@@ -88,16 +88,18 @@
                   {{#if (eq weapon.system.group "thrown")}}
                     {{this.range.thrown}}&nbsp;/&nbsp;
                     {{this.range.thrownMax}}&nbsp;m&nbsp;
-                    {{#if weapon.system.special.blast.has}}
-                      ({{weapon.system.special.blast.value}}&nbsp;/&nbsp;
-                    {{else}}
-                      (0&nbsp;/&nbsp;
-                    {{/if}}
-                    {{#if weapon.system.special.kill.has}}
-                      {{weapon.system.special.kill.value}})
-                    {{else}}
-                      0)
-                    {{/if}}
+                    {{#with (lookup this.system.ammoList this.system.currentAmmo)}}
+                      {{#if this.special.blast.has}}
+                        ({{this.special.blast.value}}&nbsp;/&nbsp;
+                      {{else}}
+                        (0&nbsp;/&nbsp;
+                      {{/if}}
+                      {{#if this.special.kill.has}}
+                        {{this.special.kill.value}})
+                      {{else}}
+                        0)
+                      {{/if}}
+                    {{/with}}
                   {{else if (eq weapon.system.group "melee")}}
                     {{this.range.melee}}&nbsp;m
                   {{else if (eq weapon.system.group "ranged")}}
@@ -120,11 +122,13 @@
                       <p>/</p>
                       <p>{{weapon.system.magazineCapacity}}</p>
                       <div class="item-management">
-                        {{#if weapon.system.special.singleLoading.has}}
-                          <p>&plus;{{weapon.system.reload.total}}</p>
-                        {{else}}
-                          <p>{{weapon.system.reload.total}}</p>
-                        {{/if}}
+                        {{#with (lookup weapon.system.ammoList weapon.system.currentAmmo)}}
+                          {{#if this.special.singleLoading.has}}
+                            <p>&plus;{{weapon.system.reload.total}}</p>
+                          {{else}}
+                            <p>{{weapon.system.reload.total}}</p>
+                          {{/if}}
+                        {{/with}}
                         <a
                           class="reload"
                           data-field="this.currentMag"

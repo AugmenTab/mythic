@@ -85,7 +85,7 @@
         </div>
         <div>
           {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                               ../this.system.special.singleLoading.has)}}
+                               this.special.singleLoading.has)}}
             {{localize "mythic.weaponSheet.stats.roundsCarried"}}:&nbsp;
             {{this.ammoTracking.pool}}
           {{else}}
@@ -111,24 +111,12 @@
     {{/with}}
   {{/if}}
   <aside class="special">
-    {{#each this.system.special as |special name|}}
-      {{#if special.has}}
-        <span class="special-rule">
-          {{localize (concat "mythic.weaponSheet.specialRules." name)}}
-          {{#unless (eq name "cauterize")}}
-            {{#if special.value}}&nbsp;({{special.value}}){{/if}}
-          {{/unless}}
-        </span>
-      {{/if}}
-    {{/each}}
     {{#with (lookup this.system.ammoList this.system.currentAmmo)}}
       {{#each this.special as |special name|}}
         {{#if special.has}}
           <span class="special-rule">
             {{localize (concat "mythic.weaponSheet.specialRules." name)}}
-            {{#unless (eq name "cauterize")}}
-              {{#if special.value}}&nbsp;({{special.value}}){{/if}}
-            {{/unless}}
+            {{#if special.value}}&nbsp;({{special.value}}){{/if}}
           </span>
         {{/if}}
       {{/each}}

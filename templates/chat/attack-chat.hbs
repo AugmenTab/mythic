@@ -52,8 +52,10 @@
             class="special-rule-dmg"
             data-rule="{{name}}"
             data-actor_id="{{../this.actorId}}"
-            {{#with (lookup ../this.weaponData.special [name])~}}
-              data-formula="{{this.value}}"
+            {{#with (lookup ../this.weaponData.ammoList ../this.weaponData.currentAmmo)}}
+              {{#with (lookup this.special name)}}
+                data-formula="{{this.value}}"
+              {{/with}}
             {{/with}}
           >
             <b class="chat-link">

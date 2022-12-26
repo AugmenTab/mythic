@@ -1239,146 +1239,6 @@
                 "[PD]": false,
                 "[BD]": false
             },
-            "special": {
-                "acid": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "blast": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "cauterize": {
-                    "has": false,
-                    "needsInput": false
-                },
-                "charge": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "cryo": {
-                    "has": false,
-                    "value": "1D5",
-                    "needsInput": true
-                },
-                "diceMinimum": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "electrified": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "emp": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "flame": {
-                    "has": false,
-                    "value": "1D5",
-                    "needsInput": true
-                },
-                "flashbang": {
-                    "has": false
-                },
-                "gravimetricPulse": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "gravity": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "hardlight": {
-                    "has": false
-                },
-                "headshot": {
-                    "has": false
-                },
-                "homing": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "kill": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "kinetic": {
-                    "has": false
-                },
-                "needle": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "nonlethal": {
-                    "has": false
-                },
-                "overheat": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "penetrating": {
-                    "has": false
-                },
-                "rechargeRate": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "singleLoading": {
-                    "has": false
-                },
-                "slow": {
-                    "has": false
-                },
-                "smoke": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "spike": {
-                    "has": false
-                },
-                "spin": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "spread": {
-                    "has": false
-                },
-                "sticky": {
-                    "has": false
-                },
-                "stun": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "tearGas": {
-                    "has": false
-                },
-                "tranquilize": {
-                    "has": false,
-                    "value": 0,
-                    "needsInput": true
-                },
-                "vehicleLock": {
-                    "has": false
-                }
-            },
             "fireMode": {
                 "auto": 0,
                 "burst": 0,
@@ -1430,8 +1290,127 @@
                         "thrownMax": 0,
                         "grip": "solid"
                     },
-                    "special": {},
-                    "desc": ""
+                    "desc": "",
+                    "special": {
+                        "acid": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "blast": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "cauterize": {
+                            "has": false
+                        },
+                        "charge": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "cryo": {
+                            "has": false,
+                            "value": "1D5"
+                        },
+                        "diceMinimum": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "electrified": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "emp": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "flame": {
+                            "has": false,
+                            "value": "1D5"
+                        },
+                        "flashbang": {
+                            "has": false
+                        },
+                        "gravimetricPulse": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "gravity": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "hardlight": {
+                            "has": false
+                        },
+                        "headshot": {
+                            "has": false
+                        },
+                        "homing": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "kill": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "kinetic": {
+                            "has": false
+                        },
+                        "needle": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "nonlethal": {
+                            "has": false
+                        },
+                        "overheat": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "penetrating": {
+                            "has": false
+                        },
+                        "rechargeRate": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "singleLoading": {
+                            "has": false
+                        },
+                        "slow": {
+                            "has": false
+                        },
+                        "smoke": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "spike": {
+                            "has": false
+                        },
+                        "spin": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "spread": {
+                            "has": false
+                        },
+                        "sticky": {
+                            "has": false
+                        },
+                        "stun": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "tearGas": {
+                            "has": false
+                        },
+                        "tranquilize": {
+                            "has": false,
+                            "value": 0
+                        },
+                        "vehicleLock": {
+                            "has": false
+                        }
+                    }
                 }
             },
             "settings": {

@@ -361,3 +361,41 @@ mythic.weaponSettings = {
     xxl: "mythic.weaponSheet.settings.barrelDescriptions.xxl",
   }
 }
+
+mythic.specialRules = {
+  weapons: {
+    acid: "number",
+    blast: "number",
+    cauterize: "none",
+    charge: "number",
+    cryo: "text",
+    diceMinimum: "number",
+    electrified: "number",
+    emp: "number",
+    flame: "text",
+    flashbang: "none",
+    gravimetricPulse: "number",
+    gravity: "number",
+    hardlight: "none",
+    headshot: "none",
+    homing: "number",
+    kill: "number",
+    kinetic: "none",
+    needle: "number",
+    nonlethal: "none",
+    overheat: "number",
+    penetrating: "none",
+    rechargeRate: "number",
+    singleLoading: "none",
+    slow: "none",
+    smoke: "number",
+    spike: "none",
+    spin: "number",
+    spread: "none",
+    sticky: "none",
+    stun: "number",
+    tearGas: "none",
+    tranquilize: "number",
+    vehicleLock: "none",
+  }
+}

@@ -156,6 +156,7 @@ async function onSpecial(event) {
   const element = event.currentTarget;
   const options = element.dataset.rule !== "needle"
     ? await getSpecialOptions(element.dataset.rule) : { cancelled: false };
+
   if (options.cancelled) return;
   if (element.dataset.rule !== "needle" && isNaN(options.hits)) {
     makeUIError("mythic.chat.error.nan");

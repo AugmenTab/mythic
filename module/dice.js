@@ -175,9 +175,8 @@ function calculateRangeEffects(weapon, distanceFromTarget) {
 
   if (!game.settings.get("mythic", "rangeEffects")) return noChanges;
 
-  const currentAmmo = weapon.system.currentAmmo;
-  const ammo = weapon.system.ammoList[currentAmmo];
-  const spread = weapon.system.special.spread.has;
+  const ammo = weapon.system.ammoList[weapon.system.currentAmmo];
+  const spread = ammo.special.spread.has;
   switch(weapon.system.group) {
     case "melee":
       if (1 >= distanceFromTarget) {
@@ -313,7 +312,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
   }
   result.hits *= damagesPerAttack;
   if (result.hits > 0) {
-    result.specials = getSpecialRuleValues(result.hits, weapon.system.special);
+    result.specials = getSpecialRuleValues(result.hits, weapon.system);
   }
   await Chat.postChatMessage(result, actor);
 }
@@ -377,9 +376,9 @@ async function getEvadeOptions(stat) {
   });
 }
 
-function getSpecialRuleValues(hits, specialRules) {
-  // TODO: Don't forget this when it's time for special ammo. Check both weapon
-  //       and ammo for special rules.
+function getSpecialRuleValues(hits, weaponData) {
+  const specialRules = weaponData.ammoList[weaponData.currentAmmo].special;
+
   let specials = {};
   if (specialRules.cryo.has) {
     const formula = specialRules.cryo.value.toLowerCase().split("d");
@@ -438,7 +437,7 @@ function reverseDigits(roll) {
 }
 
 async function rollAttackAndDamage(actor, weapon, data) {
-  const currentAmmo = weapon.system.currentAmmo;
+  const ammo = weapon.system.ammoList[weapon.system.currentAmmo];
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, data.target);
 
@@ -449,20 +448,16 @@ async function rollAttackAndDamage(actor, weapon, data) {
     ...outcome
   };
 
-  if (    attack.outcome === "success"
-       || weapon.system.special.blast.has
-       || weapon.system.special.kill.has
-  ) {
+  if (attack.outcome === "success" || ammo.special.blast.has || ammo.special.kill.has) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), data.vehicle);
-    const ammo = weapon.system.ammoList[currentAmmo];
     const critType = game.settings.get("mythic", "criticalHitResult");
 
     let damage =
       [ `${ammo.diceQuantity}D${ammo.diceValue}` , data.rangeDamage ].map(pool => {
         if (!pool.toLowerCase().includes("d")) return pool;
 
-        let min = weapon.system.special.diceMinimum.has
-                ? weapon.system.special.diceMinimum.value
+        let min = ammo.special.diceMinimum.has
+                ? ammo.special.diceMinimum.value
                 : 0;
 
         if (roll.total === 1 && min < 5) min = 5;
@@ -477,16 +472,16 @@ async function rollAttackAndDamage(actor, weapon, data) {
         return acc === "" ? formula : `${acc}+${formula}`;
       });
 
-    let base = weapon.system.ammoList[currentAmmo].baseDamage;
-    let pierce = weapon.system.ammoList[currentAmmo].piercing;
+    let base = ammo.baseDamage;
+    let pierce = ammo.piercing;
 
     if (weapon.system.group === "melee") {
       const str = (
         actor.system.mythicCharacteristics.str.total +
         getCharacteristicModifier(actor.system.characteristics.str.total)
       );
-      base += Math.floor(str * weapon.system.ammoList[currentAmmo].strDamage);
-      pierce += Math.floor(str * weapon.system.ammoList[currentAmmo].strPiercing);
+      base += Math.floor(str * ammo.strDamage);
+      pierce += Math.floor(str * ammo.strPiercing);
       if (actor.system.trainings.weapons.unarmedCombatant) {
         const wfm = getCharacteristicModifier(actor.system.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);
@@ -511,7 +506,7 @@ async function rollAttackAndDamage(actor, weapon, data) {
         break;
     }
 
-    if (weapon.system.special.blast.has || weapon.system.special.kill.has) {
+    if (ammo.special.blast.has || ammo.special.kill.has) {
       const scatterData = {
         distance: data.distanceFromTarget,
         degrees: outcome.degrees,

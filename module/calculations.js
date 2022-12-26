@@ -82,10 +82,11 @@ export function calculateWeaponValues(weaponData) {
  */
 export function handleReloadMagCount(weaponData) {
   const currentAmmo = weaponData.currentAmmo;
+  const ammo = weaponData.ammoList[currentAmmo];
   const magCurrent = weaponData.ammoList[currentAmmo].currentMag;
   const magCapacity = weaponData.magazineCapacity;
   const tracking = game.settings.get("mythic", "ammoTracking");
-  const isSingleLoading = weaponData.special.singleLoading.has;
+  const singleLoading = ammo.special.singleLoading.has;
 
   if (magCurrent === magCapacity) {
     makeUIWarning("mythic.chat.error.noNeedToReload");
@@ -93,7 +94,7 @@ export function handleReloadMagCount(weaponData) {
   }
 
   if (tracking === "selfManaged") {
-    weaponData.ammoList[currentAmmo].currentMag = magCapacity
+    ammo.currentMag = magCapacity
     return weaponData;
   }
 
@@ -1162,8 +1163,9 @@ function calculateWeaponTarget(actorData, weaponData) {
 }
 
 function calculateWeaponSummaryAttackData(actor) {
-  let weapons = actor.items.filter(item => item.type === "weapon");
+  const weapons = actor.items.filter(item => item.type === "weapon");
   Object.values(weapons).forEach(weapon => {
+    const currentAmmo = weapon.system.currentAmmo;
     if (weapon.system.group === "thrown") {
       calculateWeaponRangeThrown(actor.system, weapon.system);
       weapon.system.attack.half = 1;
@@ -1174,7 +1176,7 @@ function calculateWeaponSummaryAttackData(actor) {
       calculateWeaponAttacksMelee(actor.system, weapon.system);
     } else if (weapon.system.group === "ranged") {
       calculateWeaponAttacksRanged(weapon.system);
-      if (weapon.system.special.singleLoading.has) {
+      if (weapon.system.ammoList[currentAmmo].special.singleLoading.has) {
         calculateWeaponReloadSingleLoading(actor.system, weapon.system);
       } else calculateWeaponReloadStandard(actor.system, weapon.system);
     }

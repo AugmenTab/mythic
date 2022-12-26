@@ -220,7 +220,7 @@
         <th>{{localize "mythic.weaponSheet.stats.critsOn"}}</th>
         <th>{{localize "mythic.weaponSheet.stats.piercing"}}</th>
         {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                         system.special.singleLoading.has)}}
+                         system.ammoList.STD.special.singleLoading.has)}}
           <th>{{localize "mythic.weaponSheet.stats.roundsCarried"}}</th>
         {{else}}
           <th>{{localize "mythic.weaponSheet.stats.magsCarried"}}</th>
@@ -334,7 +334,7 @@
       {{#if (eq system.group "ranged")}}
         <td>
           {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                               ../this.system.special.singleLoading.has)}}
+                               ../this.system.ammoList.STD.special.singleLoading.has)}}
             <input
               name="system.ammoList.STD.ammoTracking.pool"
               type="number"
@@ -374,36 +374,33 @@
   </tbody>
 </table>
 <table class="special-rules">
-  <thead>
-    <tr>
-      <th>{{localize "mythic.weaponSheet.specialRules.label"}}</th>
-    </tr>
-  </thead>
+  <thead><tr><th>{{localize "mythic.weaponSheet.specialRules.label"}}</th></tr></thead>
   <tbody>
     <tr>
       <td>
-        {{#each system.special as |details name|}}
-          <span>
-            <input
-              name="system.special.{{name}}.has"
-              type="checkbox"
-              {{checked details.has}}
-            />
-            <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
-            {{#if (cond "||" details.needsInput (eq name "electrified"))}}
+        {{#each config.specialRules.weapons as |type name|}}
+          {{#with (lookup ../this.system.ammoList.STD.special name)}}
+            <span>
               <input
-                name="system.special.{{name}}.value"
-                {{!-- TODO: Write a migration after the move to Foundry v10. --}}
-                {{#if (cond "||" (eq name "flame") (eq name "cryo"))}}
-                  type="text"
-                {{else}}
-                  type="number" data-dtype="Number"
-                {{/if}}
-                value="{{details.value}}"
-                onfocus="this.select()"
+                name="system.ammoList.STD.special.{{name}}.has"
+                type="checkbox"
+                {{checked this.has}}
               />
-            {{/if}}
-          </span>
+              <p>{{localize (concat "mythic.weaponSheet.specialRules." name)}}</p>
+              {{#unless (eq type "none")}}
+                <input
+                  name="system.ammoList.STD.special.{{name}}.value"
+                  {{#if (eq type "text")}}
+                    type="text"
+                  {{else if (eq type "number")}}
+                    type="number" data-dtype="Number"
+                  {{/if}}
+                  value="{{this.value}}"
+                  onfocus="this.select()"
+                />
+              {{/unless}}
+            </span>
+          {{/with}}
         {{/each}}
       </td>
     </tr>
