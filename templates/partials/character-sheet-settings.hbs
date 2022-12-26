@@ -937,6 +937,42 @@
           </tbody>
         </table>
       </div>
+      <div>
+        <h2>{{localize "mythic.characterSettings.perceptiveRange.label"}}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "mythic.characterSettings.perceptiveRange.total"}}</th>
+              <th>{{localize "mythic.characterSettings.perceptiveRange.base"}}</th>
+              <th>{{localize "mythic.characterSettings.perceptiveRange.mod"}}</th>
+              <th>{{localize "mythic.characterSettings.perceptiveRange.vigil"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>{{localnum system.perceptiveRange.total}}</b></td>
+              <td>{{localnum system.perceptiveRange.base}}</td>
+              <td>
+                <input
+                  style="width:60px"
+                  name="system.perceptiveRange.mod"
+                  type="number"
+                  value="{{system.perceptiveRange.mod}}"
+                  data-dtype="Number"
+                  onfocus="this.select()"
+                />
+              </td>
+              <td>
+                <input
+                  name="system.perceptiveRange.vigil"
+                  type="checkbox"
+                  {{checked system.perceptiveRange.vigil}}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </section>

@@ -143,6 +143,13 @@
               "mult": "INT Multiplier",
               "mod": "Modifier",
               "unlimited": "Unlimited?"
+            },
+            "perceptiveRange": {
+              "label": "Perceptive Range Settings",
+              "total": "Total",
+              "base": "Base",
+              "mod": "Modifier",
+              "vigil": "Vigil?"
             }
         },
         "characterEducations": {

@@ -331,7 +331,9 @@
                 },
                 "perceptiveRange": {
                   "total": 0,
-                  "mod": 0
+                  "base": 0,
+                  "mod": 0,
+                  "vigil": false
                 },
                 "trainings": {
                     "equipment": {

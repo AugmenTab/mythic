@@ -964,9 +964,11 @@ function calculateMythicDifficulty(actorData) {
 }
 
 function calculatePerceptiveRange(actorData) {
-  actorData.perceptiveRange.total = actorData.perceptiveRange.mod + (
-    5 * actorData.characteristics.per.total
+  const base = actorData.characteristics.per.total * (
+    actorData.perceptiveRange.vigil ? 10 : 5
   );
+  actorData.perceptiveRange.base = base;
+  actorData.perceptiveRange.total = actorData.perceptiveRange.mod + base;
 }
 
 function calculateSkillTargetEncumbrancePenalty(actorData) {
