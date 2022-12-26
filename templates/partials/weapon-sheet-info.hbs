@@ -334,7 +334,7 @@
       {{#if (eq system.group "ranged")}}
         <td>
           {{#if (cond "||" (eq (getSetting "ammoTracking") "ammoPool")
-                               ../this.system.ammoList.STD.special.singleLoading.has)}}
+                               system.ammoList.STD.special.singleLoading.has)}}
             <input
               name="system.ammoList.STD.ammoTracking.pool"
               type="number"

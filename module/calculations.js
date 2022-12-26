@@ -86,7 +86,7 @@ export function handleReloadMagCount(weaponData) {
   const magCurrent = weaponData.ammoList[currentAmmo].currentMag;
   const magCapacity = weaponData.magazineCapacity;
   const tracking = game.settings.get("mythic", "ammoTracking");
-  const singleLoading = ammo.special.singleLoading.has;
+  const isSingleLoading = ammo.special.singleLoading.has;
 
   if (magCurrent === magCapacity) {
     makeUIWarning("mythic.chat.error.noNeedToReload");
@@ -104,7 +104,6 @@ export function handleReloadMagCount(weaponData) {
 
   if (tracking === "ammoPool" || isSingleLoading) {
     return calculateReloadAmmoPool(weaponData, {
-      currentAmmo: currentAmmo,
       magCapacity: magCapacity,
       magCurrent: magCurrent,
       isSingleLoading: isSingleLoading
@@ -1229,7 +1228,8 @@ function calculateWoundsNamedCharacter(actorData) {
 }
 
 function calculateReloadAmmoPool(weaponData, extraData) {
-  const pool = weaponData.ammoList[extraData.currentAmmo].ammoTracking.pool;
+  const currentAmmo = weaponData.currentAmmo;
+  const pool = weaponData.ammoList[currentAmmo].ammoTracking.pool;
   const missingRounds = extraData.magCapacity - extraData.magCurrent;
   const roundsToReload = extraData.isSingleLoading
                        ? weaponData.reload.total
@@ -1248,13 +1248,13 @@ function calculateReloadAmmoPool(weaponData, extraData) {
     } else if (newPool <= extraData.magCapacity) {
       makeUIWarning("mythic.chat.error.poolDownToOneMag");
     }
-    weaponData.ammoList[extraData.currentAmmo].ammoTracking.pool = newPool;
-    weaponData.ammoList[extraData.currentAmmo].currentMag =
+    weaponData.ammoList[currentAmmo].ammoTracking.pool = newPool;
+    weaponData.ammoList[currentAmmo].currentMag =
       extraData.magCurrent + reload;
   } else if (reload > pool) {
     makeUIWarning("mythic.chat.error.reloadEmptiesPool");
-    weaponData.ammoList[extraData.currentAmmo].ammoTracking.pool = 0;
-    weaponData.ammoList[extraData.currentAmmo].currentMag =
+    weaponData.ammoList[currentAmmo].ammoTracking.pool = 0;
+    weaponData.ammoList[currentAmmo].currentMag =
       extraData.magCurrent + pool;
   }
   return weaponData;
