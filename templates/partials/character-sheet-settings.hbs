@@ -418,32 +418,36 @@
   </div>
   <div class="character-sheet-summary">
     <div>
-      <h2>{{localize "mythic.characterSettings.initiative.label"}}</h2>
+      <h2>{{localize "mythic.characterSettings.supportPoints.label"}}</h2>
       <table>
         <thead>
           <tr>
             <th>
-              {{localize "mythic.characterSettings.initiative.battleMind"}}
+              {{localize "mythic.characterSettings.supportPoints.rank"}}
             </th>
-            <th>
-              {{localize "mythic.characterSettings.initiative.fastFoot"}}
-            </th>
+            <th>{{localize "mythic.characterSettings.other"}}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
               <input
-                name="system.initiative.battleMind"
-                type="checkbox"
-                {{checked system.initiative.battleMind}}
+                style="width:60px"
+                name="system.supportPoints.rank"
+                type="number"
+                data-dtype="Number"
+                value="{{system.supportPoints.rank}}"
+                onfocus="this.select()"
               />
             </td>
             <td>
               <input
-                name="system.initiative.fastFoot"
-                type="checkbox"
-                {{checked system.initiative.fastFoot}}
+                style="width:60px"
+                name="system.supportPoints.other"
+                type="number"
+                data-dtype="Number"
+                value="{{system.supportPoints.other}}"
+                onfocus="this.select()"
               />
             </td>
           </tr>
@@ -587,6 +591,7 @@
             <td>
               {{#if (eq actor.type "Named Character")}}
                 <input
+                  style="width:60px"
                   name="system.luck.advancements"
                   type="number"
                   value="{{system.luck.advancements}}"
@@ -700,7 +705,7 @@
               <th style="width:75px">
                 {{localize "mythic.characterSettings.total"}}
               </th>
-              <th>{{localize "mythic.characterSettings.wounds.doubleTou"}}</th>
+              <th>{{{localize "mythic.characterSettings.wounds.doubleTou"}}}</th>
               <th style="width: 140px">
                 {{localize "mythic.characterSettings.wounds.aiDegen"}}
               </th>
@@ -728,6 +733,7 @@
               </td>
               <td>
                 <input
+                  style="width:60px"
                   name="system.wounds.aiDegen"
                   type="number"
                   data-dtype="Number"
@@ -750,6 +756,7 @@
               </td>
               <td>
                 <input
+                  style="width:60px"
                   name="system.wounds.other"
                   type="number"
                   data-dtype="Number"
@@ -762,34 +769,36 @@
         </table>
       </div>
       <div>
-        <h2>{{localize "mythic.characterSettings.supportPoints.label"}}</h2>
+        <h2>{{localize "mythic.characterSettings.initiative.label"}}</h2>
         <table>
           <thead>
             <tr>
-              <th>
-                {{localize "mythic.characterSettings.supportPoints.rank"}}
-              </th>
-              <th>{{localize "mythic.characterSettings.other"}}</th>
+              <th>{{localize "mythic.characterSettings.initiative.battleMind"}}</th>
+              <th>{{localize "mythic.characterSettings.initiative.fastFoot"}}</th>
+              <th>{{localize "mythic.characterSettings.initiative.grandEntrance"}}</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
                 <input
-                  name="system.supportPoints.rank"
-                  type="number"
-                  data-dtype="Number"
-                  value="{{system.supportPoints.rank}}"
-                  onfocus="this.select()"
+                  name="system.initiative.battleMind"
+                  type="checkbox"
+                  {{checked system.initiative.battleMind}}
                 />
               </td>
               <td>
                 <input
-                  name="system.supportPoints.other"
-                  type="number"
-                  data-dtype="Number"
-                  value="{{system.supportPoints.other}}"
-                  onfocus="this.select()"
+                  name="system.initiative.fastFoot"
+                  type="checkbox"
+                  {{checked system.initiative.fastFoot}}
+                />
+              </td>
+              <td>
+                <input
+                  name="system.initiative.grandEntrance"
+                  type="checkbox"
+                  {{checked system.initiative.grandEntrance}}
                 />
               </td>
             </tr>
@@ -803,18 +812,10 @@
     <table>
       <thead>
         <tr>
-          <th>
-            {{localize "mythic.characterSettings.movement.jumpMultiplier"}}
-          </th>
-          <th>
-            {{localize "mythic.characterSettings.movement.leapAgiBonus"}}
-          </th>
-          <th>
-            {{localize "mythic.characterSettings.movement.leapMultiplier"}}
-          </th>
-          <th>
-            {{localize "mythic.characterSettings.movement.agiBonusRunCharge"}}
-          </th>
+          <th>{{localize "mythic.characterSettings.movement.jumpMultiplier"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.leapAgiBonus"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.leapMultiplier"}}</th>
+          <th>{{localize "mythic.characterSettings.movement.agiBonusRunCharge"}}</th>
           <th>{{localize "mythic.characterSettings.movement.blur"}}</th>
           <th>{{localize "mythic.characterSettings.movement.rush"}}</th>
         </tr>
@@ -823,6 +824,7 @@
         <tr>
           <td>
             <input
+              style="width:60px"
               name="system.movement.jumpMultiplier"
               type="number"
               value="{{system.movement.jumpMultiplier}}"
@@ -832,6 +834,7 @@
           </td>
           <td>
             <input
+              style="width:60px"
               name="system.movement.leapAgiBonus"
               type="number"
               value="{{system.movement.leapAgiBonus}}"
@@ -841,6 +844,7 @@
           </td>
           <td>
             <input
+              style="width:60px"
               name="system.movement.leapMultiplier"
               type="number"
               value="{{system.movement.leapMultiplier}}"
@@ -850,6 +854,7 @@
           </td>
           <td>
             <input
+              style="width:60px"
               name="system.movement.agiBonusRunCharge"
               type="number"
               value="{{system.movement.agiBonusRunCharge}}"

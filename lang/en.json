@@ -103,7 +103,8 @@
             "initiative": {
                 "label": "Initiative Settings",
                 "battleMind": "Battle Mind?",
-                "fastFoot": "Fast Foot?"
+                "fastFoot": "Fast Foot?",
+                "grandEntrance": "Grand Entrance?"
             },
             "luck": {
                 "label": "Luck Settings",
@@ -127,7 +128,7 @@
             },
             "wounds": {
                 "label": "Wounds Settings",
-                "doubleTou": "Double TOU Mod?",
+                "doubleTou": "TOU &times;2?",
                 "aiDegen": "AI Destabilizations",
                 "advancements": "Advancements",
                 "difficulty": "Difficulty",

@@ -684,18 +684,26 @@ function calculateGripPenaltyThrown(grip) {
 }
 
 function calculateInitiative(actorData, feltFatigue) {
-  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
-  const intMod = getCharacteristicModifier(actorData.characteristics.int.total);
+  const init = actorData.initiative;
+  const stats = actorData.characteristics;
   const mythicAgi = actorData.mythicCharacteristics.agi.total;
-  const battlemind = actorData.initiative.battleMind;
+
   let formula = [];
   formula.push(actorData.initiative.fastFoot ? "2d10kh" : "1d10");
-  formula.push((battlemind ? intMod : agiMod).toString());
+  formula.push(
+    [ getCharacteristicModifier(stats.agi.total)
+    , init.battleMind    ? getCharacteristicModifier(stats.int.total) : 0
+    , init.grandEntrance ? getCharacteristicModifier(stats.ldr.total) : 0
+    ].sort().reverse()[0]
+  );
+
   if (mythicAgi > 0) {
     const bonus = Math.floor(mythicAgi / 2);
     formula.push(bonus > 1 ? bonus : 1);
   };
+
   formula.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
+
   const mods = interpretDiceRollModifiers(formula.slice(1).join("+"));
   actorData.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
   actorData.initiative.formula = formula.join("+");

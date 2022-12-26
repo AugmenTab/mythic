@@ -316,6 +316,7 @@
                 "initiative": {
                     "fastFoot": false,
                     "battleMind": false,
+                    "grandEntrance": false,
                     "mods": 0,
                     "formula": "1D10"
                 },
