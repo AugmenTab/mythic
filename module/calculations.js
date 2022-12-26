@@ -555,7 +555,7 @@ function calculateEducations(actor) {
     item.type === "education" && item.system.roll.training !== "none"
   ).length;
 
-  actor.system.educations.max = (
+  actor.system.educations.max = actor.system.educations.mod + (
       actor.system.educations.intMultiplier
     * getCharacteristicModifier(actor.system.characteristics.int.total)
   );

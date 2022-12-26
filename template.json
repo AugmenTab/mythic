@@ -324,6 +324,7 @@
                     "value": 0,
                     "max": 0,
                     "intMultiplier": 2,
+                    "mod": 0,
                     "unlimited": false,
                     "style": "",
                     "notes": ""

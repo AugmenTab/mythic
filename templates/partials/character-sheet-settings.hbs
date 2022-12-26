@@ -880,4 +880,63 @@
       </tbody>
     </table>
   </div>
+  <div class="wide">
+    <div class="equal-cols">
+      <div>
+        <h2>{{localize "mythic.characterSettings.education.label"}}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "mythic.characterSettings.education.total"}}</th>
+              <th>{{localize "mythic.characterSettings.education.mult"}}</th>
+              <th>{{localize "mythic.characterSettings.education.mod"}}</th>
+              <th>{{localize "mythic.characterSettings.education.unlimited"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <b>
+                  {{#if system.educations.unlimited}}
+                    &infin;
+                  {{else}}
+                    {{system.educations.max}}
+                  {{/if}}
+                </b>
+              </td>
+              <td>
+                <input
+                  style="width:60px"
+                  {{#if system.educations.unlimited}} disabled {{/if}}
+                  name="system.educations.intMultiplier"
+                  type="number"
+                  value="{{system.educations.intMultiplier}}"
+                  data-dtype="Number"
+                  onfocus="this.select()"
+                />
+              </td>
+              <td>
+                <input
+                  style="width:60px"
+                  {{#if system.educations.unlimited}} disabled {{/if}}
+                  name="system.educations.mod"
+                  type="number"
+                  value="{{system.educations.mod}}"
+                  data-dtype="Number"
+                  onfocus="this.select()"
+                />
+              </td>
+              <td>
+                <input
+                  name="system.educations.unlimited"
+                  type="checkbox"
+                  {{checked system.educations.unlimited}}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>

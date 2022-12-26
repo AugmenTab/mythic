@@ -136,6 +136,13 @@
                 "base": "Base Wounds",
                 "swarm": "Swarm",
                 "mod": "Modifier"
+            },
+            "education": {
+              "label": "Education Settings",
+              "total": "Total",
+              "mult": "INT Multiplier",
+              "mod": "Modifier",
+              "unlimited": "Unlimited?"
             }
         },
         "characterEducations": {
