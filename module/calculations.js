@@ -160,6 +160,9 @@ export function prepareBestiaryDerived(actor) {
   // Calculate Perceptive Range
   calculatePerceptiveRange(actor.system);
 
+  // Calculate Education Limit
+  calculateEducations(actor);
+
   // Calculate DR
   calculateDamageResistance(actor.system);
 
@@ -297,6 +300,9 @@ export function prepareNamedCharacterDerived(actor) {
 
   // Calculate Perceptive Range
   calculatePerceptiveRange(actor.system);
+
+  // Calculate Education Limit
+  calculateEducations(actor);
 
   // Calculate DR
   calculateDamageResistance(actor.system);
@@ -540,6 +546,23 @@ function calculateDamageResistanceFlood(actor) {
       val.resistance = touDamageResistance > 0 ? touDamageResistance : 0;
     }
   });
+}
+
+function calculateEducations(actor) {
+  if (actor.system.educations.unlimited) return;
+
+  actor.system.educations.value = actor.items.filter(item =>
+    item.type === "education" && item.system.roll.training !== "none"
+  ).length;
+
+  actor.system.educations.max = (
+      actor.system.educations.intMultiplier
+    * getCharacteristicModifier(actor.system.characteristics.int.total)
+  );
+
+  actor.system.educations.style =
+    actor.system.educations.value > actor.system.educations.max
+      ? "color:red" : "";
 }
 
 function calculateEducationTargets(actor) {

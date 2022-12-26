@@ -319,6 +319,14 @@
                     "mods": 0,
                     "formula": "1D10"
                 },
+                "educations": {
+                    "value": 0,
+                    "max": 0,
+                    "intMultiplier": 2,
+                    "unlimited": false,
+                    "style": "",
+                    "notes": ""
+                },
                 "perceptiveRange": {
                   "total": 0,
                   "mod": 0
@@ -624,9 +632,6 @@
                 "current": 0,
                 "purchases": [],
                 "color": "",
-                "notes": ""
-            },
-            "educations": {
                 "notes": ""
             },
             "biography": "",

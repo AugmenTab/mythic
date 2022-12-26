@@ -2,13 +2,28 @@
   <table class="educations-table">
     <thead>
       <tr>
-        <th colspan="6">
-          {{localize "mythic.characterEducations.title"}}
-          &nbsp;&nbsp;
-          <a class="postable-details" data-roll="educations">
-            <i class="clickable fas fa-dice-d20"></i>
-          </a>
-        </th>
+        {{#if actor.system.educations.unlimited}}
+          <th colspan="6">
+            {{localize "mythic.characterEducations.title"}}
+            &nbsp;&nbsp;
+            <a class="postable-details" data-roll="educations">
+              <i class="clickable fas fa-dice-d20"></i>
+            </a>
+          </th>
+        {{else}}
+          <th colspan="5">
+            {{localize "mythic.characterEducations.title"}}
+            &nbsp;&nbsp;
+            <a class="postable-details" data-roll="educations">
+              <i class="clickable fas fa-dice-d20"></i>
+            </a>
+          </th>
+          <th>
+            <b style="{{actor.system.educations.style}}">{{actor.system.educations.value}}</b>
+            &sol;
+            <b>{{actor.system.educations.max}}</b>
+          </th>
+        {{/if}}
       </tr>
       <tr>
         <th>{{localize "mythic.characterEducations.name"}}</th>
