@@ -381,6 +381,7 @@ mythic.specialRules = {
     homing: "number",
     kill: "number",
     kinetic: "none",
+    longBarrel: "none",
     needle: "number",
     nonlethal: "none",
     overheat: "number",

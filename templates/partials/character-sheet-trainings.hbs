@@ -41,7 +41,7 @@
   <table>
     <thead>
       <tr>
-        <th colspan="4">
+        <th colspan="5">
           {{localize "mythic.characterTalents.trainings.abilities"}}
         </th>
       </tr>
@@ -49,9 +49,8 @@
         <th>{{localize "mythic.characterTalents.trainings.hth"}}</th>
         <th>{{localize "mythic.characterTalents.trainings.mac"}}</th>
         <th>{{localize "mythic.characterTalents.trainings.rapidReload"}}</th>
-        <th>
-          {{localize "mythic.characterTalents.trainings.unarmedCombatant"}}
-        </th>
+        <th>{{localize "mythic.characterTalents.trainings.quickscope"}}</th>
+        <th>{{localize "mythic.characterTalents.trainings.unarmedCombatant"}}</th>
       </tr>
     </thead>
     <tbody>
@@ -78,6 +77,13 @@
             name="system.trainings.weapons.rapidReload"
             type="checkbox"
             {{checked system.trainings.weapons.rapidReload}}
+          />
+        </td>
+        <td>
+          <input
+            name="system.trainings.weapons.quickscope"
+            type="checkbox"
+            {{checked system.trainings.weapons.quickscope}}
           />
         </td>
         <td>

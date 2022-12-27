@@ -356,6 +356,7 @@
                         "hth": false,
                         "mac": false,
                         "rapidReload": false,
+                        "quickscope": false,
                         "unarmedCombatant": false
                     },
                     "languages": [],
@@ -1353,6 +1354,9 @@
                             "value": 0
                         },
                         "kinetic": {
+                            "has": false
+                        },
+                        "longBarrel": {
                             "has": false
                         },
                         "needle": {

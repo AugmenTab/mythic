@@ -170,7 +170,7 @@ function calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget) {
   return 10 * Math.floor((pRange - distanceFromTarget) / 50);
 }
 
-function calculateRangeEffects(weapon, distanceFromTarget) {
+function calculateRangeEffects(actorData, weapon, distanceFromTarget) {
   const noChanges = { target: 0, pierce: "full", damage: "0" };
 
   if (!game.settings.get("mythic", "rangeEffects")) return noChanges;
@@ -191,39 +191,26 @@ function calculateRangeEffects(weapon, distanceFromTarget) {
       break;
 
     case "ranged":
-      if (weapon.system.trainings.equipment === "range") {
-        switch(weapon.system.trainings.faction) {
-          case "unsc":
-            if (20 >= distanceFromTarget) {
-              return { target: -20, pierce: "full", damage: "0" };
-            }
-
-            if (50 >= distanceFromTarget && ammo.range.close >= 50) {
-              return noChanges;
-            }
-            break;
-
-          case "covenant":
-            if (10 >= distanceFromTarget) {
-              return { target: -20, pierce: "full", damage: "0" };
-            }
-
-            if (20 >= distanceFromTarget && ammo.range.close >= 20) {
-              return noChanges;
-            }
-            break;
-
-          case "forerunner":
-            if (20 >= distanceFromTarget) {
-              return { target: -20, pierce: "full", damage: "0" };
-            }
-
-            if (30 >= distanceFromTarget && ammo.range.close >= 30) {
-              return noChanges;
-            }
-            break;
-        }
+      if (ammo.special.longBarrel.has && 3 >= distanceFromTarget) {
+        return {
+          target: actorData.trainings.weapons.quickscope ? -5 : -10,
+          pierce: "full",
+          damage: spread ? "2D10" : "0"
+        };
       }
+
+      if (ammo.special.longBarrel.has && 10 >= distanceFromTarget) {
+        return {
+          target: actorData.trainings.weapons.quickscope ? -5 : -10,
+          pierce: "full",
+          damage: spread ? "1D10" : "0"
+        };
+      }
+
+      if (ammo.special.longBarrel.has && ammo.range.close >= distanceFromTarget) {
+        return { target: 0, pierce: "full", damage: spread ? "1D10" : "0" };
+      }
+
 
       if (ammo.range.close >= 3 && 3 >= distanceFromTarget) {
         return { target: 20, pierce: "full", damage: spread ? "2D10" : "0" };
