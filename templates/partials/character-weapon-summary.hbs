@@ -103,7 +103,28 @@
                   {{else if (eq weapon.system.group "melee")}}
                     {{this.range.melee}}&nbsp;m
                   {{else if (eq weapon.system.group "ranged")}}
-                    {{this.range.close}}&nbsp;-&nbsp;{{this.range.long}}&nbsp;m
+                    <div>
+                      {{this.range.close}}&nbsp;-&nbsp;{{this.range.long}}&nbsp;m
+                      <div class="scope">
+                        {{localnum weapon.system.scopeMinimum}}&nbsp;-
+                        {{localnum
+                            (doMath "*"
+                                    ../../system.perceptiveRange.total
+                                    weapon.system.scopeMagnification)}}&nbsp;m
+                        (&times;
+                        <input
+                          style="width:25px;height:20px"
+                          class="item-edit-inline"
+                          data-field="scopeMagnification"
+                          data-item-id="{{weapon._id}}"
+                          type="number"
+                          data-dtype="Number"
+                          value="{{weapon.system.scopeMagnification}}"
+                          onfocus="this.select()"
+                        />
+                        )
+                      </div>
+                    </div>
                   {{/if}}
                 </td>
                 {{!-- Magazine --}}
@@ -140,7 +161,7 @@
                     <div class="magazine">
                       <input
                         class="item-edit-inline"
-                        data-field="this.currentMag"
+                        data-field="ammoList.{{weapon.system.currentAmmo}}.currentMag"
                         data-item-id="{{weapon._id}}"
                         type="number"
                         data-dtype="Number"

@@ -70,6 +70,7 @@ export function getCharacteristicModifier(score) {
  */
 export function calculateWeaponValues(weaponData) {
   weaponData.price.total = weaponData.price.base + weaponData.price.mods;
+  weaponData.scopeMinimum = getScopeMinimumRange(weaponData.scopeMagnification);
 
   // TODO: Remove this once special ammo is implemented.
   weaponData.currentAmmo = "STD";
@@ -1299,6 +1300,16 @@ function getDifficultyFromTier(tier) {
     "4": "nemesis",
   };
   return tierMap[tier];
+}
+
+function getScopeMinimumRange(magnification) {
+  const mag = Math.floor(magnification);
+  if (mag >= 25) return 10  * mag;
+  if (mag >= 21) return 170 + (20 * (mag - 21));
+  if (mag >= 10) return 10  * (mag - 5);
+  if (mag >=  3) return  5  * (mag - 1);
+  if (mag >=  2) return  7;
+  return 0;
 }
 
 function resetCharacteristicPenalties(actorData) {
