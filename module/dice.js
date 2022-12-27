@@ -77,7 +77,7 @@ export async function rollAttacks(element, actor, weapon) {
 
   const currentAmmo = weapon.system.currentAmmo;
   const rangeEffects =
-    calculateRangeEffects(weapon, distanceFromTarget);
+    calculateRangeEffects(actor, weapon, distanceFromTarget);
 
   if (rangeEffects.error) {
     makeUIError(rangeEffects.error);
