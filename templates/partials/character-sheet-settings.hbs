@@ -57,63 +57,20 @@
                   onfocus="this.select()"
                 />
               {{else}}
-                {{!-- TODO: #each system.experiencePayout.difficulty as |payout tier| --}}
                 <div class="by-difficulty-tier">
-                  <input
-                    {{#if (eq system.experiencePayout.tier "easy")}}
-                      style="font-weight:bold"
-                    {{/if}}
-                    class="exp-input"
-                    name="system.experiencePayout.difficulty.easy"
-                    value="{{system.experiencePayout.difficulty.easy}}"
-                    type="number"
-                    data-dtype="Number"
-                    onfocus="this.select()"
-                  />
-                  <input
-                    {{#if (eq system.experiencePayout.tier "normal")}}
-                      style="font-weight:bold"
-                    {{/if}}
-                    class="exp-input"
-                    name="system.experiencePayout.difficulty.normal"
-                    value="{{system.experiencePayout.difficulty.normal}}"
-                    type="number"
-                    data-dtype="Number"
-                    onfocus="this.select()"
-                  />
-                  <input
-                    {{#if (eq system.experiencePayout.tier "heroic")}}
-                      style="font-weight:bold"
-                    {{/if}}
-                    class="exp-input"
-                    name="system.experiencePayout.difficulty.heroic"
-                    value="{{system.experiencePayout.difficulty.heroic}}"
-                    type="number"
-                    data-dtype="Number"
-                    onfocus="this.select()"
-                  />
-                  <input
-                    {{#if (eq system.experiencePayout.tier "legendary")}}
-                      style="font-weight:bold"
-                    {{/if}}
-                    class="exp-input"
-                    name="system.experiencePayout.difficulty.legendary"
-                    value="{{system.experiencePayout.difficulty.legendary}}"
-                    type="number"
-                    data-dtype="Number"
-                    onfocus="this.select()"
-                  />
-                  <input
-                    {{#if (eq system.experiencePayout.tier "nemesis")}}
-                      style="font-weight:bold"
-                    {{/if}}
-                    class="exp-input"
-                    name="system.experiencePayout.difficulty.nemesis"
-                    value="{{system.experiencePayout.difficulty.nemesis}}"
-                    type="number"
-                    data-dtype="Number"
-                    onfocus="this.select()"
-                  />
+                  {{#each system.experiencePayout.difficulty as |payout tier|}}
+                    <input
+                      {{#if (eq ../system.experiencePayout.tier tier)}}
+                        style="font-weight:bold"
+                      {{/if}}
+                      class="exp-input"
+                      name="system.experiencePayout.difficulty.{{tier}}"
+                      value="{{payout}}"
+                      type="number"
+                      data-dtype="Number"
+                      onfocus="this.select()"
+                    />
+                  {{/each}}
                 </div>
               {{/if}}
             </td>
@@ -609,63 +566,20 @@
                     onfocus="this.select()"
                   />
                 {{else}}
-                  {{!-- TODO: #each system.luck.difficulty as |luck tier| --}}
                   <div class="by-difficulty-tier">
-                    <input
-                      {{#if (eq system.luck.tier "easy")}}
-                        style="font-weight:bold"
-                      {{/if}}
-                      class="luck-input"
-                      name="system.luck.difficulty.easy"
-                      type="number"
-                      value="{{system.luck.difficulty.easy}}"
-                      data-dtype="Number"
-                      onfocus="this.select()"
-                    />
-                    <input
-                      {{#if (eq system.luck.tier "normal")}}
-                        style="font-weight:bold"
-                      {{/if}}
-                      class="luck-input"
-                      name="system.luck.difficulty.normal"
-                      type="number"
-                      value="{{system.luck.difficulty.normal}}"
-                      data-dtype="Number"
-                      onfocus="this.select()"
-                    />
-                    <input
-                      {{#if (eq system.luck.tier "heroic")}}
-                        style="font-weight:bold"
-                      {{/if}}
-                      class="luck-input"
-                      name="system.luck.difficulty.heroic"
-                      type="number"
-                      value="{{system.luck.difficulty.heroic}}"
-                      data-dtype="Number"
-                      onfocus="this.select()"
-                    />
-                    <input
-                      {{#if (eq system.luck.tier "legendary")}}
-                        style="font-weight:bold"
-                      {{/if}}
-                      class="luck-input"
-                      name="system.luck.difficulty.legendary"
-                      type="number"
-                      value="{{system.luck.difficulty.legendary}}"
-                      data-dtype="Number"
-                      onfocus="this.select()"
-                    />
-                    <input
-                      {{#if (eq system.luck.tier "nemesis")}}
-                        style="font-weight:bold"
-                      {{/if}}
-                      class="luck-input"
-                      name="system.luck.difficulty.nemesis"
-                      type="number"
-                      value="{{system.luck.difficulty.nemesis}}"
-                      data-dtype="Number"
-                      onfocus="this.select()"
-                    />
+                    {{#each system.luck.difficulty as |luck tier|}}
+                      <input
+                        {{#if (eq ../system.luck.tier tier)}}
+                          style="font-weight:bold"
+                        {{/if}}
+                        class="luck-input"
+                        name="system.luck.difficulty.{{tier}}"
+                        type="number"
+                        value="{{luck}}"
+                        data-dtype="Number"
+                        onfocus="this.select()"
+                      />
+                    {{/each}}
                   </div>
                 {{/if}}
               {{/if}}
