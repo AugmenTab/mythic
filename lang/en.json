@@ -329,7 +329,8 @@
             },
             "attack": {
                 "title": "Attack",
-                "pierce": "Pierce"
+                "pierce": "Pierce",
+                "specialDamage": "Special Damage"
             },
             "error": {
                 "nan": "Invalid entry: please enter a whole number.",

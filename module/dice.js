@@ -440,7 +440,7 @@ async function rollAttackAndDamage(actor, weapon, data) {
     const critType = game.settings.get("mythic", "criticalHitResult");
 
     let damage =
-      [ `${ammo.diceQuantity}D${ammo.diceValue}` , data.rangeDamage ].map(pool => {
+      [ `${ammo.diceQuantity}D${ammo.diceValue}`, data.rangeDamage ].map(pool => {
         if (!pool.toLowerCase().includes("d")) return pool;
 
         let min = ammo.special.diceMinimum.has
@@ -477,7 +477,10 @@ async function rollAttackAndDamage(actor, weapon, data) {
 
     const sizeBonus = weapon.system.group === "melee"
                     ? SIZE_DAMAGE_BONUS[actor.system.size] : 0;
-    attack.damageRoll = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
+
+    const formula = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
+    const dmgResult = await rollDamage(formula, ammo.critsOn);
+    attack = { ...attack, ...dmgResult };
 
     switch(data.pierce) {
       case "full":
@@ -523,6 +526,18 @@ async function rollBasicTest(target, test, type, actor) {
     ...outcome
   };
   await Chat.postChatMessage(result, actor);
+}
+
+async function rollDamage(formula, critsOn) {
+  const roll = await new Roll(formula).roll({ async: true });
+  const inline = roll.toAnchor();
+  const doesSpecialDamage = (
+       (game.settings.get("mythic", "criticalHitResult") === "special")
+    && roll.dice.some(die => die.results.some(res => res.result >= critsOn))
+  );
+
+  inline.className = "inline-roll inline-result";
+  return { damageRoll: inline.outerHTML, doesSpecialDamage: doesSpecialDamage };
 }
 
 async function rollEvasions(baseTarget, options, actor) {
