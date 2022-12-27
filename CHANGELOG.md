@@ -8,6 +8,7 @@
 * Updated the system to Mythic 6.0, with the following adjustments:
   * Set the default critical failure threshold to only natural 100s.
   * Added a value field for editing the Electrified special rule for Weapons.
+  * Introduction of new Long Barrel special rule for Weapons.
   * Updated values and logic handling melee reach, to-hit, and damage.
   * Updated the rules for calculating throwing distance.
   * Updated the rules for calculating carry, lift, and push weight.
@@ -30,6 +31,10 @@
 * Scatter is now determined at the time the attack is made, so it can persist between server instances.
 * Natural Armor is now supported.
 * Effects for attacking at different ranges (bonuses and penalties to attack, damage, and pierce) are applied based on distance to target. This can be toggled on and off with a system setting.
+* Education limit is now tracked and modifiable.
+* Perceptive Range is now tracked and modifiable.
+* Weapons have a Scope Magnification value, and display their effective minimum and maximum ranges with that magnification factored in.
+* Attacks that deal Special Damage now indicate this by displaying a bullseye.
 
 ## Bug Fixes
 

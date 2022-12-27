@@ -2,13 +2,13 @@
 
 An unofficial system implementation for playing the fan-made [Halo: Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
 
-This system (once complete) provides character sheet support for various Actor and Item types, mechanical support for dice and rules necessary to play games of Mythic 4.0 and later. Coming soon will be compendium content for the Bestiary, the Flood, and all in-game items.
+This system (once complete) provides character sheet support for various Actor and Item types, mechanical support for dice and rules necessary to play games of Mythic 6.0. Coming soon will be compendium content for the Bestiary, the Flood, and all in-game items.
 
 You can find video guides on how to install and use Mythic for Foundry [on my YouTube channel](https://www.youtube.com/playlist?list=PLeJTbB--c7R3tkFoFiC145CT_ykJ-FdsP).
 
 ## Installation
 
-The latest version of the Mythic for Foundry system can be installed using the manifest. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and provide the following link as the Manifest URL: 
+The latest version of the Mythic for Foundry system can be installed using the manifest. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and provide the following link as the Manifest URL:
 * [https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json](https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json)
 
 Any current or prior version can also be installed manually. You must clone or extract the system files to your `Data/systems/mythic` folder. Archives of all editions can be found in the [Releases](https://github.com/AugmenTab/mythic/releases).
@@ -98,18 +98,17 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 * Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 * Experience Purchase Price field does not focus coming off the Name field. It has to be focused a second time before the focus sticks.
-* Equipping a new armor while one is already equipped updates the character sheet n + 1 times, where n is the number of armors the user has in their inventory. This is not so much a bug as it is a quirk of how it updates each armor in turn to unequip them before finally equipping the new armor. This may cause unforeseen issues, but as of yet none have been observed. In the future, I would like to batch these changes, then update them all at once.
 
 ## Planned Features and Stretch Goals
 
 For a real-time record of what I'm working on, you can check the project's [Trello board](https://trello.com/b/y80KFteH/mythic-for-foundry).
 
+* Vehicle Actor type.
+* Fully functioning Medical page to handle Special Damage.
+* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Compendia as laid out above.
 * Tooltips for everything.
-* Fully functioning Medical page to handle Special Damage.
-* Vehicle Actor type.
 * A supporting API to handle weapon stat and price calculation using the [Mythic and 100DOS Community Development Tools](https://docs.google.com/spreadsheets/d/1e5gepoZg_IZvupVw-rCKNMz42xMxGlF--oJluaa9Ljo/edit?usp=sharing).
-* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Add called shots, Clear Target, and Precision Strike.
 * Add dual wielding.
 * Lock nav bar & inventory bar at the top of the Actor Sheet.
