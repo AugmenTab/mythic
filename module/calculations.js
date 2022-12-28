@@ -705,7 +705,7 @@ function calculateInitiative(actorData, feltFatigue) {
 
   formula.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
 
-  const mods = interpretDiceRollModifiers(formula.slice(1).join("+"));
+  const mods = interpretDiceRollModifiers(formula.slice(1).join("+")).flat;
   actorData.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
   actorData.initiative.formula = formula.join("+");
 }

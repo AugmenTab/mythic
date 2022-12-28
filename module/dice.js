@@ -2,7 +2,7 @@
 
 import { getCharacteristicModifier } from "./calculations.js";
 import * as Chat from "./chat.js";
-import { localize, makeUIError, makeUIWarning } from "./common.js";
+import * as Common from "./common.js";
 import { determineHitLocation } from "./location.js";
 
 const FORMULA = "D100";
@@ -42,13 +42,18 @@ const SIZE_DAMAGE_BONUS = {
  * @returns {number} The number value of the evaluated expression.
  */
 export function interpretDiceRollModifiers(str) {
-  const mods = str.trim().match(/\s*[+\-]?\s*\d+\s*/g);
-  const num = mods.reduce((acc, mod) => acc + parseInt(mod), 0);
+  const numsAndDice = Common.partitionArray(
+    (x => x.includes("d")),
+    str.split(/(?=[+-])/g).map(x => x.trim().toLowerCase().replace("+", ""))
+  );
 
-  if (isNaN(num)) {
-    makeUIError("mythic.chat.error.parseFailure");
+  const nums = numsAndDice.no.reduce((acc, mod) => acc + parseInt(mod), 0);
+  if (isNaN(nums)) {
+    Common.makeUIError("mythic.chat.error.parseFailure");
     throw new Error(msg);
-  } else return num;
+  }
+
+  return { flat: nums, dice: numsAndDice.yes };
 }
 
 /**
@@ -62,17 +67,23 @@ export async function rollAttacks(element, actor, weapon) {
   const attackOptions = await getAttackRollOptions();
   if (attackOptions.cancelled) return;
 
-  const atkMod = interpretDiceRollModifiers(attackOptions.circumstance.attack);
-  const dmgMod = interpretDiceRollModifiers(attackOptions.circumstance.damage);
-  const distanceFromTarget = parseFloat(attackOptions.distanceFromTarget);
+  const dmgMods = interpretDiceRollModifiers(attackOptions.circumstance.damage);
+  const atkMods = interpretDiceRollModifiers(attackOptions.circumstance.attack);
 
-  if ([ atkMod, dmgMod ].some(isNaN)) {
-    makeUIError("mythic.chat.error.nan");
+  let atkModRoll = 0;
+  if (atkMods.dice.length > 0) {
+    const atkRoll = await new Roll(atkMods.dice.join("+")).roll({ async: true });
+    atkModRoll = atkRoll.total;
+  }
+
+  if ([ atkMods.flat, dmgMods.flat ].some(isNaN)) {
+    Common.makeUIError("mythic.chat.error.nan");
     return;
   }
 
+  const distanceFromTarget = parseFloat(attackOptions.distanceFromTarget);
   if (isNaN(distanceFromTarget) || distanceFromTarget < 0) {
-    makeUIWarning("mythic.chat.error.distanceFromTargetDefaulted");
+    Common.makeUIWarning("mythic.chat.error.distanceFromTargetDefaulted");
   }
 
   const currentAmmo = weapon.system.currentAmmo;
@@ -80,19 +91,25 @@ export async function rollAttacks(element, actor, weapon) {
     calculateRangeEffects(actor, weapon, distanceFromTarget);
 
   if (rangeEffects.error) {
-    makeUIError(rangeEffects.error);
+    Common.makeUIError(rangeEffects.error);
     return;
   }
 
   const target = (
       weapon.system.ammoList[currentAmmo].target
-    + atkMod
+    + atkMods.flat
+    + atkModRoll
     + rangeEffects.target
     + calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget)
   );
 
+  if (isNaN(target)) {
+    Common.makeUIError("mythic.chat.error.nan");
+    return;
+  }
+
   const data = {
-    circDmg: dmgMod,
+    circDmg: dmgMods,
     rangeDamage: rangeEffects.damage,
     distanceFromTarget: distanceFromTarget,
     isZeroG: attackOptions.isZeroG,
@@ -115,15 +132,21 @@ export async function rollAttacks(element, actor, weapon) {
  */
 export async function rollEvasionBatch(element, actor) {
   const options = await getEvadeOptions(actor.system.skills.evasion.characteristic);
-  let mod = 0;
-  if (options.cancelled) {
-    return;
-  } else mod = interpretDiceRollModifiers(options.circumstance);
-  if (isNaN(mod) || isNaN(options.penalty) || isNaN(options.times)) {
-    makeUIError("mythic.chat.error.nan");
-    options.cancelled = true;
+  if (options.cancelled) return;
+
+  const mods = interpretDiceRollModifiers(options.circumstance);
+  let mod = mods.flat;
+  if (mods.dice.length > 0) {
+    const roll = await new Roll(mods.dice.join("+")).roll({ async: true });
+    mod += roll.total;
   }
-  if (!options.cancelled) await rollEvasions(parseInt(element.value) + mod, options, actor);
+
+  if (isNaN(mod) || isNaN(options.penalty) || isNaN(options.times)) {
+    Common.makeUIError("mythic.chat.error.nan");
+    return;
+  }
+
+  await rollEvasions(parseInt(element.value) + mod, options, actor);
 }
 
 /**
@@ -142,20 +165,21 @@ export async function rollTest(element, actor) {
         ? CHARACTERISTICS[element.name]
         : element.name
     );
-  const target = parseInt(element.value);
   const testOptions = await getTestOptions(test);
-  let mod = 0;
-  if (!testOptions.cancelled) mod = interpretDiceRollModifiers(testOptions.circumstance);
-  if (isNaN(mod)) {
-    makeUIError("mythic.chat.error.nan");
-    testOptions.cancelled = true;
+  if (testOptions.cancelled) return;
+
+  const mods = interpretDiceRollModifiers(testOptions.circumstance);
+  let mod = mods.flat;
+  if (mods.dice.length > 0) {
+    const roll = await new Roll(mods.dice.join("+")).roll({ async: true });
+    mod += roll.total;
   }
-  if (!testOptions.cancelled) {
-    if (type === "initiative") {
-      await rollInitiative(element, mod, actor);
-    } else {
-      await rollBasicTest(target + mod, test, type, actor);
-    }
+
+  if (type === "initiative") {
+    await rollInitiative(element, mod, actor);
+  } else {
+    const target = parseInt(element.value);
+    await rollBasicTest(target + mod, test, type, actor);
   }
 }
 
@@ -306,10 +330,10 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
 
 function getAttackFlavor(group, type, fireMode) {
   let message = `${capitalize(group)} ${capitalize(type)}
-  ${localize("mythic.chat.attack.title")}`;
+  ${Common.localize("mythic.chat.attack.title")}`;
   if (group === "ranged") {
     message += " - ";
-    message += localize(`mythic.weaponSheet.fireMode.${fireMode}`);
+    message += Common.localize(`mythic.weaponSheet.fireMode.${fireMode}`);
   }
   return message;
 }
@@ -323,11 +347,11 @@ async function getAttackRollOptions() {
       content: html,
       buttons: {
         roll: {
-          label: localize("mythic.chat.actions.roll"),
+          label: Common.localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processAttackOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: localize("mythic.chat.actions.cancel"),
+          label: Common.localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -348,11 +372,11 @@ async function getEvadeOptions(stat) {
       content: html,
       buttons: {
         roll: {
-          label: localize("mythic.chat.actions.roll"),
+          label: Common.localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processEvadeOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: localize("mythic.chat.actions.cancel"),
+          label: Common.localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -400,11 +424,11 @@ async function getTestOptions(test) {
       content: html,
       buttons: {
         roll: {
-          label: localize("mythic.chat.actions.roll"),
+          label: Common.localize("mythic.chat.actions.roll"),
           callback: html => resolve(_processTestOptions(html[0].querySelector("form")))
         },
         cancel: {
-          label: localize("mythic.chat.actions.cancel"),
+          label: Common.localize("mythic.chat.actions.cancel"),
           callback: html => resolve({cancelled: true})
         }
       },
@@ -478,7 +502,9 @@ async function rollAttackAndDamage(actor, weapon, data) {
     const sizeBonus = weapon.system.group === "melee"
                     ? SIZE_DAMAGE_BONUS[actor.system.size] : 0;
 
-    const formula = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg}`;
+    let formula = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg.flat}`;
+    data.circDmg.dice.forEach(die => formula += ` + ${die}`);
+
     const dmgResult = await rollDamage(formula, ammo.critsOn);
     attack = { ...attack, ...dmgResult };
 
@@ -522,7 +548,7 @@ async function rollBasicTest(target, test, type, actor) {
     critical: false,
     outcome: "",
     template: "test",
-    flavor: `${localize("mythic.chat.test")}: ${test}`,
+    flavor: `${Common.localize("mythic.chat.test")}: ${test}`,
     ...outcome
   };
   await Chat.postChatMessage(result, actor);
@@ -546,7 +572,7 @@ async function rollEvasions(baseTarget, options, actor) {
 
   let result = {
     evasions: [],
-    flavor: `${localize("mythic.chat.test")}: ${localize(i18n)} (${stat})`,
+    flavor: `${Common.localize("mythic.chat.test")}: ${Common.localize(i18n)} (${stat})`,
     type: "test",
     template: "evade"
   };
@@ -573,7 +599,7 @@ async function rollInitiative(element, mod, actor) {
     const result = await roll.roll({ async: true });
     result.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: actor }),
-      flavor: localize("mythic.characterWeaponSummary.initiative")
+      flavor: Common.localize("mythic.characterWeaponSummary.initiative")
     });
   }
 }
