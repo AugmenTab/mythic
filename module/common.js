@@ -27,3 +27,16 @@ export function makeUIError(path) {
 export function makeUIWarning(path) {
   ui.notifications.warn(localize(path));
 }
+
+/**
+ * Partitions an array based on a provided predicate function.
+ * @param {function} pred - The predicate function to check.
+ * @param {object} arr - The array to partition.
+ * @returns {object} - An object with two arrays: results that failed the
+ * predicate and results that passed the predicate.
+ */
+export function partitionArray(pred, arr) {
+  let no = [], yes = [];
+  arr.forEach(x => (pred(x) ? yes : no).push(x));
+  return { no, yes };
+}
