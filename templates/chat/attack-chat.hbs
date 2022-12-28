@@ -10,12 +10,12 @@
         <p><b>&vert;&vert;</b></p>
         <p>
           <b style="color:{{attack.color}}">{{{attack.roll}}}</b>
-          <b>vs&nbsp;{{../this.target}}:&nbsp;
+          <b>vs&nbsp;{{../this.target}}:
           </b>
           {{#if attack.critical}}
             Critical&nbsp;{{attack.outcome}}!
           {{else}}
-            &nbsp;{{attack.degrees}}&nbsp;degrees&nbsp;of&nbsp;{{attack.outcome}}!
+            {{attack.degrees}}&nbsp;degrees&nbsp;of&nbsp;{{attack.outcome}}!
           {{/if}}
         </p>
       </span>
