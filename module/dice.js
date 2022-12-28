@@ -439,6 +439,12 @@ async function getTestOptions(test) {
   });
 }
 
+function renderChatRoll(roll, classes = []) {
+  const inline = roll.toAnchor();
+  inline.className = [ "inline-roll", "inline-result", ...classes ].join(" ");
+  return inline.outerHTML;
+}
+
 function reverseDigits(roll) {
   let digits = String(roll).split("");
   if (digits.length === 1) {
@@ -455,7 +461,7 @@ async function rollAttackAndDamage(actor, weapon, data) {
   let attack = {
     attackNumber: data.attackNumber,
     damages: data.damages,
-    roll: roll.total,
+    roll: renderChatRoll(roll),
     ...outcome
   };
 
@@ -543,7 +549,7 @@ async function rollBasicTest(target, test, type, actor) {
   let result = {
     type: type,
     test: test,
-    roll: roll.total,
+    roll: renderChatRoll(roll),
     target: target > 0 ? target : 0,
     critical: false,
     outcome: "",
@@ -556,14 +562,13 @@ async function rollBasicTest(target, test, type, actor) {
 
 async function rollDamage(formula, critsOn) {
   const roll = await new Roll(formula).roll({ async: true });
-  const inline = roll.toAnchor();
-  const doesSpecialDamage = (
-       (game.settings.get("mythic", "criticalHitResult") === "special")
-    && roll.dice.some(die => die.results.some(res => res.result >= critsOn))
-  );
-
-  inline.className = "inline-roll inline-result";
-  return { damageRoll: inline.outerHTML, doesSpecialDamage: doesSpecialDamage };
+  return {
+    damageRoll: renderChatRoll(roll),
+    doesSpecialDamage: (
+         (game.settings.get("mythic", "criticalHitResult") === "special")
+      && roll.dice.some(die => die.results.some(res => res.result >= critsOn))
+    )
+  };
 }
 
 async function rollEvasions(baseTarget, options, actor) {
@@ -579,11 +584,11 @@ async function rollEvasions(baseTarget, options, actor) {
 
   for (let i = 0; i < options.times; i++) {
     const roll = await new Roll(FORMULA).roll({ async: true });
-    let target = baseTarget - (i * options.penalty);
-    let outcome = determineRollOutcome(roll.total, target);
+    const target = baseTarget - (i * options.penalty);
+    const outcome = determineRollOutcome(roll.total, target);
     result.evasions.push({
       evasionNumber: i + 1,
-      roll: roll.total,
+      roll: renderChatRoll(roll),
       target: target > 0 ? target : 0,
       ...outcome
     });

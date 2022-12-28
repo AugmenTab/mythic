@@ -4,13 +4,13 @@
       <p><b style="font-size:1.125em">{{evasion.evasionNumber}}</b></p>
       <p><b>&vert;&vert;</b></p>
       <p>
-        <b style="color:{{evasion.color}}">[[{{evasion.roll}}]]</b>
-        <b>&nbsp;vs&nbsp;{{evasion.target}}:&nbsp;</b>
-        {{#if evasion.critical}}
-          Critical&nbsp;{{evasion.outcome}}!
-        {{else}}
-          {{evasion.degrees}}&nbsp;degrees&nbsp;of&nbsp;{{evasion.outcome}}!
-        {{/if}}
+      <b style="color:{{evasion.color}}">{{{evasion.roll}}}</b>
+      <b>&nbsp;vs&nbsp;{{evasion.target}}:&nbsp;</b>
+      {{#if evasion.critical}}
+        Critical&nbsp;{{evasion.outcome}}!
+      {{else}}
+        {{evasion.degrees}}&nbsp;degrees&nbsp;of&nbsp;{{evasion.outcome}}!
+      {{/if}}
       </p>
     </span>
   {{/each}}
