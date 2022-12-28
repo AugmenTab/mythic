@@ -44,6 +44,8 @@
 * Inventory items now calculate and display weight values correctly.
 * Fixes Actor data preparation failing at the time of Actor creation.
 * Self-supporting items now only apply their benefit when they are equipped.
+* Dice are now parsed in circumstance modifiers for Tests, as well as To-Hit and Damage values for Attacks.
+* Various formatting issues in sheets and chat messages were corrected.
 
 ## 0.2.4
 
