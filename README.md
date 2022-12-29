@@ -2,6 +2,14 @@
 
 An unofficial system implementation for playing the fan-made [Halo: Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
 
+![Foundry Version Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dfor-the-badge%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FAugmenTab%2Fmythic%2Fmain%2Fsystem.json)
+![License](https://img.shields.io/github/license/AugmenTab/mythic?style=for-the-badge)
+![Downloads](https://img.shields.io/github/downloads/AugmenTab/mythic/total?style=for-the-badge)
+![Downloads - Latest Release](https://img.shields.io/github/downloads/AugmenTab/mythic/latest/total?style=for-the-badge)
+![Code Size](https://img.shields.io/github/languages/code-size/AugmenTab/mythic?style=for-the-badge)
+![Open Issues](https://img.shields.io/github/issues/AugmenTab/mythic?style=for-the-badge)
+![Last Commit](https://img.shields.io/github/last-commit/AugmenTab/mythic?style=for-the-badge)
+
 This system (once complete) provides character sheet support for various Actor and Item types, mechanical support for dice and rules necessary to play games of Mythic 6.0. Coming soon will be compendium content for the Bestiary, the Flood, and all in-game items.
 
 You can find video guides on how to install and use Mythic for Foundry [on my YouTube channel](https://www.youtube.com/playlist?list=PLeJTbB--c7R3tkFoFiC145CT_ykJ-FdsP).
