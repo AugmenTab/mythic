@@ -1,8 +1,8 @@
-module.exports = function(grunt) {
+module.exports = grunt => {
   const DEV_PATH = "/home/foundry/foundrydata/Data/systems/mythic/";
   const RELEASE_DIR = "/home/tab/Documents";
   const RELEASE_PATH = RELEASE_DIR + "/mythic";
-  const RELEASE_TASKS = ["less", "copy:release", "uglify", "compress", "clean"];
+  const RELEASE_TASKS = [ "less", "copy:release", "uglify", "compress", "clean" ];
 
   // Configuration
   grunt.initConfig({
@@ -32,25 +32,27 @@ module.exports = function(grunt) {
     copy: {
       dev: {
         files: [
-          {expand: true, src: "lang/*",        dest: DEV_PATH},
-          {expand: true, src: "mythic.css",    dest: DEV_PATH},
-          {expand: true, src: "system.json",   dest: DEV_PATH},
-          {expand: true, src: "template.json", dest: DEV_PATH},
-          {expand: true, src: "module/**",     dest: DEV_PATH},
-          {expand: true, src: "templates/**",  dest: DEV_PATH},
-          {expand: true, src: "mythic.js",     dest: DEV_PATH}
+          { expand: true, src: "lang/*",        dest: DEV_PATH },
+          { expand: true, src: "mythic.css",    dest: DEV_PATH },
+          { expand: true, src: "system.json",   dest: DEV_PATH },
+          { expand: true, src: "template.json", dest: DEV_PATH },
+          { expand: true, src: "module/**",     dest: DEV_PATH },
+          { expand: true, src: "packs/**",      dest: DEV_PATH },
+          { expand: true, src: "templates/**",  dest: DEV_PATH },
+          { expand: true, src: "mythic.js",     dest: DEV_PATH }
         ]
       },
       release: {
         files: [
-          {expand: true, src: "lang/*",        dest: RELEASE_PATH},
-          {expand: true, src: "templates/**",  dest: RELEASE_PATH},
-          {expand: true, src: "CHANGELOG.md",  dest: RELEASE_PATH},
-          {expand: true, src: "LICENSE.txt",   dest: RELEASE_PATH},
-          {expand: true, src: "mythic.css",    dest: RELEASE_PATH},
-          {expand: true, src: "README.md",     dest: RELEASE_PATH},
-          {expand: true, src: "system.json",   dest: RELEASE_PATH},
-          {expand: true, src: "template.json", dest: RELEASE_PATH}
+          { expand: true, src: "lang/*",        dest: RELEASE_PATH },
+          { expand: true, src: "packs/*",       dest: RELEASE_PATH },
+          { expand: true, src: "templates/**",  dest: RELEASE_PATH },
+          { expand: true, src: "CHANGELOG.md",  dest: RELEASE_PATH },
+          { expand: true, src: "LICENSE.txt",   dest: RELEASE_PATH },
+          { expand: true, src: "mythic.css",    dest: RELEASE_PATH },
+          { expand: true, src: "README.md",     dest: RELEASE_PATH },
+          { expand: true, src: "system.json",   dest: RELEASE_PATH },
+          { expand: true, src: "template.json", dest: RELEASE_PATH }
         ]
       }
     },
@@ -59,7 +61,7 @@ module.exports = function(grunt) {
     less:{
       main: {
         options: {
-          paths: ["less/"],
+          paths: [ "less/" ],
           compress: true
         },
         files: {
@@ -72,8 +74,8 @@ module.exports = function(grunt) {
     uglify: {
       main: {
         files: [
-          {expand: true, src: "module/**/*.js", dest: RELEASE_PATH},
-          {expand: true, src: "mythic.js",      dest: RELEASE_PATH}
+          { expand: true, src: "module/**/*.js", dest: RELEASE_PATH },
+          { expand: true, src: "mythic.js",      dest: RELEASE_PATH }
         ]
       }
     },
@@ -82,7 +84,7 @@ module.exports = function(grunt) {
     watch: {
       peep: {
         files: "*",
-        tasks: ["default"]
+        tasks: [ "default" ]
       }
     }
   });
@@ -96,6 +98,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Tasks
-  grunt.registerTask('default', ["less", "copy:dev"]);
+  grunt.registerTask('default', [ "less", "copy:dev" ]);
   grunt.registerTask('release', RELEASE_TASKS);
 };
