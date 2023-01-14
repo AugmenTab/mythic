@@ -1,0 +1,67 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.35.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           domain
+version:        0.1.0.0
+description:    A helper program to build items and populate compendia for Mythic for Foundry.
+homepage:       https://github.com/AugmenTab/mythic#readme
+bug-reports:    https://github.com/AugmenTab/mythic/issues
+author:         Tyler Baum
+maintainer:     tyler.baum@protonmail.com
+copyright:      2023 Tyler Baum
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/AugmenTab/mythic
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_domain
+  hs-source-dirs:
+      src
+  default-extensions:
+      DeriveDataTypeable
+      DerivingStrategies
+      FlexibleContexts
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      NoImplicitPrelude
+      OverloadedStrings
+  ghc-options: -j -Werror -Wall -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Wmissing-deriving-strategies -Wmissing-export-lists -fno-warn-orphans
+  build-depends:
+      base >=4.7 && <5
+    , flipstone-prelude
+    , text
+  default-language: Haskell2010
+
+executable domain-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_domain
+  hs-source-dirs:
+      app
+  default-extensions:
+      DeriveDataTypeable
+      DerivingStrategies
+      FlexibleContexts
+      GeneralizedNewtypeDeriving
+      MultiParamTypeClasses
+      NoImplicitPrelude
+      OverloadedStrings
+  ghc-options: -j -Werror -Wall -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Wmissing-deriving-strategies -Wmissing-export-lists -fno-warn-orphans -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , domain
+    , flipstone-prelude
+    , text
+  default-language: Haskell2010
