@@ -20,8 +20,12 @@ description:         A helper program to build items and populate compendia for 
 
 dependencies:
 - base >= 4.7 && < 5
+- bytestring
+- cassava
 - flipstone-prelude
+- ghc-prim
 - text
+- vector
 
 default-extensions:
   - DeriveDataTypeable

@@ -13,7 +13,6 @@ author:         Tyler Baum
 maintainer:     tyler.baum@protonmail.com
 copyright:      2023 Tyler Baum
 license:        BSD3
-license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
@@ -24,7 +23,8 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Data.Types
+      Data.Types.Ingest
   other-modules:
       Paths_domain
   hs-source-dirs:
@@ -40,8 +40,12 @@ library
   ghc-options: -j -Werror -Wall -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Wmissing-deriving-strategies -Wmissing-export-lists -fno-warn-orphans
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , flipstone-prelude
+    , ghc-prim
     , text
+    , vector
   default-language: Haskell2010
 
 executable domain-exe
@@ -61,7 +65,11 @@ executable domain-exe
   ghc-options: -j -Werror -Wall -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Wmissing-deriving-strategies -Wmissing-export-lists -fno-warn-orphans -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , bytestring
+    , cassava
     , domain
     , flipstone-prelude
+    , ghc-prim
     , text
+    , vector
   default-language: Haskell2010

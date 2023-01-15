@@ -3,11 +3,21 @@ module Main
   ) where
 
 import           Flipstone.Prelude
-import           Lib
+import           Data.Types
 
-import qualified Data.Text.IO as Text
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.Csv as CSV
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
+import           Data.Vector
+import qualified System.IO as IO
 
 main :: IO ()
 main = do
-  Text.putStrLn "Up and running"
-  someFunc
+  fileData <- IO.readFile "data/equipment.csv"
+  case CSV.decodeByName $ LBS.fromStrict $ TE.encodeUtf8 $ T.pack fileData of
+    Left err -> IO.putStrLn err
+    Right x  -> printSuccess x
+
+printSuccess :: (a, Vector RawEquipment) -> IO ()
+printSuccess _ = IO.putStrLn "Success!"
