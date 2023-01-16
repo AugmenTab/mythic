@@ -24,6 +24,7 @@ source-repository head
 library
   exposed-modules:
       Data.Types
+      Data.Types.Compendium
       Data.Types.Foundry
       Data.Types.Ingest
       Data.Types.Prelude

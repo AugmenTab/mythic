@@ -14,6 +14,7 @@ module Data.Types.Prelude
   , Hardpoints
   , ItemPrice
   , ItemTrainings
+  , ItemType
   , Protection
   , Reload
   , Shields
@@ -169,6 +170,13 @@ data ItemTrainings =
     { itemTrainingsEquipment :: Maybe EquipmentTraining
     , itemTrainingsFaction   :: Faction
     }
+
+data ItemType
+  = ItemAbility
+  | ItemArmor
+  | ItemEducation
+  | ItemEquipment
+  | ItemWeapon
 
 newtype MagazineCapacity = MagazineCapacity Int
 
