@@ -5,6 +5,7 @@ module Data.Types.Foundry
   ) where
 
 import           Flipstone.Prelude
+import           Domain.JSON
 import           Data.Types.Prelude
 
 import qualified Data.Map as Map
@@ -16,7 +17,7 @@ data Armor =
     , armorFaction     :: Text
     , armorDescription :: Description
     , armorPrice       :: ItemPrice
-    , armorBreakPoints :: Breakpoints
+    , armorBreakpoints :: Breakpoints
     , armorTrainings   :: ItemTrainings
     , armorWeight      :: Weight
     , armorStats       :: StatAdjustments
@@ -25,7 +26,26 @@ data Armor =
     , armorNotes       :: ArmorNotes
     , armorProtection  :: Protection
     , armorShields     :: Shields
+    , armorSize        :: Size
     }
+
+instance ToJSON Armor where
+  toJSON a =
+    object [ "faction"         .= armorFaction a
+           , "description"     .= armorDescription a
+           , "price"           .= armorPrice a
+           , "breakPoints"     .= armorBreakpoints a
+           , "trainings"       .= armorTrainings a
+           , "weight"          .= armorWeight a
+           , "characteristics" .= armorStats a
+           , "hardpoints"      .= armorHardpoints a
+           , "material"        .= armorMaterial a
+           , "notes"           .= armorNotes a
+           , "protection"      .= armorProtection a
+           , "shields"         .= armorShields a
+           , "size"            .= armorSize a
+           , "variant"         .= armorVariant a
+           ]
 
 data Equipment =
   Equipment

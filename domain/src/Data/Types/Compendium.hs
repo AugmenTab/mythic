@@ -1,38 +1,39 @@
 module Data.Types.Compendium
   ( Compendium
   , Entry
-  , GameItem
   , Img
   , ItemID
-  , Permission
   ) where
 
 import           Flipstone.Prelude
 import           Data.Types.Prelude
-import           Data.Types.Foundry
+import           Domain.JSON
 
-import qualified Data.Map as Map
-import           Data.Maybe (fromMaybe)
+newtype Compendium item = Compendium [Entry item]
 
-newtype Compendium = Compendium [Entry]
-
-data Entry =
+data Entry item =
   Entry
-    { entryId         :: ItemID
-    , entryName       :: Name
-    , entryType       :: ItemType
-    , entryImg        :: Img
-    , entryData       :: GameItem
-    , entryPermission :: Permission
+    { entryId   :: ItemID
+    , entryName :: Name
+    , entryImg  :: Img
+    , entryType :: ItemType
+    , entryData :: item
     }
 
-data GameItem
-  = ArmorItem     Armor
-  | EquipmentItem Equipment
-  | WeaponItem    Weapon
+instance ToJSON item => ToJSON (Entry item) where
+  toJSON e =
+    object [ "_id"        .= entryId e
+           , "name"       .= entryName e
+           , "img"        .= entryImg e
+           , "type"       .= entryType e
+           , "system"     .= entryData e
+           , "flags"      .= emptyObject
+           , "effects"    .= emptyArray
+           , "permission" .= object [ "default" .= defaultInt 0 ]
+           ]
 
 newtype Img = Img Text
+  deriving newtype (ToJSON)
 
 newtype ItemID = ItemID Text
-
-newtype Permission = Permission Int
+  deriving newtype (ToJSON)
