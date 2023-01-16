@@ -20,7 +20,7 @@ module Data.Types.Prelude
   , Reload
   , Shields
   , Size
-  , SpecialRule
+  , SpecialRules
   , StatAdjustments
   , WeaponGroup
   , WeaponRange
@@ -46,7 +46,7 @@ import           Domain.JSON
 
 import           Data.Coerce (coerce)
 import qualified Data.Map as Map
-import           Data.Maybe (fromMaybe)
+import           Data.Maybe (fromMaybe, isJust)
 import qualified Data.Set as Set
 import qualified Data.Text as T
 import           GHC.Types (Double)
@@ -86,7 +86,7 @@ data Ammunition =
     , ammunitionCritsOn      :: Int
     , ammunitionRange        :: WeaponRange
     , ammunitionDescription  :: Description
-    , ammunitionSpecials     :: Set SpecialRule
+    , ammunitionSpecials     :: SpecialRules
     }
 
 instance ToJSON Ammunition where
@@ -109,7 +109,7 @@ instance ToJSON Ammunition where
                , "ammoTracking" .= emptyAmmoTracking
                , "range"        .= ammunitionRange a
                , "desc"         .= ammunitionDescription a
-            -- , "special"      .= ammunitionSpecials a
+               , "special"      .= ammunitionSpecials a
                ]
 
 data ArmorAdjustment =
@@ -459,41 +459,91 @@ sizeText size =
     Colossal   -> "colossal"
     Vast       -> "vast"
 
-data SpecialRule
-  = Acid             Int
-  | Blast            Int
-  | Cauterize
-  | ChargeRule       Int
-  | Cryo             Text
-  | DiceMinimum      Int
-  | Electrified      Int
-  | EMP              Int
-  | Flame            Text
-  | Flashbang
-  | GravimetricPulse Int
-  | Gravity          Int
-  | Hardlight
-  | Headshot
-  | Homing           Int
-  | Kill             Int
-  | Kinetic
-  | LongBarrel
-  | Needle           Int
-  | Nonlethal
-  | Overheat         Int
-  | Penetrating
-  | RechargeRate     Int
-  | SingleLoading
-  | Slow
-  | Smoke            Int
-  | Spike
-  | Spin             Int
-  | Spread
-  | Sticky
-  | Stun             Int
-  | TearGas
-  | Tranquilize      Int
-  | VehicleLock
+data SpecialRules =
+  SpecialRules
+    { acid             :: Maybe Int
+    , blast            :: Maybe Int
+    , cauterize        :: Maybe ()
+    , chargeRule       :: Maybe Int
+    , cryo             :: Maybe Text
+    , diceMinimum      :: Maybe Int
+    , electrified      :: Maybe Int
+    , emp              :: Maybe Int
+    , flame            :: Maybe Text
+    , flashbang        :: Maybe ()
+    , gravimetricPulse :: Maybe Int
+    , gravity          :: Maybe Int
+    , hardlight        :: Maybe ()
+    , headshot         :: Maybe ()
+    , homing           :: Maybe Int
+    , kill             :: Maybe Int
+    , kinetic          :: Maybe ()
+    , longBarrel       :: Maybe ()
+    , needle           :: Maybe Int
+    , nonlethal        :: Maybe ()
+    , overheat         :: Maybe Int
+    , penetrating      :: Maybe ()
+    , rechargeRate     :: Maybe Int
+    , singleLoading    :: Maybe ()
+    , slow             :: Maybe ()
+    , smoke            :: Maybe Int
+    , spike            :: Maybe ()
+    , spin             :: Maybe Int
+    , spread           :: Maybe ()
+    , sticky           :: Maybe ()
+    , stun             :: Maybe Int
+    , tearGas          :: Maybe ()
+    , tranquilize      :: Maybe Int
+    , vehicleLock      :: Maybe ()
+    }
+
+instance ToJSON SpecialRules where
+  toJSON r =
+    let noneRule mbRule = object [ "has" .= isJust mbRule ]
+        intRule mbInt =
+          object [ "has"   .= isJust mbInt
+                 , "value" .= fromMaybe 0 mbInt
+                 ]
+
+        textRule mbText =
+          object [ "has"   .= isJust mbText
+                 , "value" .= fromMaybe "1D5" mbText
+                 ]
+
+     in object [ "acid"             .= intRule  (acid r)
+               , "blast"            .= intRule  (blast r)
+               , "cauterize"        .= noneRule (cauterize r)
+               , "charge"           .= intRule  (chargeRule r)
+               , "cryo"             .= textRule (cryo r)
+               , "diceMinimum"      .= intRule  (diceMinimum r)
+               , "electrified"      .= intRule  (electrified r)
+               , "emp"              .= intRule  (emp r)
+               , "flame"            .= textRule (flame r)
+               , "flashbang"        .= noneRule (flashbang r)
+               , "gravimetricPulse" .= intRule  (gravimetricPulse r)
+               , "gravity"          .= intRule  (gravity r)
+               , "hardlight"        .= noneRule (hardlight r)
+               , "headshot"         .= noneRule (headshot r)
+               , "homing"           .= intRule  (homing r)
+               , "kill"             .= intRule  (kill r)
+               , "kinetic"          .= noneRule (kinetic r)
+               , "longBarrel"       .= noneRule (longBarrel r)
+               , "needle"           .= intRule  (needle r)
+               , "nonlethal"        .= noneRule (nonlethal r)
+               , "overheat"         .= intRule  (overheat r)
+               , "penetrating"      .= noneRule (penetrating r)
+               , "rechargeRate"     .= intRule  (rechargeRate r)
+               , "singleLoading"    .= noneRule (singleLoading r)
+               , "slow"             .= noneRule (slow r)
+               , "smoke"            .= intRule  (smoke r)
+               , "spin"             .= noneRule (spin r)
+               , "spread"           .= noneRule (spread r)
+               , "sticky"           .= noneRule (sticky r)
+               , "stun"             .= noneRule (stun r)
+               , "tearGas"          .= noneRule (tearGas r)
+               , "tranquilize"      .= noneRule (tranquilize r)
+               , "vehicleLock"      .= noneRule (vehicleLock r)
+               ]
 
 data StatAdjustments =
   StatAdjustments
