@@ -5,22 +5,22 @@ module Domain.JSON
   , withObject
   , (.=)
 
-  , defaultInt
   , emptyArray
   , encodeJSON
   , emptyObject
+  , keyFromText
+  , valueInt
+  , valueText
   ) where
 
 import           Flipstone.Prelude
 
 import           Data.Aeson (ToJSON(..), encode, withObject, object, (.=))
+import           Data.Aeson.Key (Key, fromText)
 import           Data.Aeson.Types (Value(..))
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text.Encoding as TE
 import qualified Data.Vector as V
-
-defaultInt :: Int -> Value
-defaultInt = toJSON
 
 emptyArray :: Value
 emptyArray = Array V.empty
@@ -30,3 +30,12 @@ encodeJSON = TE.decodeUtf8 . LBS.toStrict . encode
 
 emptyObject :: Value
 emptyObject = object []
+
+keyFromText :: Text -> Key
+keyFromText = fromText
+
+valueInt :: Int -> Value
+valueInt = toJSON
+
+valueText :: Text -> Value
+valueText = toJSON

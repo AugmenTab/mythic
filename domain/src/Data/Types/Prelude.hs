@@ -1,6 +1,7 @@
 module Data.Types.Prelude
   ( -- Data Types
     AmmoGroup
+  , AmmoList
   , Ammunition
   , ArmorAdjustment
   , ArmorNotes
@@ -10,7 +11,7 @@ module Data.Types.Prelude
   , Faction
   , FirearmType
   , FireMode
-  , Grip
+  , FireModes
   , Hardpoints
   , ItemPrice
   , ItemTrainings
@@ -25,6 +26,7 @@ module Data.Types.Prelude
   , WeaponRange
   , WeaponSettings
   , WeaponTag
+  , WeaponTags
   , Weight
 
     -- Newtypes
@@ -42,12 +44,16 @@ module Data.Types.Prelude
 import           Flipstone.Prelude
 import           Domain.JSON
 
+import           Data.Coerce (coerce)
 import qualified Data.Map as Map
 import           Data.Maybe (fromMaybe)
+import qualified Data.Set as Set
 import qualified Data.Text as T
 import           GHC.Types (Double)
+import           Text.Show (Show, show)
 
 newtype Ammo = Ammo Text
+  deriving newtype (ToJSON)
 
 data AmmoGroup
   = None
@@ -59,9 +65,16 @@ data AmmoGroup
   | MRC
   | BruteShot
 
+newtype AmmoList = AmmoList [Ammunition]
+
+instance ToJSON AmmoList where
+  toJSON (AmmoList l) =
+    object $ (\a -> (keyFromText . coerce $ ammunitionName a) .= a) <$> l
+
 data Ammunition =
   Ammunition
-    { ammunitionAttackBonus  :: Int
+    { ammunitionName         :: Name
+    , ammunitionAttackBonus  :: Int
     , ammunitionDiceQuantity :: Int
     , ammunitionDiceValue    :: Int
     , ammunitionBaseDamage   :: Int
@@ -73,8 +86,31 @@ data Ammunition =
     , ammunitionCritsOn      :: Int
     , ammunitionRange        :: WeaponRange
     , ammunitionDescription  :: Description
-    , ammunitionSpecials     :: Map.Map Text SpecialRule
+    , ammunitionSpecials     :: Set SpecialRule
     }
+
+instance ToJSON Ammunition where
+  toJSON a =
+    let emptyAmmoTracking =
+          object [ "pool" .= valueInt 0
+                 , "mags" .= valueInt 0
+                 ]
+
+     in object [ "attackBonus"  .= ammunitionAttackBonus a
+               , "diceQuantity" .= ammunitionDiceQuantity a
+               , "diceValue"    .= ammunitionDiceValue a
+               , "baseDamage"   .= ammunitionBaseDamage a
+               , "strDamage"    .= ammunitionSTRDamage a
+               , "piercing"     .= ammunitionPiercing a
+               , "strPiercing"  .= ammunitionSTRPiercing a
+               , "target"       .= ammunitionTarget a
+               , "currentMag"   .= ammunitionCurrentMag a
+               , "critsOn"      .= ammunitionCritsOn a
+               , "ammoTracking" .= emptyAmmoTracking
+               , "range"        .= ammunitionRange a
+               , "desc"         .= ammunitionDescription a
+            -- , "special"      .= ammunitionSpecials a
+               ]
 
 data ArmorAdjustment =
   ArmorAdjustment
@@ -142,6 +178,21 @@ data Attack =
     , attackBonus    :: Int
     }
 
+instance ToJSON Attack where
+  toJSON a =
+    object [ "fireMode"    .= attackFireModeText a
+           , "half"        .= attackHalf a
+           , "full"        .= attackFull a
+           , "attackBonus" .= attackBonus a
+           ]
+
+attackFireModeText :: Attack -> Text
+attackFireModeText atk =
+  T.concat [ fireModeText $ attackFireMode atk
+           , "-"
+           , T.pack . show $ attackFireRate atk
+           ]
+
 data Barrel
   = XS
   | S
@@ -149,6 +200,19 @@ data Barrel
   | L
   | XL
   | XXL
+
+instance ToJSON Barrel where
+  toJSON = toJSON . barrelText
+
+barrelText :: Barrel -> Text
+barrelText barrel =
+  case barrel of
+    XS  -> "xs"
+    S   -> "s"
+    M   -> "m"
+    L   -> "l"
+    XL  -> "xl"
+    XXL -> "xxl"
 
 newtype Breakpoints = Breakpoints Int
   deriving newtype (ToJSON)
@@ -203,6 +267,16 @@ data FirearmType
   | Cannons
   | Shotguns
 
+instance ToJSON FirearmType where
+  toJSON = toJSON . firearmTypeText
+
+firearmTypeText :: FirearmType -> Text
+firearmTypeText fType =
+  case fType of
+    Firearms -> "firearms"
+    Cannons  -> "cannons"
+    Shotguns -> "shotguns"
+
 data FireMode
   = Auto
   | Burst
@@ -212,25 +286,48 @@ data FireMode
   | Pump
   | Semi
   | Sustained
+  deriving stock (Eq, Ord)
+
+fireModeText :: FireMode -> Text
+fireModeText fm =
+  case fm of
+    Auto      -> "auto"
+    Burst     -> "burst"
+    Charge    -> "charge"
+    Drawback  -> "drawback"
+    Flintlock -> "flintlock"
+    Pump      -> "pump"
+    Semi      -> "semi"
+    Sustained -> "sustained"
+
+newtype FireModes = FireModes (Map.Map FireMode FireRate)
+
+instance ToJSON FireModes where
+  toJSON (FireModes f) =
+    let lookup = valueInt . maybe 0 coerce . flip Map.lookup f
+     in object [ "auto"      .= lookup Auto
+               , "burst"     .= lookup Burst
+               , "charge"    .= lookup Charge
+               , "drawback"  .= lookup Drawback
+               , "flintlock" .= lookup Flintlock
+               , "pump"      .= lookup Pump
+               , "semi"      .= lookup Semi
+               , "sustained" .= lookup Sustained
+               ]
 
 newtype FireRate = FireRate Int
-
-data Grip
-  = Solid
-  | Slight
-  | Partial
-  | Sloppy
+  deriving newtype (Show, ToJSON)
 
 data Hardpoints
 
 instance ToJSON Hardpoints where
   toJSON h =
-    object [ "head"     .= defaultInt 0
-           , "chest"    .= defaultInt 0
-           , "leftArm"  .= defaultInt 0
-           , "rightArm" .= defaultInt 0
-           , "leftLeg"  .= defaultInt 0
-           , "rightLeg" .= defaultInt 0
+    object [ "head"     .= valueInt 0
+           , "chest"    .= valueInt 0
+           , "leftArm"  .= valueInt 0
+           , "rightArm" .= valueInt 0
+           , "leftLeg"  .= valueInt 0
+           , "rightLeg" .= valueInt 0
            ]
 
 data ItemPrice =
@@ -256,7 +353,7 @@ data ItemTrainings =
 instance ToJSON ItemTrainings where
   toJSON t =
     let defTraining = maybe "" equipmentTrainingText $ itemTrainingsEquipment t
-     in object [ "equipment" .= toJSON defTraining
+     in object [ "equipment" .= defTraining
                , "faction"   .= itemTrainingsFaction t
                ]
 
@@ -280,6 +377,7 @@ itemTypeText item =
     ItemWeapon    -> "weapon"
 
 newtype MagazineCapacity = MagazineCapacity Int
+  deriving newtype (ToJSON)
 
 newtype Name = Name Text
   deriving newtype (ToJSON)
@@ -305,8 +403,10 @@ instance ToJSON Protection where
            ]
 
 newtype Reload = Reload Int
+  deriving newtype (ToJSON)
 
 newtype ScopeMagnification = ScopeMagnification Int
+  deriving newtype (ToJSON)
 
 data Shields =
   Shields
@@ -406,7 +506,7 @@ data StatAdjustments =
 
 instance ToJSON StatAdjustments where
   toJSON s =
-    let defAdjustments fn = toJSON . fromMaybe emptyAdjustment $ fn s
+    let defAdjustments fn = fromMaybe emptyAdjustment $ fn s
      in object [ "has"       .= statAdjustmentsHas s
                , "str"       .= defAdjustments statAdjustmentsSTR
                , "agi"       .= defAdjustments statAdjustmentsAGI
@@ -419,13 +519,32 @@ data WeaponGroup
   | MeleeGroup
   | Thrown
 
+instance ToJSON WeaponGroup where
+  toJSON = toJSON . weaponGroupText
+
+weaponGroupText :: WeaponGroup -> Text
+weaponGroupText wg =
+  case wg of
+    Ranged     -> "ranged"
+    MeleeGroup -> "melee"
+    Thrown     -> "thrown"
+
 data WeaponRange =
   WeaponRange
     { weaponRangeClose :: Int
     , weaponRangeLong  :: Int
     , weaponRangeMelee :: Int
-    , weaponRangeGrip  :: Grip
     }
+
+instance ToJSON WeaponRange where
+  toJSON r =
+    object [ "close"     .= weaponRangeClose r
+           , "long"      .= weaponRangeLong r
+           , "melee"     .= weaponRangeMelee r
+           , "thrown"    .= valueInt 0
+           , "thrownMax" .= valueInt 0
+           , "grip"      .= valueText "solid"
+           ]
 
 data WeaponSettings =
   WeaponSettings
@@ -436,6 +555,15 @@ data WeaponSettings =
     , settingsSingleUse      :: Bool
     }
 
+instance ToJSON WeaponSettings where
+  toJSON s =
+    object [ "firearmType"    .= settingsFirearmType s
+           , "barrel"         .= settingsBarrel s
+           , "bulletDiameter" .= settingsBulletDiameter s
+           , "caseLength"     .= settingsCaseLength s
+           , "singleUse"      .= settingsSingleUse s
+           ]
+
 data WeaponTag
   = UD
   | I
@@ -445,6 +573,21 @@ data WeaponTag
   | SD
   | PD
   | BD
+  deriving stock (Eq, Ord)
+
+newtype WeaponTags = WeaponTags (Set WeaponTag)
+
+instance ToJSON WeaponTags where
+  toJSON (WeaponTags t) =
+    object [ "[UD]" .= Set.member UD t
+           , "[I]"  .= Set.member I  t
+           , "[OH]" .= Set.member OH t
+           , "[TH]" .= Set.member TH t
+           , "[HW]" .= Set.member HW t
+           , "[SD]" .= Set.member SD t
+           , "[PD]" .= Set.member PD t
+           , "[BD]" .= Set.member BD t
+           ]
 
 data Weight =
   Weight
@@ -459,10 +602,11 @@ instance ToJSON Weight where
                                    then weightEach w
                                    else 0
            , "each"          .= weightEach w
-           , "quantity"      .= defaultInt 1
-           , "carried"       .= toJSON False
-           , "equipped"      .= toJSON False
+           , "quantity"      .= valueInt 1
+           , "carried"       .= False
+           , "equipped"      .= False
            , "selfSupported" .= weightSelfSupported w
            ]
 
 newtype WeaponType = WeaponType Text
+  deriving newtype (ToJSON)

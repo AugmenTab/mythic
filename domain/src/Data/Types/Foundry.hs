@@ -1,14 +1,12 @@
 module Data.Types.Foundry
-  ( Armor
-  , Equipment
-  , Weapon
+  ( Armor(..)
+  , Equipment(..)
+  , Weapon(..)
   ) where
 
 import           Flipstone.Prelude
 import           Domain.JSON
 import           Data.Types.Prelude
-
-import qualified Data.Map as Map
 
 data Armor =
   Armor
@@ -57,6 +55,15 @@ data Equipment =
     , equipmentDescription :: Description
     }
 
+instance ToJSON Equipment where
+  toJSON e =
+    object [ "price"       .= equipmentPrice e
+           , "breakPoints" .= equipmentBreakpoints e
+           , "trainings"   .= equipmentTrainings e
+           , "weight"      .= equipmentWeight e
+           , "description" .= equipmentDescription e
+           ]
+
 data Weapon =
   Weapon
     { weaponName        :: Name
@@ -67,8 +74,8 @@ data Weapon =
     , weaponTrainings   :: ItemTrainings
     , weaponWeight      :: Weight
     , weaponGroup       :: WeaponGroup
-    , weaponTags        :: Set WeaponTag
-    , weaponFireModes   :: Map.Map FireMode FireRate
+    , weaponTags        :: WeaponTags
+    , weaponFireModes   :: FireModes
     , weaponAttack      :: Attack
     , weaponReload      :: Reload
     , weaponNickname    :: Maybe Name
@@ -77,6 +84,31 @@ data Weapon =
     , weaponAmmo        :: Ammo
     , weaponAmmoGroup   :: AmmoGroup
     , weaponScopeMag    :: Maybe ScopeMagnification
-    , weaponAmmoList    :: [Ammunition]
+    , weaponCurrentAmmo :: Name
+    , weaponAmmoList    :: AmmoList
     , weaponSettings    :: WeaponSettings
     }
+
+instance ToJSON Weapon where
+  toJSON w =
+    object [ "faction"            .= weaponFaction w
+           , "description"        .= weaponDescription w
+           , "price"              .= weaponPrice w
+           , "breakPoints"        .= weaponBreakpoints w
+           , "trainings"          .= weaponTrainings w
+           , "weight"             .= weaponWeight w
+           , "group"              .= weaponGroup w
+           , "tags"               .= weaponTags w
+           , "fireMode"           .= weaponFireModes w
+           , "attack"             .= weaponAttack w
+           , "reload"             .= weaponReload w
+           , "nickname"           .= weaponNickname w
+           , "type"               .= weaponType w
+           , "magazineCapacity"   .= weaponMagCap w
+           , "ammo"               .= weaponAmmo w
+           , "ammoGroup"          .= weaponGroup w
+           , "scopeMagnification" .= weaponScopeMag w
+           , "currentAmmo"        .= weaponCurrentAmmo w
+           , "ammoList"           .= weaponAmmoList w
+           , "settings"           .= weaponSettings w
+           ]

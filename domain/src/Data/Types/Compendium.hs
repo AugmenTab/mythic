@@ -29,7 +29,7 @@ instance ToJSON item => ToJSON (Entry item) where
            , "system"     .= entryData e
            , "flags"      .= emptyObject
            , "effects"    .= emptyArray
-           , "permission" .= object [ "default" .= defaultInt 0 ]
+           , "permission" .= object [ "default" .= valueInt 0 ]
            ]
 
 newtype Img = Img Text
