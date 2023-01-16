@@ -3,4 +3,5 @@ module Data.Types
   ) where
 
 import Data.Types.Prelude as X
+import Data.Types.Foundry as X
 import Data.Types.Ingest as X

@@ -24,7 +24,9 @@ source-repository head
 library
   exposed-modules:
       Data.Types
+      Data.Types.Foundry
       Data.Types.Ingest
+      Data.Types.Prelude
   other-modules:
       Paths_domain
   hs-source-dirs:
@@ -42,6 +44,7 @@ library
       base >=4.7 && <5
     , bytestring
     , cassava
+    , containers
     , flipstone-prelude
     , ghc-prim
     , text
@@ -67,6 +70,7 @@ executable domain-exe
       base >=4.7 && <5
     , bytestring
     , cassava
+    , containers
     , domain
     , flipstone-prelude
     , ghc-prim
