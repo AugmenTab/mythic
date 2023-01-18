@@ -2,7 +2,7 @@
 
 An unofficial system implementation for playing the fan-made [Halo: Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
 
-![Foundry Version Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dfor-the-badge%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FAugmenTab%2Fmythic%2Fmain%2Fsystem.json)
+<!-- ![Foundry Version Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dfor-the-badge%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FAugmenTab%2Fmythic%2Fmain%2Fsystem.json) -->
 ![License](https://img.shields.io/github/license/AugmenTab/mythic?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/AugmenTab/mythic/total?style=for-the-badge)
 ![Downloads - Latest Release](https://img.shields.io/github/downloads/AugmenTab/mythic/latest/total?style=for-the-badge)
