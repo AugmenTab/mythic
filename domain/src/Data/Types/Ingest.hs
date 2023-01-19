@@ -11,7 +11,7 @@ import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
 import           GHC.Types (Double)
 import           Text.Read (read)
-import           Text.Show (show)
+import           Text.Show (Show, show)
 
 data RawArmor =
   RawArmor
@@ -51,7 +51,7 @@ data RawEquipment =
     , rawEquipmentDescription :: Text
     , rawEquipmentWeight      :: Double
     , rawEquipmentPrice       :: Int
-    }
+    } deriving stock (Show)
 
 instance CSV.FromNamedRecord RawEquipment where
   parseNamedRecord e =

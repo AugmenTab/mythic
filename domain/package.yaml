@@ -26,6 +26,9 @@ dependencies:
 - containers
 - flipstone-prelude
 - ghc-prim
+- http-client
+- http-conduit
+- http-types
 - text
 - vector
 

@@ -50,6 +50,9 @@ library
     , containers
     , flipstone-prelude
     , ghc-prim
+    , http-client
+    , http-conduit
+    , http-types
     , text
     , vector
   default-language: Haskell2010
@@ -78,6 +81,9 @@ executable domain-exe
     , domain
     , flipstone-prelude
     , ghc-prim
+    , http-client
+    , http-conduit
+    , http-types
     , text
     , vector
   default-language: Haskell2010
