@@ -28,7 +28,9 @@ library
       Data.Types.Foundry
       Data.Types.Ingest
       Data.Types.Prelude
+      Domain.CSV
       Domain.JSON
+      Domain.Request
   other-modules:
       Paths_domain
   hs-source-dirs:

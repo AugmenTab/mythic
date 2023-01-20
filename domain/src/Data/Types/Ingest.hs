@@ -31,7 +31,7 @@ data RawArmor =
 
 instance CSV.FromNamedRecord RawArmor where
   parseNamedRecord a =
-    RawArmor <$> a .: "COMP_name"
+    RawArmor <$> a .: "Name"
              <*> a .: "COMP_armor_head"
              <*> a .: "COMP_armor_arms"
              <*> a .: "COMP_armor_chest"
@@ -55,7 +55,7 @@ data RawEquipment =
 
 instance CSV.FromNamedRecord RawEquipment where
   parseNamedRecord e =
-    RawEquipment <$> e .: "COMP_name"
+    RawEquipment <$> e .: "Name"
                  <*> e .: "COMP_field"
                  <*> e .: "COMP_description"
                  <*> (defaultZero <$> e .: "COMP_weight")
@@ -82,7 +82,7 @@ data RawMeleeWeapon =
 
 instance CSV.FromNamedRecord RawMeleeWeapon where
   parseNamedRecord m =
-    RawMeleeWeapon <$> m .: "COMP_name"
+    RawMeleeWeapon <$> m .: "Name"
                    <*> m .: "COMP_type"
                    <*> m .: "COMP_range"
                    <*> m .: "COMP_damage_roll"
@@ -118,7 +118,7 @@ data RawRangedWeapon =
 
 instance CSV.FromNamedRecord RawRangedWeapon where
   parseNamedRecord r =
-    RawRangedWeapon <$> r .: "COMP_name"
+    RawRangedWeapon <$> r .: "Name"
                     <*> r .: "COMP_type"
                     <*> r .: "COMP_range"
                     <*> r .: "COMP_damage_roll"
