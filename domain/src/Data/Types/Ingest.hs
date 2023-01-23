@@ -1,5 +1,6 @@
 module Data.Types.Ingest
-  ( RawArmor(..)
+  ( RawData(..)
+  , RawArmor(..)
   , RawEquipment(..)
   , RawMeleeWeapon(..)
   , RawRangedWeapon(..)
@@ -11,7 +12,13 @@ import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
 import           GHC.Types (Double)
 import           Text.Read (read)
-import           Text.Show (Show, show)
+import           Text.Show (show)
+
+data RawData
+  = ArmorData     RawArmor
+  | EquipmentData RawEquipment
+  | MeleeData     RawMeleeWeapon
+  | RangedData    RawRangedWeapon
 
 data RawArmor =
   RawArmor
@@ -51,7 +58,7 @@ data RawEquipment =
     , rawEquipmentDescription :: Text
     , rawEquipmentWeight      :: Double
     , rawEquipmentPrice       :: Int
-    } deriving stock (Show)
+    }
 
 instance CSV.FromNamedRecord RawEquipment where
   parseNamedRecord e =

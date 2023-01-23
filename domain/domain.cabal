@@ -28,6 +28,8 @@ library
       Data.Types.Foundry
       Data.Types.Ingest
       Data.Types.Prelude
+      Domain.Convert
+      Domain.Convert.Ingest
       Domain.CSV
       Domain.JSON
       Domain.Prepare
