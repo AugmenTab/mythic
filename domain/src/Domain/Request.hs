@@ -1,14 +1,19 @@
 module Domain.Request
-  ( SheetSubject, sheetSubjectText
+  ( SheetSubject(..)
+  , sheetSubjectText
   , sheetDataMap
   , makeSheetRequest
   , setSheetQueryStrings
+  , responseContent
   ) where
 
 import           Flipstone.Prelude
 
 import qualified Data.ByteString as BS
+import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Map as Map
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
 import qualified Network.HTTP.Client as HTTP
 import qualified Network.HTTP.Simple as HTTP
 
@@ -35,16 +40,15 @@ type SheetData = (GID, Range)
 sheetDataMap :: Map.Map SheetSubject SheetData
 sheetDataMap =
   Map.fromList
-    [ ( ArmorSheet       , (GID "3822484"  , Range "B1:M295") )
-    , ( EquipmentSheet   , (GID "515202982", Range "B1:E346") )
-    , ( MeleeWeaponSheet , (GID "346860164", Range "B1:Q51")  )
-    , ( RangedWeaponSheet, (GID "297713635", Range "B1:P375") )
+ -- [ ( ArmorSheet       , (GID "3822484"  , Range "A2:M295") )
+    [ ( EquipmentSheet   , (GID "515202982", Range "A2:E234") ) -- TODO: Figure out weapon mods
+ -- , ( MeleeWeaponSheet , (GID "346860164", Range "A2:Q51")  )
+ -- , ( RangedWeaponSheet, (GID "297713635", Range "A2:P375") )
     ]
 
 makeSheetRequest :: Either Text HTTP.Request
 makeSheetRequest =
   let baseURL = "https://docs.google.com"
-      path = "/spreadsheets/d/1oebS4iy37YYpuooGVI_7WpSOCk2Fy_zh2ACC6_heLJA/export"
       buildRequest =
           Right
         . HTTP.addRequestHeader "Accept" "text/csv"
@@ -53,10 +57,27 @@ makeSheetRequest =
 
    in maybe (Left "Couldn't parse URL") buildRequest $ HTTP.parseRequest baseURL
 
+path :: BS.ByteString
+path =
+  BS.intercalate "/"
+    [ "/spreadsheets"
+    , "d"
+    , "1oebS4iy37YYpuooGVI_7WpSOCk2Fy_zh2ACC6_heLJA"
+    , "export"
+    ]
+
 setSheetQueryStrings :: SheetData -> HTTP.Request -> HTTP.Request
 setSheetQueryStrings (GID gid, Range range) =
   HTTP.setQueryString
     [ ("format", Just "csv")
-    , ("gid", Just gid)
-    , ("range", Just range)
+    , ("gid"   , Just gid)
+    , ("range" , Just range)
     ]
+
+responseContent :: HTTP.Response LBS.ByteString
+                -> SheetSubject
+                -> Either Text [Text]
+responseContent resp subject =
+  case TE.decodeUtf8 . LBS.toStrict $ HTTP.responseBody resp of
+    txt | T.null txt -> Left $ "No content in " <> sheetSubjectText subject
+        | otherwise  -> Right $ T.lines txt

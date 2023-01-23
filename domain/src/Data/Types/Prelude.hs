@@ -8,7 +8,8 @@ module Data.Types.Prelude
   , Attack
   , Barrel
   , EquipmentTraining
-  , Faction
+  , Faction(..)
+  , FactionTraining
   , FirearmType
   , FireMode
   , FireModes
@@ -32,6 +33,8 @@ module Data.Types.Prelude
     -- Newtypes
   , Ammo
   , Breakpoints
+  , CompendiumContent, mkCompendiumContent
+  , CompendiumData(..), compendiumData
   , Description
   , FireRate
   , MagazineCapacity
@@ -217,6 +220,16 @@ barrelText barrel =
 newtype Breakpoints = Breakpoints Int
   deriving newtype (ToJSON)
 
+newtype CompendiumContent = CompendiumContent Text
+
+mkCompendiumContent :: Text -> CompendiumContent
+mkCompendiumContent = CompendiumContent . T.toUpper
+
+newtype CompendiumData a = CompendiumData (Faction, CompendiumContent, a)
+
+compendiumData :: CompendiumData a -> a
+compendiumData (CompendiumData (_, _, a)) = a
+
 newtype Description = Description Text
   deriving newtype (ToJSON)
 
@@ -250,17 +263,24 @@ equipmentTrainingText eqTraining =
 data Faction
   = UNSC
   | Covenant
+  | Banished
   | Forerunner
+  deriving stock (Eq)
 
-instance ToJSON Faction where
-  toJSON = toJSON . factionText
+data FactionTraining
+  = UNSCTraining
+  | CovenantTraining
+  | ForerunnerTraining
 
-factionText :: Faction -> Text
-factionText faction =
+instance ToJSON FactionTraining where
+  toJSON = toJSON . factionTrainingText
+
+factionTrainingText :: FactionTraining -> Text
+factionTrainingText faction =
   case faction of
-    UNSC       -> "unsc"
-    Covenant   -> "covenant"
-    Forerunner -> "forerunner"
+    UNSCTraining       -> "unsc"
+    CovenantTraining   -> "covenant"
+    ForerunnerTraining -> "forerunner"
 
 data FirearmType
   = Firearms
@@ -347,7 +367,7 @@ instance ToJSON ItemPrice where
 data ItemTrainings =
   ItemTrainings
     { itemTrainingsEquipment :: Maybe EquipmentTraining
-    , itemTrainingsFaction   :: Faction
+    , itemTrainingsFaction   :: FactionTraining
     }
 
 instance ToJSON ItemTrainings where

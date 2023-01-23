@@ -3,18 +3,18 @@ module Main
   ) where
 
 import           Flipstone.Prelude
+import qualified Domain.Prepare as Prepare
 import qualified Domain.Request as Request
+import           Data.Types
 
-import qualified Data.ByteString.Lazy as LBS
 import           Data.Foldable (mapM_)
-import qualified Data.List as L
 import qualified Data.Map as Map
 import qualified Data.Text as T
-import qualified Data.Text.Encoding as TE
 import           Data.Traversable (for, sequence)
 import qualified Network.HTTP.Client as HTTP
 import           Network.HTTP.Conduit (tlsManagerSettings)
 import qualified System.IO as IO
+import           Text.Show (show)
 
 main :: IO ()
 main = do
@@ -25,17 +25,14 @@ main = do
       result <-
         for (Map.toList Request.sheetDataMap) $ \(subject, sheetData) -> do
           resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
-          let _parse = LBS.fromStrict
-                     . TE.encodeUtf8
-                     . T.unlines . L.take 14 . T.lines -- remove breaking lines for now
-                     . TE.decodeUtf8
-                     . LBS.toStrict
-                     . HTTP.responseBody
-
-
-          -- TODO: Process resp into separate compendia
-          pure $ const (Request.sheetSubjectText subject) <$> Right resp
+          pure $ Request.responseContent resp subject -- Get response body lines
+             >>= Prepare.prepareSheet subject -- Do formatting work on sheet
+          -- >>= Convert.ingestRaw subject -- Ingest as Raw type
+          -- >>= Convert.toFoundry subject -- Convert from Raw type to Foundry type
+          -- >>= Convert.toCompendium -- Convert from Foundry type to Compendium
+          -- >>= Persist.storeCompendium -- Write Compendium to disk
 
       case sequence result of
-        Left  err -> IO.putStrLn $ T.unpack err
-        Right res -> mapM_ (IO.putStrLn . T.unpack) res
+        Left  e -> IO.putStrLn $ T.unpack e
+        Right r ->
+          mapM_ (mapM_ (IO.putStrLn . show . T.lines . compendiumData)) r
