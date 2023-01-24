@@ -9,23 +9,18 @@ import           Data.Types
 
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text.Encoding as TE
-import           Data.Traversable (sequence)
 
 ingestRaw :: Request.SheetSubject
-          -> [CompendiumData Text]
-          -> Either Text [CompendiumData RawData]
-ingestRaw subject sheets =
-  let ingestSheet =
-        case subject of
-       -- Request.ArmorSheet        -> ingestArmor -- TODO
-          Request.EquipmentSheet    -> ingestEquipment
-       -- Request.MeleeWeaponSheet  -> ingestMelee -- TODO
-       -- Request.RangedWeaponSheet -> ingestRanged -- TODO
+          -> CompendiumMap Text
+          -> Either Text (CompendiumMap [RawData])
+ingestRaw subject cMap = do
+  case subject of
+ -- Request.ArmorSheet        -> traverse ingestArmor     cMap -- TODO
+    Request.EquipmentSheet    -> traverse ingestEquipment cMap
+ -- Request.MeleeWeaponSheet  -> traverse ingestMelee     cMap -- TODO
+ -- Request.RangedWeaponSheet -> traverse ingestRanged    cMap -- TODO
 
-   in fmap concat $ sequence $ ingestSheet <$> sheets
-
-ingestEquipment :: CompendiumData Text
-                -> Either Text [CompendiumData RawData]
-ingestEquipment (CompendiumData (faction, content, sheet)) = do
+ingestEquipment :: Text -> Either Text [RawData]
+ingestEquipment sheet = do
   rawEquipment <- decodeCSV . LBS.fromStrict $ TE.encodeUtf8 sheet
-  pure $ (\e -> CompendiumData (faction, content, EquipmentData e)) <$> rawEquipment
+  pure $ EquipmentData <$> rawEquipment

@@ -9,11 +9,12 @@ import           Data.Types
 import           Control.Applicative ((<|>))
 import qualified Data.Attoparsec.Text as Atto
 import qualified Data.List as L
+import qualified Data.Map as Map
 import qualified Data.Text as T
 
 prepareSheet :: Request.SheetSubject
              -> [Text]
-             -> Either Text [CompendiumData Text]
+             -> Either Text (Map.Map CompendiumData Text)
 prepareSheet subject [] =
   Left $ "No content in " <> Request.sheetSubjectText subject
 
@@ -25,7 +26,8 @@ prepareSheet subject (header:lines) =
       --  Request.MeleeWeaponSheet  -> startingMelee -- TODO
       --  Request.RangedWeaponSheet -> startingRanged -- TODO
 
-   in Right $ separateSheet header UNSC startingContent [ header ] [] lines
+   in Right $
+        separateSheet header UNSC startingContent [ header ] Map.empty lines
 
 startingEquipment :: CompendiumContent
 startingEquipment = mkCompendiumContent "HELMET AND FACIAL EQUIPMENT"
@@ -34,13 +36,13 @@ separateEquipment :: Text
                   -> Faction
                   -> CompendiumContent
                   -> [Text]
-                  -> [CompendiumData Text]
+                  -> CompendiumMap Text
                   -> [Text]
-                  -> [CompendiumData Text]
-separateEquipment _      faction content sheet acc [] =
-  CompendiumData (faction, content, T.unlines sheet) : acc
+                  -> CompendiumMap Text
+separateEquipment _      faction content sheet cMap [] =
+  Map.insert (faction, content) (T.unlines sheet) cMap
 
-separateEquipment header faction content sheet acc (line:lines) =
+separateEquipment header faction content sheet cMap (line:lines) =
   case tryParseFactionOrContent line of
     Just (Left  f) ->
       separateEquipment
@@ -48,7 +50,7 @@ separateEquipment header faction content sheet acc (line:lines) =
         f
         content
         [ header ]
-        (CompendiumData (faction, content, T.unlines sheet) : acc)
+        (Map.insert (faction, content) (T.unlines sheet) cMap)
         lines
 
     Just (Right c)
@@ -58,14 +60,14 @@ separateEquipment header faction content sheet acc (line:lines) =
           faction
           c
           [ header ]
-          (CompendiumData (faction, content, T.unlines sheet) : acc)
+          (Map.insert (faction, content) (T.unlines sheet) cMap)
           lines
 
       | otherwise ->
-        separateEquipment header faction c sheet acc lines
+        separateEquipment header faction c sheet cMap lines
 
     Nothing ->
-      separateEquipment header faction content (sheet <> [ line ]) acc lines
+      separateEquipment header faction content (sheet <> [ line ]) cMap lines
 
 tryParseFactionOrContent :: Text -> Maybe (Either Faction CompendiumContent)
 tryParseFactionOrContent txt =

@@ -22,13 +22,21 @@ main = do
       mgr <- HTTP.newManager tlsManagerSettings
       result <-
         for (Map.toList Request.sheetDataMap) $ \(subject, sheetData) -> do
+          let subjectTxt = T.unpack $ Request.sheetSubjectText subject
+
+          IO.putStrLn $ "Fetching " <> subjectTxt <> "..."
           resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
-          pure $ Request.responseContent resp subject -- Get response body lines
-             >>= Prepare.prepareSheet subject -- Do formatting work on sheet
-             >>= Convert.ingestRaw subject -- Ingest as Raw type
-          -- >>= Convert.toFoundry subject -- Convert from Raw type to Foundry type
-          -- >>= Convert.toCompendium -- Convert from Foundry type to Compendium
-          -- >>= Persist.storeCompendium -- Write Compendium to disk
+
+          IO.putStrLn $ "Converting " <> subjectTxt <> "..."
+          let result = Request.responseContent resp subject -- Get response body lines
+                   >>= Prepare.prepareSheet subject -- Do formatting work on sheet
+                   >>= Convert.ingestRaw subject -- Ingest as Raw type
+                -- >>= Convert.toFoundry subject -- Convert from Raw type to Foundry type
+                -- >>= Convert.toCompendium -- Convert from Foundry type to Compendium
+                -- >>= Persist.storeCompendium -- Write Compendium to disk
+
+          IO.putStrLn $ "Finished with " <> subjectTxt <> "."
+          pure result
 
       case sequence result of
         Left  e -> IO.putStrLn $ T.unpack e

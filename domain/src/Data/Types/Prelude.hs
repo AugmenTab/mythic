@@ -34,7 +34,6 @@ module Data.Types.Prelude
   , Ammo
   , Breakpoints
   , CompendiumContent, mkCompendiumContent
-  , CompendiumData(..), compendiumData
   , Description
   , FireRate
   , MagazineCapacity
@@ -42,6 +41,10 @@ module Data.Types.Prelude
   , Reload
   , ScopeMagnification
   , WeaponType
+
+  -- Type Aliases
+  , CompendiumData
+  , CompendiumMap
   ) where
 
 import           Flipstone.Prelude
@@ -221,14 +224,13 @@ newtype Breakpoints = Breakpoints Int
   deriving newtype (ToJSON)
 
 newtype CompendiumContent = CompendiumContent Text
+  deriving newtype (Eq, Ord)
 
 mkCompendiumContent :: Text -> CompendiumContent
 mkCompendiumContent = CompendiumContent . T.toUpper
 
-newtype CompendiumData a = CompendiumData (Faction, CompendiumContent, a)
-
-compendiumData :: CompendiumData a -> a
-compendiumData (CompendiumData (_, _, a)) = a
+type CompendiumData = (Faction, CompendiumContent)
+type CompendiumMap entries = Map.Map CompendiumData entries
 
 newtype Description = Description Text
   deriving newtype (ToJSON)
@@ -265,7 +267,7 @@ data Faction
   | Covenant
   | Banished
   | Forerunner
-  deriving stock (Eq)
+  deriving stock (Eq, Ord)
 
 data FactionTraining
   = UNSCTraining
