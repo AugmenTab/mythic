@@ -1,5 +1,6 @@
 module Data.Types.Foundry
-  ( Armor(..)
+  ( FoundryData(..)
+  , Armor(..)
   , Equipment(..)
   , Weapon(..)
   ) where
@@ -7,6 +8,11 @@ module Data.Types.Foundry
 import           Flipstone.Prelude
 import           Domain.JSON
 import           Data.Types.Prelude
+
+data FoundryData
+  = FoundryArmor     Armor
+  | FoundryEquipment Equipment
+  | FoundryWeapon    Weapon
 
 data Armor =
   Armor

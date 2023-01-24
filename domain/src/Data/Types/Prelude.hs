@@ -32,12 +32,12 @@ module Data.Types.Prelude
 
     -- Newtypes
   , Ammo
-  , Breakpoints
+  , Breakpoints, mkBreakpoints
   , CompendiumContent, mkCompendiumContent
-  , Description
+  , Description, mkDescription
   , FireRate
   , MagazineCapacity
-  , Name
+  , Name, mkName
   , Reload
   , ScopeMagnification
   , WeaponType
@@ -223,6 +223,9 @@ barrelText barrel =
 newtype Breakpoints = Breakpoints Int
   deriving newtype (ToJSON)
 
+mkBreakpoints :: Int -> Breakpoints
+mkBreakpoints = Breakpoints
+
 newtype CompendiumContent = CompendiumContent Text
   deriving newtype (Eq, Ord)
 
@@ -234,6 +237,9 @@ type CompendiumMap entries = Map.Map CompendiumData entries
 
 newtype Description = Description Text
   deriving newtype (ToJSON)
+
+mkDescription :: Text -> Description
+mkDescription = Description
 
 data EquipmentTraining
   = Basic
@@ -403,6 +409,9 @@ newtype MagazineCapacity = MagazineCapacity Int
 
 newtype Name = Name Text
   deriving newtype (ToJSON)
+
+mkName :: Text -> Name
+mkName = Name
 
 data Protection =
   Protection

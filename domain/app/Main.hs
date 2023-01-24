@@ -31,7 +31,7 @@ main = do
           let result = Request.responseContent resp subject -- Get response body lines
                    >>= Prepare.prepareSheet subject -- Do formatting work on sheet
                    >>= Convert.ingestRaw subject -- Ingest as Raw type
-                -- >>= Convert.toFoundry subject -- Convert from Raw type to Foundry type
+                   >>= Convert.toFoundry -- Convert from Raw type to Foundry type
                 -- >>= Convert.toCompendium -- Convert from Foundry type to Compendium
                 -- >>= Persist.storeCompendium -- Write Compendium to disk
 
