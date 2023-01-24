@@ -14,8 +14,8 @@ module Data.Types.Prelude
   , FireMode
   , FireModes
   , Hardpoints
-  , ItemPrice
-  , ItemTrainings
+  , ItemPrice, mkItemPrice
+  , ItemTrainings, mkItemTrainings
   , ItemType
   , Protection
   , Reload
@@ -28,7 +28,7 @@ module Data.Types.Prelude
   , WeaponSettings
   , WeaponTag
   , WeaponTags
-  , Weight
+  , Weight(..)
 
     -- Newtypes
   , Ammo
@@ -275,6 +275,14 @@ data Faction
   | Forerunner
   deriving stock (Eq, Ord)
 
+factionTrainingFor :: Faction -> FactionTraining
+factionTrainingFor faction =
+  case faction of
+    UNSC       -> UNSCTraining
+    Covenant   -> CovenantTraining
+    Banished   -> CovenantTraining
+    Forerunner -> ForerunnerTraining
+
 data FactionTraining
   = UNSCTraining
   | CovenantTraining
@@ -372,6 +380,14 @@ instance ToJSON ItemPrice where
            , "total" .= priceTotal p
            ]
 
+mkItemPrice :: Int -> ItemPrice
+mkItemPrice n =
+  ItemPrice
+    { priceBase  = n
+    , priceMods  = 0
+    , priceTotal = n
+    }
+
 data ItemTrainings =
   ItemTrainings
     { itemTrainingsEquipment :: Maybe EquipmentTraining
@@ -384,6 +400,10 @@ instance ToJSON ItemTrainings where
      in object [ "equipment" .= defTraining
                , "faction"   .= itemTrainingsFaction t
                ]
+
+mkItemTrainings :: Faction -> Maybe EquipmentTraining -> ItemTrainings
+mkItemTrainings faction mbEquipmentTraining =
+  ItemTrainings mbEquipmentTraining $ factionTrainingFor faction
 
 data ItemType
   = ItemAbility

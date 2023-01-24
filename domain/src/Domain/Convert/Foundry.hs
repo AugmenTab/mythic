@@ -5,28 +5,38 @@ module Domain.Convert.Foundry
 import           Flipstone.Prelude
 import           Data.Types
 
-import           Data.Traversable (for, sequence)
+import qualified Data.Map as Map
+import           Data.Traversable (for)
 
 toFoundry :: CompendiumMap [RawData]
           -> Either Text (CompendiumMap [FoundryData])
-toFoundry = traverse mkFoundry
+toFoundry = Map.traverseWithKey mkFoundry
 
-mkFoundry :: [RawData] -> Either Text [FoundryData]
-mkFoundry rawData = for rawData $ \raw ->
+mkFoundry :: CompendiumData -> [RawData] -> Either Text [FoundryData]
+mkFoundry (faction, _) rawData = for rawData $ \raw ->
   case raw of
- -- ArmorData     a -> mkArmor     a
-    EquipmentData e -> mkEquipment e
- -- MeleeData     m -> mkMelee     m
- -- RangedData    r -> mkRanged    r
+    ArmorData     _ -> Left "Not yet implemented" -- TODO: mkArmor     faction a
+    EquipmentData e -> mkEquipment faction e
+    MeleeData     _ -> Left "Not yet implemented" -- TODO: mkMelee     faction m
+    RangedData    _ -> Left "Not yet implemented" -- TODO: mkRanged    faction r
 
-mkEquipment :: RawEquipment -> Either Text FoundryData
-mkEquipment raw = do
-  pure $ FoundryEquipment $
-    Equipment
-      { equipmentName        = mkName $ rawEquipmentName raw
-      , equipmentPrice       = undefined
-      , equipmentBreakpoints = mkBreakpoints 0
-      , equipmentTrainings   = undefined
-      , equipmentWeight      = undefined
-      , equipmentDescription = mkDescription $ rawEquipmentDescription raw
-      }
+mkEquipment :: Faction -> RawEquipment -> Either Text FoundryData
+mkEquipment faction raw = Right $ FoundryEquipment $
+  let desc = rawEquipmentDescription raw
+      weight =
+        Weight
+          { weightEach = rawEquipmentWeight raw
+          -- No Item supports its own weight as far as the descriptions are
+          -- concerned. This can be updated if/when a user points one out or one
+          -- gets added to teh game.
+          , weightSelfSupported = False
+          }
+
+   in Equipment
+        { equipmentName        = mkName $ rawEquipmentName raw
+        , equipmentPrice       = mkItemPrice $ rawEquipmentPrice raw
+        , equipmentBreakpoints = mkBreakpoints 0
+        , equipmentTrainings   = mkItemTrainings faction Nothing
+        , equipmentWeight      = weight
+        , equipmentDescription = mkDescription desc
+        }
