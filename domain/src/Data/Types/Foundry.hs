@@ -9,10 +9,26 @@ import           Flipstone.Prelude
 import           Domain.JSON
 import           Data.Types.Prelude
 
+import qualified Data.Map as Map
+import           Data.Maybe (isJust)
+
 data FoundryData
   = FoundryArmor     Armor
   | FoundryEquipment Equipment
   | FoundryWeapon    Weapon
+
+instance CompendiumEntry FoundryData where
+  named (FoundryArmor a)     = named a
+  named (FoundryEquipment e) = named e
+  named (FoundryWeapon w)    = named w
+
+  imged (FoundryArmor a)     = imged a
+  imged (FoundryEquipment e) = imged e
+  imged (FoundryWeapon w)    = imged w
+
+  typed (FoundryArmor a)     = typed a
+  typed (FoundryEquipment e) = typed e
+  typed (FoundryWeapon w)    = typed w
 
 data Armor =
   Armor
@@ -32,6 +48,11 @@ data Armor =
     , armorShields     :: Shields
     , armorSize        :: Size
     }
+
+instance CompendiumEntry Armor where
+  named = armorName
+  imged = const (mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp")
+  typed = const ItemArmor
 
 instance ToJSON Armor where
   toJSON a =
@@ -60,6 +81,11 @@ data Equipment =
     , equipmentWeight      :: Weight
     , equipmentDescription :: Description
     }
+
+instance CompendiumEntry Equipment where
+  named = equipmentName
+  imged = const (mkImg "icons/containers/chest/chest-simple-walnut.webp")
+  typed = const ItemEquipment
 
 instance ToJSON Equipment where
   toJSON e =
@@ -95,6 +121,11 @@ data Weapon =
     , weaponSettings    :: WeaponSettings
     }
 
+instance CompendiumEntry Weapon where
+  named = weaponName
+  imged = weaponImg
+  typed = const ItemWeapon
+
 instance ToJSON Weapon where
   toJSON w =
     object [ "faction"            .= weaponFaction w
@@ -118,3 +149,26 @@ instance ToJSON Weapon where
            , "ammoList"           .= weaponAmmoList w
            , "settings"           .= weaponSettings w
            ]
+
+weaponImg :: Weapon -> Img
+weaponImg weapon = mkImg $
+  case weaponGroup weapon of
+    MeleeGroup -> "icons/containers/chest/chest-simple-walnut.webp"
+    Thrown     -> "icons/weapons/thrown/bomb-fuse-blue.webp"
+    Ranged
+      | isJust $ Map.lookup Drawback $ fireModes $ weaponFireModes weapon ->
+        "icons/weapons/bows/bow-ornamental-carved-brown.webp"
+
+      | isJust $ Map.lookup Flintlock $ fireModes $ weaponFireModes weapon ->
+        "icons/weapons/guns/gun-pistol-flintlock-metal.webp"
+
+      | otherwise ->
+        case weaponAmmoGroup weapon of
+          None         -> "icons/weapons/guns/gun-pistol-flintlock-metal.webp"
+          STD          -> "icons/weapons/guns/rifle-brown.webp"
+          Shotgun      -> "icons/weapons/guns/gun-blunderbuss-gold.webp"
+          Flamethrower -> "icons/magic/fire/blast-jet-stream-embers-red.webp"
+          Sniper       -> "icons/weapons/guns/gun-topbarrel.webp"
+          Grenade      -> "icons/weapons/thrown/grenade-round.webp"
+          MRC          -> "icons/weapons/artillery/cannon-engraved-gold.webp"
+          BruteShot    -> "icons/weapons/thrown/bomb-purple.webp"

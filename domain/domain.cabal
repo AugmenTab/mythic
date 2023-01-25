@@ -29,6 +29,7 @@ library
       Data.Types.Ingest
       Data.Types.Prelude
       Domain.Convert
+      Domain.Convert.Compendium
       Domain.Convert.Foundry
       Domain.Convert.Ingest
       Domain.CSV
@@ -60,6 +61,7 @@ library
     , http-client
     , http-conduit
     , http-types
+    , random
     , text
     , vector
   default-language: Haskell2010
@@ -92,6 +94,7 @@ executable domain-exe
     , http-client
     , http-conduit
     , http-types
+    , random
     , text
     , vector
   default-language: Haskell2010

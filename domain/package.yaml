@@ -30,6 +30,7 @@ dependencies:
 - http-client
 - http-conduit
 - http-types
+- random
 - text
 - vector
 

@@ -15,10 +15,10 @@ ingestRaw :: Request.SheetSubject
           -> Either Text (CompendiumMap [RawData])
 ingestRaw subject cMap = do
   case subject of
- -- Request.ArmorSheet        -> traverse ingestArmor     cMap -- TODO
+    Request.ArmorSheet        -> Left "Not implemented yet" -- TODO: traverse ingestArmor     cMap -- TODO
     Request.EquipmentSheet    -> traverse ingestEquipment cMap
- -- Request.MeleeWeaponSheet  -> traverse ingestMelee     cMap -- TODO
- -- Request.RangedWeaponSheet -> traverse ingestRanged    cMap -- TODO
+    Request.MeleeWeaponSheet  -> Left "Not implemented yet" -- TODO: traverse ingestMelee     cMap -- TODO
+    Request.RangedWeaponSheet -> Left "Not implemented yet" -- TODO: traverse ingestRanged    cMap -- TODO
 
 ingestEquipment :: Text -> Either Text [RawData]
 ingestEquipment sheet = do

@@ -1,6 +1,6 @@
 module Data.Types.Prelude
   ( -- Data Types
-    AmmoGroup
+    AmmoGroup(..)
   , AmmoList
   , Ammunition
   , ArmorAdjustment
@@ -8,22 +8,22 @@ module Data.Types.Prelude
   , Attack
   , Barrel
   , EquipmentTraining
-  , Faction(..)
+  , Faction(..), factionText
   , FactionTraining
   , FirearmType
-  , FireMode
-  , FireModes
+  , FireMode(..)
+  , FireModes, fireModes
   , Hardpoints
   , ItemPrice, mkItemPrice
   , ItemTrainings, mkItemTrainings
-  , ItemType
+  , ItemType(..)
   , Protection
   , Reload
   , Shields
   , Size
   , SpecialRules
   , StatAdjustments
-  , WeaponGroup
+  , WeaponGroup(..)
   , WeaponRange
   , WeaponSettings
   , WeaponTag
@@ -33,11 +33,12 @@ module Data.Types.Prelude
     -- Newtypes
   , Ammo
   , Breakpoints, mkBreakpoints
-  , CompendiumContent, mkCompendiumContent
+  , CompendiumDetails, compendiumDetails, mkCompendiumDetails
   , Description, mkDescription
   , FireRate
+  , Img, mkImg
   , MagazineCapacity
-  , Name, mkName
+  , Name, mkName, nameText
   , Reload
   , ScopeMagnification
   , WeaponType
@@ -45,6 +46,9 @@ module Data.Types.Prelude
   -- Type Aliases
   , CompendiumData
   , CompendiumMap
+
+  -- Type Classes
+  , CompendiumEntry(..)
   ) where
 
 import           Flipstone.Prelude
@@ -226,14 +230,22 @@ newtype Breakpoints = Breakpoints Int
 mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
 
-newtype CompendiumContent = CompendiumContent Text
+newtype CompendiumDetails = CompendiumDetails Text
   deriving newtype (Eq, Ord)
 
-mkCompendiumContent :: Text -> CompendiumContent
-mkCompendiumContent = CompendiumContent . T.toUpper
+mkCompendiumDetails :: Text -> CompendiumDetails
+mkCompendiumDetails = CompendiumDetails . T.toUpper
 
-type CompendiumData = (Faction, CompendiumContent)
+compendiumDetails :: CompendiumDetails -> Text
+compendiumDetails (CompendiumDetails t) = t
+
+type CompendiumData = (Faction, CompendiumDetails)
 type CompendiumMap entries = Map.Map CompendiumData entries
+
+class CompendiumEntry a where
+  named :: a -> Name
+  imged :: a -> Img
+  typed :: a -> ItemType
 
 newtype Description = Description Text
   deriving newtype (ToJSON)
@@ -274,6 +286,14 @@ data Faction
   | Banished
   | Forerunner
   deriving stock (Eq, Ord)
+
+factionText :: Faction -> Text
+factionText faction =
+  case faction of
+    UNSC       -> "UNSC"
+    Covenant   -> "Covenant"
+    Banished   -> "Banished"
+    Forerunner -> "Forerunner"
 
 factionTrainingFor :: Faction -> FactionTraining
 factionTrainingFor faction =
@@ -351,6 +371,9 @@ instance ToJSON FireModes where
                , "sustained" .= lookup Sustained
                ]
 
+fireModes :: FireModes -> Map.Map FireMode FireRate
+fireModes (FireModes f) = f
+
 newtype FireRate = FireRate Int
   deriving newtype (Show, ToJSON)
 
@@ -365,6 +388,12 @@ instance ToJSON Hardpoints where
            , "leftLeg"  .= valueInt 0
            , "rightLeg" .= valueInt 0
            ]
+
+newtype Img = Img Text
+  deriving newtype (ToJSON)
+
+mkImg :: Text -> Img
+mkImg = Img
 
 data ItemPrice =
   ItemPrice
@@ -432,6 +461,9 @@ newtype Name = Name Text
 
 mkName :: Text -> Name
 mkName = Name
+
+nameText :: Name -> Text
+nameText (Name t) = t
 
 data Protection =
   Protection

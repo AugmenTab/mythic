@@ -29,12 +29,12 @@ prepareSheet subject (header:lines) =
    in Right $
         separateSheet header UNSC startingContent [ header ] Map.empty lines
 
-startingEquipment :: CompendiumContent
-startingEquipment = mkCompendiumContent "HELMET AND FACIAL EQUIPMENT"
+startingEquipment :: CompendiumDetails
+startingEquipment = mkCompendiumDetails "HELMET AND FACIAL EQUIPMENT"
 
 separateEquipment :: Text
                   -> Faction
-                  -> CompendiumContent
+                  -> CompendiumDetails
                   -> [Text]
                   -> CompendiumMap Text
                   -> [Text]
@@ -69,7 +69,7 @@ separateEquipment header faction content sheet cMap (line:lines) =
     Nothing ->
       separateEquipment header faction content (sheet <> [ line ]) cMap lines
 
-tryParseFactionOrContent :: Text -> Maybe (Either Faction CompendiumContent)
+tryParseFactionOrContent :: Text -> Maybe (Either Faction CompendiumDetails)
 tryParseFactionOrContent txt =
   let parser = do
         _ <- Atto.string ","
@@ -81,5 +81,5 @@ tryParseFactionOrContent txt =
 
    in case Atto.parseOnly parser txt of
         Right ("COVENANT", _) -> Just $ Left Covenant
-        Right (_, c) -> Just . Right $ mkCompendiumContent c
+        Right (_, c) -> Just . Right $ mkCompendiumDetails c
         _ -> Nothing
