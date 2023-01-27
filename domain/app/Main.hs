@@ -34,23 +34,24 @@ main = do
         resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
 
         IO.putStrLn $ "Converting " <> subjectTxt <> "..."
-        let result = Request.responseContent resp subject
-                 >>= Prepare.prepareSheet subject
-                 >>= Convert.ingestRaw subject
-                 >>= Convert.toFoundry
-                 >>= (pure . Convert.toCompendium)
+        pure . either (Exit.die . T.unpack) handleSheetResults
+             $ Request.responseContent resp subject
+           >>= Prepare.prepareSheet subject
+           >>= Convert.ingestRaw subject
+           >>= Convert.toFoundry
+           >>= pure . Convert.toCompendium
 
-        case result of
-          Left  errorMsg  -> Exit.die $ T.unpack errorMsg
-          Right compendia -> forM_ compendia handleSheetResult
+handleSheetResults :: [Compendium FoundryData] -> IO ()
+handleSheetResults compendia = do
+  forM_ compendia $ \compendium -> do
+    IO.putStrLn $
+      L.concat [ "Writing compendium "
+               , T.unpack $ labelText $ compendiumLabel compendium
+               , " to " <> compendiumPath compendium <> "..."
+               ]
 
-handleSheetResult :: Compendium FoundryData -> IO ()
-handleSheetResult compendium = do
-  IO.putStrLn $
-    L.concat [ "Writing compendium "
-             , T.unpack $ labelText $ compendiumLabel compendium
-             , " to " <> compendiumPath compendium <> "..."
-             ]
+    -- TODO: Persist.writeCompendium -- Write Compendium to disk
 
-  -- TODO: Persist.storeCompendia -- Write Compendia to disk
+  -- TODO: Persist.writeManifest -- Encode compendia manifest and write to disk
+  -- Maybe encode the entire manifest file?
   IO.putStrLn "Done."
