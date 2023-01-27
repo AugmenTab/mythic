@@ -11,6 +11,7 @@ import           Flipstone.Prelude
 import           Data.Types.Prelude
 import           Domain.JSON
 
+import qualified Data.Bool as B
 import qualified Data.Char as C
 import qualified Data.List as L
 import           Data.List ((!!))
@@ -36,9 +37,12 @@ instance ToJSON (Compendium item) where
            , "system"  .= ("mythic" :: Text)
            ]
 
-mkCompendiumName :: Label -> Name
-mkCompendiumName (Label l) =
-  mkName . T.toLower $ T.filter (not . C.isSpace) l
+mkCompendiumName :: Faction -> CompendiumDetails -> Name
+mkCompendiumName faction details =
+  mkName $ T.toLower $ T.intercalate "-"
+    [ factionText faction
+    , T.map (\c -> B.bool c '-' $ C.isSpace c) $ compendiumDetails details
+    ]
 
 mkCompendiumPath :: Name -> FilePath
 mkCompendiumPath name =

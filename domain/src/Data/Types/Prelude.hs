@@ -231,7 +231,7 @@ mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
 
 newtype CompendiumDetails = CompendiumDetails Text
-  deriving newtype (Eq, Ord)
+  deriving newtype (Eq, Ord, Show)
 
 mkCompendiumDetails :: Text -> CompendiumDetails
 mkCompendiumDetails = CompendiumDetails . T.toUpper
@@ -285,7 +285,7 @@ data Faction
   | Covenant
   | Banished
   | Forerunner
-  deriving stock (Eq, Ord)
+  deriving stock (Eq, Ord, Show)
 
 factionText :: Faction -> Text
 factionText faction =

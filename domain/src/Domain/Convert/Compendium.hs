@@ -16,7 +16,7 @@ mkCompendium :: CompendiumEntry item
              => CompendiumData -> [item] -> Compendium item
 mkCompendium (faction, content) fData =
   let label = mkCompendiumLabel faction content
-      name  = mkCompendiumName label
+      name  = mkCompendiumName  faction content
    in Compendium
         { compendiumName    = name
         , compendiumLabel   = label
