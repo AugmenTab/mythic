@@ -380,7 +380,7 @@ newtype FireRate = FireRate Int
 data Hardpoints
 
 instance ToJSON Hardpoints where
-  toJSON h =
+  toJSON _ =
     object [ "head"     .= valueInt 0
            , "chest"    .= valueInt 0
            , "leftArm"  .= valueInt 0

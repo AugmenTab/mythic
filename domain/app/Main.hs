@@ -8,6 +8,7 @@ import qualified Domain.Convert as Convert
 import qualified Domain.Prepare as Prepare
 import qualified Domain.Request as Request
 
+import qualified Control.Concurrent.Async as Async
 import           Control.Monad (forM_)
 import qualified Data.List as L
 import qualified Data.Map as Map
@@ -15,6 +16,7 @@ import qualified Data.Text as T
 import           Data.Tuple (uncurry)
 import qualified Network.HTTP.Client as HTTP
 import           Network.HTTP.Conduit (tlsManagerSettings)
+import qualified System.Exit as Exit
 import qualified System.IO as IO
 
 main :: IO ()
@@ -25,7 +27,7 @@ main = do
       let sheets = Map.toList Request.sheetDataMap
 
       mgr <- HTTP.newManager tlsManagerSettings
-      forM_ sheets $ uncurry $ \subject sheetData -> do
+      Async.forConcurrently_ sheets $ uncurry $ \subject sheetData -> do
         let subjectTxt = T.unpack $ Request.sheetSubjectText subject
 
         IO.putStrLn $ "Fetching " <> subjectTxt <> "..."
@@ -38,19 +40,17 @@ main = do
                  >>= Convert.toFoundry
                  >>= (pure . Convert.toCompendium)
 
-        IO.putStrLn $ "Finished with " <> subjectTxt <> "."
-        handleSheetResult result
+        case result of
+          Left  errorMsg  -> Exit.die $ T.unpack errorMsg
+          Right compendia -> forM_ compendia handleSheetResult
 
-handleSheetResult :: Either Text [Compendium FoundryData] -> IO ()
-handleSheetResult (Left err) = do
-  IO.putStrLn $ T.unpack err
-
-handleSheetResult (Right compendia) = forM_ compendia $ \compendium -> do
+handleSheetResult :: Compendium FoundryData -> IO ()
+handleSheetResult compendium = do
   IO.putStrLn $
     L.concat [ "Writing compendium "
              , T.unpack $ labelText $ compendiumLabel compendium
              , " to " <> compendiumPath compendium <> "..."
              ]
 
-  -- TODO: >>= Persist.storeCompendia -- Write Compendia to disk
-  liftIO $ IO.putStrLn "Done."
+  -- TODO: Persist.storeCompendia -- Write Compendia to disk
+  IO.putStrLn "Done."

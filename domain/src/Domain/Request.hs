@@ -79,5 +79,5 @@ responseContent :: HTTP.Response LBS.ByteString
                 -> Either Text [Text]
 responseContent resp subject =
   case TE.decodeUtf8 . LBS.toStrict $ HTTP.responseBody resp of
-    txt | T.null txt -> Left $ "No content in " <> sheetSubjectText subject
+    txt | T.null txt -> Left  $ "No content in " <> sheetSubjectText subject
         | otherwise  -> Right $ T.lines txt

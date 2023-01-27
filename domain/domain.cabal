@@ -51,6 +51,7 @@ library
   ghc-options: -j -Werror -Wall -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Wmissing-deriving-strategies -Wmissing-export-lists -fno-warn-orphans
   build-depends:
       aeson
+    , async
     , base >=4.7 && <5
     , bytestring
     , cassava
@@ -82,6 +83,7 @@ executable domain-exe
   ghc-options: -j -Werror -Wall -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wpartial-fields -Wredundant-constraints -Wmissing-deriving-strategies -Wmissing-export-lists -fno-warn-orphans -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
+    , async
     , base >=4.7 && <5
     , bytestring
     , cassava
