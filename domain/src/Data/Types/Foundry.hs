@@ -30,6 +30,11 @@ instance CompendiumEntry FoundryData where
   typed (FoundryEquipment e) = typed e
   typed (FoundryWeapon w)    = typed w
 
+instance ToJSON FoundryData where
+  toJSON (FoundryArmor     a) = toJSON a
+  toJSON (FoundryEquipment e) = toJSON e
+  toJSON (FoundryWeapon    w) = toJSON w
+
 data Armor =
   Armor
     { armorName        :: Name

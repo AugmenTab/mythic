@@ -457,7 +457,7 @@ newtype MagazineCapacity = MagazineCapacity Int
   deriving newtype (ToJSON)
 
 newtype Name = Name Text
-  deriving newtype (ToJSON)
+  deriving newtype (Eq, Ord, ToJSON)
 
 mkName :: Text -> Name
 mkName = Name

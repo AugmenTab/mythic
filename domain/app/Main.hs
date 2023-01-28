@@ -5,6 +5,7 @@ module Main
 import           Flipstone.Prelude
 import           Data.Types
 import qualified Domain.Convert as Convert
+import qualified Domain.Persist as Persist
 import qualified Domain.Prepare as Prepare
 import qualified Domain.Request as Request
 
@@ -34,24 +35,27 @@ main = do
         resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
 
         IO.putStrLn $ "Converting " <> subjectTxt <> "..."
-        pure . either (Exit.die . T.unpack) handleSheetResults
-             $ Request.responseContent resp subject
-           >>= Prepare.prepareSheet subject
-           >>= Convert.ingestRaw subject
-           >>= Convert.toFoundry
-           >>= pure . Convert.toCompendium
+        either (Exit.die . T.unpack) handleSheetResults $
+              Request.responseContent resp subject
+          >>= Prepare.prepareSheet subject
+          >>= Convert.ingestRaw subject
+          >>= Convert.toFoundry
+          >>= pure . Convert.toCompendium
+
+      IO.putStrLn "Done."
+
 
 handleSheetResults :: [Compendium FoundryData] -> IO ()
 handleSheetResults compendia = do
+  IO.putStrLn "Made it"
   forM_ compendia $ \compendium -> do
     IO.putStrLn $
       L.concat [ "Writing compendium "
                , T.unpack $ labelText $ compendiumLabel compendium
-               , " to " <> compendiumPath compendium <> "..."
+               , " to " <> compendiumPath compendium <> " ..."
                ]
 
-    -- TODO: Persist.writeCompendium -- Write Compendium to disk
+    Persist.writeCompendium compendium
 
   -- TODO: Persist.writeManifest -- Encode compendia manifest and write to disk
   -- Maybe encode the entire manifest file?
-  IO.putStrLn "Done."
