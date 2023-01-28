@@ -29,7 +29,7 @@ defaultConfig =
   Pretty.Config
     { Pretty.confIndent          = Pretty.Spaces 2
     , Pretty.confCompare         = mempty
-    , Pretty.confNumFormat       = Pretty.Decimal
+    , Pretty.confNumFormat       = Pretty.Generic
     , Pretty.confTrailingNewline = False
     }
 
