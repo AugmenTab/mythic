@@ -48,8 +48,29 @@ All available Item types in this system.
 
 ### Compendia
 
-All of the compendia that come included with this system. Unimplemented compendia are *italicized.*. **Development on some Compendia will rely on as-of-yet unimplemented features or bug fixes, and thus won't be introduced until those dependencies are resolved.**
+All of the compendia that come included with this system. **Development on some Compendia will rely on as-of-yet unimplemented features or bug fixes, and thus won't be introduced until those dependencies are resolved.**
 
+Available Compendium Packs:
+* Item
+  * UNSC - AERIAL GEAR
+  * UNSC - CARRYING DEVICES
+  * UNSC - CHEMICAL AND RADIOLOGICAL WEAPONS
+  * UNSC - COMPUTING AND COMMUNICATIONS
+  * UNSC - ELECTRONIC WARFARE
+  * UNSC - GENERAL
+  * UNSC - HELMET AND FACIAL EQUIPMENT
+  * UNSC - MEDICAL
+  * UNSC - SENSORS
+  * UNSC - SURVIVAL
+  * COVENANT - CARRYING DEVICES
+  * COVENANT - CHEMICAL AND RADIOLOGICAL WEAPONS
+  * COVENANT - COMPUTING AND COMMUNICATIONS
+  * COVENANT - DEPLOYABLE EQUIPMENT
+  * COVENANT - HELMET AND FACIAL EQUIPMENT
+  * COVENANT - MEDICAL EQUIPMENT
+  * COVENANT - OTHER
+
+Upcoming Compendium Packs:
 * Actor
     * *Bestiary - Covenant*
     * *Bestiary - Flood*
@@ -64,8 +85,6 @@ All of the compendia that come included with this system. Unimplemented compendi
     * *Abilities*
     * *Armors*
     * *Educations*
-    * *Equipment - Covenant*
-    * *Equipment - Human*
     * *Weapons - Banished*
     * *Weapons - Covenant*
     * *Weapons - Forerunner*

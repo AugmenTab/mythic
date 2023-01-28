@@ -35,6 +35,7 @@
 * Perceptive Range is now tracked and modifiable.
 * Weapons have a Scope Magnification value, and display their effective minimum and maximum ranges with that magnification factored in.
 * Attacks that deal Special Damage now indicate this by displaying a bullseye.
+* Equipment Item Compendia are now available.
 
 ## Bug Fixes
 
