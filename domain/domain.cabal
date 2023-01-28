@@ -63,6 +63,7 @@ library
     , http-client
     , http-conduit
     , http-types
+    , iso639
     , random
     , text
     , vector
@@ -97,6 +98,7 @@ executable domain-exe
     , http-client
     , http-conduit
     , http-types
+    , iso639
     , random
     , text
     , vector

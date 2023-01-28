@@ -27,34 +27,38 @@ main = do
       let sheets = Map.toList Request.sheetDataMap
 
       mgr <- HTTP.newManager tlsManagerSettings
-      Async.forConcurrently_ sheets $ uncurry $ \subject sheetData -> do
-        let subjectTxt = Request.sheetSubjectText subject
+      compendia <-
+        Async.forConcurrently sheets $ uncurry $ \subject sheetData -> do
+          let subjectTxt = Request.sheetSubjectText subject
 
-        IO.putStrLn $ "Fetching " <> subjectTxt <> "..."
-        resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
+          IO.putStrLn $ "Fetching " <> subjectTxt <> "..."
+          resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
 
-        IO.putStrLn $ "Converting " <> subjectTxt <> "..."
-        either (Exit.die . T.unpack) handleSheetResults $
-              Request.responseContent resp subject
-          >>= Prepare.prepareSheet subject
-          >>= Convert.ingestRaw subject
-          >>= Convert.toFoundry
-          >>= pure . Convert.toCompendium
+          IO.putStrLn $ "Converting " <> subjectTxt <> "..."
+          let results = Request.responseContent resp subject
+                    >>= Prepare.prepareSheet subject
+                    >>= Convert.ingestRaw subject
+                    >>= Convert.toFoundry
+                    >>= pure . Convert.toCompendium
 
+          case results of
+            Left  errMsg -> Exit.die $ T.unpack errMsg
+            Right packs  -> do
+              void $ handleSheetResults packs
+              pure packs
+
+      Persist.writeManifest $ concat compendia
       IO.putStrLn "Done."
 
 
 handleSheetResults :: [Compendium FoundryData] -> IO ()
-handleSheetResults compendia = do
-  forM_ compendia $ \compendium -> do
-    IO.putStrLn $
-      T.unwords [ "Writing compendium"
-                , labelText $ compendiumLabel compendium
-                , "to"
-                , T.pack $ compendiumPath compendium
-                , " ..."
-                ]
+handleSheetResults compendia = forM_ compendia $ \compendium -> do
+  IO.putStrLn $
+    T.unwords [ "Writing compendium"
+              , labelText $ compendiumLabel compendium
+              , "to"
+              , T.pack $ compendiumPath compendium
+              , " ..."
+              ]
 
-    Persist.writeCompendium compendium
-
-  Persist.writeManifest compendia
+  Persist.writeCompendium compendium

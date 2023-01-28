@@ -1,176 +1,180 @@
 {
-    "id": "mythic",
-    "title": "Mythic 6.0",
-    "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
-    "version": "0.2.4",
-    "authors": [
-        {
-            "name": "Tyler Baum",
-            "discord": "∀ugmenTab#5063",
-            "url": "https://github.com/AugmenTab"
-        }
-    ],
-    "esmodules": [ "mythic.js" ],
-    "styles": [ "mythic.css" ],
-    "packs": [
-      {
-        "label": "UNSC - AERIAL GEAR",
-        "name": "unsc-aerial-gear",
-        "path": "packs/unsc-aerial-gear.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - CARRYING DEVICES",
-        "name": "unsc-carrying-devices",
-        "path": "packs/unsc-carrying-devices.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - CHEMICAL AND RADIOLOGICAL WEAPONS",
-        "name": "unsc-chemical-and-radiological-weapons",
-        "path": "packs/unsc-chemical-and-radiological-weapons.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - COMPUTING AND COMMUNICATIONS",
-        "name": "unsc-computing-and-communications",
-        "path": "packs/unsc-computing-and-communications.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - ELECTRONIC WARFARE",
-        "name": "unsc-electronic-warfare",
-        "path": "packs/unsc-electronic-warfare.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - GENERAL",
-        "name": "unsc-general",
-        "path": "packs/unsc-general.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - HELMET AND FACIAL EQUIPMENT",
-        "name": "unsc-helmet-and-facial-equipment",
-        "path": "packs/unsc-helmet-and-facial-equipment.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - MEDICAL",
-        "name": "unsc-medical",
-        "path": "packs/unsc-medical.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - SENSORS",
-        "name": "unsc-sensors",
-        "path": "packs/unsc-sensors.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "UNSC - SURVIVAL",
-        "name": "unsc-survival",
-        "path": "packs/unsc-survival.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - CARRYING DEVICES",
-        "name": "covenant-carrying-devices",
-        "path": "packs/covenant-carrying-devices.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - CHEMICAL AND RADIOLOGICAL WEAPONS",
-        "name": "covenant-chemical-and-radiological-weapons",
-        "path": "packs/covenant-chemical-and-radiological-weapons.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - COMPUTING AND COMMUNICATIONS",
-        "name": "covenant-computing-and-communications",
-        "path": "packs/covenant-computing-and-communications.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - DEPLOYABLE EQUIPMENT",
-        "name": "covenant-deployable-equipment",
-        "path": "packs/covenant-deployable-equipment.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - HELMET AND FACIAL EQUIPMENT",
-        "name": "covenant-helmet-and-facial-equipment",
-        "path": "packs/covenant-helmet-and-facial-equipment.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - MEDICAL EQUIPMENT",
-        "name": "covenant-medical-equipment",
-        "path": "packs/covenant-medical-equipment.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      },
-      {
-        "label": "COVENANT - OTHER",
-        "name": "covenant-other",
-        "path": "packs/covenant-other.db",
-        "private": false,
-        "system": "mythic",
-        "type": "Item"
-      }
-    ],
-    "languages": [
-        {
-            "lang": "en",
-            "name": "English",
-            "path": "lang/en.json"
-        }
-    ],
-    "initiative": "@initiative.formula",
-    "gridDistance": 1,
-    "gridUnits": "m",
-    "primaryTokenAttribute": "wounds",
-    "secondaryTokenAttribute": null,
-    "compatibility": {
-      "minimum": "10",
-      "verified": "10",
-      "maximum": "10"
+  "authors": [
+    {
+      "discord": "∀ugmenTab#5063",
+      "name": "Tyler Baum",
+      "url": "https://github.com/AugmenTab"
+    }
+  ],
+  "changelog": "https://github.com/AugmenTab/mythic/blob/main/CHANGELOG.md",
+  "compatibility": {
+    "maximum": "10",
+    "minimum": "10",
+    "verified": "10"
+  },
+  "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
+  "download": "https://github.com/AugmenTab/mythic/releases/latest/download/mythic.zip",
+  "esmodules": [
+    "mythic.js"
+  ],
+  "gridDistance": 1,
+  "gridUnits": "m",
+  "id": "mythic",
+  "initiative": "@initiative.formula",
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "license": "LICENSE",
+  "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
+  "packs": [
+    {
+      "label": "UNSC - AERIAL GEAR",
+      "name": "unsc-aerial-gear",
+      "path": "packs/unsc-aerial-gear.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
     },
-    "url": "https://github.com/AugmenTab/mythic",
-    "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
-    "download": "https://github.com/AugmenTab/mythic/releases/latest/download/mythic.zip",
-    "license": "LICENSE",
-    "readme": "README.md",
-    "changelog": "https://github.com/AugmenTab/mythic/blob/main/CHANGELOG.md"
+    {
+      "label": "UNSC - CARRYING DEVICES",
+      "name": "unsc-carrying-devices",
+      "path": "packs/unsc-carrying-devices.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - CHEMICAL AND RADIOLOGICAL WEAPONS",
+      "name": "unsc-chemical-and-radiological-weapons",
+      "path": "packs/unsc-chemical-and-radiological-weapons.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - COMPUTING AND COMMUNICATIONS",
+      "name": "unsc-computing-and-communications",
+      "path": "packs/unsc-computing-and-communications.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - ELECTRONIC WARFARE",
+      "name": "unsc-electronic-warfare",
+      "path": "packs/unsc-electronic-warfare.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - GENERAL",
+      "name": "unsc-general",
+      "path": "packs/unsc-general.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - HELMET AND FACIAL EQUIPMENT",
+      "name": "unsc-helmet-and-facial-equipment",
+      "path": "packs/unsc-helmet-and-facial-equipment.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - MEDICAL",
+      "name": "unsc-medical",
+      "path": "packs/unsc-medical.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - SENSORS",
+      "name": "unsc-sensors",
+      "path": "packs/unsc-sensors.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "UNSC - SURVIVAL",
+      "name": "unsc-survival",
+      "path": "packs/unsc-survival.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - CARRYING DEVICES",
+      "name": "covenant-carrying-devices",
+      "path": "packs/covenant-carrying-devices.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - CHEMICAL AND RADIOLOGICAL WEAPONS",
+      "name": "covenant-chemical-and-radiological-weapons",
+      "path": "packs/covenant-chemical-and-radiological-weapons.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - COMPUTING AND COMMUNICATIONS",
+      "name": "covenant-computing-and-communications",
+      "path": "packs/covenant-computing-and-communications.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - DEPLOYABLE EQUIPMENT",
+      "name": "covenant-deployable-equipment",
+      "path": "packs/covenant-deployable-equipment.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - HELMET AND FACIAL EQUIPMENT",
+      "name": "covenant-helmet-and-facial-equipment",
+      "path": "packs/covenant-helmet-and-facial-equipment.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - MEDICAL EQUIPMENT",
+      "name": "covenant-medical-equipment",
+      "path": "packs/covenant-medical-equipment.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "COVENANT - OTHER",
+      "name": "covenant-other",
+      "path": "packs/covenant-other.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    }
+  ],
+  "primaryTokenAttribute": "wounds",
+  "readme": "README.md",
+  "secondaryTokenAttribute": null,
+  "styles": [
+    "mythic.css"
+  ],
+  "title": "Mythic 6.0",
+  "url": "https://github.com/AugmenTab/mythic",
+  "version": "0.2.4"
 }
