@@ -50,7 +50,7 @@ export function interpretDiceRollModifiers(str) {
   const nums = numsAndDice.no.reduce((acc, mod) => acc + parseInt(mod), 0);
   if (isNaN(nums)) {
     Common.makeUIError("mythic.chat.error.parseFailure");
-    throw new Error(msg);
+    return { flat: 0, dice: [] };
   }
 
   return { flat: nums, dice: numsAndDice.yes };
