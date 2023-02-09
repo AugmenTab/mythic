@@ -18,7 +18,6 @@ module Data.Types.Prelude
   , ItemTrainings, mkItemTrainings
   , ItemType(..)
   , Protection
-  , Reload
   , Shields
   , Size
   , SpecialRules
@@ -619,6 +618,7 @@ instance ToJSON SpecialRules where
                , "singleLoading"    .= noneRule (singleLoading r)
                , "slow"             .= noneRule (slow r)
                , "smoke"            .= intRule  (smoke r)
+               , "spike"            .= noneRule (spike r)
                , "spin"             .= noneRule (spin r)
                , "spread"           .= noneRule (spread r)
                , "sticky"           .= noneRule (sticky r)

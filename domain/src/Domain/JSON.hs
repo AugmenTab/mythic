@@ -16,7 +16,7 @@ module Domain.JSON
 
 import           Flipstone.Prelude
 
-import           Data.Aeson (ToJSON(..), encode, withObject, object, (.=))
+import           Data.Aeson (ToJSON(..), object, (.=))
 import qualified Data.Aeson.Encode.Pretty as Pretty
 import           Data.Aeson.Key (Key, fromText)
 import           Data.Aeson.Types (Value(..))
