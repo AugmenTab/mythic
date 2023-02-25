@@ -1,0 +1,75 @@
+<table class="armor-shields" {{#unless this.has}} hidden {{/unless}}>
+  <thead>
+    <tr>
+      <th colspan="4">{{localize "mythic.armorSheet.shields.label"}}</th>
+    </tr>
+    <tr>
+      <th>{{localize "mythic.armorSheet.source.label"}}</th>
+      {{#each this as |values key|}}
+        {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+          <th>{{localize (concat "mythic.armorSheet.shields." key)}}</th>
+        {{/unless}}
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{localize "mythic.armorSheet.source.armor"}}</td>
+      {{#each this as |values key|}}
+        {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+          <td>
+            <input
+              name="system.shields.{{key}}.armor"
+              type="number"
+              data-dtype="Number"
+              value="{{values.armor}}"
+              onfocus="this.select()"
+            />
+          </td>
+        {{/unless}}
+      {{/each}}
+    </tr>
+    <tr>
+      <td>{{localize "mythic.armorSheet.source.variant"}}</td>
+      {{#each this as |values key|}}
+        {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+          <td>
+            <input
+              name="system.shields.{{key}}.variant"
+              type="number"
+              data-dtype="Number"
+              value="{{values.variant}}"
+              onfocus="this.select()"
+            />
+          </td>
+        {{/unless}}
+      {{/each}}
+    </tr>
+    <tr>
+      <td>{{localize "mythic.armorSheet.source.other"}}</td>
+      {{#each this as |values key|}}
+        {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+          <td>
+            <input
+              name="system.shields.{{key}}.other"
+              type="number"
+              data-dtype="Number"
+              value="{{values.other}}"
+              onfocus="this.select()"
+            />
+          </td>
+        {{/unless}}
+      {{/each}}
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>{{localize "mythic.armorSheet.total"}}</th>
+      {{#each this as |values key|}}
+        {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
+          <th>{{values.total}}</th>
+        {{/unless}}
+      {{/each}}
+    </tr>
+  </thead>
+</table>

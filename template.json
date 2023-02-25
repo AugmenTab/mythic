@@ -1056,6 +1056,29 @@
                     "equipped": false,
                     "selfSupported": false
                 }
+            },
+            "shields": {
+                "shields": {
+                    "has": false,
+                    "integrity": {
+                        "armor": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "recharge": {
+                        "armor": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "delay": {
+                        "armor": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    }
+                }
             }
         },
         "ability": {
@@ -1068,7 +1091,8 @@
         "armor": {
             "templates": [
                 "baseItemDetails",
-                "physical"
+                "physical",
+                "shields"
             ],
             "characteristics": {
                 "has": false,
@@ -1150,27 +1174,6 @@
                     "total": 0
                 }
             },
-            "shields": {
-                "has": false,
-                "integrity": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "recharge": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "delay": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                }
-            },
             "size": "",
             "variant": ""
         },
@@ -1220,14 +1223,16 @@
         },
         "equipment": {
             "templates": [
-                "physical"
+                "physical",
+                "shields"
             ],
             "description": ""
         },
         "weapon": {
             "templates": [
                 "baseItemDetails",
-                "physical"
+                "physical",
+                "shields"
             ],
             "group": "ranged",
             "tags": {
