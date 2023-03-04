@@ -1259,7 +1259,8 @@
                 "fireMode": "",
                 "half": 0,
                 "full": 0,
-                "attackBonus": 0
+                "attackBonus": 0,
+                "extraMelee": 0
             },
             "reload": {
                 "base": 0,
@@ -1294,6 +1295,7 @@
                         "long": 0,
                         "melee": 0,
                         "thrown": 0,
+                        "thrownBonus": 0,
                         "thrownMax": 0,
                         "grip": "solid"
                     },

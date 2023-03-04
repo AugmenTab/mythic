@@ -613,6 +613,8 @@
                 "range": "Range",
                 "reach": "Reach",
                 "reachBonus": "Reach Bonus",
+                "extraMelee": "Extra Full Attacks",
+                "rangeBonus": "Range Bonus",
                 "grip": "Grip",
                 "ammo": "Ammunition",
                 "ammoGroup": "Sp. Ammo Group",

@@ -36,6 +36,8 @@
 * Weapons have a Scope Magnification value, and display their effective minimum and maximum ranges with that magnification factored in.
 * Attacks that deal Special Damage now indicate this by displaying a bullseye.
 * Equipment Item Compendia are now available.
+* Field added to melee weapons to indicate the number of extra attacks it grants on a Full Attack action.
+* Field added to thrown weapons to indicate a flat range bonus granted by the weapon.
 
 ## Bug Fixes
 

@@ -1061,9 +1061,12 @@ function calculateWeaponAttacksMelee(actorData, weaponData) {
     && actorData.trainings.weapons.mac
   ) ? 1 : 0;
 
-  weaponData.attack.half = Math.min(4, Math.max(1, mkBase(0)));
-  weaponData.attack.full = Math.min(8, 2 * mkBase(macMod));
   weaponData.attack.fireMode = "melee";
+  weaponData.attack.half = Math.min(4, Math.max(1, mkBase(0)));
+  weaponData.attack.full = (
+      Math.min(8, 2 * mkBase(macMod))
+    + Math.max(0, weaponData.attack.extraMelee)
+  );
 }
 
 function calculateWeaponAttacksRanged(weaponData) {
@@ -1100,6 +1103,7 @@ function calculateWeaponRangeMelee(actorData, weaponData) {
 
 function calculateWeaponRangeThrown(actorData, weaponData) {
   const currentAmmo = weaponData.currentAmmo;
+  const bonus = weaponData.ammoList[currentAmmo].range.thrownBonus;
   const base = (
       getCharacteristicModifier(actorData.characteristics.str.total)
     + actorData.mythicCharacteristics.str.total
@@ -1110,9 +1114,11 @@ function calculateWeaponRangeThrown(actorData, weaponData) {
   mult -= calculateWeightPenaltyThrown(base, weaponData.weight.each);
   mult -= calculateGripPenaltyThrown(grip);
 
-  weaponData.ammoList[currentAmmo].range.thrownMax = Math.floor(base * 20);
+  weaponData.ammoList[currentAmmo].range.thrownMax =
+    bonus + Math.floor(base * 20);
+
   weaponData.ammoList[currentAmmo].range.thrown = Math.floor(
-    (base * mult) / (grip === "sloppy" ? 2 : 1)
+    ((base * mult) + bonus) / (grip === "sloppy" ? 2 : 1)
   );
 }
 
