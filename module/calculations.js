@@ -689,9 +689,9 @@ function calculateInitiative(actorData, feltFatigue) {
   const stats = actorData.characteristics;
   const mythicAgi = actorData.mythicCharacteristics.agi.total;
 
-  let formula = [];
-  formula.push(actorData.initiative.fastFoot ? "2d10kh" : "1d10");
-  formula.push(
+  let mods = [];
+  const dice = actorData.initiative.fastFoot ? "2d10kh" : "1d10";
+  mods.push(
     [ getCharacteristicModifier(stats.agi.total)
     , init.battleMind    ? getCharacteristicModifier(stats.int.total) : 0
     , init.grandEntrance ? getCharacteristicModifier(stats.ldr.total) : 0
@@ -700,14 +700,13 @@ function calculateInitiative(actorData, feltFatigue) {
 
   if (mythicAgi > 0) {
     const bonus = Math.floor(mythicAgi / 2);
-    formula.push(bonus > 1 ? bonus : 1);
+    mods.push(bonus > 1 ? bonus : 1);
   };
 
-  formula.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
+  mods.push(-5 * (feltFatigue < 0 ? 0 : feltFatigue));
 
-  const mods = interpretDiceRollModifiers(formula.slice(1).join("+")).flat;
-  actorData.initiative.mods = (mods > 0 ? "+" : "") + mods.toString();
-  actorData.initiative.formula = formula.join("+");
+  actorData.initiative.mods = mods.reduce((acc, x) => acc + x, 0);
+  actorData.initiative.formula = `${dice}+${mods.join("+")}`;
 }
 
 function calculateInitiativeFlood(actorData) {
