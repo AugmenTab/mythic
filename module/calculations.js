@@ -36,9 +36,9 @@ const PHYSICAL_SKILLS = new Set([
 export function calculateArmorValues(armorData) {
   armorData.price.total = armorData.price.base + armorData.price.mods;
   new Array(
+    Object.entries(armorData.characteristics),
     Object.entries(armorData.protection),
     Object.entries(armorData.shields),
-    Object.entries(armorData.characteristics),
   ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
 }
 
@@ -49,6 +49,7 @@ export function calculateArmorValues(armorData) {
  */
 export function calculateEquipmentValues(equipmentData) {
   new Array(
+    Object.entries(equipmentData.characteristics)
     Object.entries(equipmentData.shields)
   ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
 }
@@ -66,6 +67,7 @@ export function calculateWeaponValues(weaponData) {
   weaponData.currentAmmo = "STD";
 
   new Array(
+    Object.entries(weaponData.characteristics)
     Object.entries(weaponData.shields)
   ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
 }
