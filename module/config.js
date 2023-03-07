@@ -400,3 +400,10 @@ mythic.specialRules = {
     vehicleLock: "none",
   }
 }
+
+mythic.armorHardpoints = {
+  head: 3,
+  chest: 6,
+  arm: 3,
+  leg: 3
+}
