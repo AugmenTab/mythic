@@ -1036,6 +1036,33 @@
                 "faction": "",
                 "description": ""
             },
+            "characteristics": {
+                "has": false,
+                "str": {
+                    "item": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "agi": {
+                    "item": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "mythicStr": {
+                    "item": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                },
+                "mythicAgi": {
+                    "item": 0,
+                    "variant": 0,
+                    "other": 0,
+                    "total": 0
+                }
+            },
             "physical": {
                 "price": {
                     "base": 0,
@@ -1091,36 +1118,10 @@
         "armor": {
             "templates": [
                 "baseItemDetails",
+                "characteristics",
                 "physical",
                 "shields"
             ],
-            "characteristics": {
-                "has": false,
-                "str": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "agi": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "mythicStr": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "mythicAgi": {
-                    "armor": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                }
-            },
             "hardpoints": {
                 "head": 0,
                 "chest": 0,
@@ -1223,6 +1224,7 @@
         },
         "equipment": {
             "templates": [
+                "characteristics",
                 "physical",
                 "shields"
             ],
@@ -1231,6 +1233,7 @@
         "weapon": {
             "templates": [
                 "baseItemDetails",
+                "characteristics",
                 "physical",
                 "shields"
             ],
