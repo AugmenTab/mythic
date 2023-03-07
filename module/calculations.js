@@ -48,18 +48,9 @@ export function calculateArmorValues(armorData) {
  * @param {ItemData} equipmentData - The equipment's ItemData.
  */
 export function calculateEquipmentValues(equipmentData) {
-  Object.entries(equipmentData.shields)
-    .filter(v => v[0] !== "has").map(calculateItemValues);
-}
-
-/**
- * Get the characteristic modifier for a given characteristic score.
- *
- * @param {number} score - The characteristic score.
- * @returns {number} The characteristic modifier.
- */
-export function getCharacteristicModifier(score) {
-  return score < 0 ? 0 : Math.floor(score / 10);
+  new Array(
+    Object.entries(equipmentData.shields)
+  ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
 }
 
 /**
@@ -73,6 +64,20 @@ export function calculateWeaponValues(weaponData) {
 
   // TODO: Remove this once special ammo is implemented.
   weaponData.currentAmmo = "STD";
+
+  new Array(
+    Object.entries(weaponData.shields)
+  ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
+}
+
+/**
+ * Get the characteristic modifier for a given characteristic score.
+ *
+ * @param {number} score - The characteristic score.
+ * @returns {number} The characteristic modifier.
+ */
+export function getCharacteristicModifier(score) {
+  return score < 0 ? 0 : Math.floor(score / 10);
 }
 
 /**
