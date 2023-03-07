@@ -21,7 +21,7 @@
   </select>
 </div>
 {{!-- Armor Basics --}}
-<div class="armor-tables">
+<div class="item-tables">
   <table>
     <thead>
       <tr>
@@ -163,7 +163,7 @@
     {{> "systems/mythic/templates/partials/shields.hbs" system.shields}}
   {{!-- Characteristic Adjustments --}}
   <table
-    class="armor-stats"
+    class="item-stats"
     {{#unless system.characteristics.has}} hidden {{/unless}}
   >
     <thead>
@@ -185,10 +185,10 @@
           {{#unless (eq stat "has")}}
             <td>
               <input
-                name="system.characteristics.{{stat}}.armor"
+                name="system.characteristics.{{stat}}.item"
                 type="number"
                 data-dtype="Number"
-                value="{{values.armor}}"
+                value="{{values.item}}"
                 onfocus="this.select()"
               />
             </td>

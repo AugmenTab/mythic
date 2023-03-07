@@ -447,12 +447,6 @@
                 "leftLeg": "L. Leg",
                 "rightLeg": "R. Leg"
             },
-            "shields": {
-                "label": "Shields",
-                "integrity": "Integrity",
-                "recharge": "Recharge",
-                "delay": "Delay"
-            },
             "characteristics": "Characteristic Adjustments",
             "mythic": "Mythic",
             "source": {
@@ -498,7 +492,8 @@
             "faction": "Faction",
             "price": "Price (cR)",
             "weight": "Weight (kg)",
-            "selfSupported": "Self-Supporting?"
+            "selfSupported": "Self-Supporting?",
+            "hasShields": "Shields?"
         },
         "skillSheet": {
             "stats": "Characteristics",
@@ -558,6 +553,18 @@
             "none": "--",
             "plus5": "+5",
             "plus10": "+10"
+        },
+        "shields": {
+            "label": "Shields",
+            "integrity": "Integrity",
+            "recharge": "Recharge",
+            "delay": "Delay",
+            "total": "Total",
+            "source": {
+              "item": "Item",
+              "variant": "Variant",
+              "other": "Other"
+            }
         },
         "sizes": {
             "mini": "Mini",

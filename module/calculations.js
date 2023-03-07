@@ -35,22 +35,21 @@ const PHYSICAL_SKILLS = new Set([
  */
 export function calculateArmorValues(armorData) {
   armorData.price.total = armorData.price.base + armorData.price.mods;
-
-  const canBeNegative = ["str", "agi", "mythicStr", "mythicAgi"];
   new Array(
     Object.entries(armorData.protection),
     Object.entries(armorData.shields),
     Object.entries(armorData.characteristics),
-  ).flat()
-   .filter(v => v[0] !== "has")
-   .map(x => {
-      const total = x[1].armor + x[1].variant + x[1].other;
-      if (x < 0 && !canBeNegative.includes(x[0])) {
-        x[1].total = 0;
-      } else {
-        x[1].total = total;
-      }
-   });
+  ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
+}
+
+/**
+ * Calculates equipment shield values.
+ *
+ * @param {ItemData} equipmentData - The equipment's ItemData.
+ */
+export function calculateEquipmentValues(equipmentData) {
+  Object.entries(equipmentData.shields)
+    .filter(v => v[0] !== "has").map(calculateItemValues);
 }
 
 /**
@@ -759,6 +758,18 @@ function calculateInventoryBars(actorData) {
     actorData.carryingCapacity.bar.width = `${percent.toFixed(1)}%`;
     actorData.carryingCapacity.bar.left = percent <= 4 ? "0.3em" : "0";
     actorData.carryingCapacity.bar.tier = "carry";
+  }
+}
+
+function calculateItemValues(item) {
+  const canBeNegative = ["str", "agi", "mythicStr", "mythicAgi"];
+  const total =
+    (item[1].armor || item[1].item || 0) + item[1].variant + item[1].other;
+
+  if (item < 0 && !canBeNegative.includes(item[0])) {
+    item[1].total = 0;
+  } else {
+    item[1].total = total;
   }
 }
 

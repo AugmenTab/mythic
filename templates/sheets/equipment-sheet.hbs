@@ -26,6 +26,7 @@
         <th>{{localize "mythic.equipmentSheet.price"}}</th>
         <th>{{localize "mythic.equipmentSheet.weight"}}</th>
         <th>{{localize "mythic.equipmentSheet.selfSupported"}}</th>
+        <th>{{localize "mythic.equipmentSheet.hasShields"}}</th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +42,7 @@
         </td>
         <td>
           <input
+            style="width:60px"
             name="system.price.base"
             type="number"
             data-dtype="Number"
@@ -50,6 +52,7 @@
         </td>
         <td>
           <input
+            style="width:60px"
             name="system.weight.each"
             type="number"
             data-dtype="Number"
@@ -59,14 +62,23 @@
         </td>
         <td>
           <input
+            style="width:60px"
             name="system.weight.selfSupported"
             type="checkbox"
             {{checked system.weight.selfSupported}}
           />
         </td>
+        <td>
+          <input
+            name="system.shields.has"
+            type="checkbox"
+            {{checked system.shields.has}}
+          />
+        </td>
       </tr>
     </tbody>
   </table>
+  {{> "systems/mythic/templates/partials/shields.hbs" system.shields}}
   <div class="sheet-content">
     {{editor system.description target="system.description" button=true owner=owner editable=this.options.editable}}
   </div>

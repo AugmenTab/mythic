@@ -1,28 +1,29 @@
-<table class="armor-shields" {{#unless this.has}} hidden {{/unless}}>
+<table class="item-shields" {{#unless this.has}} hidden {{/unless}}>
   <thead>
     <tr>
-      <th colspan="4">{{localize "mythic.armorSheet.shields.label"}}</th>
+      <th colspan="4">{{localize "mythic.shields.label"}}</th>
     </tr>
     <tr>
-      <th>{{localize "mythic.armorSheet.source.label"}}</th>
+      <th>{{localize "mythic.shields.label"}}</th>
       {{#each this as |values key|}}
         {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
-          <th>{{localize (concat "mythic.armorSheet.shields." key)}}</th>
+          <th>{{localize (concat "mythic.shields." key)}}</th>
         {{/unless}}
       {{/each}}
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>{{localize "mythic.armorSheet.source.armor"}}</td>
+      <td>{{localize "mythic.shields.source.item"}}</td>
       {{#each this as |values key|}}
         {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
           <td>
             <input
-              name="system.shields.{{key}}.armor"
+              style="width:60px"
+              name="system.shields.{{key}}.item"
               type="number"
               data-dtype="Number"
-              value="{{values.armor}}"
+              value="{{values.item}}"
               onfocus="this.select()"
             />
           </td>
@@ -30,11 +31,12 @@
       {{/each}}
     </tr>
     <tr>
-      <td>{{localize "mythic.armorSheet.source.variant"}}</td>
+      <td>{{localize "mythic.shields.source.variant"}}</td>
       {{#each this as |values key|}}
         {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
           <td>
             <input
+              style="width:60px"
               name="system.shields.{{key}}.variant"
               type="number"
               data-dtype="Number"
@@ -46,11 +48,12 @@
       {{/each}}
     </tr>
     <tr>
-      <td>{{localize "mythic.armorSheet.source.other"}}</td>
+      <td>{{localize "mythic.shields.source.other"}}</td>
       {{#each this as |values key|}}
         {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
           <td>
             <input
+              style="width:60px"
               name="system.shields.{{key}}.other"
               type="number"
               data-dtype="Number"
@@ -64,7 +67,7 @@
   </tbody>
   <thead>
     <tr>
-      <th>{{localize "mythic.armorSheet.total"}}</th>
+      <th>{{localize "mythic.shields.total"}}</th>
       {{#each this as |values key|}}
         {{#unless (cond "||" (eq key "has") (eq key "value") (eq key "max"))}}
           <th>{{values.total}}</th>

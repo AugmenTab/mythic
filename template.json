@@ -1088,19 +1088,19 @@
                 "shields": {
                     "has": false,
                     "integrity": {
-                        "armor": 0,
+                        "item": 0,
                         "variant": 0,
                         "other": 0,
                         "total": 0
                     },
                     "recharge": {
-                        "armor": 0,
+                        "item": 0,
                         "variant": 0,
                         "other": 0,
                         "total": 0
                     },
                     "delay": {
-                        "armor": 0,
+                        "item": 0,
                         "variant": 0,
                         "other": 0,
                         "total": 0
@@ -1139,37 +1139,37 @@
             },
             "protection": {
                 "head": {
-                    "armor": 0,
+                    "item": 0,
                     "variant": 0,
                     "other": 0,
                     "total": 0
                 },
                 "chest": {
-                    "armor": 0,
+                    "item": 0,
                     "variant": 0,
                     "other": 0,
                     "total": 0
                 },
                 "leftArm": {
-                    "armor": 0,
+                    "item": 0,
                     "variant": 0,
                     "other": 0,
                     "total": 0
                 },
                 "rightArm": {
-                    "armor": 0,
+                    "item": 0,
                     "variant": 0,
                     "other": 0,
                     "total": 0
                 },
                 "leftLeg": {
-                    "armor": 0,
+                    "item": 0,
                     "variant": 0,
                     "other": 0,
                     "total": 0
                 },
                 "rightLeg": {
-                    "armor": 0,
+                    "item": 0,
                     "variant": 0,
                     "other": 0,
                     "total": 0
