@@ -1,5 +1,34 @@
 <div class="weapon-settings">
-  <h2>{{localize "mythic.weaponSheet.nav.settings"}}</h2>
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>{{localize "mythic.weaponSheet.settings.hasShields"}}
+          <th>{{localize "mythic.weaponSheet.settings.hasStats"}}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              name="system.shields.has"
+              type="checkbox"
+              {{checked system.shields.has}}
+            />
+          </td>
+          <td>
+            <input
+              name="system.characteristics.has"
+              type="checkbox"
+              {{checked system.characteristics.has}}
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {{> "systems/mythic/templates/partials/shields.hbs" system.shields}}
+    {{> "systems/mythic/templates/partials/characteristics.hbs" system.characteristics}}
+  </div>
   <span>
     {{localize "mythic.weaponSheet.settings.context.blurb"}}:&nbsp;
     <a href="{{localize "mythic.weaponSheet.settings.context.link"}}">

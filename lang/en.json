@@ -682,6 +682,8 @@
                 "vehicleLock": "Vehicle Lock"
             },
             "settings": {
+                "hasShields": "Shields?",
+                "hasStats": "Characteristics?",
                 "context": {
                     "blurb": "The context for these fields can be found here",
                     "linkText": "100DOS and Mythic Development Tools",
