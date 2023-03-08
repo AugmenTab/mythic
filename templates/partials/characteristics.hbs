@@ -1,0 +1,75 @@
+<table
+  class="item-stats"
+  {{#unless this.has}} hidden {{/unless}}
+>
+  <thead>
+    <tr>
+      <th colspan="5">{{localize "mythic.armorSheet.characteristics"}}</th>
+    </tr>
+    <tr>
+      <th>{{localize "mythic.armorSheet.source.label"}}</th>
+      <th>STR</th>
+      <th>AGI</th>
+      <th>{{localize "mythic.armorSheet.mythic"}} STR</th>
+      <th>{{localize "mythic.armorSheet.mythic"}} AGI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{localize "mythic.armorSheet.source.armor"}}</td>
+      {{#each this as |values stat|}}
+        {{#unless (eq stat "has")}}
+          <td>
+            <input
+              name="system.characteristics.{{stat}}.item"
+              type="number"
+              data-dtype="Number"
+              value="{{values.item}}"
+              onfocus="this.select()"
+            />
+          </td>
+        {{/unless}}
+      {{/each}}
+    </tr>
+    <tr>
+      <td>{{localize "mythic.armorSheet.source.variant"}}</td>
+      {{#each this as |values stat|}}
+        {{#unless (eq stat "has")}}
+          <td>
+            <input
+              name="system.characteristics.{{stat}}.variant"
+              type="number"
+              data-dtype="Number"
+              value="{{values.variant}}"
+              onfocus="this.select()"
+            />
+          </td>
+        {{/unless}}
+      {{/each}}
+    </tr>
+    <tr>
+      <td>{{localize "mythic.armorSheet.source.other"}}</td>
+      {{#each this as |values stat|}}
+        {{#unless (eq stat "has")}}
+          <td>
+            <input
+              name="system.characteristics.{{stat}}.other"
+              type="number"
+              data-dtype="Number"
+              value="{{values.other}}"
+              onfocus="this.select()"
+            />
+          </td>
+        {{/unless}}
+      {{/each}}
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>{{localize "mythic.armorSheet.total"}}</th>
+      {{#each this as |values stat|}}
+        {{#unless (eq stat "has")}} <th>{{values.total}}</th> {{/unless}}
+      {{/each}}
+    </tr>
+  </thead>
+</table>

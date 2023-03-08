@@ -1037,30 +1037,32 @@
                 "description": ""
             },
             "characteristics": {
-                "has": false,
-                "str": {
-                    "item": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "agi": {
-                    "item": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "mythicStr": {
-                    "item": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
-                },
-                "mythicAgi": {
-                    "item": 0,
-                    "variant": 0,
-                    "other": 0,
-                    "total": 0
+                "characteristics": {
+                    "has": false,
+                    "str": {
+                        "item": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "agi": {
+                        "item": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "mythicStr": {
+                        "item": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    },
+                    "mythicAgi": {
+                        "item": 0,
+                        "variant": 0,
+                        "other": 0,
+                        "total": 0
+                    }
                 }
             },
             "physical": {

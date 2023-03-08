@@ -49,7 +49,7 @@ export function calculateArmorValues(armorData) {
  */
 export function calculateEquipmentValues(equipmentData) {
   new Array(
-    Object.entries(equipmentData.characteristics)
+    Object.entries(equipmentData.characteristics),
     Object.entries(equipmentData.shields)
   ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
 }
@@ -67,7 +67,7 @@ export function calculateWeaponValues(weaponData) {
   weaponData.currentAmmo = "STD";
 
   new Array(
-    Object.entries(weaponData.characteristics)
+    Object.entries(weaponData.characteristics),
     Object.entries(weaponData.shields)
   ).flat().filter(v => v[0] !== "has").map(calculateItemValues);
 }

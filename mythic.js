@@ -34,6 +34,7 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/character-sheet-trainings.hbs",
     "systems/mythic/templates/partials/character-stat-block.hbs",
     "systems/mythic/templates/partials/character-weapon-summary.hbs",
+    "systems/mythic/templates/partials/characteristics.hbs",
     "systems/mythic/templates/partials/editor.hbs",
     "systems/mythic/templates/partials/flood-details.hbs",
     "systems/mythic/templates/partials/flood-inventory.hbs",
