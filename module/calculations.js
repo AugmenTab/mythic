@@ -156,6 +156,7 @@ export function prepareBestiaryBase(actor) {
 export function prepareBestiaryDerived(actor) {
   // Set Up Armor
   applyArmorStatsToCharacter(actor);
+  applyItemCharacteristicsToCharacter(actor);
 
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actor);
@@ -238,6 +239,7 @@ export function prepareFloodBase(actor) {
 export function prepareFloodDerived(actor) {
   // Set Up Armor
   applyArmorStatsToCharacter(actor);
+  applyItemCharacteristicsToCharacter(actor);
 
   // Calculate Characteristics
   calculateCharacteristicsFlood(actor.system);
@@ -297,6 +299,7 @@ export function prepareNamedCharacterBase(actor) {
 export function prepareNamedCharacterDerived(actor) {
   // Set Up Armor
   applyArmorStatsToCharacter(actor);
+  applyItemCharacteristicsToCharacter(actor);
 
   // Calculate Mythic Characteristics
   calculateMythicCharacteristics(actor);
@@ -420,15 +423,18 @@ function applyArmorStatsToCharacter(actor) {
   } else {
     emptyArmorShields(actor.system);
   }
+}
 
-  if (armor.system.characteristics.has) {
-    actor.system.characteristics.str.equipment = armor.system.characteristics.str.total;
-    actor.system.characteristics.agi.equipment = armor.system.characteristics.agi.total;
-    actor.system.mythicCharacteristics.str.equipment = armor.system.characteristics.mythicStr.total;
-    actor.system.mythicCharacteristics.agi.equipment = armor.system.characteristics.mythicAgi.total;
-  } else {
-    emptyArmorCharacteristics(actor.system);
-  }
+function applyItemCharacteristicsToCharacter(actor) {
+  emptyArmorCharacteristics(actor.system);
+
+  const items = actor.items.filter(i => i.system.weight.equipped && i.system.characteristics.has);
+  Object.values(items).forEach (item => {
+    actor.system.characteristics.str.equipment       += item.system.characteristics.str.total;
+    actor.system.characteristics.agi.equipment       += item.system.characteristics.agi.total;
+    actor.system.mythicCharacteristics.str.equipment += item.system.characteristics.mythicStr.total;
+    actor.system.mythicCharacteristics.agi.equipment += item.system.characteristics.mythicAgi.total;
+  });
 }
 
 function calculateAbilityPool(actorData) {
