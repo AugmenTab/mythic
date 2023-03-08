@@ -488,12 +488,18 @@
         },
         "equipmentSheet": {
             "name": "Name",
+            "nav": {
+                "details": "Details",
+                "notes": "Notes"
+            },
             "details": "Details",
             "faction": "Faction",
             "price": "Price (cR)",
             "weight": "Weight (kg)",
             "selfSupported": "Self-Supporting?",
-            "hasShields": "Shields?"
+            "hasShields": "Shields?",
+            "hasStats": "Characteristics?",
+            "notes": "Notes"
         },
         "skillSheet": {
             "stats": "Characteristics",

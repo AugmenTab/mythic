@@ -19,67 +19,99 @@
       </a>
     </h1>
   </header>
-  <table>
-    <thead>
-      <tr>
-        <th>{{localize "mythic.equipmentSheet.faction"}}</th>
-        <th>{{localize "mythic.equipmentSheet.price"}}</th>
-        <th>{{localize "mythic.equipmentSheet.weight"}}</th>
-        <th>{{localize "mythic.equipmentSheet.selfSupported"}}</th>
-        <th>{{localize "mythic.equipmentSheet.hasShields"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <select name="system.trainings.faction">
-            {{#select system.trainings.faction}}
-              {{#each config.trainings.factions as |value key|}}
-                <option value="{{key}}">{{localize value}}</option>
-              {{/each}}
-            {{/select}}
-          </select>
-        </td>
-        <td>
-          <input
-            style="width:60px"
-            name="system.price.base"
-            type="number"
-            data-dtype="Number"
-            value="{{system.price.base}}"
-            onfocus="this.select()"
-          />
-        </td>
-        <td>
-          <input
-            style="width:60px"
-            name="system.weight.each"
-            type="number"
-            data-dtype="Number"
-            value="{{system.weight.each}}"
-            onfocus="this.select()"
-          />
-        </td>
-        <td>
-          <input
-            style="width:60px"
-            name="system.weight.selfSupported"
-            type="checkbox"
-            {{checked system.weight.selfSupported}}
-          />
-        </td>
-        <td>
-          <input
-            name="system.shields.has"
-            type="checkbox"
-            {{checked system.shields.has}}
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  {{> "systems/mythic/templates/partials/shields.hbs" system.shields}}
-  <div class="sheet-content">
-    {{editor system.description target="system.description" button=true owner=owner editable=this.options.editable}}
-  </div>
+  <nav class="item-tabs tabs" data-group="primary">
+    <a class="item" data-tab="details">
+      {{localize "mythic.equipmentSheet.nav.details"}}
+    </a>
+    <a class="item" data-tab="notes">
+      {{localize "mythic.equipmentSheet.nav.notes"}}
+    </a>
+  </nav>
+  <section class="item-sheet-body">
+    {{!-- Details Page --}}
+    <div class="tab" data-group="primary" data-tab="details">
+      <table>
+        <thead>
+          <tr>
+            <th>{{localize "mythic.equipmentSheet.faction"}}</th>
+            <th>{{localize "mythic.equipmentSheet.price"}}</th>
+            <th>{{localize "mythic.equipmentSheet.weight"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select name="system.trainings.faction">
+                {{#select system.trainings.faction}}
+                  {{#each config.trainings.factions as |value key|}}
+                    <option value="{{key}}">{{localize value}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+            </td>
+            <td>
+              <input
+                style="width:60px"
+                name="system.price.base"
+                type="number"
+                data-dtype="Number"
+                value="{{system.price.base}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                style="width:60px"
+                name="system.weight.each"
+                type="number"
+                data-dtype="Number"
+                value="{{system.weight.each}}"
+                onfocus="this.select()"
+              />
+            </td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th>{{localize "mythic.equipmentSheet.selfSupported"}}</th>
+            <th>{{localize "mythic.equipmentSheet.hasShields"}}</th>
+            <th>{{localize "mythic.equipmentSheet.hasStats"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                style="width:60px"
+                name="system.weight.selfSupported"
+                type="checkbox"
+                {{checked system.weight.selfSupported}}
+              />
+            </td>
+            <td>
+              <input
+                name="system.shields.has"
+                type="checkbox"
+                {{checked system.shields.has}}
+              />
+            </td>
+            <td>
+              <input
+                name="system.characteristics.has"
+                type="checkbox"
+                {{checked system.characteristics.has}}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {{> "systems/mythic/templates/partials/shields.hbs" system.shields}}
+      {{> "systems/mythic/templates/partials/characteristics.hbs" system.characteristics}}
+    </div>
+
+    {{!-- Notes Page --}}
+    <div class="tab" data-group="primary" data-tab="notes">
+      {{> "systems/mythic/templates/partials/editor.hbs" content=system.description target="system.description" link="equipmentSheet.notes"}}
+    </div>
+  </section>
 </form>
