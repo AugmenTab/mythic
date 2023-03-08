@@ -19,6 +19,8 @@ import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet
  */
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
+    "systems/mythic/templates/chat/postable-characteristics.hbs",
+    "systems/mythic/templates/chat/postable-shields.hbs",
     "systems/mythic/templates/partials/armor-sheet-info.hbs",
     "systems/mythic/templates/partials/character-details.hbs",
     "systems/mythic/templates/partials/character-sheet-ability.hbs",

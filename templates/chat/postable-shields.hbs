@@ -1,0 +1,28 @@
+{{#if this.has}}
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">{{localize "mythic.shields.label"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          {{localize "mythic.shields.integrity"}}
+          :&nbsp;
+          {{this.integrity.total}}
+        </td>
+        <td>
+          {{localize "mythic.shields.recharge"}}
+          :&nbsp;
+          {{this.recharge.total}}
+        </td>
+        <td>
+          {{localize "mythic.shields.delay"}}
+          :&nbsp;
+          {{this.delay.total}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{{/if}}

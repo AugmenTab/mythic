@@ -122,5 +122,7 @@
       {{/each}}
     {{/with}}
   </aside>
+  {{> "systems/mythic/templates/chat/postable-shields.hbs" this.system.shields}}
+  {{> "systems/mythic/templates/chat/postable-characteristics.hbs" this.system.characteristics}}
   {{{this.system.description}}}
 </div>

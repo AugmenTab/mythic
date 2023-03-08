@@ -1,0 +1,23 @@
+{{#if this.has}}
+  <table>
+    <thead>
+      <tr>
+        <th colspan="4">{{localize "mythic.armorSheet.characteristics"}}</th>
+      </tr>
+      <tr>
+        <th>STR</th>
+        <th>AGI</th>
+        <th>{{localize "mythic.armorSheet.mythic"}}&nbsp;STR</th>
+        <th>{{localize "mythic.armorSheet.mythic"}}&nbsp;AGI</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{this.str.total}}</td>
+        <td>{{this.agi.total}}</td>
+        <td>{{this.mythicStr.total}}</td>
+        <td>{{this.mythicAgi.total}}</td>
+      </tr>
+    </tbody>
+  </table>
+{{/if}}
