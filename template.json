@@ -1099,6 +1099,7 @@
                         "item": 0,
                         "variant": 0,
                         "other": 0,
+                        "current": 0,
                         "total": 0
                     },
                     "recharge": {

@@ -40,6 +40,10 @@
 * Equipment Item Compendia are now available.
 * Field added to melee weapons to indicate the number of extra attacks it grants on an Attack action.
 * Field added to thrown weapons to indicate a flat range bonus granted by the weapon.
+* Equipment and Weapon Items can now provide shields and characteristic adjustments like Armor can.
+  * Characteristics adjustments from all Items are summed and displayed in the Equipment row for both Characteristics and Mythic Characteristics in the Settings tab for any character sheet.
+  * Shields are displayed under the weapon summary section on any character sheet. Included are buttons to recharge a single item, or all equipped shield-giving items.
+  * The shields section does not cover shield-granting armor - that is still managed in the same place it was previously, though it has now been renamed to "Energy Shields."
 
 ## Bug Fixes
 

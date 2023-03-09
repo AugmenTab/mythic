@@ -225,7 +225,7 @@
                 "luck": "Luck",
                 "support": "Support Points",
                 "damageResistance": "Damage Resistance (Armor Value)",
-                "shields": "Shields",
+                "shields": "Energy Shields",
                 "current": "Current",
                 "max": "Max",
                 "delay": "Delay",
@@ -321,6 +321,15 @@
             "full": "Full",
             "empty": "No weapons have been added yet.",
             "unequipped": "No weapons have been equipped yet."
+        },
+        "characterShieldSummary": {
+            "title": "Shields",
+            "name": "Name (Item Type)",
+            "integrity": "Integrity",
+            "recharge": "Recharge Rate",
+            "delay": "Delay",
+            "empty": "No shield-granting items have been added yet.",
+            "unequipped": "No shield-granting items have been equipped yet."
         },
         "chat": {
             "actions": {

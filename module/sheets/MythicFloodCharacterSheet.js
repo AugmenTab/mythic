@@ -24,7 +24,7 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "flood", "character"],
-      height: 620,
+      height: 745,
       width: 800,
       tabs: [
         {
@@ -62,6 +62,8 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
 
     data.armors = sortAndFilterItems(data.items, "armor");
     data.equipment = sortAndFilterItems(data.items, "equipment");
+    data.shields = data.items.filter(i => i.type !== "armor" && i.system.shields.has);
+    data.equippedShields = data.shields.filter(i => i.system.weight.equipped);
     data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
     data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
     return data;
@@ -94,6 +96,8 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     html.find(".postable-details").click(this._onPostDetails.bind(this));
     html.find(".postable-item").click(this._onPostItem.bind(this));
     html.find(".recharge").click(this._onShieldRecharge.bind(this));
+    html.find(".recharge-item").click(this._onShieldItemRecharge.bind(this));
+    html.find(".recharge-all-items").click(this._onShieldItemRechargeAll.bind(this));
     html.find(".reload").click(this._onReload.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".special-focus").focus(this._onItemEditInline.bind(this));
@@ -172,6 +176,28 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
     await item.update({ "system": handleReloadMagCount(item.system) });
+  }
+
+  async _onShieldItemRecharge(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    const shields = item.system.shields;
+    const val = shields.integrity.current + shields.recharge.total;
+    await item.update({
+      "system.shields.integrity.current": Math.min(val, shields.integrity.total)
+    });
+  }
+
+  async _onShieldItemRechargeAll(event) {
+    event.preventDefault();
+    await this.actor.items.filter(i => i.type !== "armor" && i.system.weight.equipped).forEach(async item => {
+      const shields = item.system.shields;
+      const val = shields.integrity.current + shields.recharge.total;
+      await item.update({
+        "system.shields.integrity.current": Math.min(val, shields.integrity.total)
+      });
+    });
   }
 
   async _onShieldRecharge(event) {
