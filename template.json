@@ -737,6 +737,12 @@
                     "total": 0
                 }
             },
+            "perceptiveRange": {
+              "total": 0,
+              "base": 0,
+              "mod": 0,
+              "vigil": false
+            },
             "wounds": {
                 "value": 0,
                 "max": 0,

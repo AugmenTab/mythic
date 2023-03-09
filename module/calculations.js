@@ -244,6 +244,9 @@ export function prepareFloodDerived(actor) {
   // Calculate Characteristics
   calculateCharacteristicsFlood(actor.system);
 
+  // Calculate Perceptive Range
+  calculatePerceptiveRange(actor.system);
+
   // Calculate Mythic Characteristics
   calculateMythicCharacteristicsFlood(actor.system);
 
