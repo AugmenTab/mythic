@@ -1018,7 +1018,7 @@
                 "felt": 0,
                 "total": 0,
                 "character": 0,
-                "hearing": 0,
+                "hearingPenalty": false,
                 "bar": {
                     "bgBar": "",
                     "bgFill": "",

@@ -476,6 +476,7 @@ function calculateCarryWeight(actor) {
   actor.system.carryingCapacity.push = 4 * (carryBase + liftPullTou);
 
   if (actor.type !== "Flood") calculateInventoryBars(actor.system);
+  calculateHearingPenaltyByWeight(actor);
 }
 
 function calculateCharacteristics(actor, feltFatigue) {
@@ -699,6 +700,15 @@ function calculateGripPenaltyThrown(grip) {
   return 0;
 }
 
+function calculateHearingPenaltyByWeight(actor) {
+  const current = actor.type === "Flood"
+                ? actor.system.carryingCapacity.total
+                : actor.system.carryingCapacity.felt;
+
+  actor.system.carryingCapacity.hearingPenalty =
+    current > (actor.system.carryingCapacity.carry / 2);
+}
+
 function calculateInitiative(actorData, feltFatigue) {
   const init = actorData.initiative;
   const stats = actorData.characteristics;
@@ -829,15 +839,9 @@ function calculateInventoryWeight(actor) {
     total += weight.total;
   });
 
+  actor.system.carryingCapacity.felt = felt > 0 ? felt : 0;
   actor.system.carryingCapacity.total = total > 0 ? total : 0;
   actor.system.carryingCapacity.character = total + actor.system.weight;
-
-  if (actor.type === "Flood") {
-    actor.system.carryingCapacity.hearing = Math.floor((total > 0 ? total : 0) / 10);
-  } else {
-    actor.system.carryingCapacity.felt = felt > 0 ? felt : 0;
-    actor.system.carryingCapacity.hearing = Math.floor((felt > 0 ? felt : 0) / 10);
-  }
 }
 
 function calculateLuck(actor) {

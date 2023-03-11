@@ -18,6 +18,7 @@
   * Fixed wound calculation to now be accurate for both Named Characters and Bestiary.
   * Updated rate of melee attacks.
   * Updated armor hardpoints.
+  * Updated penalty to masking footsteps based on weight.
 * Re-introduced the ammunition management feature, with a new system setting offering the following three modes:
   * Magazines - weapons track full magazines, and reloaded weapons lose the held ammunition in the current magazine.
   * Ammo Pool - a count of total rounds are tracked, with magazines always topped off. This works like how the games handle ammunition, and is how single-loading weapons will work even in Magazines mode.

@@ -104,8 +104,10 @@
         <th>
           {{localize "mythic.characterInventory.characterTotal"}}:&nbsp;{{localnum system.carryingCapacity.character}}&nbsp;kg
         </th>
-        <th colspan="2">
-          +{{system.carryingCapacity.hearing}}&nbsp;{{localize "mythic.characterInventory.heard"}}
+        <th colspan="2" style="color:red">
+          {{#if system.carryingCapacity.hearingPenalty}}
+            {{localize "mythic.characterInventory.heard"}}
+          {{/if}}
         </th>
         <th colspan="2">
           <span class="cR-field">

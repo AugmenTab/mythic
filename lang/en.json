@@ -188,7 +188,7 @@
             },
             "characterTotal": "Character Total Weight",
             "equipmentNotes": "Write equipment notes here.",
-            "heard": "to be heard"
+            "heard": "-10 STEALTH"
         },
         "characterSkills": {
             "skillsTitle": "Skills",
