@@ -842,6 +842,9 @@ function calculateInventoryWeight(actor) {
   actor.system.carryingCapacity.felt = felt > 0 ? felt : 0;
   actor.system.carryingCapacity.total = total > 0 ? total : 0;
   actor.system.carryingCapacity.character = total + actor.system.weight;
+
+  // Reset encumbrance to prevent bad state from forming at character creation.
+  if (actor.type !== "Flood") actor.system.fatigue.encumbrance = false;
 }
 
 function calculateLuck(actor) {
