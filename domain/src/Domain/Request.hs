@@ -24,7 +24,7 @@ data SheetSubject
   | RangedWeaponSheet
   deriving stock (Eq, Ord)
 
-sheetSubjectText :: SheetSubject -> Text
+sheetSubjectText :: SheetSubject -> T.Text
 sheetSubjectText subject =
   case subject of
     ArmorSheet        -> "ArmorSheet"
@@ -46,7 +46,7 @@ sheetDataMap =
  -- , ( RangedWeaponSheet, (GID "297713635", Range "A2:P375") )
     ]
 
-makeSheetRequest :: Either Text HTTP.Request
+makeSheetRequest :: Either T.Text HTTP.Request
 makeSheetRequest =
   let baseURL = "https://docs.google.com"
       buildRequest =
@@ -76,7 +76,7 @@ setSheetQueryStrings (GID gid, Range range) =
 
 responseContent :: HTTP.Response LBS.ByteString
                 -> SheetSubject
-                -> Either Text [Text]
+                -> Either T.Text [T.Text]
 responseContent resp subject =
   case TE.decodeUtf8 . LBS.toStrict $ HTTP.responseBody resp of
     txt | T.null txt -> Left  $ "No content in " <> sheetSubjectText subject

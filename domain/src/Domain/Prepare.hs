@@ -10,8 +10,8 @@ import qualified Data.Map as Map
 import qualified Data.Text as T
 
 prepareSheet :: Request.SheetSubject
-             -> [Text]
-             -> Either Text (CompendiumMap Text)
+             -> [T.Text]
+             -> Either T.Text (CompendiumMap T.Text)
 prepareSheet subject [] =
   Left $ "No content in " <> Request.sheetSubjectText subject
 
@@ -28,13 +28,13 @@ prepareSheet subject (header:lines) =
 startingEquipment :: CompendiumDetails
 startingEquipment = mkCompendiumDetails "HELMET AND FACIAL EQUIPMENT"
 
-separateEquipment :: Text
+separateEquipment :: T.Text
                   -> Faction
                   -> CompendiumDetails
-                  -> [Text]
-                  -> CompendiumMap Text
-                  -> [Text]
-                  -> CompendiumMap Text
+                  -> [T.Text]
+                  -> CompendiumMap T.Text
+                  -> [T.Text]
+                  -> CompendiumMap T.Text
 separateEquipment header faction content sheet cMap [] =
   Map.insert (faction, content) (T.unlines $ header : sheet) cMap
 
@@ -64,7 +64,7 @@ separateEquipment header faction content sheet cMap (l1:l2:lines) =
     _ ->
       separateEquipment header faction content (l1 : sheet) cMap (l2 : lines)
 
-tryParseFactionOrContent :: Text -> Maybe (Either Faction CompendiumDetails)
+tryParseFactionOrContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
 tryParseFactionOrContent line
   | T.isPrefixOf ",Equipment,"       line
   , T.isInfixOf  "COVENANT,COVENANT" line = Just $ Left Covenant

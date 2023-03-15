@@ -10,7 +10,7 @@ import qualified Data.Text as T
 import           Data.Tuple (snd)
 import qualified Data.Vector as V
 
-decodeCSV :: CSV.FromNamedRecord a => LBS.ByteString -> Either Text [a]
+decodeCSV :: CSV.FromNamedRecord a => LBS.ByteString -> Either T.Text [a]
 decodeCSV bs =
   case CSV.decodeByName bs of
     Left  err -> Left $ T.pack err

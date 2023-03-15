@@ -26,27 +26,27 @@ writeManifest = IO.writeFile "../system.json" . encodePage . mythicManifest
 
 data Manifest =
   Manifest
-    { systemId                :: Text
-    , title                   :: Text
-    , description             :: Text
-    , version                 :: Text
+    { systemId                :: T.Text
+    , title                   :: T.Text
+    , description             :: T.Text
+    , version                 :: T.Text
     , authors                 :: [Author]
-    , esmodules               :: [Text]
-    , styles                  :: [Text]
+    , esmodules               :: [T.Text]
+    , styles                  :: [T.Text]
     , packs                   :: [Compendium FoundryData]
     , languages               :: [Language]
-    , initiative              :: Text
+    , initiative              :: T.Text
     , gridDistance            :: Int
-    , gridUnits               :: Text
-    , primaryTokenAttribute   :: Text
-    , secondaryTokenAttribute :: Maybe Text
+    , gridUnits               :: T.Text
+    , primaryTokenAttribute   :: T.Text
+    , secondaryTokenAttribute :: Maybe T.Text
     , compatibility           :: Compatibility
-    , url                     :: Text
-    , manifest                :: Text
-    , download                :: Text
-    , license                 :: Text
-    , readme                  :: Text
-    , changelog               :: Text
+    , url                     :: T.Text
+    , manifest                :: T.Text
+    , download                :: T.Text
+    , license                 :: T.Text
+    , readme                  :: T.Text
+    , changelog               :: T.Text
     }
 
 instance ToJSON Manifest where
@@ -76,10 +76,10 @@ instance ToJSON Manifest where
 
 data Author =
   Author
-    { name    :: Text
-    , website :: Maybe Text
-    , email   :: Maybe Text
-    , discord :: Maybe Text
+    { name    :: T.Text
+    , website :: Maybe T.Text
+    , email   :: Maybe T.Text
+    , discord :: Maybe T.Text
     }
 
 instance ToJSON Author where
@@ -103,7 +103,7 @@ mythicAuthor =
 data Language =
   Language
     { code :: LanguageCodes.ISO639_1
-    , path :: Text
+    , path :: T.Text
     }
 
 instance ToJSON Language where
@@ -113,15 +113,15 @@ instance ToJSON Language where
            , "path" .= path l
            ]
 
-languageCode :: LanguageCodes.ISO639_1 -> Text
+languageCode :: LanguageCodes.ISO639_1 -> T.Text
 languageCode language =
   let (f, s) = LanguageCodes.toChars language
    in T.pack [ f, s ]
 
-languageName :: Language -> Text
+languageName :: Language -> T.Text
 languageName = T.pack . LanguageCodes.language . code
 
-languagePath :: LanguageCodes.ISO639_1 -> Text
+languagePath :: LanguageCodes.ISO639_1 -> T.Text
 languagePath language =
   "lang/" <> languageCode language <> ".json"
 
@@ -132,9 +132,9 @@ mkLanguage =
 
 data Compatibility =
   Compatibility
-    { minimumVersion  :: Text
-    , verifiedVersion :: Text
-    , maximumVersion  :: Text
+    { minimumVersion  :: T.Text
+    , verifiedVersion :: T.Text
+    , maximumVersion  :: T.Text
     }
 
 instance ToJSON Compatibility where

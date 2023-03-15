@@ -11,6 +11,7 @@ import           Data.Types.Prelude
 
 import qualified Data.Map as Map
 import           Data.Maybe (isJust)
+import qualified Data.Text as T
 
 data FoundryData
   = FoundryArmor     Armor
@@ -39,7 +40,7 @@ data Armor =
   Armor
     { armorName        :: Name
     , armorVariant     :: Name
-    , armorFaction     :: Text
+    , armorFaction     :: T.Text
     , armorDescription :: Description
     , armorPrice       :: ItemPrice
     , armorBreakpoints :: Breakpoints
@@ -47,7 +48,7 @@ data Armor =
     , armorWeight      :: Weight
     , armorStats       :: StatAdjustments
     , armorHardpoints  :: Hardpoints
-    , armorMaterial    :: Text
+    , armorMaterial    :: T.Text
     , armorNotes       :: ArmorNotes
     , armorProtection  :: Protection
     , armorShields     :: Shields
@@ -104,7 +105,7 @@ instance ToJSON Equipment where
 data Weapon =
   Weapon
     { weaponName        :: Name
-    , weaponFaction     :: Text
+    , weaponFaction     :: T.Text
     , weaponDescription :: Description
     , weaponPrice       :: ItemPrice
     , weaponBreakpoints :: Breakpoints

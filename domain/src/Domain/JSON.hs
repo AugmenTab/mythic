@@ -21,6 +21,7 @@ import qualified Data.Aeson.Encode.Pretty as Pretty
 import           Data.Aeson.Key (Key, fromText)
 import           Data.Aeson.Types (Value(..))
 import qualified Data.ByteString.Lazy as LBS
+import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 import qualified Data.Vector as V
 
@@ -36,13 +37,13 @@ defaultConfig =
 --
 -- Encoding JSON
 --
-encodeJSON :: ToJSON a => Pretty.Config -> a -> Text
+encodeJSON :: ToJSON a => Pretty.Config -> a -> T.Text
 encodeJSON config = TE.decodeUtf8 . LBS.toStrict . Pretty.encodePretty' config
 
-encodeLine :: ToJSON a => a -> Text
+encodeLine :: ToJSON a => a -> T.Text
 encodeLine = encodeJSON (defaultConfig { Pretty.confIndent = Pretty.Spaces 0 })
 
-encodePage :: ToJSON a => a -> Text
+encodePage :: ToJSON a => a -> T.Text
 encodePage = encodeJSON defaultConfig
 
 --
@@ -54,11 +55,11 @@ emptyArray = Array V.empty
 emptyObject :: Value
 emptyObject = object []
 
-keyFromText :: Text -> Key
+keyFromText :: T.Text -> Key
 keyFromText = fromText
 
 valueInt :: Int -> Value
 valueInt = toJSON
 
-valueText :: Text -> Value
+valueText :: T.Text -> Value
 valueText = toJSON

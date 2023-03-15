@@ -8,11 +8,12 @@ import qualified Domain.Request as Request
 import           Data.Types
 
 import qualified Data.ByteString.Lazy as LBS
+import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 
 ingestRaw :: Request.SheetSubject
-          -> CompendiumMap Text
-          -> Either Text (CompendiumMap [RawData])
+          -> CompendiumMap T.Text
+          -> Either T.Text (CompendiumMap [RawData])
 ingestRaw subject cMap = do
   case subject of
     Request.ArmorSheet        -> Left "Not implemented yet" -- TODO: traverse ingestArmor     cMap -- TODO
@@ -20,7 +21,7 @@ ingestRaw subject cMap = do
     Request.MeleeWeaponSheet  -> Left "Not implemented yet" -- TODO: traverse ingestMelee     cMap -- TODO
     Request.RangedWeaponSheet -> Left "Not implemented yet" -- TODO: traverse ingestRanged    cMap -- TODO
 
-ingestEquipment :: Text -> Either Text [RawData]
+ingestEquipment :: T.Text -> Either T.Text [RawData]
 ingestEquipment sheet = do
   rawEquipment <- decodeCSV . LBS.fromStrict $ TE.encodeUtf8 sheet
   pure $ EquipmentData <$> rawEquipment

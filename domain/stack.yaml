@@ -6,4 +6,4 @@ packages:
 
 extra-deps:
 - git: https://github.com/flipstone/flipstone-prelude.git
-  commit: 208bc1a01df26e62a2222e2dbe8b18b6d8e5e672
+  commit: 8d6cff69ae8da12bb7252e19e3c699ea90715ba7

@@ -61,7 +61,7 @@ import qualified Data.Text as T
 import           GHC.Types (Double)
 import           Text.Show (Show, show)
 
-newtype Ammo = Ammo Text
+newtype Ammo = Ammo T.Text
   deriving newtype (ToJSON)
 
 data AmmoGroup
@@ -148,9 +148,9 @@ emptyAdjustment =
 
 data ArmorNotes =
   ArmorNotes
-    { armorNotesVariant      :: Text
-    , armorNotesPermutations :: Text
-    , armorNotesOther        :: Text
+    { armorNotesVariant      :: T.Text
+    , armorNotesPermutations :: T.Text
+    , armorNotesOther        :: T.Text
     }
 
 instance ToJSON ArmorNotes where
@@ -161,7 +161,7 @@ instance ToJSON ArmorNotes where
            , "other"        .= armorNotesOther a
            ]
 
-defaultArmorNotes :: Text
+defaultArmorNotes :: T.Text
 defaultArmorNotes =
   T.concat [ "<table style=\"width: 98.9267%; margin-left: auto; margin-right: "
            , "auto;\" border=\"1\"><thead><tr style=\"text-align: center;\">"
@@ -195,7 +195,7 @@ instance ToJSON Attack where
            , "attackBonus" .= attackBonus a
            ]
 
-attackFireModeText :: Attack -> Text
+attackFireModeText :: Attack -> T.Text
 attackFireModeText atk =
   T.concat [ fireModeText $ attackFireMode atk
            , "-"
@@ -213,7 +213,7 @@ data Barrel
 instance ToJSON Barrel where
   toJSON = toJSON . barrelText
 
-barrelText :: Barrel -> Text
+barrelText :: Barrel -> T.Text
 barrelText barrel =
   case barrel of
     XS  -> "xs"
@@ -229,13 +229,13 @@ newtype Breakpoints = Breakpoints Int
 mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
 
-newtype CompendiumDetails = CompendiumDetails Text
+newtype CompendiumDetails = CompendiumDetails T.Text
   deriving newtype (Eq, Ord, Show)
 
-mkCompendiumDetails :: Text -> CompendiumDetails
+mkCompendiumDetails :: T.Text -> CompendiumDetails
 mkCompendiumDetails = CompendiumDetails . T.toUpper
 
-compendiumDetails :: CompendiumDetails -> Text
+compendiumDetails :: CompendiumDetails -> T.Text
 compendiumDetails (CompendiumDetails t) = t
 
 type CompendiumData = (Faction, CompendiumDetails)
@@ -246,10 +246,10 @@ class CompendiumEntry a where
   imged :: a -> Img
   typed :: a -> ItemType
 
-newtype Description = Description Text
+newtype Description = Description T.Text
   deriving newtype (ToJSON)
 
-mkDescription :: Text -> Description
+mkDescription :: T.Text -> Description
 mkDescription = Description
 
 data EquipmentTraining
@@ -266,7 +266,7 @@ data EquipmentTraining
 instance ToJSON EquipmentTraining where
   toJSON = toJSON . equipmentTrainingText
 
-equipmentTrainingText :: EquipmentTraining -> Text
+equipmentTrainingText :: EquipmentTraining -> T.Text
 equipmentTrainingText eqTraining =
   case eqTraining of
     Basic     -> "basic"
@@ -286,7 +286,7 @@ data Faction
   | Forerunner
   deriving stock (Eq, Ord, Show)
 
-factionText :: Faction -> Text
+factionText :: Faction -> T.Text
 factionText faction =
   case faction of
     UNSC       -> "UNSC"
@@ -310,7 +310,7 @@ data FactionTraining
 instance ToJSON FactionTraining where
   toJSON = toJSON . factionTrainingText
 
-factionTrainingText :: FactionTraining -> Text
+factionTrainingText :: FactionTraining -> T.Text
 factionTrainingText faction =
   case faction of
     UNSCTraining       -> "unsc"
@@ -325,7 +325,7 @@ data FirearmType
 instance ToJSON FirearmType where
   toJSON = toJSON . firearmTypeText
 
-firearmTypeText :: FirearmType -> Text
+firearmTypeText :: FirearmType -> T.Text
 firearmTypeText fType =
   case fType of
     Firearms -> "firearms"
@@ -343,7 +343,7 @@ data FireMode
   | Sustained
   deriving stock (Eq, Ord)
 
-fireModeText :: FireMode -> Text
+fireModeText :: FireMode -> T.Text
 fireModeText fm =
   case fm of
     Auto      -> "auto"
@@ -388,10 +388,10 @@ instance ToJSON Hardpoints where
            , "rightLeg" .= valueInt 0
            ]
 
-newtype Img = Img Text
+newtype Img = Img T.Text
   deriving newtype (ToJSON)
 
-mkImg :: Text -> Img
+mkImg :: T.Text -> Img
 mkImg = Img
 
 data ItemPrice =
@@ -443,7 +443,7 @@ data ItemType
 instance ToJSON ItemType where
   toJSON = toJSON . itemTypeText
 
-itemTypeText :: ItemType -> Text
+itemTypeText :: ItemType -> T.Text
 itemTypeText item =
   case item of
     ItemAbility   -> "ability"
@@ -455,13 +455,13 @@ itemTypeText item =
 newtype MagazineCapacity = MagazineCapacity Int
   deriving newtype (ToJSON)
 
-newtype Name = Name Text
+newtype Name = Name T.Text
   deriving newtype (Eq, Ord, ToJSON)
 
-mkName :: Text -> Name
+mkName :: T.Text -> Name
 mkName = Name
 
-nameText :: Name -> Text
+nameText :: Name -> T.Text
 nameText (Name t) = t
 
 data Protection =
@@ -524,7 +524,7 @@ data Size
 instance ToJSON Size where
   toJSON = toJSON . sizeText
 
-sizeText :: Size -> Text
+sizeText :: Size -> T.Text
 sizeText size =
   case size of
     Mini       -> "mini"
@@ -547,11 +547,11 @@ data SpecialRules =
     , blast            :: Maybe Int
     , cauterize        :: Maybe ()
     , chargeRule       :: Maybe Int
-    , cryo             :: Maybe Text
+    , cryo             :: Maybe T.Text
     , diceMinimum      :: Maybe Int
     , electrified      :: Maybe Int
     , emp              :: Maybe Int
-    , flame            :: Maybe Text
+    , flame            :: Maybe T.Text
     , flashbang        :: Maybe ()
     , gravimetricPulse :: Maybe Int
     , gravity          :: Maybe Int
@@ -655,7 +655,7 @@ data WeaponGroup
 instance ToJSON WeaponGroup where
   toJSON = toJSON . weaponGroupText
 
-weaponGroupText :: WeaponGroup -> Text
+weaponGroupText :: WeaponGroup -> T.Text
 weaponGroupText wg =
   case wg of
     Ranged     -> "ranged"
@@ -708,7 +708,7 @@ data WeaponTag
   | BD
   deriving stock (Eq, Ord)
 
-newtype WeaponTags = WeaponTags (Set WeaponTag)
+newtype WeaponTags = WeaponTags (Set.Set WeaponTag)
 
 instance ToJSON WeaponTags where
   toJSON (WeaponTags t) =
@@ -741,5 +741,5 @@ instance ToJSON Weight where
            , "selfSupported" .= weightSelfSupported w
            ]
 
-newtype WeaponType = WeaponType Text
+newtype WeaponType = WeaponType T.Text
   deriving newtype (ToJSON)

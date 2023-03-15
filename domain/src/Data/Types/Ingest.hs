@@ -10,6 +10,7 @@ import           Flipstone.Prelude
 
 import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
+import qualified Data.Text as T
 import           GHC.Types (Double)
 import           Text.Read (read)
 import           Text.Show (show)
@@ -22,7 +23,7 @@ data RawData
 
 data RawArmor =
   RawArmor
-    { rawArmorName        :: Text
+    { rawArmorName        :: T.Text
     , rawArmorHead        :: Int
     , rawArmorArms        :: Int
     , rawArmorChest       :: Int
@@ -32,7 +33,7 @@ data RawArmor =
     , rawArmorRecharge    :: Int
     , rawArmorVariant     :: Bool
     , rawArmorWeight      :: Double
-    , rawArmorDescription :: Text
+    , rawArmorDescription :: T.Text
     , rawArmorPrice       :: Int
     }
 
@@ -53,9 +54,9 @@ instance CSV.FromNamedRecord RawArmor where
 
 data RawEquipment =
   RawEquipment
-    { rawEquipmentName        :: Text
-    , rawEquipmentField       :: Text
-    , rawEquipmentDescription :: Text
+    { rawEquipmentName        :: T.Text
+    , rawEquipmentField       :: T.Text
+    , rawEquipmentDescription :: T.Text
     , rawEquipmentWeight      :: Double
     , rawEquipmentPrice       :: Int
     }
@@ -70,20 +71,20 @@ instance CSV.FromNamedRecord RawEquipment where
 
 data RawMeleeWeapon =
   RawMeleeWeapon
-    { rawMeleeName         :: Text
-    , rawMeleeType         :: Text
+    { rawMeleeName         :: T.Text
+    , rawMeleeType         :: T.Text
     , rawMeleeRange        :: Int
-    , rawMeleeDamageRoll   :: Text
+    , rawMeleeDamageRoll   :: T.Text
     , rawMeleeDamageBase   :: Int
     , rawMeleePierce       :: Int
     , rawMeleeHitMod       :: Int
     , rawMeleeROF          :: Double
     , rawMeleeBreakpoints  :: Int
-    , rawMeleeBaseMod      :: Text
-    , rawMeleePierceMod    :: Text
+    , rawMeleeBaseMod      :: T.Text
+    , rawMeleePierceMod    :: T.Text
     , rawMeleeWeight       :: Double
-    , rawMeleeSpecialRules :: Text
-    , rawMeleeDescription  :: Text
+    , rawMeleeSpecialRules :: T.Text
+    , rawMeleeDescription  :: T.Text
     , rawMeleePrice        :: Int
     }
 
@@ -107,19 +108,19 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
 
 data RawRangedWeapon =
   RawRangedWeapon
-    { rawRangedName         :: Text
-    , rawRangedType         :: Text
-    , rawRangedRange        :: Text
-    , rawRangedDamageRoll   :: Text
+    { rawRangedName         :: T.Text
+    , rawRangedType         :: T.Text
+    , rawRangedRange        :: T.Text
+    , rawRangedDamageRoll   :: T.Text
     , rawRangedDamageBase   :: Int
     , rawRangedPierce       :: Int
     , rawRangedHitMod       :: Int
-    , rawRangedMagazine     :: Text
-    , rawRangedROF          :: Text
-    , rawRangedReload       :: Text
+    , rawRangedMagazine     :: T.Text
+    , rawRangedROF          :: T.Text
+    , rawRangedReload       :: T.Text
     , rawRangedWeight       :: Double
-    , rawRangedSpecialRules :: Text
-    , rawRangedDescription  :: Text
+    , rawRangedSpecialRules :: T.Text
+    , rawRangedDescription  :: T.Text
     , rawRangedPrice        :: Int
     }
 

@@ -33,8 +33,8 @@ instance ToJSON (Compendium item) where
            , "label"   .= compendiumLabel c
            , "path"    .= compendiumPath  c
            , "private" .= False
-           , "type"    .= ("Item" :: Text)
-           , "system"  .= ("mythic" :: Text)
+           , "type"    .= ("Item" :: T.Text)
+           , "system"  .= ("mythic" :: T.Text)
            ]
 
 mkCompendiumName :: Faction -> CompendiumDetails -> Name
@@ -75,10 +75,10 @@ instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
                , "permission" .= permissions
                ]
 
-newtype ItemID = ItemID Text
+newtype ItemID = ItemID T.Text
   deriving newtype (ToJSON)
 
-idText :: ItemID -> Text
+idText :: ItemID -> T.Text
 idText (ItemID i) = i
 
 -- This represents the range of characters to use when constructing an ID.
@@ -96,7 +96,7 @@ idRange = (0, L.length idCharacters - 1)
 -- packs are generated.
 mkItemID :: Label -> Name -> ItemID
 mkItemID (Label label) name = do
-  let mkSeed :: Text -> Int
+  let mkSeed :: T.Text -> Int
       mkSeed txt = T.length txt * sum (C.ord <$> T.unpack txt)
    in   ItemID
       . T.pack
@@ -107,12 +107,12 @@ mkItemID (Label label) name = do
       . mkSeed
       $ label <> " - " <> nameText name
 
-newtype Label = Label Text
+newtype Label = Label T.Text
   deriving newtype (ToJSON)
 
 mkCompendiumLabel :: Faction -> CompendiumDetails -> Label
 mkCompendiumLabel faction content =
   Label $ T.toUpper (factionText faction) <> " - " <> compendiumDetails content
 
-labelText :: Label -> Text
+labelText :: Label -> T.Text
 labelText (Label l) = l
