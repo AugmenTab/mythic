@@ -1,6 +1,6 @@
 /** @module MythicBestiaryCharacterSheet */
 
-import { handleReloadMagCount, sortAndFilterItems } from "../calculations.js";
+import * as Calc from "../calculations.js";
 import { getPostableItemFlavorPath } from "../chat.js";
 import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
@@ -54,18 +54,18 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     data.system = data.actor.system;
     data.config = CONFIG.mythic;
 
-    const a = sortAndFilterItems(data.items, "ability");
+    const a = Calc.sortAndFilterItems(data.items, "ability");
     data.abilities = a.filter(i => i.type === "ability");
     data.augmentations = a.filter(i => i.type === "augmentation");
     data.racials = a.filter(i => i.type === "racial");
     data.traits = a.filter(i => i.type === "trait");
 
-    data.armors = sortAndFilterItems(data.items, "armor");
-    data.educations = sortAndFilterItems(data.items, "education");
-    data.equipment = sortAndFilterItems(data.items, "equipment");
-    data.shields = data.items.filter(i => i.type !== "armor" && i.system.shields.has);
+    data.armors = Calc.sortAndFilterItems(data.items, "armor");
+    data.educations = Calc.sortAndFilterItems(data.items, "education");
+    data.equipment = Calc.sortAndFilterItems(data.items, "equipment");
+    data.shields = data.items.filter(Calc.isNonArmorShieldItem);
     data.equippedShields = data.shields.filter(i => i.system.weight.equipped);
-    data.weapons = sortAndFilterItems(data.items, "weapon", "nickname");
+    data.weapons = Calc.sortAndFilterItems(data.items, "weapon", "nickname");
     data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
     return data;
   }
@@ -217,7 +217,7 @@ export default class MythicBestiaryCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    await item.update({ "system": handleReloadMagCount(item.system) });
+    await item.update({ "system": Calc.handleReloadMagCount(item.system) });
   }
 
   async _onShieldItemRecharge(event) {

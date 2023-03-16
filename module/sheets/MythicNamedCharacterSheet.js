@@ -63,8 +63,10 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.armors = Calc.sortAndFilterItems(data.items, "armor");
     data.educations = Calc.sortAndFilterItems(data.items, "education");
     data.equipment = Calc.sortAndFilterItems(data.items, "equipment");
-    data.shields = data.items.filter(i => i.type !== "armor" && i.system.shields.has);
+
+    data.shields = data.items.filter(Calc.isNonArmorShieldItem);
     data.equippedShields = data.shields.filter(i => i.system.weight.equipped);
+
     data.weapons = Calc.sortAndFilterItems(data.items, "weapon", "nickname");
     data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
     return data;

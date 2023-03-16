@@ -3,6 +3,8 @@
 import { interpretDiceRollModifiers } from "./dice.js";
 import { makeUIError, makeUIWarning } from "./common.js";
 
+const GRANTS_CHARACTERISTICS = [ "armor", "equipment", "weapon" ];
+
 const MELEE_REACH_SIZE_BONUS = {
   "mini": 0,
   "small": 1,
@@ -118,6 +120,16 @@ export function handleReloadMagCount(weaponData) {
   }
 
   return weaponData;
+}
+
+/**
+ * Determine if an Item is a shield-granting Item, excluding Armor.
+ *
+ * @param {Item} item - The Item to check.
+ * @returns {boolean} Whether the Item is a non-armor, shield-granting Item.
+ */
+export function isNonArmorShieldItem(item) {
+  return [ "equipment", "weapon" ].includes(item.type) && item.system.shields.has;
 }
 
 /**
@@ -431,7 +443,12 @@ function applyArmorStatsToCharacter(actor) {
 function applyItemCharacteristicsToCharacter(actor) {
   emptyArmorCharacteristics(actor.system);
 
-  const items = actor.items.filter(i => i.system.weight.equipped && i.system.characteristics.has);
+  const items = actor.items.filter(i => {
+    return GRANTS_CHARACTERISTICS.includes(i.type)
+        && i.system.weight.equipped
+        && i.system.characteristics.has
+  });
+
   Object.values(items).forEach (item => {
     actor.system.characteristics.str.equipment       += item.system.characteristics.str.total;
     actor.system.characteristics.agi.equipment       += item.system.characteristics.agi.total;
