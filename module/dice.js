@@ -497,8 +497,10 @@ async function rollAttackAndDamage(actor, weapon, data) {
         actor.system.mythicCharacteristics.str.total +
         getCharacteristicModifier(actor.system.characteristics.str.total)
       );
+
       base += Math.floor(str * ammo.strDamage);
       pierce += Math.floor(str * ammo.strPiercing);
+
       if (actor.system.trainings.weapons.unarmedCombatant) {
         const wfm = getCharacteristicModifier(actor.system.characteristics.wfm.total);
         pierce += Math.floor(wfm / 2);
@@ -511,8 +513,12 @@ async function rollAttackAndDamage(actor, weapon, data) {
     let formula = `${damage} + ${base} + ${sizeBonus} + ${data.circDmg.flat}`;
     data.circDmg.dice.forEach(die => formula += ` + ${die}`);
 
-    const dmgResult = await rollDamage(formula, ammo.critsOn);
-    attack = { ...attack, ...dmgResult };
+    const dmgResults = [];
+    for (let i = 0; i < data.damages; i++) {
+      dmgResults.push(await rollDamage(formula, ammo.critsOn));
+    }
+
+    attack = { ...attack, dmgResults };
 
     switch(data.pierce) {
       case "full":

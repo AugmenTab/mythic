@@ -21,10 +21,10 @@
       </span>
       {{#if (cond "||" (eq attack.outcome "success") attack.damageRoll)}}
         <div class="damage-block">
-          {{#times attack.damages}}
+          {{#each attack.dmgResults}}
             <p>
               <i class="fas fa-long-arrow-alt-right"></i>
-              {{{attack.damageRoll}}}&nbsp;{{localize "mythic.chat.attack.pierce"}}&nbsp;{{attack.piercing}}
+              {{{this.damageRoll}}}&nbsp;{{localize "mythic.chat.attack.pierce"}}&nbsp;{{attack.piercing}}
               {{#unless attack.apply}}
                 :&nbsp;{{attack.location}}
               {{else}}
@@ -38,14 +38,14 @@
                   </span>
                 {{/if}}
               {{/unless}}
-              {{#if attack.doesSpecialDamage}}
+              {{#if this.doesSpecialDamage}}
                 <i
                   class="fas fa-bullseye"
                   title="{{localize "mythic.chat.attack.specialDamage"}}"
                 ></i>
               {{/if}}
             </p>
-          {{/times}}
+          {{/each}}
         </div>
       {{/if}}
     </div>
