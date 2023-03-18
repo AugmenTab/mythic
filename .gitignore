@@ -1,3 +1,5 @@
 .vscode
 templates/sheets/skill-sheet.hbs
 node_modules
+
+packs/*.db
