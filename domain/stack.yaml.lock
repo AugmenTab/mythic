@@ -5,15 +5,15 @@
 
 packages:
 - completed:
-    commit: 8d6cff69ae8da12bb7252e19e3c699ea90715ba7
+    commit: b516a71f960149ff6cec163e2ee0c61478e913e0
     git: https://github.com/flipstone/flipstone-prelude.git
     name: flipstone-prelude
     pantry-tree:
-      sha256: b29be645abae434834b09736365724ba4727338cb2c6a52cf5452bb929790fe6
+      sha256: 353f9ee4141f50c0440a6289f377362f130ef014c22f66dce9ee22507cad04e9
       size: 728
     version: 0.1.0.0
   original:
-    commit: 8d6cff69ae8da12bb7252e19e3c699ea90715ba7
+    commit: b516a71f960149ff6cec163e2ee0c61478e913e0
     git: https://github.com/flipstone/flipstone-prelude.git
 snapshots:
 - completed:

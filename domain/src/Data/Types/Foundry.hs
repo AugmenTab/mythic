@@ -10,7 +10,7 @@ import           Domain.JSON
 import           Data.Types.Prelude
 
 import qualified Data.Map as Map
-import           Data.Maybe (isJust)
+import           Data.Maybe (fromMaybe, isJust)
 import qualified Data.Text as T
 
 data FoundryData
@@ -80,12 +80,14 @@ instance ToJSON Armor where
 
 data Equipment =
   Equipment
-    { equipmentName        :: Name
-    , equipmentPrice       :: ItemPrice
-    , equipmentBreakpoints :: Breakpoints
-    , equipmentTrainings   :: ItemTrainings
-    , equipmentWeight      :: Weight
-    , equipmentDescription :: Description
+    { equipmentName            :: Name
+    , equipmentPrice           :: ItemPrice
+    , equipmentBreakpoints     :: Breakpoints
+    , equipmentTrainings       :: ItemTrainings
+    , equipmentWeight          :: Weight
+    , equipmentDescription     :: Description
+    , equipmentShields         :: Maybe Shields
+    , equipmentCharacteristics :: Maybe StatAdjustments
     }
 
 instance CompendiumEntry Equipment where
@@ -95,36 +97,42 @@ instance CompendiumEntry Equipment where
 
 instance ToJSON Equipment where
   toJSON e =
-    object [ "price"       .= equipmentPrice e
-           , "breakPoints" .= equipmentBreakpoints e
-           , "trainings"   .= equipmentTrainings e
-           , "weight"      .= equipmentWeight e
-           , "description" .= equipmentDescription e
-           ]
+    object
+      [ "price"           .= equipmentPrice e
+      , "breakPoints"     .= equipmentBreakpoints e
+      , "trainings"       .= equipmentTrainings e
+      , "weight"          .= equipmentWeight e
+      , "description"     .= equipmentDescription e
+      , "shields"         .= fromMaybe emptyShields (equipmentShields e)
+      , "characteristics" .= fromMaybe emptyStatAdjustments
+                                       (equipmentCharacteristics e)
+      ]
 
 data Weapon =
   Weapon
-    { weaponName        :: Name
-    , weaponFaction     :: T.Text
-    , weaponDescription :: Description
-    , weaponPrice       :: ItemPrice
-    , weaponBreakpoints :: Breakpoints
-    , weaponTrainings   :: ItemTrainings
-    , weaponWeight      :: Weight
-    , weaponGroup       :: WeaponGroup
-    , weaponTags        :: WeaponTags
-    , weaponFireModes   :: FireModes
-    , weaponAttack      :: Attack
-    , weaponReload      :: Reload
-    , weaponNickname    :: Maybe Name
-    , weaponType        :: WeaponType
-    , weaponMagCap      :: MagazineCapacity
-    , weaponAmmo        :: Ammo
-    , weaponAmmoGroup   :: AmmoGroup
-    , weaponScopeMag    :: Maybe ScopeMagnification
-    , weaponCurrentAmmo :: Name
-    , weaponAmmoList    :: AmmoList
-    , weaponSettings    :: WeaponSettings
+    { weaponName            :: Name
+    , weaponFaction         :: T.Text
+    , weaponDescription     :: Description
+    , weaponPrice           :: ItemPrice
+    , weaponBreakpoints     :: Breakpoints
+    , weaponTrainings       :: ItemTrainings
+    , weaponWeight          :: Weight
+    , weaponGroup           :: WeaponGroup
+    , weaponTags            :: WeaponTags
+    , weaponFireModes       :: FireModes
+    , weaponAttack          :: Attack
+    , weaponReload          :: Reload
+    , weaponNickname        :: Maybe Name
+    , weaponType            :: WeaponType
+    , weaponMagCap          :: MagazineCapacity
+    , weaponAmmo            :: Ammo
+    , weaponAmmoGroup       :: AmmoGroup
+    , weaponScopeMag        :: Maybe ScopeMagnification
+    , weaponCurrentAmmo     :: Name
+    , weaponAmmoList        :: AmmoList
+    , weaponShields         :: Maybe Shields
+    , weaponCharacteristics :: Maybe StatAdjustments
+    , weaponSettings        :: WeaponSettings
     }
 
 instance CompendiumEntry Weapon where
@@ -153,6 +161,9 @@ instance ToJSON Weapon where
            , "scopeMagnification" .= weaponScopeMag w
            , "currentAmmo"        .= weaponCurrentAmmo w
            , "ammoList"           .= weaponAmmoList w
+           , "shields"            .= fromMaybe emptyShields (weaponShields w)
+           , "characteristics"    .= fromMaybe emptyStatAdjustments
+                                               (weaponCharacteristics w)
            , "settings"           .= weaponSettings w
            ]
 

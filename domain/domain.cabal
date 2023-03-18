@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.1.
+-- This file has been generated from package.yaml by hpack version 0.35.2.
 --
 -- see: https://github.com/sol/hpack
 
@@ -33,6 +33,7 @@ library
       Domain.Convert.Foundry
       Domain.Convert.Ingest
       Domain.CSV
+      Domain.Helpers
       Domain.JSON
       Domain.Persist
       Domain.Prepare

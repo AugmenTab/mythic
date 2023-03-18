@@ -29,7 +29,7 @@ defaultConfig :: Pretty.Config
 defaultConfig =
   Pretty.Config
     { Pretty.confIndent          = Pretty.Spaces 2
-    , Pretty.confCompare         = mempty
+    , Pretty.confCompare         = const . const LT
     , Pretty.confNumFormat       = Pretty.Generic
     , Pretty.confTrailingNewline = False
     }

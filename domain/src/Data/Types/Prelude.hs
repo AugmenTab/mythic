@@ -3,7 +3,6 @@ module Data.Types.Prelude
     AmmoGroup(..)
   , AmmoList
   , Ammunition
-  , ArmorAdjustment
   , ArmorNotes
   , Attack
   , Barrel
@@ -14,14 +13,15 @@ module Data.Types.Prelude
   , FireMode(..)
   , FireModes, fireModes
   , Hardpoints
+  , ItemAdjustment, emptyItemAdjustment, basicItemAdjustment
   , ItemPrice, mkItemPrice
   , ItemTrainings, mkItemTrainings
   , ItemType(..)
   , Protection
-  , Shields
+  , Shields(..), emptyShields
   , Size
   , SpecialRules
-  , StatAdjustments
+  , StatAdjustments, emptyStatAdjustments
   , WeaponGroup(..)
   , WeaponRange
   , WeaponSettings
@@ -120,31 +120,6 @@ instance ToJSON Ammunition where
                , "desc"         .= ammunitionDescription a
                , "special"      .= ammunitionSpecials a
                ]
-
-data ArmorAdjustment =
-  ArmorAdjustment
-    { armorAdjustment        :: Int
-    , armorAdjustmentVariant :: Int
-    , armorAdjustmentOther   :: Int
-    , armorAdjustmentTotal   :: Int
-    }
-
-instance ToJSON ArmorAdjustment where
-  toJSON a =
-    object [ "armor"   .= armorAdjustment a
-           , "variant" .= armorAdjustmentVariant a
-           , "other"   .= armorAdjustmentOther a
-           , "total"   .= armorAdjustmentTotal a
-           ]
-
-emptyAdjustment :: ArmorAdjustment
-emptyAdjustment =
-  ArmorAdjustment
-    { armorAdjustment        = 0
-    , armorAdjustmentVariant = 0
-    , armorAdjustmentOther   = 0
-    , armorAdjustmentTotal   = 0
-    }
 
 data ArmorNotes =
   ArmorNotes
@@ -394,6 +369,34 @@ newtype Img = Img T.Text
 mkImg :: T.Text -> Img
 mkImg = Img
 
+data ItemAdjustment =
+  ItemAdjustment
+    { itemAdjustment        :: Int
+    , itemAdjustmentVariant :: Int
+    , itemAdjustmentOther   :: Int
+    , itemAdjustmentTotal   :: Int
+    }
+
+instance ToJSON ItemAdjustment where
+  toJSON a =
+    object [ "item"    .= itemAdjustment a
+           , "variant" .= itemAdjustmentVariant a
+           , "other"   .= itemAdjustmentOther a
+           , "total"   .= itemAdjustmentTotal a
+           ]
+
+emptyItemAdjustment :: ItemAdjustment
+emptyItemAdjustment = basicItemAdjustment 0
+
+basicItemAdjustment :: Int -> ItemAdjustment
+basicItemAdjustment val =
+  ItemAdjustment
+    { itemAdjustment        = val
+    , itemAdjustmentVariant = 0
+    , itemAdjustmentOther   = 0
+    , itemAdjustmentTotal   = val
+    }
+
 data ItemPrice =
   ItemPrice
     { priceBase  :: Int
@@ -466,12 +469,12 @@ nameText (Name t) = t
 
 data Protection =
   Protection
-    { protectionHead     :: ArmorAdjustment
-    , protectionChest    :: ArmorAdjustment
-    , protectionLeftArm  :: ArmorAdjustment
-    , protectionRightArm :: ArmorAdjustment
-    , protectionLeftLeg  :: ArmorAdjustment
-    , protectionRightLeg :: ArmorAdjustment
+    { protectionHead     :: ItemAdjustment
+    , protectionChest    :: ItemAdjustment
+    , protectionLeftArm  :: ItemAdjustment
+    , protectionRightArm :: ItemAdjustment
+    , protectionLeftLeg  :: ItemAdjustment
+    , protectionRightLeg :: ItemAdjustment
     }
 
 instance ToJSON Protection where
@@ -493,9 +496,9 @@ newtype ScopeMagnification = ScopeMagnification Int
 data Shields =
   Shields
     { shieldsHas       :: Bool
-    , shieldsIntegrity :: ArmorAdjustment
-    , shieldsRecharge  :: ArmorAdjustment
-    , shieldsDelay     :: ArmorAdjustment
+    , shieldsIntegrity :: ItemAdjustment
+    , shieldsRecharge  :: ItemAdjustment
+    , shieldsDelay     :: ItemAdjustment
     }
 
 instance ToJSON Shields where
@@ -505,6 +508,15 @@ instance ToJSON Shields where
            , "recharge"  .= shieldsRecharge s
            , "delay"     .= shieldsDelay s
            ]
+
+emptyShields :: Shields
+emptyShields =
+  Shields
+    { shieldsHas       = False
+    , shieldsIntegrity = emptyItemAdjustment
+    , shieldsRecharge  = emptyItemAdjustment
+    , shieldsDelay     = emptyItemAdjustment
+    }
 
 data Size
   = Mini
@@ -631,21 +643,30 @@ instance ToJSON SpecialRules where
 data StatAdjustments =
   StatAdjustments
     { statAdjustmentsHas       :: Bool
-    , statAdjustmentsSTR       :: Maybe ArmorAdjustment
-    , statAdjustmentsAGI       :: Maybe ArmorAdjustment
-    , statAdjustmentsMythicSTR :: Maybe ArmorAdjustment
-    , statAdjustmentsMythicAGI :: Maybe ArmorAdjustment
+    , statAdjustmentsSTR       :: ItemAdjustment
+    , statAdjustmentsAGI       :: ItemAdjustment
+    , statAdjustmentsMythicSTR :: ItemAdjustment
+    , statAdjustmentsMythicAGI :: ItemAdjustment
     }
 
 instance ToJSON StatAdjustments where
   toJSON s =
-    let defAdjustments fn = fromMaybe emptyAdjustment $ fn s
-     in object [ "has"       .= statAdjustmentsHas s
-               , "str"       .= defAdjustments statAdjustmentsSTR
-               , "agi"       .= defAdjustments statAdjustmentsAGI
-               , "mythicStr" .= defAdjustments statAdjustmentsMythicSTR
-               , "mythicAgi" .= defAdjustments statAdjustmentsMythicAGI
-               ]
+    object [ "has"       .= statAdjustmentsHas s
+           , "str"       .= statAdjustmentsSTR s
+           , "agi"       .= statAdjustmentsAGI s
+           , "mythicStr" .= statAdjustmentsMythicSTR s
+           , "mythicAgi" .= statAdjustmentsMythicAGI s
+           ]
+
+emptyStatAdjustments :: StatAdjustments
+emptyStatAdjustments =
+  StatAdjustments
+    { statAdjustmentsHas       = False
+    , statAdjustmentsSTR       = emptyItemAdjustment
+    , statAdjustmentsAGI       = emptyItemAdjustment
+    , statAdjustmentsMythicSTR = emptyItemAdjustment
+    , statAdjustmentsMythicAGI = emptyItemAdjustment
+    }
 
 data WeaponGroup
   = Ranged
