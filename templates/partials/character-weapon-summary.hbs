@@ -86,8 +86,7 @@
                 {{!-- Range --}}
                 <td>
                   {{#if (eq weapon.system.group "thrown")}}
-                    {{this.range.thrown}}&nbsp;/&nbsp;
-                    {{this.range.thrownMax}}&nbsp;m&nbsp;
+                    {{this.range.thrown}}&nbsp;/&nbsp;{{this.range.thrownMax}}&nbsp;m&nbsp;
                     {{#with (lookup this.system.ammoList this.system.currentAmmo)}}
                       {{#if this.special.blast.has}}
                         ({{this.special.blast.value}}&nbsp;/&nbsp;

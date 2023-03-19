@@ -19,26 +19,24 @@
           {{/if}}
         </p>
       </span>
-      {{#if (cond "||" (eq attack.outcome "success") attack.damageRoll)}}
+      {{#if (cond "||" (eq attack.outcome "success") attack.dmgResults)}}
         <div class="damage-block">
-          {{#each attack.dmgResults}}
+          {{#each attack.dmgResults as |dmg|}}
             <p>
               <i class="fas fa-long-arrow-alt-right"></i>
-              {{{this.damageRoll}}}&nbsp;{{localize "mythic.chat.attack.pierce"}}&nbsp;{{attack.piercing}}
-              {{#unless attack.apply}}
+              {{{dmg.damageRoll}}}&nbsp;{{localize "mythic.chat.attack.pierce"}}&nbsp;{{attack.piercing}}
+              {{#if (eq attack.outcome "success")}}
                 :&nbsp;{{attack.location}}
               {{else}}
-                {{#if (eq attack.outcome "failure")}}
-                  :&nbsp;
-                  <span
-                    class="chat-link scatter"
-                    data-scatter="{{attack.scatter}}"
-                  >
-                    {{localize "mythic.chat.scatter.title"}}!
-                  </span>
-                {{/if}}
-              {{/unless}}
-              {{#if this.doesSpecialDamage}}
+                :&nbsp;
+                <span
+                  class="chat-link scatter"
+                  data-scatter="{{attack.scatter}}"
+                >
+                  {{localize "mythic.chat.scatter.title"}}!
+                </span>
+              {{/if}}
+              {{#if dmg.doesSpecialDamage}}
                 <i
                   class="fas fa-bullseye"
                   title="{{localize "mythic.chat.attack.specialDamage"}}"

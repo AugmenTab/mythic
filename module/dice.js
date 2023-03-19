@@ -457,6 +457,11 @@ async function rollAttackAndDamage(actor, weapon, data) {
   const ammo = weapon.system.ammoList[weapon.system.currentAmmo];
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, data.target);
+  const scatters = (
+       weapon.system.attack.fireMode === "thrown"
+    || ammo.special.blast.has
+    || ammo.special.kill.has
+  );
 
   let attack = {
     attackNumber: data.attackNumber,
@@ -465,7 +470,7 @@ async function rollAttackAndDamage(actor, weapon, data) {
     ...outcome
   };
 
-  if (attack.outcome === "success" || ammo.special.blast.has || ammo.special.kill.has) {
+  if (attack.outcome === "success" || scatters) {
     attack.location = await determineHitLocation(reverseDigits(roll.total), data.vehicle);
     const critType = game.settings.get("mythic", "criticalHitResult");
 
@@ -534,16 +539,13 @@ async function rollAttackAndDamage(actor, weapon, data) {
         break;
     }
 
-    if (ammo.special.blast.has || ammo.special.kill.has) {
-      const scatterData = {
+    if (scatters) {
+      attack.scatter = await scatterAttack(weapon, {
         distance: data.distanceFromTarget,
         degrees: outcome.degrees,
         isZeroG: data.isZeroG,
         vehicle: data.vehicle
-      };
-
-      attack.scatter = await scatterAttack(scatterData, weapon);
-      attack.apply = true;
+      });
     }
   }
   return attack;
@@ -615,10 +617,11 @@ async function rollInitiative(element, mod, actor) {
   }
 }
 
-async function scatterAttack(data, weapon) {
+async function scatterAttack(weapon, data) {
   const currentAmmo = weapon.system.currentAmmo;
+  const thrownRange = weapon.system.ammoList[currentAmmo].range.thrown;
   const range = weapon.system.attack.fireMode === "thrown"
-              ? weapon.system.ammoList[currentAmmo].range.thrown
+              ? thrownRange
               : weapon.system.ammoList[currentAmmo].range.long;
 
   let msg = "";
@@ -632,8 +635,13 @@ async function scatterAttack(data, weapon) {
     } else if (mod > (range * 2)) {
       mod *= 2;
     }
+
     const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
-    msg += `${Chat.getScatterArrow(direction.total)} ${dice.total} m`;
+    const distance = weapon.system.attack.fireMode === "thrown"
+                   ? Math.min(dice.total, thrownRange)
+                   : dice.total;
+
+    msg += `${Chat.getScatterArrow(direction.total)} ${distance} m`;
   }
   return msg;
 }
