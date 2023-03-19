@@ -63,24 +63,36 @@
                 {{!-- Fire Mode --}}
                 <td>
                   {{#if (eq weapon.system.group "ranged")}}
-                  <select
-                    class="item-edit-inline special-focus"
-                    data-field="attack.fireMode"
-                    data-item-id="{{weapon._id}}"
-                  >
-                    {{#select weapon.system.attack.fireMode}}
-                    <option value="none">--</option>
-                    {{#each weapon.system.fireMode as |rate mode|}}
-                      {{#if rate}}
-                      <option value="{{mode}}-{{rate}}">
-                        {{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})
-                      </option>
-                      {{/if}}
-                    {{/each}}
-                    {{/select}}
-                  </select>
+                    <select
+                      class="item-edit-inline special-focus"
+                      data-field="attack.fireMode"
+                      data-item-id="{{weapon._id}}"
+                    >
+                      {{#select weapon.system.attack.fireMode}}
+                        <option value="none">--</option>
+                        {{#each weapon.system.fireMode as |rate mode|}}
+                          {{#if rate}}
+                            <option value="{{mode}}-{{rate}}">
+                              {{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})
+                            </option>
+                          {{/if}}
+                        {{/each}}
+                      {{/select}}
+                    </select>
+                  {{else if (eq weapon.system.group "thrown")}}
+                    <select
+                      class="item-edit-inline special-focus"
+                      data-field="ammoList.{{weapon.system.currentAmmo}}.range.grip"
+                      data-item-id="{{weapon._id}}"
+                    >
+                      {{#select this.range.grip}}
+                        {{#each ../../config.grips as |value grip|}}
+                          <option value="{{grip}}">{{localize value}}</option>
+                        {{/each}}
+                      {{/select}}
+                    </select>
                   {{else}}
-                  {{localize (concat "mythic.weaponGroups." weapon.system.group)}}
+                    {{localize (concat "mythic.weaponGroups." weapon.system.group)}}
                   {{/if}}
                 </td>
                 {{!-- Range --}}

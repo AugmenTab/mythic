@@ -19,6 +19,7 @@
   * Updated rate of melee attacks.
   * Updated armor hardpoints.
   * Updated penalty to masking footsteps based on weight.
+  * Updated thrown weapon scatter with new scatter distance limitation.
 * Re-introduced the ammunition management feature, with a new system setting offering the following three modes:
   * Magazines - weapons track full magazines, and reloaded weapons lose the held ammunition in the current magazine.
   * Ammo Pool - a count of total rounds are tracked, with magazines always topped off. This works like how the games handle ammunition, and is how single-loading weapons will work even in Magazines mode.
@@ -45,6 +46,7 @@
   * Characteristics adjustments from all Items are summed and displayed in the Equipment row for both Characteristics and Mythic Characteristics in the Settings tab for any character sheet.
   * Shields are displayed under the weapon summary section on any character sheet. Included are buttons to recharge a single item, or all equipped shield-giving items.
   * The shields section does not cover shield-granting armor - that is still managed in the same place it was previously, though it has now been renamed to "Energy Shields."
+* Thrown weapons can now control their grip quality from the summary.
 
 ## Bug Fixes
 
