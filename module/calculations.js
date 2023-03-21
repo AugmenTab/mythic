@@ -1207,7 +1207,7 @@ function calculateWeaponTarget(actorData, weaponData) {
   if (!actorData.trainings.equipment[weaponData.trainings.equipment]) {
     mod -= 10;
   }
-  if (["burst", "semi", "sustained"].includes(mode)) {
+  if ([ "burst", "semi" ].includes(mode)) {
     mod += 10;
   }
   if (group === "melee") {
