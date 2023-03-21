@@ -1169,12 +1169,16 @@ function calculateWeaponRangeThrown(actorData, weaponData) {
 }
 
 function calculateWeaponReloadStandard(actorData, weaponData) {
-  let base = weaponData.reload.base;
-  if (actorData.trainings.weapons.rapidReload) base = Math.ceil(base / 2);
   const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
   const wfrMod = getCharacteristicModifier(actorData.characteristics.wfr.total);
-  const final = base - Math.floor(agiMod / 2) - Math.floor(wfrMod / 2);
-  weaponData.reload.total = final > 0 ? final : 1;
+  let reload = (
+      weaponData.reload.base
+    - Math.floor(agiMod / 2)
+    - Math.floor(wfrMod / 2)
+  );
+
+  if (actorData.trainings.weapons.rapidReload) reload = Math.ceil(reload / 2);
+  weaponData.reload.total = reload > 0 ? reload : 1;
 }
 
 function calculateWeaponReloadSingleLoading(actorData, weaponData) {
