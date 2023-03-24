@@ -1104,15 +1104,16 @@ function calculateSwarm(actorData) {
 function calculateWeaponAttacksMelee(actorData, weaponData) {
   const wfm = getCharacteristicModifier(actorData.characteristics.wfm.total);
   const extra = weaponData.attack.extraMelee;
-  const half = Math.min(4, Math.max(1, Math.floor(wfm / 2)));
+  const half =
+    Math.min(8, extra + Math.min(4, Math.max(1, Math.floor(wfm / 2))));
 
   const macMod = (
     actorData.trainings.weapons.hth && actorData.trainings.weapons.mac
   ) ? 1 : 0;
 
   weaponData.attack.fireMode = "melee";
-  weaponData.attack.half = half + extra;
-  weaponData.attack.full = extra + Math.min(8, (2 * half) + macMod);
+  weaponData.attack.half = half;
+  weaponData.attack.full = Math.min(8, (2 * half) + macMod);
 }
 
 function calculateWeaponAttacksRanged(weaponData) {
