@@ -398,6 +398,9 @@ function getSpecialRuleValues(hits, weaponData) {
       (formula.length === 2 ? `D${formula[1]}` : "")
     );
   }
+  if (specialRules.electrified.has) {
+    specials.electrified = specialRules.electrified.value;
+  }
   if (specialRules.flame.has) {
     const formula = specialRules.flame.value.toLowerCase().split("d");
     specials.flame = (

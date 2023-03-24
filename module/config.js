@@ -370,7 +370,7 @@ mythic.specialRules = {
     charge: "number",
     cryo: "text",
     diceMinimum: "number",
-    electrified: "number",
+    electrified: "text",
     emp: "number",
     flame: "text",
     flashbang: "none",
