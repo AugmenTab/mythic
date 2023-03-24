@@ -16,6 +16,7 @@ mythic.ammoGroups = {
   std: "mythic.ammoGroups.std",
   shotgun: "mythic.ammoGroups.shotgun",
   flamethrower: "mythic.ammoGroups.flamethrower",
+  cryosprayer: "mythic.ammoGroups.cryosprayer",
   sniper: "mythic.ammoGroups.sniper",
   grenade: "mythic.ammoGroups.grenade",
   mrc: "mythic.ammoGroups.mrc",
