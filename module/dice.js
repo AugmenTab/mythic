@@ -478,12 +478,9 @@ async function rollAttackAndDamage(actor, weapon, data) {
       [ `${ammo.diceQuantity}D${ammo.diceValue}`, data.rangeDamage ].map(pool => {
         if (!pool.toLowerCase().includes("d")) return pool;
 
-        let min = ammo.special.diceMinimum.has
-                ? ammo.special.diceMinimum.value
-                : 0;
-
-        if (roll.total === 1 && min < 5) min = 5;
-        if (min > 0) pool += `min${min}`;
+        if (ammo.special.diceMinimum.has) {
+          pool += `min${ammo.special.diceMinimum.value}`;
+        }
 
         if (critType !== "special") {
           pool += `${critType}>=${ammo.critsOn}`;
