@@ -7,7 +7,7 @@ module Data.Types.Prelude
   , Attack
   , Barrel
   , EquipmentTraining
-  , Faction(..), factionText
+  , Faction(..), factions, factionText
   , FactionTraining
   , FirearmType
   , FireMode(..)
@@ -260,6 +260,14 @@ data Faction
   | Banished
   | Forerunner
   deriving stock (Eq, Ord, Show)
+
+factions :: [Faction]
+factions =
+  [ UNSC
+  , Covenant
+  , Banished
+  , Forerunner
+  ]
 
 factionText :: Faction -> T.Text
 factionText faction =

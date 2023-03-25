@@ -6,7 +6,10 @@ import           Flipstone.Prelude
 import qualified Domain.Request as Request
 import           Data.Types
 
+import           Control.Applicative ((<|>))
+import qualified Data.List as L
 import qualified Data.Map as Map
+import qualified Data.Set as Set
 import qualified Data.Text as T
 
 prepareSheet :: Request.SheetSubject
@@ -65,27 +68,56 @@ separateEquipment header faction content sheet cMap (l1:l2:lines) =
       separateEquipment header faction content (l1 : sheet) cMap (l2 : lines)
 
 tryParseFactionOrContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
-tryParseFactionOrContent line
-  | T.isPrefixOf ",Equipment,"       line
-  , T.isInfixOf  "COVENANT,COVENANT" line = Just $ Left Covenant
+tryParseFactionOrContent line =
+  case T.split (== ',') line of
+    -- This guard checks for the following:
+    --   - The first column is an empty string
+    --   - The second column is a valid COMP_field value
+    --
+    -- This typically means that this line is indicating a change in either the
+    -- faction or the compendium title for the upcoming items. From here, we
+    -- dispatch to functions that get those values if they exist. If they don't
+    -- exist, the line is likely a hidden empty line that can be safely passed
+    -- over.
+    --
+    -- We separate out col4 from the rest of the columns because, sometimes,
+    -- faction change lines will list the faction twice, and that second faction
+    -- will be in the 4th column. It won't be null, but everything after it will
+    -- be if the line is really a faction or compendium title change line.
+    "" : col2 : col3 : _col4 : rest
+      | L.all isEmptyCell rest
+      , Set.member col2 fields ->
+        tryParseFaction col3 <|> tryParseContent col3
 
-  -- This is ugly. If we reach this point, we're on a compendium title row. The
-  -- only consistent way I can find to parse these out is to check for the
-  -- presence of two commas somewhere in the line, which would be the commas at
-  -- the end of the description and weight columns respectively. This should
-  -- only hit rows that are missing both a price and a weight figure, so this
-  -- should only occur with compendium title rows.
-  --
-  -- Then, we're stripping the first 11 characters off the string, which would
-  -- be equal to ",Equipment,". Since we have already ruled out the row being a
-  -- faction separator row, this SHOULD get us at the start of the compendium
-  -- title row. None of those have a comma, so we should be able to safely go
-  -- up to the next column and use that collected text.
-  | T.isPrefixOf ",Equipment," line
-  , T.isInfixOf  ",,"          line =
-    Just . Right
-         . mkCompendiumDetails
-         . T.takeWhile (not . (==) ',')
-         $ T.drop 11 line
+    _ ->
+      Nothing
 
-  | otherwise = Nothing
+-- This checks if the contents of a CSV column is empty, which for the purposes
+-- of this application, means it is null or is either a carriage return or
+-- newline character.
+isEmptyCell :: T.Text -> Bool
+isEmptyCell txt =
+  L.any (\fn -> fn txt) $
+    [ T.null
+    , (== "\r")
+    , (== "\n")
+    ]
+
+fields :: Set.Set T.Text
+fields = Set.fromList
+  [ "Equipment"
+  ]
+
+factionMap :: Map.Map T.Text Faction
+factionMap = Map.fromList $ (\f -> (T.toUpper $ factionText f, f)) <$> factions
+
+tryParseFaction :: T.Text -> Maybe (Either Faction CompendiumDetails)
+tryParseFaction = fmap Left . flip Map.lookup factionMap
+
+-- At this point, we've confirmed the following:
+--   - The line is indicating a faction or compendium title change
+--   - The line is NOT indicating a faction change
+--
+-- In that case, it _must_ be a compendium title change.
+tryParseContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
+tryParseContent = Just . Right . mkCompendiumDetails
