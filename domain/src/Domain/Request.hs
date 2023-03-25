@@ -1,6 +1,10 @@
 module Domain.Request
   ( SheetSubject(..)
   , sheetSubjectText
+
+  , SheetHeader(..)
+  , SheetLines
+
   , sheetDataMap
   , makeSheetRequest
   , setSheetQueryStrings
@@ -74,9 +78,17 @@ setSheetQueryStrings (GID gid, Range range) =
     , ("range" , Just range)
     ]
 
+-- This newtype wrapper prevents us from accidentally including the sheet header
+-- in the lines that will be converted to Items.
+newtype SheetHeader = SheetHeader { unSheetHeader :: T.Text }
+
+-- This type alias separates the common T.Text namespace from the intent behind
+-- these CSV rows - to eventually be converted into Items.
+type SheetLines = [T.Text]
+
 responseContent :: HTTP.Response LBS.ByteString
                 -> SheetSubject
-                -> Either T.Text [T.Text]
+                -> Either T.Text SheetLines
 responseContent resp subject =
   case TE.decodeUtf8 . LBS.toStrict $ HTTP.responseBody resp of
     txt | T.null txt -> Left  $ "No content in " <> sheetSubjectText subject

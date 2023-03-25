@@ -12,60 +12,80 @@ import qualified Data.Map as Map
 import qualified Data.Set as Set
 import qualified Data.Text as T
 
+data Context =
+  Context
+    { sheetHeader   :: Request.SheetHeader
+    , faction       :: Faction
+    , content       :: CompendiumDetails
+    , currentSheet  :: Request.SheetLines
+    , compendiumMap :: CompendiumMap T.Text
+    }
+
 prepareSheet :: Request.SheetSubject
-             -> [T.Text]
+             -> Request.SheetLines
              -> Either T.Text (CompendiumMap T.Text)
 prepareSheet subject [] =
   Left $ "No content in " <> Request.sheetSubjectText subject
 
 prepareSheet subject (header:lines) =
-  let (separateSheet, startingContent) =
+  let startingContent =
         case subject of
-      --  Request.ArmorSheet        -> startingArmor -- TODO
-          Request.EquipmentSheet    -> (separateEquipment, startingEquipment)
-      --  Request.MeleeWeaponSheet  -> startingMelee -- TODO
-      --  Request.RangedWeaponSheet -> startingRanged -- TODO
+          Request.ArmorSheet        -> startingArmor
+          Request.EquipmentSheet    -> startingEquipment
+          Request.MeleeWeaponSheet  -> startingMelee
+          Request.RangedWeaponSheet -> startingRanged
 
-   in Right $ separateSheet header UNSC startingContent [] Map.empty lines
+   in Right $
+       separatePacks lines $
+         Context
+           -- We have to specify the starting Faction here because the sheets
+           -- only specify a change in faction or compendium title for all the
+           -- items _after_ the first, so we don't have access to this
+           -- information for the first pack.
+           { faction       = UNSC
+           , sheetHeader   = Request.SheetHeader header
+           , content       = startingContent
+           , currentSheet  = []
+           , compendiumMap = Map.empty
+           }
 
-startingEquipment :: CompendiumDetails
-startingEquipment = mkCompendiumDetails "HELMET AND FACIAL EQUIPMENT"
+separatePacks :: [T.Text] -> Context -> CompendiumMap T.Text
+separatePacks [] ctx =
+  updateContextCompendiumMap ctx
 
-separateEquipment :: T.Text
-                  -> Faction
-                  -> CompendiumDetails
-                  -> [T.Text]
-                  -> CompendiumMap T.Text
-                  -> [T.Text]
-                  -> CompendiumMap T.Text
-separateEquipment header faction content sheet cMap [] =
-  Map.insert (faction, content) (T.unlines $ header : sheet) cMap
+separatePacks (l1:[]) ctx =
+  updateContextCompendiumMap $
+    ctx { currentSheet = l1 : currentSheet ctx
+        }
 
-separateEquipment header faction content sheet cMap (l1:[]) =
-  Map.insert (faction, content) (T.unlines $ header : l1 : sheet) cMap
-
-separateEquipment header faction content sheet cMap (l1:l2:lines) =
+separatePacks (l1:l2:lines) ctx =
   case (tryParseFactionOrContent l1, tryParseFactionOrContent l2) of
     (Just (Left f), Just (Right c)) ->
-      separateEquipment
-        header
-        f
-        c
-        []
-        (Map.insert (faction, content) (T.unlines $ header : sheet) cMap)
-        lines
+      separatePacks lines $
+        ctx { faction       = f
+            , content       = c
+            , currentSheet  = []
+            , compendiumMap = updateContextCompendiumMap ctx
+            }
 
     (Just (Right c), _) ->
-      separateEquipment
-        header
-        faction
-        c
-        []
-        (Map.insert (faction, content) (T.unlines $ header : sheet) cMap)
-        (l2 : lines)
+      separatePacks (l2 : lines) $
+        ctx { content       = c
+            , currentSheet  = []
+            , compendiumMap = updateContextCompendiumMap ctx
+            }
 
     _ ->
-      separateEquipment header faction content (l1 : sheet) cMap (l2 : lines)
+      separatePacks (l2 : lines) $
+        ctx { currentSheet = l1 : currentSheet ctx
+            }
+
+updateContextCompendiumMap :: Context -> CompendiumMap T.Text
+updateContextCompendiumMap ctx =
+  Map.insert
+    (faction ctx, content ctx)
+    (T.unlines $ (Request.unSheetHeader $ sheetHeader ctx) : currentSheet ctx)
+    (compendiumMap ctx)
 
 tryParseFactionOrContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
 tryParseFactionOrContent line =
@@ -103,14 +123,6 @@ isEmptyCell txt =
     , (== "\n")
     ]
 
-fields :: Set.Set T.Text
-fields = Set.fromList
-  [ "Equipment"
-  ]
-
-factionMap :: Map.Map T.Text Faction
-factionMap = Map.fromList $ (\f -> (T.toUpper $ factionText f, f)) <$> factions
-
 tryParseFaction :: T.Text -> Maybe (Either Faction CompendiumDetails)
 tryParseFaction = fmap Left . flip Map.lookup factionMap
 
@@ -121,3 +133,31 @@ tryParseFaction = fmap Left . flip Map.lookup factionMap
 -- In that case, it _must_ be a compendium title change.
 tryParseContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
 tryParseContent = Just . Right . mkCompendiumDetails
+
+---
+-- Constants
+---
+factionMap :: Map.Map T.Text Faction
+factionMap = Map.fromList $ (\f -> (T.toUpper $ factionText f, f)) <$> factions
+
+fields :: Set.Set T.Text
+fields = Set.fromList
+  [ "Equipment"
+  ]
+
+-- These are required for the same reason that the starting Faction (currently
+-- defaulted to UNSC in the call to `separatePacks` in `prepareSheet`): the
+-- sheets only specify a change in faction or compendium title for all the items
+-- _after_ the first, so we don't have access to this information for the first
+-- pack.
+startingArmor :: CompendiumDetails
+startingArmor = mkCompendiumDetails "" -- TODO
+
+startingEquipment :: CompendiumDetails
+startingEquipment = mkCompendiumDetails "HELMET AND FACIAL EQUIPMENT"
+
+startingMelee :: CompendiumDetails
+startingMelee = mkCompendiumDetails "" -- TODO
+
+startingRanged :: CompendiumDetails
+startingRanged = mkCompendiumDetails "" -- TODO
