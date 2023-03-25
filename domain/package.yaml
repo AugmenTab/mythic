@@ -26,6 +26,7 @@ dependencies:
 - bytestring
 - cassava
 - containers
+- either
 - flipstone-prelude
 - ghc-prim
 - http-client

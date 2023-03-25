@@ -33,6 +33,7 @@ library
       Domain.Convert.Foundry
       Domain.Convert.Ingest
       Domain.CSV
+      Domain.Debug
       Domain.Helpers
       Domain.JSON
       Domain.Persist
@@ -59,6 +60,7 @@ library
     , bytestring
     , cassava
     , containers
+    , either
     , flipstone-prelude
     , ghc-prim
     , http-client
@@ -94,6 +96,7 @@ executable domain-exe
     , cassava
     , containers
     , domain
+    , either
     , flipstone-prelude
     , ghc-prim
     , http-client

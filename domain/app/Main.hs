@@ -50,7 +50,6 @@ main = do
       Persist.writeManifest $ concat compendia
       IO.putStrLn "Done."
 
-
 handleSheetResults :: [Compendium FoundryData] -> IO ()
 handleSheetResults compendia = forM_ compendia $ \compendium -> do
   IO.putStrLn $
