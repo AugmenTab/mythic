@@ -1,6 +1,7 @@
 module Domain.Request
   ( SheetSubject(..)
   , sheetSubjectText
+  , sheetSubjectTitle
 
   , SheetHeader(..)
   , SheetLines
@@ -35,6 +36,14 @@ sheetSubjectText subject =
     EquipmentSheet    -> "EquipmentSheet"
     MeleeWeaponSheet  -> "MeleeWeaponSheet"
     RangedWeaponSheet -> "RangedWeaponSheet"
+
+sheetSubjectTitle :: SheetSubject -> T.Text
+sheetSubjectTitle subject =
+  case subject of
+    ArmorSheet        -> "Armor"
+    EquipmentSheet    -> "Equipment"
+    MeleeWeaponSheet  -> "Melee Weapons"
+    RangedWeaponSheet -> "Ranged Weapons"
 
 newtype GID = GID BS.ByteString
 newtype Range = Range BS.ByteString

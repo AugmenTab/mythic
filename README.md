@@ -52,67 +52,35 @@ All of the compendia that come included with this system. **Development on some 
 
 Available Compendium Packs:
 * Item
-  * UNSC - AERIAL GEAR
-  * UNSC - CARRYING DEVICES
-  * UNSC - CHEMICAL AND RADIOLOGICAL WEAPONS
-  * UNSC - COMPUTING AND COMMUNICATIONS
-  * UNSC - ELECTRONIC WARFARE
-  * UNSC - GENERAL
-  * UNSC - HELMET AND FACIAL EQUIPMENT
-  * UNSC - MEDICAL
-  * UNSC - SENSORS
-  * UNSC - SURVIVAL
-  * COVENANT - CARRYING DEVICES
-  * COVENANT - CHEMICAL AND RADIOLOGICAL WEAPONS
-  * COVENANT - COMPUTING AND COMMUNICATIONS
-  * COVENANT - DEPLOYABLE EQUIPMENT
-  * COVENANT - HELMET AND FACIAL EQUIPMENT
-  * COVENANT - MEDICAL EQUIPMENT
-  * COVENANT - OTHER
+  * Equipment - UNSC
+  * Equipment - Covenant
 
-Upcoming Compendium Packs:
+Planned Compendium Packs:
 * Actor
+    * *Bestiary - Banished*
     * *Bestiary - Covenant*
-    * *Bestiary - Flood*
-    * *Bestiary - Human*
-    * *Bestiary - Promethean*
-    * *Bestiary - Sentinel*
+    * *Bestiary - Forerunner*
+    * *Bestiary - UNSC*
     * *Vehicles - Banished*
     * *Vehicles - Covenant*
     * *Vehicles - Forerunner*
-    * *Vehicles - Human*
+    * *Vehicles - UNSC*
 * Item
     * *Abilities*
-    * *Armors*
+    * *Armors - Banished*
+    * *Armors - Covenant*
+    * *Armors - Forerunner*
+    * *Armors - UNSC*
     * *Educations*
-    * *Weapons - Banished*
-    * *Weapons - Covenant*
-    * *Weapons - Forerunner*
-    * *Weapons - Human*
-    * *Weapons - Splatbooks*
-* JournalEntry
-    * *Ammunition*
-    * *Armor Abilities*
-    * *Armor Permutations*
-    * *Armor Variants - Covenant*
-    * *Armor Variants - MJOLNIR GEN1*
-    * *Armor Variants - MJOLNIR GEN2*
-    * *Modifications - Vehicles*
-    * *Modifications - Weapons*
-    * *Rules*
-    * *Skills*
-* Macro
-    * *Calculate Damage from Falling Objects*
-    * *Calculate Falling Damage*
-    * *Calculate Scatter*
-    * *Calculate Splatter Damage*
-    * *Generate Encounter*
-    * *Generate Environment*
-    * *Generate Mission*
-    * *Generate NPC*
-    * *Generate Weather Conditions*
-    * *Generate Planet*
-    * *Place a Blast/Kill template.*
+    * *Melee Weapons - Banished*
+    * *Melee Weapons - Covenant*
+    * *Melee Weapons - Forerunner*
+    * *Melee Weapons - UNSC*
+    * *Ranged Weapons - Banished*
+    * *Ranged Weapons - Covenant*
+    * *Ranged Weapons - Forerunner*
+    * *Ranged Weapons - UNSC*
+
 
 ## Legal
 

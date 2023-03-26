@@ -3,10 +3,9 @@ module Domain.Prepare
   ) where
 
 import           Flipstone.Prelude
-import qualified Domain.Request as Request
 import           Data.Types
+import qualified Domain.Request as Request
 
-import           Control.Applicative ((<|>))
 import qualified Data.List as L
 import qualified Data.Map as Map
 import qualified Data.Set as Set
@@ -24,19 +23,11 @@ data Context =
 prepareSheet :: Request.SheetSubject
              -> Request.SheetLines
              -> Either T.Text (CompendiumMap T.Text)
-prepareSheet subject [] =
-  Left $ "No content in " <> Request.sheetSubjectText subject
-
-prepareSheet subject (header:lines) =
-  let startingContent =
-        case subject of
-          Request.ArmorSheet        -> startingArmor
-          Request.EquipmentSheet    -> startingEquipment
-          Request.MeleeWeaponSheet  -> startingMelee
-          Request.RangedWeaponSheet -> startingRanged
-
-   in Right $
-       separatePacks lines $
+prepareSheet subject lines =
+  case L.uncons lines of
+    Just (header, rows) ->
+      Right $
+       separatePacks rows $
          Context
            -- We have to specify the starting Faction here because the sheets
            -- only specify a change in faction or compendium title for all the
@@ -44,73 +35,54 @@ prepareSheet subject (header:lines) =
            -- information for the first pack.
            { faction       = UNSC
            , sheetHeader   = Request.SheetHeader header
-           , content       = startingContent
+           , content       = mkCompendiumDetails
+                           $ Request.sheetSubjectTitle subject
            , currentSheet  = []
            , compendiumMap = Map.empty
            }
 
+    Nothing ->
+      Left $ "No content in " <> Request.sheetSubjectText subject
+
 separatePacks :: [T.Text] -> Context -> CompendiumMap T.Text
-separatePacks [] ctx =
-  updateContextCompendiumMap ctx
+separatePacks []         ctx = updateCompendiumMap ctx
+separatePacks (row:rows) ctx =
+  case T.split (== ',') row of
+    -- This guard checks for the following:
+    --   - The first column is one of the various "empty" cell values
+    --   - The second column is a valid COMP_field value
+    --
+    -- This typically means that this line is indicating a change in the faction
+    -- (and thus the compendium) for the upcoming items. If col3 does contain a
+    -- faction, we push the current compendium to the `CompendiumMap`.
+    -- Otherwise, it's a blank line with no valuable data, so we skip the line
+    -- entirely and move on.
+    --
+    -- If the line never qualified for the two checks to begin with, it's a row
+    -- containing an Item, so we add it and move on.
+    col1 : col2 : col3 : _cols | isEmptyCell col1, Set.member col2 fields ->
+      case Map.lookup (T.toUpper col3) factionMap of
+        Just newFaction ->
+          separatePacks rows $
+            ctx { faction       = newFaction
+                , currentSheet  = []
+                , compendiumMap = updateCompendiumMap ctx
+                }
 
-separatePacks (l1:[]) ctx =
-  updateContextCompendiumMap $
-    ctx { currentSheet = l1 : currentSheet ctx
-        }
-
-separatePacks (l1:l2:lines) ctx =
-  case (tryParseFactionOrContent l1, tryParseFactionOrContent l2) of
-    (Just (Left f), Just (Right c)) ->
-      separatePacks lines $
-        ctx { faction       = f
-            , content       = c
-            , currentSheet  = []
-            , compendiumMap = updateContextCompendiumMap ctx
-            }
-
-    (Just (Right c), _) ->
-      separatePacks (l2 : lines) $
-        ctx { content       = c
-            , currentSheet  = []
-            , compendiumMap = updateContextCompendiumMap ctx
-            }
+        Nothing ->
+          separatePacks rows ctx
 
     _ ->
-      separatePacks (l2 : lines) $
-        ctx { currentSheet = l1 : currentSheet ctx
+      separatePacks rows $
+        ctx { currentSheet = row : currentSheet ctx
             }
 
-updateContextCompendiumMap :: Context -> CompendiumMap T.Text
-updateContextCompendiumMap ctx =
+updateCompendiumMap :: Context -> CompendiumMap T.Text
+updateCompendiumMap ctx =
   Map.insert
     (faction ctx, content ctx)
     (T.unlines $ (Request.unSheetHeader $ sheetHeader ctx) : currentSheet ctx)
     (compendiumMap ctx)
-
-tryParseFactionOrContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
-tryParseFactionOrContent line =
-  case T.split (== ',') line of
-    -- This guard checks for the following:
-    --   - The first column is an empty string
-    --   - The second column is a valid COMP_field value
-    --
-    -- This typically means that this line is indicating a change in either the
-    -- faction or the compendium title for the upcoming items. From here, we
-    -- dispatch to functions that get those values if they exist. If they don't
-    -- exist, the line is likely a hidden empty line that can be safely passed
-    -- over.
-    --
-    -- We separate out col4 from the rest of the columns because, sometimes,
-    -- faction change lines will list the faction twice, and that second faction
-    -- will be in the 4th column. It won't be null, but everything after it will
-    -- be if the line is really a faction or compendium title change line.
-    "" : col2 : col3 : _col4 : rest
-      | L.all isEmptyCell rest
-      , Set.member col2 fields ->
-        tryParseFaction col3 <|> tryParseContent col3
-
-    _ ->
-      Nothing
 
 -- This checks if the contents of a CSV column is empty, which for the purposes
 -- of this application, means it is null or is either a carriage return or
@@ -119,20 +91,10 @@ isEmptyCell :: T.Text -> Bool
 isEmptyCell txt =
   L.any (\fn -> fn txt) $
     [ T.null
+    , (== "Default")
     , (== "\r")
     , (== "\n")
     ]
-
-tryParseFaction :: T.Text -> Maybe (Either Faction CompendiumDetails)
-tryParseFaction = fmap Left . flip Map.lookup factionMap
-
--- At this point, we've confirmed the following:
---   - The line is indicating a faction or compendium title change
---   - The line is NOT indicating a faction change
---
--- In that case, it _must_ be a compendium title change.
-tryParseContent :: T.Text -> Maybe (Either Faction CompendiumDetails)
-tryParseContent = Just . Right . mkCompendiumDetails
 
 ---
 -- Constants
@@ -144,20 +106,3 @@ fields :: Set.Set T.Text
 fields = Set.fromList
   [ "Equipment"
   ]
-
--- These are required for the same reason that the starting Faction (currently
--- defaulted to UNSC in the call to `separatePacks` in `prepareSheet`): the
--- sheets only specify a change in faction or compendium title for all the items
--- _after_ the first, so we don't have access to this information for the first
--- pack.
-startingArmor :: CompendiumDetails
-startingArmor = mkCompendiumDetails "" -- TODO
-
-startingEquipment :: CompendiumDetails
-startingEquipment = mkCompendiumDetails "HELMET AND FACIAL EQUIPMENT"
-
-startingMelee :: CompendiumDetails
-startingMelee = mkCompendiumDetails "" -- TODO
-
-startingRanged :: CompendiumDetails
-startingRanged = mkCompendiumDetails "" -- TODO

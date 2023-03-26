@@ -208,7 +208,7 @@ newtype CompendiumDetails = CompendiumDetails T.Text
   deriving newtype (Eq, Ord, Show)
 
 mkCompendiumDetails :: T.Text -> CompendiumDetails
-mkCompendiumDetails = CompendiumDetails . T.toUpper
+mkCompendiumDetails = CompendiumDetails
 
 compendiumDetails :: CompendiumDetails -> T.Text
 compendiumDetails (CompendiumDetails t) = t

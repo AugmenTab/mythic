@@ -32,137 +32,17 @@
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
     {
-      "label": "UNSC - AERIAL GEAR",
-      "name": "unsc-aerial-gear",
-      "path": "packs/unsc-aerial-gear.db",
+      "label": "Equipment - UNSC",
+      "name": "equipment-unsc",
+      "path": "packs/equipment-unsc.db",
       "private": false,
       "system": "mythic",
       "type": "Item"
     },
     {
-      "label": "UNSC - CARRYING DEVICES",
-      "name": "unsc-carrying-devices",
-      "path": "packs/unsc-carrying-devices.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - CHEMICAL AND RADIOLOGICAL WEAPONS",
-      "name": "unsc-chemical-and-radiological-weapons",
-      "path": "packs/unsc-chemical-and-radiological-weapons.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - COMPUTING AND COMMUNICATIONS",
-      "name": "unsc-computing-and-communications",
-      "path": "packs/unsc-computing-and-communications.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - ELECTRONIC WARFARE",
-      "name": "unsc-electronic-warfare",
-      "path": "packs/unsc-electronic-warfare.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - GENERAL",
-      "name": "unsc-general",
-      "path": "packs/unsc-general.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - HELMET AND FACIAL EQUIPMENT",
-      "name": "unsc-helmet-and-facial-equipment",
-      "path": "packs/unsc-helmet-and-facial-equipment.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - MEDICAL",
-      "name": "unsc-medical",
-      "path": "packs/unsc-medical.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - SENSORS",
-      "name": "unsc-sensors",
-      "path": "packs/unsc-sensors.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "UNSC - SURVIVAL",
-      "name": "unsc-survival",
-      "path": "packs/unsc-survival.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - CARRYING DEVICES",
-      "name": "covenant-carrying-devices",
-      "path": "packs/covenant-carrying-devices.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - CHEMICAL AND RADIOLOGICAL WEAPONS",
-      "name": "covenant-chemical-and-radiological-weapons",
-      "path": "packs/covenant-chemical-and-radiological-weapons.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - COMPUTING AND COMMUNICATIONS",
-      "name": "covenant-computing-and-communications",
-      "path": "packs/covenant-computing-and-communications.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - DEPLOYABLE EQUIPMENT",
-      "name": "covenant-deployable-equipment",
-      "path": "packs/covenant-deployable-equipment.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - HELMET AND FACIAL EQUIPMENT",
-      "name": "covenant-helmet-and-facial-equipment",
-      "path": "packs/covenant-helmet-and-facial-equipment.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - MEDICAL EQUIPMENT",
-      "name": "covenant-medical-equipment",
-      "path": "packs/covenant-medical-equipment.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "COVENANT - OTHER",
-      "name": "covenant-other",
-      "path": "packs/covenant-other.db",
+      "label": "Equipment - Covenant",
+      "name": "equipment-covenant",
+      "path": "packs/equipment-covenant.db",
       "private": false,
       "system": "mythic",
       "type": "Item"

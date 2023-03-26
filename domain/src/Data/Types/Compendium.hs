@@ -40,8 +40,8 @@ instance ToJSON (Compendium item) where
 mkCompendiumName :: Faction -> CompendiumDetails -> Name
 mkCompendiumName faction details =
   mkName $ T.toLower $ T.intercalate "-"
-    [ factionText faction
-    , T.map (\c -> B.bool c '-' $ C.isSpace c) $ compendiumDetails details
+    [ T.map (\c -> B.bool c '-' $ C.isSpace c) $ compendiumDetails details
+    , factionText faction
     ]
 
 mkCompendiumPath :: Name -> FilePath
@@ -112,7 +112,7 @@ newtype Label = Label T.Text
 
 mkCompendiumLabel :: Faction -> CompendiumDetails -> Label
 mkCompendiumLabel faction content =
-  Label $ T.toUpper (factionText faction) <> " - " <> compendiumDetails content
+  Label $ compendiumDetails content <> " - " <> factionText faction
 
 labelText :: Label -> T.Text
 labelText (Label l) = l
