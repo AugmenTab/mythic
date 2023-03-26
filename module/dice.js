@@ -485,7 +485,9 @@ async function rollAttackAndDamage(actor, weapon, data) {
           pool += `min${ammo.special.diceMinimum.value}`;
         }
 
-        if (critType !== "special") {
+        if (ammo.special.hardlight.has) {
+          pool += `x>=${ammo.critsOn}`;
+        } else if (critType !== "special") {
           pool += `${critType}>=${ammo.critsOn}`;
         }
 
