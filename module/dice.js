@@ -194,13 +194,14 @@ function calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget) {
   return 10 * Math.floor((pRange - distanceFromTarget) / 50);
 }
 
-function calculateRangeEffects(actorData, weapon, distanceFromTarget) {
+function calculateRangeEffects(actor, weapon, distanceFromTarget) {
   const noChanges = { target: 0, pierce: "full", damage: "0" };
 
   if (!game.settings.get("mythic", "rangeEffects")) return noChanges;
 
   const ammo = weapon.system.ammoList[weapon.system.currentAmmo];
   const spread = ammo.special.spread.has;
+
   switch(weapon.system.group) {
     case "melee":
       if (1 >= distanceFromTarget) {
@@ -217,7 +218,7 @@ function calculateRangeEffects(actorData, weapon, distanceFromTarget) {
     case "ranged":
       if (ammo.special.longBarrel.has && 3 >= distanceFromTarget) {
         return {
-          target: actorData.trainings.weapons.quickscope ? -5 : -10,
+          target: actor.system.trainings.weapons.quickscope ? -5 : -10,
           pierce: "full",
           damage: spread ? "2D10" : "0"
         };
@@ -225,7 +226,7 @@ function calculateRangeEffects(actorData, weapon, distanceFromTarget) {
 
       if (ammo.special.longBarrel.has && 10 >= distanceFromTarget) {
         return {
-          target: actorData.trainings.weapons.quickscope ? -5 : -10,
+          target: actor.system.trainings.weapons.quickscope ? -5 : -10,
           pierce: "full",
           damage: spread ? "1D10" : "0"
         };
