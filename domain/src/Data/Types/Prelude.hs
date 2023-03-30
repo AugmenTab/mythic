@@ -1,17 +1,17 @@
 module Data.Types.Prelude
   ( -- Data Types
     AmmoGroup(..)
-  , AmmoList
-  , Ammunition
+  , AmmoList, mkAmmoList
+  , Ammunition(..)
   , ArmorNotes
-  , Attack
+  , Attack, emptyAttack
   , Barrel
-  , EquipmentTraining
+  , EquipmentTraining(..)
   , Faction(..), factions, factionText
   , FactionTraining
   , FirearmType
-  , FireMode(..)
-  , FireModes, fireModes
+  , FireMode(..), fireModeFromText
+  , FireModes, fireModes, mkFireModes
   , Hardpoints
   , ItemAdjustment, emptyItemAdjustment, basicItemAdjustment
   , ItemPrice, mkItemPrice
@@ -20,27 +20,27 @@ module Data.Types.Prelude
   , Protection
   , Shields(..), emptyShields
   , Size
-  , SpecialRules
+  , SpecialRules(..), emptySpecialRules
   , StatAdjustments, emptyStatAdjustments
   , WeaponGroup(..)
-  , WeaponRange
-  , WeaponSettings
-  , WeaponTag
-  , WeaponTags
+  , WeaponRange(..), emptyWeaponRange
+  , WeaponSettings, emptyWeaponSettings
+  , WeaponTag, weaponTagFromText
+  , WeaponTags(..)
   , Weight(..)
 
     -- Newtypes
-  , Ammo
+  , Ammo, mkAmmo
   , Breakpoints, mkBreakpoints
   , CompendiumDetails, compendiumDetails, mkCompendiumDetails
   , Description, mkDescription
-  , FireRate
+  , FireRate, mkFireRate
   , Img, mkImg
-  , MagazineCapacity
+  , MagazineCapacity, mkMagazineCapacity
   , Name, mkName, nameText
-  , Reload
+  , Reload, mkReload
   , ScopeMagnification
-  , WeaponType
+  , WeaponType, mkWeaponType
 
   -- Type Aliases
   , CompendiumData
@@ -54,7 +54,8 @@ import           Flipstone.Prelude
 import           Domain.JSON
 
 import           Data.Coerce (coerce)
-import qualified Data.Map as Map
+import qualified Data.List.Extra as L
+import qualified Data.Map.Strict as Map
 import           Data.Maybe (fromMaybe, isJust)
 import qualified Data.Set as Set
 import qualified Data.Text as T
@@ -63,6 +64,9 @@ import           Text.Show (Show, show)
 
 newtype Ammo = Ammo T.Text
   deriving newtype (ToJSON)
+
+mkAmmo :: T.Text -> Ammo
+mkAmmo = Ammo
 
 data AmmoGroup
   = None
@@ -79,6 +83,9 @@ newtype AmmoList = AmmoList [Ammunition]
 instance ToJSON AmmoList where
   toJSON (AmmoList l) =
     object $ (\a -> (keyFromText . coerce $ ammunitionName a) .= a) <$> l
+
+mkAmmoList :: Ammunition -> AmmoList
+mkAmmoList = AmmoList . L.snoc []
 
 data Ammunition =
   Ammunition
@@ -176,6 +183,16 @@ attackFireModeText atk =
            , "-"
            , T.pack . show $ attackFireRate atk
            ]
+
+emptyAttack :: Attack
+emptyAttack =
+  Attack
+    { attackFireMode = NoFireMode
+    , attackFireRate = FireRate 0
+    , attackHalf     = 0
+    , attackFull     = 0
+    , attackBonus    = 0
+    }
 
 data Barrel
   = XS
@@ -316,7 +333,8 @@ firearmTypeText fType =
     Shotguns -> "shotguns"
 
 data FireMode
-  = Auto
+  = NoFireMode
+  | Auto
   | Burst
   | Charge
   | Drawback
@@ -326,17 +344,31 @@ data FireMode
   | Sustained
   deriving stock (Eq, Ord)
 
+fireModeFromText :: T.Text -> Maybe FireMode
+fireModeFromText txt =
+  case txt of
+   "Auto"      -> Just Auto
+   "Burst"     -> Just Burst
+   "Charge"    -> Just Charge
+   "Drawback"  -> Just Drawback
+   "Flintlock" -> Just Flintlock
+   "Pump"      -> Just Pump
+   "Semi"      -> Just Semi
+   "Sustained" -> Just Sustained
+   _           -> Nothing
+
 fireModeText :: FireMode -> T.Text
 fireModeText fm =
   case fm of
-    Auto      -> "auto"
-    Burst     -> "burst"
-    Charge    -> "charge"
-    Drawback  -> "drawback"
-    Flintlock -> "flintlock"
-    Pump      -> "pump"
-    Semi      -> "semi"
-    Sustained -> "sustained"
+    NoFireMode -> T.empty
+    Auto       -> "auto"
+    Burst      -> "burst"
+    Charge     -> "charge"
+    Drawback   -> "drawback"
+    Flintlock  -> "flintlock"
+    Pump       -> "pump"
+    Semi       -> "semi"
+    Sustained  -> "sustained"
 
 newtype FireModes = FireModes (Map.Map FireMode FireRate)
 
@@ -356,8 +388,14 @@ instance ToJSON FireModes where
 fireModes :: FireModes -> Map.Map FireMode FireRate
 fireModes (FireModes f) = f
 
+mkFireModes :: Map.Map FireMode FireRate -> FireModes
+mkFireModes = FireModes
+
 newtype FireRate = FireRate Int
   deriving newtype (Show, ToJSON)
+
+mkFireRate :: Int -> FireRate
+mkFireRate = FireRate
 
 data Hardpoints
 
@@ -466,6 +504,9 @@ itemTypeText item =
 newtype MagazineCapacity = MagazineCapacity Int
   deriving newtype (ToJSON)
 
+mkMagazineCapacity :: Int -> MagazineCapacity
+mkMagazineCapacity = MagazineCapacity
+
 newtype Name = Name T.Text
   deriving newtype (Eq, Ord, ToJSON)
 
@@ -497,6 +538,9 @@ instance ToJSON Protection where
 
 newtype Reload = Reload Int
   deriving newtype (ToJSON)
+
+mkReload :: Int -> Reload
+mkReload = Reload
 
 newtype ScopeMagnification = ScopeMagnification Int
   deriving newtype (ToJSON)
@@ -569,7 +613,7 @@ data SpecialRules =
     , chargeRule       :: Maybe Int
     , cryo             :: Maybe T.Text
     , diceMinimum      :: Maybe Int
-    , electrified      :: Maybe Int
+    , electrified      :: Maybe T.Text
     , emp              :: Maybe Int
     , flame            :: Maybe T.Text
     , flashbang        :: Maybe ()
@@ -618,7 +662,7 @@ instance ToJSON SpecialRules where
                , "charge"           .= intRule  (chargeRule r)
                , "cryo"             .= textRule (cryo r)
                , "diceMinimum"      .= intRule  (diceMinimum r)
-               , "electrified"      .= intRule  (electrified r)
+               , "electrified"      .= textRule (electrified r)
                , "emp"              .= intRule  (emp r)
                , "flame"            .= textRule (flame r)
                , "flashbang"        .= noneRule (flashbang r)
@@ -647,6 +691,45 @@ instance ToJSON SpecialRules where
                , "tranquilize"      .= noneRule (tranquilize r)
                , "vehicleLock"      .= noneRule (vehicleLock r)
                ]
+
+emptySpecialRules :: SpecialRules
+emptySpecialRules =
+  SpecialRules
+    { acid             = Nothing
+    , blast            = Nothing
+    , cauterize        = Nothing
+    , chargeRule       = Nothing
+    , cryo             = Nothing
+    , diceMinimum      = Nothing
+    , electrified      = Nothing
+    , emp              = Nothing
+    , flame            = Nothing
+    , flashbang        = Nothing
+    , gravimetricPulse = Nothing
+    , gravity          = Nothing
+    , hardlight        = Nothing
+    , headshot         = Nothing
+    , homing           = Nothing
+    , kill             = Nothing
+    , kinetic          = Nothing
+    , longBarrel       = Nothing
+    , needle           = Nothing
+    , nonlethal        = Nothing
+    , overheat         = Nothing
+    , penetrating      = Nothing
+    , rechargeRate     = Nothing
+    , singleLoading    = Nothing
+    , slow             = Nothing
+    , smoke            = Nothing
+    , spike            = Nothing
+    , spin             = Nothing
+    , spread           = Nothing
+    , sticky           = Nothing
+    , stun             = Nothing
+    , tearGas          = Nothing
+    , tranquilize      = Nothing
+    , vehicleLock      = Nothing
+    }
 
 data StatAdjustments =
   StatAdjustments
@@ -708,6 +791,14 @@ instance ToJSON WeaponRange where
            , "grip"      .= valueText "solid"
            ]
 
+emptyWeaponRange :: WeaponRange
+emptyWeaponRange =
+  WeaponRange
+    { weaponRangeClose = 0
+    , weaponRangeLong  = 0
+    , weaponRangeMelee = 0
+    }
+
 data WeaponSettings =
   WeaponSettings
     { settingsFirearmType    :: FirearmType
@@ -726,6 +817,16 @@ instance ToJSON WeaponSettings where
            , "singleUse"      .= settingsSingleUse s
            ]
 
+emptyWeaponSettings :: WeaponSettings
+emptyWeaponSettings =
+  WeaponSettings
+    { settingsFirearmType    = Firearms
+    , settingsBarrel         = XS
+    , settingsBulletDiameter = 0
+    , settingsCaseLength     = 0
+    , settingsSingleUse      = False
+    }
+
 data WeaponTag
   = UD
   | I
@@ -736,6 +837,19 @@ data WeaponTag
   | PD
   | BD
   deriving stock (Eq, Ord)
+
+weaponTagFromText :: T.Text -> Maybe WeaponTag
+weaponTagFromText tag =
+  case tag of
+    "[UD]" -> Just UD
+    "[I]"  -> Just I
+    "[OH]" -> Just OH
+    "[TH]" -> Just TH
+    "[HW]" -> Just HW
+    "[SD]" -> Just SD
+    "[PD]" -> Just PD
+    "[BD]" -> Just BD
+    _      -> Nothing
 
 newtype WeaponTags = WeaponTags (Set.Set WeaponTag)
 
@@ -772,3 +886,6 @@ instance ToJSON Weight where
 
 newtype WeaponType = WeaponType T.Text
   deriving newtype (ToJSON)
+
+mkWeaponType :: T.Text -> WeaponType
+mkWeaponType = WeaponType

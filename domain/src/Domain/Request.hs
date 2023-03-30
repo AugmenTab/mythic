@@ -16,7 +16,7 @@ import           Flipstone.Prelude
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 import qualified Network.HTTP.Client as HTTP
@@ -56,7 +56,7 @@ sheetDataMap =
  -- [ ( ArmorSheet       , (GID "3822484"  , Range "A2:M295") )
     [ ( EquipmentSheet   , (GID "515202982", Range "A2:E234") )
  -- , ( MeleeWeaponSheet , (GID "346860164", Range "A2:Q51")  )
- -- , ( RangedWeaponSheet, (GID "297713635", Range "A2:P375") )
+    , ( RangedWeaponSheet, (GID "297713635", Range "A2:P333") )
     ]
 
 makeSheetRequest :: Either T.Text HTTP.Request

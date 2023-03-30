@@ -11,7 +11,7 @@ import qualified Domain.Request as Request
 
 import qualified Control.Concurrent.Async as Async
 import           Control.Monad (forM_)
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
 import qualified Data.Text.IO as IO
 import           Data.Tuple (uncurry)

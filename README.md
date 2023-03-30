@@ -54,32 +54,32 @@ Available Compendium Packs:
 * Item
   * Equipment - UNSC
   * Equipment - Covenant
+  * Ranged Weapons - Banished
+  * Ranged Weapons - Covenant
+  * Ranged Weapons - UNSC
 
 Planned Compendium Packs:
 * Actor
-    * *Bestiary - Banished*
-    * *Bestiary - Covenant*
-    * *Bestiary - Forerunner*
-    * *Bestiary - UNSC*
-    * *Vehicles - Banished*
-    * *Vehicles - Covenant*
-    * *Vehicles - Forerunner*
-    * *Vehicles - UNSC*
+  * *Bestiary - Banished*
+  * *Bestiary - Covenant*
+  * *Bestiary - Forerunner*
+  * *Bestiary - UNSC*
+  * *Vehicles - Banished*
+  * *Vehicles - Covenant*
+  * *Vehicles - Forerunner*
+  * *Vehicles - UNSC*
 * Item
-    * *Abilities*
-    * *Armors - Banished*
-    * *Armors - Covenant*
-    * *Armors - Forerunner*
-    * *Armors - UNSC*
-    * *Educations*
-    * *Melee Weapons - Banished*
-    * *Melee Weapons - Covenant*
-    * *Melee Weapons - Forerunner*
-    * *Melee Weapons - UNSC*
-    * *Ranged Weapons - Banished*
-    * *Ranged Weapons - Covenant*
-    * *Ranged Weapons - Forerunner*
-    * *Ranged Weapons - UNSC*
+  * *Abilities*
+  * *Armors - Banished*
+  * *Armors - Covenant*
+  * *Armors - Forerunner*
+  * *Armors - UNSC*
+  * *Educations*
+  * *Melee Weapons - Banished*
+  * *Melee Weapons - Covenant*
+  * *Melee Weapons - Forerunner*
+  * *Melee Weapons - UNSC*
+  * *Ranged Weapons - Forerunner*
 
 
 ## Legal

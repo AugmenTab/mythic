@@ -27,6 +27,7 @@ dependencies:
 - cassava
 - containers
 - either
+- extra
 - flipstone-prelude
 - ghc-prim
 - http-client

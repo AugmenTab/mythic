@@ -16,12 +16,15 @@ ingestRaw :: Request.SheetSubject
           -> Either T.Text (CompendiumMap [RawData])
 ingestRaw subject cMap = do
   case subject of
-    Request.ArmorSheet        -> Left "Not implemented yet" -- TODO: traverse ingestArmor     cMap -- TODO
+    Request.ArmorSheet        -> Left "Not implemented yet" -- TODO: traverse ingestArmor     cMap
     Request.EquipmentSheet    -> traverse ingestEquipment cMap
-    Request.MeleeWeaponSheet  -> Left "Not implemented yet" -- TODO: traverse ingestMelee     cMap -- TODO
-    Request.RangedWeaponSheet -> Left "Not implemented yet" -- TODO: traverse ingestRanged    cMap -- TODO
+    Request.MeleeWeaponSheet  -> Left "Not implemented yet" -- TODO: traverse ingestMelee     cMap
+    Request.RangedWeaponSheet -> traverse ingestRanged    cMap
 
 ingestEquipment :: T.Text -> Either T.Text [RawData]
-ingestEquipment sheet = do
-  rawEquipment <- decodeCSV . LBS.fromStrict $ TE.encodeUtf8 sheet
-  pure $ EquipmentData <$> rawEquipment
+ingestEquipment =
+  ffmap EquipmentData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+
+ingestRanged :: T.Text -> Either T.Text [RawData]
+ingestRanged =
+  ffmap RangedData . decodeCSV . LBS.fromStrict . TE.encodeUtf8

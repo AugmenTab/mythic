@@ -115,7 +115,7 @@ data RawRangedWeapon =
     , rawRangedDamageBase   :: Int
     , rawRangedPierce       :: Int
     , rawRangedHitMod       :: Int
-    , rawRangedMagazine     :: T.Text
+    , rawRangedMagazine     :: Int
     , rawRangedROF          :: T.Text
     , rawRangedReload       :: T.Text
     , rawRangedWeight       :: Double

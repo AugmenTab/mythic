@@ -5,7 +5,7 @@ module Domain.Convert.Compendium
 import           Flipstone.Prelude
 import           Data.Types
 
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 import           Data.Tuple (uncurry)
 
 toCompendium :: CompendiumEntry item

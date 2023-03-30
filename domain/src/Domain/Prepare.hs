@@ -7,7 +7,7 @@ import           Data.Types
 import qualified Domain.Request as Request
 
 import qualified Data.List as L
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
 import qualified Data.Set as Set
 import qualified Data.Text as T
 
@@ -105,4 +105,5 @@ factionMap = Map.fromList $ (\f -> (T.toUpper $ factionText f, f)) <$> factions
 fields :: Set.Set T.Text
 fields = Set.fromList
   [ "Equipment"
+  , "Ran_Wep"
   ]

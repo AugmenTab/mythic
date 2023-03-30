@@ -61,6 +61,7 @@ library
     , cassava
     , containers
     , either
+    , extra
     , flipstone-prelude
     , ghc-prim
     , http-client
@@ -97,6 +98,7 @@ executable domain-exe
     , containers
     , domain
     , either
+    , extra
     , flipstone-prelude
     , ghc-prim
     , http-client
