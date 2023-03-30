@@ -73,6 +73,7 @@ data RawMeleeWeapon =
   RawMeleeWeapon
     { rawMeleeName         :: T.Text
     , rawMeleeType         :: T.Text
+    , rawMeleeAttr         :: T.Text
     , rawMeleeRange        :: Int
     , rawMeleeDamageRoll   :: T.Text
     , rawMeleeDamageBase   :: Int
@@ -92,6 +93,7 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
   parseNamedRecord m =
     RawMeleeWeapon <$> m .: "Name"
                    <*> m .: "COMP_type"
+                   <*> m .: "COMP_atribute"
                    <*> m .: "COMP_range"
                    <*> m .: "COMP_damage_roll"
                    <*> m .: "COMP_damage_base"
@@ -110,6 +112,7 @@ data RawRangedWeapon =
   RawRangedWeapon
     { rawRangedName         :: T.Text
     , rawRangedType         :: T.Text
+    , rawRangedAttr         :: T.Text
     , rawRangedRange        :: T.Text
     , rawRangedDamageRoll   :: T.Text
     , rawRangedDamageBase   :: Int
@@ -128,6 +131,7 @@ instance CSV.FromNamedRecord RawRangedWeapon where
   parseNamedRecord r =
     RawRangedWeapon <$> r .: "Name"
                     <*> r .: "COMP_type"
+                    <*> r .: "COMP_atribute"
                     <*> r .: "COMP_range"
                     <*> r .: "COMP_damage_roll"
                     <*> r .: "COMP_damage_base"

@@ -93,7 +93,7 @@ mkRanged faction raw = Right $ FoundryWeapon $
         , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe Ranged $ snd <$> weaponDetails
-        , weaponTags        = buildWeaponTags weaponTags
+        , weaponTags        = buildWeaponTags weaponTags $ rawRangedAttr raw
         , weaponFireModes   = mkFireModeMap $ rawRangedROF raw
         , weaponAttack      = emptyAttack
         , weaponReload      = reload
@@ -118,10 +118,15 @@ mkRanged faction raw = Right $ FoundryWeapon $
 --
 -- Helpers
 --
-buildWeaponTags :: [T.Text] -> WeaponTags
-buildWeaponTags tags =
+buildWeaponTags :: [T.Text] -> T.Text -> WeaponTags
+buildWeaponTags tags attr =
   let updateTags set = maybe set (flip Set.insert set) . weaponTagFromText
-   in WeaponTags $ L.foldl' updateTags Set.empty tags
+      startingSet =
+        case attr of
+          "WFR" -> Set.insert UD Set.empty
+          _     -> Set.empty
+
+   in WeaponTags $ L.foldl' updateTags startingSet tags
 
 buildSpecials :: T.Text -> SpecialRules
 buildSpecials specials =

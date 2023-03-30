@@ -25,7 +25,7 @@ module Data.Types.Prelude
   , WeaponGroup(..)
   , WeaponRange(..), emptyWeaponRange
   , WeaponSettings, emptyWeaponSettings
-  , WeaponTag, weaponTagFromText
+  , WeaponTag(..), weaponTagFromText
   , WeaponTags(..)
   , Weight(..)
 
