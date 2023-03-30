@@ -40,7 +40,7 @@ module Data.Types.Prelude
   , Name, mkName, nameText
   , Reload, mkReload
   , ScopeMagnification, mkScopeMagnification
-  , WeaponType, mkWeaponType
+  , WeaponType(..)
 
   -- Type Aliases
   , CompendiumData
@@ -892,8 +892,5 @@ instance ToJSON Weight where
            , "selfSupported" .= weightSelfSupported w
            ]
 
-newtype WeaponType = WeaponType T.Text
+newtype WeaponType = WeaponType { unWeaponType :: T.Text }
   deriving newtype (ToJSON)
-
-mkWeaponType :: T.Text -> WeaponType
-mkWeaponType = WeaponType
