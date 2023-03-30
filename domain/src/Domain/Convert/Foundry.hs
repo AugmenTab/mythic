@@ -10,7 +10,7 @@ import qualified Data.Char as C
 import qualified Data.List as L
 import qualified Data.List.Extra as L
 import qualified Data.Map.Strict as Map
-import           Data.Maybe (fromMaybe, listToMaybe)
+import           Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import qualified Data.Set as Set
 import qualified Data.Text as T
 import           Data.Traversable (for)
@@ -69,7 +69,7 @@ mkRanged faction raw = Right $ FoundryWeapon $
           , weightSelfSupported = False
           }
 
-      (weaponTags, specials) =
+      (tags, specials) =
         fromMaybe ([], T.empty)
           $ L.unsnoc
           $ fmap T.strip
@@ -77,7 +77,12 @@ mkRanged faction raw = Right $ FoundryWeapon $
           $ T.filter (/= '[')
           $ rawRangedSpecialRules raw
 
-      (unknownSpecials, specialRules) = buildSpecials specials
+      (tagSpecials, weaponTags) =
+        L.unzip $ mapMaybe (L.unsnoc . T.split (== ' ')) tags
+
+      (unknownSpecials, specialRules) =
+        buildSpecials $ T.split (== ',') specials <> fmap T.unwords tagSpecials
+
       description =
         mkDescription $ T.concat
           [ rawRangedDescription raw
@@ -136,7 +141,7 @@ buildWeaponTags tags attr =
 
    in WeaponTags $ L.foldl' updateTags startingSet tags
 
-buildSpecials :: T.Text -> (Set.Set T.Text, SpecialRules)
+buildSpecials :: [T.Text] -> (Set.Set T.Text, SpecialRules)
 buildSpecials specials =
   let extract = T.takeWhile (/= ')') . T.drop 1 . T.dropWhile (/= '(')
       extractInt = tryParseInt . extract
@@ -179,8 +184,7 @@ buildSpecials specials =
           "vehicle"     : _ -> (unk, rules { vehicleLock      = Just () })
           _                 -> (Set.insert txt unk, rules)
 
-   in L.foldl' updateSpecialRules (Set.empty, emptySpecialRules) $
-        T.split (== ',') specials
+   in L.foldl' updateSpecialRules (Set.empty, emptySpecialRules) specials
 
 findDelayIn :: [T.Text] -> Maybe ItemAdjustment
 findDelayIn txts
