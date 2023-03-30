@@ -77,6 +77,14 @@ mkRanged faction raw = Right $ FoundryWeapon $
           $ T.filter (/= '[')
           $ rawRangedSpecialRules raw
 
+      (unknownSpecials, specialRules) = buildSpecials specials
+      description =
+        mkDescription $ T.concat
+          [ rawRangedDescription raw
+          , "&#13;&#13;"
+          , T.intercalate ". " $ Set.toList unknownSpecials
+          ]
+
       reload =
         mkReload
           $ maybe 0 (read . T.unpack)
@@ -87,7 +95,7 @@ mkRanged faction raw = Right $ FoundryWeapon $
    in Weapon
         { weaponName        = mkName $ rawRangedName raw
         , weaponFaction     = factionText faction
-        , weaponDescription = mkDescription $ rawRangedDescription raw
+        , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawRangedPrice raw
         , weaponBreakpoints = mkBreakpoints 0
         , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
@@ -104,7 +112,7 @@ mkRanged faction raw = Right $ FoundryWeapon $
         , weaponAmmoGroup   = None
         , weaponScopeMag    = Just $ mkScopeMagnification 1
         , weaponCurrentAmmo = mkName "STD"
-        , weaponAmmoList    = mkRangedSTDAmmo raw $ buildSpecials specials
+        , weaponAmmoList    = mkRangedSTDAmmo raw specialRules
         , weaponSettings    = emptyWeaponSettings
 
         -- At present, there are no ranged Weapon Items that either confer a
@@ -128,49 +136,51 @@ buildWeaponTags tags attr =
 
    in WeaponTags $ L.foldl' updateTags startingSet tags
 
-buildSpecials :: T.Text -> SpecialRules
+buildSpecials :: T.Text -> (Set.Set T.Text, SpecialRules)
 buildSpecials specials =
   let extract = T.takeWhile (/= ')') . T.drop 1 . T.dropWhile (/= '(')
       extractInt = tryParseInt . extract
-      updateSpecialRules rules txt =
+      updateSpecialRules (unk, rules) txt =
         case T.strip . T.toLower <$> T.words txt of
-          "acid"        : _ -> rules { acid             = extractInt txt }
-          "blast"       : _ -> rules { blast            = extractInt txt }
-          "cauterize"   : _ -> rules { cauterize        = Just () }
-          "charge"      : _ -> rules { chargeRule       = extractInt txt }
-          "cryo"        : _ -> rules { cryo             = Just $ extract txt }
-          "dice"        : _ -> rules { diceMinimum      = extractInt txt }
-          "electrified" : _ -> rules { electrified      = Just $ extract txt }
-          "emp"         : _ -> rules { emp              = extractInt txt }
-          "flame"       : _ -> rules { flame            = Just $ extract txt }
-          "flashbang"   : _ -> rules { flashbang        = Just () }
-          "gravimetric" : _ -> rules { gravimetricPulse = extractInt txt }
-          "gravity"     : _ -> rules { gravity          = extractInt txt }
-          "hardlight"   : _ -> rules { hardlight        = Just () }
-          "headshot"    : _ -> rules { headshot         = Just () }
-          "homing"      : _ -> rules { homing           = extractInt txt }
-          "kill"        : _ -> rules { kill             = extractInt txt }
-          "kinetic"     : _ -> rules { kinetic          = Just () }
-          "long"        : _ -> rules { longBarrel       = Just () }
-          "needle"      : _ -> rules { needle           = extractInt txt }
-          "nonlethal"   : _ -> rules { nonlethal        = Just () }
-          "overheat"    : _ -> rules { overheat         = extractInt txt }
-          "penetrating" : _ -> rules { penetrating      = Just () }
-          "recharge"    : _ -> rules { rechargeRate     = extractInt txt }
-          "single"      : _ -> rules { singleLoading    = Just () }
-          "slow"        : _ -> rules { slow             = Just () }
-          "smoke"       : _ -> rules { smoke            = extractInt txt }
-          "spike"       : _ -> rules { spike            = Just () }
-          "spin"        : _ -> rules { spin             = extractInt txt }
-          "spread"      : _ -> rules { spread           = Just () }
-          "sticky"      : _ -> rules { sticky           = Just () }
-          "stun"        : _ -> rules { stun             = extractInt txt }
-          "tear"        : _ -> rules { tearGas          = Just () }
-          "tranquilize" : _ -> rules { tranquilize      = extractInt txt }
-          "vehicle"     : _ -> rules { vehicleLock      = Just () }
-          _                 -> rules
+          "acid"        : _ -> (unk, rules { acid             = extractInt txt })
+          "blast"       : _ -> (unk, rules { blast            = extractInt txt })
+          "cauterise"   : _ -> (unk, rules { cauterize        = Just () })
+          "cauterize"   : _ -> (unk, rules { cauterize        = Just () })
+          "charge"      : _ -> (unk, rules { chargeRule       = extractInt txt })
+          "cryo"        : _ -> (unk, rules { cryo             = Just $ extract txt })
+          "dice"        : _ -> (unk, rules { diceMinimum      = extractInt txt })
+          "electrified" : _ -> (unk, rules { electrified      = Just $ extract txt })
+          "emp"         : _ -> (unk, rules { emp              = extractInt txt })
+          "flame"       : _ -> (unk, rules { flame            = Just $ extract txt })
+          "flashbang"   : _ -> (unk, rules { flashbang        = Just () })
+          "gravimetric" : _ -> (unk, rules { gravimetricPulse = extractInt txt })
+          "gravity"     : _ -> (unk, rules { gravity          = extractInt txt })
+          "hardlight"   : _ -> (unk, rules { hardlight        = Just () })
+          "headshot"    : _ -> (unk, rules { headshot         = Just () })
+          "homing"      : _ -> (unk, rules { homing           = extractInt txt })
+          "kill"        : _ -> (unk, rules { kill             = extractInt txt })
+          "kinetic"     : _ -> (unk, rules { kinetic          = Just () })
+          "long"        : _ -> (unk, rules { longBarrel       = Just () })
+          "needle"      : _ -> (unk, rules { needle           = extractInt txt })
+          "nonlethal"   : _ -> (unk, rules { nonlethal        = Just () })
+          "overheat"    : _ -> (unk, rules { overheat         = extractInt txt })
+          "penetrating" : _ -> (unk, rules { penetrating      = Just () })
+          "recharge"    : _ -> (unk, rules { rechargeRate     = extractInt txt })
+          "single"      : _ -> (unk, rules { singleLoading    = Just () })
+          "slow"        : _ -> (unk, rules { slow             = Just () })
+          "smoke"       : _ -> (unk, rules { smoke            = extractInt txt })
+          "spike"       : _ -> (unk, rules { spike            = Just () })
+          "spin"        : _ -> (unk, rules { spin             = extractInt txt })
+          "spread"      : _ -> (unk, rules { spread           = Just () })
+          "sticky"      : _ -> (unk, rules { sticky           = Just () })
+          "stun"        : _ -> (unk, rules { stun             = extractInt txt })
+          "tear"        : _ -> (unk, rules { tearGas          = Just () })
+          "tranquilize" : _ -> (unk, rules { tranquilize      = extractInt txt })
+          "vehicle"     : _ -> (unk, rules { vehicleLock      = Just () })
+          _                 -> (Set.insert txt unk, rules)
 
-   in L.foldl' updateSpecialRules emptySpecialRules $ T.split (== ',') specials
+   in L.foldl' updateSpecialRules (Set.empty, emptySpecialRules) $
+        T.split (== ',') specials
 
 findDelayIn :: [T.Text] -> Maybe ItemAdjustment
 findDelayIn txts
