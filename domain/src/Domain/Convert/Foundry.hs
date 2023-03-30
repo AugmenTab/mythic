@@ -129,7 +129,6 @@ buildSpecials specials =
       extractInt = tryParseInt . extract
       updateSpecialRules rules txt =
         case T.strip . T.toLower <$> T.words txt of
-          -- TODO: Ensure the checks for each special rule before completing.
           "acid"        : _ -> rules { acid             = extractInt txt }
           "blast"       : _ -> rules { blast            = extractInt txt }
           "cauterize"   : _ -> rules { cauterize        = Just () }
