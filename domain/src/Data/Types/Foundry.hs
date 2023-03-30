@@ -9,8 +9,7 @@ import           Flipstone.Prelude
 import           Domain.JSON
 import           Data.Types.Prelude
 
-import qualified Data.Map.Strict as Map
-import           Data.Maybe (fromMaybe, isJust)
+import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 
 data FoundryData

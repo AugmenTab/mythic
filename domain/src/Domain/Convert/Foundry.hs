@@ -235,6 +235,11 @@ mkRangedSTDAmmo raw specials =
           _ ->
             emptyWeaponRange
 
+      finalSpecials =
+        if T.isPrefixOf "SINGLE LOADING" $ T.toUpper $ rawRangedType raw
+           then specials { singleLoading = Just () }
+           else specials
+
    in mkAmmoList $
         Ammunition
           { ammunitionName         = mkName "STD"
@@ -250,7 +255,7 @@ mkRangedSTDAmmo raw specials =
           , ammunitionCritsOn      = 10
           , ammunitionRange        = range
           , ammunitionDescription  = mkDescription ""
-          , ammunitionSpecials     = specials
+          , ammunitionSpecials     = finalSpecials
           }
 
 parseDiceValues :: T.Text -> (Int, Int)
