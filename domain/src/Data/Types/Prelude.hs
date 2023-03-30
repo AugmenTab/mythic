@@ -39,7 +39,7 @@ module Data.Types.Prelude
   , MagazineCapacity, mkMagazineCapacity
   , Name, mkName, nameText
   , Reload, mkReload
-  , ScopeMagnification
+  , ScopeMagnification, mkScopeMagnification
   , WeaponType, mkWeaponType
 
   -- Type Aliases
@@ -537,13 +537,21 @@ instance ToJSON Protection where
            ]
 
 newtype Reload = Reload Int
-  deriving newtype (ToJSON)
+
+instance ToJSON Reload where
+  toJSON (Reload r) =
+    object [ "base"  .= r
+           , "total" .= r
+           ]
 
 mkReload :: Int -> Reload
 mkReload = Reload
 
 newtype ScopeMagnification = ScopeMagnification Int
   deriving newtype (ToJSON)
+
+mkScopeMagnification :: Int -> ScopeMagnification
+mkScopeMagnification = ScopeMagnification
 
 data Shields =
   Shields

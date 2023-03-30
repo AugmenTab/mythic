@@ -54,9 +54,9 @@ sheetDataMap :: Map.Map SheetSubject SheetData
 sheetDataMap =
   Map.fromList
  -- [ ( ArmorSheet       , (GID "3822484"  , Range "A2:M295") )
-    [ ( EquipmentSheet   , (GID "515202982", Range "A2:E234") )
+ -- , ( EquipmentSheet   , (GID "515202982", Range "A2:E234") )
  -- , ( MeleeWeaponSheet , (GID "346860164", Range "A2:Q51")  )
-    , ( RangedWeaponSheet, (GID "297713635", Range "A2:P333") )
+    [ ( RangedWeaponSheet, (GID "297713635", Range "A2:P333") )
     ]
 
 makeSheetRequest :: Either T.Text HTTP.Request
