@@ -26,7 +26,7 @@ mkFoundry (faction, _) rawData = for rawData $ \raw ->
   case raw of
     ArmorData     _ -> Left "Not yet implemented" -- TODO: mkArmor     faction a
     EquipmentData e -> mkEquipment faction e
-    MeleeData     _ -> Left "Not yet implemented" -- TODO: mkMelee     faction m
+    MeleeData     m -> mkMelee     faction m
     RangedData    r -> mkRanged    faction r
 
 mkEquipment :: Faction -> RawEquipment -> Either T.Text FoundryData
@@ -56,6 +56,71 @@ mkEquipment faction raw = Right $ FoundryEquipment $
         , equipmentCharacteristics = Nothing
         }
 
+mkMelee :: Faction -> RawMeleeWeapon -> Either T.Text FoundryData
+mkMelee faction raw = Right $ FoundryWeapon $
+  let weaponType = rawMeleeType raw
+      weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
+      fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
+      weight =
+        Weight
+          { weightEach = rawMeleeWeight raw
+          -- No Item supports its own weight as far as the descriptions are
+          -- concerned. This can be updated if/when a user points one out or one
+          -- gets added to the game.
+          , weightSelfSupported = False
+          }
+
+      specialsTxt = rawMeleeSpecialRules raw
+      (tags, specials) =
+        fromMaybe ([], T.empty)
+          $ L.unsnoc
+          $ fmap T.strip
+          $ T.split (== ']')
+          $ T.filter (/= '[') specialsTxt
+
+      (tagSpecials, weaponTags) =
+        L.unzip $ mapMaybe (L.unsnoc . T.split (== ' ')) tags
+
+      (unknownSpecials, specialRules) =
+        buildSpecials $ T.split (== ',') specials <> fmap T.unwords tagSpecials
+
+      description =
+        mkDescription $ T.concat
+          [ rawMeleeDescription raw
+          , "&#13;&#13;"
+          , T.intercalate ". " $ Set.toList unknownSpecials
+          ]
+
+   in Weapon
+        { weaponName        = mkName $ rawMeleeName raw
+        , weaponFaction     = factionText faction
+        , weaponDescription = description
+        , weaponPrice       = mkItemPrice $ rawMeleePrice raw
+        , weaponBreakpoints = mkBreakpoints 0
+        , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
+        , weaponWeight      = weight
+        , weaponGroup       = fromMaybe MeleeGroup $ snd <$> weaponDetails
+        , weaponTags        = buildWeaponTags weaponTags $ rawMeleeAttr raw
+        , weaponFireModes   = mkFireModes fireModeMap
+        , weaponAttack      = emptyAttack
+        , weaponReload      = mkReload 0
+        , weaponNickname    = Nothing
+        , weaponType        = WeaponType weaponType
+        , weaponMagCap      = mkMagazineCapacity 0
+        , weaponAmmo        = mkAmmo ""
+        , weaponAmmoGroup   = None
+        , weaponScopeMag    = Nothing
+        , weaponCurrentAmmo = mkName "STD"
+        , weaponAmmoList    = mkMeleeSTDAmmo raw specialRules
+        , weaponSettings    = emptyWeaponSettings
+        , weaponShields     = findShieldsIn specialsTxt
+
+        -- At present, there are no ranged Weapon Items that modify their
+        -- wielder's characteristics. This may change in the future, so the
+        -- value will be kept hardcoded to `Nothing` here for now.
+        , weaponCharacteristics = Nothing
+        }
+
 mkRanged :: Faction -> RawRangedWeapon -> Either T.Text FoundryData
 mkRanged faction raw = Right $ FoundryWeapon $
   let weaponType = rawRangedType raw
@@ -69,13 +134,13 @@ mkRanged faction raw = Right $ FoundryWeapon $
           , weightSelfSupported = False
           }
 
+      specialsTxt = rawRangedSpecialRules raw
       (tags, specials) =
         fromMaybe ([], T.empty)
           $ L.unsnoc
           $ fmap T.strip
           $ T.split (== ']')
-          $ T.filter (/= '[')
-          $ rawRangedSpecialRules raw
+          $ T.filter (/= '[') specialsTxt
 
       (tagSpecials, weaponTags) =
         L.unzip $ mapMaybe (L.unsnoc . T.split (== ' ')) tags
@@ -119,12 +184,11 @@ mkRanged faction raw = Right $ FoundryWeapon $
         , weaponCurrentAmmo = mkName "STD"
         , weaponAmmoList    = mkRangedSTDAmmo raw specialRules
         , weaponSettings    = emptyWeaponSettings
+        , weaponShields     = findShieldsIn specialsTxt
 
-        -- At present, there are no ranged Weapon Items that either confer a
-        -- shield to their wielder or modify their wielder's characteristics.
-        -- This may change in the future, so the value will be kept hardcoded to
-        -- `Nothing` here for now.
-        , weaponShields         = Nothing
+        -- At present, there are no ranged Weapon Items that modify their
+        -- wielder's characteristics. This may change in the future, so the
+        -- value will be kept hardcoded to `Nothing` here for now.
         , weaponCharacteristics = Nothing
         }
 
@@ -204,8 +268,9 @@ findIntegrityIn txts
 findRechargeIn :: [T.Text] -> Maybe ItemAdjustment
 findRechargeIn txts
   | L.length txts < 3                   = Nothing
-  | "recharge" : "rate" : v        : _ <- txts = basicItemAdjustment <$> tryParseInt v
+  | "rate"     : "of"   : v        : _ <- txts = basicItemAdjustment <$> tryParseInt v
   | "recharge" : "of"   : v        : _ <- txts = basicItemAdjustment <$> tryParseInt v
+  | "recharge" : "rate" : v        : _ <- txts = basicItemAdjustment <$> tryParseInt v
   | "takes"    : v      : "rounds" : _ <- txts = basicItemAdjustment <$> tryParseInt v
   | otherwise                                  = findRechargeIn . snd =<< L.uncons txts
 
@@ -238,6 +303,30 @@ mkFireModeMap modes =
 
    in mkFireModes $ foldl' updateFireModeMap Map.empty $ T.split (== ',') modes
 
+mkMeleeSTDAmmo :: RawMeleeWeapon -> SpecialRules -> AmmoList
+mkMeleeSTDAmmo raw specials =
+  let (diceQuantity, diceValue) = parseDiceValues $ rawMeleeDamageRoll raw
+      range = emptyWeaponRange { weaponRangeMelee = rawMeleeRange raw }
+   in mkAmmoList $
+        Ammunition
+          { ammunitionName         = mkName "STD"
+          , ammunitionAttackBonus  = rawMeleeHitMod raw
+          , ammunitionDiceQuantity = diceQuantity
+          , ammunitionDiceValue    = diceValue
+          , ammunitionBaseDamage   = rawMeleeDamageBase raw
+          , ammunitionSTRDamage    = strengthMultiplierFromText
+                                   $ rawMeleeBaseMod raw
+          , ammunitionPiercing     = rawMeleePierce raw
+          , ammunitionSTRPiercing  = strengthMultiplierFromText
+                                   $ rawMeleePierceMod raw
+          , ammunitionTarget       = 0
+          , ammunitionCurrentMag   = 0
+          , ammunitionCritsOn      = 10
+          , ammunitionRange        = range
+          , ammunitionDescription  = mkDescription ""
+          , ammunitionSpecials     = specials
+          }
+
 mkRangedSTDAmmo :: RawRangedWeapon -> SpecialRules -> AmmoList
 mkRangedSTDAmmo raw specials =
   let (diceQuantity, diceValue) = parseDiceValues $ rawRangedDamageRoll raw
@@ -265,9 +354,9 @@ mkRangedSTDAmmo raw specials =
           , ammunitionDiceQuantity = diceQuantity
           , ammunitionDiceValue    = diceValue
           , ammunitionBaseDamage   = rawRangedDamageBase raw
-          , ammunitionSTRDamage    = 0
+          , ammunitionSTRDamage    = Nothing
           , ammunitionPiercing     = rawRangedPierce raw
-          , ammunitionSTRPiercing  = 0
+          , ammunitionSTRPiercing  = Nothing
           , ammunitionTarget       = 0
           , ammunitionCurrentMag   = rawRangedMagazine raw
           , ammunitionCritsOn      = 10
@@ -293,31 +382,47 @@ weaponDetailsMap :: Map.Map T.Text (EquipmentTraining, WeaponGroup)
 weaponDetailsMap =
   Map.fromList
     [ ( "AUTOCANNON"            , (Cannon  , Ranged) )
+    , ( "AXE"                   , (Melee   , MeleeGroup) )
     , ( "BEAM"                  , (Advanced, Ranged) )
     , ( "CANNON"                , (Cannon  , Ranged) )
     , ( "CARBINE"               , (Infantry, Ranged) )
     , ( "CHEMICAL SPRAYER"      , (Advanced, Ranged) )
+    , ( "CLUB"                  , (Melee   , MeleeGroup) )
     , ( "COILGUN"               , (Cannon  , Ranged) )
+    , ( "DAGGER"                , (Melee   , MeleeGroup) )
     , ( "DEMOLITION"            , (Ordnance, Thrown) )
     , ( "DEMOLITIONS"           , (Ordnance, Thrown) )
     , ( "ENERGY WEAPON"         , (Advanced, Ranged) )
+    , ( "FIST WEAPON"           , (Melee   , MeleeGroup) )
+    , ( "GARROTE"               , (Melee   , MeleeGroup) )
     , ( "GRENADE"               , (Infantry, Thrown) )
     , ( "GRENADE LAUNCHER"      , (Launcher, Ranged) )
+    , ( "HAMMER"                , (Melee   , MeleeGroup) )
     , ( "HEAVY MACHINE GUN"     , (Heavy   , Ranged) )
     , ( "KNIFE"                 , (Basic   , MeleeGroup) )
     , ( "LANDMINE"              , (Ordnance, Thrown) )
     , ( "LIGHT MACHINE GUN"     , (Heavy   , Ranged) )
+    , ( "MACE"                  , (Melee   , MeleeGroup) )
     , ( "MACHINE GUN"           , (Heavy   , Ranged) )
     , ( "MAGAZINE SHOTGUN"      , (Basic   , Ranged) )
+    , ( "MELEE SHIELD"          , (Melee   , MeleeGroup) )
     , ( "MISSILE LAUNCHER"      , (Launcher, Ranged) )
     , ( "MORTAR CANNON"         , (Cannon  , Ranged) )
+    , ( "ONE-HANDED SWORD"      , (Melee   , MeleeGroup) )
     , ( "ORDINANCE"             , (Ordnance, Ranged) )
     , ( "PISTOL"                , (Basic   , Ranged) )
+    , ( "POLEARM AXE"           , (Melee   , MeleeGroup) )
+    , ( "POLEARM SPIKE"         , (Melee   , MeleeGroup) )
     , ( "RAILGUN"               , (Advanced, Ranged) )
     , ( "RIFLE"                 , (Infantry, Ranged) )
     , ( "ROCKET LAUNCHER"       , (Launcher, Ranged) )
     , ( "SATCHEL CHARGE"        , (Ordnance, Thrown) )
+    , ( "SHOVEL"                , (Melee   , MeleeGroup) )
     , ( "SINGLE LOADING SHOTGUN", (Basic   , Ranged) )
     , ( "SMG"                   , (Infantry, Ranged) )
     , ( "SNIPER RIFLE"          , (Range   , Ranged) )
+    , ( "SPRAY WEAPON"          , (Melee   , MeleeGroup) )
+    , ( "TASER"                 , (Melee   , MeleeGroup) )
+    , ( "TWO-HANDED SWORD"      , (Melee   , MeleeGroup) )
     ]
+

@@ -79,7 +79,6 @@ data RawMeleeWeapon =
     , rawMeleeDamageBase   :: Int
     , rawMeleePierce       :: Int
     , rawMeleeHitMod       :: Int
-    , rawMeleeROF          :: Double
     , rawMeleeBreakpoints  :: Int
     , rawMeleeBaseMod      :: T.Text
     , rawMeleePierceMod    :: T.Text
@@ -99,10 +98,9 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
                    <*> m .: "COMP_damage_base"
                    <*> m .: "COMP_pierce"
                    <*> m .: "COMP_hitmod"
-                   <*> m .: "COMP_rof"
                    <*> m .: "COMP_breakpoints"
-                   <*> m .: "COMP_base-mod"
-                   <*> m .: "COMP_pierce-mod"
+                   <*> m .: "COMP_base_mod"
+                   <*> m .: "COMP_pierce_mod"
                    <*> m .: "COMP_weight"
                    <*> m .: "COMP_special_rules"
                    <*> m .: "COMP_description"

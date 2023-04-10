@@ -18,12 +18,17 @@ ingestRaw subject cMap = do
   case subject of
     Request.ArmorSheet        -> Left "Not implemented yet" -- TODO: traverse ingestArmor     cMap
     Request.EquipmentSheet    -> traverse ingestEquipment cMap
-    Request.MeleeWeaponSheet  -> Left "Not implemented yet" -- TODO: traverse ingestMelee     cMap
+    Request.MeleeWeaponSheet  -> traverse ingestMelee     cMap
     Request.RangedWeaponSheet -> traverse ingestRanged    cMap
 
 ingestEquipment :: T.Text -> Either T.Text [RawData]
 ingestEquipment =
   ffmap EquipmentData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+
+ingestMelee :: T.Text -> Either T.Text [RawData]
+ingestMelee _ =
+--ffmap MeleeData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+  Left "Not implemented yet"
 
 ingestRanged :: T.Text -> Either T.Text [RawData]
 ingestRanged =

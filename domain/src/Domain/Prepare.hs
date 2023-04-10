@@ -105,5 +105,6 @@ factionMap = Map.fromList $ (\f -> (T.toUpper $ factionText f, f)) <$> factions
 fields :: Set.Set T.Text
 fields = Set.fromList
   [ "Equipment"
+  , "Mel_Wep"
   , "Ran_Wep"
   ]

@@ -22,6 +22,7 @@ module Data.Types.Prelude
   , Size
   , SpecialRules(..), emptySpecialRules
   , StatAdjustments, emptyStatAdjustments
+  , StrengthMultiplier(..), strengthMultiplierFromText
   , WeaponGroup(..)
   , WeaponRange(..), emptyWeaponRange
   , WeaponSettings, emptyWeaponSettings
@@ -94,9 +95,9 @@ data Ammunition =
     , ammunitionDiceQuantity :: Int
     , ammunitionDiceValue    :: Int
     , ammunitionBaseDamage   :: Int
-    , ammunitionSTRDamage    :: Int
+    , ammunitionSTRDamage    :: Maybe StrengthMultiplier
     , ammunitionPiercing     :: Int
-    , ammunitionSTRPiercing  :: Int
+    , ammunitionSTRPiercing  :: Maybe StrengthMultiplier
     , ammunitionTarget       :: Int
     , ammunitionCurrentMag   :: Int
     , ammunitionCritsOn      :: Int
@@ -107,7 +108,8 @@ data Ammunition =
 
 instance ToJSON Ammunition where
   toJSON a =
-    let emptyAmmoTracking =
+    let strMultFrom fn = maybe 0 strengthMultiplier $ fn a
+        emptyAmmoTracking =
           object [ "pool" .= valueInt 0
                  , "mags" .= valueInt 0
                  ]
@@ -116,9 +118,9 @@ instance ToJSON Ammunition where
                , "diceQuantity" .= ammunitionDiceQuantity a
                , "diceValue"    .= ammunitionDiceValue a
                , "baseDamage"   .= ammunitionBaseDamage a
-               , "strDamage"    .= ammunitionSTRDamage a
+               , "strDamage"    .= strMultFrom ammunitionSTRDamage
                , "piercing"     .= ammunitionPiercing a
-               , "strPiercing"  .= ammunitionSTRPiercing a
+               , "strPiercing"  .= strMultFrom ammunitionSTRPiercing
                , "target"       .= ammunitionTarget a
                , "currentMag"   .= ammunitionCurrentMag a
                , "critsOn"      .= ammunitionCritsOn a
@@ -188,7 +190,7 @@ emptyAttack :: Attack
 emptyAttack =
   Attack
     { attackFireMode = NoFireMode
-    , attackFireRate = FireRate 0
+    , attackFireRate = mkFireRate 0
     , attackHalf     = 0
     , attackFull     = 0
     , attackBonus    = 0
@@ -766,6 +768,29 @@ emptyStatAdjustments =
     , statAdjustmentsMythicSTR = emptyItemAdjustment
     , statAdjustmentsMythicAGI = emptyItemAdjustment
     }
+
+data StrengthMultiplier
+  = NoMultiplier
+  | HalfStrength
+  | FullStrength
+  | DoubleStrength
+
+strengthMultiplierFromText :: T.Text -> Maybe StrengthMultiplier
+strengthMultiplierFromText txt =
+  case txt of
+    "N/A"    -> Just NoMultiplier
+    "Half"   -> Just HalfStrength
+    "Full"   -> Just FullStrength
+    "Double" -> Just DoubleStrength
+    _        -> Nothing
+
+strengthMultiplier :: StrengthMultiplier -> Double
+strengthMultiplier sm =
+  case sm of
+    NoMultiplier   -> 0
+    HalfStrength   -> 0.5
+    FullStrength   -> 1
+    DoubleStrength -> 2
 
 data WeaponGroup
   = Ranged
