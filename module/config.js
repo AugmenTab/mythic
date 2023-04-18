@@ -144,7 +144,7 @@ mythic.skills = {
   deception: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CHA"],
+    characteristics: ["CHA", "LDR"],
     floodCharacteristics: []
   },
   demolition: {
