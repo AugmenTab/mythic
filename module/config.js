@@ -213,12 +213,6 @@ mythic.skills = {
     characteristics: ["INT", "PER"],
     floodCharacteristics: ["INT", "PER"]
   },
-  navSlipspace: {
-    difficulty: "mythic.skillSheet.difficulties.basic",
-    type: "mythic.skillSheet.types.field",
-    characteristics: ["INT", "PER"],
-    floodCharacteristics: ["INT", "PER"]
-  },
   negotiation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",

@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       {{#each actor.system.skills as |details skill|}}
-        {{#unless (cond "||" (eq skill "notes") (eq skill "medMgalekgolo"))}}
+        {{#unless (cond "||" (eq skill "notes") (eq skill "medMgalekgolo") (eq skill "navSlipspace"))}}
           <tr>
             <td>{{localize (concat "mythic.skillNames." skill)}}</td>
             {{#with (lookup ../config.skills [skill])~}}
