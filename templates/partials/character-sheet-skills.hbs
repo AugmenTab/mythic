@@ -15,35 +15,30 @@
       </tr>
     </thead>
     <tbody>
-      {{#each actor.system.skills as |details skill|}}
-        {{#unless (cond "||" (eq skill "notes") (eq skill "medMgalekgolo") (eq skill "navSlipspace"))}}
+      {{#each config.skills as |details skill|}}
+        {{#with (lookup ../this.actor.system.skills skill)}}
           <tr>
             <td>{{localize (concat "mythic.skillNames." skill)}}</td>
-            {{#with (lookup ../config.skills [skill])~}}
-              <td>{{localize this.difficulty}}</td>
-              <td>{{localize this.type}}</td>
-            {{/with}}
+            <td>{{localize details.difficulty}}</td>
+            <td>{{localize details.type}}</td>
             <td>
               <select name="system.skills.{{skill}}.characteristic">
-                {{#select details.characteristic}}
-                  {{#with (lookup ../config.skills [skill])~}}
-                    {{#if (eq ../../actor.type "Flood")}}
-                      {{#each this.floodCharacteristics as |stat|}}
-                        <option value="{{stat}}">{{stat}}</option>
-                      {{/each}}
-                    {{else}}
-                      {{#each this.characteristics as |stat|}}
-                        <option value="{{stat}}">{{stat}}</option>
-                      {{/each}}
-                    {{/if}}
-                  {{/with}}
+                {{#select this.characteristic}}
+                  {{#if (eq ../../actor.type "Flood")}}
+                    {{#each details.floodCharacteristics as |stat|}}
+                      <option value="{{stat}}">{{stat}}</option>
+                    {{/each}}
+                  {{else}}
+                    {{#each details.characteristics as |stat|}}
+                      <option value="{{stat}}">{{stat}}</option>
+                    {{/each}}
+                  {{/if}}
                 {{/select}}
-              </select>
             </td>
             <td>
               <select name="system.skills.{{skill}}.training.tier">
-                {{#select details.training.tier}}
-                  {{#each ../config.skillTraining as |content option|}}
+                {{#select this.training.tier}}
+                  {{#each ../../config.skillTraining as |content option|}}
                     <option value="{{option}}">{{localize content}}</option>
                   {{/each}}
                 {{/select}}
@@ -51,29 +46,29 @@
             </td>
             <td>
               <input
+                style="width:50px"
                 name={{concat "system.skills." skill ".mods"}}
                 type="number"
                 data-dtype="Number"
-                value="{{details.mods}}"
+                value="{{this.mods}}"
                 onfocus="this.select()"
               />
             </td>
             <td>
               <button
-                class="skill
-                rollable"
-                {{#if (cond "&&" (eq skill "evasion") (eq details.characteristic "WFM"))}}
-                  name="{{localize "mythic.skillNames.parry"}} ({{details.characteristic}})"
+                class="skill rollable"
+                {{#if (cond "&&" (eq skill "evasion") (eq this.characteristic "WFM"))}}
+                  name="{{localize "mythic.skillNames.parry"}} ({{this.characteristic}})"
                 {{else}}
-                  name="{{localize (concat "mythic.skillNames." skill)}} ({{details.characteristic}})"
+                  name="{{localize (concat "mythic.skillNames." skill)}} ({{this.characteristic}})"
                 {{/if}}
-                value="{{details.roll}}"
+                value="{{this.roll}}"
               >
-                <b>{{details.roll}}</b>
+                <b>{{this.roll}}</b>
               </button>
             </td>
           </tr>
-        {{/unless}}
+        {{/with}}
       {{/each}}
       <tr>
         <td colspan="7">
