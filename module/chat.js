@@ -22,7 +22,7 @@ export function addChatListeners(html) {
  * @returns {string} The HTML of the chat message to be posted.
  */
 export async function buildChatMessageContent(data) {
-  const template = `systems/mythic/templates/chat/${data.template}-chat.hbs`;
+  const template = `systems/mythic/templates/chat/${data.template}.hbs`;
   return await renderTemplate(template, data);
 }
 
@@ -74,6 +74,7 @@ export function getPostableItemFlavorPath(item) {
  * @param {object} actor - The Actor that is rolling the message to chat.
  */
 export async function postChatMessage(data, actor) {
+  const mode = game.settings.get("core", "rollMode");
   const audioOptions = {
     src: "sounds/dice.wav",
     volume: 0.8,
@@ -81,13 +82,15 @@ export async function postChatMessage(data, actor) {
     loop: false
   };
 
-  await AudioHelper.play(audioOptions, true);
-  await ChatMessage.create({
+  const chatOptions = {
     user: game.user.id,
     speaker: ChatMessage.getSpeaker({ actor: actor }),
     flavor: data.flavor,
     content: await buildChatMessageContent(data)
-  }, {});
+  };
+
+  await AudioHelper.play(audioOptions, true);
+  await ChatMessage.create(ChatMessage.applyRollMode(chatOptions, mode), {});
 }
 
 async function getScatterOptions(degrees = 0) {
@@ -175,7 +178,7 @@ async function onSpecial(event) {
       hits: options.hits || 1,
       render: await roll.render(),
       rule: element.dataset.rule,
-      template: "special-rule"
+      template: "special-rule-chat"
     };
     await postChatMessage(data, game.actors.get(element.dataset.actor_id));
   }

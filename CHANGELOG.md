@@ -47,6 +47,7 @@
   * Shields are displayed under the weapon summary section on any character sheet. Included are buttons to recharge a single item, or all equipped shield-giving items.
   * The shields section does not cover shield-granting armor - that is still managed in the same place it was previously, though it has now been renamed to "Energy Shields."
 * Thrown weapons can now control their grip quality from the summary.
+* Chat messages generated from the sheet use the selected message visibility.
 
 ## Bug Fixes
 

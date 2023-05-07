@@ -1,6 +1,6 @@
 /** @module MythicItemSheet */
 
-import { getPostableItemFlavorPath } from "../chat.js";
+import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
 import { localize } from "../common.js";
 
 /**
@@ -72,12 +72,11 @@ export default class MythicItemSheet extends ItemSheet {
   async _onPostItem(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const template = `systems/mythic/templates/chat/postable-${this.item.type}.hbs`;
-    await ChatMessage.create({
-      user: game.user.id,
-      speaker: ChatMessage.getSpeaker ({ actor: this.item.actor }),
+
+    await postChatMessage({
       flavor: localize(getPostableItemFlavorPath(this.item)),
-      content: await renderTemplate(template, this.item)
-    });
+      template: `postable-${this.item.type}`,
+      ...this.item
+    }, this.item.actor);
   }
 };

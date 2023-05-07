@@ -1,7 +1,7 @@
 /** @module MythicNamedCharacterSheet */
 
 import * as Calc from "../calculations.js";
-import { getPostableItemFlavorPath } from "../chat.js";
+import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
 import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
@@ -241,26 +241,25 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const postable = element.dataset.roll;
-    const template = `systems/mythic/templates/chat/postable-${postable}.hbs`;
-    await ChatMessage.create({
-      user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+
+    await postChatMessage({
       flavor: localize(`mythic.chat.${postable}.flavor`),
-      content: await renderTemplate(template, this.actor)
-    });
+      template: `postable-${postable}`,
+      ...this.actor
+    }, this.actor);
   }
 
   async _onPostItem(event) {
     event.preventDefault();
     const element = event.currentTarget;
-    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-    const template = `systems/mythic/templates/chat/postable-${item.type}.hbs`;
-    await ChatMessage.create({
-      user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+    const item =
+      await this.actor.items.get(element.getAttribute("data-item-id"));
+
+    await postChatMessage({
       flavor: localize(getPostableItemFlavorPath(item)),
-      content: await renderTemplate(template, item)
-    });
+      template: `postable-${item.type}`,
+      ...item
+    }, this.actor);
   }
 
   async _onReload(event) {

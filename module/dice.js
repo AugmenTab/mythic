@@ -293,7 +293,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
     hits: 0,
     type: data.type,
     target: data.target > 0 ? data.target : 0,
-    template: "attack",
+    template: "attack-chat",
     flavor: getAttackFlavor(weapon.system.group, data.type, fireMode)
   };
   let attacks = 1, damagesPerAttack = 1;
@@ -564,7 +564,7 @@ async function rollBasicTest(target, test, type, actor) {
     target: target > 0 ? target : 0,
     critical: false,
     outcome: "",
-    template: "test",
+    template: "test-chat",
     flavor: `${Common.localize("mythic.chat.test")}: ${test}`,
     ...outcome
   };
@@ -590,7 +590,7 @@ async function rollEvasions(baseTarget, options, actor) {
     evasions: [],
     flavor: `${Common.localize("mythic.chat.test")}: ${Common.localize(i18n)} (${stat})`,
     type: "test",
-    template: "evade"
+    template: "evade-chat"
   };
 
   for (let i = 0; i < options.times; i++) {
