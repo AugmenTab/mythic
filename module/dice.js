@@ -14,9 +14,9 @@ const CHARACTERISTICS = {
   "wfm": "Warfare Melee",
   "int": "Intellect",
   "per": "Perception",
-  "cr": "Courage",
-  "ch": "Charisma",
-  "ld": "Leadership"
+  "crg": "Courage",
+  "cha": "Charisma",
+  "ldr": "Leadership"
 };
 
 const SIZE_DAMAGE_BONUS = {
@@ -159,12 +159,15 @@ export async function rollEvasionBatch(element, actor) {
  */
 export async function rollTest(element, actor) {
   const type = element.classList[0];
-  const test = type === "initiative"
-    ? capitalize(type)
-    : (CHARACTERISTICS[element.name] != undefined
-        ? CHARACTERISTICS[element.name]
-        : element.name
-    );
+  const localizationPath = `mythic.characteristics.${element.name}`;
+  const test =
+    type === "initiative"
+      ? capitalize(type)
+      : (CHARACTERISTICS[element.name] != undefined
+          ? CHARACTERISTICS[element.name]
+          : element.name
+        );
+
   const testOptions = await getTestOptions(test);
   if (testOptions.cancelled) return;
 
