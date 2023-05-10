@@ -90,6 +90,7 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
     super.activateListeners(html);
 
     html.find(".evade").click(this._onEvade.bind(this));
+    html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
@@ -106,6 +107,19 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
   async _onEvade(event) {
     event.preventDefault();
     await rollEvasionBatch(event.currentTarget, this.actor);
+  }
+
+  async _onItemCreate(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const itemType = element.getAttribute("data-item-type");
+    const itemSubtype = element.getAttribute("data-item-subtype");
+
+    await Item.create({
+      name: localize(`mythic.${itemType}Sheet.newItem`),
+      type: itemType,
+      system: Calc.generateBaseItemData(itemType, itemSubtype)
+    }, { parent: this.actor });
   }
 
   async _onItemDelete(event) {

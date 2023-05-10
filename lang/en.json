@@ -424,7 +424,8 @@
             "summary": "Summary",
             "prerequisite": "Prerequisites",
             "cost": "EXP Cost",
-            "type": "Type"
+            "type": "Type",
+            "newItem": "New Ability"
         },
         "armorSheet": {
             "name": "Name",
@@ -471,7 +472,8 @@
                 "armor": "Armor Details",
                 "variant": "Variant Details",
                 "other": "Notes"
-            }
+            },
+            "newItem": "New Armor"
         },
         "educationSheet": {
             "name": "Name",
@@ -494,7 +496,8 @@
                 "restricted": "Restricted",
                 "dimensional": "Dimensional"
             },
-            "skills": "Applicable Skills"
+            "skills": "Applicable Skills",
+            "newItem": "New Education"
         },
         "equipmentSheet": {
             "name": "Name",
@@ -509,7 +512,8 @@
             "selfSupported": "Self-Supporting?",
             "hasShields": "Shields?",
             "hasStats": "Characteristics?",
-            "notes": "Notes"
+            "notes": "Notes",
+            "newItem": "New Equipment"
         },
         "skillSheet": {
             "stats": "Characteristics",
@@ -746,7 +750,8 @@
                     "field": "Single Use",
                     "description": "Given to explosives that can only be used once, such as grenades."
                 }
-            }
+            },
+            "newItem": "New Weapon"
         },
         "trainings": {
             "equipment": {

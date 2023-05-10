@@ -48,6 +48,7 @@
   * The shields section does not cover shield-granting armor - that is still managed in the same place it was previously, though it has now been renamed to "Energy Shields."
 * Thrown weapons can now control their grip quality from the summary.
 * Chat messages generated from the sheet use the selected message visibility.
+* Items can now be created directly on Actor sheets.
 
 ## Bug Fixes
 

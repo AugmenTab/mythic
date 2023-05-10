@@ -75,6 +75,27 @@ export function calculateWeaponValues(weaponData) {
 }
 
 /**
+ * Builds the minimum complete definition of an Item's system data for Items
+ * generated directly from an Actor sheet, based on the Item type and optionally
+ * its "subtype" - that is, its type within the system data.
+ *
+ * @param {string} type - A string representation of the Item type.
+ * @param {string} subtype - A nullable string representation of the Item's
+ * system data type.
+ * @returns {ItemData} The minimal complete definition of the ItemData.
+ */
+export function generateBaseItemData(type, subtype) {
+  switch (type) {
+    case "ability":   return { "type": subtype};
+    case "armor":     return {};
+    case "education": return { "type": "biological", "difficulty": "basic" };
+    case "equipment": return {};
+    case "weapon":    return {};
+    default:          return {};
+  }
+}
+
+/**
  * Get the characteristic modifier for a given characteristic score.
  *
  * @param {number} score - The characteristic score.
@@ -88,6 +109,7 @@ export function getCharacteristicModifier(score) {
  * Process current magazine and ammo pool values for a weapon upon reloading.
  *
  * @param {ItemData} weaponData - The Weapon Item data.
+ * @returns {ItemData} The modified Weapon Item data.
  */
 export function handleReloadMagCount(weaponData) {
   const currentAmmo = weaponData.currentAmmo;

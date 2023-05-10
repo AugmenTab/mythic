@@ -4,19 +4,33 @@
       <tr>
         {{#if actor.system.educations.unlimited}}
           <th colspan="6">
-            {{localize "mythic.characterEducations.title"}}
-            &nbsp;&nbsp;
-            <a class="postable-details" data-roll="educations">
-              <i class="clickable fas fa-dice-d20"></i>
-            </a>
+            <div class="add-item-header">
+              <div>
+                {{localize "mythic.characterEducations.title"}}
+                &nbsp;&nbsp;
+                <a class="postable-details" data-roll="educations">
+                  <i class="clickable fas fa-dice-d20"></i>
+                </a>
+              </div>
+              <a class="item-create" data-item-type="education">
+                <i class="clickable fa-solid fa-plus"></i>
+              </a>
+            </div>
           </th>
         {{else}}
           <th colspan="5">
-            {{localize "mythic.characterEducations.title"}}
-            &nbsp;&nbsp;
-            <a class="postable-details" data-roll="educations">
-              <i class="clickable fas fa-dice-d20"></i>
-            </a>
+            <div class="add-item-header">
+              <div>
+                {{localize "mythic.characterEducations.title"}}
+                &nbsp;&nbsp;
+                <a class="postable-details" data-roll="educations">
+                  <i class="clickable fas fa-dice-d20"></i>
+                </a>
+              </div>
+              <a class="item-create" data-item-type="education">
+                <i class="clickable fa-solid fa-plus"></i>
+              </a>
+            </div>
           </th>
           <th>
             <b style="{{actor.system.educations.style}}">{{actor.system.educations.value}}</b>

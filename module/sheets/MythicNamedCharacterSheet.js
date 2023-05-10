@@ -98,6 +98,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".exp-delete").click(this._onExpDelete.bind(this));
     html.find(".exp-edit").change(this._onExpEdit.bind(this));
     html.find(".exp-submit").keyup(this._onExpSubmit.bind(this));
+    html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
@@ -198,6 +199,19 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     }
     system.trainings.languages = [...langs];
     await this.actor.update({ "system": system });
+  }
+
+  async _onItemCreate(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const itemType = element.getAttribute("data-item-type");
+    const itemSubtype = element.getAttribute("data-item-subtype");
+
+    await Item.create({
+      name: localize(`mythic.${itemType}Sheet.newItem`),
+      type: itemType,
+      system: Calc.generateBaseItemData(itemType, itemSubtype)
+    }, { parent: this.actor });
   }
 
   async _onItemDelete(event) {
