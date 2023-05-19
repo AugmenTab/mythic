@@ -20,19 +20,19 @@ const CHARACTERISTICS = {
 };
 
 const SIZE_DAMAGE_BONUS = {
-  "mini": -2,
-  "small": 0,
-  "normal": 0,
-  "large": 2,
-  "huge": 3,
-  "hulking": 4,
-  "giant": 5,
-  "immense": 6,
-  "massive": 8,
-  "great": 10,
+  "mini":       -3,
+  "small":      -1,
+  "normal":      0,
+  "large":       2,
+  "huge":        3,
+  "hulking":     4,
+  "giant":       5,
+  "immense":     6,
+  "massive":     8,
+  "great":      10,
   "monumental": 15,
-  "colossal": 20,
-  "vast": 30
+  "colossal":   20,
+  "vast":       30
 };
 
 /**

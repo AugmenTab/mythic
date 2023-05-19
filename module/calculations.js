@@ -6,19 +6,19 @@ import { makeUIError, makeUIWarning } from "./common.js";
 const GRANTS_CHARACTERISTICS = [ "armor", "equipment", "weapon" ];
 
 const MELEE_REACH_SIZE_BONUS = {
-  "mini": 0,
-  "small": 1,
-  "normal": 1,
-  "large": 2,
-  "huge": 3,
-  "hulking": 4,
-  "giant": 5,
-  "immense": 6,
-  "massive": 8,
-  "great": 10,
-  "monumental": 20,
-  "colossal": 50,
-  "vast": 100
+  "mini":        0,
+  "small":       1,
+  "normal":      1,
+  "large":       2,
+  "huge":        3,
+  "hulking":     3,
+  "giant":       4,
+  "immense":     4,
+  "massive":     5,
+  "great":       6,
+  "monumental":  7,
+  "colossal":   10,
+  "vast":       25
 };
 
 const PHYSICAL_SKILLS = new Set([
