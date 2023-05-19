@@ -219,27 +219,6 @@ function calculateRangeEffects(actor, weapon, distanceFromTarget) {
       break;
 
     case "ranged":
-      if (ammo.special.longBarrel.has && 3 >= distanceFromTarget) {
-        return {
-          target: actor.system.trainings.weapons.quickscope ? -5 : -10,
-          pierce: "full",
-          damage: spread ? "2D10" : "0"
-        };
-      }
-
-      if (ammo.special.longBarrel.has && 10 >= distanceFromTarget) {
-        return {
-          target: actor.system.trainings.weapons.quickscope ? -5 : -10,
-          pierce: "full",
-          damage: spread ? "1D10" : "0"
-        };
-      }
-
-      if (ammo.special.longBarrel.has && ammo.range.close >= distanceFromTarget) {
-        return { target: 0, pierce: "full", damage: spread ? "1D10" : "0" };
-      }
-
-
       if (ammo.range.close >= 3 && 3 >= distanceFromTarget) {
         return { target: 20, pierce: "full", damage: spread ? "2D10" : "0" };
       }
