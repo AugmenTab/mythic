@@ -296,7 +296,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
 
   async _onShieldItemRechargeAll(event) {
     event.preventDefault();
-    await this.actor.items.filter(i => i.type !== "armor" && i.system.weight.equipped).forEach(async item => {
+    console.log(this.actor);
+    await this.actor.items.filter(Calc.isNonArmorShieldItem).forEach(async item => {
       const shields = item.system.shields;
       const val = shields.integrity.current + shields.recharge.total;
       await item.update({
