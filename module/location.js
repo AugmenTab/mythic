@@ -48,11 +48,11 @@ async function determineHitLocationVehicle(key) {
 
 async function determineHitOrgan() {
   function findOrgan(key) {
-    if (key >= 8) return "liver";
-    if (key >= 4) return "kidney";
+    if (key >= 5) return "liver";
+    if (key >= 3) return "kidney";
     if (key >= 1) return "stomach";
   }
-  const roll = await new Roll("1D10").roll({ async: true });
+  const roll = await new Roll("1D6").roll({ async: true });
   return localize(`mythic.hitLocations.organ.${findOrgan(roll.total)}`);
 }
 
@@ -104,16 +104,16 @@ async function determineHitSublocation(key, root) {
   if (key >= 11) return localize(`${root}.arm.hand`);
 
   // Head
-  if (key >= 10) return localize(`${root}.head.forehead`);
-  if (key >= 9) {
+  if (key >= 9) return localize(`${root}.head.forehead`);
+  if (key >= 8) {
     const side = await determineHitSide();
     return `${side} ${localize(`${root}.head.ear`)}`;
   }
-  if (key >= 8) {
+  if (key >= 7) {
     const side = await determineHitSide();
     return `${side} ${localize(`${root}.head.eye`)}`;
   }
-  if (key >= 6) return localize(`${root}.head.nose`);
+  if (key >= 5) return localize(`${root}.head.nose`);
   if (key >= 3) return localize(`${root}.head.mouth`);
   if (key >= 1) return localize(`${root}.head.neck`);
 }
