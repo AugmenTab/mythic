@@ -85,12 +85,13 @@ export function calculateWeaponValues(weaponData) {
  * @returns {ItemData} The minimal complete definition of the ItemData.
  */
 export function generateBaseItemData(type, subtype) {
+  const trainings = { "faction": "unsc", "equipment": "basic" };
   switch (type) {
     case "ability":   return { "type": subtype};
-    case "armor":     return {};
+    case "armor":     return { "trainings.faction": "unsc", "size": "mini" };
     case "education": return { "type": "biological", "difficulty": "basic" };
-    case "equipment": return {};
-    case "weapon":    return {};
+    case "equipment": return { "trainings.faction": "unsc" };
+    case "weapon":    return { "ammoGroup": "none", trainings };
     default:          return {};
   }
 }
