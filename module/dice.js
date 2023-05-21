@@ -623,7 +623,7 @@ async function scatterAttack(weapon, data) {
 
     const dice = await new Roll(`${mod > 1 ? mod : 1}D10`).roll({ async: true });
     const distance = weapon.system.attack.fireMode === "thrown"
-                   ? Math.min(dice.total, thrownRange)
+                   ? Math.min(Math.floor(dice.total / 2), thrownRange)
                    : dice.total;
 
     msg += `${Chat.getScatterArrow(direction.total)} ${distance} m`;
