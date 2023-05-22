@@ -7,7 +7,7 @@ module Data.Types.Prelude
   , Attack, emptyAttack
   , Barrel
   , EquipmentTraining(..)
-  , Faction(..), factions, factionText
+  , Faction(..), factions, factionFromText, factionText
   , FactionTraining
   , FirearmType
   , FireMode(..), fireModeFromText
@@ -287,6 +287,15 @@ factions =
   , Banished
   , Forerunner
   ]
+
+factionFromText :: T.Text -> Either T.Text Faction
+factionFromText txt =
+  case txt of
+    "UNSC"       -> Right UNSC
+    "Covenant"   -> Right Covenant
+    "Banished"   -> Right Banished
+    "Forerunner" -> Right Forerunner
+    _            -> Left $ "Unknown Faction " <> txt <> "."
 
 factionText :: Faction -> T.Text
 factionText faction =

@@ -24,6 +24,7 @@ data RawData
 data RawArmor =
   RawArmor
     { rawArmorName        :: T.Text
+    , rawArmorFaction     :: T.Text
     , rawArmorHead        :: Int
     , rawArmorArms        :: Int
     , rawArmorChest       :: Int
@@ -40,6 +41,7 @@ data RawArmor =
 instance CSV.FromNamedRecord RawArmor where
   parseNamedRecord a =
     RawArmor <$> a .: "Name"
+             <*> a .: "COMP_faction"
              <*> a .: "COMP_armor_head"
              <*> a .: "COMP_armor_arms"
              <*> a .: "COMP_armor_chest"
@@ -55,6 +57,7 @@ instance CSV.FromNamedRecord RawArmor where
 data RawEquipment =
   RawEquipment
     { rawEquipmentName        :: T.Text
+    , rawEquipmentFaction     :: T.Text
     , rawEquipmentField       :: T.Text
     , rawEquipmentDescription :: T.Text
     , rawEquipmentWeight      :: Double
@@ -64,6 +67,7 @@ data RawEquipment =
 instance CSV.FromNamedRecord RawEquipment where
   parseNamedRecord e =
     RawEquipment <$> e .: "Name"
+                 <*> e .: "COMP_faction"
                  <*> e .: "COMP_field"
                  <*> e .: "COMP_description"
                  <*> (defaultZero <$> e .: "COMP_weight")
@@ -72,6 +76,7 @@ instance CSV.FromNamedRecord RawEquipment where
 data RawMeleeWeapon =
   RawMeleeWeapon
     { rawMeleeName         :: T.Text
+    , rawMeleeFaction      :: T.Text
     , rawMeleeType         :: T.Text
     , rawMeleeAttr         :: T.Text
     , rawMeleeRange        :: Int
@@ -91,6 +96,7 @@ data RawMeleeWeapon =
 instance CSV.FromNamedRecord RawMeleeWeapon where
   parseNamedRecord m =
     RawMeleeWeapon <$> m .: "Name"
+                   <*> m .: "COMP_faction"
                    <*> m .: "COMP_type"
                    <*> m .: "COMP_atribute"
                    <*> m .: "COMP_range"
@@ -109,6 +115,7 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
 data RawRangedWeapon =
   RawRangedWeapon
     { rawRangedName         :: T.Text
+    , rawRangedFaction      :: T.Text
     , rawRangedType         :: T.Text
     , rawRangedAttr         :: T.Text
     , rawRangedRange        :: T.Text
@@ -128,6 +135,7 @@ data RawRangedWeapon =
 instance CSV.FromNamedRecord RawRangedWeapon where
   parseNamedRecord r =
     RawRangedWeapon <$> r .: "Name"
+                    <*> r .: "COMP_faction"
                     <*> r .: "COMP_type"
                     <*> r .: "COMP_atribute"
                     <*> r .: "COMP_range"

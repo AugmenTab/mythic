@@ -6,7 +6,6 @@ import           Flipstone.Prelude
 import           Data.Types
 import qualified Domain.Convert as Convert
 import qualified Domain.Persist as Persist
-import qualified Domain.Prepare as Prepare
 import qualified Domain.Request as Request
 
 import qualified Control.Concurrent.Async as Async
@@ -35,11 +34,11 @@ main = do
           resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
 
           IO.putStrLn $ "Converting " <> subjectTxt <> "..."
-          let results = Request.responseContent resp subject
-                    >>= Prepare.prepareSheet subject
-                    >>= Convert.ingestRaw subject
-                    >>= Convert.toFoundry
-                    >>= pure . Convert.toCompendium
+          let results =
+                pure . Convert.toCompendium
+                  =<< Convert.toFoundry
+                  =<< Convert.ingestRaw subject
+                  =<< Request.responseContent resp subject
 
           case results of
             Left  errMsg -> Exit.die $ T.unpack errMsg

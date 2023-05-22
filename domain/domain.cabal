@@ -37,7 +37,6 @@ library
       Domain.Helpers
       Domain.JSON
       Domain.Persist
-      Domain.Prepare
       Domain.Request
   other-modules:
       Paths_domain
