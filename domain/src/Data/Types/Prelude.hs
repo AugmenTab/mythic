@@ -280,6 +280,9 @@ data Faction
   | Forerunner
   deriving stock (Eq, Ord, Show)
 
+instance ToJSON Faction where
+  toJSON = toJSON . factionText
+
 factions :: [Faction]
 factions =
   [ UNSC

@@ -24,10 +24,14 @@ toFoundry = Map.traverseWithKey mkFoundry
 mkFoundry :: CompendiumData -> [RawData] -> Either T.Text [FoundryData]
 mkFoundry (faction, _) rawData = for rawData $ \raw ->
   case raw of
-    ArmorData     _ -> Left "Not yet implemented" -- TODO: mkArmor     faction a
+    ArmorData     a -> mkArmor     faction a
     EquipmentData e -> mkEquipment faction e
     MeleeData     m -> mkMelee     faction m
     RangedData    r -> mkRanged    faction r
+
+mkArmor :: Faction -> RawArmor -> Either T.Text FoundryData
+mkArmor _ _ =
+  Left "Not yet implemeted"
 
 mkEquipment :: Faction -> RawEquipment -> Either T.Text FoundryData
 mkEquipment faction raw = Right $ FoundryEquipment $
@@ -43,6 +47,7 @@ mkEquipment faction raw = Right $ FoundryEquipment $
 
    in Equipment
         { equipmentName        = mkName $ rawEquipmentName raw
+        , equipmentFaction     = faction
         , equipmentPrice       = mkItemPrice $ rawEquipmentPrice raw
         , equipmentBreakpoints = mkBreakpoints 0
         , equipmentTrainings   = mkItemTrainings faction Nothing
@@ -93,7 +98,7 @@ mkMelee faction raw = Right $ FoundryWeapon $
 
    in Weapon
         { weaponName        = mkName $ rawMeleeName raw
-        , weaponFaction     = factionText faction
+        , weaponFaction     = faction
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawMeleePrice raw
         , weaponBreakpoints = mkBreakpoints 0
@@ -123,7 +128,8 @@ mkMelee faction raw = Right $ FoundryWeapon $
 
 mkRanged :: Faction -> RawRangedWeapon -> Either T.Text FoundryData
 mkRanged faction raw = Right $ FoundryWeapon $
-  let weaponType = rawRangedType raw
+  let (name, nickname) = mkNameAndNickname $ rawRangedName raw
+      weaponType = rawRangedType raw
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       weight =
         Weight
@@ -163,8 +169,8 @@ mkRanged faction raw = Right $ FoundryWeapon $
           $ rawRangedReload raw
 
    in Weapon
-        { weaponName        = mkName $ rawRangedName raw
-        , weaponFaction     = factionText faction
+        { weaponName        = name
+        , weaponFaction     = faction
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawRangedPrice raw
         , weaponBreakpoints = mkBreakpoints 0
@@ -175,7 +181,7 @@ mkRanged faction raw = Right $ FoundryWeapon $
         , weaponFireModes   = mkFireModeMap $ rawRangedROF raw
         , weaponAttack      = emptyAttack
         , weaponReload      = reload
-        , weaponNickname    = Nothing
+        , weaponNickname    = nickname
         , weaponType        = WeaponType weaponType
         , weaponMagCap      = mkMagazineCapacity $ rawRangedMagazine raw
         , weaponAmmo        = mkAmmo ""
@@ -326,6 +332,31 @@ mkMeleeSTDAmmo raw specials =
           , ammunitionDescription  = mkDescription ""
           , ammunitionSpecials     = specials
           }
+
+mkNameAndNickname :: T.Text -> (Name, Maybe Name)
+mkNameAndNickname txt =
+  -- It is unfortunate that we have to use the partial `T.splitOn` here, but
+  -- some weapon names naturally contain a hyphen so we can't rely on any one
+  -- specific character for delimiting the weapon name. However, since
+  -- `T.splitOn` raising an exception would mean the name itself is empty, it's
+  -- acceptable that the program would crash on an uncaught exception here
+  -- since we should never accept an empty value for the weapon name.
+  let prepare =
+        L.unsnoc
+          . fmap (T.strip . T.filter (/= '\"'))
+          . L.filter (not . T.null)
+          . T.splitOn " - "
+
+   in case prepare txt of
+        Just (name, nick)
+          | L.null name ->
+            (mkName nick, Nothing)
+
+          | otherwise ->
+            (mkName $ T.intercalate " - " name, Just $ mkName nick)
+
+        Nothing ->
+          (mkName txt, Nothing)
 
 mkRangedSTDAmmo :: RawRangedWeapon -> SpecialRules -> AmmoList
 mkRangedSTDAmmo raw specials =

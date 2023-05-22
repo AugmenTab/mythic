@@ -39,7 +39,7 @@ data Armor =
   Armor
     { armorName        :: Name
     , armorVariant     :: Name
-    , armorFaction     :: T.Text
+    , armorFaction     :: Faction
     , armorDescription :: Description
     , armorPrice       :: ItemPrice
     , armorBreakpoints :: Breakpoints
@@ -80,6 +80,7 @@ instance ToJSON Armor where
 data Equipment =
   Equipment
     { equipmentName            :: Name
+    , equipmentFaction         :: Faction
     , equipmentPrice           :: ItemPrice
     , equipmentBreakpoints     :: Breakpoints
     , equipmentTrainings       :: ItemTrainings
@@ -110,7 +111,7 @@ instance ToJSON Equipment where
 data Weapon =
   Weapon
     { weaponName            :: Name
-    , weaponFaction         :: T.Text
+    , weaponFaction         :: Faction
     , weaponDescription     :: Description
     , weaponPrice           :: ItemPrice
     , weaponBreakpoints     :: Breakpoints
