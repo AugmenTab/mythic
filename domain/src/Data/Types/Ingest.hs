@@ -58,7 +58,6 @@ data RawEquipment =
   RawEquipment
     { rawEquipmentName        :: T.Text
     , rawEquipmentFaction     :: T.Text
-    , rawEquipmentField       :: T.Text
     , rawEquipmentDescription :: T.Text
     , rawEquipmentWeight      :: Double
     , rawEquipmentPrice       :: Int
@@ -68,7 +67,6 @@ instance CSV.FromNamedRecord RawEquipment where
   parseNamedRecord e =
     RawEquipment <$> e .: "Name"
                  <*> e .: "COMP_faction"
-                 <*> e .: "COMP_field"
                  <*> e .: "COMP_description"
                  <*> (defaultZero <$> e .: "COMP_weight")
                  <*> e .: "COMP_price"
