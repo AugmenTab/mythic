@@ -11,6 +11,7 @@ import MythicItemSheet from "./module/sheets/MythicItemSheet.js";
 import MythicBestiaryCharacterSheet from "./module/sheets/MythicBestiaryCharacterSheet.js";
 import MythicFloodCharacterSheet from "./module/sheets/MythicFloodCharacterSheet.js";
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
+import MythicVehicleSheet from "./module/sheets/MythicVehicleSheet.js";
 
 /**
  * Loads all registered Handlebars partials.
@@ -192,6 +193,7 @@ Hooks.once("init", function() {
   Actors.registerSheet("mythic", MythicBestiaryCharacterSheet, { types: ["Bestiary Character"], makeDefault: true });
   Actors.registerSheet("mythic", MythicFloodCharacterSheet, { types: ["Flood"], makeDefault: true });
   Actors.registerSheet("mythic", MythicNamedCharacterSheet, { types: ["Named Character"], makeDefault: true });
+  Actors.registerSheet("mythic", MythicVehicleSheet, { types: ["Vehicle"], makeDefault: true });
 
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("mythic", MythicItemSheet, { makeDefault: true });
