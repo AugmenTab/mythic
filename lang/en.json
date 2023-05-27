@@ -27,6 +27,18 @@
             "gender": "Gender",
             "swarm": "Swarm"
         },
+        "vehicleDetails": {
+            "name": "Name",
+            "faction": "Faction",
+            "designation": "Designation",
+            "variant": "Variant",
+            "length": "Length (m)",
+            "width": "Width (m)",
+            "height": "Height (m)",
+            "weight": "Weight (t)",
+            "price": "Price (cR)",
+            "experience": "Combat Experience"
+        },
         "characteristics": {
             "str": "Strength",
             "tou": "Toughness",
@@ -599,6 +611,13 @@
             "monumental": "Monumental",
             "colossal": "Colossal",
             "vast": "Vast"
+        },
+        "vehicleSheet": {
+            "types": {
+                "ground": "Ground",
+                "air": "Air",
+                "space": "Space"
+            }
         },
         "weaponSheet": {
             "name": "Name",

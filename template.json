@@ -1014,9 +1014,12 @@
         "Vehicle": {
             "templates": [],
             "designation": "",
+            "faction": "",
+            "factionTraining": "unsc",
             "variant": "",
             "price": 0,
             "experience": 0,
+            "vehicleType": "ground",
             "dimensions": {
               "length": 0,
               "width": 0,

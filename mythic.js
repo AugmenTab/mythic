@@ -45,6 +45,8 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/flood-settings.hbs",
     "systems/mythic/templates/partials/flood-stat-block.hbs",
     "systems/mythic/templates/partials/shields.hbs",
+    "systems/mythic/templates/partials/vehicle-details.hbs",
+    "systems/mythic/templates/partials/vehicle-sheet-summary.hbs",
     "systems/mythic/templates/partials/weapon-sheet-info.hbs",
     "systems/mythic/templates/partials/weapon-sheet-settings.hbs"
   ];

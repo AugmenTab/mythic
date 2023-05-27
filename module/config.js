@@ -402,3 +402,9 @@ mythic.armorHardpoints = {
   arm: 3,
   leg: 3
 }
+
+mythic.vehicleTypes = {
+  ground: "mythic.vehicleSheet.types.ground",
+  air: "mythic.vehicleSheet.types.air",
+  space: "mythic.vehicleSheet.types.space"
+}

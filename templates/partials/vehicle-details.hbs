@@ -1,0 +1,125 @@
+<div class="vehicle-details">
+  <img
+    src="{{actor.img}}"
+    data-edit="img"
+    title="{{actor.name}}"
+  />
+  <div class="vehicle-info">
+    <div class="vehicle-identity">
+      <h1 id="name">
+        <input
+          name="name"
+          type="text"
+          value="{{actor.name}}"
+          placeholder="{{localize "mythic.characterDetails.name"}}"
+          onfocus="this.select()"
+        />
+      </h1>
+      <h1 id="faction">
+        <input
+          name="system.faction"
+          type="text"
+          value="{{system.faction}}"
+          placeholder="{{localize "mythic.characterDetails.faction"}}"
+          onfocus="this.select()"
+        />
+      </h1>
+    </div>
+    <div class="vehicle-taxonomy">
+      <p style="grid-column: span 3">
+        <input
+          name="system.designation"
+          type="text"
+          value="{{system.designation}}"
+          placeholder="{{localize "mythic.vehicleDetails.designation"}}"
+          onfocus="this.select()"
+        />
+      </p>
+      <p style="grid-column: span 2">
+        <input
+          name="system.variant"
+          type="text"
+          value="{{system.variant}}"
+          placeholder="{{localize "mythic.vehicleDetails.variant"}}"
+          onfocus="this.select()"
+        />
+      </p>
+    </div>
+    <div class="vehicle-physical">
+      <select name="system.factionTraining">
+        {{#select system.factionTraining}}
+          {{#each config.trainings.factions as |value key|}}
+            <option value="{{key}}">{{localize value}}</option>
+          {{/each}}
+        {{/select}}
+      </select>
+      <p>
+        <input
+          name="system.price"
+          type="number"
+          data-dtype="Number"
+          value="{{system.price}}"
+          placeholder="{{localize "mythic.vehicleDetails.price"}}"
+          onfocus="this.select()"
+        />
+      </p>
+      <p>
+        <input
+          name="system.experience"
+          type="number"
+          data-dtype="Number"
+          value="{{system.experience}}"
+          placeholder="{{localize "mythic.vehicleDetails.experience"}}"
+          onfocus="this.select()"
+        />
+      </p>
+      <select name="system.vehicleType">
+        {{#select system.vehicleType}}
+          {{#each config.vehicleTypes as |value key|}}
+            <option value="{{key}}">{{localize value}}</option>
+          {{/each}}
+        {{/select}}
+      </select>
+      <p>
+        <input
+          name="system.dimensions.length"
+          type="number"
+          data-dtype="Number"
+          value="{{system.dimensions.length}}"
+          placeholder="{{localize "mythic.vehicleDetails.length"}}"
+          onfocus="this.select()"
+        />
+      </p>
+      <p>
+        <input
+          name="system.dimensions.width"
+          type="number"
+          data-dtype="Number"
+          value="{{system.dimensions.width}}"
+          placeholder="{{localize "mythic.vehicleDetails.width"}}"
+          onfocus="this.select()"
+        />
+      </p>
+      <p>
+        <input
+          name="system.dimensions.height"
+          type="number"
+          data-dtype="Number"
+          value="{{system.dimensions.height}}"
+          placeholder="{{localize "mythic.vehicleDetails.height"}}"
+          onfocus="this.select()"
+        />
+      </p>
+      <p>
+        <input
+          name="system.dimensions.weight"
+          type="number"
+          data-dtype="Number"
+          value="{{system.dimensions.weight}}"
+          placeholder="{{localize "mythic.vehicleDetails.weight"}}"
+          onfocus="this.select()"
+        />
+      </p>
+    </div>
+  </div>
+</div>
