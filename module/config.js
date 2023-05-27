@@ -393,6 +393,19 @@ mythic.specialRules = {
     tearGas: "none",
     tranquilize: "number",
     vehicleLock: "none",
+  },
+  vehicles: {
+    allTerrain: "none",
+    antiGrav: "none",
+    autoloader: "none",
+    boost: "number",
+    continuousTrack: "none",
+    enclosedTop: "none",
+    heavyPlating: "none",
+    neuralInterface: "none",
+    openTop: "none",
+    slipspace: "none",
+    walkerStomp: "none"
   }
 }
 

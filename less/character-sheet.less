@@ -524,4 +524,146 @@
       text-align: center;
     }
   }
+
+  .vehicle-summary {
+    display: grid;
+    grid-template-columns: 175px 2fr;
+    column-gap: 8px;
+
+    .armor-and-shields {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      column-gap: 8px;
+    }
+
+    .vehicle-special-rules {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 10px;
+
+      span {
+        display: grid;
+        grid-template-columns: 30px auto 45px;
+        text-align: left;
+        align-items: center;
+
+        input[type="number"] {
+          text-align: center;
+        }
+      }
+    }
+
+    .vehicle-dash {
+      display: grid;
+      grid-template-rows: repeat(2, auto);
+      row-gap: 4px;
+      place-items: center;
+      font-size: 1.25em;
+
+      .speed-current-value {
+        display: grid;
+        grid-template-columns: 15px 1fr 15px;
+        width: 90%;
+        place-items: center;
+      }
+
+      .gauge {
+        display: inline-block;
+        position: relative;
+
+        .dial {
+          display: inline-block;
+          background: #222222;
+          width: 140px;
+          height: 70px;
+          border-top-left-radius: 125px;
+          border-top-right-radius: 125px;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
+
+        .band {
+          border-top: 4px solid green;
+          border-left: 4px solid green;
+          border-right: 4px solid red;
+        }
+
+        .tick {
+          display: inline-block;
+          width: 2px;
+          height: 60px;
+          background: none;
+          border-top: 3px solid #d0d0d0;
+          border-radius: 1px;
+          left: calc(50% - 1px);
+          top: 8px;
+          position: absolute;
+          transform-origin: bottom center;
+        }
+
+        .tick:nth-of-type(2n) {
+          border-top: 7px solid #d0d0d0;
+          width: 3px;
+        }
+
+        each(range(24), {
+          .tick-speedo:nth-of-type(@{value}) {
+            transform: rotate(-104deg + (@value * 8));
+          }
+        });
+
+        each(range(10), {
+          .tick-fuel:nth-of-type(@{value}) {
+            transform: rotate(-90deg + (@value * 15));
+          }
+        });
+
+        .fuel-light {
+          display: inline-block;
+          height: 30px;
+          position: absolute;
+          left: calc(41%);
+          top: 25px;
+        }
+
+        .needle {
+          display: inline-block;
+          width: 3px;
+          height: 60px;
+          background: #999999;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+          border-top-left-radius: 200%;
+          border-top-right-radius: 200%;
+          left: calc(50% - 1px);
+          top: 8px;
+          position: absolute;
+          transform-origin: bottom;
+        }
+
+        .pushed {
+          animation: move 0.2s infinite;
+        }
+
+        @keyframes move {
+          0% {
+            transform: rotate(88deg);
+          }
+          100% {
+            transform: rotate(90deg);
+          }
+        }
+      }
+
+      .speed-conversion {
+        display: grid;
+        grid-template-columns: 30px 1fr 8px 1fr;
+        place-items: center;
+
+        span:first-of-type {
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }

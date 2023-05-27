@@ -1,6 +1,22 @@
 /** @module helpers */
 
 /**
+ * Determine a fuel or speedometer gauge needle rotation angle for transform
+ * property.
+ * @param {string} gauge - The gauge for which the angle is being calculated.
+ * @param {object} obj - The vehicle speed object.
+ * @returns {number} The angle of rotation for the gauge needle element.
+ */
+Handlebars.registerHelper("angle", function(gauge, obj) {
+  if (!obj) return 0;
+  const percent = obj.value / obj.max;
+  switch(gauge) {
+    case "fuel":  return ((percent > 1 ? 1 : percent) * 120) - 60;
+    case "speed": return ((percent > 1 ? 1 : percent) * 176) - 88;
+  }
+});
+
+/**
  * Register Handlebars helper to concatenate strings.
  *
  * @param {...string} arguments - The strings to be concatenated.

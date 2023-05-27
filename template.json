@@ -1041,7 +1041,7 @@
                 "current": 0,
                 "max": 0
               },
-              "topSpeed": {
+              "speed": {
                 "base": 0,
                 "current": 0,
                 "max": 0
@@ -1138,7 +1138,7 @@
               "heavyPlating": {
                 "has": false
               },
-              "neutralInterface": {
+              "neuralInterface": {
                 "has": false
               },
               "openTop": {

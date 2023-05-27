@@ -1,0 +1,100 @@
+{{!-- Speed Gauge --}}
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">CURRENT SPEED</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <div class="vehicle-dash">
+          <div class="speed-current-value">
+            <a><i class="fas fa-minus speed-change" data-operation="dec"></i></a>
+            <input
+              name="system.movement.speed.current"
+              style="width:75px"
+              type="number"
+              data-dtype="Number"
+              value="{{system.movement.speed.current}}"
+              onfocus="this.select()"
+            />
+            <a><i class="fas fa-plus speed-change" data-operation="inc"></i></a>
+          </div>
+          <div class="gauge" style="width:140px">
+            <span class="dial band"></span>
+            {{#times 24}}
+              <span class="tick tick-speedo"></span>
+            {{/times}}
+            <span
+              style="transform:rotate({{angle "speed" system.movement.speed.current}}deg)"
+              {{#if (gt system.movement.speed.current system.movement.speed.max)}}
+                class="needle pushed"
+              {{else}}
+                class="needle"
+              {{/if}}
+            ></span>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="speed-conversion">
+          <span>{{localnum system.movement.speed.current}}</span>
+          <span>/</span>
+          <span>{{localnum system.movement.speed.max}}</span>
+          <span>MPT</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div class="speed-conversion">
+          <span>{{localnum (doMath "*" 0.6 system.movement.speed.current)}}</span>
+          <span>/</span>
+          <span>{{localnum (doMath "*" 0.6 system.movement.speed.max)}}</span>
+          <span>KPH</span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>BRAKE</th>
+      <th>ACCELERATE</th>
+    <tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>900 MPT</td>
+      <td>1,000 MPT</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="2">MANEUVER</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <span>
+          <select>
+            <option>[P1]</option>
+            <option>[G1]</option>
+            <option>[C1]</option>
+          </select>
+          <button style="width:75px; margin: 0; display: inline; font-weight:bold">100</button>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button style="width:75px; margin: 0; display: inline; font-weight:bold">
+          <i class="fa-solid fa-car-burst" style="font-size: 2em"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

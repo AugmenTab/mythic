@@ -613,6 +613,19 @@
             "vast": "Vast"
         },
         "vehicleSheet": {
+            "special": {
+                "allTerrain": "All-Terrain",
+                "antiGrav": "Anti-Gravitational",
+                "autoloader": "Autoloader",
+                "boost": "Boost",
+                "continuousTrack": "Continuous Track",
+                "enclosedTop": "Enclosed Top",
+                "heavyPlating": "Heavy Plating",
+                "neuralInterface": "Neural Interface",
+                "openTop": "Open Top",
+                "slipspace": "Slipspace",
+                "walkerStomp": "Walker Stomp"
+            },
             "types": {
                 "ground": "Ground",
                 "air": "Air",
