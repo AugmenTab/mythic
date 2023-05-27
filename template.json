@@ -1012,9 +1012,152 @@
             }
         },
         "Vehicle": {
-            "templates": [
-                "bestiary"
-            ]
+            "templates": [],
+            "designation": "",
+            "variant": "",
+            "price": 0,
+            "experience": 0,
+            "dimensions": {
+              "length": 0,
+              "width": 0,
+              "height": 0,
+              "weight": 0
+            },
+            "characteristics": {
+              "str": 0,
+              "mythicStr": 0,
+              "agi": 0,
+              "mythicAgi": 0
+            },
+            "movement": {
+              "accelerate": {
+                "current": 0,
+                "max": 0
+              },
+              "brake": {
+                "current": 0,
+                "max": 0
+              },
+              "topSpeed": {
+                "base": 0,
+                "current": 0,
+                "max": 0
+              },
+              "maneuver": {
+                "base": 0,
+                "total": 0
+              }
+            },
+            "breakpoints": {
+              "wep": {
+                "has": false,
+                "current": 0,
+                "max": 0
+              },
+              "mob": {
+                "current": 0,
+                "max": 0
+              },
+              "eng": {
+                "current": 0,
+                "max": 0
+              },
+              "op": {
+                "current": 0,
+                "max": 0
+              },
+              "hull": {
+                "doom": "",
+                "current": 0,
+                "max": 0
+              }
+            },
+            "armor": {
+              "front": {
+                "current": 0,
+                "max": 0
+              },
+              "back": {
+                "current": 0,
+                "max": 0
+              },
+              "side": {
+                "current": 0,
+                "max": 0
+              },
+              "top": {
+                "current": 0,
+                "max": 0
+              },
+              "bottom": {
+                "current": 0,
+                "max": 0
+              }
+            },
+            "shields": {
+              "integrity": {
+                "current": 0,
+                "max": 0
+              },
+              "recharge": 0,
+              "delay": 0
+            },
+            "sizePoints": 0,
+            "weaponPoints": 0,
+            "crew": {
+              "operators": [],
+              "gunners": []
+            },
+            "complement": {
+              "active": [],
+              "passengers": 0
+            },
+            "special": {
+              "allTerrain": {
+                "has": false
+              },
+              "antiGrav": {
+                "has": false
+              },
+              "autoloader": {
+                "has": false
+              },
+              "boost": {
+                "has": false,
+                "value": 0
+              },
+              "continuousTrack": {
+                "has": false
+              },
+              "enclosedTop": {
+                "has": false
+              },
+              "heavyPlating": {
+                "has": false
+              },
+              "neutralInterface": {
+                "has": false
+              },
+              "openTop": {
+                "has": false
+              },
+              "slipspace": {
+                "has": false
+              },
+              "walkerStomp": {
+                "has": false
+              }
+            },
+            "propulsion": {
+              "type": "",
+              "current": 0,
+              "max": 0
+            },
+            "modifications": {
+              "mods": [],
+              "notes": ""
+            },
+            "notes": ""
         }
     },
     "Item": {
