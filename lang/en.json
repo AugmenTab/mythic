@@ -37,7 +37,7 @@
             "height": "Height (m)",
             "weight": "Weight (t)",
             "price": "Price (cR)",
-            "experience": "Combat Experience"
+            "experience": "Combat EXP"
         },
         "characteristics": {
             "str": "Strength",

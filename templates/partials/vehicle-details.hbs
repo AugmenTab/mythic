@@ -53,26 +53,30 @@
           {{/each}}
         {{/select}}
       </select>
-      <p>
+      <span class="offset-label">
+        <p>{{localize "mythic.vehicleDetails.price"}}</p>
         <input
           name="system.price"
+          style="width: 82px"
           type="number"
           data-dtype="Number"
+          placeholder="0"
           value="{{system.price}}"
-          placeholder="{{localize "mythic.vehicleDetails.price"}}"
           onfocus="this.select()"
         />
-      </p>
-      <p>
+      </span>
+      <span class="offset-label">
+        <p>{{localize "mythic.vehicleDetails.experience"}}</p>
         <input
           name="system.experience"
+          style="width: 67px"
           type="number"
           data-dtype="Number"
+          placeholder="0"
           value="{{system.experience}}"
-          placeholder="{{localize "mythic.vehicleDetails.experience"}}"
           onfocus="this.select()"
         />
-      </p>
+      </span>
       <select name="system.vehicleType">
         {{#select system.vehicleType}}
           {{#each config.vehicleTypes as |value key|}}
@@ -80,46 +84,54 @@
           {{/each}}
         {{/select}}
       </select>
-      <p>
+      <span class="offset-label">
+        <p>{{localize "mythic.vehicleDetails.length"}}</p>
         <input
           name="system.dimensions.length"
+          style="width: 75px"
           type="number"
           data-dtype="Number"
+          placeholder="0"
           value="{{system.dimensions.length}}"
-          placeholder="{{localize "mythic.vehicleDetails.length"}}"
           onfocus="this.select()"
         />
-      </p>
-      <p>
+      </span>
+      <span class="offset-label">
+        <p>{{localize "mythic.vehicleDetails.width"}}</p>
         <input
           name="system.dimensions.width"
+          style="width: 80px"
           type="number"
           data-dtype="Number"
+          placeholder="0"
           value="{{system.dimensions.width}}"
-          placeholder="{{localize "mythic.vehicleDetails.width"}}"
           onfocus="this.select()"
         />
-      </p>
-      <p>
+      </span>
+      <span class="offset-label">
+        <p>{{localize "mythic.vehicleDetails.height"}}</p>
         <input
           name="system.dimensions.height"
+          style="width: 76px"
           type="number"
           data-dtype="Number"
+          placeholder="0"
           value="{{system.dimensions.height}}"
-          placeholder="{{localize "mythic.vehicleDetails.height"}}"
           onfocus="this.select()"
         />
-      </p>
-      <p>
+      </span>
+      <span class="offset-label">
+        <p>{{localize "mythic.vehicleDetails.weight"}}</p>
         <input
           name="system.dimensions.weight"
+          style="width: 80px"
           type="number"
           data-dtype="Number"
+          placeholder="0"
           value="{{system.dimensions.weight}}"
-          placeholder="{{localize "mythic.vehicleDetails.weight"}}"
           onfocus="this.select()"
         />
-      </p>
+      </span>
     </div>
   </div>
 </div>

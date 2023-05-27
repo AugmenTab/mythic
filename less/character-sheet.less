@@ -55,7 +55,6 @@
     h1 input {
       margin-left: 0;
       margin-right: 0;
-      width: 100%;
     }
 
     img {
@@ -107,6 +106,24 @@
     .vehicle-info {
       display: grid;
       grid-template-rows: repeat(3, auto);
+
+      .offset-label {
+        border: 1px solid var(--color-border-light-tertiary);
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.05);
+        height: 27px;
+        padding: 4px;
+
+        p {
+          all: unset;
+          font-weight: bold;
+        }
+
+        input {
+          all: unset;
+          position: relative;
+        }
+      }
 
       .vehicle-identity {
         display: grid;
