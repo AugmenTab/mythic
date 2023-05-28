@@ -2,7 +2,7 @@
 <table>
   <thead>
     <tr>
-      <th colspan="2">CURRENT SPEED</th>
+      <th colspan="2">{{localize "mythic.vehicleSheet.movement.speed"}}</th>
     </tr>
   </thead>
   <tbody>
@@ -10,7 +10,9 @@
       <td colspan="2">
         <div class="vehicle-dash">
           <div class="speed-current-value">
-            <a><i class="fas fa-minus speed-change" data-operation="dec"></i></a>
+            <a>
+              <i class="fas fa-minus speed-change" data-operation="dec"></i>
+            </a>
             <input
               name="system.movement.speed.current"
               style="width:75px"
@@ -27,7 +29,7 @@
               <span class="tick tick-speedo"></span>
             {{/times}}
             <span
-              style="transform:rotate({{angle "speed" system.movement.speed.current}}deg)"
+              style="transform:rotate({{angle "speed" system.movement.speed}}deg)"
               {{#if (gt system.movement.speed.current system.movement.speed.max)}}
                 class="needle pushed"
               {{else}}
@@ -61,37 +63,47 @@
   </tbody>
   <thead>
     <tr>
-      <th>BRAKE</th>
-      <th>ACCELERATE</th>
+      <th>{{localize "mythic.vehicleSheet.movement.brake"}}</th>
+      <th>{{localize "mythic.vehicleSheet.movement.accelerate"}}</th>
     <tr>
   </thead>
   <tbody>
     <tr>
-      <td>900 MPT</td>
-      <td>1,000 MPT</td>
+      <td>{{localnum system.movement.brake.current}}&nbsp;MPT</td>
+      <td>{{localnum system.movement.accelerate.current}}&nbsp;MPT</td>
     </tr>
   </tbody>
   <thead>
     <tr>
-      <th colspan="2">MANEUVER</th>
+      <th colspan="2">{{localize "mythic.vehicleSheet.movement.maneuver"}}</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td colspan="2">
         <span>
-          <select>
-            <option>[P1]</option>
-            <option>[G1]</option>
-            <option>[C1]</option>
+          <select name="system.movement.maneuver.owner">
+            {{#select system.movement.maneuver.owner}}
+              {{#if system.crew.operators}}
+                {{#each system.crew.operators as |pilot|}}
+                  <option value="{{pilot.id}}">
+                    [P{{doMath "+" pilot.idx 1}}]
+                  </option>
+                {{/each}}
+              {{else}}
+                <option value="">--</option>
+              {{/if}}
+            {{/select}}
           </select>
-          <button style="width:75px; margin: 0; display: inline; font-weight:bold">100</button>
+          <button class="gauge-btn">
+            {{localnum system.movement.maneuver.total}}
+          </button>
         </span>
       </td>
     </tr>
     <tr>
       <td colspan="2">
-        <button style="width:75px; margin: 0; display: inline; font-weight:bold">
+        <button class="gauge-btn">
           <i class="fa-solid fa-car-burst" style="font-size: 2em"></i>
         </button>
       </td>

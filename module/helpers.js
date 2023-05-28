@@ -9,7 +9,7 @@
  */
 Handlebars.registerHelper("angle", function(gauge, obj) {
   if (!obj) return 0;
-  const percent = obj.value / obj.max;
+  const percent = obj.max > 0 ? obj.value / obj.max : 0;
   switch(gauge) {
     case "fuel":  return ((percent > 1 ? 1 : percent) * 120) - 60;
     case "speed": return ((percent > 1 ? 1 : percent) * 176) - 88;

@@ -1048,7 +1048,8 @@
               },
               "maneuver": {
                 "base": 0,
-                "total": 0
+                "total": 0,
+                "owner": ""
               }
             },
             "breakpoints": {
@@ -1109,7 +1110,11 @@
             "sizePoints": 0,
             "weaponPoints": 0,
             "crew": {
-              "operators": [],
+              "operators": [
+                "idx": 0,
+                "id": "",
+                "display": ""
+              ],
               "gunners": []
             },
             "complement": {

@@ -636,6 +636,12 @@
             "doom": {
                 "operational": "Vehicle is operational."
             },
+            "movement": {
+                "accelerate": "Accelerate",
+                "brake": "Brake",
+                "speed": "Current Speed",
+                "maneuver": "Maneuver"
+            },
             "special": {
                 "label": "Special Rules",
                 "allTerrain": "All-Terrain",
