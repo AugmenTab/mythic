@@ -87,16 +87,27 @@ Handlebars.registerHelper("cond", function(...var_args) {
  * @param {number} v2 - The second number to be operated on.
  * @returns {number} The result of the arithmetic operation.
  */
-Handlebars.registerHelper("doMath", function(operator, v1, v2) {
-  if (isNaN(v1)) throw new Error(`Argument "${v1}" is NaN.`);
-  if (isNaN(v2)) throw new Error(`Argument "${v1}" is NaN.`);
+Handlebars.registerHelper("doMath", function(...var_args) {
+  if (typeof(var_args.slice(-1)[0]) === "object") var_args.pop();
+  const operator = var_args[0];
+  return var_args.slice(1).map(_failIfNaN).reduce(_doMath);
 
-  switch (operator) {
-    case '+': return v1 + v2;
-    case '-': return v1 - v2;
-    case '*': return v1 * v2;
-    case '/': return v1 / v2;
-    default: throw new Error(`The '${operator}' operator is not recognized.`);
+  function _failIfNaN(n) {
+    if (isNaN(n)) {
+      throw new Error(`Argument ${n} is NaN`);
+    } else {
+      return n;
+    }
+  }
+
+  function _doMath(v1, v2) {
+    switch (operator) {
+      case '+': return v1 + v2;
+      case '-': return v1 - v2;
+      case '*': return v1 * v2;
+      case '/': return v1 / v2;
+      default: throw new Error(`The '${operator}' operator is not recognized.`);
+    }
   }
 });
 
