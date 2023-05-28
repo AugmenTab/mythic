@@ -1110,11 +1110,7 @@
             "sizePoints": 0,
             "weaponPoints": 0,
             "crew": {
-              "operators": [
-                "idx": 0,
-                "id": "",
-                "display": ""
-              ],
+              "operators": [],
               "gunners": []
             },
             "complement": {

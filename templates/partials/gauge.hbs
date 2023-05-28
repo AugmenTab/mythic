@@ -95,7 +95,13 @@
               {{/if}}
             {{/select}}
           </select>
-          <button class="gauge-btn">
+          <button
+            class="gauge-btn"
+            {{#if (eq system.movement.maneuver.total 0)}}
+              disabled="true"
+              aria-disabled="true"
+            {{/if}}
+          >
             {{localnum system.movement.maneuver.total}}
           </button>
         </span>
@@ -103,7 +109,13 @@
     </tr>
     <tr>
       <td colspan="2">
-        <button class="gauge-btn">
+        <button
+          class="gauge-btn"
+          {{#if (eq system.movement.speed.current 0)}}
+            disabled="true"
+            aria-disabled="true"
+          {{/if}}
+        >
           <i class="fa-solid fa-car-burst" style="font-size: 2em"></i>
         </button>
       </td>

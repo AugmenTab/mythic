@@ -633,6 +633,9 @@
                 "op": "OP",
                 "hull": "HULL"
             },
+            "crew": {
+                "none": "This vehicle has no roles defined."
+            },
             "doom": {
                 "operational": "Vehicle is operational."
             },
