@@ -4,6 +4,9 @@
     <a class="item" data-tab="summary">
       {{localize "mythic.characterNav.summary"}}
     </a>
+    <a class="item" data-tab="notes">
+      {{localize "mythic.characterNav.notes"}}
+    </a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -11,6 +14,11 @@
     {{!-- Summary Page: --}}
     <div class="tab" data-group="primary" data-tab="summary">
       {{> "systems/mythic/templates/partials/vehicle-sheet-summary.hbs"}}
+    </div>
+
+    {{!-- Notes Page: --}}
+    <div class="tab" data-group="primary" data-tab="notes">
+      {{> "systems/mythic/templates/partials/editor.hbs" content=system.notes target="system.notes" link="characterNav.notes"}}
     </div>
   </section>
 </form>
