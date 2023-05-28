@@ -2,29 +2,38 @@
   <table>
     <thead>
       <tr>
-        <th colspan="3">{{localize "mythic.characterWeaponSummary.title"}}</th>
-        <th>
-          <button
-            class="initiative rollable"
-            data-roll="{{system.initiative.formula}}"
-            data-label="initiative"
-          >
-            {{localize "mythic.characterWeaponSummary.initiative"}}:&nbsp;{{system.initiative.mods}}
-          </button>
-      </th>
-      <th colspan="3">
-        <button
-          class="evade"
-          name="{{localize "mythic.skillNames.evasion"}} ({{system.skills.evasion.characteristic}})"
-          value="{{system.skills.evasion.roll}}"
-        >
-          {{#if (eq system.skills.evasion.characteristic "AGI")}}
-            {{localize "mythic.skillNames.evasion"}}:&nbsp;{{system.skills.evasion.roll}}
+        <th
+          {{#if (eq actor.type "Vehicle")}}
+            colspan="7"
           {{else}}
-            {{localize "mythic.skillNames.parry"}}:&nbsp;{{system.skills.evasion.roll}}
-          {{/if}}
-        </button>
-      </th>
+            colspan="3"
+          {{/if}}>
+          {{localize "mythic.characterWeaponSummary.title"}}
+        </th>
+        {{#unless (eq actor.type "Vehicle")}}
+          <th>
+            <button
+              class="initiative rollable"
+              data-roll="{{system.initiative.formula}}"
+              data-label="initiative"
+            >
+              {{localize "mythic.characterWeaponSummary.initiative"}}:&nbsp;{{system.initiative.mods}}
+            </button>
+          </th>
+          <th colspan="3">
+            <button
+              class="evade"
+              name="{{localize "mythic.skillNames.evasion"}} ({{system.skills.evasion.characteristic}})"
+              value="{{system.skills.evasion.roll}}"
+            >
+              {{#if (eq system.skills.evasion.characteristic "AGI")}}
+                {{localize "mythic.skillNames.evasion"}}:&nbsp;{{system.skills.evasion.roll}}
+              {{else}}
+                {{localize "mythic.skillNames.parry"}}:&nbsp;{{system.skills.evasion.roll}}
+              {{/if}}
+            </button>
+          </th>
+        {{/unless}}
       <tr>
         <th>
           {{localize "mythic.characterWeaponSummary.name"}}&nbsp;({{localize "mythic.characterWeaponSummary.target"}})
@@ -47,14 +56,23 @@
                 <td>
                   <div class="weapon-name">
                   <img alt="{{weapon.name}}" src="{{weapon.img}}"/>
-                  <p>
-                    {{#unless weapon.system.nickname}}
-                    {{weapon.name}}
-                    {{else}}
-                    {{weapon.system.nickname}}
-                    {{/unless}}
-                    &nbsp;({{this.target}})
-                  </p>
+                  <div class="name-and-selectors">
+                    <div>
+                      {{#unless weapon.system.nickname}}
+                        <b>{{weapon.name}}</b>
+                      {{else}}
+                        <b>{weapon.system.nickname}}</b>
+                      {{/unless}}
+                      &nbsp;({{this.target}})
+                    </div>
+                    {{#if (eq actor.type "Vehicle")}}
+                      <select style="width: 50px">
+                        <option>[P1]</option>
+                        <option>[G1]</option>
+                        <option>[C1]</option>
+                      </select>
+                    {{/if}}
+                  </div>
                   <a class="item-edit" data-item-id="{{weapon._id}}">
                     <i class="clickable fas fa-edit"></i>
                   </a>

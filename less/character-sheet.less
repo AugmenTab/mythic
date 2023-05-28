@@ -231,7 +231,7 @@
 
   .weapon-name {
     display: inline-grid;
-    grid-template-columns: 3em auto 16px;
+    grid-template-columns: 3em 1fr 16px;
     column-gap: 8px;
     justify-items: start;
     align-items: center;
@@ -240,6 +240,24 @@
 
     img {
       height: 3em;
+    }
+
+    .name-and-selectors {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      column-gap: 8px;
+      width: 100%;
+      text-align: left;
+
+      div {
+        grid-column: span 2;
+        margin: 0.25em 0;
+      }
+
+      select {
+        font-size: 0.85em;
+        height: 22px;
+      }
     }
   }
 

@@ -18,8 +18,8 @@ export default class MythicVehicleSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "vehicle", "character"],
-      height: 745,
-      width: 800,
+      height: 765,
+      width: 820,
       tabs: [
         {
           navSelector: '.tabs',
