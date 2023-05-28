@@ -613,7 +613,31 @@
             "vast": "Vast"
         },
         "vehicleSheet": {
+            "core": {
+                "current": "Current",
+                "max": "Max"
+            },
+            "armor": {
+                "label": "Armor",
+                "front": "Front",
+                "back": "Back",
+                "side": "Side",
+                "top": "Top",
+                "bottom": "Bottom"
+            },
+            "breakpoints": {
+                "label": "Breakpoints",
+                "wep": "WEP",
+                "mob": "MOB",
+                "eng": "ENG",
+                "op": "OP",
+                "hull": "HULL"
+            },
+            "doom": {
+                "operational": "Vehicle is operational."
+            },
             "special": {
+                "label": "Special Rules",
                 "allTerrain": "All-Terrain",
                 "antiGrav": "Anti-Gravitational",
                 "autoloader": "Autoloader",

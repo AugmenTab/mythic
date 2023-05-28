@@ -1,67 +1,106 @@
-<div>
+<div class="vehicle-stat-block">
   {{!-- Break Points --}}
   <div>
     <table>
       <thead>
         <tr>
-          {{!-- if has wep then colspan 10 else colspan 8 --}}
-          <th colspan="10">BREAKPOINTS</th>
+          <th colspan="10">{{localize "mythic.vehicleSheet.breakpoints.label"}}</th>
         </tr>
         <tr>
-          {{!-- if has wep then display wep --}}
-          <th colspan="2">WEP</th>
-          <th colspan="2">MOB</th>
-          <th colspan="2">ENG</th>
-          <th colspan="2">OP</th>
-          <th colspan="2">HULL</th>
-        <tr>
+          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.wep"}}</th>
+          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.mob"}}</th>
+          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.eng"}}</th>
+          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.op"}}</th>
+          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.hull"}}</th>
+        </tr>
       </thead>
       <tbody>
         <tr>
-          {{!-- if has wep then display wep --}}
-          <td>Current</td>
+          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
+          {{#if system.breakpoints.wep.has}}
+            <td>
+              <input
+                name="system.breakpoints.wep.current"
+                type="number"
+                data-dtype="Number"
+                value="{{system.breakpoints.wep.current}}"
+                onfocus="this.select()"
+              />
+            </td>
+          {{else}}
+            <td>&lt;N/A&gt;</td>
+          {{/if}}
+          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
           <td>
-            <input class="padding:8px" style="width: 45px" type="text" />
+            <input
+              name="system.breakpoints.mob.current"
+              type="number"
+              data-dtype="Number"
+              value="{{system.breakpoints.mob.current}}"
+              onfocus="this.select()"
+            />
           </td>
-          <td>Current</td>
+          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
           <td>
-            <input class="padding:8px" style="width: 45px" type="text" />
+            <input
+              name="system.breakpoints.eng.current"
+              type="number"
+              data-dtype="Number"
+              value="{{system.breakpoints.eng.current}}"
+              onfocus="this.select()"
+            />
           </td>
-          <td>Current</td>
+          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
           <td>
-            <input class="padding:8px" style="width: 45px" type="text" />
+            <input
+              name="system.breakpoints.op.current"
+              type="number"
+              data-dtype="Number"
+              value="{{system.breakpoints.op.current}}"
+              onfocus="this.select()"
+            />
           </td>
-          <td>Current</td>
+          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
           <td>
-            <input class="padding:8px" style="width: 45px" type="text" />
-          </td>
-          <td>Current</td>
-          <td>
-            <input class="padding:8px" style="width: 45px" type="text" />
+            <input
+              name="system.breakpoints.hull.current"
+              type="number"
+              data-dtype="Number"
+              value="{{system.breakpoints.hull.current}}"
+              onfocus="this.select()"
+            />
           </td>
         </tr>
         <tr>
-          {{!-- if has wep then display wep --}}
-          <td>Max</td>
-          <td>1,000</td>
-          <td>Max</td>
-          <td>1,000</td>
-          <td>Max</td>
-          <td>1,000</td>
-          <td>Max</td>
-          <td>1,000</td>
-          <td>Max</td>
-          <td>1,000</td>
+          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
+          {{#if system.breakpoints.wep.has}}
+            <td>{{localnum system.breakpoints.wep.max}}</td>
+          {{else}}
+            <td>&lt;N/A&gt;</td>
+          {{/if}}
+          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
+          <td>{{localnum system.breakpoints.mob.max}}</td>
+          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
+          <td>{{localnum system.breakpoints.eng.max}}</td>
+          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
+          <td>{{localnum system.breakpoints.op.max}}</td>
+          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
+          <td>{{localnum system.breakpoints.hull.max}}</td>
         </tr>
         <tr>
-          {{!-- if has wep then colspan 8 else colspan 6 --}}
-          <td colspan="8">
-            <div style="text-align: left; padding: 4px">Doomed state text will go here</div>
+          <td colspan="9">
+            <div style="text-align: left; padding: 4px">
+              {{localize (concat "mythic.vehicleSheet.doom." system.breakpoints.hull.doom)}}
+            </div>
           </td>
-          <td colspan="2">
-            <button style="width:50px; margin: 0; display: inline">
-              {{!-- unless can explode make disabled --}}
-              <i class="fa-solid fa-bomb"></i>
+          <td>
+            <button
+              style="width:50px; margin: 0; display: inline"
+              {{#unless system.breakpoints.hull.doomed}}
+                disabled="disabled"
+              {{/unless}}
+              >
+                <i class="fa-solid fa-bomb"></i>
             </button>
           </td>
         </tr>
@@ -74,30 +113,30 @@
     <table>
       <thead>
         <tr>
-          <th colspan="5">ARMOR</th>
+          <th colspan="5">{{localize "mythic.vehicleSheet.armor.label"}}</th>
         </tr>
         <tr>
-          <th>FRONT</th>
-          <th>BACK</th>
-          <th>SIDE</th>
-          <th>TOP</th>
-          <th>BOTTOM</th>
+          <th>{{localize "mythic.vehicleSheet.armor.front"}}</th>
+          <th>{{localize "mythic.vehicleSheet.armor.back"}}</th>
+          <th>{{localize "mythic.vehicleSheet.armor.side"}}</th>
+          <th>{{localize "mythic.vehicleSheet.armor.top"}}</th>
+          <th>{{localize "mythic.vehicleSheet.armor.bottom"}}</th>
         <tr>
       </thead>
       <tbody>
         <tr>
-          <td>100</td>
-          <td>100</td>
-          <td>100</td>
-          <td>100</td>
-          <td>100</td>
+          <td>{{localnum system.armor.front.current}}</td>
+          <td>{{localnum system.armor.back.current}}</td>
+          <td>{{localnum system.armor.side.current}}</td>
+          <td>{{localnum system.armor.top.current}}</td>
+          <td>{{localnum system.armor.bottom.current}}</td>
         </tr>
       </tbody>
     </table>
     <table>
       <thead>
         <tr>
-          <th colspan="3">SHIELDS</th>
+          <th colspan="3">{{localize "mythic.shields.label"}}</th>
           <th>
             <a class="recharge"><i class="clickable fas fa-sync-alt"></i></a>
           </th>
@@ -105,7 +144,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>Current</td>
+          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
           <td>
             <input
               name="system.shields.integrity.current"
@@ -116,24 +155,25 @@
               onfocus="this.select()"
             />
           </td>
-          <td>Delay</td>
+          <td>{{localize "mythic.shields.delay"}}</td>
           <td>{{localnum system.shields.delay}}</td>
         </tr>
         <tr>
-          <td>Max</td>
+          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
           <td>{{localnum system.shields.integrity.max}}</td>
-          <td>Charge</td>
+          <td>{{localize "mythic.shields.recharge"}}</td>
           <td>{{localnum system.shields.recharge}}</td>
         </tr>
       </tbody>
     </table>
   </div>
+
   {{!-- Special Rules --}}
   <div>
     <table>
       <thead>
         <tr>
-          <th>Special Rules</th>
+          <th>{{localize "mythic.vehicleSheet.special.label"}}</th>
         <tr>
       </thead>
       <tbody>
@@ -148,7 +188,11 @@
                       type="checkbox"
                       {{checked this.has}}
                     />
-                    <p {{#if (eq type "none")}} style="grid-column: span 2" {{/if}}>
+                    <p
+                      {{#if (eq type "none")}}
+                        style="grid-column: span 2"
+                      {{/if}}
+                    >
                       {{localize (concat "mythic.vehicleSheet.special." name)}}
                     </p>
                     {{#unless (eq type "none")}}
