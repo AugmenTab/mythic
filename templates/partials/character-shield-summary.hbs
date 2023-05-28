@@ -1,0 +1,69 @@
+<section class="character-weapon-summary summary-table">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="6">{{localize "mythic.characterShieldSummary.title"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.characterShieldSummary.name"}}</th>
+        <th>{{localize "mythic.characterShieldSummary.integrity"}}</th>
+        <th>{{localize "mythic.characterShieldSummary.recharge"}}</th>
+        <th>{{localize "mythic.characterShieldSummary.delay"}}</th>
+        <th>
+          <button class="recharge-all-items">
+            <i class="clickable fas fa-sync-alt"></i>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if shields}}
+        {{#if equippedShields}}
+          {{#each equippedShields as |shield _|}}
+            <tr>
+              <td>
+                <div class="weapon-name">
+                  <img alt="{{shield.name}}" src="{{shield.img}}"/>
+                  <p>{{shield.name}}&nbsp;({{shield.type}})</p>
+                  <a class="item-edit" data-item-id="{{shield._id}}">
+                    <i class="clickable fas fa-edit"></i>
+                  </a>
+                </div>
+              </td>
+              <td style="width:90px">
+                <div class="integrity">
+                  <input
+                    class="item-edit-inline"
+                    data-field="shields.integrity.current"
+                    data-item-id="{{shield._id}}"
+                    type="number"
+                    data-dtype="Number"
+                    value="{{shield.system.shields.integrity.current}}"
+                    onfocus="this.select()"
+                  />
+                  <p>/</p>
+                  <p>{{shield.system.shields.integrity.total}}</p>
+                </div>
+              </td>
+              <td>{{shield.system.shields.recharge.total}}</td>
+              <td>{{shield.system.shields.delay.total}}</td>
+              <td>
+                <button class="recharge-item" data-item-id="{{shield._id}}">
+                  <i class="fas fa-sync-alt"></i>
+                </button>
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <td colspan="5">
+            {{localize "mythic.characterShieldSummary.unequipped"}}
+          </td>
+        {{/if}}
+      {{else}}
+        <td colspan="5">
+          {{localize "mythic.characterShieldSummary.empty"}}
+        </td>
+        {{/if}}
+    </tbody>
+  </table>
+</section>
