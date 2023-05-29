@@ -640,10 +640,27 @@
                 "operational": "Vehicle is operational."
             },
             "movement": {
+                "label": "Movement",
                 "accelerate": "Accelerate",
                 "brake": "Brake",
                 "speed": "Current Speed",
+                "topSpeed": "Top Speed",
                 "maneuver": "Maneuver"
+            },
+            "points": {
+                "label": "Size and Weapon Points",
+                "size": "Size",
+                "weapon": "Weapon"
+            },
+            "propulsion": {
+                "label": "Propulsion",
+                "type": "Type",
+                "intact": "Intact",
+                "total": "Total",
+                "legs": "Legs",
+                "thrusters": "Thrusters",
+                "treads": "Treads",
+                "wheels": "Wheels"
             },
             "special": {
                 "label": "Special Rules",
@@ -663,6 +680,11 @@
                 "ground": "Ground",
                 "air": "Air",
                 "space": "Space"
+            },
+            "walkerStats": {
+                "label": "Walker Stats",
+                "mythicStr": "Mythic STR",
+                "mythicAgi": "Mythic AGI"
             }
         },
         "weaponSheet": {

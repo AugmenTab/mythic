@@ -705,4 +705,36 @@
       font-size: 1.1em;
     }
   }
+
+  .vehicle-common-stats {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    column-gap: 8px;
+
+    input {
+      width: 45px;
+    }
+  }
+
+  .vehicle-split {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+
+    input {
+      width: 45px;
+    }
+
+    .split-left {
+      input {
+        width: 70px;
+      }
+    }
+
+    .split-right {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      column-gap: 8px;
+    }
+  }
 }

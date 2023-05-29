@@ -49,6 +49,7 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/shields.hbs",
     "systems/mythic/templates/partials/vehicle-crew-manifest.hbs",
     "systems/mythic/templates/partials/vehicle-details.hbs",
+    "systems/mythic/templates/partials/vehicle-sheet-settings.hbs",
     "systems/mythic/templates/partials/vehicle-sheet-summary.hbs",
     "systems/mythic/templates/partials/vehicle-stat-block.hbs",
     "systems/mythic/templates/partials/weapon-sheet-info.hbs",

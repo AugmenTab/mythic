@@ -1,0 +1,313 @@
+<div class="vehicle-common-stats">
+  <table>
+    <thead>
+      <tr>
+        <th colspan="5">
+          {{localize "mythic.vehicleSheet.breakpoints.label"}}
+        </th>
+      </tr>
+      <tr>
+        {{#each config.vehicle.breakpoints as |value _|}}
+          <th>{{localize value}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#each config.vehicle.breakpoints as |_ key|}}
+          {{#with (lookup ../this.system.breakpoints key)}}
+            <td>
+              <input
+                name="system.breakpoints.{{key}}.max"
+                type="number"
+                data-dtype="Number"
+                value="{{this.max}}"
+                onfocus="this.select()"
+              />
+            </td>
+          {{/with}}
+        {{/each}}
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="5">{{localize "mythic.vehicleSheet.armor.label"}}</th>
+      </tr>
+      <tr>
+        {{#each config.vehicle.armor as |value _|}}
+          <th>{{localize value}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#each config.vehicle.armor as |_ key|}}
+          {{#with (lookup ../this.system.armor key)}}
+            <td>
+              <input
+                name="system.armor.{{key}}.max"
+                type="number"
+                data-dtype="Number"
+                value="{{this.max}}"
+                onfocus="this.select()"
+              />
+            </td>
+          {{/with}}
+        {{/each}}
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="3">{{localize "mythic.shields.label"}}</th>
+      </tr>
+      <tr>
+        <th>{{localize "mythic.shields.integrity"}}</th>
+        <th>{{localize "mythic.shields.delay"}}</th>
+        <th>{{localize "mythic.shields.recharge"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input
+            name="system.shields.integrity.max"
+            type="number"
+            data-dtype="Number"
+            value="{{system.shields.integrity.max}}"
+            onfocus="this.select()"
+          />
+        </td>
+        <td>
+          <input
+            name="system.shields.delay"
+            type="number"
+            data-dtype="Number"
+            value="{{system.shields.delay}}"
+            onfocus="this.select()"
+          />
+        </td>
+        <td>
+          <input
+            name="system.shields.recharge"
+            type="number"
+            data-dtype="Number"
+            value="{{system.shields.recharge}}"
+            onfocus="this.select()"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="vehicle-split">
+  {{#if (eq system.propulsion.type "legs")}}
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="5">
+              {{localize "mythic.vehicleSheet.walkerStats.label"}}
+            </th>
+          </tr>
+          <tr>
+            <th>STR</th>
+            <th>AGI</th>
+            <th>{{localize "mythic.vehicleSheet.walkerStats.mythicStr"}}</th>
+            <th>{{localize "mythic.vehicleSheet.walkerStats.mythicAgi"}}</th>
+            <th>{{localize "mythic.vehicleSheet.movement.maneuver"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                name="system.characteristics.str"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.str}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.characteristics.agi"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.agi}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.characteristics.mythicStr"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.mythicStr}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.characteristics.mythicAgi"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.mythicAgi}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.movement.maneuver.base"
+                type="number"
+                data-dtype="Number"
+                value="{{system.movement.maneuver.base}}"
+                onfocus="this.select()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <div class="split-left">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="4">
+              {{localize "mythic.vehicleSheet.movement.label"}}
+            </th>
+          </tr>
+          <tr>
+            <th>{{localize "mythic.vehicleSheet.movement.accelerate"}}</th>
+            <th>{{localize "mythic.vehicleSheet.movement.brake"}}</th>
+            <th>{{localize "mythic.vehicleSheet.movement.topSpeed"}}</th>
+            <th>{{localize "mythic.vehicleSheet.movement.maneuver"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                name="system.movement.accelerate.base"
+                type="number"
+                data-dtype="Number"
+                value="{{system.movement.accelerate.base}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.movement.brake.base"
+                type="number"
+                data-dtype="Number"
+                value="{{system.movement.brake.base}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.movement.speed.base"
+                type="number"
+                data-dtype="Number"
+                value="{{system.movement.speed.base}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.movement.maneuver.base"
+                type="number"
+                data-dtype="Number"
+                value="{{system.movement.maneuver.base}}"
+                onfocus="this.select()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+  <div class="split-right">
+    <table>
+      <thead>
+        <tr>
+          <th colspan="3">
+            {{localize "mythic.vehicleSheet.propulsion.label"}}
+          </th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.vehicleSheet.propulsion.type"}}</th>
+          <th>{{localize "mythic.vehicleSheet.propulsion.intact"}}</th>
+          <th>{{localize "mythic.vehicleSheet.propulsion.total"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select name="system.propulsion.type">
+              {{#select system.propulsion.type}}
+                {{#each config.vehicle.propulsion as |value key|}}
+                  <option value="{{key}}">{{localize value}}</option>
+                {{/each}}
+              {{/select}}
+          </td>
+          <td>
+            <input
+              name="system.propulsion.current"
+              type="number"
+              data-dtype="Number"
+              value="{{system.propulsion.current}}"
+              onfocus="this.select()"
+            />
+          </td>
+          <td>
+            <input
+              name="system.propulsion.max"
+              type="number"
+              data-dtype="Number"
+              value="{{system.propulsion.max}}"
+              onfocus="this.select()"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">{{localize "mythic.vehicleSheet.points.label"}}</th>
+        </tr>
+        <tr>
+          <th>{{localize "mythic.vehicleSheet.points.size"}}</th>
+          <th>{{localize "mythic.vehicleSheet.points.weapon"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input
+              name="system.sizePoints"
+              type="number"
+              data-dtype="Number"
+              value="{{system.sizePoints}}"
+              onfocus="this.select()"
+            />
+          </td>
+          <td>
+            <input
+              name="system.weaponPoints"
+              type="number"
+              data-dtype="Number"
+              value="{{system.weaponPoints}}"
+              onfocus="this.select()"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

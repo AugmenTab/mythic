@@ -1034,10 +1034,12 @@
             },
             "movement": {
               "accelerate": {
+                "base": 0,
                 "current": 0,
                 "max": 0
               },
               "brake": {
+                "base": 0,
                 "current": 0,
                 "max": 0
               },
@@ -1054,7 +1056,6 @@
             },
             "breakpoints": {
               "wep": {
-                "has": false,
                 "current": 0,
                 "max": 0
               },

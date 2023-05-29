@@ -7,6 +7,9 @@
     <a class="item" data-tab="notes">
       {{localize "mythic.characterNav.notes"}}
     </a>
+    <a class="item" data-tab="settings">
+      {{localize "mythic.characterNav.settings"}}
+    </a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -19,6 +22,11 @@
     {{!-- Notes Page: --}}
     <div class="tab" data-group="primary" data-tab="notes">
       {{> "systems/mythic/templates/partials/editor.hbs" content=system.notes target="system.notes" link="characterNav.notes"}}
+    </div>
+
+    {{!-- Settings Page: --}}
+    <div class="tab" data-group="primary" data-tab="settings">
+      {{> "systems/mythic/templates/partials/vehicle-sheet-settings.hbs"}}
     </div>
   </section>
 </form>

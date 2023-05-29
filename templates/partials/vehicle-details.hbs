@@ -79,7 +79,7 @@
       </span>
       <select name="system.vehicleType">
         {{#select system.vehicleType}}
-          {{#each config.vehicleTypes as |value key|}}
+          {{#each config.vehicle.types as |value key|}}
             <option value="{{key}}">{{localize value}}</option>
           {{/each}}
         {{/select}}

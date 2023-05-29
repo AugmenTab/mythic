@@ -1,5 +1,7 @@
 /** @module MythicVehicleSheet */
 
+import * as Calc from "../calculations.js";
+
 /**
  * Class representing the unique features of this system's Vehicle sheet.
  *
@@ -42,6 +44,9 @@ export default class MythicVehicleSheet extends ActorSheet {
 
     data.system = data.actor.system;
     data.config = CONFIG.mythic;
+
+    data.weapons = Calc.sortAndFilterItems(data.items, "weapon", "nickname");
+    data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
 
     return data;
   }
