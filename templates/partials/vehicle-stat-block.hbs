@@ -7,85 +7,51 @@
           <th colspan="10">{{localize "mythic.vehicleSheet.breakpoints.label"}}</th>
         </tr>
         <tr>
-          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.wep"}}</th>
-          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.mob"}}</th>
-          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.eng"}}</th>
-          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.op"}}</th>
-          <th colspan="2">{{localize "mythic.vehicleSheet.breakpoints.hull"}}</th>
+          {{#each config.vehicle.breakpoints as |value _|}}
+            <th colspan="2">{{localize value}}</th>
+          {{/each}}
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
-          {{#if system.breakpoints.wep.has}}
-            <td>
-              <input
-                name="system.breakpoints.wep.current"
-                type="number"
-                data-dtype="Number"
-                value="{{system.breakpoints.wep.current}}"
-                onfocus="this.select()"
-              />
-            </td>
-          {{else}}
-            <td>&lt;N/A&gt;</td>
-          {{/if}}
-          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
-          <td>
-            <input
-              name="system.breakpoints.mob.current"
-              type="number"
-              data-dtype="Number"
-              value="{{system.breakpoints.mob.current}}"
-              onfocus="this.select()"
-            />
-          </td>
-          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
-          <td>
-            <input
-              name="system.breakpoints.eng.current"
-              type="number"
-              data-dtype="Number"
-              value="{{system.breakpoints.eng.current}}"
-              onfocus="this.select()"
-            />
-          </td>
-          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
-          <td>
-            <input
-              name="system.breakpoints.op.current"
-              type="number"
-              data-dtype="Number"
-              value="{{system.breakpoints.op.current}}"
-              onfocus="this.select()"
-            />
-          </td>
-          <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
-          <td>
-            <input
-              name="system.breakpoints.hull.current"
-              type="number"
-              data-dtype="Number"
-              value="{{system.breakpoints.hull.current}}"
-              onfocus="this.select()"
-            />
-          </td>
+          {{#each config.vehicle.breakpoints as |_ key|}}
+            {{#with (lookup ../this.system.breakpoints key)}}
+              <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
+              <td>
+                {{#if (cond "&&" (eq "wep" key)
+                                 (eq ../../equippedWeapons.length 0)
+                      )
+                }}
+                  &lt;N/A&gt;
+                {{else}}
+                  <input
+                    name="system.breakpoints.{{key}}.current"
+                    type="number"
+                    data-dtype="Number"
+                    value="{{this.current}}"
+                    onfocus="this.select()"
+                  />
+                {{/if}}
+              </td>
+            {{/with}}
+          {{/each}}
         </tr>
         <tr>
-          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
-          {{#if system.breakpoints.wep.has}}
-            <td>{{localnum system.breakpoints.wep.max}}</td>
-          {{else}}
-            <td>&lt;N/A&gt;</td>
-          {{/if}}
-          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
-          <td>{{localnum system.breakpoints.mob.max}}</td>
-          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
-          <td>{{localnum system.breakpoints.eng.max}}</td>
-          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
-          <td>{{localnum system.breakpoints.op.max}}</td>
-          <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
-          <td>{{localnum system.breakpoints.hull.max}}</td>
+          {{#each config.vehicle.breakpoints as |_ key|}}
+            {{#with (lookup ../this.system.breakpoints key)}}
+              <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
+              <td>
+                {{#if (cond "&&" (eq "wep" key)
+                                 (eq ../../equippedWeapons.length 0)
+                      )
+                }}
+                  &lt;N/A&gt;
+                {{else}}
+                  {{localnum this.max}}
+                {{/if}}
+              </td>
+            {{/with}}
+          {{/each}}
         </tr>
         <tr>
           <td colspan="9">
@@ -117,20 +83,18 @@
           <th colspan="5">{{localize "mythic.vehicleSheet.armor.label"}}</th>
         </tr>
         <tr>
-          <th>{{localize "mythic.vehicleSheet.armor.front"}}</th>
-          <th>{{localize "mythic.vehicleSheet.armor.back"}}</th>
-          <th>{{localize "mythic.vehicleSheet.armor.side"}}</th>
-          <th>{{localize "mythic.vehicleSheet.armor.top"}}</th>
-          <th>{{localize "mythic.vehicleSheet.armor.bottom"}}</th>
+          {{#each config.vehicle.armor as |value _|}}
+            <th>{{localize value}}</th>
+          {{/each}}
         <tr>
       </thead>
       <tbody>
         <tr>
-          <td>{{localnum system.armor.front.current}}</td>
-          <td>{{localnum system.armor.back.current}}</td>
-          <td>{{localnum system.armor.side.current}}</td>
-          <td>{{localnum system.armor.top.current}}</td>
-          <td>{{localnum system.armor.bottom.current}}</td>
+          {{#each config.vehicle.armor as |_ key|}}
+            {{#with (lookup ../this.system.armor key)}}
+              <td>{{localnum this.current}}</td>
+            {{/with}}
+          {{/each}}
         </tr>
       </tbody>
     </table>

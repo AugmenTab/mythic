@@ -416,8 +416,30 @@ mythic.armorHardpoints = {
   leg: 3
 }
 
-mythic.vehicleTypes = {
-  ground: "mythic.vehicleSheet.types.ground",
-  air: "mythic.vehicleSheet.types.air",
-  space: "mythic.vehicleSheet.types.space"
+mythic.vehicle = {
+  armor: {
+    front: "mythic.vehicleSheet.armor.front",
+    back: "mythic.vehicleSheet.armor.back",
+    side: "mythic.vehicleSheet.armor.side",
+    top: "mythic.vehicleSheet.armor.top",
+    bottom: "mythic.vehicleSheet.armor.bottom"
+  },
+  breakpoints: {
+    wep: "mythic.vehicleSheet.breakpoints.wep",
+    mob: "mythic.vehicleSheet.breakpoints.mob",
+    eng: "mythic.vehicleSheet.breakpoints.eng",
+    op: "mythic.vehicleSheet.breakpoints.op",
+    hull: "mythic.vehicleSheet.breakpoints.hull"
+  },
+  propulsion: {
+    legs: "mythic.vehicleSheet.propulsion.legs",
+    thrusters: "mythic.vehicleSheet.propulsion.thrusters",
+    treads: "mythic.vehicleSheet.propulsion.treads",
+    wheels: "mythic.vehicleSheet.propulsion.wheels"
+  },
+  types: {
+    ground: "mythic.vehicleSheet.types.ground",
+    air: "mythic.vehicleSheet.types.air",
+    space: "mythic.vehicleSheet.types.space"
+  }
 }
