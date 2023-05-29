@@ -749,4 +749,41 @@
       column-gap: 8px;
     }
   }
+
+  .vehicle-role-assignment {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 16px;
+    row-gap: 16px;
+
+    div {
+      h3 {
+        display: grid;
+        grid-template-columns: 1fr 20px;
+        width: 100%;
+      }
+
+      a {
+        text-align: center;
+      }
+
+      label {
+        grid-column: span 2;
+      }
+
+      div {
+        display: grid;
+        grid-template-columns: 30px 130px 1fr 20px;
+        place-items: center;
+        column-gap: 4px;
+        width: 100%;
+        padding-bottom: 4px;
+
+        span {
+          text-align: start;
+          width: 100%;
+        }
+      }
+    }
+  }
 }

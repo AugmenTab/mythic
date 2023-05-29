@@ -634,7 +634,17 @@
                 "hull": "HULL"
             },
             "crew": {
-                "none": "This vehicle has no roles defined."
+                "none": "This vehicle has no roles defined.",
+                "label": "Crew and Complement",
+                "operators": "Operators",
+                "gunners": "Gunners",
+                "complement": "Complement",
+                "actorId": "Actor ID",
+                "empty": "unassigned",
+                "notes": {
+                    "label": "Notes",
+                    "notes": "Write crew and complement notes here."
+                }
             },
             "doom": {
                 "operational": "Vehicle is operational."

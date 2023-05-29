@@ -2,7 +2,7 @@
   class="vehicle-manifest"
   {{#with (doMath "+" system.crew.operators.length
                       system.crew.gunners.length
-                      system.complement.active.length
+                      system.crew.complement.length
           )
   }}
     style="grid-template-columns: repeat(min(4, {{this}}), 1fr)"
@@ -11,30 +11,34 @@
   {{!-- Emptiness check. --}}
   {{#unless (cond "||" system.crew.operators.length
                        system.crew.gunners.length
-                       system.complement.active.length
+                       system.crew.complement.length
             )
   }}
     <div>&lt;&nbsp;{{localize "mythic.vehicleSheet.crew.none"}}&nbsp;&gt;</div>
   {{/unless}}
 
   {{!-- Operators --}}
-  {{#each system.crew.operators.length as |pilot|}}
-    {{#if pilot.idx}}
-      <div><b>[P{{doMath "+" pilot.idx 1}}]</b>&nbsp;{{pilot.display}}</div>
+  {{#each system.crew.operators.length as |operator|}}
+    {{#if operator.idx}}
+      <div>
+        <b>[O{{doMath "+" operator.idx 1}}]</b>&nbsp;{{operator.display}}
+      </div>
     {{/if}}
   {{/each}}
 
   {{!-- Gunners --}}
   {{#each system.crew.gunners.length as |gunner|}}
     {{#if gunner.idx}}
-      <div><b>[P{{doMath "+" gunner.idx 1}}]</b>&nbsp;{{gunner.display}}</div>
+      <div><b>[G{{doMath "+" gunner.idx 1}}]</b>&nbsp;{{gunner.display}}</div>
     {{/if}}
   {{/each}}
 
   {{!-- Active Complement --}}
-  {{#each system.complement.active.length as |active|}}
-    {{#if active.idx}}
-      <div><b>[P{{doMath "+" active.idx 1}}]</b>&nbsp;{{active.display}}</div>
+  {{#each system.crew.complement.length as |complement|}}
+    {{#if complement.idx}}
+      <div>
+        <b>[C{{doMath "+" complement.idx 1}}]</b>&nbsp;{{complement.display}}
+      </div>
     {{/if}}
   {{/each}}
 </div>
