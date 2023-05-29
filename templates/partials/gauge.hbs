@@ -86,9 +86,11 @@
             {{#select system.movement.maneuver.owner}}
               {{#if system.crew.operators}}
                 {{#each system.crew.operators as |operator|}}
-                  <option value="{{operator.id}}">
-                    [O{{doMath "+" operator.idx 1}}]
-                  </option>
+                  {{#if operator.display}}
+                    <option value="{{operator.id}}">
+                      [O{{doMath "+" operator.idx 1}}]
+                    </option>
+                  {{/if}}
                 {{/each}}
               {{else}}
                 <option value="">--</option>

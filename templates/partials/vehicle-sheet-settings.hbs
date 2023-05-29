@@ -315,45 +315,129 @@
 <div class="vehicle-role-assignment">
   <div>
     <h3 class="add-item-header">
-      <span>{{localize "mythic.vehicleSheet.crew.operators"}}</span>
-      <a><i class="clickable fa-solid fa-plus"></i></a>
+      <span>{{localize "mythic.vehicleSheet.crew.operators.label"}}</span>
+      <a class="crew-create" data-role="operator">
+        <i class="clickable fa-solid fa-plus"></i>
+      </a>
     </h3>
-    <div>
-      <span><b>[O1]</b></span>
-      <input type="text" />
-      <span><b>CDR Carter A-259</b></span>
-      <a><i class="clickable fas fa-trash"></i></a>
-    </div>
-    <div>
-      <span><b>[O2]</b></span>
-      <input type="text" />
-      <span>&lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;</span>
-      <a><i class="clickable fas fa-trash"></i></a>
-    </div>
+    {{#if system.crew.operators}}
+      {{#each system.crew.operators as |operator|}}
+        <div>
+          <span><b>[O{{doMath "+" operator.idx 1}}]</b></span>
+          <input
+            class="crew-edit"
+            data-role="operator"
+            data-index="{{operator.idx}}"
+            type="text"
+            value="{{operator.id}}"
+          />
+          <span>
+            {{#if operator.id}}
+              <b>{{operator.display}}</b>
+            {{else}}
+              &lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;
+            {{/if}}
+          </span>
+          <a
+            class="crew-delete"
+            data-role="operator"
+            data-index="{{operator.idx}}"
+          >
+            <i class="clickable fas fa-trash"></i>
+          </a>
+        </div>
+      {{/each}}
+    {{else}}
+      <div>
+        <p style="grid-column: span 4">
+          {{localize "mythic.vehicleSheet.crew.operators.empty"}}
+        </p>
+      </div>
+    {{/if}}
   </div>
   <div>
     <h3 class="add-item-header">
-      <span>{{localize "mythic.vehicleSheet.crew.gunners"}}</span>
-      <a><i class="clickable fa-solid fa-plus"></i></a>
+      <span>{{localize "mythic.vehicleSheet.crew.gunners.label"}}</span>
+      <a class="crew-create" data-role="gunner">
+        <i class="clickable fa-solid fa-plus"></i>
+      </a>
     </h3>
-    <div>
-      <span><b>[G1]</b></span>
-      <input type="text" />
-      <span>&lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;</span>
-      <a><i class="clickable fas fa-trash"></i></a>
-    </div>
+    {{#if system.crew.gunners}}
+      {{#each system.crew.gunners as |gunner|}}
+        <div>
+          <span><b>[G{{doMath "+" gunner.idx 1}}]</b></span>
+          <input
+            class="crew-edit"
+            data-role="gunner"
+            data-index="{{gunner.idx}}"
+            type="text"
+            value="{{gunner.id}}"
+          />
+          <span>
+            {{#if gunner.id}}
+              <b>{{gunner.display}}</b>
+            {{else}}
+              &lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;
+            {{/if}}
+          </span>
+          <a
+            class="crew-delete"
+            data-role="gunner"
+            data-index="{{gunner.idx}}"
+          >
+            <i class="clickable fas fa-trash"></i>
+          </a>
+        </div>
+      {{/each}}
+    {{else}}
+      <div>
+        <p style="grid-column: span 4">
+          {{localize "mythic.vehicleSheet.crew.gunners.empty"}}
+        </p>
+      </div>
+    {{/if}}
   </div>
   <div>
     <h3 class="add-item-header">
-      <span>{{localize "mythic.vehicleSheet.crew.complement"}}</span>
-      <a><i class="clickable fa-solid fa-plus"></i></a>
+      <span>{{localize "mythic.vehicleSheet.crew.complement.label"}}</span>
+      <a class="crew-create" data-role="complement">
+        <i class="clickable fa-solid fa-plus"></i>
+      </a>
     </h3>
-    <div>
-      <span><b>[C1]</b></span>
-      <input type="text" />
-      <span>&lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;</span>
-      <a><i class="clickable fas fa-trash"></i></a>
-    </div>
+    {{#if system.crew.complement}}
+      {{#each system.crew.complement as |complement|}}
+        <div>
+          <span><b>[C{{doMath "+" complement.idx 1}}]</b></span>
+          <input
+            class="crew-edit"
+            data-role="complement"
+            data-index="{{complement.idx}}"
+            type="text"
+            value="{{complement.id}}"
+          />
+          <span>
+            {{#if complement.id}}
+              <b>{{complement.display}}</b>
+            {{else}}
+              &lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;
+            {{/if}}
+          </span>
+          <a
+            class="crew-delete"
+            data-role="complement"
+            data-index="{{complement.idx}}"
+          >
+            <i class="clickable fas fa-trash"></i>
+          </a>
+        </div>
+      {{/each}}
+    {{else}}
+      <div>
+        <p style="grid-column: span 4">
+          {{localize "mythic.vehicleSheet.crew.complement.empty"}}
+        </p>
+      </div>
+    {{/if}}
   </div>
   <div>
     <h3 class="add-item-header">

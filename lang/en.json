@@ -365,7 +365,9 @@
                 "reloadEmptiesPool": "Your ammo pool has been depleted.",
                 "unrecognizedGrip": "Unrecognized grip value.",
                 "distancefromTargetDefaulted": "The distance from target value provided is invalid. No range values applied to attack.",
-                "targetOutOfRange": "Target is out of range for this weapon."
+                "targetOutOfRange": "Target is out of range for this weapon.",
+                "unknownCrewRole": "The provided vehicle crew role is unknown.",
+                "unknownActor": "The provided Actor ID is unknown - cannot assign role to unknown Actor."
             },
             "education": {
                 "flavor": "Education",
@@ -634,12 +636,20 @@
                 "hull": "HULL"
             },
             "crew": {
-                "none": "This vehicle has no roles defined.",
                 "label": "Crew and Complement",
-                "operators": "Operators",
-                "gunners": "Gunners",
-                "complement": "Complement",
-                "actorId": "Actor ID",
+                "operators": {
+                    "label": "Operators",
+                    "empty": "No operator roles have been defined."
+                },
+                "gunners": {
+                    "label": "Gunners",
+                    "empty": "No gunner roles have been defined."
+                },
+                "complement": {
+                    "label": "Complement",
+                    "empty": "No complement roles have been defined."
+                },
+                "none": "This vehicle has no roles defined.",
                 "empty": "unassigned",
                 "notes": {
                     "label": "Notes",

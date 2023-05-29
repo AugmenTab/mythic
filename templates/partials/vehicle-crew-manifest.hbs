@@ -18,27 +18,35 @@
   {{/unless}}
 
   {{!-- Operators --}}
-  {{#each system.crew.operators.length as |operator|}}
-    {{#if operator.idx}}
-      <div>
+  {{#each system.crew.operators as |operator|}}
+    <div>
+      {{#if operator.display}}
         <b>[O{{doMath "+" operator.idx 1}}]</b>&nbsp;{{operator.display}}
-      </div>
-    {{/if}}
+      {{else}}
+        <b>[O{{doMath "+" operator.idx 1}}]</b>&nbsp;&lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;
+      {{/if}}
+    </div>
   {{/each}}
 
   {{!-- Gunners --}}
-  {{#each system.crew.gunners.length as |gunner|}}
-    {{#if gunner.idx}}
-      <div><b>[G{{doMath "+" gunner.idx 1}}]</b>&nbsp;{{gunner.display}}</div>
-    {{/if}}
+  {{#each system.crew.gunners as |gunner|}}
+    <div>
+      {{#if gunner.display}}
+        <b>[G{{doMath "+" gunner.idx 1}}]</b>&nbsp;{{gunner.display}}
+      {{else}}
+        <b>[G{{doMath "+" gunner.idx 1}}]</b>&nbsp;&lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;
+      {{/if}}
+    </div>
   {{/each}}
 
   {{!-- Active Complement --}}
-  {{#each system.crew.complement.length as |complement|}}
-    {{#if complement.idx}}
-      <div>
+  {{#each system.crew.complement as |complement|}}
+    <div>
+      {{#if complement.display}}
         <b>[C{{doMath "+" complement.idx 1}}]</b>&nbsp;{{complement.display}}
-      </div>
-    {{/if}}
+      {{else}}
+        <b>[C{{doMath "+" complement.idx 1}}]</b>&nbsp;&lt;{{localize "mythic.vehicleSheet.crew.empty"}}&gt;
+      {{/if}}
+    </div>
   {{/each}}
 </div>

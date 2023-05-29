@@ -405,6 +405,34 @@ export function prepareVehicleDerived(actor) {
 }
 
 /**
+ * Updates a list of crew roles with new indexes and Actor display names.
+ *
+ * @param {Array.<object>} crew - List of crew roles.
+ * @returns {Array.<object>} The list of updated crew roles.
+ */
+export function setupCrew(crew) {
+  for (let i = 0; i < crew.length; i++) {
+    crew[i].idx = i;
+
+    const actor = game.actors.get(crew[i].id);
+    if (!crew[i]) {
+      continue;
+    } else if (!crew[i].id) {
+      crew[i].display = null;
+      continue;
+    } else if (!actor) {
+      crew[i].display = null;
+      makeUIWarning("mythic.chat.error.unknownActor");
+    } else {
+      const rank = actor.system.rank === "" ? "" : `${actor.system.rank} `;
+      crew[i].display = rank + actor.name;
+    }
+  }
+
+  return crew;
+}
+
+/**
  * Updates a list of experience purchases with new indexes.
  *
  * @param {Array.<object>} purchases - List of experience purchases.
