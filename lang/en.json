@@ -60,6 +60,7 @@
                 "trainings": "Trainings"
             },
             "inventory": "Inventory",
+            "cargo": "Cargo",
             "medical": "Medical",
             "experience": "Experience",
             "biography": "Biography",
@@ -634,6 +635,11 @@
                 "eng": "ENG",
                 "op": "OP",
                 "hull": "HULL"
+            },
+            "cargo": {
+                "label": "Cargo",
+                "empty": "No cargo has been added yet.",
+                "notes": "Write cargo notes here."
             },
             "crew": {
                 "label": "Crew and Complement",

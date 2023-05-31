@@ -65,11 +65,30 @@
                       {{/unless}}
                       &nbsp;({{this.target}})
                     </div>
-                    {{#if (eq actor.type "Vehicle")}}
+                    {{#if (eq ../../actor.type "Vehicle")}}
                       <select style="width: 50px">
-                        <option>[O1]</option>
-                        <option>[G1]</option>
-                        <option>[C1]</option>
+                        <option value="">--</option>
+                        {{#each ../../actor.system.crew.operators as |operator|}}
+                          {{#if operator.display}}
+                            <option value="{{operator.id}}">
+                              [O{{doMath "+" operator.idx 1}}]
+                            </option>
+                          {{/if}}
+                        {{/each}}
+                        {{#each ../../actor.system.crew.gunners as |gunner|}}
+                          {{#if gunner.display}}
+                            <option value="{{gunner.id}}">
+                              [G{{doMath "+" gunner.idx 1}}]
+                            </option>
+                          {{/if}}
+                        {{/each}}
+                        {{#each ../../actor.system.crew.complement as |complement|}}
+                          {{#if complement.display}}
+                            <option value="{{complement.id}}">
+                              [C{{doMath "+" complement.idx 1}}]
+                            </option>
+                          {{/if}}
+                        {{/each}}
                       </select>
                     {{/if}}
                   </div>

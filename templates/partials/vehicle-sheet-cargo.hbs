@@ -1,0 +1,72 @@
+<section>
+  <table>
+    <thead>
+      <tr>
+        <th>{{localize "mythic.characterInventory.name"}}</th>
+        <th>{{localize "mythic.characterInventory.carried"}}</th>
+        <th>{{localize "mythic.characterInventory.equipped"}}</th>
+        <th>{{localize "mythic.characterInventory.quantity"}}</th>
+        <th>{{localize "mythic.characterInventory.total"}}</th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th colspan="7">
+          <div class="add-item-header">
+            {{localize "mythic.characterInventory.weapon.label"}}
+            <a class="item-create" data-item-type="weapon">
+              <i class="clickable fa-solid fa-plus"></i>
+            </a>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each weapons as |weapon|}}
+        {{> "systems/mythic/templates/partials/cargo-item.hbs" weapon}}
+      {{else}}
+        <tr>
+          <td colspan="7">
+            {{localize "mythic.characterInventory.weapon.empty"}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan="7">
+          <div class="add-item-header">
+            {{localize "mythic.vehicleSheet.cargo.label"}}
+            <a class="item-create" data-item-type="equipment">
+              <i class="clickable fa-solid fa-plus"></i>
+            </a>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cargo as |item|}}
+        {{> "systems/mythic/templates/partials/cargo-item.hbs" item}}
+      {{else}}
+        <tr>
+          <td colspan="7">
+            {{localize "mythic.vehicleSheet.cargo.empty"}}
+          </td>
+        </tr>
+      {{/each}}
+      <td colspan="7">
+        <textarea
+          name="system.cargo.notes"
+          placeholder="{{localize "mythic.vehicleSheet.cargo.notes"}}"
+        >{{system.cargo.notes}}</textarea>
+      </td>
+    </tbody>
+    <thead>
+      <tr>
+        <th colspan=4"></th>
+        <th>{{localnum system.cargo.total}}&nbsp;kg</th>
+      </tr>
+    </thead>
+  </table>
+  </table>
+</section>

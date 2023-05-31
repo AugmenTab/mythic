@@ -4,6 +4,9 @@
     <a class="item" data-tab="summary">
       {{localize "mythic.characterNav.summary"}}
     </a>
+    <a class="item" data-tab="cargo">
+      {{localize "mythic.characterNav.cargo"}}
+    </a>
     <a class="item" data-tab="notes">
       {{localize "mythic.characterNav.notes"}}
     </a>
@@ -17,6 +20,11 @@
     {{!-- Summary Page: --}}
     <div class="tab" data-group="primary" data-tab="summary">
       {{> "systems/mythic/templates/partials/vehicle-sheet-summary.hbs"}}
+    </div>
+
+    {{!-- Cargo Page: --}}
+    <div class="tab" data-group="primary" data-tab="cargo">
+      {{> "systems/mythic/templates/partials/vehicle-sheet-cargo.hbs"}}
     </div>
 
     {{!-- Notes Page: --}}

@@ -84,6 +84,7 @@
         <span>
           <select name="system.movement.maneuver.owner">
             {{#select system.movement.maneuver.owner}}
+              <option value="">--</option>
               {{#if system.crew.operators}}
                 {{#each system.crew.operators as |operator|}}
                   {{#if operator.display}}
@@ -92,8 +93,6 @@
                     </option>
                   {{/if}}
                 {{/each}}
-              {{else}}
-                <option value="">--</option>
               {{/if}}
             {{/select}}
           </select>

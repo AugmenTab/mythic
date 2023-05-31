@@ -25,26 +25,19 @@
     />
   </td>
   <td>
-    <input
-      class="item-edit-inline"
-      data-field="weight.equipped"
-      data-item-id="{{this._id}}"
-      type="checkbox"
-      {{checked this.system.weight.equipped}}
-      {{#unless this.system.weight.carried}}
-        disabled="true"
-        aria-disabled="true"
-      {{/unless}}
-    />
-  </td>
-  <td>
-    <input
-      class="item-edit-inline"
-      data-field="weight.selfSupported"
-      data-item-id="{{this._id}}"
-      type="checkbox"
-      {{checked this.system.weight.selfSupported}}
-    />
+    {{#if (eq this.type "weapon")}}
+      <input
+        class="item-edit-inline"
+        data-field="weight.equipped"
+        data-item-id="{{this._id}}"
+        type="checkbox"
+        {{checked this.system.weight.equipped}}
+        {{#unless this.system.weight.carried}}
+          disabled="true"
+          aria-disabled="true"
+        {{/unless}}
+      />
+    {{/if}}
   </td>
   <td>
     <input
@@ -54,9 +47,9 @@
       data-item-id="{{this._id}}"
       onfocus="this.select()"
       {{#if (cond "&&" (eq this.type "weapon") (eq this.system.group "thrown"))}}
-          data-field="ammoList.{{this.system.currentAmmo}}.currentMag"
+        data-field="ammoList.{{this.system.currentAmmo}}.currentMag"
         {{#with (lookup this.system.ammoList this.system.currentAmmo)}}
-          value="{{this.currentMag}}"
+        value="{{this.currentMag}}"
         {{/with}}
       {{else}}
         data-field="weight.quantity"
@@ -64,6 +57,5 @@
       {{/if}}
     />
   </td>
-  <td>{{localnum this.system.weight.felt}}&nbsp;kg</td>
   <td>{{localnum this.system.weight.total}}&nbsp;kg</td>
 </tr>

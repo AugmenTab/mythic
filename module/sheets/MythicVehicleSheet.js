@@ -1,7 +1,8 @@
 /** @module MythicVehicleSheet */
 
 import * as Calc from "../calculations.js";
-import { makeUIError } from "../common.js";
+import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
+import { localize, makeUIError } from "../common.js";
 
 /**
  * Class representing the unique features of this system's Vehicle sheet.
@@ -46,6 +47,9 @@ export default class MythicVehicleSheet extends ActorSheet {
     data.system = data.actor.system;
     data.config = CONFIG.mythic;
 
+    data.cargo =
+      data.items.filter(item => [ "armor", "equipment" ].includes(item.type));
+
     data.weapons = Calc.sortAndFilterItems(data.items, "weapon", "nickname");
     data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
 
@@ -75,6 +79,11 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".crew-create").click(this._onCrewCreate.bind(this));
     html.find(".crew-delete").click(this._onCrewDelete.bind(this));
     html.find(".crew-edit").change(this._onCrewEdit.bind(this));
+    html.find(".item-create").click(this._onItemCreate.bind(this));
+    html.find(".item-delete").click(this._onItemDelete.bind(this));
+    html.find(".item-edit").click(this._onItemEdit.bind(this));
+    html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
+    html.find(".postable-item").click(this._onPostItem.bind(this));
   }
 
   async _onCrewCreate(event) {
@@ -188,5 +197,59 @@ export default class MythicVehicleSheet extends ActorSheet {
         // for the user to see.
         makeUIError("mythic.chat.error.unknownCrewRole");
     }
+  }
+
+  async _onItemCreate(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const itemType = element.getAttribute("data-item-type");
+    const itemSubtype = element.getAttribute("data-item-subtype");
+
+    await Item.create({
+      name: localize(`mythic.${itemType}Sheet.newItem`),
+      type: itemType,
+      system: Calc.generateBaseItemData(itemType, itemSubtype)
+    }, { parent: this.actor });
+  }
+
+  async _onItemDelete(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    await item.delete();
+  }
+
+  async _onItemEdit(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    item.sheet.render(true);
+  }
+
+  async _onItemEditInline(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    const key = `system.${element.dataset.field}`;
+
+    if (element.type === "checkbox") {
+      await item.update({ [key]: element.checked })
+    } else {
+      const val = parseInt(element.value);
+      await item.update({ [key]: isNaN(val) ? element.value : val });
+    }
+  }
+
+  async _onPostItem(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item =
+      await this.actor.items.get(element.getAttribute("data-item-id"));
+
+    await postChatMessage({
+      flavor: localize(getPostableItemFlavorPath(item)),
+      template: `postable-${item.type}`,
+      ...item
+    }, this.actor);
   }
 }

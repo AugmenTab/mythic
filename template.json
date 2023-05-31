@@ -1161,6 +1161,13 @@
               "mods": [],
               "notes": ""
             },
+            "cargo": {
+              "total": 0,
+              "notes": ""
+            },
+            "perceptiveRange": {
+                "total": 0
+            },
             "notes": ""
         }
     },
@@ -1419,6 +1426,7 @@
             "ammoGroup": "",
             "scopeMagnification": 1.0,
             "scopeMinimum": 0,
+            "owner": "",
             "currentAmmo": "STD",
             "ammoList": {
                 "STD": {
