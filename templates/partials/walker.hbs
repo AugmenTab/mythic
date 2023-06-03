@@ -1,0 +1,137 @@
+<table>
+  <thead>
+    <tr>
+      <th>STR</th>
+      <th>AGI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          name="str"
+          class="characteristic rollable"
+          value="{{system.characteristics.str}}"
+        >
+          {{system.characteristics.str}}
+        </button>
+      </td>
+      <td>
+        <button
+          name="agi"
+          class="characteristic rollable"
+          value="{{system.characteristics.agi}}"
+        >
+          {{system.characteristics.agi}}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>{{localize "mythic.vehicleSheet.walkerStats.mythicStr"}}</th>
+      <th>{{localize "mythic.vehicleSheet.walkerStats.mythicAgi"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&plus;{{system.characteristics.mythicStr}}</td>
+      <td>&plus;{{system.characteristics.mythicAgi}}</td>
+    </tr>
+  </tbody>
+
+  <thead>
+    <tr>
+      <th>{{localize "mythic.characterStatBlock.movement.half"}}</th>
+      <th>{{localize "mythic.characterStatBlock.movement.full"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{localnum system.movement.walker.half}}</td>
+      <td>{{localnum system.movement.walker.full}}</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>{{localize "mythic.characterStatBlock.movement.charge"}}</th>
+      <th>{{localize "mythic.characterStatBlock.movement.run"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{localnum system.movement.walker.charge}}</td>
+      <td>{{localnum system.movement.walker.run}}</td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="2">{{localize "mythic.skillNames.evasion"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <span>
+          <select name="system.movement.evasion.owner">
+            {{#select system.movement.evasion.owner}}
+              <option value="">--</option>
+              {{#if system.crew.operators}}
+                {{#each system.crew.operators as |operator|}}
+                  {{#if operator.display}}
+                    <option value="{{operator.id}}">
+                      [O{{doMath "+" operator.idx 1}}]
+                    </option>
+                  {{/if}}
+                {{/each}}
+              {{/if}}
+            {{/select}}
+          </select>
+          <button
+            class="gauge-btn"
+            {{#if (eq system.movement.walker.evasion.total 0)}}
+              disabled="true"
+              aria-disabled="true"
+            {{/if}}
+          >
+            {{localnum system.movement.walker.evasion.total}}
+          </button>
+        </span>
+      </td>
+    </tr>
+  <thead>
+    <tr>
+      <th colspan="2">{{localize "mythic.skillNames.parry"}}</th>
+    </tr>
+  </thead>
+    <tr>
+      <td colspan="2">
+        <span>
+          <select name="system.movement.parry.owner">
+            {{#select system.movement.parry.owner}}
+              <option value="">--</option>
+              {{#if system.crew.operators}}
+                {{#each system.crew.operators as |operator|}}
+                  {{#if operator.display}}
+                    <option value="{{operator.id}}">
+                      [O{{doMath "+" operator.idx 1}}]
+                    </option>
+                  {{/if}}
+                {{/each}}
+              {{/if}}
+            {{/select}}
+          </select>
+          <button
+            class="gauge-btn"
+            {{#if (eq system.movement.walker.parry.total 0)}}
+              disabled="true"
+              aria-disabled="true"
+            {{/if}}
+          >
+            {{localnum system.movement.walker.parry.total}}
+          </button>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

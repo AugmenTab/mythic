@@ -671,7 +671,9 @@
                 "brake": "Brake",
                 "speed": "Current Speed",
                 "topSpeed": "Top Speed",
-                "maneuver": "Maneuver"
+                "maneuver": "Maneuver",
+                "jump": "Jump",
+                "leap": "Leap"
             },
             "points": {
                 "label": "Size and Weapon Points",

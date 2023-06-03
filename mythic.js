@@ -54,6 +54,7 @@ async function preloadHandlebarsTemplates() {
     "systems/mythic/templates/partials/vehicle-sheet-settings.hbs",
     "systems/mythic/templates/partials/vehicle-sheet-summary.hbs",
     "systems/mythic/templates/partials/vehicle-stat-block.hbs",
+    "systems/mythic/templates/partials/walker.hbs",
     "systems/mythic/templates/partials/weapon-sheet-info.hbs",
     "systems/mythic/templates/partials/weapon-sheet-settings.hbs"
   ];

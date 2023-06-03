@@ -3,7 +3,11 @@
 </header>
 {{> "systems/mythic/templates/partials/vehicle-crew-manifest.hbs"}}
 <div class="vehicle-summary">
-  {{> "systems/mythic/templates/partials/gauge.hbs"}}
+  {{#if (eq system.propulsion.type "legs")}}
+    {{> "systems/mythic/templates/partials/walker.hbs"}}
+  {{else}}
+    {{> "systems/mythic/templates/partials/gauge.hbs"}}
+  {{/if}}
   {{> "systems/mythic/templates/partials/vehicle-stat-block.hbs"}}
 </div>
 {{> "systems/mythic/templates/partials/character-weapon-summary.hbs"}}

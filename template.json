@@ -741,7 +741,7 @@
                 "base": 0,
                 "mod": 0
             },
-            "size": "",
+            "size": "mini",
             "notes": "",
             "contamination": 0,
             "swarm": {
@@ -1019,7 +1019,7 @@
             "variant": "",
             "price": 0,
             "experience": 0,
-            "vehicleType": "ground",
+            "size": "",
             "dimensions": {
               "length": 0,
               "width": 0,
@@ -1052,6 +1052,22 @@
                 "base": 0,
                 "total": 0,
                 "owner": ""
+              },
+              "walker": {
+                "half": 0,
+                "full": 0,
+                "charge": 0,
+                "run": 0,
+                "jump": 0,
+                "leap": 0,
+                "evasion": {
+                  "total": 0,
+                  "owner": ""
+                },
+                "parry": {
+                  "total": 0,
+                  "owner": ""
+                }
               }
             },
             "breakpoints": {
@@ -1153,7 +1169,7 @@
               }
             },
             "propulsion": {
-              "type": "",
+              "type": "wheels",
               "current": 0,
               "max": 0
             },

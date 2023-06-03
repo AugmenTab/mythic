@@ -109,7 +109,7 @@
       <table>
         <thead>
           <tr>
-            <th colspan="5">
+            <th colspan="6">
               {{localize "mythic.vehicleSheet.walkerStats.label"}}
             </th>
           </tr>
@@ -118,7 +118,8 @@
             <th>AGI</th>
             <th>{{localize "mythic.vehicleSheet.walkerStats.mythicStr"}}</th>
             <th>{{localize "mythic.vehicleSheet.walkerStats.mythicAgi"}}</th>
-            <th>{{localize "mythic.vehicleSheet.movement.maneuver"}}</th>
+            <th>{{localize "mythic.vehicleSheet.movement.jump"}}</th>
+            <th>{{localize "mythic.vehicleSheet.movement.leap"}}</th>
           </tr>
         </thead>
         <tbody>
@@ -161,10 +162,19 @@
             </td>
             <td>
               <input
-                name="system.movement.maneuver.base"
+                name="system.movement.walker.jump"
                 type="number"
                 data-dtype="Number"
-                value="{{system.movement.maneuver.base}}"
+                value="{{system.movement.walker.jump}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.movement.walker.leap"
+                type="number"
+                data-dtype="Number"
+                value="{{system.movement.walker.leap}}"
                 onfocus="this.select()"
               />
             </td>

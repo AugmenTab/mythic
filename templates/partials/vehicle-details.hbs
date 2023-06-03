@@ -77,9 +77,9 @@
           onfocus="this.select()"
         />
       </span>
-      <select name="system.vehicleType">
-        {{#select system.vehicleType}}
-          {{#each config.vehicle.types as |value key|}}
+      <select name="system.size">
+        {{#select system.size}}
+          {{#each config.size as |value key|}}
             <option value="{{key}}">{{localize value}}</option>
           {{/each}}
         {{/select}}
