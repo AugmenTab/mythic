@@ -155,6 +155,25 @@
                       name="system.special.{{name}}.has"
                       type="checkbox"
                       {{checked this.has}}
+                      {{!-- Disable `enclosedTop` when `openTop` is selected --}}
+                      {{#if (cond "&&" (eq name "enclosedTop")
+                                       ../../this.system.special.openTop.has
+                            )
+                      }}
+                        class="disabled-special"
+                        disabled="true"
+                        aria-disabled="true"
+                      {{/if}}
+
+                      {{!-- Disable `openTop` when `enclosedTop` is selected --}}
+                      {{#if (cond "&&" (eq name "openTop")
+                                       ../../this.system.special.enclosedTop.has
+                            )
+                      }}
+                        class="disabled-special"
+                        disabled="true"
+                        aria-disabled="true"
+                      {{/if}}
                     />
                     <p
                       {{!-- Span 2 columns if no input is required --}}
@@ -169,6 +188,26 @@
                             )
                       }}
                         class="disabled-special"
+                      {{/if}}
+
+                      {{!-- Disable `enclosedTop` when `openTop` is selected --}}
+                      {{#if (cond "&&" (eq name "enclosedTop")
+                                       ../../this.system.special.openTop.has
+                            )
+                      }}
+                        class="disabled-special"
+                        disabled="true"
+                        aria-disabled="true"
+                      {{/if}}
+
+                      {{!-- Disable `openTop` when `enclosedTop` is selected --}}
+                      {{#if (cond "&&" (eq name "openTop")
+                                       ../../this.system.special.enclosedTop.has
+                            )
+                      }}
+                        class="disabled-special"
+                        disabled="true"
+                        aria-disabled="true"
                       {{/if}}
                     >
                       {{localize (concat "mythic.vehicleSheet.special." name)}}
