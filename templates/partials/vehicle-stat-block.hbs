@@ -56,18 +56,21 @@
         <tr>
           <td colspan="9">
             <div style="text-align: left; padding: 4px">
-              {{localize (concat "mythic.vehicleSheet.doom." system.breakpoints.hull.doom)}}
+              {{localize (concat "mythic.vehicleSheet.doom." system.breakpoints.hull.doom.level)}}
             </div>
           </td>
           <td>
             <button
               class="vehicle-btn doom"
-              {{#unless system.breakpoints.hull.doomed}}
+              {{#unless (cond "||" (gt system.breakpoints.hull.doom.blast 0)
+                                   (gt system.breakpoints.hull.doom.kill  0)
+                        )
+              }}
                 disabled="true"
                 aria-disabled="true"
               {{/unless}}
-              >
-                <i class="fa-solid fa-bomb"></i>
+            >
+              <i class="fa-solid fa-bomb"></i>
             </button>
           </td>
         </tr>

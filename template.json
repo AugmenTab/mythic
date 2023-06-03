@@ -1088,10 +1088,15 @@
                 "max": 0
               },
               "hull": {
-                "doom": "operational",
-                "doomed": false,
                 "current": 0,
-                "max": 0
+                "max": 0,
+                "doom": {
+                  "level": "tier_0",
+                  "armor": 0,
+                  "blast": 0,
+                  "kill": 0,
+                  "move": 0
+                }
               }
             },
             "armor": {

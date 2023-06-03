@@ -663,7 +663,16 @@
                 }
             },
             "doom": {
-                "operational": "Vehicle is operational."
+                "tier_0": "The Vehicle is operational.",
+                "tier_1": "The Vehicle has entered a doomed state.",
+                "tier_2": "The Vehicle has entered a doomed state.",
+                "tier_3": "A Character within the Vehicle takes the Damage of Attacks, reduced by half of the current Armor of the Vehicle.",
+                "tier_4": "A Character within the Vehicle takes the full Damage of Attacks.",
+                "tier_5": "The Vehicle is made into a useless husk of armor and components. The Vehicle cannot move and any weapon that needs an engine to move can no longer turn and aim.",
+                "tier_6": "The Vehicle catches fire and the Characters inside will take Flame (2) each Round until they escape.",
+                "tier_7": "The Vehicle catches fire and the Characters inside will take Flame (2) each Round until they escape. The Characters have 4 Rounds to escape the Vehicle before it detonates.",
+                "tier_8": "The Vehicle catches fire and the Characters inside will take Flame (2) each Round until they escape. The Characters have 2 Rounds to escape before the Vehicle fully detonates.",
+                "tier_9": "The Vehicle instantly detonates with no chance of escaping."
             },
             "movement": {
                 "label": "Movement",
