@@ -383,7 +383,11 @@ export function prepareNamedCharacterDerived(actor) {
  * @param {Actor} veh - The Vehicle Actor data.
  */
 export function prepareVehicleBase(veh) {
+  // Calculate Doom State Values
   calculateVehicleDoom(veh);
+
+  // Armor
+  calculateVehicleArmor(veh);
 }
 
 /**
@@ -1150,6 +1154,16 @@ function calculateSwarm(actorData) {
   } else {
     actorData.swarm.total = 1;
   }
+}
+
+function calculateVehicleArmor(veh) {
+  const div = veh.system.breakpoints.hull.current < 1 ? 2 : 1;
+  const penalty = veh.system.breakpoints.hull.doom.armor;
+
+  Object.values(veh.system.armor).forEach(loc => {
+    const current = Math.floor(loc.max / div) - penalty;
+    loc.current = current > 0 ? current  : 0;
+  });
 }
 
 function calculateVehicleDoom(veh) {

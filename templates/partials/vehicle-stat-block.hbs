@@ -157,8 +157,18 @@
                       {{checked this.has}}
                     />
                     <p
+                      {{!-- Span 2 columns if no input is required --}}
                       {{#if (eq type "none")}}
                         style="grid-column: span 2"
+                      {{/if}}
+
+                      {{!-- Style as disabled if in doomed state --}}
+                      {{#if (cond "&&"
+                                  (eq name "heavyPlating")
+                                  (lt ../../this.system.breakpoints.hull.current 1)
+                            )
+                      }}
+                        class="disabled-special"
                       {{/if}}
                     >
                       {{localize (concat "mythic.vehicleSheet.special." name)}}
