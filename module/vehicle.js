@@ -66,6 +66,22 @@ export function getPropulsion(propulsion) {
   }
 }
 
+function calculateManeuver(veh) {
+  const op = game.actors.get(veh.system.movement.maneuver.owner);
+  if (!op) {
+    veh.system.movement.maneuver.total = 0;
+    return;
+  }
+
+  let mod = 0;
+  if (op.system.skills.stunting.training.tier === "trained") mod =  5;
+  if (op.system.skills.stunting.training.tier === "plus10")  mod = 10;
+  if (op.system.skills.stunting.training.tier === "plus20")  mod = 20;
+
+  veh.system.movement.maneuver.total =
+    Math.min(veh.system.movement.maneuver.base + mod, op.system.skills.evasion.roll);
+}
+
 function calculateMovement(veh, penalized) {
   Object.entries(veh.system.movement).splice(0, 3).forEach(([ key, val ]) => {
     if (veh.system.breakpoints.hull.doom.move) {
@@ -78,6 +94,8 @@ function calculateMovement(veh, penalized) {
       val.current = 0;
     }
   });
+
+  calculateManeuver(veh);
 }
 
 function calculateWalkerMovement(veh) {
