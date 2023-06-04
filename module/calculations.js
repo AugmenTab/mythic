@@ -1171,7 +1171,7 @@ function calculateVehicleArmor(veh) {
 }
 
 function calculateVehicleDoom(veh) {
-  const hull = veh.system.breakpoints.hull.current * -1;
+  const hull = veh.system.breakpoints.hull.current;
   veh.system.breakpoints.hull.doom = Vehicle.getDoom(hull);
 }
 
