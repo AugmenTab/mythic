@@ -392,6 +392,9 @@ export function prepareVehicleBase(veh) {
 
   // Calculate Propulsion Changes
   calculateVehiclePropulsion(veh);
+
+  // Calculate Movement
+  Vehicle.calculateVehicleMovement(veh);
 }
 
 /**

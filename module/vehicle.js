@@ -12,6 +12,20 @@ const DEFAULT_PROPULSION = { multiplier: 1, toHit: 0 };
 const DEFAULT_DISABLED = { multiplier: 0, toHit: 0 };
 
 /**
+ * Calculates Vehicle movement values.
+ *
+ * @param {Actor} veh - The Vehicle Actor.
+ */
+export function calculateVehicleMovement(veh) {
+  switch(veh.system.propulsion.type) {
+    case "legs":      calculateWalkerMovement(veh);
+    case "thrusters": calculateMovement(veh, [ "accelerate", "brake", "speed" ]);
+    case "treads":    calculateMovement(veh, [ "accelerate", "speed" ]);
+    case "wheels":    calculateMovement(veh, [ "accelerate", "speed" ]);
+  }
+}
+
+/**
  * Provides vehicle doom state data based on its current hull breakpoints.
  *
  * @param {number} hull - The vehicle's current hull breakpoints.
@@ -48,6 +62,23 @@ export function getPropulsion(propulsion) {
     case "treads":    return getTreadsState(propulsion);
     case "wheels":    return getWheelsState(propulsion);
   }
+}
+
+function calculateMovement(veh, penalized) {
+  Object.entries(veh.system.movement).splice(0, 3).forEach(([ key, val ]) => {
+    if (veh.system.breakpoints.hull.doom.move) {
+      const mult =
+        penalized.includes(key) ? veh.system.propulsion.state.multiplier : 1;
+
+      val.max = val.base * mult;
+    } else {
+      val.max = 0;
+      val.current = 0;
+    }
+  });
+}
+
+function calculateWalkerMovement(veh) {
 }
 
 function getLegsState(propulsion) {
