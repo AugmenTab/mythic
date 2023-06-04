@@ -1175,8 +1175,8 @@
             },
             "propulsion": {
               "type": "wheels",
-              "current": 0,
-              "max": 0,
+              "current": 3,
+              "max": "3",
               "state": {
                 "multiplier": 1,
                 "toHit": 0
