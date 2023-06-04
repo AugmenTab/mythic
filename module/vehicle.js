@@ -1,5 +1,7 @@
 /** @module vehicle */
 
+import * as Common from "./common.js";
+
 // This defines the default values for a vehicle's propulsion when it's in
 // perfect working order. This is a multiplier of x1 to all movement stats or
 // characteristics, and no to-hit penalty.
@@ -79,6 +81,18 @@ function calculateMovement(veh, penalized) {
 }
 
 function calculateWalkerMovement(veh) {
+  const mult = veh.system.propulsion.state.multiplier;
+  const agi = Common.getCharacteristicModifier(veh.system.characteristics.agi);
+  const base = agi + veh.system.characteristics.mythicAgi;
+  const half =
+    veh.system.breakpoints.hull.doom.move
+      ? Math.max(0, Math.floor(base * mult))
+      : 0;
+
+  veh.system.movement.walker.half = half;
+  veh.system.movement.walker.full = half * 2;
+  veh.system.movement.walker.charge = half * 3;
+  veh.system.movement.walker.run = half * 6;
 }
 
 function getLegsState(propulsion) {
