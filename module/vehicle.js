@@ -68,7 +68,14 @@ export function getPropulsion(propulsion) {
 
 function calculateManeuver(veh) {
   const op = game.actors.get(veh.system.movement.maneuver.owner);
-  if (!op) {
+  const immobile = [
+    !op,
+    !veh.system.breakpoints.hull.doom.move,
+    veh.system.movement.speed.current === 0,
+    veh.system.movement.speed.max === 0
+  ].some(Boolean);
+
+  if (immobile) {
     veh.system.movement.maneuver.total = 0;
     return;
   }
@@ -148,13 +155,14 @@ function getLegsState(propulsion) {
 
 function getThrustersState(propulsion) {
   const thrusters = propulsion.max;
-  const disabled = propulsion.max - propulsion.current;
+  const intact = propulsion.current;
+  const disabled = thrusters - intact;
 
-  if (disabled <= 0) return DEFAULT_PROPULSION;
+  if (intact >= thrusters) return DEFAULT_PROPULSION;
 
   function fromMultiplier(x) {
     return {
-      multiplier: normalizeFloat(Math.max(1 - (disabled * x), 0)),
+      multiplier: normalizeFloat(Math.min(1, Math.max(1 - (disabled * x), 0))),
       toHit: 0
     };
   }
@@ -164,7 +172,7 @@ function getThrustersState(propulsion) {
   if (thrusters >= 16) return fromMultiplier(0.30);
   if (thrusters >= 15) return fromMultiplier(0.35);
   if (thrusters >= 14) return fromMultiplier(0.40);
-  if (thrusters >=  1) return fromMultiplier(0.05 * (thrusters - 1));
+  if (thrusters >=  1) return fromMultiplier(1 - (0.05 * (thrusters - 1)));
   return DEFAULT_DISABLED;
 }
 
