@@ -105,6 +105,58 @@ function calculateMovement(veh, penalized) {
   calculateManeuver(veh);
 }
 
+function calculateSkillValue(stat, training) {
+  const mods = {
+    "none": -20,
+    "trained": 0,
+    "plus10": 10,
+    "plus20": 20
+  };
+
+  const target = stat + (mods[training] || 0);
+  return target > 0 ? target : 0;
+}
+
+function calculateWalkerEvasion(veh) {
+  const op = game.actors.get(veh.system.movement.walker.evasion.owner);
+  const immobile = [
+    !op,
+    !veh.system.breakpoints.hull.doom.move,
+    veh.system.movement.walker.half === 0,
+  ].some(Boolean);
+
+  if (immobile) {
+    veh.system.movement.walker.evasion.total = 0;
+    return;
+  }
+
+  const training = op.system.skills.evasion.training.tier;
+  const agi =
+    Math.min(op.system.characteristics.agi.roll, veh.system.characteristics.agi);
+
+  veh.system.movement.walker.evasion.total = calculateSkillValue(agi, training);
+}
+
+function calculateWalkerParry(veh) {
+  const op = game.actors.get(veh.system.movement.walker.parry.owner);
+  const immobile = [
+    !op,
+    !veh.system.breakpoints.hull.doom.move,
+    veh.system.movement.walker.half === 0,
+  ].some(Boolean);
+
+  if (immobile) {
+    veh.system.movement.walker.parry.total = 0;
+    return;
+  }
+
+  const training = op.system.skills.evasion.training.tier;
+  const wfm = op.system.characteristics.wfm.roll;
+
+  veh.system.movement.walker.parry.total =
+    calculateSkillValue(op.system.trainings.weapons.hth ? wfm + 5 : wfm, training);
+}
+
 function calculateWalkerMovement(veh) {
   const mult = veh.system.propulsion.state.multiplier;
   const agi = Common.getCharacteristicModifier(veh.system.characteristics.agi);
@@ -118,6 +170,9 @@ function calculateWalkerMovement(veh) {
   veh.system.movement.walker.full = half * 2;
   veh.system.movement.walker.charge = half * 3;
   veh.system.movement.walker.run = half * 6;
+
+  calculateWalkerEvasion(veh);
+  calculateWalkerParry(veh);
 }
 
 function getLegsState(propulsion) {
