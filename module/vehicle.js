@@ -124,6 +124,8 @@ function getLegsState(propulsion) {
       if (legs >= 1) return DEFAULT_DISABLED;
       return { multiplier: 0, toHit: -20 };
   }
+
+  return DEFAULT_DISABLED;
 }
 
 function getThrustersState(propulsion) {
@@ -188,6 +190,8 @@ function getTreadsState(propulsion) {
       if (treads >= 1) return fromMultiplier(0.99);
       return DEFAULT_DISABLED;
   }
+
+  return DEFAULT_DISABLED;
 }
 
 function getWheelsState(propulsion) {
@@ -231,6 +235,8 @@ function getWheelsState(propulsion) {
       if (wheels >= 1) return fromMultiplier(0.95);
       return DEFAULT_DISABLED;
   }
+
+  return DEFAULT_DISABLED;
 }
 
 function normalizeFloat(x) {
