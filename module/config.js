@@ -431,6 +431,11 @@ mythic.vehicle = {
     op: "mythic.vehicleSheet.breakpoints.op",
     hull: "mythic.vehicleSheet.breakpoints.hull"
   },
+  mobility: {
+    legs: [ 2, 4, 6 ],
+    treads: [ 2, 4, 6, 8 ],
+    wheels: [ 3, 4, 6, 8 ]
+  },
   propulsion: {
     legs: "mythic.vehicleSheet.propulsion.legs",
     thrusters: "mythic.vehicleSheet.propulsion.thrusters",

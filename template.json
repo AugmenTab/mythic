@@ -1176,7 +1176,11 @@
             "propulsion": {
               "type": "wheels",
               "current": 0,
-              "max": 0
+              "max": 0,
+              "state": {
+                "multiplier": 1,
+                "toHit": 0
+              }
             },
             "modifications": {
               "mods": [],

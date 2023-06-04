@@ -2,6 +2,7 @@
 
 import { interpretDiceRollModifiers } from "./dice.js";
 import { makeUIError, makeUIWarning } from "./common.js";
+import * as Vehicle from "./vehicle.js";
 
 const GRANTS_CHARACTERISTICS = [ "armor", "equipment", "weapon" ];
 
@@ -386,8 +387,11 @@ export function prepareVehicleBase(veh) {
   // Calculate Doom State Values
   calculateVehicleDoom(veh);
 
-  // Armor
+  // Calculate Armor
   calculateVehicleArmor(veh);
+
+  // Calculate Propulsion Changes
+  calculateVehiclePropulsion(veh);
 }
 
 /**
@@ -1167,20 +1171,13 @@ function calculateVehicleArmor(veh) {
 }
 
 function calculateVehicleDoom(veh) {
-  let doom = { level: "tier_0", armor: 0, blast: 0, kill: 0, move: true };
-  const bp = veh.system.breakpoints.hull.current * -1;
+  const hull = veh.system.breakpoints.hull.current * -1;
+  veh.system.breakpoints.hull.doom = Vehicle.getDoom(hull);
+}
 
-  if (bp >=   0) doom = { level: "tier_1", armor: 0, blast: 0, kill: 0, move: true  };
-  if (bp >=  11) doom = { level: "tier_2", armor: 1, blast: 0, kill: 0, move: true  };
-  if (bp >=  21) doom = { level: "tier_3", armor: 2, blast: 0, kill: 0, move: true  };
-  if (bp >=  31) doom = { level: "tier_4", armor: 3, blast: 0, kill: 0, move: true  };
-  if (bp >=  41) doom = { level: "tier_5", armor: 4, blast: 0, kill: 0, move: false };
-  if (bp >=  51) doom = { level: "tier_6", armor: 5, blast: 0, kill: 0, move: false };
-  if (bp >=  66) doom = { level: "tier_7", armor: 5, blast: 2, kill: 1, move: false };
-  if (bp >=  81) doom = { level: "tier_8", armor: 5, blast: 3, kill: 2, move: false };
-  if (bp >= 100) doom = { level: "tier_9", armor: 5, blast: 4, kill: 3, move: false };
-
-  veh.system.breakpoints.hull.doom = doom;
+function calculateVehiclePropulsion(veh) {
+  const propulsion = veh.system.propulsion;
+  veh.system.propulsion.state = Vehicle.getPropulsion(propulsion);
 }
 
 function calculateWeaponAttacksMelee(actorData, weaponData) {

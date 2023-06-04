@@ -275,13 +275,23 @@
             />
           </td>
           <td>
-            <input
-              name="system.propulsion.max"
-              type="number"
-              data-dtype="Number"
-              value="{{system.propulsion.max}}"
-              onfocus="this.select()"
-            />
+            {{#if (eq system.propulsion.type "thrusters")}}
+              <input
+                name="system.propulsion.max"
+                type="number"
+                data-dtype="Number"
+                value="{{system.propulsion.max}}"
+                onfocus="this.select()"
+              />
+            {{else}}
+              <select name="system.propulsion.max">
+                {{#select system.propulsion.max}}
+                  {{#each (lookup config.vehicle.mobility system.propulsion.type)}}
+                    <option value="{{this}}">{{this}}</option>
+                  {{/each}}
+                {{/select}}
+              </select>
+            {{/if}}
           </td>
         </tr>
       </tbody>
