@@ -1,6 +1,5 @@
 /** @module chat */
 
-import { getCharacteristicModifier } from "./calculations.js";
 import { localize, makeUIError } from "./common.js";
 
 /**

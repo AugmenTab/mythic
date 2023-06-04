@@ -1,7 +1,5 @@
 /** @module MythicCombat */
 
-import { getCharacteristicModifier } from "./calculations.js";
-
 /**
  * Class representing the unique features of this system's Combat mechanics.
  *

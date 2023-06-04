@@ -1,6 +1,16 @@
 /** @module common */
 
 /**
+ * Get the characteristic modifier for a given characteristic score.
+ *
+ * @param {number} score - The characteristic score.
+ * @returns {number} The characteristic modifier.
+ */
+export function getCharacteristicModifier(score) {
+  return score < 0 ? 0 : Math.floor(score / 10);
+}
+
+/**
  * Fetches a localization string.
  *
  * @param {string} path - The path to the localization text.

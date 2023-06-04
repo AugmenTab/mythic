@@ -1,7 +1,7 @@
 /** @module calculations */
 
+import * as Common from "./common.js";
 import { interpretDiceRollModifiers } from "./dice.js";
-import { makeUIError, makeUIWarning } from "./common.js";
 import * as Vehicle from "./vehicle.js";
 
 const GRANTS_CHARACTERISTICS = [ "armor", "equipment", "weapon" ];
@@ -98,16 +98,6 @@ export function generateBaseItemData(type, subtype) {
 }
 
 /**
- * Get the characteristic modifier for a given characteristic score.
- *
- * @param {number} score - The characteristic score.
- * @returns {number} The characteristic modifier.
- */
-export function getCharacteristicModifier(score) {
-  return score < 0 ? 0 : Math.floor(score / 10);
-}
-
-/**
  * Process current magazine and ammo pool values for a weapon upon reloading.
  *
  * @param {ItemData} weaponData - The Weapon Item data.
@@ -122,7 +112,7 @@ export function handleReloadMagCount(weaponData) {
   const isSingleLoading = ammo.special.singleLoading.has;
 
   if (magCurrent === magCapacity) {
-    makeUIWarning("mythic.chat.error.noNeedToReload");
+    Common.makeUIWarning("mythic.chat.error.noNeedToReload");
     return weaponData;
   }
 
@@ -433,7 +423,7 @@ export function setupCrew(crew) {
       continue;
     } else if (!actor) {
       crew[i].display = null;
-      makeUIWarning("mythic.chat.error.unknownActor");
+      Common.makeUIWarning("mythic.chat.error.unknownActor");
     } else {
       const rank = actor.system.rank === "" ? "" : `${actor.system.rank} `;
       crew[i].display = rank + actor.name;
@@ -613,7 +603,9 @@ function calculateCharacteristicsFlood(actorData) {
 }
 
 function calculateDamageResistance(actorData) {
-  const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
+  const touMod =
+    Common.getCharacteristicModifier(actorData.characteristics.tou.total);
+
   const touSoak = touMod + actorData.mythicCharacteristics.tou.total;
   actorData.characteristics.extra.touDR = touSoak;
 
@@ -624,7 +616,7 @@ function calculateDamageResistance(actorData) {
 
 function calculateDamageResistanceFlood(actor) {
   const touDamageResistance = (
-      getCharacteristicModifier(actor.system.characteristics.tou.total)
+      Common.getCharacteristicModifier(actor.system.characteristics.tou.total)
     + actor.system.mythicCharacteristics.tou.total
   );
 
@@ -653,7 +645,7 @@ function calculateEducations(actor) {
 
   actor.system.educations.max = actor.system.educations.mod + (
       actor.system.educations.intMultiplier
-    * getCharacteristicModifier(actor.system.characteristics.int.total)
+    * Common.getCharacteristicModifier(actor.system.characteristics.int.total)
   );
 
   actor.system.educations.style =
@@ -695,7 +687,7 @@ function calculateEncumbrance(actorData) {
   } else if (method === "simplified") {
     const strMod = (
         actorData.mythicCharacteristics.str.total
-      + getCharacteristicModifier(str)
+      + Common.getCharacteristicModifier(str)
     );
 
     penalty = (
@@ -775,7 +767,7 @@ function calculateGripPenaltyThrown(grip) {
 
   // This should never happen since the grip value is chosen from a select menu,
   // but if it does, we should produce an error.
-  makeUIError("mythic.chat.error.unrecognizedGrip");
+  Common.makeUIError("mythic.chat.error.unrecognizedGrip");
   return 0;
 }
 
@@ -796,9 +788,9 @@ function calculateInitiative(actorData, feltFatigue) {
   let mods = [];
   const dice = actorData.initiative.fastFoot ? "2d10kh" : "1d10";
   mods.push(
-    [ getCharacteristicModifier(stats.agi.total)
-    , init.battleMind    ? getCharacteristicModifier(stats.int.total) : 0
-    , init.grandEntrance ? getCharacteristicModifier(stats.ldr.total) : 0
+    [ Common.getCharacteristicModifier(stats.agi.total)
+    , init.battleMind    ? Common.getCharacteristicModifier(stats.int.total) : 0
+    , init.grandEntrance ? Common.getCharacteristicModifier(stats.ldr.total) : 0
     ].sort().reverse()[0]
   );
 
@@ -814,9 +806,12 @@ function calculateInitiative(actorData, feltFatigue) {
 }
 
 function calculateInitiativeFlood(actorData) {
-  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
+  const agiMod =
+    Common.getCharacteristicModifier(actorData.characteristics.agi.total);
+
   const mythicAgi = actorData.mythicCharacteristics.agi.total;
   let bonus = 0;
+
   if (mythicAgi > 0) {
     bonus = Math.floor(mythicAgi / 2);
     bonus += (bonus > 0 ? 0 : 1);
@@ -947,7 +942,7 @@ function calculateLuck(actor) {
 
 function calculateMaxFatigue(actorData) {
   actorData.fatigue.max =
-    2 * getCharacteristicModifier(actorData.characteristics.tou.total);
+    2 * Common.getCharacteristicModifier(actorData.characteristics.tou.total);
 }
 
 function calculateMovementDistancesWithEncumbrance(actorData) {
@@ -990,8 +985,12 @@ function calculateMovementDistancesWithEncumbrance(actorData) {
 }
 
 function calculateMovementDistancesBase(actorData) {
-  const strMod = getCharacteristicModifier(actorData.characteristics.str.total);
-  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.roll);
+  const strMod =
+    Common.getCharacteristicModifier(actorData.characteristics.str.total);
+
+  const agiMod =
+    Common.getCharacteristicModifier(actorData.characteristics.agi.roll);
+
   const base = agiMod + actorData.mythicCharacteristics.agi.total;
   const chargeRunBonus =
     isNaN(actorData.movement.agiBonusRunCharge)
@@ -1184,7 +1183,9 @@ function calculateVehiclePropulsion(veh) {
 }
 
 function calculateWeaponAttacksMelee(actorData, weaponData) {
-  const wfm = getCharacteristicModifier(actorData.characteristics.wfm.total);
+  const wfm =
+    Common.getCharacteristicModifier(actorData.characteristics.wfm.total);
+
   const extra = weaponData.attack.extraMelee;
   const half =
     Math.min(8, extra + Math.min(4, Math.max(1, Math.floor(wfm / 2))));
@@ -1234,7 +1235,7 @@ function calculateWeaponRangeThrown(actorData, weaponData) {
   const currentAmmo = weaponData.currentAmmo;
   const bonus = weaponData.ammoList[currentAmmo].range.thrownBonus;
   const base = (
-      getCharacteristicModifier(actorData.characteristics.str.total)
+      Common.getCharacteristicModifier(actorData.characteristics.str.total)
     + actorData.mythicCharacteristics.str.total
   );
 
@@ -1252,8 +1253,12 @@ function calculateWeaponRangeThrown(actorData, weaponData) {
 }
 
 function calculateWeaponReloadStandard(actorData, weaponData) {
-  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
-  const wfrMod = getCharacteristicModifier(actorData.characteristics.wfr.total);
+  const agiMod =
+    Common.getCharacteristicModifier(actorData.characteristics.agi.total);
+
+  const wfrMod =
+    Common.getCharacteristicModifier(actorData.characteristics.wfr.total);
+
   let reload = (
       weaponData.reload.base
     - Math.floor(agiMod / 2)
@@ -1265,8 +1270,12 @@ function calculateWeaponReloadStandard(actorData, weaponData) {
 }
 
 function calculateWeaponReloadSingleLoading(actorData, weaponData) {
-  const agiMod = getCharacteristicModifier(actorData.characteristics.agi.total);
-  const wfrMod = getCharacteristicModifier(actorData.characteristics.wfr.total);
+  const agiMod =
+    Common.getCharacteristicModifier(actorData.characteristics.agi.total);
+
+  const wfrMod =
+    Common.getCharacteristicModifier(actorData.characteristics.wfr.total);
+
   const rrBonus = actorData.trainings.weapons.rapidReload ? 1 : 0;
   const final = 1 + Math.floor(agiMod / 2) + Math.floor(wfrMod / 2) + rrBonus;
   weaponData.reload.total = final > 3 ? 3 : final;
@@ -1335,7 +1344,9 @@ function calculateWeightPenaltyThrown(mod, weight) {
 }
 
 function calculateWoundsBestiary(actorData) {
-  const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
+  const touMod =
+    Common.getCharacteristicModifier(actorData.characteristics.tou.total);
+
   const mythicTou = actorData.mythicCharacteristics.tou.total;
   const doubleTou = actorData.wounds.doubleTou ? 2 : 1;
   const diffTier = actorData.difficulty.normalOnly
@@ -1356,7 +1367,9 @@ function calculateWoundsFlood(actorData) {
 }
 
 function calculateWoundsNamedCharacter(actorData) {
-  const touMod = getCharacteristicModifier(actorData.characteristics.tou.total);
+  const touMod =
+    Common.getCharacteristicModifier(actorData.characteristics.tou.total);
+
   const doubleTou = actorData.wounds.doubleTou ? 2 : 1;
   const mythicTou = actorData.mythicCharacteristics.tou.total;
   actorData.wounds.max = (
@@ -1376,7 +1389,7 @@ function calculateReloadAmmoPool(weaponData, extraData) {
                        : missingRounds;
 
   if (pool === 0) {
-    makeUIError("mythic.chat.error.ammoPoolEmpty");
+    Common.makeUIError("mythic.chat.error.ammoPoolEmpty");
     return weaponData;
   }
 
@@ -1384,15 +1397,15 @@ function calculateReloadAmmoPool(weaponData, extraData) {
   if (pool >= reload) {
     const newPool = pool - reload;
     if (newPool === 0) {
-      makeUIWarning("mythic.chat.error.reloadEmptiesPool");
+      Common.makeUIWarning("mythic.chat.error.reloadEmptiesPool");
     } else if (newPool <= extraData.magCapacity) {
-      makeUIWarning("mythic.chat.error.poolDownToOneMag");
+      Common.makeUIWarning("mythic.chat.error.poolDownToOneMag");
     }
     weaponData.ammoList[currentAmmo].ammoTracking.pool = newPool;
     weaponData.ammoList[currentAmmo].currentMag =
       extraData.magCurrent + reload;
   } else if (reload > pool) {
-    makeUIWarning("mythic.chat.error.reloadEmptiesPool");
+    Common.makeUIWarning("mythic.chat.error.reloadEmptiesPool");
     weaponData.ammoList[currentAmmo].ammoTracking.pool = 0;
     weaponData.ammoList[currentAmmo].currentMag =
       extraData.magCurrent + pool;
@@ -1404,11 +1417,11 @@ function calculateReloadMagFed(weaponData, currentAmmo) {
   const magsCarried = weaponData.ammoList[currentAmmo].ammoTracking.mags;
   if (magsCarried > 0) {
     const newMagsCarried = magsCarried - 1;
-    if (newMagsCarried === 0) makeUIWarning("mythic.chat.error.lastMag");
+    if (newMagsCarried === 0) Common.makeUIWarning("mythic.chat.error.lastMag");
     weaponData.ammoList[currentAmmo].currentMag = weaponData.magazineCapacity;
     weaponData.ammoList[currentAmmo].ammoTracking.mags = newMagsCarried;
   } else {
-    makeUIError("mythic.chat.error.outOfMags");
+    Common.makeUIError("mythic.chat.error.outOfMags");
   }
   return weaponData;
 }

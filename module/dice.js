@@ -1,6 +1,5 @@
 /** @module dice */
 
-import { getCharacteristicModifier } from "./calculations.js";
 import * as Chat from "./chat.js";
 import * as Common from "./common.js";
 import { determineHitLocation } from "./location.js";
@@ -485,14 +484,16 @@ async function rollAttackAndDamage(actor, weapon, data) {
     if (weapon.system.group === "melee") {
       const str = (
         actor.system.mythicCharacteristics.str.total +
-        getCharacteristicModifier(actor.system.characteristics.str.total)
+        Common.getCharacteristicModifier(actor.system.characteristics.str.total)
       );
 
       base += Math.floor(str * ammo.strDamage);
       pierce += Math.floor(str * ammo.strPiercing);
 
       if (actor.system.trainings.weapons.unarmedCombatant) {
-        const wfm = getCharacteristicModifier(actor.system.characteristics.wfm.total);
+        const wfm =
+          Common.getCharacteristicModifier(actor.system.characteristics.wfm.total);
+
         pierce += Math.floor(wfm / 2);
       }
     }
