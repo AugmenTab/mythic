@@ -169,7 +169,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     switch(element.dataset.role) {
       case "complement":
         let complement = this.actor.system.crew.complement;
-        complement[element.dataset.idx].id = element.value;
+        complement[element.dataset.index].id = element.value;
 
         return await this.actor.update({
           "system.crew.complement": Calc.setupCrew(complement)
@@ -177,10 +177,10 @@ export default class MythicVehicleSheet extends ActorSheet {
 
       case "gunner":
         let gunners = this.actor.system.crew.gunners;
-        gunners[element.dataset.idx].id = element.value;
+        gunners[element.dataset.index].id = element.value;
 
         return await this.actor.update({
-          "system.crew.gunners": Calc.setupCrew(operators)
+          "system.crew.gunners": Calc.setupCrew(gunners)
         });
 
       case "operator":
