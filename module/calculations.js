@@ -220,6 +220,9 @@ export function prepareBestiaryDerived(actor) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actor);
+
+  // Update Dependent Vehicles
+  Vehicle.updateDependentVehicles(actor._id);
 }
 
 /**
@@ -290,6 +293,9 @@ export function prepareFloodDerived(actor) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actor);
+
+  // Update Dependent Vehicles
+  Vehicle.updateDependentVehicles(actor._id);
 }
 
 /**
@@ -366,6 +372,9 @@ export function prepareNamedCharacterDerived(actor) {
 
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(actor);
+
+  // Update Dependent Vehicles
+  Vehicle.updateDependentVehicles(actor._id);
 }
 
 /**

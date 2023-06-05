@@ -66,6 +66,13 @@ export function getPropulsion(propulsion) {
   }
 }
 
+export function updateDependentVehicles(actorId) {
+  game.actors.filter(v => isOnBoard(actorId, v)).map(vehicle => {
+    vehicle.prepareData();
+    vehicle.render();
+  });
+}
+
 function calculateManeuver(veh) {
   const op = game.actors.get(veh.system.movement.maneuver.owner);
   const immobile = [
@@ -318,6 +325,16 @@ function getWheelsState(propulsion) {
   }
 
   return DEFAULT_DISABLED;
+}
+
+function isOnBoard(actorId, veh) {
+  if (veh.type !== "Vehicle") return false;
+
+  return new Array(
+    veh.system.crew.operators,
+    veh.system.crew.gunners,
+    veh.system.crew.complement
+  ).flat().some(crew => crew.id === actorId);
 }
 
 function normalizeFloat(x) {
