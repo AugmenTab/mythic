@@ -433,6 +433,9 @@ export function setupCrew(crew) {
     } else if (!actor) {
       crew[i].display = null;
       Common.makeUIWarning("mythic.chat.error.unknownActor");
+    } else if (actor.type === "Vehicle") {
+      crew[i].display = null;
+      Common.makeUIWarning("mythic.chat.error.noVehicleAsCrew");
     } else {
       const rank = actor.system.rank === "" ? "" : `${actor.system.rank} `;
       crew[i].display = rank + actor.name;
