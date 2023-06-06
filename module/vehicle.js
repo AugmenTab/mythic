@@ -112,7 +112,7 @@ function calculateMovement(veh, penalized) {
   calculateManeuver(veh);
 }
 
-function calculateSkillValue(stat, training) {
+function calculateSkillValue(stat, training, modifier) {
   const mods = {
     "none": -20,
     "trained": 0,
@@ -120,7 +120,7 @@ function calculateSkillValue(stat, training) {
     "plus20": 20
   };
 
-  const target = stat + (mods[training] || 0);
+  const target = stat + modifier + (mods[training] || 0);
   return target > 0 ? target : 0;
 }
 
@@ -138,10 +138,12 @@ function calculateWalkerEvasion(veh) {
   }
 
   const training = op.system.skills.evasion.training.tier;
+  const mods = op.system.skills.evasion.mods;
   const agi =
     Math.min(op.system.characteristics.agi.roll, veh.system.characteristics.agi);
 
-  veh.system.movement.walker.evasion.total = calculateSkillValue(agi, training);
+  veh.system.movement.walker.evasion.total =
+    calculateSkillValue(agi, training, mods);
 }
 
 function calculateWalkerParry(veh) {
@@ -159,9 +161,11 @@ function calculateWalkerParry(veh) {
 
   const training = op.system.skills.evasion.training.tier;
   const wfm = op.system.characteristics.wfm.roll;
+  const stat = op.system.trainings.weapons.hth ? wfm + 5 : wfm;
+  const mods = op.system.skills.evasion.mods;
 
   veh.system.movement.walker.parry.total =
-    calculateSkillValue(op.system.trainings.weapons.hth ? wfm + 5 : wfm, training);
+    calculateSkillValue(stat, training, mods);
 }
 
 function calculateWalkerMovement(veh) {
