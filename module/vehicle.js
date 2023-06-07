@@ -66,6 +66,20 @@ export function getPropulsion(propulsion) {
   }
 }
 
+export function getRoleOwner(assignment) {
+  const actorId = assignment.split("_")[1];
+  const actor = game.actors.get(actorId);
+
+  if (!actor && !actorId) {
+    return null;
+  } else if (!actor) {
+    Common.makeUIError("mythic.chat.error.unknownActor");
+    return null;
+  } else {
+    return actor;
+  }
+}
+
 export function updateDependentVehicles(actorId) {
   game.actors.filter(v => isOnBoard(actorId, v)).map(vehicle => {
     vehicle.prepareData();

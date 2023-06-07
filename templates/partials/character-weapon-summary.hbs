@@ -66,29 +66,36 @@
                       &nbsp;({{this.target}})
                     </div>
                     {{#if (eq ../../actor.type "Vehicle")}}
-                      <select style="width: 50px">
-                        <option value="">--</option>
-                        {{#each ../../actor.system.crew.operators as |operator|}}
-                          {{#if operator.display}}
-                            <option value="{{operator.id}}">
-                              [O{{doMath "+" operator.idx 1}}]
-                            </option>
-                          {{/if}}
-                        {{/each}}
-                        {{#each ../../actor.system.crew.gunners as |gunner|}}
-                          {{#if gunner.display}}
-                            <option value="{{gunner.id}}">
-                              [G{{doMath "+" gunner.idx 1}}]
-                            </option>
-                          {{/if}}
-                        {{/each}}
-                        {{#each ../../actor.system.crew.complement as |complement|}}
-                          {{#if complement.display}}
-                            <option value="{{complement.id}}">
-                              [C{{doMath "+" complement.idx 1}}]
-                            </option>
-                          {{/if}}
-                        {{/each}}
+                      <select
+                        class="item-edit-inline special-focus"
+                        style="width: 50px"
+                        data-field="owner"
+                        data-item-id="{{weapon._id}}"
+                      >
+                        {{#select weapon.system.owner}}
+                          <option value="">--</option>
+                          {{#each ../../actor.system.crew.operators as |operator|}}
+                            {{#if operator.display}}
+                              <option value="{{concat "o_" operator.id}}">
+                                [O{{doMath "+" operator.idx 1}}]
+                              </option>
+                            {{/if}}
+                          {{/each}}
+                          {{#each ../../actor.system.crew.gunners as |gunner|}}
+                            {{#if gunner.display}}
+                              <option value="{{concat "g_" gunner.id}}">
+                                [G{{doMath "+" gunner.idx 1}}]
+                              </option>
+                            {{/if}}
+                          {{/each}}
+                          {{#each ../../actor.system.crew.complement as |complement|}}
+                            {{#if complement.display}}
+                              <option value="{{concat "c_" complement.id}}">
+                                [C{{doMath "+" complement.idx 1}}]
+                              </option>
+                            {{/if}}
+                          {{/each}}
+                        {{/select}}
                       </select>
                     {{/if}}
                   </div>

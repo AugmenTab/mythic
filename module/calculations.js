@@ -411,7 +411,8 @@ export function prepareVehicleEmbedded(veh) {
  * @param {Actor} veh - The Vehicle Actor data.
  */
 export function prepareVehicleDerived(veh) {
-  // TODO
+  // Calculate Weapon Attacks
+  calculateWeaponSummaryAttackData(veh);
 }
 
 /**
@@ -437,7 +438,7 @@ export function setupCrew(crew) {
       crew[i].display = null;
       Common.makeUIWarning("mythic.chat.error.noVehicleAsCrew");
     } else {
-      const rank = actor.system.rank === "" ? "" : `${actor.system.rank} `;
+      const rank = !actor.system.rank ? "" : `${actor.system.rank} `;
       crew[i].display = rank + actor.name;
     }
   }
@@ -1324,23 +1325,31 @@ function calculateWeaponTarget(actorData, weaponData) {
 
 function calculateWeaponSummaryAttackData(actor) {
   const weapons = actor.items.filter(item => item.type === "weapon");
+
   Object.values(weapons).forEach(weapon => {
     const currentAmmo = weapon.system.currentAmmo;
+    const owner =
+      actor.type === "Vehicle"
+        ? Vehicle.getRoleOwner(weapon.system.owner)
+        : actor;
+
+    if (!owner) return;
     if (weapon.system.group === "thrown") {
-      calculateWeaponRangeThrown(actor.system, weapon.system);
+      calculateWeaponRangeThrown(owner.system, weapon.system);
       weapon.system.attack.half = 1;
       weapon.system.attack.full = 1;
       weapon.system.attack.fireMode = "thrown";
     } else if (weapon.system.group === "melee") {
-      calculateWeaponRangeMelee(actor.system, weapon.system);
-      calculateWeaponAttacksMelee(actor.system, weapon.system);
+      calculateWeaponRangeMelee(owner.system, weapon.system);
+      calculateWeaponAttacksMelee(owner.system, weapon.system);
     } else if (weapon.system.group === "ranged") {
       calculateWeaponAttacksRanged(weapon.system);
       if (weapon.system.ammoList[currentAmmo].special.singleLoading.has) {
-        calculateWeaponReloadSingleLoading(actor.system, weapon.system);
-      } else calculateWeaponReloadStandard(actor.system, weapon.system);
+        calculateWeaponReloadSingleLoading(owner.system, weapon.system);
+      } else calculateWeaponReloadStandard(owner.system, weapon.system);
     }
-    calculateWeaponTarget(actor.system, weapon.system);
+
+    calculateWeaponTarget(owner.system, weapon.system);
   });
 }
 

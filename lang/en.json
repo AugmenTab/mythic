@@ -368,7 +368,7 @@
                 "distancefromTargetDefaulted": "The distance from target value provided is invalid. No range values applied to attack.",
                 "targetOutOfRange": "Target is out of range for this weapon.",
                 "unknownCrewRole": "The provided vehicle crew role is unknown.",
-                "unknownActor": "The provided Actor ID is unknown - cannot assign role to unknown Actor.",
+                "unknownActor": "Cannot find Actor for provided Actor ID.",
                 "noVehicleAsCrew": "The provided Actor ID belongs to a Vehicle - cannot assign vehicle role to a Vehicle."
             },
             "education": {
