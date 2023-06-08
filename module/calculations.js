@@ -1271,12 +1271,17 @@ function calculateWeaponRangeThrown(actorData, weaponData) {
   );
 }
 
-function calculateWeaponReloadStandard(actorData, weaponData) {
+function calculateWeaponReloadStandard(actor, vehData, weaponData) {
+  if (vehData && vehData.special.autoloader.has) {
+    weaponData.reload.total = Math.floor(weaponData.reload.base / 2);
+    return;
+  }
+
   const agiMod =
-    Common.getCharacteristicModifier(actorData.characteristics.agi.total);
+    Common.getCharacteristicModifier(actor.system.characteristics.agi.total);
 
   const wfrMod =
-    Common.getCharacteristicModifier(actorData.characteristics.wfr.total);
+    Common.getCharacteristicModifier(actor.system.characteristics.wfr.total);
 
   let reload = (
       weaponData.reload.base
@@ -1284,7 +1289,7 @@ function calculateWeaponReloadStandard(actorData, weaponData) {
     - Math.floor(wfrMod / 2)
   );
 
-  if (actorData.trainings.weapons.rapidReload) reload = Math.ceil(reload / 2);
+  if (actor.system.trainings.weapons.rapidReload) reload = Math.ceil(reload / 2);
   weaponData.reload.total = reload > 0 ? reload : 1;
 }
 
@@ -1334,8 +1339,9 @@ function calculateWeaponSummaryAttackData(actor) {
 
   Object.values(weapons).forEach(weapon => {
     const currentAmmo = weapon.system.currentAmmo;
+    const isVehicle = actor.type === "Vehicle";
     const owner =
-      actor.type === "Vehicle"
+      isVehicle
         ? Vehicle.getRoleOwner(weapon.system.owner)
         : actor;
 
@@ -1352,7 +1358,10 @@ function calculateWeaponSummaryAttackData(actor) {
       calculateWeaponAttacksRanged(weapon.system);
       if (weapon.system.ammoList[currentAmmo].special.singleLoading.has) {
         calculateWeaponReloadSingleLoading(owner.system, weapon.system);
-      } else calculateWeaponReloadStandard(owner.system, weapon.system);
+      } else {
+        const vehData = isVehicle ? actor.system : null;
+        calculateWeaponReloadStandard(owner, vehData, weapon.system);
+      }
     }
 
     calculateWeaponTarget(owner.system, weapon.system);
