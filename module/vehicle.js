@@ -66,6 +66,13 @@ export function getPropulsion(propulsion) {
   }
 }
 
+/**
+ * Finds the role owner for a given role assignment - that is, the abbreviation
+ * for a role followed by the Actor ID, separated by an underscore ('_').
+ *
+ * @param {string} assignment - The assignment string.
+ * @return {Actor|null} The current Actor assigned to the role, if applicable.
+ */
 export function getRoleOwner(assignment) {
   const actorId = assignment.split("_")[1];
   const actor = game.actors.get(actorId);
@@ -80,6 +87,12 @@ export function getRoleOwner(assignment) {
   }
 }
 
+/**
+ * Updates all Vehicle Actors that list the provided Actor ID as assigned to one
+ * of its onboard roles.
+ *
+ * @param {string} actorId - The ID of the Actor.
+ */
 export function updateDependentVehicles(actorId) {
   game.actors.filter(v => isOnBoard(actorId, v)).map(vehicle => {
     vehicle.prepareData();
@@ -88,7 +101,7 @@ export function updateDependentVehicles(actorId) {
 }
 
 function calculateManeuver(veh) {
-  const op = game.actors.get(veh.system.movement.maneuver.owner);
+  const op = getRoleOwner(veh.system.movement.maneuver.owner);
   const immobile = [
     !op,
     !veh.system.breakpoints.hull.doom.move,
@@ -139,7 +152,7 @@ function calculateSkillValue(stat, training, modifier) {
 }
 
 function calculateWalkerEvasion(veh) {
-  const op = game.actors.get(veh.system.movement.walker.evasion.owner);
+  const op = getRoleOwner(veh.system.movement.walker.evasion.owner);
   const immobile = [
     !op,
     !veh.system.breakpoints.hull.doom.move,
@@ -161,7 +174,7 @@ function calculateWalkerEvasion(veh) {
 }
 
 function calculateWalkerParry(veh) {
-  const op = game.actors.get(veh.system.movement.walker.parry.owner);
+  const op = getRoleOwner(veh.system.movement.walker.parry.owner);
   const immobile = [
     !op,
     !veh.system.breakpoints.hull.doom.move,

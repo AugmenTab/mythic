@@ -79,7 +79,7 @@
               {{#if system.crew.operators}}
                 {{#each system.crew.operators as |operator|}}
                   {{#if operator.display}}
-                    <option value="{{operator.id}}">
+                    <option value="{{concat "o_" operator.id}}">
                       [O{{doMath "+" operator.idx 1}}]
                     </option>
                   {{/if}}
@@ -113,7 +113,7 @@
               {{#if system.crew.operators}}
                 {{#each system.crew.operators as |operator|}}
                   {{#if operator.display}}
-                    <option value="{{operator.id}}">
+                    <option value="{{concat "o_" operator.id}}">
                       [O{{doMath "+" operator.idx 1}}]
                     </option>
                   {{/if}}
