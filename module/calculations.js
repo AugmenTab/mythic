@@ -411,6 +411,12 @@ export function prepareVehicleEmbedded(veh) {
  * @param {Actor} veh - The Vehicle Actor data.
  */
 export function prepareVehicleDerived(veh) {
+  new Array(
+    veh.system.crew.operators,
+    veh.system.crew.gunners,
+    veh.system.crew.complement
+  ).forEach(setupCrew);
+
   // Calculate Weapon Attacks
   calculateWeaponSummaryAttackData(veh);
 }
