@@ -113,7 +113,8 @@
     <tr>
       <td colspan="2">
         <button
-          class="vehicle-btn splatter"
+          class="vehicle-btn attack"
+          data-atk-type="splatter"
           {{#if (eq system.movement.speed.current 0)}}
             disabled="true"
             aria-disabled="true"
@@ -125,7 +126,8 @@
       {{!--
       <td colspan="2">
         <button
-          class="vehicle-btn splatter"
+          class="vehicle-btn attack"
+          data-atk-type="wreck"
           {{#if (eq system.movement.speed.current 0)}}
             disabled="true"
             aria-disabled="true"

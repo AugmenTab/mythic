@@ -77,6 +77,7 @@ export default class MythicVehicleSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.find(".attack").click(this._onVehicleAttack.bind(this));
     html.find(".crew-create").click(this._onCrewCreate.bind(this));
     html.find(".crew-delete").click(this._onCrewDelete.bind(this));
     html.find(".crew-edit").change(this._onCrewEdit.bind(this));
@@ -90,7 +91,6 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".reload").click(this._onReload.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".speed-change").click(this._onSpeedChange.bind(this));
-    html.find(".splatter").click(this._onSplatter.bind(this));
   }
 
   async _onCrewCreate(event) {
@@ -310,8 +310,10 @@ export default class MythicVehicleSheet extends ActorSheet {
     await this.actor.update({ "system.movement.speed.current": speed });
   }
 
-  async _onSplatter(event) {
+  async _onVehicleAttack(event) {
     event.preventDefault();
-    await rollVehicleAttack(this.actor, "splatter");
+    const element = event.currentTarget;
+    const atkType = element.getAttribute("data-atk-type");
+    await rollVehicleAttack(this.actor, atkType);
   }
 }
