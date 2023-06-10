@@ -397,20 +397,24 @@ export function prepareVehicleBase(veh) {
 }
 
 /**
- * Prepares all embedded entities for a Vehicle Actor type.
- *
- * @param {Actor} veh - The Vehicle Actor data.
- */
-export function prepareVehicleEmbedded(veh) {
-  // TODO
-}
-
-/**
  * Prepares all derived Actor data for a Vehicle Actor type.
  *
  * @param {Actor} veh - The Vehicle Actor data.
  */
 export function prepareVehicleDerived(veh) {
+  // Calculate Cargo
+  veh.system.cargo.total = 0;
+  veh.items.filter(
+    item => ["armor", "equipment", "weapon"].includes(item.type)
+  ).forEach(item => {
+    const weight = calculateItemWeight(item);
+
+    if (!item.system.weight.carried) item.system.weight.equipped = false;
+    item.system.weight.total = weight.total;
+
+    veh.system.cargo.total += weight.total;
+  });
+
   new Array(
     veh.system.crew.operators,
     veh.system.crew.gunners,

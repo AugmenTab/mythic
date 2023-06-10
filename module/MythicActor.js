@@ -41,7 +41,7 @@ export default class MythicActor extends Actor {
   prepareEmbeddedEntities() {
     const flags = this.flags.boilerplate || {};
     switch (this.type) {
-      case "Vehicle": return Calc.prepareVehicleEmbedded(this);
+      case "Vehicle": return;
       default:        return Calc.prepareCharacterEmbedded(this);
     }
   }
