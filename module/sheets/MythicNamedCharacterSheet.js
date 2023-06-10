@@ -283,6 +283,21 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     await item.update({ "system": Calc.handleReloadMagCount(item.system) });
   }
 
+  async _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    if (element.classList[0] === "attack") {
+      const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+      const newMag = await rollAttacks(element, this.actor, item);
+      if (!isNaN(newMag)) {
+        item.system.ammoList[item.system.currentAmmo].currentMag = newMag;
+        await item.update({ "system": item.system });
+      }
+    } else {
+      await rollTest(element, this.actor);
+    }
+  }
+
   async _onShieldItemRecharge(event) {
     event.preventDefault();
     const element = event.currentTarget;
@@ -311,20 +326,5 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const val = system.shields.value + system.shields.recharge;
     const update = val > system.shields.max ? system.shields.max : val;
     await this.actor.update({ "system.shields.value": update });
-  }
-
-  async _onRoll(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    if (element.classList[0] === "attack") {
-      const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-      const newMag = await rollAttacks(element, this.actor, item);
-      if (!isNaN(newMag)) {
-        item.system.ammoList[item.system.currentAmmo].currentMag = newMag;
-        await item.update({ "system": item.system });
-      }
-    } else {
-      await rollTest(element, this.actor);
-    }
   }
 }

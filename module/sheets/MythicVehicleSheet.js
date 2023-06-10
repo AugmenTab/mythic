@@ -3,6 +3,7 @@
 import * as Calc from "../calculations.js";
 import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
 import { localize, makeUIError } from "../common.js";
+import { rollTest } from "../dice.js";
 
 /**
  * Class representing the unique features of this system's Vehicle sheet.
@@ -84,6 +85,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
     html.find(".postable-item").click(this._onPostItem.bind(this));
+    html.find(".rollable").click(this._onRoll.bind(this));
   }
 
   async _onCrewCreate(event) {
@@ -251,5 +253,20 @@ export default class MythicVehicleSheet extends ActorSheet {
       template: `postable-${item.type}`,
       ...item
     }, this.actor);
+  }
+
+  async _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    if (element.classList[0] === "attack") {
+      const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+      const newMag = await rollAttacks(element, this.actor, item);
+      if (!isNaN(newMag)) {
+        item.system.ammoList[item.system.currentAmmo].currentMag = newMag;
+        await item.update({ "system": item.system });
+      }
+    } else {
+      await rollTest(element, this.actor);
+    }
   }
 }
