@@ -14,11 +14,11 @@
               <i class="fas fa-minus speed-change" data-operation="dec"></i>
             </a>
             <input
-              name="system.movement.speed.current"
+              name="system.movement.speed.value"
               style="width:75px"
               type="number"
               data-dtype="Number"
-              value="{{system.movement.speed.current}}"
+              value="{{system.movement.speed.value}}"
               onfocus="this.select()"
             />
             <a><i class="fas fa-plus speed-change" data-operation="inc"></i></a>
@@ -30,7 +30,7 @@
             {{/times}}
             <span
               style="transform:rotate({{angle "speed" system.movement.speed}}deg)"
-              {{#if (gt system.movement.speed.current system.movement.speed.max)}}
+              {{#if (gt system.movement.speed.value system.movement.speed.max)}}
                 class="needle pushed"
               {{else}}
                 class="needle"
@@ -43,7 +43,7 @@
     <tr>
       <td colspan="2">
         <div class="speed-conversion">
-          <span>{{localnum system.movement.speed.current}}</span>
+          <span>{{localnum system.movement.speed.value}}</span>
           <span>/</span>
           <span>{{localnum system.movement.speed.max}}</span>
           <span>MPT</span>
@@ -53,7 +53,7 @@
     <tr>
       <td colspan="2">
         <div class="speed-conversion">
-          <span>{{localnum (doMath "*" 0.6 system.movement.speed.current)}}</span>
+          <span>{{localnum (doMath "*" 0.6 system.movement.speed.value)}}</span>
           <span>/</span>
           <span>{{localnum (doMath "*" 0.6 system.movement.speed.max)}}</span>
           <span>KPH</span>
@@ -69,8 +69,8 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{localnum system.movement.brake.max}}&nbsp;MPT</td>
-      <td>{{localnum system.movement.accelerate.max}}&nbsp;MPT</td>
+      <td>{{localnum system.movement.brake.value}}&nbsp;MPT</td>
+      <td>{{localnum system.movement.accelerate.value}}&nbsp;MPT</td>
     </tr>
   </tbody>
   <thead>
@@ -115,7 +115,7 @@
         <button
           class="vehicle-btn vehicle-attack"
           data-atk-type="splatter"
-          {{#if (eq system.movement.speed.current 0)}}
+          {{#if (eq system.movement.speed.value 0)}}
             disabled="true"
             aria-disabled="true"
           {{/if}}
@@ -127,7 +127,7 @@
         <button
           class="vehicle-btn vehicle-attack"
           data-atk-type="wreck"
-          {{#if (eq system.movement.speed.current 0)}}
+          {{#if (eq system.movement.speed.value 0)}}
             disabled="true"
             aria-disabled="true"
           {{/if}}

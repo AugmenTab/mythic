@@ -137,7 +137,7 @@ export function getTrampleDetails(veh) {
  * @returns {object} The wreck details.
  */
 export function getWreckDetails(veh, atkType) {
-  const dice = Math.floor(veh.system.movement.speed.current / 20);
+  const dice = Math.floor(veh.system.movement.speed.value / 20);
   const critType = game.settings.get("mythic", "criticalHitResult");
   const formula =
     `${dice}D10` + (critType !== "special" ? `${critType}>=10` : "");
@@ -167,7 +167,7 @@ function calculateManeuver(veh) {
   const immobile = [
     !op,
     !veh.system.breakpoints.hull.doom.move,
-    veh.system.movement.speed.current === 0,
+    veh.system.movement.speed.value === 0,
     veh.system.movement.speed.max === 0
   ].some(Boolean);
 
@@ -186,17 +186,25 @@ function calculateManeuver(veh) {
 }
 
 function calculateMovement(veh, penalized) {
-  Object.entries(veh.system.movement).splice(0, 3).forEach(([ key, val ]) => {
+  function calc(key, val) {
     if (veh.system.breakpoints.hull.doom.move) {
       const mult =
         penalized.includes(key) ? veh.system.propulsion.state.multiplier : 1;
 
-      val.max = val.base * mult;
+      return { value: val.value, mult: mult };
     } else {
-      val.max = 0;
-      val.current = 0;
+      return { value: 0, mult: 1 };
     }
+  }
+
+  Object.entries(veh.system.movement).splice(0, 2).forEach(([ key, val ]) => {
+    const { value, mult } = calc(key, val);
+    val.value = val.max * mult;
   });
+
+  const { value, mult } = calc("speed", veh.system.movement.speed);
+  veh.system.movement.speed.value = value;
+  veh.system.movement.speed.max = veh.system.movement.speed.base * mult;
 
   calculateManeuver(veh);
 }
@@ -274,7 +282,7 @@ function calculateWalkerMovement(veh) {
 }
 
 function getLegsState(propulsion) {
-  const legs = propulsion.current;
+  const legs = propulsion.value;
 
   function fromMultiplier(x) {
     return { multiplier: normalizeFloat(1 - x), toHit: 0 };
@@ -308,7 +316,7 @@ function getLegsState(propulsion) {
 
 function getThrustersState(propulsion) {
   const thrusters = propulsion.max;
-  const intact = propulsion.current;
+  const intact = propulsion.value;
   const disabled = thrusters - intact;
 
   if (intact >= thrusters) return DEFAULT_PROPULSION;
@@ -330,7 +338,7 @@ function getThrustersState(propulsion) {
 }
 
 function getTreadsState(propulsion) {
-  const treads = propulsion.current;
+  const treads = propulsion.value;
 
   function fromMultiplier(x) {
     return { multiplier: normalizeFloat(1 - x), toHit: 0 };
@@ -374,7 +382,7 @@ function getTreadsState(propulsion) {
 }
 
 function getWheelsState(propulsion) {
-  const wheels = propulsion.current;
+  const wheels = propulsion.value;
 
   function fromMultiplier(x) {
     return { multiplier: normalizeFloat(1 - x), toHit: 0 };

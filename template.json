@@ -1034,18 +1034,16 @@
             },
             "movement": {
               "accelerate": {
-                "base": 0,
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "brake": {
-                "base": 0,
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "speed": {
                 "base": 0,
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "maneuver": {
@@ -1067,23 +1065,23 @@
             },
             "breakpoints": {
               "wep": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "mob": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "eng": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "op": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "hull": {
-                "current": 0,
+                "value": 0,
                 "max": 0,
                 "doom": {
                   "level": "tier_0",
@@ -1096,31 +1094,29 @@
             },
             "armor": {
               "front": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "back": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "side": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "top": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               },
               "bottom": {
-                "current": 0,
+                "value": 0,
                 "max": 0
               }
             },
             "shields": {
-              "integrity": {
-                "current": 0,
-                "max": 0
-              },
+              "value": 0,
+              "max": 0,
               "recharge": 0,
               "delay": 0
             },
@@ -1170,7 +1166,7 @@
             },
             "propulsion": {
               "type": "wheels",
-              "current": 3,
+              "value": 3,
               "max": "3",
               "state": {
                 "multiplier": 1,

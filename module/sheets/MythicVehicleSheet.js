@@ -289,8 +289,8 @@ export default class MythicVehicleSheet extends ActorSheet {
   async _onShieldRecharge(event) {
     event.preventDefault();
     const shields = this.actor.system.shields;
-    const update = Math.min(shields.integrity.max, shields.integrity.current + shields.recharge);
-    await this.actor.update({ "system.shields.integrity.current": update });
+    const update = Math.min(shields.max, shields.value + shields.recharge);
+    await this.actor.update({ "system.shields.value": update });
   }
 
   async _onSpeedChange(event) {
@@ -299,7 +299,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     const operation = element.getAttribute("data-operation");
     const mvmt = this.actor.system.movement;
 
-    let speed = mvmt.speed.current;
+    let speed = mvmt.speed.value;
 
     if (operation === "inc") {
       speed = Math.min(mvmt.speed.max, speed + mvmt.accelerate.max);
@@ -307,7 +307,7 @@ export default class MythicVehicleSheet extends ActorSheet {
       speed = Math.max(0, speed - mvmt.brake.max);
     }
 
-    await this.actor.update({ "system.movement.speed.current": speed });
+    await this.actor.update({ "system.movement.speed.value": speed });
   }
 
   async _onVehicleAttack(event) {

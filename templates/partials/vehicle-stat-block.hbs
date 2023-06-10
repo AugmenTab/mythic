@@ -25,10 +25,10 @@
                   &lt;N/A&gt;
                 {{else}}
                   <input
-                    name="system.breakpoints.{{key}}.current"
+                    name="system.breakpoints.{{key}}.value"
                     type="number"
                     data-dtype="Number"
-                    value="{{this.current}}"
+                    value="{{this.value}}"
                     onfocus="this.select()"
                   />
                 {{/if}}
@@ -96,7 +96,7 @@
         <tr>
           {{#each config.vehicle.armor as |_ key|}}
             {{#with (lookup ../this.system.armor key)}}
-              <td>{{localnum this.current}}</td>
+              <td>{{localnum this.value}}</td>
             {{/with}}
           {{/each}}
         </tr>
@@ -116,11 +116,11 @@
           <td>{{localize "mythic.vehicleSheet.core.current"}}</td>
           <td>
             <input
-              name="system.shields.integrity.current"
+              name="system.shields.value"
               style="width: 40px"
               type="number"
               data-dtype="Number"
-              value="{{system.shields.integrity.current}}"
+              value="{{system.shields.value}}"
               onfocus="this.select()"
             />
           </td>
@@ -129,7 +129,7 @@
         </tr>
         <tr>
           <td>{{localize "mythic.vehicleSheet.core.max"}}</td>
-          <td>{{localnum system.shields.integrity.max}}</td>
+          <td>{{localnum system.shields.max}}</td>
           <td>{{localize "mythic.shields.recharge"}}</td>
           <td>{{localnum system.shields.recharge}}</td>
         </tr>
@@ -185,7 +185,7 @@
                       {{!-- Style as disabled if in doomed state --}}
                       {{#if (cond "&&"
                                   (eq name "heavyPlating")
-                                  (lt ../../this.system.breakpoints.hull.current 1)
+                                  (lt ../../this.system.breakpoints.hull.value 1)
                             )
                       }}
                         class="disabled-special"

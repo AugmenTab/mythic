@@ -1186,17 +1186,17 @@ function calculateSwarm(actorData) {
 }
 
 function calculateVehicleArmor(veh) {
-  const div = veh.system.breakpoints.hull.current < 1 ? 2 : 1;
+  const div = veh.system.breakpoints.hull.value < 1 ? 2 : 1;
   const penalty = veh.system.breakpoints.hull.doom.armor;
 
   Object.values(veh.system.armor).forEach(loc => {
     const current = Math.floor(loc.max / div) - penalty;
-    loc.current = current > 0 ? current  : 0;
+    loc.value = current > 0 ? current  : 0;
   });
 }
 
 function calculateVehicleDoom(veh) {
-  const hull = veh.system.breakpoints.hull.current;
+  const hull = veh.system.breakpoints.hull.value;
   veh.system.breakpoints.hull.doom = Vehicle.getDoom(hull);
 }
 
