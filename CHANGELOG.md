@@ -49,6 +49,12 @@
 * Thrown weapons can now control their grip quality from the summary.
 * Chat messages generated from the sheet use the selected message visibility.
 * Items can now be created directly on Actor sheets.
+* Vehicle Actors introduced.
+  * Vehicles are better suited to serve their role in the game as Actors than as Items. So, while there is no way to represent "ownership" of a Vehicle in the system, the benefits far exceed this downside.
+  * Perhaps the most notable feature unique to Vehicles is Role Assignment, which allows users to provide an Actor ID for the character at a particular vehicle post. These roles can then be "assigned" to jobs or weapons, and the relevant Test(s) will be using that Actor's stats.
+  * Two primary types: Walkers (using "Legs" propulsion type), and all others.
+  * Walkers are expected to have a Stomp and Punch weapon added (if relevant).
+  * Vehicles can post their doom state detonation to chat, along with make Splatter or Trample attacks as appropriate. Non-walkers can also post the damage dealt on a Wreck to chat.
 
 ## Bug Fixes
 

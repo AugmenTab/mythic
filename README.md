@@ -29,12 +29,12 @@ The following is a list of features offered by Mythic for Foundry.
 
 ### Actors
 
-All available Actor types in this system. Unimplemented items are *italicized*.
+All available Actor types in this system.
 
 * **Named Character:** The primary Actor type for player characters, NPCs, and special Nemesis enemies. Nearly every aspect of this character sheet can be customized to fine-tune exacting stat requirements.
 * **Bestiary Character**: The Actor type representing all unnamed mooks in the game, pulled from the Bestiary. These are made to be generic boilerplate templates for enemies that can be rolled from and adjusted quickly so as to represent a variety of similar enemies.
 * **Flood**: An Actor type specifically for the Flood Bestiary, playing to their unique strengths and offers multiple avenues of adjustment for stats and swarm sizes.
-* *Vehicle*: The Actor type for vehicles, permitting them to own items and weapons that can be swapped out to represent different configurations without requiring different sheets.
+* **Vehicle**: The Actor type for vehicles, permitting them to own items and weapons that can be swapped out to represent different configurations without requiring different sheets.
 
 ### Items
 
@@ -90,6 +90,7 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 ## Known Bugs
 
+* Rich text editor (often used in Notes and Bio sections) has a broken display for its options/tools bar.
 * Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 * Experience Purchase Price field does not focus coming off the Name field. It has to be focused a second time before the focus sticks.
@@ -98,7 +99,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 For a real-time record of what I'm working on, you can check the project's [Trello board](https://trello.com/b/y80KFteH/mythic-for-foundry).
 
-* Vehicle Actor type.
 * Fully functioning Medical page to handle Special Damage.
 * Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
 * Compendia as laid out above.
