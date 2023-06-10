@@ -86,6 +86,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
     html.find(".postable-item").click(this._onPostItem.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
+    html.find(".speed-change").click(this._onSpeedChange.bind(this));
   }
 
   async _onCrewCreate(event) {
@@ -268,5 +269,22 @@ export default class MythicVehicleSheet extends ActorSheet {
     } else {
       await rollTest(element, this.actor);
     }
+  }
+
+  async _onSpeedChange(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const operation = element.getAttribute("data-operation");
+    const mvmt = this.actor.system.movement;
+
+    let speed = mvmt.speed.current;
+
+    if (operation === "inc") {
+      speed = Math.min(mvmt.speed.max, speed + mvmt.accelerate.max);
+    } else if (operation === "dec") {
+      speed = Math.max(0, speed - mvmt.brake.max);
+    }
+
+    await this.actor.update({ "system.movement.speed.current": speed });
   }
 }

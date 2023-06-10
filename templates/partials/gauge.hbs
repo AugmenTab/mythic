@@ -97,7 +97,9 @@
             {{/select}}
           </select>
           <button
-            class="gauge-btn"
+            name="{{localize "mythic.vehicleSheet.movement.maneuver"}}"
+            class="gauge-btn rollable"
+            value="{{system.movement.maneuver.total}}"
             {{#if (eq system.movement.maneuver.total 0)}}
               disabled="true"
               aria-disabled="true"
