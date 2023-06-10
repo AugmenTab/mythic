@@ -418,7 +418,8 @@
             },
             "test": "Test",
             "vehicle": {
-              "splatter": "Splatter Attack"
+              "splatter": "Splatter Attack",
+              "wreck": "Vehicle Wreck"
             }
         },
         "combat": {

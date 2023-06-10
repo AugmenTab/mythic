@@ -3,7 +3,7 @@
 import * as Chat from "./chat.js";
 import * as Common from "./common.js";
 import { determineHitLocation } from "./location.js";
-import { getRoleOwner } from "./vehicle.js";
+import { getRoleOwner, getWreckDetails } from "./vehicle.js";
 
 const FORMULA = "D100";
 const CHARACTERISTICS = {
@@ -159,15 +159,15 @@ export async function rollEvasionBatch(element, actor) {
  * @param {Actor} veh - The Actor Vehicle that fired the listener.
  */
 export async function rollVehicleAttack(veh, atkType) {
-  const dice = Math.floor(veh.system.movement.speed.current / 20);
-  const critType = game.settings.get("mythic", "criticalHitResult");
-
-  let formula = `${dice}D10`;
-  if (critType !== "special") {
-    formula += `${critType}>=10`;
+  function getDetails() {
+    switch(atkType) {
+      case "splatter": return getWreckDetails(veh, atkType);
+      case "wreck":    return getWreckDetails(veh, atkType);
+    }
   }
 
-  const dmgRoll = await rollDamage(formula, 10);
+  const details = getDetails();
+  const dmgRoll = await rollDamage(details.formula, 10);
 
   Chat.postChatMessage({
     flavor: Common.localize(`mythic.chat.vehicle.${atkType}`),
@@ -175,10 +175,9 @@ export async function rollVehicleAttack(veh, atkType) {
     atkType: atkType,
     dmgRoll: dmgRoll.damageRoll,
     doesSpecialDamage: dmgRoll.doesSpecialDamage,
-    evasionPenalty: dice * -5,
-    specials: []
+    evasionPenalty: details.evasionPenalty,
+    specials: details.specials,
   }, veh);
-
 }
 
 /**

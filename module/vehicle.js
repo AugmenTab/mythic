@@ -88,6 +88,27 @@ export function getRoleOwner(assignment) {
 }
 
 /**
+ * Provides details around a Vehicle wreck - any applicable penalty to Evasion
+ * tests, the damage roll formula, and any applicable special rules.
+ *
+ * @param {Actor} veh - The Vehicle Actor.
+ * @param {string} atkType - The type of attack: doom, splatter, step, or wreck.
+ * @returns {object} The wreck details.
+ */
+export function getWreckDetails(veh, atkType) {
+  const dice = Math.floor(veh.system.movement.speed.current / 20);
+  const critType = game.settings.get("mythic", "criticalHitResult");
+  const formula =
+    `${dice}D10` + (critType !== "special" ? `${critType}>=10` : "");
+
+  return {
+    evasionPenalty: atkType === "splatter" ? dice * -5 : 0,
+    formula: formula,
+    specials: []
+  };
+}
+
+/**
  * Updates all Vehicle Actors that list the provided Actor ID as assigned to one
  * of its onboard roles.
  *
