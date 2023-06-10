@@ -3,7 +3,7 @@
 import * as Calc from "../calculations.js";
 import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
 import { localize, makeUIError } from "../common.js";
-import { rollTest } from "../dice.js";
+import { rollAttacks, rollTest } from "../dice.js";
 
 /**
  * Class representing the unique features of this system's Vehicle sheet.
@@ -85,6 +85,8 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".item-edit").click(this._onItemEdit.bind(this));
     html.find(".item-edit-inline").change(this._onItemEditInline.bind(this));
     html.find(".postable-item").click(this._onPostItem.bind(this));
+    html.find(".recharge").click(this._onShieldRecharge.bind(this));
+    html.find(".reload").click(this._onReload.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".speed-change").click(this._onSpeedChange.bind(this));
   }
@@ -256,6 +258,13 @@ export default class MythicVehicleSheet extends ActorSheet {
     }, this.actor);
   }
 
+  async _onReload(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+    await item.update({ "system": Calc.handleReloadMagCount(item.system) });
+  }
+
   async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
@@ -269,6 +278,13 @@ export default class MythicVehicleSheet extends ActorSheet {
     } else {
       await rollTest(element, this.actor);
     }
+  }
+
+  async _onShieldRecharge(event) {
+    event.preventDefault();
+    const shields = this.actor.system.shields;
+    const update = Math.min(shields.integrity.max, shields.integrity.current + shields.recharge);
+    await this.actor.update({ "system.shields.integrity.current": update });
   }
 
   async _onSpeedChange(event) {

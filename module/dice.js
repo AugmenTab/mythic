@@ -3,6 +3,7 @@
 import * as Chat from "./chat.js";
 import * as Common from "./common.js";
 import { determineHitLocation } from "./location.js";
+import { getRoleOwner } from "./vehicle.js";
 
 const FORMULA = "D100";
 const CHARACTERISTICS = {
@@ -66,6 +67,9 @@ export async function rollAttacks(element, actor, weapon) {
   const attackOptions = await getAttackRollOptions();
   if (attackOptions.cancelled) return;
 
+  const owner =
+    actor.type === "Vehicle" ? getRoleOwner(weapon.system.owner) : actor;
+
   const dmgMods = interpretDiceRollModifiers(attackOptions.circumstance.damage);
   const atkMods = interpretDiceRollModifiers(attackOptions.circumstance.attack);
 
@@ -87,7 +91,7 @@ export async function rollAttacks(element, actor, weapon) {
 
   const currentAmmo = weapon.system.currentAmmo;
   const rangeEffects =
-    calculateRangeEffects(actor, weapon, distanceFromTarget);
+    calculateRangeEffects(owner, weapon, distanceFromTarget);
 
   if (rangeEffects.error) {
     Common.makeUIError(rangeEffects.error);
@@ -99,7 +103,7 @@ export async function rollAttacks(element, actor, weapon) {
     + atkMods.flat
     + atkModRoll
     + rangeEffects.target
-    + calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget)
+    + calculatePerceptiveRangePenalties(owner, weapon, distanceFromTarget)
   );
 
   if (isNaN(target)) {
@@ -118,7 +122,7 @@ export async function rollAttacks(element, actor, weapon) {
     pierce: rangeEffects.pierce
   };
 
-  await getAttackAndDamageOutcomes(actor, weapon, data);
+  await getAttackAndDamageOutcomes(owner, weapon, data);
   return weapon.system.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
