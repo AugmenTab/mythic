@@ -420,6 +420,7 @@
             "vehicle": {
               "doom": "Doomed Vehicle Detonation",
               "splatter": "Splatter Attack",
+              "trample": "Trample Attack",
               "wreck": "Vehicle Wreck"
             }
         },

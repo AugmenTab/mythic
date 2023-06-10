@@ -1060,14 +1060,9 @@
                 "run": 0,
                 "jump": 0,
                 "leap": 0,
-                "evasion": {
-                  "total": 0,
-                  "owner": ""
-                },
-                "parry": {
-                  "total": 0,
-                  "owner": ""
-                }
+                "owner": "",
+                "evasion": 0,
+                "parry": 0
               }
             },
             "breakpoints": {

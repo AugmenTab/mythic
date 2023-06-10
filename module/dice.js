@@ -163,6 +163,7 @@ export async function rollVehicleAttack(veh, atkType) {
     switch(atkType) {
       case "doom":     return Vehicle.getDoomDetails(veh);
       case "splatter": return Vehicle.getWreckDetails(veh, atkType);
+      case "trample":  return Vehicle.getTrampleDetails(veh);
       case "wreck":    return Vehicle.getWreckDetails(veh, atkType);
     }
   }

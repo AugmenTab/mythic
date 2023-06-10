@@ -115,6 +115,20 @@ export function getRoleOwner(assignment) {
 }
 
 /**
+ * Provides details around a Vehicle trample attack - the relevant Evasion
+ * penalty and the damage roll formula.
+ *
+ * @param {Actor} veh - The Vehicle Actor.
+ * @returns {object} The trample details.
+ */
+export function getTrampleDetails(veh) {
+  return {
+    evasionPenalty: "+20 / 0",
+    formula: `${Math.floor(veh.system.dimensions.weight)}`
+  };
+}
+
+/**
  * Provides details around a Vehicle wreck - any applicable penalty to Evasion
  * tests, the damage roll formula, and any applicable special rules.
  *
@@ -200,7 +214,7 @@ function calculateSkillValue(stat, training, modifier) {
 }
 
 function calculateWalkerEvasion(veh) {
-  const op = getRoleOwner(veh.system.movement.walker.evasion.owner);
+  const op = getRoleOwner(veh.system.movement.walker.owner);
   const immobile = [
     !op,
     !veh.system.breakpoints.hull.doom.move,
@@ -208,7 +222,7 @@ function calculateWalkerEvasion(veh) {
   ].some(Boolean);
 
   if (immobile) {
-    veh.system.movement.walker.evasion.total = 0;
+    veh.system.movement.walker.evasion = 0;
     return;
   }
 
@@ -217,12 +231,11 @@ function calculateWalkerEvasion(veh) {
   const agi =
     Math.min(op.system.characteristics.agi.roll, veh.system.characteristics.agi);
 
-  veh.system.movement.walker.evasion.total =
-    calculateSkillValue(agi, training, mods);
+  veh.system.movement.walker.evasion = calculateSkillValue(agi, training, mods);
 }
 
 function calculateWalkerParry(veh) {
-  const op = getRoleOwner(veh.system.movement.walker.parry.owner);
+  const op = getRoleOwner(veh.system.movement.walker.owner);
   const immobile = [
     !op,
     !veh.system.breakpoints.hull.doom.move,
@@ -230,7 +243,7 @@ function calculateWalkerParry(veh) {
   ].some(Boolean);
 
   if (immobile) {
-    veh.system.movement.walker.parry.total = 0;
+    veh.system.movement.walker.parry = 0;
     return;
   }
 
@@ -239,8 +252,7 @@ function calculateWalkerParry(veh) {
   const stat = op.system.trainings.weapons.hth ? wfm + 5 : wfm;
   const mods = op.system.skills.evasion.mods;
 
-  veh.system.movement.walker.parry.total =
-    calculateSkillValue(stat, training, mods);
+  veh.system.movement.walker.parry = calculateSkillValue(stat, training, mods);
 }
 
 function calculateWalkerMovement(veh) {

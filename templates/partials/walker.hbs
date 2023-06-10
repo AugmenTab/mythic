@@ -66,51 +66,27 @@
   </tbody>
   <thead>
     <tr>
-      <th colspan="2">{{localize "mythic.skillNames.evasion"}}</th>
+      <th>{{localize "mythic.skillNames.evasion"}}</th>
+      <th>{{localize "mythic.skillNames.parry"}}</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td colspan="2">
-        <span>
-          <select name="system.movement.walker.evasion.owner">
-            {{#select system.movement.walker.evasion.owner}}
-              <option value="">--</option>
-              {{#if system.crew.operators}}
-                {{#each system.crew.operators as |operator|}}
-                  {{#if operator.display}}
-                    <option value="{{concat "o_" operator.id}}">
-                      [O{{doMath "+" operator.idx 1}}]
-                    </option>
-                  {{/if}}
-                {{/each}}
-              {{/if}}
-            {{/select}}
-          </select>
+        <div class="walker">
           <button
             name="{{localize "mythic.skillNames.evasion"}}"
             class="gauge-btn rollable"
-            value="{{system.movement.walker.evasion.total}}"
-            {{#if (eq system.movement.walker.evasion.total 0)}}
+            value="{{system.movement.walker.evasion}}"
+            {{#if (eq system.movement.walker.evasion 0)}}
               disabled="true"
               aria-disabled="true"
             {{/if}}
           >
-            {{localnum system.movement.walker.evasion.total}}
+            {{localnum system.movement.walker.evasion}}
           </button>
-        </span>
-      </td>
-    </tr>
-  <thead>
-    <tr>
-      <th colspan="2">{{localize "mythic.skillNames.parry"}}</th>
-    </tr>
-  </thead>
-    <tr>
-      <td colspan="2">
-        <span>
-          <select name="system.movement.walker.parry.owner">
-            {{#select system.movement.walker.parry.owner}}
+          <select name="system.movement.walker.owner">
+            {{#select system.movement.walker.owner}}
               <option value="">--</option>
               {{#if system.crew.operators}}
                 {{#each system.crew.operators as |operator|}}
@@ -126,16 +102,28 @@
           <button
             name="{{localize "mythic.skillNames.parry"}}"
             class="gauge-btn rollable"
-            value="{{system.movement.walker.parry.total}}"
-            {{#if (eq system.movement.walker.parry.total 0)}}
+            value="{{system.movement.walker.parry}}"
+            {{#if (eq system.movement.walker.parry 0)}}
               disabled="true"
               aria-disabled="true"
             {{/if}}
           >
-            {{localnum system.movement.walker.parry.total}}
+            {{localnum system.movement.walker.parry}}
           </button>
-        </span>
+        </div>
       </td>
     </tr>
+      <td colspan="2">
+        <button
+          class="vehicle-btn vehicle-attack"
+          data-atk-type="trample"
+          {{#unless system.movement.walker.owner}}
+            disabled="true"
+            aria-disabled="true"
+          {{/unless}}
+        >
+          <i class="fa-solid fa-shoe-prints"></i>
+        </button>
+      </td>
   </tbody>
 </table>

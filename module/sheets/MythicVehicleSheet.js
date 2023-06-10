@@ -77,7 +77,6 @@ export default class MythicVehicleSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find(".attack").click(this._onVehicleAttack.bind(this));
     html.find(".crew-create").click(this._onCrewCreate.bind(this));
     html.find(".crew-delete").click(this._onCrewDelete.bind(this));
     html.find(".crew-edit").change(this._onCrewEdit.bind(this));
@@ -91,6 +90,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".reload").click(this._onReload.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".speed-change").click(this._onSpeedChange.bind(this));
+    html.find(".vehicle-attack").click(this._onVehicleAttack.bind(this));
   }
 
   async _onCrewCreate(event) {
