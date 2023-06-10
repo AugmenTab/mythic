@@ -3,7 +3,7 @@
 import * as Chat from "./chat.js";
 import * as Common from "./common.js";
 import { determineHitLocation } from "./location.js";
-import { getRoleOwner, getWreckDetails } from "./vehicle.js";
+import * as Vehicle from "./vehicle.js";
 
 const FORMULA = "D100";
 const CHARACTERISTICS = {
@@ -68,7 +68,7 @@ export async function rollAttacks(element, actor, weapon) {
   if (attackOptions.cancelled) return;
 
   const owner =
-    actor.type === "Vehicle" ? getRoleOwner(weapon.system.owner) : actor;
+    actor.type === "Vehicle" ? Vehicle.getRoleOwner(weapon.system.owner) : actor;
 
   const dmgMods = interpretDiceRollModifiers(attackOptions.circumstance.damage);
   const atkMods = interpretDiceRollModifiers(attackOptions.circumstance.attack);
@@ -161,8 +161,9 @@ export async function rollEvasionBatch(element, actor) {
 export async function rollVehicleAttack(veh, atkType) {
   function getDetails() {
     switch(atkType) {
-      case "splatter": return getWreckDetails(veh, atkType);
-      case "wreck":    return getWreckDetails(veh, atkType);
+      case "doom":     return Vehicle.getDoomDetails(veh);
+      case "splatter": return Vehicle.getWreckDetails(veh, atkType);
+      case "wreck":    return Vehicle.getWreckDetails(veh, atkType);
     }
   }
 
@@ -176,6 +177,7 @@ export async function rollVehicleAttack(veh, atkType) {
     dmgRoll: dmgRoll.damageRoll,
     doesSpecialDamage: dmgRoll.doesSpecialDamage,
     evasionPenalty: details.evasionPenalty,
+    pierce: details.pierce,
     specials: details.specials,
   }, veh);
 }

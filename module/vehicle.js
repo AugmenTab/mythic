@@ -50,6 +50,33 @@ export function getDoom(hull) {
 }
 
 /**
+ * Provides details around a Vehicle doom detonation - the damage roll formula,
+ * the pierce value of the explosion, and any applicable special rules.
+ *
+ * @param {Actor} veh - The Vehicle Actor.
+ * @returns {object} The doom detonation details.
+ */
+export function getDoomDetails(veh) {
+  const doom = veh.system.breakpoints.hull.doom;
+  const critType = game.settings.get("mythic", "criticalHitResult");
+  const sp = veh.system.sizePoints;
+  const wp = veh.system.weaponPoints;
+
+  const formula = (
+      `${sp + wp}D10`
+    + (critType !== "special" ? `${critType}>=10` : "")
+    + ` + ${5 * sp}`
+  );
+
+  const specials = {
+    blast: { has: doom.blast > 0, value: doom.blast * sp },
+    kill:  { has: doom.kill  > 0, value: doom.kill  * sp }
+  };
+
+  return { formula: formula, pierce: wp * 5, specials: specials };
+}
+
+/**
  * Determines the state of the vehicle's propulsion - that is, its movement
  * multiplier and to-hit penalty based on a comparison of its intact propulsion
  * devices to its total propulsion devices.

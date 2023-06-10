@@ -418,6 +418,7 @@
             },
             "test": "Test",
             "vehicle": {
+              "doom": "Doomed Vehicle Detonation",
               "splatter": "Splatter Attack",
               "wreck": "Vehicle Wreck"
             }

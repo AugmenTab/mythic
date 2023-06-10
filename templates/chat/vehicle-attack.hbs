@@ -3,6 +3,9 @@
     <p>
       <i class="fas fa-long-arrow-alt-right"></i>
       {{{dmgRoll}}}
+      {{#if pierce}}
+        &nbsp;{{localize "mythic.chat.attack.pierce"}}&nbsp;{{pierce}}
+      {{/if}}
       {{#if doesSpecialDamage}}
         <i
           class="fas fa-bullseye"
