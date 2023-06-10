@@ -3,7 +3,7 @@
 import * as Calc from "../calculations.js";
 import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
 import { localize, makeUIError } from "../common.js";
-import { rollAttacks, rollTest } from "../dice.js";
+import { rollAttacks, rollVehicleAttack, rollTest } from "../dice.js";
 
 /**
  * Class representing the unique features of this system's Vehicle sheet.
@@ -80,6 +80,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".crew-create").click(this._onCrewCreate.bind(this));
     html.find(".crew-delete").click(this._onCrewDelete.bind(this));
     html.find(".crew-edit").change(this._onCrewEdit.bind(this));
+    html.find(".doom").click(this._onDoomDetonate.bind(this));
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
@@ -89,6 +90,7 @@ export default class MythicVehicleSheet extends ActorSheet {
     html.find(".reload").click(this._onReload.bind(this));
     html.find(".rollable").click(this._onRoll.bind(this));
     html.find(".speed-change").click(this._onSpeedChange.bind(this));
+    html.find(".splatter").click(this._onSplatter.bind(this));
   }
 
   async _onCrewCreate(event) {
@@ -204,6 +206,10 @@ export default class MythicVehicleSheet extends ActorSheet {
     }
   }
 
+  async _onDoomDetonate(event) {
+    event.preventDefault();
+  }
+
   async _onItemCreate(event) {
     event.preventDefault();
     const element = event.currentTarget;
@@ -302,5 +308,10 @@ export default class MythicVehicleSheet extends ActorSheet {
     }
 
     await this.actor.update({ "system.movement.speed.current": speed });
+  }
+
+  async _onSplatter(event) {
+    event.preventDefault();
+    await rollVehicleAttack(this.actor, "splatter");
   }
 }

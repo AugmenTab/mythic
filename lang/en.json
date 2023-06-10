@@ -416,7 +416,10 @@
                 "flame": "Rolling damage for a Flame attack!",
                 "needle": "Rolling damage for a Needle Supercombine!"
             },
-            "test": "Test"
+            "test": "Test",
+            "vehicle": {
+              "splatter": "Splatter Attack"
+            }
         },
         "combat": {
             "error": {

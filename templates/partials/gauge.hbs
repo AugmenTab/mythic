@@ -119,9 +119,22 @@
             aria-disabled="true"
           {{/if}}
         >
+          <i class="fa-solid fa-person-walking"></i>
+        </button>
+      </td>
+      {{!--
+      <td colspan="2">
+        <button
+          class="vehicle-btn splatter"
+          {{#if (eq system.movement.speed.current 0)}}
+            disabled="true"
+            aria-disabled="true"
+          {{/if}}
+        >
           <i class="fa-solid fa-car-burst"></i>
         </button>
       </td>
+      --}}
     </tr>
   </tbody>
 </table>

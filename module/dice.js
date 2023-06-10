@@ -153,6 +153,35 @@ export async function rollEvasionBatch(element, actor) {
 }
 
 /**
+ * Roll a special Vehicle attack from a Vehicle Actor sheet.
+ *
+ * @async
+ * @param {Actor} veh - The Actor Vehicle that fired the listener.
+ */
+export async function rollVehicleAttack(veh, atkType) {
+  const dice = Math.floor(veh.system.movement.speed.current / 20);
+  const critType = game.settings.get("mythic", "criticalHitResult");
+
+  let formula = `${dice}D10`;
+  if (critType !== "special") {
+    formula += `${critType}>=10`;
+  }
+
+  const dmgRoll = await rollDamage(formula, 10);
+
+  Chat.postChatMessage({
+    flavor: Common.localize(`mythic.chat.vehicle.${atkType}`),
+    template: "vehicle-attack",
+    atkType: atkType,
+    dmgRoll: dmgRoll.damageRoll,
+    doesSpecialDamage: dmgRoll.doesSpecialDamage,
+    evasionPenalty: dice * -5,
+    specials: []
+  }, veh);
+
+}
+
+/**
  * Roll tests from an Actor sheet.
  *
  * @async

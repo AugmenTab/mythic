@@ -1,0 +1,29 @@
+<div class="post-attack">
+  <div class="vehicle-damage-block">
+    <p>
+      <i class="fas fa-long-arrow-alt-right"></i>
+      {{{dmgRoll}}}
+      {{#if doesSpecialDamage}}
+        <i
+          class="fas fa-bullseye"
+          title="{{localize "mythic.chat.attack.specialDamage"}}"
+        ></i>
+      {{/if}}
+    </p>
+    {{#if (eq atkType "splatter")}}
+      <p>{{localize "mythic.skillNames.evasion"}}:&nbsp;{{evasionPenalty}}</p>
+    {{/if}}
+  </div>
+  <aside class="special">
+    <span class="special-damage">
+      {{#each specials as |special name|}}
+        {{#if special.has}}
+          <span class="special-rule">
+            {{localize (concat "mythic.weaponSheet.specialRules." name)}}
+            {{#if special.value}}&nbsp;({{special.value}}){{/if}}
+          </span>
+        {{/if}}
+      {{/each}}
+    </span>
+  </aside>
+</div>
