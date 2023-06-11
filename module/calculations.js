@@ -1349,7 +1349,11 @@ function calculateWeaponSummaryAttackData(actor) {
         ? Vehicle.getRoleOwner(weapon.system.owner)
         : actor;
 
-    if (!owner) return;
+    if (!owner) {
+      weapon.system.ammoList[currentAmmo].target = 0;
+      return;
+    }
+
     if (weapon.system.group === "thrown") {
       calculateWeaponRangeThrown(owner.system, weapon.system);
       weapon.system.attack.half = 1;

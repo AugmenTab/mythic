@@ -243,8 +243,11 @@
                   {{/if}}
                   {{#unless this.currentMag}}
                     {{#unless (eq weapon.system.attack.fireMode "melee")}}
-                    disabled="true" aria-disabled="true"
+                      disabled="true" aria-disabled="true"
                     {{/unless}}
+                  {{/unless}}
+                  {{#unless (gt this.target 0)}}
+                    disabled="true" aria-disabled="true"
                   {{/unless}}
                   >
                   1
@@ -257,10 +260,13 @@
                     data-item-id="{{weapon._id}}"
                     value="half"
                     {{#if (eq weapon.system.attack.fireMode "none")}}
-                    disabled="true" aria-disabled="true"
+                      disabled="true" aria-disabled="true"
                     {{/if}}
+                    {{#unless (gt this.target 0)}}
+                      disabled="true" aria-disabled="true"
+                    {{/unless}}
                     {{#unless weapon.system.attack.half}}
-                    disabled="true" aria-disabled="true"
+                      disabled="true" aria-disabled="true"
                     {{/unless}}
                   >
                     {{weapon.system.attack.half}}
@@ -271,11 +277,14 @@
                     class="attack rollable"
                     data-item-id="{{weapon._id}}"
                     value="full"
+                    {{#unless (gt this.target 0)}}
+                      disabled="true" aria-disabled="true"
+                    {{/unless}}
                     {{#if (eq weapon.system.attack.fireMode "none")}}
-                    disabled="true" aria-disabled="true"
+                      disabled="true" aria-disabled="true"
                     {{/if}}
                     {{#unless weapon.system.attack.full}}
-                    disabled="true" aria-disabled="true"
+                      disabled="true" aria-disabled="true"
                     {{/unless}}
                   >
                     {{weapon.system.attack.full}}
