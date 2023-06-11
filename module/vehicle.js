@@ -163,6 +163,9 @@ export function updateDependentVehicles(actorId) {
 }
 
 function calculateManeuver(veh) {
+  function getMod(operator) {
+  }
+
   const op = getRoleOwner(veh.system.movement.maneuver.owner);
   const immobile = [
     !op,
@@ -176,13 +179,17 @@ function calculateManeuver(veh) {
     return;
   }
 
-  let mod = 0;
-  if (op.system.skills.stunting.training.tier === "trained") mod =  5;
-  if (op.system.skills.stunting.training.tier === "plus10")  mod = 10;
-  if (op.system.skills.stunting.training.tier === "plus20")  mod = 20;
+  const mod = () => {
+    switch(op.system.skills.stunting.training.tier) {
+      case "plus20": return 20;
+      case "plus10": return 10;
+      default:       return  0;
+    }
+  };
 
-  veh.system.movement.maneuver.total =
-    Math.min(veh.system.movement.maneuver.base + mod, op.system.skills.evasion.roll);
+  veh.system.movement.maneuver.total = Math.min(
+    veh.system.movement.maneuver.base + mod(), op.system.skills.evasion.roll
+  );
 }
 
 function calculateMovement(veh, penalized) {
