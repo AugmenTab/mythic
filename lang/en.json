@@ -36,8 +36,8 @@
             "width": "Width (m)",
             "height": "Height (m)",
             "weight": "Weight (t)",
-            "price": "Price (cR)",
-            "experience": "Combat EXP"
+            "price": "Cost (cR)",
+            "experience": "Defeat EXP"
         },
         "characteristics": {
             "str": "Strength",
@@ -74,7 +74,7 @@
                 "difficultyLabel": "Difficulty Settings",
                 "normalOnly": "Single Difficulty?",
                 "advancesMythics": "Advances Mythic Stats?",
-                "expPayoutLabel": "Experience Payout Settings",
+                "expPayoutLabel": "Defeat Experience Payout Settings",
                 "swarm": "Swarm Settings",
                 "total": "Total",
                 "base": "Base",
@@ -257,7 +257,7 @@
             },
             "experience": {
                 "label": "Experience",
-                "payout": "Experience Payout",
+                "payout": "Defeat Experience Payout",
                 "apply": "Apply",
                 "purchase": "Purchase",
                 "tier": "Tier",
@@ -270,7 +270,7 @@
                 "notes": "Experience Notes",
                 "expNotes": "Write experience notes here.",
                 "ability": "Purchased Ability",
-                "price": "Price",
+                "price": "Cost",
                 "err": "The provided price could not be parsed. Please enter a whole number.",
                 "empty": "<p>No experience purchases have been made yet.</p><p>You can log any purchases you make with starting or gained experience here.</p><p>Click the Purchase button above to add an experience purchase.</p>"
             }
@@ -463,7 +463,7 @@
                 "faction": "Faction",
                 "size": "Size",
                 "training": "Faction Training",
-                "price": "Price (cR)",
+                "price": "Cost (cR)",
                 "material": "Material",
                 "weight": "Weight (kg)",
                 "selfSupported": "Self-Supporting?",
@@ -529,7 +529,7 @@
             },
             "details": "Details",
             "faction": "Faction",
-            "price": "Price (cR)",
+            "price": "Cost (cR)",
             "weight": "Weight (kg)",
             "selfSupported": "Self-Supporting?",
             "hasShields": "Shields?",
@@ -775,7 +775,7 @@
                 "grip": "Grip",
                 "ammo": "Ammunition",
                 "ammoGroup": "Sp. Ammo Group",
-                "price": "Price (cR)",
+                "price": "Cost (cR)",
                 "reload": "Reload",
                 "attackBonus": "To-Hit Bonus",
                 "type": "Type",
