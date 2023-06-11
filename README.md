@@ -90,7 +90,6 @@ Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsof
 
 ## Known Bugs
 
-* Rich text editor (often used in Notes and Bio sections) has a broken display for its options/tools bar.
 * Talents tabs do not apply active class when first clicking in from elsewhere.
 * Experience Apply buttons are discarding first attempt to alter values, then work correctly afterward.
 * Experience Purchase Price field does not focus coming off the Name field. It has to be focused a second time before the focus sticks.
