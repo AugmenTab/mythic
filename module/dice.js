@@ -70,6 +70,15 @@ export async function rollAttacks(element, actor, weapon) {
   const owner =
     actor.type === "Vehicle" ? Vehicle.getRoleOwner(weapon.system.owner) : actor;
 
+  const str =
+    actor.type === "Vehicle"
+      ? ( actor.system.characteristics.mythicStr
+        + Common.getCharacteristicModifier(actor.system.characteristics.str)
+        )
+      : ( owner.system.mythicCharacteristics.str.total
+        + Common.getCharacteristicModifier(owner.system.characteristics.str.total)
+        );
+
   const dmgMods = interpretDiceRollModifiers(attackOptions.circumstance.damage);
   const atkMods = interpretDiceRollModifiers(attackOptions.circumstance.attack);
 
@@ -122,7 +131,7 @@ export async function rollAttacks(element, actor, weapon) {
     pierce: rangeEffects.pierce
   };
 
-  await getAttackAndDamageOutcomes(owner, weapon, data);
+  await getAttackAndDamageOutcomes(owner, str, weapon, data);
   return weapon.system.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
@@ -297,7 +306,7 @@ function determineRollOutcome(roll, target) {
   return outcome;
 }
 
-async function getAttackAndDamageOutcomes(actor, weapon, data) {
+async function getAttackAndDamageOutcomes(actor, str, weapon, data) {
   const fireMode = weapon.system.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
@@ -334,7 +343,7 @@ async function getAttackAndDamageOutcomes(actor, weapon, data) {
       pierce: data.pierce
     };
 
-    const attack = await rollAttackAndDamage(actor, weapon, attackData);
+    const attack = await rollAttackAndDamage(actor, str, weapon, attackData);
     result.hits += attack.outcome === "success" ? 1 : 0;
     result.attacks.push(attack);
   }
@@ -473,7 +482,7 @@ function reverseDigits(roll) {
   return parseInt(digits.join(""));
 }
 
-async function rollAttackAndDamage(actor, weapon, data) {
+async function rollAttackAndDamage(actor, str, weapon, data) {
   const ammo = weapon.system.ammoList[weapon.system.currentAmmo];
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, data.target);
@@ -517,11 +526,6 @@ async function rollAttackAndDamage(actor, weapon, data) {
     let pierce = ammo.piercing;
 
     if (weapon.system.group === "melee") {
-      const str = (
-        actor.system.mythicCharacteristics.str.total +
-        Common.getCharacteristicModifier(actor.system.characteristics.str.total)
-      );
-
       base += Math.floor(str * ammo.strDamage);
       pierce += Math.floor(str * ammo.strPiercing);
 
