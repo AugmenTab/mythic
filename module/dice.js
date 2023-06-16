@@ -337,7 +337,7 @@ async function getAttackAndDamageOutcomes(actor, str, weapon, data) {
       damages: damagesPerAttack,
       distanceFromTarget: data.distanceFromTarget,
       isZeroG: data.isZeroG,
-      vehicle: data.vehicle,
+      vehicle: data.isVehicle,
       circDmg: data.circDmg,
       rangeDamage: data.rangeDamage,
       pierce: data.pierce
