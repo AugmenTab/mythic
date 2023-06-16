@@ -1206,12 +1206,17 @@ function calculateVehiclePropulsion(veh) {
 }
 
 function calculateWeaponAttacksMelee(actorData, weaponData) {
+  const currentAmmo = weaponData.currentAmmo;
   const wfm =
     Common.getCharacteristicModifier(actorData.characteristics.wfm.total);
 
   const extra = weaponData.attack.extraMelee;
-  const half =
+  let half =
     Math.min(8, extra + Math.min(4, Math.max(1, Math.floor(wfm / 2))));
+
+  if (weaponData.ammoList[currentAmmo].special.slow.has) {
+    half = Math.max(1, Math.floor(half / 2));
+  }
 
   const macMod = (
     actorData.trainings.weapons.hth && actorData.trainings.weapons.mac

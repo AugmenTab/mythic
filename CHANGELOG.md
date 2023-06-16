@@ -55,6 +55,7 @@
   * Two primary types: Walkers (using "Legs" propulsion type), and all others.
   * Walkers are expected to have a Stomp and Punch weapon added (if relevant).
   * Vehicles can post their doom state detonation to chat, along with make Splatter or Trample attacks as appropriate. Non-walkers can also post the damage dealt on a Wreck to chat.
+* The Slow special rule now halves melee rate of attacks.
 
 ## Bug Fixes
 
