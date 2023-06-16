@@ -1354,6 +1354,15 @@ function calculateWeaponSummaryAttackData(actor) {
       return;
     }
 
+    // Non-walkers should only be able to use ranged weapons.
+    const isNonWalker = isVehicle && actor.system.propulsion.type !== "legs";
+    if (isNonWalker && weapon.system.group !== "ranged") {
+      weapon.system.attack.half = 0;
+      weapon.system.attack.full = 0;
+      weapon.system.ammoList[currentAmmo].target = 0;
+      return;
+    }
+
     if (weapon.system.group === "thrown") {
       calculateWeaponRangeThrown(owner.system, weapon.system);
       weapon.system.attack.half = 1;
