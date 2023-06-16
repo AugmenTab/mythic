@@ -1254,24 +1254,20 @@ function calculateWeaponRangeMelee(actorData, weaponData) {
   );
 }
 
-function calculateWeaponRangeThrown(actorData, weaponData) {
+function calculateWeaponRangeThrown(actorData, str, weaponData) {
   const currentAmmo = weaponData.currentAmmo;
   const bonus = weaponData.ammoList[currentAmmo].range.thrownBonus;
-  const base = (
-      Common.getCharacteristicModifier(actorData.characteristics.str.total)
-    + actorData.mythicCharacteristics.str.total
-  );
 
   let mult = 20;
   const grip = weaponData.ammoList[currentAmmo].range.grip;
-  mult -= calculateWeightPenaltyThrown(base, weaponData.weight.each);
+  mult -= calculateWeightPenaltyThrown(str, weaponData.weight.each);
   mult -= calculateGripPenaltyThrown(grip);
 
   weaponData.ammoList[currentAmmo].range.thrownMax =
-    bonus + Math.floor(base * 20);
+    bonus + Math.floor(str * 20);
 
   weaponData.ammoList[currentAmmo].range.thrown = Math.floor(
-    ((base * mult) + bonus) / (grip === "sloppy" ? 2 : 1)
+    ((str * mult) + bonus) / (grip === "sloppy" ? 2 : 1)
   );
 }
 
@@ -1364,7 +1360,16 @@ function calculateWeaponSummaryAttackData(actor) {
     }
 
     if (weapon.system.group === "thrown") {
-      calculateWeaponRangeThrown(owner.system, weapon.system);
+      const str =
+        actor.type === "Vehicle"
+          ? ( actor.system.characteristics.mythicStr
+            + Common.getCharacteristicModifier(actor.system.characteristics.str)
+            )
+          : ( owner.system.mythicCharacteristics.str.total
+            + Common.getCharacteristicModifier(owner.system.characteristics.str.total)
+            );
+
+      calculateWeaponRangeThrown(owner.system, str, weapon.system);
       weapon.system.attack.half = 1;
       weapon.system.attack.full = 1;
       weapon.system.attack.fireMode = "thrown";
