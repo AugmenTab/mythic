@@ -112,6 +112,20 @@ Handlebars.registerHelper("doMath", function(...var_args) {
 });
 
 /**
+ * Retrieve an Entity by type and ID.
+ *
+ * @param {string} type - The Entity type.
+ * @param {string} id - The Entity's ID.
+ * @returns {object|null} The data object for the Entity found, if any.
+ */
+Handlebars.registerHelper("getEntity", function(type, id) {
+  switch(type) {
+    case "actor": return game.actors.get(id.split("_")[1]);
+    default:      return null;
+  }
+});
+
+/**
  * Retrieve a system setting.
  *
  * @param {string} setting - The name for the system setting to retrieve.

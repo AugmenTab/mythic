@@ -162,10 +162,19 @@
                       {{this.range.close}}&nbsp;-&nbsp;{{this.range.long}}&nbsp;m
                       <div class="scope">
                         {{localnum weapon.system.scopeMinimum}}&nbsp;-
-                        {{localnum
-                            (doMath "*"
-                                    ../../system.perceptiveRange.total
-                                    weapon.system.scopeMagnification)}}&nbsp;m
+                        {{#if (eq ../../actor.type "Vehicle")}}
+                          {{#with (getEntity "actor" weapon.system.owner)}}
+                            {{localnum
+                                (doMath "*"
+                                        this.system.perceptiveRange.total
+                                        ../../this.system.scopeMagnification)}}&nbsp;m
+                          {{/with}}
+                        {{else}}
+                          {{localnum
+                              (doMath "*"
+                                      ../../system.perceptiveRange.total
+                                      weapon.system.scopeMagnification)}}&nbsp;m
+                        {{/if}}
                         (&times;
                         <input
                           style="width:25px;height:20px"
