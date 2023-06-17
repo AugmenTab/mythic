@@ -7,6 +7,7 @@ import           Data.Types
 import           Domain.Helpers (tryParseInt)
 
 import qualified Data.Char as C
+import           Data.Either.Extra (maybeToEither)
 import qualified Data.List as L
 import qualified Data.List.Extra as L
 import qualified Data.Map.Strict as Map
@@ -47,16 +48,15 @@ mkArmor _ _ =
   Left "Not yet implemeted"
 
 mkEquipment :: Maybe Faction -> RawEquipment -> Either T.Text FoundryData
-mkEquipment Nothing raw =
-  Left
-    $ T.unwords
-        [ "Cannot build Equipment"
-        , rawEquipmentName raw <> ":"
-        , "no faction could be parsed."
-        ]
+mkEquipment mbFaction raw = do
+  faction <-
+    flip maybeToEither mbFaction
+      $ T.unwords
+          [ "Cannot build Equipment"
+          , rawEquipmentName raw <> ":"
+          , "no faction could be parsed."
+          ]
 
-
-mkEquipment (Just faction) raw = Right $ FoundryEquipment $
   let desc = rawEquipmentDescription raw
       weight =
         Weight
@@ -67,7 +67,9 @@ mkEquipment (Just faction) raw = Right $ FoundryEquipment $
           , weightSelfSupported = False
           }
 
-   in Equipment
+  Right
+    . FoundryEquipment
+    $ Equipment
         { equipmentName        = mkName $ rawEquipmentName raw
         , equipmentFaction     = faction
         , equipmentPrice       = mkItemPrice $ rawEquipmentPrice raw
@@ -84,15 +86,15 @@ mkEquipment (Just faction) raw = Right $ FoundryEquipment $
         }
 
 mkMelee :: Maybe Faction -> RawMeleeWeapon -> Either T.Text FoundryData
-mkMelee Nothing raw =
-  Left
-    $ T.unwords
-        [ "Cannot build Melee Weapon "
-        , rawMeleeName raw <> ":"
-        , "no faction could be parsed."
-        ]
+mkMelee mbFaction raw = do
+  faction <-
+    flip maybeToEither mbFaction
+      $ T.unwords
+          [ "Cannot build Melee Weapon "
+          , rawMeleeName raw <> ":"
+          , "no faction could be parsed."
+          ]
 
-mkMelee (Just faction) raw = Right $ FoundryWeapon $
   let weaponType = rawMeleeType raw
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
@@ -126,7 +128,9 @@ mkMelee (Just faction) raw = Right $ FoundryWeapon $
           , T.intercalate ". " $ Set.toList unknownSpecials
           ]
 
-   in Weapon
+  Right
+    . FoundryWeapon
+    $ Weapon
         { weaponName        = mkName $ rawMeleeName raw
         , weaponFaction     = faction
         , weaponDescription = description
@@ -157,15 +161,15 @@ mkMelee (Just faction) raw = Right $ FoundryWeapon $
         }
 
 mkRanged :: Maybe Faction -> RawRangedWeapon -> Either T.Text FoundryData
-mkRanged Nothing raw =
-  Left
-    $ T.unwords
-        [ "Cannot build Ranged Weapon"
-        , rawRangedName raw <> ":"
-        , "no faction could be parsed."
-        ]
+mkRanged mbFaction raw = do
+  faction <-
+    flip maybeToEither mbFaction
+      $ T.unwords
+          [ "Cannot build Ranged Weapon"
+          , rawRangedName raw <> ":"
+          , "no faction could be parsed."
+          ]
 
-mkRanged (Just faction) raw = Right $ FoundryWeapon $
   let (name, nickname) = mkNameAndNickname $ rawRangedName raw
       weaponType = rawRangedType raw
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
@@ -206,7 +210,9 @@ mkRanged (Just faction) raw = Right $ FoundryWeapon $
           $ T.words
           $ rawRangedReload raw
 
-   in Weapon
+  Right
+    . FoundryWeapon
+    $ Weapon
         { weaponName        = name
         , weaponFaction     = faction
         , weaponDescription = description
