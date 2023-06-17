@@ -32,41 +32,9 @@
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
     {
-      "label": "Equipment - UNSC",
-      "name": "equipment-unsc",
-      "path": "packs/equipment-unsc.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Equipment - Covenant",
-      "name": "equipment-covenant",
-      "path": "packs/equipment-covenant.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Ranged Weapons - UNSC",
-      "name": "ranged-weapons-unsc",
-      "path": "packs/ranged-weapons-unsc.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Ranged Weapons - Covenant",
-      "name": "ranged-weapons-covenant",
-      "path": "packs/ranged-weapons-covenant.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Ranged Weapons - Banished",
-      "name": "ranged-weapons-banished",
-      "path": "packs/ranged-weapons-banished.db",
+      "label": "Ability",
+      "name": "ability",
+      "path": "packs/ability.db",
       "private": false,
       "system": "mythic",
       "type": "Item"

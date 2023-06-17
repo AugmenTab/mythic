@@ -1,5 +1,6 @@
 module Data.Types.Ingest
   ( RawData(..)
+  , RawAbility(..)
   , RawArmor(..)
   , RawEquipment(..)
   , RawMeleeWeapon(..)
@@ -16,10 +17,28 @@ import           Text.Read (read)
 import           Text.Show (show)
 
 data RawData
-  = ArmorData     RawArmor
+  = AbilityData   RawAbility
+  | ArmorData     RawArmor
   | EquipmentData RawEquipment
   | MeleeData     RawMeleeWeapon
   | RangedData    RawRangedWeapon
+
+data RawAbility =
+  RawAbility
+    { rawAbilityName        :: T.Text
+    , rawAbilityPrereqs     :: T.Text
+    , rawAbilityCost        :: Int
+    , rawAbilitySummary     :: T.Text
+    , rawAbilityDescription :: T.Text
+    }
+
+instance CSV.FromNamedRecord RawAbility where
+  parseNamedRecord a =
+    RawAbility <$> a .: "Name"
+               <*> a .: "COMP_prerequisite"
+               <*> a .: "Comp_experience"
+               <*> a .: "Comp_aditional_info"
+               <*> a .: "COMP_description"
 
 data RawArmor =
   RawArmor

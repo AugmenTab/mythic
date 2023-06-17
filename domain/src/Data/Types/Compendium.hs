@@ -15,6 +15,7 @@ import qualified Data.Bool as B
 import qualified Data.Char as C
 import qualified Data.List as L
 import           Data.List ((!!))
+import           Data.Maybe (catMaybes)
 import qualified Data.Text as T
 import           GHC.IO (FilePath)
 import           System.Random (mkStdGen, randomRs)
@@ -38,12 +39,17 @@ instance ToJSON (Compendium item) where
            , "system"  .= ("mythic" :: T.Text)
            ]
 
-mkCompendiumName :: Faction -> CompendiumDetails -> Name
-mkCompendiumName faction details =
-  mkName $ T.toLower $ T.intercalate "-"
-    [ T.map (\c -> B.bool c '-' $ C.isSpace c) $ compendiumDetails details
-    , factionText faction
-    ]
+mkCompendiumName :: Maybe Faction -> CompendiumDetails -> Name
+mkCompendiumName mbFaction details =
+  mkName
+    . T.toLower
+    . T.intercalate "-"
+    $ catMaybes
+        [ Just
+            . T.map (\c -> B.bool c '-' $ C.isSpace c)
+            $ compendiumDetails details
+        , factionText <$> mbFaction
+        ]
 
 mkCompendiumPath :: Name -> FilePath
 mkCompendiumPath name =
@@ -132,9 +138,14 @@ mkEntryID (Label label) name = do
 newtype Label = Label T.Text
   deriving newtype (ToJSON)
 
-mkCompendiumLabel :: Faction -> CompendiumDetails -> Label
-mkCompendiumLabel faction content =
-  Label $ compendiumDetails content <> " - " <> factionText faction
+mkCompendiumLabel :: Maybe Faction -> CompendiumDetails -> Label
+mkCompendiumLabel mbFaction content =
+  Label
+    . T.intercalate " - "
+    $ catMaybes
+        [ Just $ compendiumDetails content
+        , factionText <$> mbFaction
+        ]
 
 labelText :: Label -> T.Text
 labelText (Label l) = l

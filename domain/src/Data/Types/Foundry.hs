@@ -1,5 +1,6 @@
 module Data.Types.Foundry
   ( FoundryData(..)
+  , Ability(..)
   , Armor(..)
   , Equipment(..)
   , Weapon(..)
@@ -13,7 +14,8 @@ import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 
 data FoundryData
-  = FoundryArmor     Armor
+  = FoundryAbility   Ability
+  | FoundryArmor     Armor
  -- | FoundryBestiary  Bestiary
  -- | FoundryCharacter Character
   | FoundryEquipment Equipment
@@ -22,6 +24,7 @@ data FoundryData
   | FoundryWeapon    Weapon
 
 instance CompendiumEntry FoundryData where
+  named (FoundryAbility   a) = named a
   named (FoundryArmor     a) = named a
 --  named (FoundryBestiary  b) = named b
 --  named (FoundryCharacter c) = named c
@@ -30,6 +33,7 @@ instance CompendiumEntry FoundryData where
 --  named (FoundryVehicle   v) = named v
   named (FoundryWeapon    w) = named w
 
+  imged (FoundryAbility   a) = imged a
   imged (FoundryArmor     a) = imged a
 --  imged (FoundryBestiary  b) = imged b
 --  imged (FoundryCharacter c) = imged c
@@ -38,6 +42,7 @@ instance CompendiumEntry FoundryData where
 --  imged (FoundryVehicle   v) = imged v
   imged (FoundryWeapon    w) = imged w
 
+  typed (FoundryAbility   a) = typed a
   typed (FoundryArmor     a) = typed a
 --  typed (FoundryBestiary  b) = typed b
 --  typed (FoundryCharacter c) = typed c
@@ -47,6 +52,7 @@ instance CompendiumEntry FoundryData where
   typed (FoundryWeapon    w) = typed w
 
 instance ToJSON FoundryData where
+  toJSON (FoundryAbility   a) = toJSON a
   toJSON (FoundryArmor     a) = toJSON a
 --  toJSON (FoundryBestiary  b) = toJSON b
 --  toJSON (FoundryCharacter c) = toJSON c
@@ -54,6 +60,30 @@ instance ToJSON FoundryData where
 --  toJSON (FoundryFlood     f) = toJSON f
 --  toJSON (FoundryVehicle   v) = toJSON v
   toJSON (FoundryWeapon    w) = toJSON w
+
+data Ability =
+  Ability
+    { abilityName        :: Name
+    , abilityPrereqs     :: Prerequisites
+    , abilityCost        :: Int
+    , abilitySummary     :: Description
+    , abilityDescription :: Description
+    , abilityType        :: AbilityType
+    }
+
+instance CompendiumEntry Ability where
+  named = abilityName
+  imged = const (mkImg "") -- TODO
+  typed = const (FoundryItem ItemAbility)
+
+instance ToJSON Ability where
+  toJSON a =
+    object [ "prerequisite" .= abilityPrereqs     a
+           , "cost"         .= abilityCost        a
+           , "summary"      .= abilitySummary     a
+           , "description"  .= abilityDescription a
+           , "type"         .= abilityType        a
+           ]
 
 data Armor =
   Armor

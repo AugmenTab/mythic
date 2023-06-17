@@ -8,6 +8,7 @@ import qualified Domain.Request as Request
 import           Data.Types
 
 import qualified Data.ByteString.Lazy as LBS
+import           Data.Either.Extra (eitherToMaybe)
 import qualified Data.List as L
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
@@ -24,6 +25,7 @@ ingestRaw subject lines = do
 
   let ingestFn =
         case subject of
+          Request.AbilitySheet      -> ingestAbility
           Request.ArmorSheet        -> ingestArmor
           Request.EquipmentSheet    -> ingestEquipment
           Request.MeleeWeaponSheet  -> ingestMelee
@@ -36,17 +38,23 @@ mkCompendiumMapEntry :: Request.SheetSubject
                      -> RawData
                      -> Either T.Text (CompendiumData, [RawData])
 mkCompendiumMapEntry subject rawData = do
-  faction <-
-    factionFromText
-      $ case rawData of
-          ArmorData     raw -> rawArmorFaction     raw
-          EquipmentData raw -> rawEquipmentFaction raw
-          MeleeData     raw -> rawMeleeFaction     raw
-          RangedData    raw -> rawRangedFaction    raw
+  let faction =
+        eitherToMaybe
+          . factionFromText
+          $ case rawData of
+              AbilityData   _   -> "factionless_ability"
+              ArmorData     raw -> rawArmorFaction     raw
+              EquipmentData raw -> rawEquipmentFaction raw
+              MeleeData     raw -> rawMeleeFaction     raw
+              RangedData    raw -> rawRangedFaction    raw
 
   pure ( (faction, mkCompendiumDetails $ Request.sheetSubjectTitle subject)
        , [ rawData ]
        )
+
+ingestAbility :: T.Text -> Either T.Text [RawData]
+ingestAbility =
+  ffmap AbilityData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestArmor :: T.Text -> Either T.Text [RawData]
 ingestArmor _ =

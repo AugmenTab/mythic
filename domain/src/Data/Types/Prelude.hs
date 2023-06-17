@@ -1,6 +1,7 @@
 module Data.Types.Prelude
   ( -- Data Types
-    AmmoGroup(..)
+    AbilityType(..)
+  , AmmoGroup(..)
   , AmmoList, mkAmmoList
   , Ammunition(..)
   , ArmorNotes
@@ -41,6 +42,7 @@ module Data.Types.Prelude
   , Img, mkImg
   , MagazineCapacity, mkMagazineCapacity
   , Name, mkName, nameText
+  , Prerequisites, mkPrereqs
   , Reload, mkReload
   , ScopeMagnification, mkScopeMagnification
   , WeaponType(..)
@@ -66,6 +68,23 @@ import qualified Data.Set as Set
 import qualified Data.Text as T
 import           GHC.Types (Double)
 import           Text.Show (Show, show)
+
+data AbilityType
+  = TrueAbility
+  | RacialTrait
+  | Trait
+  | Augmentation
+
+instance ToJSON AbilityType where
+  toJSON = toJSON . abilityTypeToText
+
+abilityTypeToText :: AbilityType -> T.Text
+abilityTypeToText at =
+  case at of
+    TrueAbility  -> "ability"
+    RacialTrait  -> "racial"
+    Trait        -> "trait"
+    Augmentation -> "augmentation"
 
 data ActorType
   = ActorBestiary
@@ -254,7 +273,7 @@ mkCompendiumDetails = CompendiumDetails
 compendiumDetails :: CompendiumDetails -> T.Text
 compendiumDetails (CompendiumDetails t) = t
 
-type CompendiumData = (Faction, CompendiumDetails)
+type CompendiumData = (Maybe Faction, CompendiumDetails)
 type CompendiumMap entries = Map.Map CompendiumData entries
 
 class CompendiumEntry a where
@@ -567,6 +586,12 @@ mkName = Name
 
 nameText :: Name -> T.Text
 nameText (Name t) = t
+
+newtype Prerequisites = Prerequisites T.Text
+  deriving newtype (ToJSON)
+
+mkPrereqs :: T.Text -> Prerequisites
+mkPrereqs = Prerequisites
 
 data Protection =
   Protection

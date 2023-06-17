@@ -16,9 +16,9 @@ toCompendium = mapMaybe (uncurry mkCompendium) . Map.toList
 
 mkCompendium :: CompendiumEntry item
              => CompendiumData -> [item] -> Maybe (Compendium item)
-mkCompendium (faction, content) fData = do
-  let label   = mkCompendiumLabel faction content
-      name    = mkCompendiumName  faction content
+mkCompendium (mbFaction, content) fData = do
+  let label   = mkCompendiumLabel mbFaction content
+      name    = mkCompendiumName  mbFaction content
       entries = mkEntry label <$> fData
 
   cType <- entryType . fst <$> L.uncons entries
