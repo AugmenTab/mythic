@@ -10,7 +10,9 @@ module Domain.JSON
   , emptyArray
   , emptyObject
   , keyFromText
+  , nullJSON
   , valueInt
+  , valueRatio
   , valueText
   ) where
 
@@ -24,6 +26,7 @@ import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 import qualified Data.Vector as V
+import           GHC.Types (Double)
 
 defaultConfig :: Pretty.Config
 defaultConfig =
@@ -58,8 +61,14 @@ emptyObject = object []
 keyFromText :: T.Text -> Key
 keyFromText = fromText
 
+nullJSON :: Value
+nullJSON = Null
+
 valueInt :: Int -> Value
 valueInt = toJSON
+
+valueRatio :: Rational -> Value
+valueRatio = (toJSON :: Double -> Value) . realToFrac
 
 valueText :: T.Text -> Value
 valueText = toJSON

@@ -5,31 +5,41 @@ module Domain.Convert.Compendium
 import           Flipstone.Prelude
 import           Data.Types
 
+import qualified Data.List.Extra as L
+import           Data.Maybe (mapMaybe)
 import qualified Data.Map.Strict as Map
-import           Data.Tuple (uncurry)
+import           Data.Tuple (fst, uncurry)
 
 toCompendium :: CompendiumEntry item
              => CompendiumMap [item] -> [Compendium item]
-toCompendium = fmap (uncurry mkCompendium) . Map.toList
+toCompendium = mapMaybe (uncurry mkCompendium) . Map.toList
 
 mkCompendium :: CompendiumEntry item
-             => CompendiumData -> [item] -> Compendium item
-mkCompendium (faction, content) fData =
-  let label = mkCompendiumLabel faction content
-      name  = mkCompendiumName  faction content
-   in Compendium
+             => CompendiumData -> [item] -> Maybe (Compendium item)
+mkCompendium (faction, content) fData = do
+  let label   = mkCompendiumLabel faction content
+      name    = mkCompendiumName  faction content
+      entries = mkEntry label <$> fData
+
+  cType <- entryType . fst <$> L.uncons entries
+
+  Just
+    $ Compendium
         { compendiumName    = name
         , compendiumLabel   = label
         , compendiumPath    = mkCompendiumPath name
-        , compendiumEntries = mkEntry label <$> fData
+        , compendiumType    = cType
+        , compendiumEntries = entries
         }
 
-mkEntry :: CompendiumEntry item => Label -> item -> Entry item
-mkEntry label item =
+mkEntry :: CompendiumEntry entry => Label -> entry -> Entry entry
+mkEntry label entry =
   Entry
-    { entryId   = mkItemID label $ named item
-    , entryName = named item
-    , entryImg  = imged item
-    , entryType = typed item
-    , entryData = item
+    { entryId    = mkEntryID label $ named entry
+    , entryName  = named entry
+    , entryImg   = imged entry
+    , entryType  = typed entry
+    , entryData  = entry
+    , entryToken = Nothing -- TODO
+    , entryItems = []
     }

@@ -14,25 +14,45 @@ import qualified Data.Text as T
 
 data FoundryData
   = FoundryArmor     Armor
+ -- | FoundryBestiary  Bestiary
+ -- | FoundryCharacter Character
   | FoundryEquipment Equipment
+ -- | FoundryFlood     Flood
+ -- | FoundryVehicle   Vehicle
   | FoundryWeapon    Weapon
 
 instance CompendiumEntry FoundryData where
-  named (FoundryArmor a)     = named a
+  named (FoundryArmor     a) = named a
+--  named (FoundryBestiary  b) = named b
+--  named (FoundryCharacter c) = named c
   named (FoundryEquipment e) = named e
-  named (FoundryWeapon w)    = named w
+--  named (FoundryFlood     f) = named f
+--  named (FoundryVehicle   v) = named v
+  named (FoundryWeapon    w) = named w
 
-  imged (FoundryArmor a)     = imged a
+  imged (FoundryArmor     a) = imged a
+--  imged (FoundryBestiary  b) = imged b
+--  imged (FoundryCharacter c) = imged c
   imged (FoundryEquipment e) = imged e
-  imged (FoundryWeapon w)    = imged w
+--  imged (FoundryFlood     f) = imged f
+--  imged (FoundryVehicle   v) = imged v
+  imged (FoundryWeapon    w) = imged w
 
-  typed (FoundryArmor a)     = typed a
+  typed (FoundryArmor     a) = typed a
+--  typed (FoundryBestiary  b) = typed b
+--  typed (FoundryCharacter c) = typed c
   typed (FoundryEquipment e) = typed e
-  typed (FoundryWeapon w)    = typed w
+--  typed (FoundryFlood     f) = typed f
+--  typed (FoundryVehicle   v) = typed v
+  typed (FoundryWeapon    w) = typed w
 
 instance ToJSON FoundryData where
   toJSON (FoundryArmor     a) = toJSON a
+--  toJSON (FoundryBestiary  b) = toJSON b
+--  toJSON (FoundryCharacter c) = toJSON c
   toJSON (FoundryEquipment e) = toJSON e
+--  toJSON (FoundryFlood     f) = toJSON f
+--  toJSON (FoundryVehicle   v) = toJSON v
   toJSON (FoundryWeapon    w) = toJSON w
 
 data Armor =
@@ -56,8 +76,8 @@ data Armor =
 
 instance CompendiumEntry Armor where
   named = armorName
-  imged = const (mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp")
-  typed = const ItemArmor
+  imged = const armorImg
+  typed = const (FoundryItem ItemArmor)
 
 instance ToJSON Armor where
   toJSON a =
@@ -77,6 +97,10 @@ instance ToJSON Armor where
            , "variant"         .= armorVariant a
            ]
 
+armorImg :: Img
+armorImg =
+  mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp"
+
 data Equipment =
   Equipment
     { equipmentName            :: Name
@@ -92,8 +116,8 @@ data Equipment =
 
 instance CompendiumEntry Equipment where
   named = equipmentName
-  imged = const (mkImg "icons/containers/chest/chest-simple-walnut.webp")
-  typed = const ItemEquipment
+  imged = const equipmentImg
+  typed = const (FoundryItem ItemEquipment)
 
 instance ToJSON Equipment where
   toJSON e =
@@ -107,6 +131,10 @@ instance ToJSON Equipment where
       , "characteristics" .= fromMaybe emptyStatAdjustments
                                        (equipmentCharacteristics e)
       ]
+
+equipmentImg :: Img
+equipmentImg =
+  mkImg "icons/containers/chest/chest-simple-walnut.webp"
 
 data Weapon =
   Weapon
@@ -138,7 +166,7 @@ data Weapon =
 instance CompendiumEntry Weapon where
   named = weaponName
   imged = weaponImg
-  typed = const ItemWeapon
+  typed = const (FoundryItem ItemWeapon)
 
 instance ToJSON Weapon where
   toJSON w =
@@ -168,50 +196,51 @@ instance ToJSON Weapon where
            ]
 
 weaponImg :: Weapon -> Img
-weaponImg weapon = mkImg $
-  case T.toUpper $ unWeaponType $ weaponType weapon of
-    "AUTOCANNON"             -> "icons/weapons/artillery/cannon-engraved-gold.webp"
-    "AXE"                    -> "icons/weapons/axes/axe-battle-blackened.webp"
-    "BEAM"                   -> "icons/magic/lightning/bolt-beam-strike-blue.webp"
-    "CANNON"                 -> "icons/weapons/artillery/cannon-banded.webp"
-    "CARBINE"                -> "icons/weapons/guns/rifle-bayonet.webp"
-    "CHEMICAL SPRAYER"       -> "icons/magic/fire/blast-jet-stream-embers-red.webp"
-    "CLUB"                   -> "icons/weapons/clubs/club-heavy-barbed-brown.webp"
-    "COILGUN"                -> "icons/commodities/tech/coil-steel-grey.webp"
-    "DAGGER"                 -> "icons/weapons/daggers/dagger-curved-blue.webp"
-    "DEMOLITION"             -> "icons/weapons/thrown/bomb-detonator.webp"
-    "DEMOLITIONS"            -> "icons/weapons/thrown/bomb-detonator.webp"
-    "ENERGY WEAPON"          -> "icons/commodities/tech/tube-chamber-lightning.webp"
-    "FIST WEAPON"            -> "icons/weapons/fist/claw-gauntlet-gray.webp"
-    "GARROTE"                -> "icons/sundries/survival/rope-noose-brown.webp"
-    "GRENADE"                -> "icons/weapons/thrown/grenade-round.webp"
-    "GRENADE LAUNCHER"       -> "icons/weapons/thrown/rocket.webp"
-    "HAMMER"                 -> "icons/weapons/hammers/hammer-double-engraved-gold.webp"
-    "HEAVY MACHINE GUN"      -> "icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
-    "KNIFE"                  -> "icons/weapons/daggers/dagger-serrated-black.webp"
-    "LANDMINE"               -> "icons/weapons/thrown/bomb-detonator.webp"
-    "LIGHT MACHINE GUN"      -> "icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
-    "MACE"                   -> "icons/weapons/maces/mace-round-spiked-black.webp"
-    "MACHINE GUN"            -> "icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
-    "MAGAZINE SHOTGUN"       -> "icons/weapons/guns/gun-blunderbuss-gold.webp"
-    "MELEE SHIELD"           -> "icons/equipment/shield/oval-wooden-boss-steel.webp"
-    "MISSILE LAUNCHER"       -> "icons/weapons/thrown/rocket.webp"
-    "MORTAR CANNON"          -> "icons/skills/ranged/cannon-barrel-firing-yellow.webp"
-    "NATURAL ATTACK"         -> "icons/skills/melee/unarmed-punch-fist-blue.webp"
-    "ONE-HANDED SWORD"       -> "icons/weapons/swords/shortsword-guard-brass.webp"
-    "ORDINANCE"              -> "icons/weapons/thrown/bomb-fuse-blue.webp"
-    "PISTOL"                 -> "icons/weapons/guns/gun-pistol-flintlock-metal.webp"
-    "POLEARM AXE"            -> "icons/weapons/polearms/halberd-crescent-small-spiked.webp"
-    "POLEARM SPIKE"          -> "icons/weapons/polearms/spear-ornate-gold.webp"
-    "RAILGUN"                -> "icons/commodities/tech/coil-steel-grey.webp"
-    "RIFLE"                  -> "icons/weapons/guns/rifle-brown.webp"
-    "ROCKET LAUNCHER"        -> "icons/weapons/thrown/rocket.webp"
-    "SATCHEL CHARGE"         -> "icons/weapons/thrown/bomb-timer.webp"
-    "SHOVEL"                 -> "icons/tools/hand/shovel-spade-steel-grey.webp"
-    "SINGLE LOADING SHOTGUN" -> "icons/weapons/guns/gun-blunderbuss-bronze.webp"
-    "SMG"                    -> "icons/weapons/guns/gun-pistol-brown.webp"
-    "SNIPER RIFLE"           -> "icons/weapons/guns/gun-topbarrel.webp"
-    "SPRAY WEAPON"           -> "icons/skills/wounds/blood-spurt-spray-red.webp"
-    "TASER"                  -> "icons/magic/lightning/bolts-forked-large-blue.webp"
-    "TWO-HANDED SWORD"       -> "icons/weapons/swords/greatsword-blue.webp"
-    _                        -> "icons/skills/targeting/target-strike-triple-blue.webp"
+weaponImg weapon =
+  mkImg $
+    case T.toUpper . unWeaponType $ weaponType weapon of
+      "AUTOCANNON"             -> "icons/weapons/artillery/cannon-engraved-gold.webp"
+      "AXE"                    -> "icons/weapons/axes/axe-battle-blackened.webp"
+      "BEAM"                   -> "icons/magic/lightning/bolt-beam-strike-blue.webp"
+      "CANNON"                 -> "icons/weapons/artillery/cannon-banded.webp"
+      "CARBINE"                -> "icons/weapons/guns/rifle-bayonet.webp"
+      "CHEMICAL SPRAYER"       -> "icons/magic/fire/blast-jet-stream-embers-red.webp"
+      "CLUB"                   -> "icons/weapons/clubs/club-heavy-barbed-brown.webp"
+      "COILGUN"                -> "icons/commodities/tech/coil-steel-grey.webp"
+      "DAGGER"                 -> "icons/weapons/daggers/dagger-curved-blue.webp"
+      "DEMOLITION"             -> "icons/weapons/thrown/bomb-detonator.webp"
+      "DEMOLITIONS"            -> "icons/weapons/thrown/bomb-detonator.webp"
+      "ENERGY WEAPON"          -> "icons/commodities/tech/tube-chamber-lightning.webp"
+      "FIST WEAPON"            -> "icons/weapons/fist/claw-gauntlet-gray.webp"
+      "GARROTE"                -> "icons/sundries/survival/rope-noose-brown.webp"
+      "GRENADE"                -> "icons/weapons/thrown/grenade-round.webp"
+      "GRENADE LAUNCHER"       -> "icons/weapons/thrown/rocket.webp"
+      "HAMMER"                 -> "icons/weapons/hammers/hammer-double-engraved-gold.webp"
+      "HEAVY MACHINE GUN"      -> "icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
+      "KNIFE"                  -> "icons/weapons/daggers/dagger-serrated-black.webp"
+      "LANDMINE"               -> "icons/weapons/thrown/bomb-detonator.webp"
+      "LIGHT MACHINE GUN"      -> "icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
+      "MACE"                   -> "icons/weapons/maces/mace-round-spiked-black.webp"
+      "MACHINE GUN"            -> "icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
+      "MAGAZINE SHOTGUN"       -> "icons/weapons/guns/gun-blunderbuss-gold.webp"
+      "MELEE SHIELD"           -> "icons/equipment/shield/oval-wooden-boss-steel.webp"
+      "MISSILE LAUNCHER"       -> "icons/weapons/thrown/rocket.webp"
+      "MORTAR CANNON"          -> "icons/skills/ranged/cannon-barrel-firing-yellow.webp"
+      "NATURAL ATTACK"         -> "icons/skills/melee/unarmed-punch-fist-blue.webp"
+      "ONE-HANDED SWORD"       -> "icons/weapons/swords/shortsword-guard-brass.webp"
+      "ORDINANCE"              -> "icons/weapons/thrown/bomb-fuse-blue.webp"
+      "PISTOL"                 -> "icons/weapons/guns/gun-pistol-flintlock-metal.webp"
+      "POLEARM AXE"            -> "icons/weapons/polearms/halberd-crescent-small-spiked.webp"
+      "POLEARM SPIKE"          -> "icons/weapons/polearms/spear-ornate-gold.webp"
+      "RAILGUN"                -> "icons/commodities/tech/coil-steel-grey.webp"
+      "RIFLE"                  -> "icons/weapons/guns/rifle-brown.webp"
+      "ROCKET LAUNCHER"        -> "icons/weapons/thrown/rocket.webp"
+      "SATCHEL CHARGE"         -> "icons/weapons/thrown/bomb-timer.webp"
+      "SHOVEL"                 -> "icons/tools/hand/shovel-spade-steel-grey.webp"
+      "SINGLE LOADING SHOTGUN" -> "icons/weapons/guns/gun-blunderbuss-bronze.webp"
+      "SMG"                    -> "icons/weapons/guns/gun-pistol-brown.webp"
+      "SNIPER RIFLE"           -> "icons/weapons/guns/gun-topbarrel.webp"
+      "SPRAY WEAPON"           -> "icons/skills/wounds/blood-spurt-spray-red.webp"
+      "TASER"                  -> "icons/magic/lightning/bolts-forked-large-blue.webp"
+      "TWO-HANDED SWORD"       -> "icons/weapons/swords/greatsword-blue.webp"
+      _                        -> "icons/skills/targeting/target-strike-triple-blue.webp"

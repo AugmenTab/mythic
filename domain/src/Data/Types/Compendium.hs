@@ -1,7 +1,7 @@
 module Data.Types.Compendium
   ( Compendium(..)
   , Entry(..)
-  , ItemID, mkItemID, idText
+  , EntryID, mkEntryID, idText
   , Label, mkCompendiumLabel, labelText
   , mkCompendiumName
   , mkCompendiumPath
@@ -24,6 +24,7 @@ data Compendium item =
     { compendiumName    :: Name
     , compendiumLabel   :: Label
     , compendiumPath    :: FilePath
+    , compendiumType    :: EntryType
     , compendiumEntries :: [Entry item]
     }
 
@@ -33,7 +34,7 @@ instance ToJSON (Compendium item) where
            , "label"   .= compendiumLabel c
            , "path"    .= compendiumPath  c
            , "private" .= False
-           , "type"    .= ("Item" :: T.Text)
+           , "type"    .= entryTypeText (compendiumType c)
            , "system"  .= ("mythic" :: T.Text)
            ]
 
@@ -48,38 +49,59 @@ mkCompendiumPath :: Name -> FilePath
 mkCompendiumPath name =
   T.unpack $ "packs/" <> nameText name <> ".db"
 
-data Entry item =
+data Entry entry =
   Entry
-    { entryId   :: ItemID
-    , entryName :: Name
-    , entryImg  :: Img
-    , entryType :: ItemType
-    , entryData :: item
+    { entryId    :: EntryID
+    , entryName  :: Name
+    , entryImg   :: Img
+    , entryType  :: EntryType
+    , entryData  :: entry
+    , entryToken :: Maybe Token
+    , entryItems :: [Entry EntryType]
     }
 
 instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
   toJSON e =
-    let ItemID itemId = entryId e
-        permissions   =
-          object [ "default"          .= valueInt 0
-                 , keyFromText itemId .= valueInt 3
+    let EntryID _id = entryId e
+        ownership =
+          object [ "default"       .= valueInt 0
+                 , keyFromText _id .= valueInt 3
                  ]
 
-     in object [ "_id"        .= entryId e
-               , "name"       .= entryName e
-               , "img"        .= entryImg e
-               , "type"       .= entryType e
-               , "system"     .= entryData e
-               , "flags"      .= emptyObject
-               , "effects"    .= emptyArray
-               , "permission" .= permissions
-               ]
+     in case entryType e of
+          FoundryActor _ ->
+            object
+              [ "_id"            .= entryId e
+              , "name"           .= entryName e
+              , "img"            .= entryImg e
+              , "type"           .= entryType e
+              , "system"         .= entryData e
+              , "prototypeToken" .= entryToken e
+              , "items"          .= emptyArray
+              , "flags"          .= emptyObject
+              , "effects"        .= emptyArray
+              , "folder"         .= nullJSON
+              , "sort"           .= valueInt 0
+              , "ownership"      .= ownership
+              ]
 
-newtype ItemID = ItemID T.Text
+          FoundryItem _ ->
+            object
+              [ "_id"       .= entryId e
+              , "name"      .= entryName e
+              , "img"       .= entryImg e
+              , "type"      .= entryType e
+              , "system"    .= entryData e
+              , "flags"     .= emptyObject
+              , "effects"   .= emptyArray
+              , "ownership" .= ownership
+              ]
+
+newtype EntryID = EntryID T.Text
   deriving newtype (ToJSON)
 
-idText :: ItemID -> T.Text
-idText (ItemID i) = i
+idText :: EntryID -> T.Text
+idText (EntryID i) = i
 
 -- This represents the range of characters to use when constructing an ID.
 idCharacters :: [Char]
@@ -94,11 +116,11 @@ idRange = (0, L.length idCharacters - 1)
 -- Despite using a "random" numbers, we define the seed with the item's name
 -- and label, which allows us to reliably produce the same ID every time the
 -- packs are generated.
-mkItemID :: Label -> Name -> ItemID
-mkItemID (Label label) name = do
+mkEntryID :: Label -> Name -> EntryID
+mkEntryID (Label label) name = do
   let mkSeed :: T.Text -> Int
       mkSeed txt = T.length txt * sum (C.ord <$> T.unpack txt)
-   in   ItemID
+   in   EntryID
       . T.pack
       . fmap (idCharacters !!)
       . L.take 16

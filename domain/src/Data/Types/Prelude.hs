@@ -6,6 +6,7 @@ module Data.Types.Prelude
   , ArmorNotes
   , Attack, emptyAttack
   , Barrel
+  , EntryType(..), entryTypeText
   , EquipmentTraining(..)
   , Faction(..), factions, factionFromText, factionText
   , FactionTraining
@@ -23,6 +24,7 @@ module Data.Types.Prelude
   , SpecialRules(..), emptySpecialRules
   , StatAdjustments, emptyStatAdjustments
   , StrengthMultiplier(..), strengthMultiplierFromText
+  , Token(..)
   , WeaponGroup(..)
   , WeaponRange(..), emptyWeaponRange
   , WeaponSettings, emptyWeaponSettings
@@ -54,14 +56,34 @@ module Data.Types.Prelude
 import           Flipstone.Prelude
 import           Domain.JSON
 
+import qualified Data.Bool as B
 import           Data.Coerce (coerce)
 import qualified Data.List.Extra as L
 import qualified Data.Map.Strict as Map
 import           Data.Maybe (fromMaybe, isJust)
+import           Data.Ratio ((%))
 import qualified Data.Set as Set
 import qualified Data.Text as T
 import           GHC.Types (Double)
 import           Text.Show (Show, show)
+
+data ActorType
+  = ActorBestiary
+  | ActorFlood
+  | ActorNamed
+  | ActorVehicle
+  deriving stock (Eq)
+
+instance ToJSON ActorType where
+  toJSON = toJSON . actorTypeText
+
+actorTypeText :: ActorType -> T.Text
+actorTypeText actor =
+  case actor of
+    ActorBestiary -> "Bestiary Character"
+    ActorFlood    -> "Flood"
+    ActorNamed    -> "Named Character"
+    ActorVehicle  -> "Vehicle"
 
 newtype Ammo = Ammo T.Text
   deriving newtype (ToJSON)
@@ -238,13 +260,28 @@ type CompendiumMap entries = Map.Map CompendiumData entries
 class CompendiumEntry a where
   named :: a -> Name
   imged :: a -> Img
-  typed :: a -> ItemType
+  typed :: a -> EntryType
 
 newtype Description = Description T.Text
   deriving newtype (ToJSON)
 
 mkDescription :: T.Text -> Description
 mkDescription = Description
+
+data EntryType
+  = FoundryActor ActorType
+  | FoundryItem  ItemType
+  deriving stock (Eq)
+
+instance ToJSON EntryType where
+  toJSON (FoundryActor a) = toJSON a
+  toJSON (FoundryItem  i) = toJSON i
+
+entryTypeText :: EntryType -> T.Text
+entryTypeText et =
+  case et of
+    FoundryActor _ -> "Actor"
+    FoundryItem  _ -> "Item"
 
 data EquipmentTraining
   = Basic
@@ -502,6 +539,7 @@ data ItemType
   | ItemEducation
   | ItemEquipment
   | ItemWeapon
+  deriving stock (Eq)
 
 instance ToJSON ItemType where
   toJSON = toJSON . itemTypeText
@@ -606,6 +644,7 @@ data Size
   | Monumental
   | Colossal
   | Vast
+  deriving stock (Eq, Ord)
 
 instance ToJSON Size where
   toJSON = toJSON . sizeText
@@ -626,6 +665,23 @@ sizeText size =
     Monumental -> "monumental"
     Colossal   -> "colossal"
     Vast       -> "vast"
+
+sizeToInt :: Size -> Int
+sizeToInt size =
+  case size of
+    Mini       ->  0
+    Small      ->  1
+    Normal     ->  1
+    Large      ->  2
+    Huge       ->  3
+    Hulking    ->  3
+    Giant      ->  4
+    Immense    ->  4
+    Massive    ->  5
+    Great      ->  6
+    Monumental ->  7
+    Colossal   -> 10
+    Vast       -> 25
 
 data SpecialRules =
   SpecialRules
@@ -803,6 +859,100 @@ strengthMultiplier sm =
     HalfStrength   -> 0.5
     FullStrength   -> 1
     DoubleStrength -> 2
+
+data Token =
+  Token
+    { tokenName :: Name
+    , tokenType :: ActorType
+    , tokenSize :: Size
+    , tokenBar2 :: Maybe T.Text
+    }
+
+instance ToJSON Token where
+  toJSON token =
+    let isNamed = tokenType token == ActorNamed
+        mkBar = object . L.singleton . ("attribute" .=)
+        (size, scale) =
+          case tokenSize token of
+            Mini  -> (1, 1 % 2)
+            Small -> (1, 4 % 5)
+            tSize -> (sizeToInt tSize, 1 % 1)
+
+        texture =
+          object
+            [ "src"      .= ("icons/svg/mystery-man.svg" :: T.Text)
+            , "scaleX"   .= valueRatio scale
+            , "scaleY"   .= valueRatio scale
+            , "offsetX"  .= valueInt 0
+            , "offsetY"  .= valueInt 0
+            , "rotation" .= valueInt 0
+            , "tint"     .= nullJSON
+            ]
+
+        animation =
+          object
+            [ "type"      .= nullJSON
+            , "speed"     .= valueInt 5
+            , "intensity" .= valueInt 5
+            , "reverse"   .= False
+            ]
+
+        darkness =
+          object
+            [ "min" .= valueInt 0
+            , "max" .= valueInt 1
+            ]
+
+        light =
+          object
+            [ "alpha"       .= valueRatio (1 % 2)
+            , "angle"       .= valueInt 360
+            , "bright"      .= valueInt 0
+            , "color"       .= nullJSON
+            , "coloration"  .= valueInt 1
+            , "dim"         .= valueInt 0
+            , "attenuation" .= valueRatio (1 % 2)
+            , "luminosity"  .= valueRatio (1 % 2)
+            , "saturation"  .= valueInt 0
+            , "contrast"    .= valueInt 0
+            , "shadows"     .= valueInt 0
+            , "animation"   .= animation
+            , "darkness"    .= darkness
+            ]
+
+        sight =
+          object
+            [ "enabled"     .= False
+            , "range"       .= nullJSON
+            , "angle"       .= valueInt 360
+            , "visionMode"  .= ("basic" :: T.Text)
+            , "color"       .= nullJSON
+            , "attenuation" .= valueRatio (1 % 10)
+            , "brightness"  .= valueInt 0
+            , "saturation"  .= valueInt 0
+            , "contrast"    .= valueInt 0
+            ]
+
+     in object
+          [ "name"           .= tokenName token
+          , "displayName"    .= valueInt (B.bool 0 1 isNamed)
+          , "actorLink"      .= isNamed
+          , "texture"        .= texture
+          , "width"          .= valueInt size
+          , "height"         .= valueInt size
+          , "lockRotation"   .= False
+          , "rotation"       .= valueInt 0
+          , "alpha"          .= valueInt 1
+          , "disposition"    .= valueInt (negate 1)
+          , "displayBars"    .= valueInt 50
+          , "bar1"           .= mkBar (Just "wounds")
+          , "bar2"           .= mkBar (tokenBar2 token)
+          , "light"          .= light
+          , "sight"          .= sight
+          , "detectionModes" .= emptyArray
+          , "flags"          .= emptyObject
+          , "randomImg"      .= False
+          ]
 
 data WeaponGroup
   = Ranged
