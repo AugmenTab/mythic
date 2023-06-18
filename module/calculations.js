@@ -72,8 +72,8 @@ export function calculateWeaponValues(weaponData) {
   // TODO: Remove after v0.3.0 release.
   if (!weaponData.ammoList[weaponData.currentAmmo].special.linked) {
     weaponData.ammoList[weaponData.currentAmmo].special.linked = {
-      has: false
-      , value: 0
+      has: false,
+      value: 0
     };
   }
 
@@ -1242,13 +1242,13 @@ function calculateWeaponAttacksRanged(weaponData) {
   if (["auto", "sustained"].includes(mode)) {
     const half = Math.floor(attacks / 2);
     const mag = weaponData.ammoList[currentAmmo].currentMag;
-    weaponData.attack.half = mag >= half ? half : mag;
-    weaponData.attack.full = mag >= attacks ? attacks : mag;
+    weaponData.attack.half = Math.max(0, mag >= half    ? half    : mag);
+    weaponData.attack.full = Math.max(0, mag >= attacks ? attacks : mag);
   } else if (["burst", "pump", "semi"].includes(mode)) {
     const full = attacks * 2;
     const mag = weaponData.ammoList[currentAmmo].currentMag;
-    weaponData.attack.half = mag >= attacks ? attacks : mag;
-    weaponData.attack.full = mag >= full ? full : mag;
+    weaponData.attack.half = Math.max(0, mag >= attacks ? attacks : mag);
+    weaponData.attack.full = Math.max(0, mag >= full    ? full    : mag);
   } else if (mode === "charge") {
     weaponData.attack.half = 1;
   } else if (mode === "drawback") {

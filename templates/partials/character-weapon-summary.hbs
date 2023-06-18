@@ -250,7 +250,7 @@
                   {{#if (eq weapon.system.attack.fireMode "none")}}
                     disabled="true" aria-disabled="true"
                   {{/if}}
-                  {{#unless this.currentMag}}
+                  {{#unless (gt this.currentMag 0)}}
                     {{#unless (eq weapon.system.attack.fireMode "melee")}}
                       disabled="true" aria-disabled="true"
                     {{/unless}}
