@@ -32,9 +32,33 @@
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
     {
-      "label": "Ability",
-      "name": "ability",
-      "path": "packs/ability.db",
+      "label": "Abilities",
+      "name": "abilities",
+      "path": "packs/abilities.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - UNSC",
+      "name": "equipment-unsc",
+      "path": "packs/equipment-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Covenant",
+      "name": "equipment-covenant",
+      "path": "packs/equipment-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Forerunner",
+      "name": "equipment-forerunner",
+      "path": "packs/equipment-forerunner.db",
       "private": false,
       "system": "mythic",
       "type": "Item"

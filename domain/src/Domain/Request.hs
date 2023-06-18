@@ -42,7 +42,7 @@ sheetSubjectText subject =
 sheetSubjectTitle :: SheetSubject -> T.Text
 sheetSubjectTitle subject =
   case subject of
-    AbilitySheet      -> "Ability"
+    AbilitySheet      -> "Abilities"
     ArmorSheet        -> "Armor"
     EquipmentSheet    -> "Equipment"
     MeleeWeaponSheet  -> "Melee Weapons"
@@ -57,10 +57,10 @@ sheetDataMap :: Map.Map SheetSubject SheetData
 sheetDataMap =
   Map.fromList
     [ ( AbilitySheet     , (GID "1009120116", Range "A2:F96")  )
- -- [ ( ArmorSheet       , (GID "3822484"   , Range "A2:M170") )
- -- [ ( EquipmentSheet   , (GID "515202982" , Range "A2:F346") )
- -- [ ( MeleeWeaponSheet , (GID "346860164" , Range "A2:R49")  )
- -- [ ( RangedWeaponSheet, (GID "297713635" , Range "A2:Q331") )
+ -- , ( ArmorSheet       , (GID "3822484"   , Range "A2:M170") )
+    , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607") )
+ -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:R49")  )
+ -- , ( RangedWeaponSheet, (GID "297713635" , Range "A2:Q331") )
     ]
 
 makeSheetRequest :: Either T.Text HTTP.Request

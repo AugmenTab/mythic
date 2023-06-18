@@ -11,9 +11,10 @@ import           Flipstone.Prelude
 
 import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
+import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 import           GHC.Types (Double)
-import           Text.Read (read)
+import           Text.Read (readMaybe)
 import           Text.Show (show)
 
 data RawData
@@ -169,8 +170,7 @@ instance CSV.FromNamedRecord RawRangedWeapon where
                     <*> r .: "COMP_price"
 
 defaultZero :: String -> Double
-defaultZero ""  = 0
-defaultZero str = read str
+defaultZero = fromMaybe 0 . readMaybe
 
 parseBool :: MonadFail m => Int -> m Bool
 parseBool 0 = pure False
