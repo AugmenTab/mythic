@@ -307,6 +307,7 @@ function determineRollOutcome(roll, target) {
 }
 
 async function getAttackAndDamageOutcomes(actor, str, weapon, data) {
+  const currentAmmo = weapon.system.ammoList[weapon.system.currentAmmo];
   const fireMode = weapon.system.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
@@ -330,6 +331,10 @@ async function getAttackAndDamageOutcomes(actor, str, weapon, data) {
   } else if (data.type !== "single") {
     attacks = weapon.system.attack[data.type];
   }
+
+  damagesPerAttack *=
+    currentAmmo.special.linked.has ? currentAmmo.special.linked.value : 1;
+
   for (let i = 1; i <= attacks; i++) {
     const attackData = {
       target: data.target,

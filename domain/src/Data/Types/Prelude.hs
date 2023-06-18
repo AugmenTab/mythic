@@ -727,6 +727,7 @@ data SpecialRules =
     , homing           :: Maybe Int
     , kill             :: Maybe Int
     , kinetic          :: Maybe ()
+    , linked           :: Maybe Int
     , longBarrel       :: Maybe ()
     , needle           :: Maybe Int
     , nonlethal        :: Maybe ()
@@ -776,6 +777,7 @@ instance ToJSON SpecialRules where
                , "homing"           .= intRule  (homing r)
                , "kill"             .= intRule  (kill r)
                , "kinetic"          .= noneRule (kinetic r)
+               , "linked"           .= intRule  (linked r)
                , "longBarrel"       .= noneRule (longBarrel r)
                , "needle"           .= intRule  (needle r)
                , "nonlethal"        .= noneRule (nonlethal r)
@@ -815,6 +817,7 @@ emptySpecialRules =
     , homing           = Nothing
     , kill             = Nothing
     , kinetic          = Nothing
+    , linked           = Nothing
     , longBarrel       = Nothing
     , needle           = Nothing
     , nonlethal        = Nothing

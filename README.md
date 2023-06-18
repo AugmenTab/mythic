@@ -52,11 +52,10 @@ All of the compendia that come included with this system. **Development on some 
 
 Available Compendium Packs:
 * Item
-  * Equipment - UNSC
+  * Abilities
   * Equipment - Covenant
-  * Ranged Weapons - Banished
-  * Ranged Weapons - Covenant
-  * Ranged Weapons - UNSC
+  * Equipment - Forerunner
+  * Equipment - UNSC
 
 Planned Compendium Packs:
 * Actor
@@ -69,16 +68,17 @@ Planned Compendium Packs:
   * *Vehicles - Forerunner*
   * *Vehicles - UNSC*
 * Item
-  * *Abilities*
   * *Armors - Banished*
   * *Armors - Covenant*
   * *Armors - Forerunner*
   * *Armors - UNSC*
-  * *Educations*
   * *Melee Weapons - Banished*
   * *Melee Weapons - Covenant*
   * *Melee Weapons - Forerunner*
   * *Melee Weapons - UNSC*
+  * *Ranged Weapons - Banished*
+  * *Ranged Weapons - Covenant*
+  * *Ranged Weapons - UNSC*
   * *Ranged Weapons - Forerunner*
 
 

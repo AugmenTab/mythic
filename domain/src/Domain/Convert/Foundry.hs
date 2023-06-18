@@ -279,6 +279,7 @@ buildSpecials specials =
           "homing"      : _ -> (unk, rules { homing           = extractInt txt })
           "kill"        : _ -> (unk, rules { kill             = extractInt txt })
           "kinetic"     : _ -> (unk, rules { kinetic          = Just () })
+          "linked"      : _ -> (unk, rules { linked           = extractInt txt })
           "long"        : _ -> (unk, rules { longBarrel       = Just () })
           "needle"      : _ -> (unk, rules { needle           = extractInt txt })
           "nonlethal"   : _ -> (unk, rules { nonlethal        = Just () })

@@ -1534,6 +1534,10 @@
                         "kinetic": {
                             "has": false
                         },
+                        "linked": {
+                            "has": false,
+                            "value": 0
+                        },
                         "longBarrel": {
                             "has": false
                         },

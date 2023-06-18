@@ -56,6 +56,7 @@
   * Walkers are expected to have a Stomp and Punch weapon added (if relevant).
   * Vehicles can post their doom state detonation to chat, along with make Splatter or Trample attacks as appropriate. Non-walkers can also post the damage dealt on a Wreck to chat.
 * The Slow special rule now halves melee rate of attacks.
+* Introduction of the Linked special rule for weapons, which multiplies the number of damages for an attack by the number of linked weapons.
 
 ## Bug Fixes
 

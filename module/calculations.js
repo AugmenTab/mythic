@@ -69,6 +69,14 @@ export function calculateWeaponValues(weaponData) {
   // TODO: Remove this once special ammo is implemented.
   weaponData.currentAmmo = "STD";
 
+  // TODO: Remove after v0.3.0 release.
+  if (!weaponData.ammoList[weaponData.currentAmmo].special.linked) {
+    weaponData.ammoList[weaponData.currentAmmo].special.linked = {
+      has: false
+      , value: 0
+    };
+  }
+
   new Array(
     Object.entries(weaponData.characteristics),
     Object.entries(weaponData.shields)
