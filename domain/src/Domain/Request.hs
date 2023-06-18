@@ -56,7 +56,7 @@ type SheetData = (GID, Range)
 sheetDataMap :: Map.Map SheetSubject SheetData
 sheetDataMap =
   Map.fromList
-    [ ( AbilitySheet     , (GID "1009120116", Range "A2:F96")  )
+    [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")  )
  -- , ( ArmorSheet       , (GID "3822484"   , Range "A2:M170") )
     , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607") )
  -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:R49")  )
