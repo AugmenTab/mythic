@@ -255,7 +255,7 @@ buildWeaponTags tags attr =
 
    in WeaponTags $ L.foldl' updateTags startingSet tags
 
-buildSpecials :: [T.Text] -> (Set.Set T.Text, SpecialRules)
+buildSpecials :: [T.Text] -> (Set.Set T.Text, SpecialRules_Weapon)
 buildSpecials specials =
   let extract = T.takeWhile (/= ')') . T.drop 1 . T.dropWhile (/= '(')
       extractInt = tryParseInt . extract
@@ -299,7 +299,7 @@ buildSpecials specials =
           "vehicle"     : _ -> (unk, rules { vehicleLock      = Just () })
           _                 -> (Set.insert txt unk, rules)
 
-   in L.foldl' updateSpecialRules (Set.empty, emptySpecialRules) specials
+   in L.foldl' updateSpecialRules (Set.empty, emptyWeaponSpecialRules) specials
 
 findDelayIn :: [T.Text] -> Maybe ItemAdjustment
 findDelayIn txts
@@ -354,7 +354,7 @@ mkFireModeMap modes =
 
    in mkFireModes $ foldl' updateFireModeMap Map.empty $ T.split (== ',') modes
 
-mkMeleeSTDAmmo :: RawMeleeWeapon -> SpecialRules -> AmmoList
+mkMeleeSTDAmmo :: RawMeleeWeapon -> SpecialRules_Weapon -> AmmoList
 mkMeleeSTDAmmo raw specials =
   let (diceQuantity, diceValue) = parseDiceValues $ rawMeleeDamageRoll raw
       range = emptyWeaponRange { weaponRangeMelee = rawMeleeRange raw }
@@ -403,7 +403,7 @@ mkNameAndNickname txt =
         Nothing ->
           (mkName txt, Nothing)
 
-mkRangedSTDAmmo :: RawRangedWeapon -> SpecialRules -> AmmoList
+mkRangedSTDAmmo :: RawRangedWeapon -> SpecialRules_Weapon -> AmmoList
 mkRangedSTDAmmo raw specials =
   let (diceQuantity, diceValue) = parseDiceValues $ rawRangedDamageRoll raw
       range =

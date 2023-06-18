@@ -22,7 +22,8 @@ module Data.Types.Prelude
   , Protection
   , Shields(..), emptyShields
   , Size
-  , SpecialRules(..), emptySpecialRules
+  , SpecialRules_Vehicle(..), emptyVehicleSpecialRules
+  , SpecialRules_Weapon(..), emptyWeaponSpecialRules
   , StatAdjustments, emptyStatAdjustments
   , StrengthMultiplier(..), strengthMultiplierFromText
   , Token(..)
@@ -144,7 +145,7 @@ data Ammunition =
     , ammunitionCritsOn      :: Int
     , ammunitionRange        :: WeaponRange
     , ammunitionDescription  :: Description
-    , ammunitionSpecials     :: SpecialRules
+    , ammunitionSpecials     :: SpecialRules_Weapon
     }
 
 instance ToJSON Ammunition where
@@ -708,8 +709,60 @@ sizeToInt size =
     Colossal   -> 10
     Vast       -> 25
 
-data SpecialRules =
-  SpecialRules
+data SpecialRules_Vehicle =
+  SpecialRules_Vehicle
+    { allTerrain      :: Maybe ()
+    , antiGrav        :: Maybe ()
+    , autoloader      :: Maybe ()
+    , boost           :: Maybe Int
+    , continuousTrack :: Maybe ()
+    , heavyPlating    :: Maybe ()
+    , neuralInterface :: Maybe ()
+    , openTop         :: Maybe ()
+    , slipspace       :: Maybe ()
+    , walkerStomp     :: Maybe ()
+    }
+
+instance ToJSON SpecialRules_Vehicle where
+  toJSON r =
+    let open = openTop r
+        noneRule mbRule = object [ "has" .= isJust mbRule ]
+        intRule mbInt =
+          object [ "has"   .= isJust mbInt
+                 , "value" .= fromMaybe 0 mbInt
+                 ]
+
+     in object [ "allTerrain"      .= noneRule (allTerrain r)
+               , "antiGrav"        .= noneRule (antiGrav r)
+               , "autoloader"      .= noneRule (autoloader r)
+               , "boost"           .= intRule  (boost r)
+               , "continuousTrack" .= noneRule (continuousTrack r)
+               , "enclosedTop"     .= object [ "has" .= not (isJust open) ]
+               , "heavyPlating"    .= noneRule (heavyPlating r)
+               , "neuralInterface" .= noneRule (neuralInterface r)
+               , "openTop"         .= noneRule open
+               , "slipspace"       .= noneRule (slipspace r)
+               , "walkerStomp"     .= noneRule (walkerStomp r)
+               ]
+
+emptyVehicleSpecialRules :: SpecialRules_Vehicle
+emptyVehicleSpecialRules =
+  SpecialRules_Vehicle
+    { allTerrain      = Nothing
+    , antiGrav        = Nothing
+    , autoloader      = Nothing
+    , boost           = Nothing
+    , continuousTrack = Nothing
+    , heavyPlating    = Nothing
+    , neuralInterface = Nothing
+    , openTop         = Nothing
+    , slipspace       = Nothing
+    , walkerStomp     = Nothing
+    }
+
+
+data SpecialRules_Weapon =
+  SpecialRules_Weapon
     { acid             :: Maybe Int
     , blast            :: Maybe Int
     , cauterize        :: Maybe ()
@@ -747,7 +800,7 @@ data SpecialRules =
     , vehicleLock      :: Maybe ()
     }
 
-instance ToJSON SpecialRules where
+instance ToJSON SpecialRules_Weapon where
   toJSON r =
     let noneRule mbRule = object [ "has" .= isJust mbRule ]
         intRule mbInt =
@@ -797,9 +850,9 @@ instance ToJSON SpecialRules where
                , "vehicleLock"      .= noneRule (vehicleLock r)
                ]
 
-emptySpecialRules :: SpecialRules
-emptySpecialRules =
-  SpecialRules
+emptyWeaponSpecialRules :: SpecialRules_Weapon
+emptyWeaponSpecialRules =
+  SpecialRules_Weapon
     { acid             = Nothing
     , blast            = Nothing
     , cauterize        = Nothing
