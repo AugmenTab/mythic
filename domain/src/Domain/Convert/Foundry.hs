@@ -18,18 +18,23 @@ import           Data.Traversable (for)
 import           Data.Tuple (fst, snd)
 import           Text.Read (read)
 
+import qualified Debug.Trace as Debug
+
 toFoundry :: CompendiumMap [RawData]
           -> Either T.Text (CompendiumMap [FoundryData])
 toFoundry = Map.traverseWithKey mkFoundry
 
 mkFoundry :: CompendiumData -> [RawData] -> Either T.Text [FoundryData]
-mkFoundry (faction, _) rawData = for rawData $ \raw ->
-  case raw of
-    AbilityData   a -> Right $ mkAbility   a
-    ArmorData     a -> mkArmor     faction a
-    EquipmentData e -> mkEquipment faction e
-    MeleeData     m -> mkMelee     faction m
-    RangedData    r -> mkRanged    faction r
+mkFoundry (faction, _) rawData =
+  fmap concat
+    . for rawData
+    $ \raw ->
+      case raw of
+        AbilityData   a -> fmap L.singleton . Right $ mkAbility   a
+        ArmorData     a -> fmap L.singleton $ mkArmor     faction a
+        EquipmentData e -> fmap L.singleton $ mkEquipment faction e
+        MeleeData     m -> fmap L.singleton $ mkMelee     faction m
+        RangedData    r -> mkRanged faction r
 
 mkAbility :: RawAbility -> FoundryData
 mkAbility raw =
@@ -110,9 +115,9 @@ mkMelee mbFaction raw = do
       specialsTxt = rawMeleeSpecialRules raw
       (tags, specials) =
         fromMaybe ([], T.empty)
-          $ L.unsnoc
-          $ fmap T.strip
-          $ T.split (== ']')
+          . L.unsnoc
+          . fmap T.strip
+          . T.split (== ']')
           $ T.filter (/= '[') specialsTxt
 
       (tagSpecials, weaponTags) =
@@ -124,7 +129,7 @@ mkMelee mbFaction raw = do
       description =
         mkDescription $ T.concat
           [ rawMeleeDescription raw
-          , "&#13;&#13;"
+          , "&#13;&#13;" -- TODO: "<br><br>" ?
           , T.intercalate ". " $ Set.toList unknownSpecials
           ]
 
@@ -160,7 +165,12 @@ mkMelee mbFaction raw = do
         , weaponCharacteristics = Nothing
         }
 
-mkRanged :: Maybe Faction -> RawRangedWeapon -> Either T.Text FoundryData
+mkRanged :: Maybe Faction -> RawRangedWeapon -> Either T.Text [FoundryData]
+mkRanged _ raw = do
+  Debug.traceShowM (rawRangedName raw)
+  pure []
+
+  {-
 mkRanged mbFaction raw = do
   faction <-
     flip maybeToEither mbFaction
@@ -185,9 +195,9 @@ mkRanged mbFaction raw = do
       specialsTxt = rawRangedSpecialRules raw
       (tags, specials) =
         fromMaybe ([], T.empty)
-          $ L.unsnoc
-          $ fmap T.strip
-          $ T.split (== ']')
+          . L.unsnoc
+          . fmap T.strip
+          . T.split (== ']')
           $ T.filter (/= '[') specialsTxt
 
       (tagSpecials, weaponTags) =
@@ -205,9 +215,9 @@ mkRanged mbFaction raw = do
 
       reload =
         mkReload
-          $ maybe 0 (read . T.unpack)
-          $ listToMaybe
-          $ T.words
+          . maybe 0 (read . T.unpack)
+          . listToMaybe
+          . T.words
           $ rawRangedReload raw
 
   Right
@@ -241,6 +251,7 @@ mkRanged mbFaction raw = do
         -- value will be kept hardcoded to `Nothing` here for now.
         , weaponCharacteristics = Nothing
         }
+        -}
 
 --
 -- Helpers
@@ -403,6 +414,7 @@ mkNameAndNickname txt =
         Nothing ->
           (mkName txt, Nothing)
 
+  {-
 mkRangedSTDAmmo :: RawRangedWeapon -> SpecialRules_Weapon -> AmmoList
 mkRangedSTDAmmo raw specials =
   let (diceQuantity, diceValue) = parseDiceValues $ rawRangedDamageRoll raw
@@ -440,6 +452,7 @@ mkRangedSTDAmmo raw specials =
           , ammunitionDescription  = mkDescription ""
           , ammunitionSpecials     = finalSpecials
           }
+          -}
 
 parseDiceValues :: T.Text -> (Int, Int)
 parseDiceValues dmgRoll =
@@ -449,7 +462,7 @@ parseDiceValues dmgRoll =
       | qty == "0.5", val == "10" -> (1, 5)
       | otherwise ->
         ( read $ T.unpack qty
-        , read $ T.unpack $ T.takeWhile C.isDigit val
+        , read . T.unpack $ T.takeWhile C.isDigit val
         )
 
     _ -> (0, 0)
@@ -501,4 +514,3 @@ weaponDetailsMap =
     , ( "TASER"                 , (Melee   , MeleeGroup) )
     , ( "TWO-HANDED SWORD"      , (Melee   , MeleeGroup) )
     ]
-

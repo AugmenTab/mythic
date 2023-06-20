@@ -21,7 +21,7 @@ ingestRaw subject lines = do
   csv <-
     if L.null lines
        then Left $ "No content in " <> Request.sheetSubjectText subject <> "."
-       else pure $ T.unlines $ L.filter (not . T.isPrefixOf ",") lines
+       else pure $ T.unlines $ L.filter (not . isEmptyLine) lines
 
   let ingestFn =
         case subject of
@@ -33,6 +33,10 @@ ingestRaw subject lines = do
 
   fmap (Map.fromListWith (<>))
     $ traverse (mkCompendiumMapEntry subject) =<< ingestFn csv
+
+isEmptyLine :: T.Text -> Bool
+isEmptyLine line =
+  L.any (flip T.isPrefixOf line) [ ",", "Default," ]
 
 mkCompendiumMapEntry :: Request.SheetSubject
                      -> RawData

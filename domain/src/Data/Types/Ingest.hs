@@ -4,6 +4,7 @@ module Data.Types.Ingest
   , RawArmor(..)
   , RawEquipment(..)
   , RawMeleeWeapon(..)
+  , RawRangedBase(..)
   , RawRangedWeapon(..)
   ) where
 
@@ -11,6 +12,8 @@ import           Flipstone.Prelude
 
 import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
+import qualified Data.List as L
+import qualified Data.List.NonEmpty as NE
 import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 import           GHC.Types (Double)
@@ -116,7 +119,7 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
     RawMeleeWeapon <$> m .: "Name"
                    <*> m .: "COMP_faction"
                    <*> m .: "COMP_type"
-                   <*> m .: "COMP_atribute"
+                   <*> m .: "COMP_attribute"
                    <*> m .: "COMP_range"
                    <*> m .: "COMP_damage_roll"
                    <*> m .: "COMP_damage_base"
@@ -130,45 +133,67 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
                    <*> m .: "COMP_description"
                    <*> m .: "COMP_price"
 
+data RawRangedBase =
+  RawRangedBase
+    { rawRangedBaseName         :: T.Text
+    , rawRangedBaseType         :: T.Text
+    , rawRangedBaseAttr         :: T.Text
+    , rawRangedBaseRange        :: T.Text
+    , rawRangedBaseDamageRoll   :: T.Text
+    , rawRangedBaseDamageBase   :: Int
+    , rawRangedBasePierce       :: Int
+    , rawRangedBaseHitMod       :: Int
+    , rawRangedBaseMagazine     :: Int
+    , rawRangedBaseROF          :: T.Text
+    , rawRangedBaseReload       :: T.Text
+    , rawRangedBaseSpecialRules :: T.Text
+    , rawRangedBaseDescription  :: T.Text
+    }
+
 data RawRangedWeapon =
   RawRangedWeapon
-    { rawRangedName         :: T.Text
-    , rawRangedFaction      :: T.Text
-    , rawRangedType         :: T.Text
-    , rawRangedAttr         :: T.Text
-    , rawRangedRange        :: T.Text
-    , rawRangedDamageRoll   :: T.Text
-    , rawRangedDamageBase   :: Int
-    , rawRangedPierce       :: Int
-    , rawRangedHitMod       :: Int
-    , rawRangedMagazine     :: Int
-    , rawRangedROF          :: T.Text
-    , rawRangedReload       :: T.Text
-    , rawRangedWeight       :: Double
-    , rawRangedSpecialRules :: T.Text
-    , rawRangedDescription  :: T.Text
-    , rawRangedPrice        :: Int
+    { rawRangedName    :: T.Text
+    , rawRangedBases   :: NE.NonEmpty RawRangedBase
+    , rawRangedFaction :: T.Text
+    , rawRangedWeight  :: Double
+    , rawRangedPrice   :: Int
     }
 
 instance CSV.FromNamedRecord RawRangedWeapon where
-  parseNamedRecord r =
-    RawRangedWeapon <$> r .: "Name"
-                    <*> r .: "COMP_faction"
-                    <*> r .: "COMP_type"
-                    <*> r .: "COMP_atribute"
-                    <*> r .: "COMP_range"
-                    <*> r .: "COMP_damage_roll"
-                    <*> r .: "COMP_damage_base"
-                    <*> r .: "COMP_pierce"
-                    <*> r .: "COMP_hitmod"
-                    <*> r .: "COMP_magazine"
-                    <*> r .: "COMP_rof"
-                    <*> r .: "COMP_reload"
-                    <*> r .: "COMP_weight"
-                    <*> r .: "COMP_special_rules"
-                    <*> r .: "COMP_description"
-                    <*> r .: "COMP_price"
+  parseNamedRecord r = do
+    let mkBase n =
+          RawRangedBase
+            <$> r .: ("COMP_name[" <> n <> "]")
+            <*> r .: ("COMP_type[" <> n <> "]")
+            <*> r .: ("COMP_attribute[" <> n <> "]")
+            <*> r .: ("COMP_range[" <> n <> "]")
+            <*> r .: ("COMP_damage_roll[" <> n <> "]")
+            <*> r .: ("COMP_damage_base[" <> n <> "]")
+            <*> r .: ("COMP_pierce[" <> n <> "]")
+            <*> r .: ("COMP_hitmod[" <> n <> "]")
+            <*> r .: ("COMP_magazine[" <> n <> "]")
+            <*> r .: ("COMP_rof[" <> n <> "]")
+            <*> r .: ("COMP_reload[" <> n <> "]")
+            <*> r .: ("COMP_special_rules[" <> n <> "]")
+            <*> r .: ("COMP_description[" <> n <> "]")
 
+    base <- NE.singleton <$> mkBase "0"
+    variantName <- r .: "COMP_name[1]"
+    variant <-
+      if T.null variantName
+         then pure []
+         else L.singleton <$> mkBase "1"
+
+    RawRangedWeapon
+      <$> r .: "Name"
+      <*> pure (NE.appendList base variant)
+      <*> r .: "COMP_faction"
+      <*> r .: "COMP_weight"
+      <*> r .: "COMP_price"
+
+--
+-- Helpers
+--
 defaultZero :: String -> Double
 defaultZero = fromMaybe 0 . readMaybe
 
