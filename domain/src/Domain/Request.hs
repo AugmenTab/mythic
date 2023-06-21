@@ -3,7 +3,6 @@ module Domain.Request
   , sheetSubjectText
   , sheetSubjectTitle
 
-  , SheetHeader(..)
   , SheetLines
 
   , sheetDataMap
@@ -94,10 +93,6 @@ setSheetQueryStrings (GID gid, Range range) =
     , ("gid"   , Just gid)
     , ("range" , Just range)
     ]
-
--- This newtype wrapper prevents us from accidentally including the sheet header
--- in the lines that will be converted to Items.
-newtype SheetHeader = SheetHeader { unSheetHeader :: T.Text }
 
 -- This type alias separates the common T.Text namespace from the intent behind
 -- these CSV rows - to eventually be converted into Items.

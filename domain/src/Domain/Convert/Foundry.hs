@@ -10,6 +10,7 @@ import qualified Data.Char as C
 import           Data.Either.Extra (maybeToEither)
 import qualified Data.List as L
 import qualified Data.List.Extra as L
+import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
 import           Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import qualified Data.Set as Set
@@ -17,8 +18,6 @@ import qualified Data.Text as T
 import           Data.Traversable (for)
 import           Data.Tuple (fst, snd)
 import           Text.Read (read)
-
-import qualified Debug.Trace as Debug
 
 toFoundry :: CompendiumMap [RawData]
           -> Either T.Text (CompendiumMap [FoundryData])
@@ -34,7 +33,7 @@ mkFoundry (faction, _) rawData =
         ArmorData     a -> fmap L.singleton $ mkArmor     faction a
         EquipmentData e -> fmap L.singleton $ mkEquipment faction e
         MeleeData     m -> fmap L.singleton $ mkMelee     faction m
-        RangedData    r -> mkRanged faction r
+        RangedData    r -> mkRangedWeapons faction r
 
 mkAbility :: RawAbility -> FoundryData
 mkAbility raw =
@@ -165,13 +164,17 @@ mkMelee mbFaction raw = do
         , weaponCharacteristics = Nothing
         }
 
-mkRanged :: Maybe Faction -> RawRangedWeapon -> Either T.Text [FoundryData]
-mkRanged _ raw = do
-  Debug.traceShowM (rawRangedName raw)
-  pure []
+mkRangedWeapons :: Maybe Faction
+                -> RawRangedWeapon
+                -> Either T.Text [FoundryData]
+mkRangedWeapons mbFaction raw =
+  traverse (mkRanged mbFaction raw) . NE.toList $ rawRangedBases raw
 
-  {-
-mkRanged mbFaction raw = do
+mkRanged :: Maybe Faction
+         -> RawRangedWeapon
+         -> RawRangedBase
+         -> Either T.Text FoundryData
+mkRanged mbFaction raw rawBase = do
   faction <-
     flip maybeToEither mbFaction
       $ T.unwords
@@ -181,7 +184,7 @@ mkRanged mbFaction raw = do
           ]
 
   let (name, nickname) = mkNameAndNickname $ rawRangedName raw
-      weaponType = rawRangedType raw
+      weaponType = rawRangedBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       weight =
         Weight
@@ -192,7 +195,7 @@ mkRanged mbFaction raw = do
           , weightSelfSupported = False
           }
 
-      specialsTxt = rawRangedSpecialRules raw
+      specialsTxt = rawRangedBaseSpecialRules rawBase
       (tags, specials) =
         fromMaybe ([], T.empty)
           . L.unsnoc
@@ -208,7 +211,7 @@ mkRanged mbFaction raw = do
 
       description =
         mkDescription $ T.concat
-          [ rawRangedDescription raw
+          [ rawRangedBaseDescription rawBase
           , "&#13;&#13;"
           , T.intercalate ". " $ Set.toList unknownSpecials
           ]
@@ -218,7 +221,7 @@ mkRanged mbFaction raw = do
           . maybe 0 (read . T.unpack)
           . listToMaybe
           . T.words
-          $ rawRangedReload raw
+          $ rawRangedBaseReload rawBase
 
   Right
     . FoundryWeapon
@@ -231,18 +234,18 @@ mkRanged mbFaction raw = do
         , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe Ranged $ snd <$> weaponDetails
-        , weaponTags        = buildWeaponTags weaponTags $ rawRangedAttr raw
-        , weaponFireModes   = mkFireModeMap $ rawRangedROF raw
+        , weaponTags        = buildWeaponTags weaponTags $ rawRangedBaseAttr rawBase
+        , weaponFireModes   = mkFireModeMap $ rawRangedBaseROF rawBase
         , weaponAttack      = emptyAttack
         , weaponReload      = reload
         , weaponNickname    = nickname
         , weaponType        = WeaponType weaponType
-        , weaponMagCap      = mkMagazineCapacity $ rawRangedMagazine raw
+        , weaponMagCap      = mkMagazineCapacity $ rawRangedBaseMagazine rawBase
         , weaponAmmo        = mkAmmo ""
         , weaponAmmoGroup   = None
         , weaponScopeMag    = Just $ mkScopeMagnification 1
         , weaponCurrentAmmo = mkName "STD"
-        , weaponAmmoList    = mkRangedSTDAmmo raw specialRules
+        , weaponAmmoList    = mkRangedSTDAmmo rawBase specialRules
         , weaponSettings    = emptyWeaponSettings
         , weaponShields     = findShieldsIn specialsTxt
 
@@ -251,7 +254,6 @@ mkRanged mbFaction raw = do
         -- value will be kept hardcoded to `Nothing` here for now.
         , weaponCharacteristics = Nothing
         }
-        -}
 
 --
 -- Helpers
@@ -414,12 +416,11 @@ mkNameAndNickname txt =
         Nothing ->
           (mkName txt, Nothing)
 
-  {-
-mkRangedSTDAmmo :: RawRangedWeapon -> SpecialRules_Weapon -> AmmoList
-mkRangedSTDAmmo raw specials =
-  let (diceQuantity, diceValue) = parseDiceValues $ rawRangedDamageRoll raw
+mkRangedSTDAmmo :: RawRangedBase -> SpecialRules_Weapon -> AmmoList
+mkRangedSTDAmmo rawBase specials =
+  let (diceQuantity, diceValue) = parseDiceValues $ rawRangedBaseDamageRoll rawBase
       range =
-        case T.split (== '-') $ T.filter (/= 'm') $ rawRangedRange raw of
+        case T.split (== '-') $ T.filter (/= 'm') $ rawRangedBaseRange rawBase of
           close : long : []
             | L.all (not . T.null) [ close, long ] ->
               emptyWeaponRange
@@ -431,41 +432,41 @@ mkRangedSTDAmmo raw specials =
             emptyWeaponRange
 
       finalSpecials =
-        if T.isPrefixOf "SINGLE LOADING" $ T.toUpper $ rawRangedType raw
+        if T.isPrefixOf "SINGLE LOADING" $ T.toUpper $ rawRangedBaseType rawBase
            then specials { singleLoading = Just () }
            else specials
 
    in mkAmmoList $
         Ammunition
           { ammunitionName         = mkName "STD"
-          , ammunitionAttackBonus  = rawRangedHitMod raw
+          , ammunitionAttackBonus  = rawRangedBaseHitMod rawBase
           , ammunitionDiceQuantity = diceQuantity
           , ammunitionDiceValue    = diceValue
-          , ammunitionBaseDamage   = rawRangedDamageBase raw
+          , ammunitionBaseDamage   = rawRangedBaseDamageBase rawBase
           , ammunitionSTRDamage    = Nothing
-          , ammunitionPiercing     = rawRangedPierce raw
+          , ammunitionPiercing     = rawRangedBasePierce rawBase
           , ammunitionSTRPiercing  = Nothing
           , ammunitionTarget       = 0
-          , ammunitionCurrentMag   = rawRangedMagazine raw
+          , ammunitionCurrentMag   = rawRangedBaseMagazine rawBase
           , ammunitionCritsOn      = 10
           , ammunitionRange        = range
           , ammunitionDescription  = mkDescription ""
           , ammunitionSpecials     = finalSpecials
           }
-          -}
 
 parseDiceValues :: T.Text -> (Int, Int)
 parseDiceValues dmgRoll =
   case T.split (== 'D') dmgRoll of
     qty : val : _
-      | L.all T.null [ qty, val ] -> (1, 10)
+      | L.all T.null [ qty, val ] -> (0, 10)
       | qty == "0.5", val == "10" -> (1, 5)
       | otherwise ->
         ( read $ T.unpack qty
         , read . T.unpack $ T.takeWhile C.isDigit val
         )
 
-    _ -> (0, 0)
+    _ ->
+      (0, 10)
 
 weaponDetailsMap :: Map.Map T.Text (EquipmentTraining, WeaponGroup)
 weaponDetailsMap =

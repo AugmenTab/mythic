@@ -41,5 +41,5 @@ mkEntry label entry =
     , entryType  = typed entry
     , entryData  = entry
     , entryToken = Nothing -- TODO
-    , entryItems = []
+    , entryItems = [] -- TODO
     }

@@ -30,7 +30,40 @@
   ],
   "license": "LICENSE",
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
-  "packs": [],
+  "packs": [
+    {
+      "label": "Ranged Weapons - UNSC",
+      "name": "ranged-weapons-unsc",
+      "path": "packs/ranged-weapons-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Covenant",
+      "name": "ranged-weapons-covenant",
+      "path": "packs/ranged-weapons-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Banished",
+      "name": "ranged-weapons-banished",
+      "path": "packs/ranged-weapons-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Forerunner",
+      "name": "ranged-weapons-forerunner",
+      "path": "packs/ranged-weapons-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    }
+  ],
   "primaryTokenAttribute": "wounds",
   "readme": "README.md",
   "secondaryTokenAttribute": null,
