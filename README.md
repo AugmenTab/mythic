@@ -56,6 +56,10 @@ Available Compendium Packs:
   * Equipment - Covenant
   * Equipment - Forerunner
   * Equipment - UNSC
+  * Melee Weapons - Banished
+  * Melee Weapons - Covenant
+  * Melee Weapons - Forerunner
+  * Melee Weapons - UNSC
   * Ranged Weapons - Banished
   * Ranged Weapons - Covenant
   * Ranged Weapons - Forerunner
@@ -76,11 +80,6 @@ Planned Compendium Packs:
   * *Armors - Covenant*
   * *Armors - Forerunner*
   * *Armors - UNSC*
-  * *Melee Weapons - Banished*
-  * *Melee Weapons - Covenant*
-  * *Melee Weapons - Forerunner*
-  * *Melee Weapons - UNSC*
-
 
 ## Legal
 

@@ -32,7 +32,7 @@ mkFoundry (faction, _) rawData =
         AbilityData   a -> fmap L.singleton . Right $ mkAbility   a
         ArmorData     a -> fmap L.singleton $ mkArmor     faction a
         EquipmentData e -> fmap L.singleton $ mkEquipment faction e
-        MeleeData     m -> fmap L.singleton $ mkMelee     faction m
+        MeleeData     m -> mkMeleeWeapons  faction m
         RangedData    r -> mkRangedWeapons faction r
 
 mkAbility :: RawAbility -> FoundryData
@@ -89,8 +89,15 @@ mkEquipment mbFaction raw = do
         , equipmentCharacteristics = Nothing
         }
 
-mkMelee :: Maybe Faction -> RawMeleeWeapon -> Either T.Text FoundryData
-mkMelee mbFaction raw = do
+mkMeleeWeapons :: Maybe Faction -> RawMeleeWeapon -> Either T.Text [FoundryData]
+mkMeleeWeapons mbFaction raw =
+  traverse (mkMelee mbFaction raw) . NE.toList $ rawMeleeBases raw
+
+mkMelee :: Maybe Faction
+        -> RawMeleeWeapon
+        -> RawMeleeBase
+        -> Either T.Text FoundryData
+mkMelee mbFaction raw rawBase = do
   faction <-
     flip maybeToEither mbFaction
       $ T.unwords
@@ -99,7 +106,7 @@ mkMelee mbFaction raw = do
           , "no faction could be parsed."
           ]
 
-  let weaponType = rawMeleeType raw
+  let weaponType = rawMeleeBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
       weight =
@@ -111,7 +118,7 @@ mkMelee mbFaction raw = do
           , weightSelfSupported = False
           }
 
-      specialsTxt = rawMeleeSpecialRules raw
+      specialsTxt = rawMeleeBaseSpecialRules rawBase
       (tags, specials) =
         fromMaybe ([], T.empty)
           . L.unsnoc
@@ -127,15 +134,15 @@ mkMelee mbFaction raw = do
 
       description =
         mkDescription $ T.concat
-          [ rawMeleeDescription raw
-          , "&#13;&#13;" -- TODO: "<br><br>" ?
+          [ rawMeleeBaseDescription rawBase
+          , "<br><br>"
           , T.intercalate ". " $ Set.toList unknownSpecials
           ]
 
   Right
     . FoundryWeapon
     $ Weapon
-        { weaponName        = mkName $ rawMeleeName raw
+        { weaponName        = mkName $ rawMeleeBaseName rawBase
         , weaponFaction     = faction
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawMeleePrice raw
@@ -143,7 +150,8 @@ mkMelee mbFaction raw = do
         , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe MeleeGroup $ snd <$> weaponDetails
-        , weaponTags        = buildWeaponTags weaponTags $ rawMeleeAttr raw
+        , weaponTags        = buildWeaponTags weaponTags
+                                $ rawMeleeBaseAttr rawBase
         , weaponFireModes   = mkFireModes fireModeMap
         , weaponAttack      = emptyAttack
         , weaponReload      = mkReload 0
@@ -154,7 +162,7 @@ mkMelee mbFaction raw = do
         , weaponAmmoGroup   = None
         , weaponScopeMag    = Nothing
         , weaponCurrentAmmo = mkName "STD"
-        , weaponAmmoList    = mkMeleeSTDAmmo raw specialRules
+        , weaponAmmoList    = mkMeleeSTDAmmo rawBase specialRules
         , weaponSettings    = emptyWeaponSettings
         , weaponShields     = findShieldsIn specialsTxt
 
@@ -234,7 +242,8 @@ mkRanged mbFaction raw rawBase = do
         , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe Ranged $ snd <$> weaponDetails
-        , weaponTags        = buildWeaponTags weaponTags $ rawRangedBaseAttr rawBase
+        , weaponTags        = buildWeaponTags weaponTags
+                                $ rawRangedBaseAttr rawBase
         , weaponFireModes   = mkFireModeMap $ rawRangedBaseROF rawBase
         , weaponAttack      = emptyAttack
         , weaponReload      = reload
@@ -367,22 +376,22 @@ mkFireModeMap modes =
 
    in mkFireModes $ foldl' updateFireModeMap Map.empty $ T.split (== ',') modes
 
-mkMeleeSTDAmmo :: RawMeleeWeapon -> SpecialRules_Weapon -> AmmoList
-mkMeleeSTDAmmo raw specials =
-  let (diceQuantity, diceValue) = parseDiceValues $ rawMeleeDamageRoll raw
-      range = emptyWeaponRange { weaponRangeMelee = rawMeleeRange raw }
+mkMeleeSTDAmmo :: RawMeleeBase -> SpecialRules_Weapon -> AmmoList
+mkMeleeSTDAmmo rawBase specials =
+  let (diceQuantity, diceValue) = parseDiceValues $ rawMeleeBaseDamageRoll rawBase
+      range = emptyWeaponRange { weaponRangeMelee = rawMeleeBaseRange rawBase }
    in mkAmmoList $
         Ammunition
           { ammunitionName         = mkName "STD"
-          , ammunitionAttackBonus  = rawMeleeHitMod raw
+          , ammunitionAttackBonus  = rawMeleeBaseHitMod rawBase
           , ammunitionDiceQuantity = diceQuantity
           , ammunitionDiceValue    = diceValue
-          , ammunitionBaseDamage   = rawMeleeDamageBase raw
+          , ammunitionBaseDamage   = rawMeleeBaseDamageBase rawBase
           , ammunitionSTRDamage    = strengthMultiplierFromText
-                                   $ rawMeleeBaseMod raw
-          , ammunitionPiercing     = rawMeleePierce raw
+                                   $ rawMeleeBaseBaseAdd rawBase
+          , ammunitionPiercing     = rawMeleeBasePierce rawBase
           , ammunitionSTRPiercing  = strengthMultiplierFromText
-                                   $ rawMeleePierceMod raw
+                                   $ rawMeleeBasePierceAdd rawBase
           , ammunitionTarget       = 0
           , ammunitionCurrentMag   = 0
           , ammunitionCritsOn      = 10
@@ -418,7 +427,9 @@ mkNameAndNickname txt =
 
 mkRangedSTDAmmo :: RawRangedBase -> SpecialRules_Weapon -> AmmoList
 mkRangedSTDAmmo rawBase specials =
-  let (diceQuantity, diceValue) = parseDiceValues $ rawRangedBaseDamageRoll rawBase
+  let (diceQuantity, diceValue) =
+        parseDiceValues $ rawRangedBaseDamageRoll rawBase
+
       range =
         case T.split (== '-') $ T.filter (/= 'm') $ rawRangedBaseRange rawBase of
           close : long : []
@@ -432,7 +443,7 @@ mkRangedSTDAmmo rawBase specials =
             emptyWeaponRange
 
       finalSpecials =
-        if T.isPrefixOf "SINGLE LOADING" $ T.toUpper $ rawRangedBaseType rawBase
+        if T.isPrefixOf "SINGLE LOADING" . T.toUpper $ rawRangedBaseType rawBase
            then specials { singleLoading = Just () }
            else specials
 

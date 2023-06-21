@@ -70,10 +70,7 @@ ingestEquipment =
   ffmap EquipmentData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestMelee :: T.Text -> Either T.Text [RawData]
-ingestMelee _ =
---ffmap MeleeData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
-  Left "Not implemented yet"
+ingestMelee = ffmap MeleeData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestRanged :: T.Text -> Either T.Text [RawData]
-ingestRanged =
-  ffmap RangedData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+ingestRanged = ffmap RangedData . decodeCSV . LBS.fromStrict . TE.encodeUtf8

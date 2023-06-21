@@ -3,6 +3,7 @@ module Data.Types.Ingest
   , RawAbility(..)
   , RawArmor(..)
   , RawEquipment(..)
+  , RawMeleeBase(..)
   , RawMeleeWeapon(..)
   , RawRangedBase(..)
   , RawRangedWeapon(..)
@@ -94,44 +95,63 @@ instance CSV.FromNamedRecord RawEquipment where
                  <*> (defaultZero <$> e .: "COMP_weight")
                  <*> e .: "COMP_price"
 
+data RawMeleeBase =
+  RawMeleeBase
+    { rawMeleeBaseName         :: T.Text
+    , rawMeleeBaseType         :: T.Text
+    , rawMeleeBaseAttr         :: T.Text
+    , rawMeleeBaseRange        :: Int
+    , rawMeleeBaseDamageRoll   :: T.Text
+    , rawMeleeBaseDamageBase   :: Int
+    , rawMeleeBasePierce       :: Int
+    , rawMeleeBaseHitMod       :: Int
+    , rawMeleeBaseBreakpoints  :: Int
+    , rawMeleeBaseBaseAdd      :: T.Text
+    , rawMeleeBasePierceAdd    :: T.Text
+    , rawMeleeBaseSpecialRules :: T.Text
+    , rawMeleeBaseDescription  :: T.Text
+    }
+
 data RawMeleeWeapon =
   RawMeleeWeapon
     { rawMeleeName         :: T.Text
+    , rawMeleeBases        :: NE.NonEmpty RawMeleeBase
     , rawMeleeFaction      :: T.Text
-    , rawMeleeType         :: T.Text
-    , rawMeleeAttr         :: T.Text
-    , rawMeleeRange        :: Int
-    , rawMeleeDamageRoll   :: T.Text
-    , rawMeleeDamageBase   :: Int
-    , rawMeleePierce       :: Int
-    , rawMeleeHitMod       :: Int
-    , rawMeleeBreakpoints  :: Int
-    , rawMeleeBaseMod      :: T.Text
-    , rawMeleePierceMod    :: T.Text
     , rawMeleeWeight       :: Double
-    , rawMeleeSpecialRules :: T.Text
-    , rawMeleeDescription  :: T.Text
     , rawMeleePrice        :: Int
     }
 
 instance CSV.FromNamedRecord RawMeleeWeapon where
-  parseNamedRecord m =
-    RawMeleeWeapon <$> m .: "Name"
-                   <*> m .: "COMP_faction"
-                   <*> m .: "COMP_type"
-                   <*> m .: "COMP_attribute"
-                   <*> m .: "COMP_range"
-                   <*> m .: "COMP_damage_roll"
-                   <*> m .: "COMP_damage_base"
-                   <*> m .: "COMP_pierce"
-                   <*> m .: "COMP_hitmod"
-                   <*> m .: "COMP_breakpoints"
-                   <*> m .: "COMP_base_mod"
-                   <*> m .: "COMP_pierce_mod"
-                   <*> m .: "COMP_weight"
-                   <*> m .: "COMP_special_rules"
-                   <*> m .: "COMP_description"
-                   <*> m .: "COMP_price"
+  parseNamedRecord m = do
+    let mkBase n =
+          RawMeleeBase
+            <$> m .: ("Comp_name[" <> n <> "]")
+            <*> m .: ("COMP_type[" <> n <> "]")
+            <*> m .: ("COMP_attribute[" <> n <> "]")
+            <*> m .: ("COMP_range[" <> n <> "]")
+            <*> m .: ("COMP_damage_roll[" <> n <> "]")
+            <*> m .: ("COMP_damage_base[" <> n <> "]")
+            <*> m .: ("COMP_pierce[" <> n <> "]")
+            <*> m .: ("COMP_hitmod[" <> n <> "]")
+            <*> m .: ("COMP_breakpoints[" <> n <> "]")
+            <*> m .: ("COMP_base_add[" <> n <> "]")
+            <*> m .: ("COMP_pierce_add[" <> n <> "]")
+            <*> m .: ("COMP_special_rules[" <> n <> "]")
+            <*> m .: ("COMP_description[" <> n <> "]")
+
+    base <- NE.singleton <$> mkBase "0"
+    variantName <- m .: "Comp_name[1]"
+    variant <-
+      if T.null variantName
+         then pure []
+         else L.singleton <$> mkBase "1"
+
+    RawMeleeWeapon
+      <$> m .: "Name"
+      <*> pure (NE.appendList base variant)
+      <*> m .: "COMP_faction"
+      <*> m .: "COMP_weight"
+      <*> m .: "COMP_price"
 
 data RawRangedBase =
   RawRangedBase

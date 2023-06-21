@@ -59,8 +59,8 @@ sheetDataMap =
  -- [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")   )
  -- , ( ArmorSheet       , (GID "3822484"   , Range "A2:M170")  )
  -- , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
- -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:R49")   )
-    [ ( RangedWeaponSheet, (GID "430796362" , Range "A2:AE397") )
+    [ ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AG53")  )
+ -- , ( RangedWeaponSheet, (GID "430796362" , Range "A2:AE397") )
     ]
 
 makeSheetRequest :: Either T.Text HTTP.Request
