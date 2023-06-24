@@ -5,6 +5,7 @@ module Data.Types.Ingest
   , RawEquipment(..)
   , RawMeleeBase(..)
   , RawMeleeWeapon(..)
+  , RawPermutation(..)
   , RawRangedBase(..)
   , RawRangedWeapon(..)
   ) where
@@ -22,11 +23,12 @@ import           Text.Read (readMaybe)
 import           Text.Show (show)
 
 data RawData
-  = AbilityData   RawAbility
-  | ArmorData     RawArmor
-  | EquipmentData RawEquipment
-  | MeleeData     RawMeleeWeapon
-  | RangedData    RawRangedWeapon
+  = AbilityData     RawAbility
+  | ArmorData       RawArmor
+  | EquipmentData   RawEquipment
+  | MeleeData       RawMeleeWeapon
+  | PermutationData RawPermutation
+  | RangedData      RawRangedWeapon
 
 data RawAbility =
   RawAbility
@@ -152,6 +154,24 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
       <*> m .: "COMP_faction"
       <*> m .: "COMP_weight"
       <*> m .: "COMP_price"
+
+data RawPermutation =
+  RawPermutation
+    { rawPermutationName        :: T.Text
+    , rawPermutationFaction     :: T.Text
+    , rawPermutationDescription :: T.Text
+    , rawPermutationLocation    :: T.Text
+    , rawPermutationPrice       :: Int
+    }
+
+instance CSV.FromNamedRecord RawPermutation where
+  parseNamedRecord p =
+    RawPermutation
+      <$> p .: "Name"
+      <*> p .: "COMP_faction"
+      <*> p .: "COMP_description"
+      <*> p .: "COMP_hpt_location"
+      <*> p .: "COMP_price"
 
 data RawRangedBase =
   RawRangedBase

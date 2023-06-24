@@ -29,11 +29,12 @@ mkFoundry (faction, _) rawData =
     . for rawData
     $ \raw ->
       case raw of
-        AbilityData   a -> fmap L.singleton . Right $ mkAbility   a
-        ArmorData     a -> fmap L.singleton $ mkArmor     faction a
-        EquipmentData e -> fmap L.singleton $ mkEquipment faction e
-        MeleeData     m -> mkMeleeWeapons  faction m
-        RangedData    r -> mkRangedWeapons faction r
+        AbilityData     a -> fmap L.singleton . Right $ mkAbility     a
+        ArmorData       a -> fmap L.singleton $ mkArmor       faction a
+        EquipmentData   e -> fmap L.singleton $ mkEquipment   faction e
+        MeleeData       m -> mkMeleeWeapons  faction m
+        PermutationData p -> fmap L.singleton $ mkPermutation faction p
+        RangedData      r -> mkRangedWeapons faction r
 
 mkAbility :: RawAbility -> FoundryData
 mkAbility raw =
@@ -170,6 +171,40 @@ mkMelee mbFaction raw rawBase = do
         -- wielder's characteristics. This may change in the future, so the
         -- value will be kept hardcoded to `Nothing` here for now.
         , weaponCharacteristics = Nothing
+        }
+
+mkPermutation :: Maybe Faction -> RawPermutation -> Either T.Text FoundryData
+mkPermutation mbFaction raw = do
+  faction <-
+    flip maybeToEither mbFaction
+      $ T.unwords
+          [ "Cannot build Permutation"
+          , rawPermutationName raw <> ":"
+          , "no faction could be parsed."
+          ]
+
+  let desc =
+        T.intercalate "<br><br>"
+          [ "Hardpoint Location: " <> rawPermutationLocation raw
+          , rawPermutationDescription raw
+          ]
+
+  Right
+    . FoundryEquipment
+    $ Equipment
+        { equipmentName        = mkName $ rawPermutationName raw
+        , equipmentFaction     = faction
+        , equipmentPrice       = mkItemPrice $ rawPermutationPrice raw
+        , equipmentBreakpoints = mkBreakpoints 0
+        , equipmentTrainings   = mkItemTrainings faction Nothing
+        , equipmentWeight      = emptyWeight
+        , equipmentDescription = mkDescription desc
+        , equipmentShields     = Nothing
+
+        -- At present, there are no Equipment Items that can modify an Actor's
+        -- characteristics. This may change in the future, so the value will be
+        -- kept hardcoded to `Nothing` here for now.
+        , equipmentCharacteristics = Nothing
         }
 
 mkRangedWeapons :: Maybe Faction

@@ -32,33 +32,9 @@
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
     {
-      "label": "Melee Weapons - UNSC",
-      "name": "melee-weapons-unsc",
-      "path": "packs/melee-weapons-unsc.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Melee Weapons - Covenant",
-      "name": "melee-weapons-covenant",
-      "path": "packs/melee-weapons-covenant.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Melee Weapons - Banished",
-      "name": "melee-weapons-banished",
-      "path": "packs/melee-weapons-banished.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Melee Weapons - Forerunner",
-      "name": "melee-weapons-forerunner",
-      "path": "packs/melee-weapons-forerunner.db",
+      "label": "Armor Permutations - UNSC",
+      "name": "armor-permutations-unsc",
+      "path": "packs/armor-permutations-unsc.db",
       "private": false,
       "system": "mythic",
       "type": "Item"

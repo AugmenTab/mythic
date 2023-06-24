@@ -27,6 +27,7 @@ data SheetSubject
   | ArmorSheet
   | EquipmentSheet
   | MeleeWeaponSheet
+  | PermutationSheet
   | RangedWeaponSheet
   deriving stock (Eq, Ord)
 
@@ -37,6 +38,7 @@ sheetSubjectText subject =
     ArmorSheet        -> "ArmorSheet"
     EquipmentSheet    -> "EquipmentSheet"
     MeleeWeaponSheet  -> "MeleeWeaponSheet"
+    PermutationSheet  -> "PermutationSheet"
     RangedWeaponSheet -> "RangedWeaponSheet"
 
 sheetSubjectTitle :: SheetSubject -> T.Text
@@ -46,6 +48,7 @@ sheetSubjectTitle subject =
     ArmorSheet        -> "Armor"
     EquipmentSheet    -> "Equipment"
     MeleeWeaponSheet  -> "Melee Weapons"
+    PermutationSheet  -> "Armor Permutations"
     RangedWeaponSheet -> "Ranged Weapons"
 
 newtype GID = GID BS.ByteString
@@ -59,7 +62,8 @@ sheetDataMap =
  -- [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")   )
  -- , ( ArmorSheet       , (GID "3822484"   , Range "A2:M170")  )
  -- , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
-    [ ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AG53")  )
+ -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AG53")  )
+    [ ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )
  -- , ( RangedWeaponSheet, (GID "430796362" , Range "A2:AE397") )
     ]
 

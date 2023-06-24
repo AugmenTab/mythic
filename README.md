@@ -53,6 +53,7 @@ All of the compendia that come included with this system. **Development on some 
 Available Compendium Packs:
 * Item
   * Abilities
+  * Armor Permutations - UNSC
   * Equipment - Covenant
   * Equipment - Forerunner
   * Equipment - UNSC

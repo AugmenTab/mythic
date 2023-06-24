@@ -32,7 +32,7 @@ module Data.Types.Prelude
   , WeaponSettings, emptyWeaponSettings
   , WeaponTag(..), weaponTagFromText
   , WeaponTags(..)
-  , Weight(..)
+  , Weight(..), emptyWeight
 
     -- Newtypes
   , Ammo, mkAmmo
@@ -1159,6 +1159,13 @@ instance ToJSON Weight where
            , "equipped"      .= False
            , "selfSupported" .= weightSelfSupported w
            ]
+
+emptyWeight :: Weight
+emptyWeight =
+  Weight
+    { weightEach          = 0
+    , weightSelfSupported = False
+    }
 
 newtype WeaponType = WeaponType { unWeaponType :: T.Text }
   deriving newtype (ToJSON)

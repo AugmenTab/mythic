@@ -29,6 +29,7 @@ ingestRaw subject lines = do
           Request.ArmorSheet        -> ingestArmor
           Request.EquipmentSheet    -> ingestEquipment
           Request.MeleeWeaponSheet  -> ingestMelee
+          Request.PermutationSheet  -> ingestPermutation
           Request.RangedWeaponSheet -> ingestRanged
 
   fmap (Map.fromListWith (<>))
@@ -46,11 +47,12 @@ mkCompendiumMapEntry subject rawData = do
         eitherToMaybe
           . factionFromText
           $ case rawData of
-              AbilityData   _   -> "factionless_ability"
-              ArmorData     raw -> rawArmorFaction     raw
-              EquipmentData raw -> rawEquipmentFaction raw
-              MeleeData     raw -> rawMeleeFaction     raw
-              RangedData    raw -> rawRangedFaction    raw
+              AbilityData     _   -> "factionless_ability"
+              ArmorData       raw -> rawArmorFaction       raw
+              EquipmentData   raw -> rawEquipmentFaction   raw
+              MeleeData       raw -> rawMeleeFaction       raw
+              PermutationData raw -> rawPermutationFaction raw
+              RangedData      raw -> rawRangedFaction      raw
 
   pure ( (faction, mkCompendiumDetails $ Request.sheetSubjectTitle subject)
        , [ rawData ]
@@ -71,6 +73,10 @@ ingestEquipment =
 
 ingestMelee :: T.Text -> Either T.Text [RawData]
 ingestMelee = ffmap MeleeData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+
+ingestPermutation :: T.Text -> Either T.Text [RawData]
+ingestPermutation =
+  ffmap PermutationData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestRanged :: T.Text -> Either T.Text [RawData]
 ingestRanged = ffmap RangedData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
