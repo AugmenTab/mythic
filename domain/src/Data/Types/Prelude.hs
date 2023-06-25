@@ -4,7 +4,7 @@ module Data.Types.Prelude
   , AmmoGroup(..)
   , AmmoList, mkAmmoList
   , Ammunition(..)
-  , ArmorNotes
+  , ArmorNotes(..)
   , Attack, emptyAttack
   , Barrel
   , EntryType(..), entryTypeText
@@ -14,17 +14,17 @@ module Data.Types.Prelude
   , FirearmType
   , FireMode(..), fireModeFromText
   , FireModes, fireModes, mkFireModes
-  , Hardpoints
-  , ItemAdjustment, emptyItemAdjustment, basicItemAdjustment
+  , Hardpoints, emptyHardpoints
+  , ItemAdjustment(..), emptyItemAdjustment, basicItemAdjustment
   , ItemPrice, mkItemPrice
   , ItemTrainings, mkItemTrainings
   , ItemType(..)
-  , Protection
+  , Protection(..)
   , Shields(..), emptyShields
-  , Size
+  , Size(..)
   , SpecialRules_Vehicle(..), emptyVehicleSpecialRules
   , SpecialRules_Weapon(..), emptyWeaponSpecialRules
-  , StatAdjustments, emptyStatAdjustments
+  , StatAdjustments(..), emptyStatAdjustments
   , StrengthMultiplier(..), strengthMultiplierFromText
   , Token(..)
   , WeaponGroup(..)
@@ -36,6 +36,7 @@ module Data.Types.Prelude
 
     -- Newtypes
   , Ammo, mkAmmo
+  , ArmorAdjustment, mkArmorAdjustment
   , Breakpoints, mkBreakpoints
   , CompendiumDetails, compendiumDetails, mkCompendiumDetails
   , Description, mkDescription
@@ -172,20 +173,37 @@ instance ToJSON Ammunition where
                , "special"      .= ammunitionSpecials a
                ]
 
+newtype ArmorAdjustment =
+  ArmorAdjustment ItemAdjustment
+
+instance ToJSON ArmorAdjustment where
+  toJSON (ArmorAdjustment a) =
+    object [ "armor"   .= itemAdjustment a
+           , "variant" .= itemAdjustmentVariant a
+           , "other"   .= itemAdjustmentOther a
+           , "total"   .= itemAdjustmentTotal a
+           ]
+
+mkArmorAdjustment :: ItemAdjustment -> ArmorAdjustment
+mkArmorAdjustment = ArmorAdjustment
+
 data ArmorNotes =
   ArmorNotes
-    { armorNotesVariant      :: T.Text
-    , armorNotesPermutations :: T.Text
-    , armorNotesOther        :: T.Text
+    { armorNotesDefault      :: Maybe T.Text
+    , armorNotesVariant      :: Maybe T.Text
+    , armorNotesPermutations :: Maybe T.Text
+    , armorNotesOther        :: Maybe T.Text
     }
 
 instance ToJSON ArmorNotes where
   toJSON a =
-    object [ "armor"        .= defaultArmorNotes
-           , "variant"      .= armorNotesVariant a
-           , "permutations" .= armorNotesPermutations a
-           , "other"        .= armorNotesOther a
-           ]
+    let orEmpty fn = fromMaybe T.empty $ fn a
+     in object
+          [ "armor"        .= fromMaybe defaultArmorNotes (armorNotesDefault a)
+          , "variant"      .= orEmpty armorNotesVariant
+          , "permutations" .= orEmpty armorNotesPermutations
+          , "other"        .= orEmpty armorNotesOther
+          ]
 
 defaultArmorNotes :: T.Text
 defaultArmorNotes =
@@ -468,17 +486,36 @@ newtype FireRate = FireRate Int
 mkFireRate :: Int -> FireRate
 mkFireRate = FireRate
 
-data Hardpoints
+data Hardpoints =
+  Hardpoints
+    { hardpointsHead     :: Int
+    , hardpointsChest    :: Int
+    , hardpointsLeftArm  :: Int
+    , hardpointsRightArm :: Int
+    , hardpointsLeftLeg  :: Int
+    , hardpointsRightLeg :: Int
+    }
 
 instance ToJSON Hardpoints where
-  toJSON _ =
-    object [ "head"     .= valueInt 0
-           , "chest"    .= valueInt 0
-           , "leftArm"  .= valueInt 0
-           , "rightArm" .= valueInt 0
-           , "leftLeg"  .= valueInt 0
-           , "rightLeg" .= valueInt 0
+  toJSON hp =
+    object [ "head"     .= hardpointsHead     hp
+           , "chest"    .= hardpointsChest    hp
+           , "leftArm"  .= hardpointsLeftArm  hp
+           , "rightArm" .= hardpointsRightArm hp
+           , "leftLeg"  .= hardpointsLeftLeg  hp
+           , "rightLeg" .= hardpointsRightLeg hp
            ]
+
+emptyHardpoints :: Hardpoints
+emptyHardpoints =
+  Hardpoints
+    { hardpointsHead     = 0
+    , hardpointsChest    = 0
+    , hardpointsLeftArm  = 0
+    , hardpointsRightArm = 0
+    , hardpointsLeftLeg  = 0
+    , hardpointsRightLeg = 0
+    }
 
 newtype Img = Img T.Text
   deriving newtype (ToJSON)
@@ -596,12 +633,12 @@ mkPrereqs = Prerequisites
 
 data Protection =
   Protection
-    { protectionHead     :: ItemAdjustment
-    , protectionChest    :: ItemAdjustment
-    , protectionLeftArm  :: ItemAdjustment
-    , protectionRightArm :: ItemAdjustment
-    , protectionLeftLeg  :: ItemAdjustment
-    , protectionRightLeg :: ItemAdjustment
+    { protectionHead     :: ArmorAdjustment
+    , protectionChest    :: ArmorAdjustment
+    , protectionLeftArm  :: ArmorAdjustment
+    , protectionRightArm :: ArmorAdjustment
+    , protectionLeftLeg  :: ArmorAdjustment
+    , protectionRightLeg :: ArmorAdjustment
     }
 
 instance ToJSON Protection where

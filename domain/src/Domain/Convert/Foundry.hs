@@ -6,6 +6,7 @@ import           Flipstone.Prelude
 import           Data.Types
 import           Domain.Helpers (tryParseInt)
 
+import qualified Data.Bool as B
 import qualified Data.Char as C
 import           Data.Either.Extra (maybeToEither)
 import qualified Data.List as L
@@ -40,7 +41,7 @@ mkAbility :: RawAbility -> FoundryData
 mkAbility raw =
   FoundryAbility
     $ Ability
-        { abilityName        = mkName . T.toTitle $ rawAbilityName raw
+        { abilityName        = mkName $ rawAbilityName raw
         , abilityPrereqs     = mkPrereqs $ rawAbilityPrereqs raw
         , abilityCost        = rawAbilityCost raw
         , abilitySummary     = mkDescription $ rawAbilitySummary raw
@@ -49,8 +50,79 @@ mkAbility raw =
         }
 
 mkArmor :: Maybe Faction -> RawArmor -> Either T.Text FoundryData
-mkArmor _ _ =
-  Left "Not yet implemeted"
+mkArmor mbFaction raw = do
+  faction <-
+    flip maybeToEither mbFaction
+      $ T.unwords
+          [ "Cannot build Armor"
+          , rawArmorName raw <> ":"
+          , "no faction could be parsed."
+          ]
+
+  let weight =
+        Weight
+          { weightEach          = rawArmorWeight raw
+          , weightSelfSupported = rawArmorSelfSupported raw
+          }
+
+      desc = rawArmorDescription raw
+      notes =
+        ArmorNotes
+          { armorNotesDefault      = desc
+          , armorNotesVariant      = Nothing
+          , armorNotesPermutations = Nothing
+          , armorNotesOther        = Nothing
+          }
+
+      toProtection fn = mkArmorAdjustment . basicItemAdjustment $ fn raw
+      protection =
+        Protection
+          { protectionHead      = toProtection rawArmorHead
+          , protectionChest     = toProtection rawArmorChest
+          , protectionLeftArm   = toProtection rawArmorArms
+          , protectionRightArm  = toProtection rawArmorArms
+          , protectionLeftLeg   = toProtection rawArmorLegs
+          , protectionRightLeg  = toProtection rawArmorLegs
+          }
+
+      shields =
+        if rawArmorIntegrity raw > 0
+           then
+             let mkShieldValue fn = basicItemAdjustment $ fn raw
+              in Shields
+                   { shieldsHas       = True
+                   , shieldsIntegrity = mkShieldValue rawArmorIntegrity
+                   , shieldsRecharge  = mkShieldValue rawArmorRecharge
+                   , shieldsDelay     = mkShieldValue rawArmorDelay
+                   }
+
+           else
+             emptyShields
+
+      stats =
+        sumStatAdjustments
+          . findArmorStatAdjustments raw
+          . statAdjustmentsFromSpecialRules
+          $ maybe T.empty T.toLower desc
+
+  Right
+    . FoundryArmor
+    $ Armor
+        { armorName        = mkName $ rawArmorName raw
+        , armorVariant     = Nothing
+        , armorFaction     = faction
+        , armorPrice       = mkItemPrice $ rawArmorPrice raw
+        , armorBreakpoints = mkBreakpoints 0
+        , armorTrainings   = mkItemTrainings faction Nothing
+        , armorWeight      = weight
+        , armorStats       = stats
+        , armorHardpoints  = emptyHardpoints
+        , armorMaterial    = T.empty
+        , armorNotes       = notes
+        , armorProtection  = protection
+        , armorShields     = shields
+        , armorSize        = Normal
+        }
 
 mkEquipment :: Maybe Faction -> RawEquipment -> Either T.Text FoundryData
 mkEquipment mbFaction raw = do
@@ -358,6 +430,48 @@ buildSpecials specials =
 
    in L.foldl' updateSpecialRules (Set.empty, emptyWeaponSpecialRules) specials
 
+findArmorStatAdjustments :: RawArmor -> StatAdjustments -> StatAdjustments
+findArmorStatAdjustments raw startingStats =
+  let setStatAdjustment adj stat =
+        stat { itemAdjustment = itemAdjustment stat + adj }
+
+      tryParseStatAdjustment stats txt =
+        case T.words $ T.strip txt of
+          adj : "STR" : [] ->
+            stats { statAdjustmentsHas = True
+                  , statAdjustmentsSTR =
+                      setStatAdjustment (read $ T.unpack adj)
+                        $ statAdjustmentsSTR stats
+                  }
+
+          adj : "MSTR" : [] ->
+            stats { statAdjustmentsHas       = True
+                  , statAdjustmentsMythicSTR =
+                      setStatAdjustment (read $ T.unpack adj)
+                        $ statAdjustmentsMythicSTR stats
+                  }
+
+          adj : "AGI" : [] ->
+            stats { statAdjustmentsHas = True
+                  , statAdjustmentsAGI =
+                      setStatAdjustment (read $ T.unpack adj)
+                        $ statAdjustmentsAGI stats
+                  }
+
+          adj : "MAGI" : [] ->
+            stats { statAdjustmentsHas       = True
+                  , statAdjustmentsMythicAGI =
+                      setStatAdjustment (read $ T.unpack adj)
+                        $ statAdjustmentsMythicAGI stats
+                  }
+
+          _ ->
+            stats
+
+   in L.foldl' tryParseStatAdjustment startingStats
+        . T.split (== ',')
+        $ rawArmorStats raw
+
 findDelayIn :: [T.Text] -> Maybe ItemAdjustment
 findDelayIn txts
   | L.length txts < 3              = Nothing
@@ -513,6 +627,35 @@ parseDiceValues dmgRoll =
 
     _ ->
       (0, 10)
+
+statAdjustmentsFromSpecialRules :: T.Text -> StatAdjustments
+statAdjustmentsFromSpecialRules txt =
+  emptyStatAdjustments
+    { statAdjustmentsAGI =
+        basicItemAdjustment
+          $ sum [ B.bool 0 (negate 10) $ T.isInfixOf "bulky"  txt
+                , B.bool 0 (negate  5) $ T.isInfixOf "uvh-ba" txt
+                , B.bool 0 10 $ T.isInfixOf "mobility-boosting exo-lining" txt
+                ]
+    }
+
+sumStatAdjustments :: StatAdjustments -> StatAdjustments
+sumStatAdjustments stats =
+  let sumStat stat =
+        stat
+          { itemAdjustmentTotal =
+              sum [ itemAdjustment stat
+                  , itemAdjustmentVariant stat
+                  , itemAdjustmentOther stat
+                  ]
+          }
+
+   in stats
+        { statAdjustmentsSTR       = sumStat $ statAdjustmentsSTR stats
+        , statAdjustmentsAGI       = sumStat $ statAdjustmentsAGI stats
+        , statAdjustmentsMythicSTR = sumStat $ statAdjustmentsMythicSTR stats
+        , statAdjustmentsMythicAGI = sumStat $ statAdjustmentsMythicAGI stats
+        }
 
 weaponDetailsMap :: Map.Map T.Text (EquipmentTraining, WeaponGroup)
 weaponDetailsMap =

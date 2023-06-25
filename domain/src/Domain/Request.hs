@@ -60,10 +60,10 @@ sheetDataMap :: Map.Map SheetSubject SheetData
 sheetDataMap =
   Map.fromList
  -- [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")   )
- -- , ( ArmorSheet       , (GID "3822484"   , Range "A2:M170")  )
+    [ ( ArmorSheet       , (GID "226189720" , Range "A2:P199")  ) -- w/ Variants: P333
  -- , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
  -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AG53")  )
-    [ ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )
+ -- , ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )
  -- , ( RangedWeaponSheet, (GID "430796362" , Range "A2:AE397") )
     ]
 

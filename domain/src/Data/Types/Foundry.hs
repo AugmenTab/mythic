@@ -88,9 +88,8 @@ instance ToJSON Ability where
 data Armor =
   Armor
     { armorName        :: Name
-    , armorVariant     :: Name
+    , armorVariant     :: Maybe Name
     , armorFaction     :: Faction
-    , armorDescription :: Description
     , armorPrice       :: ItemPrice
     , armorBreakpoints :: Breakpoints
     , armorTrainings   :: ItemTrainings
@@ -112,7 +111,6 @@ instance CompendiumEntry Armor where
 instance ToJSON Armor where
   toJSON a =
     object [ "faction"         .= armorFaction a
-           , "description"     .= armorDescription a
            , "price"           .= armorPrice a
            , "breakPoints"     .= armorBreakpoints a
            , "trainings"       .= armorTrainings a
@@ -128,8 +126,7 @@ instance ToJSON Armor where
            ]
 
 armorImg :: Img
-armorImg =
-  mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp"
+armorImg = mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp"
 
 data Equipment =
   Equipment
@@ -217,6 +214,8 @@ instance ToJSON Weapon where
            , "ammo"               .= weaponAmmo w
            , "ammoGroup"          .= weaponGroup w
            , "scopeMagnification" .= weaponScopeMag w
+           , "scopeMinimum"       .= valueRatio 1
+           , "owner"              .= nullJSON
            , "currentAmmo"        .= weaponCurrentAmmo w
            , "ammoList"           .= weaponAmmoList w
            , "shields"            .= fromMaybe emptyShields (weaponShields w)

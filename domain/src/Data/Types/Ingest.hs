@@ -49,19 +49,21 @@ instance CSV.FromNamedRecord RawAbility where
 
 data RawArmor =
   RawArmor
-    { rawArmorName        :: T.Text
-    , rawArmorFaction     :: T.Text
-    , rawArmorHead        :: Int
-    , rawArmorArms        :: Int
-    , rawArmorChest       :: Int
-    , rawArmorLegs        :: Int
-    , rawArmorIntegrity   :: Int
-    , rawArmorDelay       :: Int
-    , rawArmorRecharge    :: Int
-    , rawArmorVariant     :: Bool
-    , rawArmorWeight      :: Double
-    , rawArmorDescription :: T.Text
-    , rawArmorPrice       :: Int
+    { rawArmorName          :: T.Text
+    , rawArmorFaction       :: T.Text
+    , rawArmorHead          :: Int
+    , rawArmorArms          :: Int
+    , rawArmorChest         :: Int
+    , rawArmorLegs          :: Int
+    , rawArmorIntegrity     :: Int
+    , rawArmorDelay         :: Int
+    , rawArmorRecharge      :: Int
+    , rawArmorVariant       :: Bool
+    , rawArmorWeight        :: Double
+    , rawArmorSelfSupported :: Bool
+    , rawArmorStats         :: T.Text
+    , rawArmorDescription   :: Maybe T.Text
+    , rawArmorPrice         :: Int
     }
 
 instance CSV.FromNamedRecord RawArmor where
@@ -72,12 +74,14 @@ instance CSV.FromNamedRecord RawArmor where
              <*> a .: "COMP_armor_arms"
              <*> a .: "COMP_armor_chest"
              <*> a .: "COMP_armor_legs"
-             <*> a .: "COMP_shield_integrity"
-             <*> a .: "COMP_shield_delay"
-             <*> a .: "COMP_shield_recharge"
+             <*> (defaultZero <$> a .: "COMP_shield_integrity")
+             <*> (defaultZero <$> a .: "COMP_shield_delay")
+             <*> (defaultZero <$> a .: "COMP_shield_recharge")
              <*> (parseBool =<< a .: "COMP_variant")
              <*> a .: "COMP_weight"
-             <*> a .: "COMP_description"
+             <*> (parseBool =<< a .: "self_supporting")
+             <*> a .: "stat_adjustments"
+             <*> (nonEmptyText <$> a .: "COMP_description")
              <*> a .: "COMP_price"
 
 data RawEquipment =
@@ -94,7 +98,7 @@ instance CSV.FromNamedRecord RawEquipment where
     RawEquipment <$> e .: "Name"
                  <*> e .: "COMP_faction"
                  <*> e .: "COMP_description"
-                 <*> (defaultZero <$> e .: "COMP_weight")
+                 <*> (defaultZeroDbl <$> e .: "COMP_weight")
                  <*> e .: "COMP_price"
 
 data RawMeleeBase =
@@ -234,8 +238,17 @@ instance CSV.FromNamedRecord RawRangedWeapon where
 --
 -- Helpers
 --
-defaultZero :: String -> Double
+defaultZero :: String -> Int
 defaultZero = fromMaybe 0 . readMaybe
+
+defaultZeroDbl :: String -> Double
+defaultZeroDbl = fromMaybe 0 . readMaybe
+
+nonEmptyText :: T.Text -> Maybe T.Text
+nonEmptyText txt =
+  if T.null txt
+     then Nothing
+     else Just txt
 
 parseBool :: MonadFail m => Int -> m Bool
 parseBool 0 = pure False

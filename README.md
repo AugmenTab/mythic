@@ -53,6 +53,10 @@ All of the compendia that come included with this system. **Development on some 
 Available Compendium Packs:
 * Item
   * Abilities
+  * Armor - Banished
+  * Armor - Covenant
+  * Armor - Forerunner
+  * Armor - UNSC
   * Armor Permutations - UNSC
   * Equipment - Covenant
   * Equipment - Forerunner
@@ -68,19 +72,14 @@ Available Compendium Packs:
 
 Planned Compendium Packs:
 * Actor
-  * *Bestiary - Banished*
   * *Bestiary - Covenant*
+  * *Bestiary - Flood*
   * *Bestiary - Forerunner*
   * *Bestiary - UNSC*
   * *Vehicles - Banished*
   * *Vehicles - Covenant*
   * *Vehicles - Forerunner*
   * *Vehicles - UNSC*
-* Item
-  * *Armors - Banished*
-  * *Armors - Covenant*
-  * *Armors - Forerunner*
-  * *Armors - UNSC*
 
 ## Legal
 

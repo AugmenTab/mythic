@@ -63,9 +63,7 @@ ingestAbility =
   ffmap AbilityData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestArmor :: T.Text -> Either T.Text [RawData]
-ingestArmor _ =
-  -- ffmap ArmorData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
-  Left "Not implemented yet"
+ingestArmor = ffmap ArmorData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestEquipment :: T.Text -> Either T.Text [RawData]
 ingestEquipment =

@@ -32,9 +32,33 @@
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
     {
-      "label": "Armor Permutations - UNSC",
-      "name": "armor-permutations-unsc",
-      "path": "packs/armor-permutations-unsc.db",
+      "label": "Armor - UNSC",
+      "name": "armor-unsc",
+      "path": "packs/armor-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Covenant",
+      "name": "armor-covenant",
+      "path": "packs/armor-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Banished",
+      "name": "armor-banished",
+      "path": "packs/armor-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Forerunner",
+      "name": "armor-forerunner",
+      "path": "packs/armor-forerunner.db",
       "private": false,
       "system": "mythic",
       "type": "Item"
