@@ -69,13 +69,11 @@ Available Compendium Packs:
   * Ranged Weapons - Covenant
   * Ranged Weapons - Forerunner
   * Ranged Weapons - UNSC
+  * The Flood
 
 Planned Compendium Packs:
 * Actor
-  * *Bestiary - Covenant*
-  * *Bestiary - Flood*
-  * *Bestiary - Forerunner*
-  * *Bestiary - UNSC*
+  * *Bestiary*
   * *Vehicles - Banished*
   * *Vehicles - Covenant*
   * *Vehicles - Forerunner*

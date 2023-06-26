@@ -28,6 +28,7 @@ ingestRaw subject lines = do
           Request.AbilitySheet      -> ingestAbility
           Request.ArmorSheet        -> ingestArmor
           Request.EquipmentSheet    -> ingestEquipment
+          Request.FloodSheet        -> ingestFlood
           Request.MeleeWeaponSheet  -> ingestMelee
           Request.PermutationSheet  -> ingestPermutation
           Request.RangedWeaponSheet -> ingestRanged
@@ -50,6 +51,7 @@ mkCompendiumMapEntry subject rawData = do
               AbilityData     _   -> "factionless_ability"
               ArmorData       raw -> rawArmorFaction       raw
               EquipmentData   raw -> rawEquipmentFaction   raw
+              FloodData       _   -> "factionless_flood"
               MeleeData       raw -> rawMeleeFaction       raw
               PermutationData raw -> rawPermutationFaction raw
               RangedData      raw -> rawRangedFaction      raw
@@ -68,6 +70,9 @@ ingestArmor = ffmap ArmorData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 ingestEquipment :: T.Text -> Either T.Text [RawData]
 ingestEquipment =
   ffmap EquipmentData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+
+ingestFlood :: T.Text -> Either T.Text [RawData]
+ingestFlood = ffmap FloodData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestMelee :: T.Text -> Either T.Text [RawData]
 ingestMelee = ffmap MeleeData . decodeCSV . LBS.fromStrict . TE.encodeUtf8

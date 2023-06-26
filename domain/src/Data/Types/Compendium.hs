@@ -2,13 +2,14 @@ module Data.Types.Compendium
   ( Compendium(..)
   , Entry(..)
   , EntryID, mkEntryID, idText
-  , Label, mkCompendiumLabel, labelText
+  , Label, mkCompendiumLabel, mkItemLabel, labelText
   , mkCompendiumName
   , mkCompendiumPath
   ) where
 
 import           Flipstone.Prelude
 import           Data.Types.Prelude
+import           Data.Types.Foundry (CompendiumEntry, FoundryData)
 import           Domain.JSON
 
 import qualified Data.Bool as B
@@ -63,7 +64,7 @@ data Entry entry =
     , entryType  :: EntryType
     , entryData  :: entry
     , entryToken :: Maybe Token
-    , entryItems :: [Entry EntryType]
+    , entryItems :: [Entry FoundryData]
     }
 
 instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
@@ -83,7 +84,7 @@ instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
               , "type"           .= entryType e
               , "system"         .= entryData e
               , "prototypeToken" .= entryToken e
-              , "items"          .= emptyArray
+              , "items"          .= entryItems e
               , "flags"          .= emptyObject
               , "effects"        .= emptyArray
               , "folder"         .= nullJSON
@@ -146,6 +147,10 @@ mkCompendiumLabel mbFaction content =
         [ Just $ compendiumDetails content
         , factionText <$> mbFaction
         ]
+
+mkItemLabel :: Label -> Name -> Label
+mkItemLabel (Label label) name =
+  Label $ T.intercalate " - " [ label, nameText name ]
 
 labelText :: Label -> T.Text
 labelText (Label l) = l

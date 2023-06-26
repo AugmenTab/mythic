@@ -3,7 +3,11 @@ module Data.Types.Foundry
   , Ability(..)
   , Armor(..)
   , Equipment(..)
+  , Flood(..)
   , Weapon(..)
+
+  -- Type Classes
+  , CompendiumEntry(..)
   ) where
 
 import           Flipstone.Prelude
@@ -13,13 +17,19 @@ import           Data.Types.Prelude
 import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 
+class CompendiumEntry a where
+  named :: a -> Name
+  imged :: a -> Img
+  typed :: a -> EntryType
+  items :: a -> [FoundryData]
+
 data FoundryData
   = FoundryAbility   Ability
   | FoundryArmor     Armor
  -- | FoundryBestiary  Bestiary
  -- | FoundryCharacter Character
   | FoundryEquipment Equipment
- -- | FoundryFlood     Flood
+  | FoundryFlood     Flood
  -- | FoundryVehicle   Vehicle
   | FoundryWeapon    Weapon
 
@@ -29,7 +39,7 @@ instance CompendiumEntry FoundryData where
 --  named (FoundryBestiary  b) = named b
 --  named (FoundryCharacter c) = named c
   named (FoundryEquipment e) = named e
---  named (FoundryFlood     f) = named f
+  named (FoundryFlood     f) = named f
 --  named (FoundryVehicle   v) = named v
   named (FoundryWeapon    w) = named w
 
@@ -38,7 +48,7 @@ instance CompendiumEntry FoundryData where
 --  imged (FoundryBestiary  b) = imged b
 --  imged (FoundryCharacter c) = imged c
   imged (FoundryEquipment e) = imged e
---  imged (FoundryFlood     f) = imged f
+  imged (FoundryFlood     f) = imged f
 --  imged (FoundryVehicle   v) = imged v
   imged (FoundryWeapon    w) = imged w
 
@@ -47,9 +57,18 @@ instance CompendiumEntry FoundryData where
 --  typed (FoundryBestiary  b) = typed b
 --  typed (FoundryCharacter c) = typed c
   typed (FoundryEquipment e) = typed e
---  typed (FoundryFlood     f) = typed f
+  typed (FoundryFlood     f) = typed f
 --  typed (FoundryVehicle   v) = typed v
   typed (FoundryWeapon    w) = typed w
+
+  items (FoundryAbility   a) = items a
+  items (FoundryArmor     a) = items a
+--  items (FoundryBestiary  b) = items b
+--  items (FoundryCharacter c) = items c
+  items (FoundryEquipment e) = items e
+  items (FoundryFlood     f) = items f
+--  items (FoundryVehicle   v) = items v
+  items (FoundryWeapon    w) = items w
 
 instance ToJSON FoundryData where
   toJSON (FoundryAbility   a) = toJSON a
@@ -57,7 +76,7 @@ instance ToJSON FoundryData where
 --  toJSON (FoundryBestiary  b) = toJSON b
 --  toJSON (FoundryCharacter c) = toJSON c
   toJSON (FoundryEquipment e) = toJSON e
---  toJSON (FoundryFlood     f) = toJSON f
+  toJSON (FoundryFlood     f) = toJSON f
 --  toJSON (FoundryVehicle   v) = toJSON v
   toJSON (FoundryWeapon    w) = toJSON w
 
@@ -75,6 +94,7 @@ instance CompendiumEntry Ability where
   named = abilityName
   imged = const (mkImg "") -- TODO
   typed = const (FoundryItem ItemAbility)
+  items = const []
 
 instance ToJSON Ability where
   toJSON a =
@@ -107,6 +127,7 @@ instance CompendiumEntry Armor where
   named = armorName
   imged = const armorImg
   typed = const (FoundryItem ItemArmor)
+  items = const []
 
 instance ToJSON Armor where
   toJSON a =
@@ -145,6 +166,7 @@ instance CompendiumEntry Equipment where
   named = equipmentName
   imged = const equipmentImg
   typed = const (FoundryItem ItemEquipment)
+  items = const []
 
 instance ToJSON Equipment where
   toJSON e =
@@ -162,6 +184,100 @@ instance ToJSON Equipment where
 equipmentImg :: Img
 equipmentImg =
   mkImg "icons/containers/chest/chest-simple-walnut.webp"
+
+data Flood =
+  Flood
+    { floodName                  :: Name
+    , floodCharacteristics       :: Characteristics
+    , floodMythicCharacteristics :: MythicCharacteristics
+    , floodWounds                :: FloodWounds
+    , floodSize                  :: Size
+    , floodNotes                 :: Maybe T.Text
+    , floodContamination         :: Contamination
+    , floodSwarm                 :: Swarm
+    , floodArmor                 :: CharacterArmor
+    , floodShields               :: CharacterShields
+    , floodSkills                :: Skills
+    , floodTrainings             :: Trainings
+    , floodExperience            :: ExperiencePayout
+    , floodItems                 :: [FoundryData]
+    }
+
+instance CompendiumEntry Flood where
+  named = floodName
+  imged = const floodImg
+  typed = const (FoundryActor ActorFlood)
+  items = floodItems
+
+instance ToJSON Flood where
+  toJSON f =
+    object
+      [ "experiencePayout"      .= floodExperience f
+      , "characteristics"       .= floodCharacteristics f
+      , "mythicCharacteristics" .= floodMythicCharacteristics f
+      , "perceptiveRange"       .=
+          object
+            [ "base"  .= valueInt 0
+            , "mod"   .= valueInt 0
+            , "total" .= valueInt 0
+            , "vigil" .= toJSON False
+            ]
+      , "wounds"        .= floodWounds f
+      , "size"          .= floodSize f
+      , "notes"         .= fromMaybe T.empty (floodNotes f)
+      , "contamination" .= floodContamination f
+      , "swarm"         .= floodSwarm f
+      , "armor"         .= floodArmor f
+      , "shields"       .= floodShields f
+      , "movement" .=
+          object
+            [ "agiBonusRunCharge" .= valueInt 0
+            , "jumpMultiplier"    .= valueInt 1
+            , "leapAgiBonus"      .= valueInt 0
+            , "leapMultiplier"    .= valueInt 1
+            , "rush"              .= toJSON False
+            , "blur"              .= toJSON False
+            , "half"              .= valueInt 0
+            , "full"              .= valueInt 0
+            , "charge"            .= valueInt 0
+            , "run"               .= valueInt 0
+            , "sprint"            .= valueText "--"
+            , "jump"              .= valueInt 0
+            , "leap"              .= valueInt 0
+            ]
+      , "initiative" .=
+          object
+            [ "formula" .= T.empty
+            , "mods"    .= T.empty
+            ]
+      , "skills"           .= floodSkills f
+      , "trainings"        .= floodTrainings f
+      , "carryingCapacity" .=
+          object
+            [ "doubleStr" .= toJSON False
+            , "doubleTou" .= toJSON False
+            , "strongBack" .= toJSON False
+            , "mod" .= valueInt 0
+            , "carry" .= valueInt 0
+            , "lift" .= valueInt 0
+            , "push" .= valueInt 0
+            , "felt" .= valueInt 0
+            , "total" .= valueInt 0
+            , "character" .= valueInt 0
+            , "hearingPenalty" .= toJSON False
+            , "bar" .=
+                object
+                  [ "bgBar"  .= T.empty
+                  , "bgFill" .= T.empty
+                  , "width"  .= T.empty
+                  , "left"   .= T.empty
+                  , "tier"   .= valueText "carry"
+                  ]
+            ]
+      ]
+
+floodImg :: Img
+floodImg = mkImg "icons/magic/death/undead-zombie-grave-green.webp"
 
 data Weapon =
   Weapon
@@ -194,6 +310,7 @@ instance CompendiumEntry Weapon where
   named = weaponName
   imged = weaponImg
   typed = const (FoundryItem ItemWeapon)
+  items = const []
 
 instance ToJSON Weapon where
   toJSON w =

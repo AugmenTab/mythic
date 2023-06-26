@@ -1,14 +1,20 @@
 module Data.Types.Prelude
   ( -- Data Types
     AbilityType(..)
+  , ActorType(..)
   , AmmoGroup(..)
   , AmmoList, mkAmmoList
   , Ammunition(..)
   , ArmorNotes(..)
   , Attack, emptyAttack
   , Barrel
+  , CharacterArmor, emptyCharacterArmor
+  , Characteristics(..)
+  , CharacterShields, emptyCharacterShields
   , EntryType(..), entryTypeText
   , EquipmentTraining(..)
+  , ExperienceDifficulty, emptyExperienceDifficulty
+  , ExperiencePayout(..)
   , Faction(..), factions, factionFromText, factionText
   , FactionTraining
   , FirearmType
@@ -19,19 +25,23 @@ module Data.Types.Prelude
   , ItemPrice, mkItemPrice
   , ItemTrainings, mkItemTrainings
   , ItemType(..)
+  , MythicCharacteristics(..)
   , Protection(..)
   , Shields(..), emptyShields
-  , Size(..)
+  , Size(..), sizeFromText
   , SpecialRules_Vehicle(..), emptyVehicleSpecialRules
   , SpecialRules_Weapon(..), emptyWeaponSpecialRules
   , StatAdjustments(..), emptyStatAdjustments
   , StrengthMultiplier(..), strengthMultiplierFromText
+  , Swarm, mkSwarm
   , Token(..)
+  , Trainings, emptyTrainings
   , WeaponGroup(..)
   , WeaponRange(..), emptyWeaponRange
   , WeaponSettings, emptyWeaponSettings
   , WeaponTag(..), weaponTagFromText
   , WeaponTags(..)
+  , WeaponTrainings, emptyWeaponTrainings
   , Weight(..), emptyWeight
 
     -- Newtypes
@@ -39,22 +49,22 @@ module Data.Types.Prelude
   , ArmorAdjustment, mkArmorAdjustment
   , Breakpoints, mkBreakpoints
   , CompendiumDetails, compendiumDetails, mkCompendiumDetails
+  , Contamination(..)
   , Description, mkDescription
   , FireRate, mkFireRate
+  , FloodWounds(..)
   , Img, mkImg
   , MagazineCapacity, mkMagazineCapacity
   , Name, mkName, nameText
   , Prerequisites, mkPrereqs
   , Reload, mkReload
   , ScopeMagnification, mkScopeMagnification
+  , Skills, characterSkillList, floodSkillList
   , WeaponType(..)
 
   -- Type Aliases
   , CompendiumData
   , CompendiumMap
-
-  -- Type Classes
-  , CompendiumEntry(..)
   ) where
 
 import           Flipstone.Prelude
@@ -65,6 +75,7 @@ import           Data.Coerce (coerce)
 import qualified Data.List.Extra as L
 import qualified Data.Map.Strict as Map
 import           Data.Maybe (fromMaybe, isJust)
+import           Data.Monoid (mappend)
 import           Data.Ratio ((%))
 import qualified Data.Set as Set
 import qualified Data.Text as T
@@ -283,6 +294,112 @@ newtype Breakpoints = Breakpoints Int
 mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
 
+data CharacterArmor =
+  CharacterArmor
+    { characterArmorHead     :: Int
+    , characterArmorChest    :: Int
+    , characterArmorLeftArm  :: Int
+    , characterArmorRightArm :: Int
+    , characterArmorLeftLeg  :: Int
+    , characterArmorRightLeg :: Int
+    }
+
+instance ToJSON CharacterArmor where
+  toJSON a =
+    let mkArmorFor fn =
+          object
+            [ "protection" .= fn a
+            , "resistance" .= fn a
+            ]
+
+     in object
+          [ "head"     .= mkArmorFor characterArmorHead
+          , "chest"    .= mkArmorFor characterArmorChest
+          , "leftArm"  .= mkArmorFor characterArmorLeftArm
+          , "rightArm" .= mkArmorFor characterArmorRightArm
+          , "leftLeg"  .= mkArmorFor characterArmorLeftLeg
+          , "rightLeg" .= mkArmorFor characterArmorRightLeg
+          ]
+
+emptyCharacterArmor :: CharacterArmor
+emptyCharacterArmor =
+  CharacterArmor
+    { characterArmorHead     = 0
+    , characterArmorChest    = 0
+    , characterArmorLeftArm  = 0
+    , characterArmorRightArm = 0
+    , characterArmorLeftLeg  = 0
+    , characterArmorRightLeg = 0
+    }
+
+data Characteristics =
+  Characteristics
+    { characteristicsIsFlood :: Bool
+    , characteristicsSTR     :: Int
+    , characteristicsTOU     :: Int
+    , characteristicsAGI     :: Int
+    , characteristicsWFR     :: Int
+    , characteristicsWFM     :: Int
+    , characteristicsINT     :: Int
+    , characteristicsPER     :: Int
+    , characteristicsCRG     :: Maybe Int
+    , characteristicsCHA     :: Maybe Int
+    , characteristicsLDR     :: Maybe Int
+    }
+
+instance ToJSON Characteristics where
+  toJSON c =
+    if characteristicsIsFlood c
+       then
+         let forFlood fn =
+               object
+                 [ "base"      .= fn c
+                 , "equipment" .= valueInt 0
+                 , "medical"   .= valueInt 0
+                 , "other"     .= valueInt 0
+                 , "total"     .= valueInt 0
+                 , "roll"      .= valueInt 0
+                 ]
+
+          in object
+               [ "str" .= forFlood characteristicsSTR
+               , "tou" .= forFlood characteristicsTOU
+               , "agi" .= forFlood characteristicsAGI
+               , "wfr" .= forFlood characteristicsWFR
+               , "wfm" .= forFlood characteristicsWFM
+               , "int" .= forFlood characteristicsINT
+               , "per" .= forFlood characteristicsPER
+               ]
+
+       else
+         object [] -- TODO
+
+data CharacterShields =
+  CharacterShields
+    { characterShieldsValue    :: Int
+    , characterShieldsMax      :: Int
+    , characterShieldsRecharge :: Int
+    , characterShieldsDelay    :: Int
+    }
+
+instance ToJSON CharacterShields where
+  toJSON s =
+    object
+      [ "value"    .= characterShieldsValue s
+      , "max"      .= characterShieldsMax s
+      , "recharge" .= characterShieldsRecharge s
+      , "delay"    .= characterShieldsDelay s
+      ]
+
+emptyCharacterShields :: CharacterShields
+emptyCharacterShields =
+  CharacterShields
+    { characterShieldsValue    = 0
+    , characterShieldsMax      = 0
+    , characterShieldsRecharge = 0
+    , characterShieldsDelay    = 0
+    }
+
 newtype CompendiumDetails = CompendiumDetails T.Text
   deriving newtype (Eq, Ord, Show)
 
@@ -295,10 +412,8 @@ compendiumDetails (CompendiumDetails t) = t
 type CompendiumData = (Maybe Faction, CompendiumDetails)
 type CompendiumMap entries = Map.Map CompendiumData entries
 
-class CompendiumEntry a where
-  named :: a -> Name
-  imged :: a -> Img
-  typed :: a -> EntryType
+newtype Contamination = Contamination Int
+  deriving newtype (ToJSON)
 
 newtype Description = Description T.Text
   deriving newtype (ToJSON)
@@ -331,6 +446,7 @@ data EquipmentTraining
   | Ordnance
   | Cannon
   | Melee
+  deriving stock (Eq, Ord)
 
 instance ToJSON EquipmentTraining where
   toJSON = toJSON . equipmentTrainingText
@@ -347,6 +463,52 @@ equipmentTrainingText eqTraining =
     Ordnance  -> "ordnance"
     Cannon    -> "cannon"
     Melee     -> "melee"
+
+data ExperienceDifficulty =
+  ExperienceDifficulty
+    { expEasy      :: Int
+    , expNormal    :: Int
+    , expHeroic    :: Int
+    , expLegendary :: Int
+    , expNemesis   :: Int
+    }
+
+instance ToJSON ExperienceDifficulty where
+  toJSON exp =
+    object
+      [ "easy"      .= expEasy exp
+      , "normal"    .= expNormal exp
+      , "heroic"    .= expHeroic exp
+      , "legendary" .= expLegendary exp
+      , "nemesis"   .= expNemesis exp
+      ]
+
+emptyExperienceDifficulty :: ExperienceDifficulty
+emptyExperienceDifficulty =
+  ExperienceDifficulty
+    { expEasy       = 0
+    , expNormal     = 0
+    , expHeroic     = 0
+    , expLegendary  = 0
+    , expNemesis    = 0
+    }
+
+data ExperiencePayout =
+  ExperiencePayout
+    { expBase       :: Int
+    , expDifficulty :: ExperienceDifficulty
+    }
+
+instance ToJSON ExperiencePayout where
+  toJSON exp =
+    object
+      [ "base"           .= expBase exp
+      , "difficulty"     .= expDifficulty exp
+      , "tier"           .= T.empty
+      , "diffMultiplier" .= valueInt 1
+      , "kit"            .= valueInt 0
+      , "total"          .= valueInt 0
+      ]
 
 data Faction
   = UNSC
@@ -486,6 +648,17 @@ newtype FireRate = FireRate Int
 mkFireRate :: Int -> FireRate
 mkFireRate = FireRate
 
+newtype FloodWounds = FloodWounds Int
+
+instance ToJSON FloodWounds where
+  toJSON (FloodWounds w) =
+    object
+      [ "value" .= w
+      , "max"   .= w
+      , "base"  .= w
+      , "mod"   .= valueInt 0
+      ]
+
 data Hardpoints =
   Hardpoints
     { hardpointsHead     :: Int
@@ -616,6 +789,35 @@ newtype MagazineCapacity = MagazineCapacity Int
 mkMagazineCapacity :: Int -> MagazineCapacity
 mkMagazineCapacity = MagazineCapacity
 
+data MythicCharacteristics =
+  MythicCharacteristics
+    { mythicIsFlood :: Bool
+    , mythicSTR     :: Int
+    , mythicTOU     :: Int
+    , mythicAGI     :: Int
+    }
+
+instance ToJSON MythicCharacteristics where
+  toJSON m =
+    if mythicIsFlood m
+       then
+         let forFlood fn =
+               object
+                 [ "base"      .= fn m
+                 , "equipment" .= valueInt 0
+                 , "other"     .= valueInt 0
+                 , "total"     .= valueInt 0
+                 ]
+
+          in object
+               [ "str" .= forFlood mythicSTR
+               , "tou" .= forFlood mythicTOU
+               , "agi" .= forFlood mythicAGI
+               ]
+
+       else
+         object [] -- TODO
+
 newtype Name = Name T.Text
   deriving newtype (Eq, Ord, ToJSON)
 
@@ -712,6 +914,24 @@ data Size
 instance ToJSON Size where
   toJSON = toJSON . sizeText
 
+sizeFromText :: T.Text -> Either T.Text Size
+sizeFromText txt =
+  case T.toLower txt of
+    "mini"       -> Right Mini
+    "small"      -> Right Small
+    "normal"     -> Right Normal
+    "large"      -> Right Large
+    "huge"       -> Right Huge
+    "hulking"    -> Right Hulking
+    "giant"      -> Right Giant
+    "immense"    -> Right Immense
+    "massive"    -> Right Massive
+    "great"      -> Right Great
+    "monumental" -> Right Monumental
+    "colossal"   -> Right Colossal
+    "vast"       -> Right Vast
+    _            -> Left $ "Unrecognized Size: " <> txt
+
 sizeText :: Size -> T.Text
 sizeText size =
   case size of
@@ -745,6 +965,81 @@ sizeToInt size =
     Monumental ->  7
     Colossal   -> 10
     Vast       -> 25
+
+newtype Skills = Skills [T.Text]
+
+instance ToJSON Skills where
+  toJSON (Skills skills) =
+    object
+      . mappend [ "notes" .= T.empty ]
+      . flip fmap skills
+      $ \skill ->
+        keyFromText skill .=
+          object
+            [ "characteristic" .= T.empty
+            , "mods"           .= valueInt 0
+            , "roll"           .= valueInt 0
+            , "training" .=
+                object
+                  [ "tier"    .= T.empty
+                  , "penalty" .= valueInt 1
+                  ]
+            ]
+
+characterSkillList :: Skills
+characterSkillList =
+  Skills
+    [ "appeal"
+    , "athletics"
+    , "camouflage"
+    , "command"
+    , "cryptography"
+    , "deception"
+    , "demolition"
+    , "evasion"
+    , "gambling"
+    , "interrogation"
+    , "intimidation"
+    , "investigation"
+    , "medHuman"
+    , "medCovenant"
+    , "medXenophile"
+    , "navGroundAir"
+    , "navSpace"
+    , "negotiation"
+    , "pilotGround"
+    , "pilotAir"
+    , "pilotSpace"
+    , "security"
+    , "stunting"
+    , "survival"
+    , "techHuman"
+    , "techCovenant"
+    , "techForerunner"
+    ]
+
+floodSkillList :: Skills
+floodSkillList =
+  Skills
+    [ "athletics"
+    , "camouflage"
+    , "cryptography"
+    , "demolition"
+    , "evasion"
+    , "intimidation"
+    , "investigation"
+    , "navGroundAir"
+    , "navSpace"
+    , "pilotGround"
+    , "pilotAir"
+    , "pilotSpace"
+    , "security"
+    , "stunting"
+    , "survival"
+    , "techHuman"
+    , "techCovenant"
+    , "techForerunner"
+    ]
 
 data SpecialRules_Vehicle =
   SpecialRules_Vehicle
@@ -978,6 +1273,30 @@ strengthMultiplier sm =
     FullStrength   -> 1
     DoubleStrength -> 2
 
+data Swarm =
+  Swarm
+    { swarmWillSwarm :: Bool
+    , swarmValue     :: Int
+    }
+
+instance ToJSON Swarm where
+  toJSON s =
+    let willSwarm = swarmWillSwarm s
+        swarmVal = B.bool 0 (swarmValue s) willSwarm
+     in object
+          [ "base"      .= swarmVal
+          , "mod"       .= valueInt 0
+          , "total"     .= swarmVal
+          , "willSwarm" .= willSwarm
+          ]
+
+mkSwarm :: Int -> Bool -> Swarm
+mkSwarm val willSwarm =
+  Swarm
+    { swarmWillSwarm = willSwarm
+    , swarmValue     = val
+    }
+
 data Token =
   Token
     { tokenName :: Name
@@ -1071,6 +1390,50 @@ instance ToJSON Token where
           , "flags"          .= emptyObject
           , "randomImg"      .= False
           ]
+
+data Trainings =
+  Trainings
+    { trainingsEquipment :: Set.Set EquipmentTraining
+    , trainingsFaction   :: Set.Set Faction
+    , trainingsWeapon    :: WeaponTrainings
+    , trainingsAlienTech :: Bool
+    }
+
+instance ToJSON Trainings where
+  toJSON t =
+    let equipment = trainingsEquipment t
+        factionTrainingss = trainingsFaction t
+     in object
+          [ "equipment" .=
+              object
+                [ "basic"    .= Set.member Basic    equipment
+                , "infantry" .= Set.member Infantry equipment
+                , "heavy"    .= Set.member Heavy    equipment
+                , "advanced" .= Set.member Advanced equipment
+                , "launcher" .= Set.member Launcher equipment
+                , "range"    .= Set.member Range    equipment
+                , "ordnance" .= Set.member Ordnance equipment
+                , "cannon"   .= Set.member Cannon   equipment
+                , "melee"    .= Set.member Melee    equipment
+                ]
+          , "faction" .=
+              object
+                [ "unsc"       .= Set.member UNSC       factionTrainingss
+                , "covenant"   .= Set.member Covenant   factionTrainingss
+                , "forerunner" .= Set.member Forerunner factionTrainingss
+                ]
+          , "weapons"   .= trainingsWeapon t
+          , "alienTech" .= trainingsAlienTech t
+          ]
+
+emptyTrainings :: Trainings
+emptyTrainings =
+  Trainings
+    { trainingsEquipment = Set.empty
+    , trainingsFaction   = Set.empty
+    , trainingsWeapon    = emptyWeaponTrainings
+    , trainingsAlienTech = False
+    }
 
 data WeaponGroup
   = Ranged
@@ -1177,6 +1540,32 @@ instance ToJSON WeaponTags where
            , "[PD]" .= Set.member PD t
            , "[BD]" .= Set.member BD t
            ]
+
+data WeaponTrainings =
+  WeaponTrainings
+    { weaponTrainingsHTH              :: Bool
+    , weaponTrainingsMAC              :: Bool
+    , weaponTrainingsRapidReload      :: Bool
+    , weaponTrainingsUnarmedCombatant :: Bool
+    }
+
+instance ToJSON WeaponTrainings where
+  toJSON t =
+    object
+      [ "hth"              .= weaponTrainingsHTH t
+      , "mac"              .= weaponTrainingsMAC t
+      , "rapidReload"      .= weaponTrainingsRapidReload t
+      , "unarmedCombatant" .= weaponTrainingsUnarmedCombatant t
+      ]
+
+emptyWeaponTrainings :: WeaponTrainings
+emptyWeaponTrainings =
+  WeaponTrainings
+    { weaponTrainingsHTH              = False
+    , weaponTrainingsMAC              = False
+    , weaponTrainingsRapidReload      = False
+    , weaponTrainingsUnarmedCombatant = False
+    }
 
 data Weight =
   Weight

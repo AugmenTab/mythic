@@ -30,15 +30,16 @@ mkFoundry (faction, _) rawData =
     . for rawData
     $ \raw ->
       case raw of
-        AbilityData     a -> fmap L.singleton . Right $ mkAbility     a
+        AbilityData     a -> Right [ mkAbility TrueAbility a ]
         ArmorData       a -> fmap L.singleton $ mkArmor       faction a
         EquipmentData   e -> fmap L.singleton $ mkEquipment   faction e
+        FloodData       f -> fmap L.singleton $ mkFlood f
         MeleeData       m -> mkMeleeWeapons  faction m
         PermutationData p -> fmap L.singleton $ mkPermutation faction p
         RangedData      r -> mkRangedWeapons faction r
 
-mkAbility :: RawAbility -> FoundryData
-mkAbility raw =
+mkAbility :: AbilityType -> RawAbility -> FoundryData
+mkAbility abilityType raw =
   FoundryAbility
     $ Ability
         { abilityName        = mkName $ rawAbilityName raw
@@ -46,7 +47,7 @@ mkAbility raw =
         , abilityCost        = rawAbilityCost raw
         , abilitySummary     = mkDescription $ rawAbilitySummary raw
         , abilityDescription = mkDescription $ rawAbilityDescription raw
-        , abilityType        = TrueAbility
+        , abilityType        = abilityType
         }
 
 mkArmor :: Maybe Faction -> RawArmor -> Either T.Text FoundryData
@@ -160,6 +161,71 @@ mkEquipment mbFaction raw = do
         -- characteristics. This may change in the future, so the value will be
         -- kept hardcoded to `Nothing` here for now.
         , equipmentCharacteristics = Nothing
+        }
+
+mkFlood :: RawFlood -> Either T.Text FoundryData
+mkFlood raw = do
+  size <- sizeFromText $ rawFloodSize raw
+
+  let name =
+        mkName
+          . maybe (rawFloodName raw) snd
+          . L.unsnoc
+          . T.splitOn " - "
+          $ rawFloodName raw
+
+      characteristics =
+        Characteristics
+          { characteristicsIsFlood = True
+          , characteristicsSTR     = rawFloodSTR raw
+          , characteristicsTOU     = rawFloodTOU raw
+          , characteristicsAGI     = rawFloodAGI raw
+          , characteristicsWFR     = rawFloodWFR raw
+          , characteristicsWFM     = rawFloodWFM raw
+          , characteristicsINT     = rawFloodINT raw
+          , characteristicsPER     = rawFloodPER raw
+          , characteristicsCRG     = Nothing
+          , characteristicsCHA     = Nothing
+          , characteristicsLDR     = Nothing
+          }
+
+      mythics =
+        MythicCharacteristics
+          { mythicIsFlood = True
+          , mythicSTR     = rawFloodMythicSTR raw
+          , mythicTOU     = rawFloodMythicTOU raw
+          , mythicAGI     = rawFloodMythicAGI raw
+          }
+
+      swarm =
+        mkSwarm 1
+          . L.any ((==) "Swarm" . rawAbilityName)
+          $ rawFloodAbilities raw
+
+      abilities = mkAbility RacialTrait <$> rawFloodAbilities raw
+      experience =
+        ExperiencePayout
+          { expBase       = rawFloodExperience raw
+          , expDifficulty = emptyExperienceDifficulty
+          }
+
+  Right
+    . FoundryFlood
+    $ Flood
+        { floodName                  = name
+        , floodCharacteristics       = characteristics
+        , floodMythicCharacteristics = mythics
+        , floodWounds                = FloodWounds $ rawFloodWounds raw
+        , floodSize                  = size
+        , floodNotes                 = Nothing
+        , floodContamination         = Contamination 0
+        , floodSwarm                 = swarm
+        , floodArmor                 = emptyCharacterArmor
+        , floodShields               = emptyCharacterShields
+        , floodSkills                = floodSkillList
+        , floodTrainings             = emptyTrainings
+        , floodExperience            = experience
+        , floodItems                 = abilities
         }
 
 mkMeleeWeapons :: Maybe Faction -> RawMeleeWeapon -> Either T.Text [FoundryData]

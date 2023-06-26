@@ -3,6 +3,7 @@ module Data.Types.Ingest
   , RawAbility(..)
   , RawArmor(..)
   , RawEquipment(..)
+  , RawFlood(..)
   , RawMeleeBase(..)
   , RawMeleeWeapon(..)
   , RawPermutation(..)
@@ -12,12 +13,14 @@ module Data.Types.Ingest
 
 import           Flipstone.Prelude
 
+import           Control.Monad.Extra (mapMaybeM)
 import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
 import qualified Data.List as L
 import qualified Data.List.NonEmpty as NE
 import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
 import           GHC.Types (Double)
 import           Text.Read (readMaybe)
 import           Text.Show (show)
@@ -26,6 +29,7 @@ data RawData
   = AbilityData     RawAbility
   | ArmorData       RawArmor
   | EquipmentData   RawEquipment
+  | FloodData       RawFlood
   | MeleeData       RawMeleeWeapon
   | PermutationData RawPermutation
   | RangedData      RawRangedWeapon
@@ -100,6 +104,54 @@ instance CSV.FromNamedRecord RawEquipment where
                  <*> e .: "COMP_description"
                  <*> (defaultZeroDbl <$> e .: "COMP_weight")
                  <*> e .: "COMP_price"
+
+data RawFlood =
+  RawFlood
+    { rawFloodName       :: T.Text
+    , rawFloodSize       :: T.Text
+    , rawFloodSTR        :: Int
+    , rawFloodTOU        :: Int
+    , rawFloodAGI        :: Int
+    , rawFloodWFR        :: Int
+    , rawFloodWFM        :: Int
+    , rawFloodINT        :: Int
+    , rawFloodPER        :: Int
+    , rawFloodMythicSTR  :: Int
+    , rawFloodMythicTOU  :: Int
+    , rawFloodMythicAGI  :: Int
+    , rawFloodExperience :: Int
+    , rawFloodWounds     :: Int
+    , rawFloodAbilities  :: [RawAbility]
+    }
+
+instance CSV.FromNamedRecord RawFlood where
+  parseNamedRecord f =
+    let indices = [ 0..5 ] :: [Int]
+        mkAbility n = do
+          name <- f .: ("Comp_aditional_info[" <> n <> "]")
+          if T.null name
+             then
+               pure Nothing
+             else
+               Just . RawAbility name "Flood" 0 T.empty
+                 <$> f .: ("COMP_description[" <> n <> "]")
+
+     in RawFlood
+          <$> f .: "Name"
+          <*> f .: "COMP_size"
+          <*> f .: "COMP_strength"
+          <*> f .: "COMP_toughness"
+          <*> f .: "COMP_agility"
+          <*> f .: "COMP_warfare ranged"
+          <*> f .: "COMP_warfare melee"
+          <*> f .: "COMP_intelligence"
+          <*> f .: "COMP_perception"
+          <*> f .: "COMP_mythic_strength"
+          <*> f .: "COMP_mythic_toughness"
+          <*> f .: "COMP_mythic_agility"
+          <*> f .: "COMP_experience"
+          <*> f .: "COMP_wounds"
+          <*> mapMaybeM (mkAbility . TE.encodeUtf8 . T.pack . show) indices
 
 data RawMeleeBase =
   RawMeleeBase

@@ -34,12 +34,13 @@ mkCompendium (mbFaction, content) fData = do
 
 mkEntry :: CompendiumEntry entry => Label -> entry -> Entry entry
 mkEntry label entry =
-  Entry
-    { entryId    = mkEntryID label $ named entry
-    , entryName  = named entry
-    , entryImg   = imged entry
-    , entryType  = typed entry
-    , entryData  = entry
-    , entryToken = Nothing -- TODO
-    , entryItems = [] -- TODO
-    }
+  let itemLabel = mkItemLabel label $ named entry
+   in Entry
+        { entryId    = mkEntryID label $ named entry
+        , entryName  = named entry
+        , entryImg   = imged entry
+        , entryType  = typed entry
+        , entryData  = entry
+        , entryToken = Nothing -- TODO
+        , entryItems = mkEntry itemLabel <$> items entry
+        }
