@@ -1,6 +1,6 @@
 # Mythic for Foundry
 
-An unofficial system implementation for playing the fan-made [Halo: Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
+An unofficial system implementation for playing the fan-made [Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
 
 <!-- ![Foundry Version Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dfor-the-badge%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FAugmenTab%2Fmythic%2Fmain%2Fsystem.json) -->
 ![License](https://img.shields.io/github/license/AugmenTab/mythic?style=for-the-badge)
@@ -85,7 +85,7 @@ Planned Compendium Packs:
 
 The software component of this system is distributed under the GNUv3 license.
 
-Halo &copy; Microsoft Corporation. Mythic for Foundry was created under Microsoft's "Game Content Usage Rules." It is not endorsed by Microsoft and does not reflect the views or opinions of Microsoft or anyone officially involved in producing or managing Halo. As such, it does not contribute to the official narrative of the fictional universe, if applicable.
+&copy; Microsoft Corporation. Mythic for Foundry was created under Microsoft's "Game Content Usage Rules." It is not endorsed by Microsoft and does not reflect the views or opinions of Microsoft or anyone officially involved in producing or managing Halo. As such, it does not contribute to the official narrative of the fictional universe, if applicable.
 
 ## Known Bugs
 
