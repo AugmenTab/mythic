@@ -212,7 +212,8 @@ instance CompendiumEntry Flood where
 instance ToJSON Flood where
   toJSON f =
     object
-      [ "experiencePayout"      .= floodExperience f
+      [ "weight"                .= valueInt 0
+      , "experiencePayout"      .= floodExperience f
       , "characteristics"       .= floodCharacteristics f
       , "mythicCharacteristics" .= floodMythicCharacteristics f
       , "perceptiveRange"       .=
