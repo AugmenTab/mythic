@@ -161,7 +161,7 @@ mythicManifest compendia =
 
    in Manifest
         { systemId                = "mythic"
-        , title                   = "Mythic 6.0"
+        , title                   = "Mythic"
         , description             = mythicDescription
         , version                 = "0.2.4"
         , authors                 = [ mythicAuthor ]
