@@ -102,7 +102,7 @@ data Ability =
 
 instance CompendiumEntry Ability where
   named = abilityName
-  imged = const (mkImg "") -- TODO
+  imged = const abilityImg
   typed = const (FoundryItem ItemAbility)
   token = const Nothing
   items = const []
@@ -115,6 +115,9 @@ instance ToJSON Ability where
            , "description"  .= abilityDescription a
            , "type"         .= abilityType        a
            ]
+
+abilityImg :: Img
+abilityImg = mkImg "icons/skills/targeting/crosshair-pointed-orange.webp"
 
 data Armor =
   Armor
