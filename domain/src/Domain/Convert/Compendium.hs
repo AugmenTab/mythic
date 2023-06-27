@@ -41,6 +41,6 @@ mkEntry label entry =
         , entryImg   = imged entry
         , entryType  = typed entry
         , entryData  = entry
-        , entryToken = Nothing -- TODO
+        , entryToken = token entry
         , entryItems = mkEntry itemLabel <$> items entry
         }

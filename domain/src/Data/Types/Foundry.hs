@@ -21,6 +21,7 @@ class CompendiumEntry a where
   named :: a -> Name
   imged :: a -> Img
   typed :: a -> EntryType
+  token :: a -> Maybe Token
   items :: a -> [FoundryData]
 
 data FoundryData
@@ -61,6 +62,15 @@ instance CompendiumEntry FoundryData where
 --  typed (FoundryVehicle   v) = typed v
   typed (FoundryWeapon    w) = typed w
 
+  token (FoundryAbility   a) = token a
+  token (FoundryArmor     a) = token a
+--  token (FoundryBestiary  b) = token b
+--  token (FoundryCharacter c) = token c
+  token (FoundryEquipment e) = token e
+  token (FoundryFlood     f) = token f
+--  token (FoundryVehicle   v) = token v
+  token (FoundryWeapon    w) = token w
+
   items (FoundryAbility   a) = items a
   items (FoundryArmor     a) = items a
 --  items (FoundryBestiary  b) = items b
@@ -94,6 +104,7 @@ instance CompendiumEntry Ability where
   named = abilityName
   imged = const (mkImg "") -- TODO
   typed = const (FoundryItem ItemAbility)
+  token = const Nothing
   items = const []
 
 instance ToJSON Ability where
@@ -127,6 +138,7 @@ instance CompendiumEntry Armor where
   named = armorName
   imged = const armorImg
   typed = const (FoundryItem ItemArmor)
+  token = const Nothing
   items = const []
 
 instance ToJSON Armor where
@@ -166,6 +178,7 @@ instance CompendiumEntry Equipment where
   named = equipmentName
   imged = const equipmentImg
   typed = const (FoundryItem ItemEquipment)
+  token = const Nothing
   items = const []
 
 instance ToJSON Equipment where
@@ -207,6 +220,7 @@ instance CompendiumEntry Flood where
   named = floodName
   imged = const floodImg
   typed = const (FoundryActor ActorFlood)
+  token = Just . mkFloodToken
   items = floodItems
 
 instance ToJSON Flood where
@@ -280,6 +294,15 @@ instance ToJSON Flood where
 floodImg :: Img
 floodImg = mkImg "icons/magic/death/undead-zombie-grave-green.webp"
 
+mkFloodToken :: Flood -> Token
+mkFloodToken flood =
+  Token
+    { tokenName = floodName flood
+    , tokenType = ActorFlood
+    , tokenSize = floodSize flood
+    , tokenBar2 = Nothing
+    }
+
 data Weapon =
   Weapon
     { weaponName            :: Name
@@ -311,6 +334,7 @@ instance CompendiumEntry Weapon where
   named = weaponName
   imged = weaponImg
   typed = const (FoundryItem ItemWeapon)
+  token = const Nothing
   items = const []
 
 instance ToJSON Weapon where
