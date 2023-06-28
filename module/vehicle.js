@@ -101,6 +101,8 @@ export function getPropulsion(propulsion) {
  * @return {Actor|null} The current Actor assigned to the role, if applicable.
  */
 export function getRoleOwner(assignment) {
+  if (!assignment) return null;
+
   const actorId = assignment.split("_")[1];
   const actor = game.actors.get(actorId);
 

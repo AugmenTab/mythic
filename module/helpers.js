@@ -120,8 +120,12 @@ Handlebars.registerHelper("doMath", function(...var_args) {
  */
 Handlebars.registerHelper("getEntity", function(type, id) {
   switch(type) {
-    case "actor": return game.actors.get(id.split("_")[1]);
-    default:      return null;
+    case "actor":
+      if (!id) return null;
+      return game.actors.get(id.split("_")[1]);
+
+    default:
+      return null;
   }
 });
 

@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * Fixes bug where weapon nickname references in the HTML templates were broken.
+* Fixes bug where null value role owner references were having illegal operations performed on them.
 
 ## 0.3.0
 
