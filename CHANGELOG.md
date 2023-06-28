@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+### Bug Fixes
+
+* Fixes bug where weapon nickname references in the HTML templates were broken.
+
 ## 0.3.0
 
 ### Changes
