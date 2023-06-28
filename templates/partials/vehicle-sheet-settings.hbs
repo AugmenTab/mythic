@@ -104,7 +104,53 @@
   </table>
 </div>
 <div class="vehicle-split">
-  {{#if (eq system.propulsion.type "legs")}}
+  {{#if (eq system.propulsion.type "none")}}
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="3">{{localize "mythic.vehicleSheet.stationary"}}</th>
+          </tr>
+          <tr>
+            <th>WFR</th>
+            <th>INT</th>
+            <th>PER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input
+                name="system.characteristics.wfr"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.wfr}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.characteristics.int"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.int}}"
+                onfocus="this.select()"
+              />
+            </td>
+            <td>
+              <input
+                name="system.characteristics.per"
+                type="number"
+                data-dtype="Number"
+                value="{{system.characteristics.per}}"
+                onfocus="this.select()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {{else if (eq system.propulsion.type "legs")}}
     <div>
       <table>
         <thead>
@@ -271,6 +317,9 @@
               type="number"
               data-dtype="Number"
               value="{{system.propulsion.value}}"
+              {{#if (eq system.propulsion.type "none")}}
+                disabled="true" aria-disabled="true"
+              {{/if}}
               onfocus="this.select()"
             />
           </td>
@@ -284,7 +333,12 @@
                 onfocus="this.select()"
               />
             {{else}}
-              <select name="system.propulsion.max">
+              <select
+                name="system.propulsion.max"
+                {{#if (eq system.propulsion.type "none")}}
+                  disabled="true" aria-disabled="true"
+                {{/if}}
+              >
                 {{#select system.propulsion.max}}
                   {{#each (lookup config.vehicle.mobility system.propulsion.type)}}
                     <option value="{{this}}">{{this}}</option>

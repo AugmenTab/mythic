@@ -1358,6 +1358,16 @@ function calculateWeaponSummaryAttackData(actor) {
         ? Vehicle.getRoleOwner(weapon.system.owner)
         : actor;
 
+    if (isVehicle && actor.system.propulsion.type === "none") {
+      actor.system.special.autoloader.has = true;
+      weapon.system.ammoList[currentAmmo].target =
+        actor.system.characteristics.wfr;
+
+      weapon.system.reload.total = Math.floor(weapon.system.reload.base / 2);
+      calculateWeaponAttacksRanged(weapon.system);
+      return;
+    }
+
     if (!owner) {
       weapon.system.ammoList[currentAmmo].target = 0;
       return;

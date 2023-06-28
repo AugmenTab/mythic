@@ -12,8 +12,11 @@
           name="str"
           class="characteristic rollable"
           value="{{system.characteristics.str}}"
+          {{#if (eq system.characteristics.str 0)}}
+            disabled="true" aria-disabled="true"
+          {{/if}}
         >
-          {{system.characteristics.str}}
+          {{localnum system.characteristics.str}}
         </button>
       </td>
       <td>
@@ -21,8 +24,11 @@
           name="agi"
           class="characteristic rollable"
           value="{{system.characteristics.agi}}"
+          {{#if (eq system.characteristics.agi 0)}}
+            disabled="true" aria-disabled="true"
+          {{/if}}
         >
-          {{system.characteristics.agi}}
+          {{localnum system.characteristics.agi}}
         </button>
       </td>
     </tr>

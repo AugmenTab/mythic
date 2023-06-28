@@ -23,6 +23,18 @@
                       )
                 }}
                   &lt;N/A&gt;
+                {{else if (eq ../../this.system.propulsion.type "none")}}
+                  {{#unless (eq key "hull")}}
+                    &lt;N/A&gt;
+                  {{else}}
+                    <input
+                      name="system.breakpoints.{{key}}.value"
+                      type="number"
+                      data-dtype="Number"
+                      value="{{this.value}}"
+                      onfocus="this.select()"
+                    />
+                  {{/unless}}
                 {{else}}
                   <input
                     name="system.breakpoints.{{key}}.value"
@@ -46,6 +58,12 @@
                       )
                 }}
                   &lt;N/A&gt;
+                {{else if (eq ../../this.system.propulsion.type "none")}}
+                  {{#unless (eq key "hull")}}
+                    &lt;N/A&gt;
+                  {{else}}
+                    {{localnum this.max}}
+                  {{/unless}}
                 {{else}}
                   {{localnum this.max}}
                 {{/if}}
@@ -156,6 +174,14 @@
                       name="system.special.{{name}}.has"
                       type="checkbox"
                       {{checked this.has}}
+                      {{!-- Disable `autoloader` when is stationary turret --}}
+                      {{#if (cond "&&" (eq name "autoloader")
+                                       (eq ../../this.system.propulsion.type "none")
+                            )
+                      }}
+                        disabled="true"
+                        aria-disabled="true"
+                      {{/if}}
                       {{!-- Disable `enclosedTop` when `openTop` is selected --}}
                       {{#if (cond "&&" (eq name "enclosedTop")
                                        ../../this.system.special.openTop.has

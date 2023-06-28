@@ -1030,7 +1030,10 @@
               "str": 0,
               "mythicStr": 0,
               "agi": 0,
-              "mythicAgi": 0
+              "mythicAgi": 0,
+              "wfr": 0,
+              "int": 0,
+              "per": 0
             },
             "movement": {
               "accelerate": {

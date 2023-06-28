@@ -701,6 +701,7 @@
                 "type": "Type",
                 "intact": "Intact",
                 "total": "Total",
+                "none": "Stationary",
                 "legs": "Legs",
                 "thrusters": "Thrusters",
                 "treads": "Treads",
@@ -720,6 +721,7 @@
                 "slipspace": "Slipspace",
                 "walkerStomp": "Walker Stomp"
             },
+            "stationary": "Stationary Turret Stats",
             "types": {
                 "ground": "Ground",
                 "air": "Air",

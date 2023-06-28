@@ -438,6 +438,7 @@ mythic.vehicle = {
     wheels: [ 3, 4, 6, 8 ]
   },
   propulsion: {
+    none: "mythic.vehicleSheet.propulsion.none",
     legs: "mythic.vehicleSheet.propulsion.legs",
     thrusters: "mythic.vehicleSheet.propulsion.thrusters",
     treads: "mythic.vehicleSheet.propulsion.treads",

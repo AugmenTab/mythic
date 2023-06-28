@@ -1,0 +1,68 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th style="height: 25px">WFR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="height: 40px">
+          <button
+            name="wfr"
+            class="characteristic rollable"
+            value="{{system.characteristics.wfr}}"
+            {{#if (eq system.characteristics.wfr 0)}}
+              disabled="true" aria-disabled="true"
+            {{/if}}
+          >
+            {{localnum system.characteristics.wfr}}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th style="height: 25px">INT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="height: 40px">
+          <button
+            name="int"
+            class="characteristic rollable"
+            value="{{system.characteristics.int}}"
+            {{#if (eq system.characteristics.int 0)}}
+              disabled="true" aria-disabled="true"
+            {{/if}}
+          >
+            {{localnum system.characteristics.int}}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <th style="height: 25px">PER</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="height: 40px">
+          <button
+            name="per"
+            class="characteristic rollable"
+            value="{{system.characteristics.per}}"
+            {{#if (eq system.characteristics.per 0)}}
+              disabled="true" aria-disabled="true"
+            {{/if}}
+          >
+            {{localnum system.characteristics.per}}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="height: 150px"></div>
+</div>

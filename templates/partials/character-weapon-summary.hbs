@@ -66,37 +66,39 @@
                       &nbsp;({{this.target}})
                     </div>
                     {{#if (eq ../../actor.type "Vehicle")}}
-                      <select
-                        class="item-edit-inline special-focus"
-                        style="width: 50px"
-                        data-field="owner"
-                        data-item-id="{{weapon._id}}"
-                      >
-                        {{#select weapon.system.owner}}
-                          <option value="">--</option>
-                          {{#each ../../actor.system.crew.operators as |operator|}}
-                            {{#if operator.display}}
-                              <option value="{{concat "o_" operator.id}}">
-                                [O{{doMath "+" operator.idx 1}}]
-                              </option>
-                            {{/if}}
-                          {{/each}}
-                          {{#each ../../actor.system.crew.gunners as |gunner|}}
-                            {{#if gunner.display}}
-                              <option value="{{concat "g_" gunner.id}}">
-                                [G{{doMath "+" gunner.idx 1}}]
-                              </option>
-                            {{/if}}
-                          {{/each}}
-                          {{#each ../../actor.system.crew.complement as |complement|}}
-                            {{#if complement.display}}
-                              <option value="{{concat "c_" complement.id}}">
-                                [C{{doMath "+" complement.idx 1}}]
-                              </option>
-                            {{/if}}
-                          {{/each}}
-                        {{/select}}
-                      </select>
+                      {{#unless (eq ../../actor.system.propulsion.type "none")}}
+                        <select
+                          class="item-edit-inline special-focus"
+                          style="width: 50px"
+                          data-field="owner"
+                          data-item-id="{{weapon._id}}"
+                        >
+                          {{#select weapon.system.owner}}
+                            <option value="">--</option>
+                            {{#each ../../actor.system.crew.operators as |operator|}}
+                              {{#if operator.display}}
+                                <option value="{{concat "o_" operator.id}}">
+                                  [O{{doMath "+" operator.idx 1}}]
+                                </option>
+                              {{/if}}
+                            {{/each}}
+                            {{#each ../../actor.system.crew.gunners as |gunner|}}
+                              {{#if gunner.display}}
+                                <option value="{{concat "g_" gunner.id}}">
+                                  [G{{doMath "+" gunner.idx 1}}]
+                                </option>
+                              {{/if}}
+                            {{/each}}
+                            {{#each ../../actor.system.crew.complement as |complement|}}
+                              {{#if complement.display}}
+                                <option value="{{concat "c_" complement.id}}">
+                                  [C{{doMath "+" complement.idx 1}}]
+                                </option>
+                              {{/if}}
+                            {{/each}}
+                          {{/select}}
+                        </select>
+                      {{/unless}}
                     {{/if}}
                   </div>
                   <a class="item-edit" data-item-id="{{weapon._id}}">
@@ -161,14 +163,22 @@
                     <div>
                       {{this.range.close}}&nbsp;-&nbsp;{{this.range.long}}&nbsp;m
                       <div class="scope">
-                        {{localnum weapon.system.scopeMinimum}}&nbsp;-
+                        {{#if (eq ../../actor.system.propulsion.type "none")}}
+                          0&nbsp;-
+                        {{else}}
+                          {{localnum weapon.system.scopeMinimum}}&nbsp;-
+                        {{/if}}
                         {{#if (eq ../../actor.type "Vehicle")}}
-                          {{#with (getEntity "actor" weapon.system.owner)}}
-                            {{localnum
-                                (doMath "*"
-                                        this.system.perceptiveRange.total
-                                        ../../this.system.scopeMagnification)}}&nbsp;m
-                          {{/with}}
+                          {{#if (eq ../../actor.system.propulsion.type "none")}}
+                            {{localnum (doMath "*" 20 ../../actor.system.characteristics.per)}}m
+                          {{else}}
+                            {{#with (getEntity "actor" weapon.system.owner)}}
+                              {{localnum
+                                  (doMath "*"
+                                          this.system.perceptiveRange.total
+                                          ../../this.system.scopeMagnification)}}&nbsp;m
+                            {{/with}}
+                          {{/if}}
                         {{else}}
                           {{localnum
                               (doMath "*"

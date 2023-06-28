@@ -107,12 +107,21 @@ export async function rollAttacks(element, actor, weapon) {
     return;
   }
 
+  const pRange =
+    (actor.type === "Vehicle" && actor.system.propulsion.type === "none")
+      ? actor.system.characteristics.per * 20
+      : owner.system.perceptiveRange.total * (
+          isNaN(weapon.system.scopeMagnification)
+            ? 1
+            : weapon.system.scopeMagnification
+        );
+
   const target = (
       weapon.system.ammoList[currentAmmo].target
     + atkMods.flat
     + atkModRoll
     + rangeEffects.target
-    + calculatePerceptiveRangePenalties(owner, weapon, distanceFromTarget)
+    + calculatePerceptiveRangePenalties(weapon, pRange, distanceFromTarget)
   );
 
   if (isNaN(target)) {
@@ -131,7 +140,9 @@ export async function rollAttacks(element, actor, weapon) {
     pierce: rangeEffects.pierce
   };
 
-  await getAttackAndDamageOutcomes(owner, str, weapon, data);
+  const wfm =
+    actor.type === "Vehicle" ? 0 : actor.system.characteristics.wfm.total;
+  await getAttackAndDamageOutcomes(actor, str, wfm, weapon, data);
   return weapon.system.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
@@ -229,13 +240,8 @@ export async function rollTest(element, actor) {
   }
 }
 
-function calculatePerceptiveRangePenalties(actor, weapon, distanceFromTarget) {
+function calculatePerceptiveRangePenalties(weapon, pRange, distanceFromTarget) {
   if (!game.settings.get("mythic", "rangeEffects")) return 0;
-
-  const pRange = actor.system.perceptiveRange.total * (
-    isNaN(weapon.system.scopeMagnification) ? 1 : weapon.system.scopeMagnification
-  );
-
   if (pRange >= distanceFromTarget) return 0;
   return 10 * Math.floor((pRange - distanceFromTarget) / 50);
 }
@@ -306,14 +312,14 @@ function determineRollOutcome(roll, target) {
   return outcome;
 }
 
-async function getAttackAndDamageOutcomes(actor, str, weapon, data) {
+async function getAttackAndDamageOutcomes(actor, str, wfm, weapon, data) {
   const currentAmmo = weapon.system.ammoList[weapon.system.currentAmmo];
   const fireMode = weapon.system.attack.fireMode.split("-")[0];
   let result = {
     actorId: actor.id,
     name: weapon.system.nickname || weapon.name,
     img: weapon.img,
-    wfm: actor.system.characteristics.wfm.total,
+    wfm: wfm,
     weaponData: weapon.system,
     attacks: [],
     hits: 0,
