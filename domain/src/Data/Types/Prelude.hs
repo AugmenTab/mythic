@@ -749,19 +749,19 @@ mkItemPrice n =
 data ItemTrainings =
   ItemTrainings
     { itemTrainingsEquipment :: Maybe EquipmentTraining
-    , itemTrainingsFaction   :: FactionTraining
+    , itemTrainingsFaction   :: Maybe FactionTraining
     }
 
 instance ToJSON ItemTrainings where
   toJSON t =
-    let defTraining = maybe "" equipmentTrainingText $ itemTrainingsEquipment t
-     in object [ "equipment" .= defTraining
-               , "faction"   .= itemTrainingsFaction t
-               ]
+    object
+      [ "equipment" .= maybe "" equipmentTrainingText (itemTrainingsEquipment t)
+      , "faction"   .= maybe "" factionTrainingText (itemTrainingsFaction t)
+      ]
 
-mkItemTrainings :: Faction -> Maybe EquipmentTraining -> ItemTrainings
+mkItemTrainings :: Maybe Faction -> Maybe EquipmentTraining -> ItemTrainings
 mkItemTrainings faction mbEquipmentTraining =
-  ItemTrainings mbEquipmentTraining $ factionTrainingFor faction
+  ItemTrainings mbEquipmentTraining $ factionTrainingFor <$> faction
 
 data ItemType
   = ItemAbility

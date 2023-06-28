@@ -172,11 +172,11 @@ data RawMeleeBase =
 
 data RawMeleeWeapon =
   RawMeleeWeapon
-    { rawMeleeName         :: T.Text
-    , rawMeleeBases        :: NE.NonEmpty RawMeleeBase
-    , rawMeleeFaction      :: T.Text
-    , rawMeleeWeight       :: Double
-    , rawMeleePrice        :: Int
+    { rawMeleeName    :: T.Text
+    , rawMeleeBases   :: NE.NonEmpty RawMeleeBase
+    , rawMeleeFaction :: T.Text
+    , rawMeleeWeight  :: Double
+    , rawMeleePrice   :: Int
     }
 
 instance CSV.FromNamedRecord RawMeleeWeapon where
@@ -186,7 +186,7 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
             <$> m .: ("Comp_name[" <> n <> "]")
             <*> m .: ("COMP_type[" <> n <> "]")
             <*> m .: ("COMP_attribute[" <> n <> "]")
-            <*> m .: ("COMP_range[" <> n <> "]")
+            <*> (defaultZero <$> m .: ("COMP_range[" <> n <> "]"))
             <*> m .: ("COMP_damage_roll[" <> n <> "]")
             <*> m .: ("COMP_damage_base[" <> n <> "]")
             <*> m .: ("COMP_pierce[" <> n <> "]")

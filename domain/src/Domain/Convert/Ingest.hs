@@ -49,12 +49,12 @@ mkCompendiumMapEntry subject rawData = do
           . factionFromText
           $ case rawData of
               AbilityData     _   -> "factionless_ability"
-              ArmorData       raw -> rawArmorFaction       raw
-              EquipmentData   raw -> rawEquipmentFaction   raw
+              ArmorData       raw -> rawArmorFaction     raw
+              EquipmentData   raw -> rawEquipmentFaction raw
               FloodData       _   -> "factionless_flood"
-              MeleeData       raw -> rawMeleeFaction       raw
+              MeleeData       _   -> "factionless_melee"
               PermutationData raw -> rawPermutationFaction raw
-              RangedData      raw -> rawRangedFaction      raw
+              RangedData      _   -> "factionless_ranged"
 
   pure ( (faction, mkCompendiumDetails $ Request.sheetSubjectTitle subject)
        , [ rawData ]

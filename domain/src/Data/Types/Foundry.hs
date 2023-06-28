@@ -309,7 +309,7 @@ mkFloodToken flood =
 data Weapon =
   Weapon
     { weaponName            :: Name
-    , weaponFaction         :: Faction
+    , weaponFaction         :: Maybe Faction
     , weaponDescription     :: Description
     , weaponPrice           :: ItemPrice
     , weaponBreakpoints     :: Breakpoints

@@ -1,7 +1,7 @@
 {
   "authors": [
     {
-      "discord": "∀ugmenTab#5063",
+      "discord": "augmentab",
       "name": "Tyler Baum",
       "url": "https://github.com/AugmenTab"
     }
@@ -12,7 +12,7 @@
     "minimum": "10",
     "verified": "10"
   },
-  "description": "An unofficial system implementation for playing the fan-made Halo: Mythic game on Foundry Virtual Tabletop.",
+  "description": "An unofficial system implementation for playing the fan-made Mythic game on Foundry Virtual Tabletop.",
   "download": "https://github.com/AugmenTab/mythic/releases/latest/download/mythic.zip",
   "esmodules": [
     "mythic.js"
@@ -32,12 +32,92 @@
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
     {
-      "label": "The Flood",
-      "name": "the-flood",
-      "path": "packs/the-flood.db",
+      "label": "Abilities",
+      "name": "abilities",
+      "path": "packs/abilities.db",
       "private": false,
       "system": "mythic",
-      "type": "Actor"
+      "type": "Item"
+    },
+    {
+      "label": "Armor - UNSC",
+      "name": "armor-unsc",
+      "path": "packs/armor-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Covenant",
+      "name": "armor-covenant",
+      "path": "packs/armor-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Banished",
+      "name": "armor-banished",
+      "path": "packs/armor-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Forerunner",
+      "name": "armor-forerunner",
+      "path": "packs/armor-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - UNSC",
+      "name": "equipment-unsc",
+      "path": "packs/equipment-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Covenant",
+      "name": "equipment-covenant",
+      "path": "packs/equipment-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Forerunner",
+      "name": "equipment-forerunner",
+      "path": "packs/equipment-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons",
+      "name": "melee-weapons",
+      "path": "packs/melee-weapons.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor Permutations - UNSC",
+      "name": "armor-permutations-unsc",
+      "path": "packs/armor-permutations-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons",
+      "name": "ranged-weapons",
+      "path": "packs/ranged-weapons.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
     }
   ],
   "primaryTokenAttribute": "wounds",
@@ -48,5 +128,5 @@
   ],
   "title": "Mythic",
   "url": "https://github.com/AugmenTab/mythic",
-  "version": "0.2.4"
+  "version": "0.3.0"
 }

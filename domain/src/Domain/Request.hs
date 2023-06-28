@@ -62,13 +62,13 @@ type SheetData = (GID, Range)
 sheetDataMap :: Map.Map SheetSubject SheetData
 sheetDataMap =
   Map.fromList
- -- [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")   )
- -- , ( ArmorSheet       , (GID "226189720" , Range "A2:P199")  )
- -- , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
-    [ ( FloodSheet       , (GID "1809814064", Range "A2:AA381") )
- -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AG53")  )
- -- , ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )
- -- , ( RangedWeaponSheet, (GID "430796362" , Range "A2:AE397") )
+    [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")   )
+    , ( ArmorSheet       , (GID "226189720" , Range "A2:P199")  )
+    , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
+ -- , ( FloodSheet       , (GID "1809814064", Range "A2:AA381") )
+    , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AH63")  )
+    , ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )
+    , ( RangedWeaponSheet, (GID "1510373161", Range "B2:AF397") )
     ]
 
 makeSheetRequest :: Either T.Text HTTP.Request

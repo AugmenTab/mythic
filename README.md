@@ -2,7 +2,7 @@
 
 An unofficial system implementation for playing the fan-made [Mythic](https://www.reddit.com/r/HaloMythic/) tabletop roleplaying game on [Foundry Virtual Tabletop](https://foundryvtt.com/).
 
-<!-- ![Foundry Version Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dfor-the-badge%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FAugmenTab%2Fmythic%2Fmain%2Fsystem.json) -->
+![Foundry Version Supported](https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fversion%3Fstyle%3Dfor-the-badge%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2FAugmenTab%2Fmythic%2Fmain%2Fsystem.json)
 ![License](https://img.shields.io/github/license/AugmenTab/mythic?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/AugmenTab/mythic/total?style=for-the-badge)
 ![Downloads - Latest Release](https://img.shields.io/github/downloads/AugmenTab/mythic/latest/total?style=for-the-badge)
@@ -48,7 +48,7 @@ All available Item types in this system.
 
 ### Compendia
 
-All of the compendia that come included with this system. **Development on some Compendia will rely on as-of-yet unimplemented features or bug fixes, and thus won't be introduced until those dependencies are resolved.**
+All of the compendia that come included with this system.
 
 Available Compendium Packs:
 * Item
@@ -61,19 +61,13 @@ Available Compendium Packs:
   * Equipment - Covenant
   * Equipment - Forerunner
   * Equipment - UNSC
-  * Melee Weapons - Banished
-  * Melee Weapons - Covenant
-  * Melee Weapons - Forerunner
-  * Melee Weapons - UNSC
-  * Ranged Weapons - Banished
-  * Ranged Weapons - Covenant
-  * Ranged Weapons - Forerunner
-  * Ranged Weapons - UNSC
-  * The Flood
+  * Melee Weapons
+  * Ranged Weapons
 
-Planned Compendium Packs:
+Upcoming Compendium Packs:
 * Actor
   * *Bestiary*
+  * *The Flood*
   * *Vehicles - Banished*
   * *Vehicles - Covenant*
   * *Vehicles - Forerunner*
@@ -96,11 +90,4 @@ The software component of this system is distributed under the GNUv3 license.
 For a real-time record of what I'm working on, you can check the project's [Trello board](https://trello.com/b/y80KFteH/mythic-for-foundry).
 
 * Fully functioning Medical page to handle Special Damage.
-* Special ammo builder for weapons, with stats and cost automatically applied to the weapon.
-* Compendia as laid out above.
-* Tooltips for everything.
-* A supporting API to handle weapon stat and price calculation using the [Mythic and 100DOS Community Development Tools](https://docs.google.com/spreadsheets/d/1e5gepoZg_IZvupVw-rCKNMz42xMxGlF--oJluaa9Ljo/edit?usp=sharing).
-* Add called shots, Clear Target, and Precision Strike.
-* Add dual wielding.
-* Lock nav bar & inventory bar at the top of the Actor Sheet.
-* Ability to add custom skills.
+* Special ammo builder for weapons.

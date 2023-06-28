@@ -8,7 +8,7 @@ import           Domain.Helpers (tryParseInt)
 
 import qualified Data.Bool as B
 import qualified Data.Char as C
-import           Data.Either.Extra (maybeToEither)
+import           Data.Either.Extra (eitherToMaybe, maybeToEither)
 import qualified Data.List as L
 import qualified Data.List.Extra as L
 import qualified Data.List.NonEmpty as NE
@@ -34,7 +34,7 @@ mkFoundry (faction, _) rawData =
         ArmorData       a -> fmap L.singleton $ mkArmor       faction a
         EquipmentData   e -> fmap L.singleton $ mkEquipment   faction e
         FloodData       f -> fmap L.singleton $ mkFlood f
-        MeleeData       m -> mkMeleeWeapons  faction m
+        MeleeData       m -> mkMeleeWeapons m
         PermutationData p -> fmap L.singleton $ mkPermutation faction p
         RangedData      r -> mkRangedWeapons faction r
 
@@ -114,7 +114,7 @@ mkArmor mbFaction raw = do
         , armorFaction     = faction
         , armorPrice       = mkItemPrice $ rawArmorPrice raw
         , armorBreakpoints = mkBreakpoints 0
-        , armorTrainings   = mkItemTrainings faction Nothing
+        , armorTrainings   = mkItemTrainings (Just faction) Nothing
         , armorWeight      = weight
         , armorStats       = stats
         , armorHardpoints  = emptyHardpoints
@@ -152,7 +152,7 @@ mkEquipment mbFaction raw = do
         , equipmentFaction     = faction
         , equipmentPrice       = mkItemPrice $ rawEquipmentPrice raw
         , equipmentBreakpoints = mkBreakpoints 0
-        , equipmentTrainings   = mkItemTrainings faction Nothing
+        , equipmentTrainings   = mkItemTrainings (Just faction) Nothing
         , equipmentWeight      = weight
         , equipmentDescription = mkDescription desc
         , equipmentShields     = findShieldsIn desc
@@ -228,24 +228,13 @@ mkFlood raw = do
         , floodItems                 = abilities
         }
 
-mkMeleeWeapons :: Maybe Faction -> RawMeleeWeapon -> Either T.Text [FoundryData]
-mkMeleeWeapons mbFaction raw =
-  traverse (mkMelee mbFaction raw) . NE.toList $ rawMeleeBases raw
+mkMeleeWeapons :: RawMeleeWeapon -> Either T.Text [FoundryData]
+mkMeleeWeapons raw = traverse (mkMelee raw) . NE.toList $ rawMeleeBases raw
 
-mkMelee :: Maybe Faction
-        -> RawMeleeWeapon
-        -> RawMeleeBase
-        -> Either T.Text FoundryData
-mkMelee mbFaction raw rawBase = do
-  faction <-
-    flip maybeToEither mbFaction
-      $ T.unwords
-          [ "Cannot build Melee Weapon "
-          , rawMeleeName raw <> ":"
-          , "no faction could be parsed."
-          ]
-
-  let weaponType = rawMeleeBaseType rawBase
+mkMelee :: RawMeleeWeapon -> RawMeleeBase -> Either T.Text FoundryData
+mkMelee raw rawBase = do
+  let mbFaction = eitherToMaybe . factionFromText $ rawMeleeFaction raw
+      weaponType = rawMeleeBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
       weight =
@@ -282,11 +271,11 @@ mkMelee mbFaction raw rawBase = do
     . FoundryWeapon
     $ Weapon
         { weaponName        = mkName $ rawMeleeBaseName rawBase
-        , weaponFaction     = faction
+        , weaponFaction     = mbFaction
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawMeleePrice raw
         , weaponBreakpoints = mkBreakpoints 0
-        , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
+        , weaponTrainings   = mkItemTrainings mbFaction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe MeleeGroup $ snd <$> weaponDetails
         , weaponTags        = buildWeaponTags weaponTags
@@ -334,7 +323,7 @@ mkPermutation mbFaction raw = do
         , equipmentFaction     = faction
         , equipmentPrice       = mkItemPrice $ rawPermutationPrice raw
         , equipmentBreakpoints = mkBreakpoints 0
-        , equipmentTrainings   = mkItemTrainings faction Nothing
+        , equipmentTrainings   = mkItemTrainings (Just faction) Nothing
         , equipmentWeight      = emptyWeight
         , equipmentDescription = mkDescription desc
         , equipmentShields     = Nothing
@@ -356,15 +345,8 @@ mkRanged :: Maybe Faction
          -> RawRangedBase
          -> Either T.Text FoundryData
 mkRanged mbFaction raw rawBase = do
-  faction <-
-    flip maybeToEither mbFaction
-      $ T.unwords
-          [ "Cannot build Ranged Weapon"
-          , rawRangedName raw <> ":"
-          , "no faction could be parsed."
-          ]
-
-  let (name, nickname) = mkNameAndNickname $ rawRangedName raw
+  let faction = eitherToMaybe . factionFromText $ rawRangedName raw
+      (name, nickname) = mkNameAndNickname $ rawRangedName raw
       weaponType = rawRangedBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       weight =
@@ -408,7 +390,7 @@ mkRanged mbFaction raw rawBase = do
     . FoundryWeapon
     $ Weapon
         { weaponName        = name
-        , weaponFaction     = faction
+        , weaponFaction     = mbFaction
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawRangedPrice raw
         , weaponBreakpoints = mkBreakpoints 0

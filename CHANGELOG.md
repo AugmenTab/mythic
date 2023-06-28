@@ -2,7 +2,7 @@
 
 ## 0.3.0
 
-## Changes
+### Changes
 
 * Full migration to Foundry v10.
 * Updated the system to Mythic 6.0, with the following adjustments:
@@ -14,7 +14,7 @@
   * Updated the rules for calculating carry, lift, and push weight.
   * Changed the "Double AGI Mod to Run/Charge" field to "AGI Bonus for Run/Charge."
     * This is to support the new rule for Hunters, where they were changed from doubling their AGI mod for figuring Charge and Run to instead gain a +3 bonus to their AGI mod when calculating those movement speeds. This field can take a number input, which will allow players to use either the new or old rules, as well as for use in like abilities, both for homebrew content and possible future official content.
-  * Updated a number of system terms that have been changed for 5.1.
+  * Updated a number of system terms that have been changed for 6.0
   * Fixed wound calculation to now be accurate for both Named Characters and Bestiary.
   * Updated rate of melee attacks.
   * Updated armor hardpoints.
@@ -39,7 +39,18 @@
 * Perceptive Range is now tracked and modifiable.
 * Weapons have a Scope Magnification value, and display their effective minimum and maximum ranges with that magnification factored in.
 * Attacks that deal Special Damage now indicate this by displaying a bullseye.
-* Equipment Item Compendia are now available.
+* Several Compendia are now available:
+  * Abilities
+  * Armor - Banished
+  * Armor - Covenant
+  * Armor - Forerunner
+  * Armor - UNSC
+  * Armor Permutations - UNSC
+  * Equipment - Covenant
+  * Equipment - Forerunner
+  * Equipment - UNSC
+  * Melee Weapons
+  * Ranged Weapons
 * Field added to melee weapons to indicate the number of extra attacks it grants on an Attack action.
 * Field added to thrown weapons to indicate a flat range bonus granted by the weapon.
 * Equipment and Weapon Items can now provide shields and characteristic adjustments like Armor can.
@@ -52,13 +63,13 @@
 * Vehicle Actors introduced.
   * Vehicles are better suited to serve their role in the game as Actors than as Items. So, while there is no way to represent "ownership" of a Vehicle in the system, the benefits far exceed this downside.
   * Perhaps the most notable feature unique to Vehicles is Role Assignment, which allows users to provide an Actor ID for the character at a particular vehicle post. These roles can then be "assigned" to jobs or weapons, and the relevant Test(s) will be using that Actor's stats.
-  * Two primary types: Walkers (using "Legs" propulsion type), and all others.
+  * Three primary types: Walkers (using "Legs" propulsion type), Stationary Turrets (using "Stationary" propulsion type), and all others.
   * Walkers are expected to have a Stomp and Punch weapon added (if relevant).
   * Vehicles can post their doom state detonation to chat, along with make Splatter or Trample attacks as appropriate. Non-walkers can also post the damage dealt on a Wreck to chat.
 * The Slow special rule now halves melee rate of attacks.
 * Introduction of the Linked special rule for weapons, which multiplies the number of damages for an attack by the number of linked weapons.
 
-## Bug Fixes
+### Bug Fixes
 
 * Weapon Item sheet tabs for Settings and Notes are now displaying properly.
 * Fixed an instance where Armor that held values for Shields or Characteristics modifiers, but had those fields not checked as "has," were still applying those values to the Actor.
@@ -72,13 +83,13 @@
 
 ## 0.2.4
 
-## Changes
+### Changes
 
 * Removes incomplete magazine count feature. This will require a different, more involved re-implementation and this removal will prevent the current buggy implementation from breaking the update for those that want to use it.
 
 ## 0.2.3
 
-## Changes
+### Changes
 
 * Known languages can now be removed from a character simply by clicking on them.
 * The following were given post-to-chat functionality:
@@ -95,7 +106,7 @@
 * Scatter arrows are now rotated into the proper direction rather than using differing numbers of arrows.
 * A value to track how many loaded magazines are carried for a weapon was added to the Special Ammo tab on the Weapon Item sheet. This value is automatically decremented with each reload, and blocks reloads when the character has run out of loaded magazines for the weapon.
 
-## Bug Fixes
+### Bug Fixes
 
 * Fixes the Explode and Explode Once alternate settings for Special Damage to use the correct weapon "Crits On" value.
 * Fixes the broken Scatter link for weapon chat dialogs.

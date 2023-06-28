@@ -30,7 +30,6 @@ main = do
         Async.forConcurrently sheets $ uncurry $ \subject sheetData -> do
           let subjectTxt = Request.sheetSubjectText subject
 
-          IO.putStrLn $ "Fetching " <> subjectTxt <> "..."
           resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
 
           IO.putStrLn $ "Converting " <> subjectTxt <> "..."

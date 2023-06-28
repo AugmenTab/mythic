@@ -97,7 +97,7 @@ mythicAuthor =
     { name    = "Tyler Baum"
     , website = Just "https://github.com/AugmenTab"
     , email   = Nothing
-    , discord = Just "∀ugmenTab#5063"
+    , discord = Just "augmentab"
     }
 
 data Language =
@@ -156,14 +156,14 @@ mythicManifest :: [Compendium FoundryData] -> Manifest
 mythicManifest compendia =
   let mythicDescription =
         T.unwords [ "An unofficial system implementation for playing the"
-                  , "fan-made Halo: Mythic game on Foundry Virtual Tabletop."
+                  , "fan-made Mythic game on Foundry Virtual Tabletop."
                   ]
 
    in Manifest
         { systemId                = "mythic"
         , title                   = "Mythic"
         , description             = mythicDescription
-        , version                 = "0.2.4"
+        , version                 = "0.3.0"
         , authors                 = [ mythicAuthor ]
         , esmodules               = [ "mythic.js" ]
         , styles                  = [ "mythic.css" ]
