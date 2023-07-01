@@ -133,6 +133,21 @@ data AmmoGroup
   | MRC
   | BruteShot
 
+instance ToJSON AmmoGroup where
+  toJSON = toJSON . ammoGroupToText
+
+ammoGroupToText :: AmmoGroup -> T.Text
+ammoGroupToText ag =
+  case ag of
+    None         -> "none"
+    STD          -> "std"
+    Shotgun      -> "shotgun"
+    Flamethrower -> "flamethrower"
+    Sniper       -> "sniper"
+    Grenade      -> "grenade"
+    MRC          -> "mrc"
+    BruteShot    -> "bruteShot"
+
 newtype AmmoList = AmmoList [Ammunition]
 
 instance ToJSON AmmoList where

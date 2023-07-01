@@ -357,7 +357,7 @@ instance ToJSON Weapon where
            , "type"               .= weaponType w
            , "magazineCapacity"   .= weaponMagCap w
            , "ammo"               .= weaponAmmo w
-           , "ammoGroup"          .= weaponGroup w
+           , "ammoGroup"          .= weaponAmmoGroup w
            , "scopeMagnification" .= weaponScopeMag w
            , "scopeMinimum"       .= valueRatio 1
            , "owner"              .= nullJSON

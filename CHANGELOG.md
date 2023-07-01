@@ -6,6 +6,7 @@
 
 * Fixes bug where weapon nickname references in the HTML templates were broken.
 * Fixes bug where null value role owner references were having illegal operations performed on them.
+* Fixes bug where references on postable weapon templates in chat messages would be broken for items immediately copied from the compendium packs.
 
 ## 0.3.0
 
