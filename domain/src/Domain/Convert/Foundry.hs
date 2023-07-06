@@ -346,7 +346,7 @@ mkRanged :: Maybe Faction
          -> Either T.Text FoundryData
 mkRanged mbFaction raw rawBase = do
   let faction = eitherToMaybe . factionFromText $ rawRangedFaction raw
-      (name, nickname) = mkNameAndNickname $ rawRangedName raw
+      (name, nickname) = mkNameAndNickname $ rawRangedBaseName rawBase
       weaponType = rawRangedBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
       weight =

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+### Bug Fixes
+
+* Fixes bug where primary fire modes for weapons with multiple fire modes were not being built as compendium items.
+
 ## 0.3.1
 
 ### Bug Fixes
