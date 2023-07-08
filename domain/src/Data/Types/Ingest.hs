@@ -2,6 +2,7 @@ module Data.Types.Ingest
   ( RawData(..)
   , RawAbility(..)
   , RawArmor(..)
+  , RawBestiary(..)
   , RawEquipment(..)
   , RawFlood(..)
   , RawMeleeBase(..)
@@ -28,6 +29,7 @@ import           Text.Show (show)
 data RawData
   = AbilityData     RawAbility
   | ArmorData       RawArmor
+  | BestiaryData    RawBestiary
   | EquipmentData   RawEquipment
   | FloodData       RawFlood
   | MeleeData       RawMeleeWeapon
@@ -87,6 +89,88 @@ instance CSV.FromNamedRecord RawArmor where
              <*> a .: "stat_adjustments"
              <*> (nonEmptyText <$> a .: "COMP_description")
              <*> a .: "COMP_price"
+
+data RawBestiary =
+  RawBestiary
+    { rawBestiaryName         :: T.Text
+    , rawBestiaryFaction      :: T.Text
+    , rawBestiarySize         :: T.Text
+    , rawBestiarySTR          :: Int
+    , rawBestiaryTOU          :: Int
+    , rawBestiaryAGI          :: Int
+    , rawBestiaryWFR          :: Int
+    , rawBestiaryWFM          :: Int
+    , rawBestiaryINT          :: Int
+    , rawBestiaryPER          :: Int
+    , rawBestiaryCRG          :: Int
+    , rawBestiaryCHA          :: Int
+    , rawBestiaryLDR          :: Int
+    , rawBestiaryMythicSTR    :: Int
+    , rawBestiaryMythicTOU    :: Int
+    , rawBestiaryMythicAGI    :: Int
+    , rawBestiaryStaticStats  :: T.Text
+    , rawBestiaryExperience   :: T.Text
+    , rawBestiaryLuck         :: T.Text
+    , rawBestiaryArmor        :: Maybe Int
+    , rawBestiaryIntegrity    :: Maybe Int
+    , rawBestiaryDelay        :: Maybe Int
+    , rawBestiaryRecharge     :: Maybe Int
+    , rawBestiaryChargeRunMod :: Int
+    , rawBestiaryJumpMod      :: Int
+    , rawBestiaryLeapMod      :: Int
+    , rawBestiaryLeapAdd      :: Int
+    , rawBestiaryCarryStrMod  :: Int
+    , rawBestiaryCarryTouMod  :: Int
+    , rawBestiaryCarryCap     :: Maybe Int
+    , rawBestiaryDescription  :: T.Text
+    , rawBestiaryAbilities    :: [RawAbility]
+    }
+
+instance CSV.FromNamedRecord RawBestiary where
+  parseNamedRecord b =
+    let indices = [ 0..10 ] :: [Int]
+        mkAbility n = do
+          name <- b .: ("Comp_aditional_info[" <> n <> "]")
+          if T.null name
+             then
+               pure Nothing
+             else
+               Just . RawAbility name "Bestiary" 0 T.empty
+                 <$> b .: ("COMP_description[" <> n <> "]")
+
+     in RawBestiary
+          <$> b .: "Name"
+          <*> b .: "faction"
+          <*> b .: "COMP_size"
+          <*> b .: "COMP_strength"
+          <*> b .: "COMP_toughness"
+          <*> b .: "COMP_agility"
+          <*> b .: "COMP_warfare ranged"
+          <*> b .: "COMP_warfare melee"
+          <*> b .: "COMP_intelligence"
+          <*> b .: "COMP_perception"
+          <*> b .: "COMP_courage"
+          <*> b .: "COMP_charisma"
+          <*> b .: "COMP_leadership"
+          <*> b .: "COMP_mythic_strength"
+          <*> b .: "COMP_mythic_toughness"
+          <*> b .: "COMP_mythic_agility"
+          <*> b .: "static_stats"
+          <*> b .: "COMP_experience"
+          <*> b .: "COMP_luck"
+          <*> (positiveInt <$> b .: "COMP_armor_head")
+          <*> (positiveInt <$> b .: "COMP_shield_integrity")
+          <*> (positiveInt <$> b .: "COMP_shield_delay")
+          <*> (positiveInt <$> b .: "COMP_shield_recharge")
+          <*> b .: "COMP_charge_move_add"
+          <*> b .: "COMP_jump_move_mod"
+          <*> b .: "COMP_leap_mod"
+          <*> b .: "COMP_leap_add"
+          <*> b .: "COMP_str_carry_mod"
+          <*> b .: "COMP_tou_carry_mod"
+          <*> (positiveInt <$> b .: "COMP_carry_add")
+          <*> b .: "COMP_armor_description"
+          <*> mapMaybeM (mkAbility . TE.encodeUtf8 . T.pack . show) indices
 
 data RawEquipment =
   RawEquipment
@@ -306,3 +390,9 @@ parseBool :: MonadFail m => Int -> m Bool
 parseBool 0 = pure False
 parseBool 1 = pure True
 parseBool x = fail $ "Unrecognized value " <> show x
+
+positiveInt :: String -> Maybe Int
+positiveInt str =
+  case readMaybe str of
+    Just n | n >= 1 -> Just n
+    _ -> Nothing

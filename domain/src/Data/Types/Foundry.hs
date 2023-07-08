@@ -28,8 +28,7 @@ class CompendiumEntry a where
 data FoundryData
   = FoundryAbility   Ability
   | FoundryArmor     Armor
- -- | FoundryBestiary  Bestiary
- -- | FoundryCharacter Character
+--  | FoundryBestiary  Bestiary
   | FoundryEquipment Equipment
   | FoundryFlood     Flood
  -- | FoundryVehicle   Vehicle
@@ -39,7 +38,6 @@ instance CompendiumEntry FoundryData where
   named (FoundryAbility   a) = named a
   named (FoundryArmor     a) = named a
 --  named (FoundryBestiary  b) = named b
---  named (FoundryCharacter c) = named c
   named (FoundryEquipment e) = named e
   named (FoundryFlood     f) = named f
 --  named (FoundryVehicle   v) = named v
@@ -48,7 +46,6 @@ instance CompendiumEntry FoundryData where
   imged (FoundryAbility   a) = imged a
   imged (FoundryArmor     a) = imged a
 --  imged (FoundryBestiary  b) = imged b
---  imged (FoundryCharacter c) = imged c
   imged (FoundryEquipment e) = imged e
   imged (FoundryFlood     f) = imged f
 --  imged (FoundryVehicle   v) = imged v
@@ -57,7 +54,6 @@ instance CompendiumEntry FoundryData where
   typed (FoundryAbility   a) = typed a
   typed (FoundryArmor     a) = typed a
 --  typed (FoundryBestiary  b) = typed b
---  typed (FoundryCharacter c) = typed c
   typed (FoundryEquipment e) = typed e
   typed (FoundryFlood     f) = typed f
 --  typed (FoundryVehicle   v) = typed v
@@ -66,7 +62,6 @@ instance CompendiumEntry FoundryData where
   token (FoundryAbility   a) = token a
   token (FoundryArmor     a) = token a
 --  token (FoundryBestiary  b) = token b
---  token (FoundryCharacter c) = token c
   token (FoundryEquipment e) = token e
   token (FoundryFlood     f) = token f
 --  token (FoundryVehicle   v) = token v
@@ -75,7 +70,6 @@ instance CompendiumEntry FoundryData where
   items (FoundryAbility   a) = items a
   items (FoundryArmor     a) = items a
 --  items (FoundryBestiary  b) = items b
---  items (FoundryCharacter c) = items c
   items (FoundryEquipment e) = items e
   items (FoundryFlood     f) = items f
 --  items (FoundryVehicle   v) = items v
@@ -95,7 +89,6 @@ instance ToJSON FoundryData where
   toJSON (FoundryAbility   a) = toJSON a
   toJSON (FoundryArmor     a) = toJSON a
 --  toJSON (FoundryBestiary  b) = toJSON b
---  toJSON (FoundryCharacter c) = toJSON c
   toJSON (FoundryEquipment e) = toJSON e
   toJSON (FoundryFlood     f) = toJSON f
 --  toJSON (FoundryVehicle   v) = toJSON v
@@ -174,6 +167,20 @@ instance ToJSON Armor where
 
 armorImg :: Img
 armorImg = mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp"
+
+data Bestiary =
+  Bestiary
+    {
+    }
+
+  {-
+instance CompendiumEntry Bestiary where
+  named = _
+  imged = _
+  typed = _
+  token = _
+  items = _
+-}
 
 data Equipment =
   Equipment

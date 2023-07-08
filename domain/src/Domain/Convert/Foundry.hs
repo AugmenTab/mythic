@@ -31,8 +31,9 @@ mkFoundry (faction, _) rawData =
     $ \raw ->
       case raw of
         AbilityData     a -> Right [ mkAbility TrueAbility a ]
-        ArmorData       a -> fmap L.singleton $ mkArmor       faction a
-        EquipmentData   e -> fmap L.singleton $ mkEquipment   faction e
+        ArmorData       a -> fmap L.singleton $ mkArmor faction a
+        BestiaryData    b -> fmap L.singleton $ mkBestiary faction b
+        EquipmentData   e -> fmap L.singleton $ mkEquipment faction e
         FloodData       f -> fmap L.singleton $ mkFlood f
         MeleeData       m -> mkMeleeWeapons m
         PermutationData p -> fmap L.singleton $ mkPermutation faction p
@@ -124,6 +125,10 @@ mkArmor mbFaction raw = do
         , armorShields     = shields
         , armorSize        = Normal
         }
+
+mkBestiary :: Maybe Faction -> RawBestiary -> Either T.Text FoundryData
+mkBestiary _mbFaction _raw = do
+  Left "reached conversion to Foundry"
 
 mkEquipment :: Maybe Faction -> RawEquipment -> Either T.Text FoundryData
 mkEquipment mbFaction raw = do

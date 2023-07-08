@@ -25,6 +25,7 @@ import qualified Network.HTTP.Simple as HTTP
 data SheetSubject
   = AbilitySheet
   | ArmorSheet
+  | BestiarySheet
   | EquipmentSheet
   | FloodSheet
   | MeleeWeaponSheet
@@ -37,6 +38,7 @@ sheetSubjectText subject =
   case subject of
     AbilitySheet      -> "AbilitySheet"
     ArmorSheet        -> "ArmorSheet"
+    BestiarySheet     -> "BestiarySheet"
     EquipmentSheet    -> "EquipmentSheet"
     FloodSheet        -> "FloodSheet"
     MeleeWeaponSheet  -> "MeleeWeaponSheet"
@@ -48,6 +50,7 @@ sheetSubjectTitle subject =
   case subject of
     AbilitySheet      -> "Abilities"
     ArmorSheet        -> "Armor"
+    BestiarySheet     -> "Bestiary"
     EquipmentSheet    -> "Equipment"
     FloodSheet        -> "The Flood"
     MeleeWeaponSheet  -> "Melee Weapons"
@@ -64,7 +67,8 @@ sheetDataMap =
   Map.fromList
  -- [ ( AbilitySheet     , (GID "1007822165", Range "A2:F96")   )
  -- , ( ArmorSheet       , (GID "226189720" , Range "A2:P199")  )
-    [ ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
+    [ ( BestiarySheet    , (GID "1982557897", Range "A2:BX407") )
+ -- , ( EquipmentSheet   , (GID "515202982" , Range "A2:F607")  )
  -- , ( FloodSheet       , (GID "1809814064", Range "A2:AA381") )
  -- , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AH63")  )
  -- , ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )

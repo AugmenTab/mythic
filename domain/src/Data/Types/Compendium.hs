@@ -9,7 +9,7 @@ module Data.Types.Compendium
 
 import           Flipstone.Prelude
 import           Data.Types.Prelude
-import           Data.Types.Foundry (CompendiumEntry, FoundryData)
+import           Data.Types.Foundry (CompendiumEntry(..), FoundryData)
 import           Domain.JSON
 
 import qualified Data.Bool as B

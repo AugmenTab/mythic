@@ -27,6 +27,7 @@ ingestRaw subject lines = do
         case subject of
           Request.AbilitySheet      -> ingestAbility
           Request.ArmorSheet        -> ingestArmor
+          Request.BestiarySheet     -> ingestBestiary
           Request.EquipmentSheet    -> ingestEquipment
           Request.FloodSheet        -> ingestFlood
           Request.MeleeWeaponSheet  -> ingestMelee
@@ -38,7 +39,19 @@ ingestRaw subject lines = do
 
 isEmptyLine :: T.Text -> Bool
 isEmptyLine line =
-  L.any (flip T.isPrefixOf line) [ ",", "Default,", "#REF!," ]
+  L.any (flip T.isPrefixOf line)
+    [ ","
+    , "\""
+    , "\t"
+    , " "
+    , "Default,"
+    , "#REF!,"
+    , "If"
+    , "Sentinel"
+    , "The"
+    , "to"
+    , "BODY"
+    ]
 
 mkCompendiumMapEntry :: Request.SheetSubject
                      -> RawData
@@ -49,7 +62,8 @@ mkCompendiumMapEntry subject rawData = do
           . factionFromText
           $ case rawData of
               AbilityData     _   -> "factionless_ability"
-              ArmorData       raw -> rawArmorFaction     raw
+              ArmorData       raw -> rawArmorFaction raw
+              BestiaryData    _   -> "factionless_bestiary"
               EquipmentData   raw -> rawEquipmentFaction raw
               FloodData       _   -> "factionless_flood"
               MeleeData       _   -> "factionless_melee"
@@ -66,6 +80,10 @@ ingestAbility =
 
 ingestArmor :: T.Text -> Either T.Text [RawData]
 ingestArmor = ffmap ArmorData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+
+ingestBestiary :: T.Text -> Either T.Text [RawData]
+ingestBestiary =
+  ffmap BestiaryData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
 
 ingestEquipment :: T.Text -> Either T.Text [RawData]
 ingestEquipment =
