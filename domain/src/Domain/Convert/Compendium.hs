@@ -9,13 +9,14 @@ import qualified Data.List.Extra as L
 import           Data.Maybe (mapMaybe)
 import qualified Data.Map.Strict as Map
 import           Data.Tuple (fst, uncurry)
+import           Text.Show (Show)
 
-toCompendium :: CompendiumEntry item
-             => CompendiumMap [item] -> [Compendium item]
+toCompendium :: (CompendiumEntry entry, Show entry)
+             => CompendiumMap [entry] -> [Compendium entry]
 toCompendium = mapMaybe (uncurry mkCompendium) . Map.toList
 
-mkCompendium :: CompendiumEntry item
-             => CompendiumData -> [item] -> Maybe (Compendium item)
+mkCompendium :: (CompendiumEntry entry, Show entry)
+             => CompendiumData -> [entry] -> Maybe (Compendium entry)
 mkCompendium (mbFaction, content) fData = do
   let label   = mkCompendiumLabel mbFaction content
       name    = mkCompendiumName  mbFaction content
@@ -32,11 +33,11 @@ mkCompendium (mbFaction, content) fData = do
         , compendiumEntries = entries
         }
 
-mkEntry :: CompendiumEntry entry => Label -> entry -> Entry entry
+mkEntry :: (CompendiumEntry entry, Show entry) => Label -> entry -> Entry entry
 mkEntry label entry =
   let itemLabel = mkItemLabel label $ named entry
    in Entry
-        { entryId    = mkEntryID label $ named entry
+        { entryId    = mkEntryID label entry
         , entryName  = named entry
         , entryImg   = imged entry
         , entryType  = typed entry

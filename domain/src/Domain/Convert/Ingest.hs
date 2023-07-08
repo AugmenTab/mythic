@@ -38,7 +38,7 @@ ingestRaw subject lines = do
 
 isEmptyLine :: T.Text -> Bool
 isEmptyLine line =
-  L.any (flip T.isPrefixOf line) [ ",", "Default," ]
+  L.any (flip T.isPrefixOf line) [ ",", "Default,", "#REF!," ]
 
 mkCompendiumMapEntry :: Request.SheetSubject
                      -> RawData

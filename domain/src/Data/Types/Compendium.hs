@@ -20,6 +20,7 @@ import           Data.Maybe (catMaybes)
 import qualified Data.Text as T
 import           GHC.IO (FilePath)
 import           System.Random (mkStdGen, randomRs)
+import           Text.Show (Show, show)
 
 data Compendium item =
   Compendium
@@ -120,21 +121,22 @@ idCharacters = [ '0'..'9' ] <> [ 'A'..'Z' ] <> [ 'a'..'z' ]
 idRange :: (Int, Int)
 idRange = (0, L.length idCharacters - 1)
 
--- Despite using a "random" numbers, we define the seed with the item's name
--- and label, which allows us to reliably produce the same ID every time the
--- packs are generated.
-mkEntryID :: Label -> Name -> EntryID
-mkEntryID (Label label) name = do
+-- Despite using a "random" numbers, we define the seed with the item's Show
+-- instance and label, which allows us to reliably produce the same ID every
+-- time the packs are generated as long as the item details themselves don't
+-- change.
+mkEntryID :: Show item => Label -> item -> EntryID
+mkEntryID (Label label) entry = do
   let mkSeed :: T.Text -> Int
       mkSeed txt = T.length txt * sum (C.ord <$> T.unpack txt)
-   in   EntryID
-      . T.pack
-      . fmap (idCharacters !!)
-      . L.take 16
-      . randomRs idRange
-      . mkStdGen
-      . mkSeed
-      $ label <> " - " <> nameText name
+   in EntryID
+        . T.pack
+        . fmap (idCharacters !!)
+        . L.take 16
+        . randomRs idRange
+        . mkStdGen
+        . mkSeed
+        $ label <> " - " <> T.pack (show entry)
 
 newtype Label = Label T.Text
   deriving newtype (ToJSON)
