@@ -16,12 +16,15 @@ You can find video guides on how to install and use Mythic for Foundry [on my Yo
 
 ## Installation
 
-The latest version of the Mythic for Foundry system can be installed using the manifest. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and provide the following link as the Manifest URL:
-* [https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json](https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json)
+The latest version of the Mythic for Foundry system can be installed via Foundry. On the Foundry VTT home page ("Configuration and Setup"), navigate to the "Game Systems" tab. Select "Install System," and search for "Mythic."
 
-Any current or prior version can also be installed manually. You must clone or extract the system files to your `Data/systems/mythic` folder. Archives of all editions can be found in the [Releases](https://github.com/AugmenTab/mythic/releases).
+Any current or prior version can also be installed using a manifest link or manually. To do this, you will need the archived system files. Archives of all editions can be found in the [Releases](https://github.com/AugmenTab/mythic/releases).
 
-Always remember to back up your world files before updating.
+To install via manifest link, you must copy a link to the `system.json` file archived for the appropriate release.
+
+To install manually, you must clone or extract the archived system files (`mythic.zip`) to your `Data/systems/mythic` folder.
+
+Take care to ensure the version of Mythic you are installing manually or via manifest is compatible with the current version of Foundry you have installed. Always remember to back up your world files before updating, regardless of which method you use.
 
 ## Features
 
@@ -58,6 +61,8 @@ Available Compendium Packs:
   * Armor - Forerunner
   * Armor - UNSC
   * Armor Permutations - UNSC
+  * Bestiary
+  * Bestiary - The Flood
   * Equipment - Covenant
   * Equipment - Forerunner
   * Equipment - UNSC
@@ -66,8 +71,6 @@ Available Compendium Packs:
 
 Upcoming Compendium Packs:
 * Actor
-  * *Bestiary*
-  * *The Flood*
   * *Vehicles - Banished*
   * *Vehicles - Covenant*
   * *Vehicles - Forerunner*
@@ -89,5 +92,5 @@ The software component of this system is distributed under the GNUv3 license.
 
 For a real-time record of what I'm working on, you can check the project's [Trello board](https://trello.com/b/y80KFteH/mythic-for-foundry).
 
-* Fully functioning Medical page to handle Special Damage.
-* Special ammo builder for weapons.
+* Medical page to handle tracking Special Damage.
+* Special ammo support for weapons.

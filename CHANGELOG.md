@@ -2,9 +2,16 @@
 
 ## 0.3.2
 
+### Changes
+
+* Two additional Compendia are now available:
+  * Bestiary
+  * Bestiary - The Flood
+
 ### Bug Fixes
 
 * Fixes bug where primary fire modes for weapons with multiple fire modes were not being built as compendium items.
+* Fixes bug where some equipment items were not appearing because they were generating IDs that were duplicates of other items.
 
 ## 0.3.1
 

@@ -12,8 +12,6 @@ import           Data.Types.Prelude
 import           Data.Types.Foundry (CompendiumEntry(..), FoundryData)
 import           Domain.JSON
 
-import qualified Data.Bool as B
-import qualified Data.Char as C
 import           Data.Hashable (hash)
 import qualified Data.List as L
 import           Data.Maybe (catMaybes)
@@ -39,7 +37,7 @@ instance ToJSON (Compendium item) where
            , "path"    .= compendiumPath  c
            , "private" .= False
            , "type"    .= entryTypeText (compendiumType c)
-           , "system"  .= ("mythic" :: T.Text)
+           , "system"  .= valueText "mythic"
            ]
 
 mkCompendiumName :: Maybe Faction -> CompendiumDetails -> Name
@@ -49,7 +47,9 @@ mkCompendiumName mbFaction details =
     . T.intercalate "-"
     $ catMaybes
         [ Just
-            . T.map (\c -> B.bool c '-' $ C.isSpace c)
+            . T.intercalate "-"
+            . L.filter (/= "-")
+            . T.words
             $ compendiumDetails details
         , factionText <$> mbFaction
         ]

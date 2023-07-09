@@ -154,7 +154,7 @@ mythicCompatibility =
 
 mythicManifest :: [Compendium FoundryData] -> Manifest
 mythicManifest compendia =
-  let version = "0.3.1"
+  let version = "0.3.2"
       mythicDescription =
         T.unwords [ "An unofficial system implementation for playing the"
                   , "fan-made Mythic game on Foundry Virtual Tabletop."
