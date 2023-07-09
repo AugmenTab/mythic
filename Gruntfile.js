@@ -2,7 +2,8 @@ module.exports = grunt => {
   const DEV_PATH = "/home/foundry/foundrydata/Data/systems/mythic/";
   const RELEASE_DIR = "/home/tab/Documents";
   const RELEASE_PATH = RELEASE_DIR + "/mythic";
-  const RELEASE_TASKS = [ "less", "copy:release", "uglify", "compress", "clean" ];
+  const RELEASE_TASKS =
+    [ "less", "copy:release", "uglify", "compress", "copy:manifest", "clean" ];
 
   // Configuration
   grunt.initConfig({
@@ -40,6 +41,11 @@ module.exports = grunt => {
           { expand: true, src: "packs/**",      dest: DEV_PATH },
           { expand: true, src: "templates/**",  dest: DEV_PATH },
           { expand: true, src: "mythic.js",     dest: DEV_PATH }
+        ]
+      },
+      manifest: {
+        files: [
+          { expand: true, src: "system.json", dest: RELEASE_DIR }
         ]
       },
       release: {
