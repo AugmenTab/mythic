@@ -13,11 +13,11 @@ module Data.Types.Prelude
   , Characteristic, mkCharacteristic
   , Characteristics(..)
   , Characteristics_Flood(..)
-  , CharacterShields, emptyCharacterShields
+  , CharacterShields, emptyCharacterShields, hasShields, mkCharacterShields
   , Difficulty(..)
   , EntryType(..), entryTypeText
-  , EquipmentTraining(..)
-  , ExperienceDifficulty, emptyExperienceDifficulty
+  , EquipmentTraining(..), allEquipmentTrainings
+  , ExperienceDifficulty, emptyExperienceDifficulty, mkExperienceDifficulty
   , ExperiencePayout(..)
   , Faction(..), factions, factionFromText, factionText
   , FactionTraining
@@ -29,7 +29,7 @@ module Data.Types.Prelude
   , ItemPrice, mkItemPrice
   , ItemTrainings, mkItemTrainings
   , ItemType(..)
-  , Luck(..)
+  , Luck, mkLuck
   , Movement(..)
   , MythicCharacteristics(..)
   , MythicCharacteristics_Flood(..)
@@ -42,7 +42,7 @@ module Data.Types.Prelude
   , StrengthMultiplier(..), strengthMultiplierFromText
   , Swarm, mkSwarm
   , Token(..)
-  , Trainings, emptyTrainings
+  , Trainings(..), emptyTrainings
   , WeaponGroup(..)
   , WeaponRange(..), emptyWeaponRange
   , WeaponSettings, emptyWeaponSettings
@@ -73,6 +73,7 @@ module Data.Types.Prelude
   -- Type Aliases
   , CompendiumData
   , CompendiumMap
+  , DifficultyTierValuesWithSingleLevelFlag
   ) where
 
 import           Flipstone.Prelude
@@ -321,7 +322,6 @@ data CarryingCapacity =
   CarryingCapacity
     { carryingCapacityDblSTR :: Bool
     , carryingCapacityDblTOU :: Bool
-    , carryingCapacityCarry  :: Int
     , carryingCapacityMod    :: Int
     }
 
@@ -336,7 +336,7 @@ instance ToJSON CarryingCapacity where
             , "tier"   .= valueText "carry"
             , "width"  .= valueText "0.0%"
             ]
-      , "carry"          .= carryingCapacityCarry cc
+      , "carry"          .= valueInt 0
       , "character"      .= valueInt 0
       , "doubleStr"      .= carryingCapacityDblSTR cc
       , "doubleTou"      .= carryingCapacityDblTOU cc
@@ -414,8 +414,8 @@ instance ToJSON Characteristic where
       , "total"        .= valueInt 0
       ]
 
-mkCharacteristic :: Bool -> Int -> Characteristic
-mkCharacteristic advances val =
+mkCharacteristic :: Int -> Bool -> Characteristic
+mkCharacteristic val advances =
   Characteristic
     { characteristicValue    = val
     , characteristicAdvances = advances
@@ -500,6 +500,15 @@ instance ToJSON CharacterShields where
       , "delay"    .= characterShieldsDelay s
       ]
 
+mkCharacterShields :: Int -> Int -> Int -> CharacterShields
+mkCharacterShields integrity recharge delay =
+  CharacterShields
+    { characterShieldsValue    = integrity
+    , characterShieldsMax      = integrity
+    , characterShieldsRecharge = recharge
+    , characterShieldsDelay    = delay
+    }
+
 emptyCharacterShields :: CharacterShields
 emptyCharacterShields =
   CharacterShields
@@ -508,6 +517,9 @@ emptyCharacterShields =
     , characterShieldsRecharge = 0
     , characterShieldsDelay    = 0
     }
+
+hasShields :: CharacterShields -> Bool
+hasShields = (> 0) . characterShieldsMax
 
 newtype CompendiumDetails = CompendiumDetails T.Text
   deriving newtype (Eq, Ord)
@@ -545,6 +557,9 @@ instance ToJSON Difficulty where
           , "tier"            .= valueText (B.bool "0" "1" normalOnly)
           ]
 
+type DifficultyTierValues = (Int, Int, Int, Int, Int)
+type DifficultyTierValuesWithSingleLevelFlag = (Bool, DifficultyTierValues)
+
 data EntryType
   = FoundryActor ActorType
   | FoundryItem  ItemType
@@ -574,6 +589,20 @@ data EquipmentTraining
 
 instance ToJSON EquipmentTraining where
   toJSON = toJSON . equipmentTrainingText
+
+allEquipmentTrainings :: Set.Set EquipmentTraining
+allEquipmentTrainings =
+  Set.fromList
+    [ Basic
+    , Infantry
+    , Heavy
+    , Advanced
+    , Launcher
+    , Range
+    , Ordnance
+    , Cannon
+    , Melee
+    ]
 
 equipmentTrainingText :: EquipmentTraining -> T.Text
 equipmentTrainingText eqTraining =
@@ -606,6 +635,16 @@ instance ToJSON ExperienceDifficulty where
       , "legendary" .= expLegendary exp
       , "nemesis"   .= expNemesis exp
       ]
+
+mkExperienceDifficulty :: DifficultyTierValues -> ExperienceDifficulty
+mkExperienceDifficulty (easy, normal, heroic, legendary, nemesis) =
+  ExperienceDifficulty
+    { expEasy       = easy
+    , expNormal     = normal
+    , expHeroic     = heroic
+    , expLegendary  = legendary
+    , expNemesis    = nemesis
+    }
 
 emptyExperienceDifficulty :: ExperienceDifficulty
 emptyExperienceDifficulty =
@@ -934,6 +973,16 @@ instance ToJSON Luck where
             , "nemesis"   .= luckNemesis l
             ]
       ]
+
+mkLuck :: DifficultyTierValues -> Luck
+mkLuck (easy, normal, heroic, legendary, nemesis) =
+  Luck
+    { luckEasy      = easy
+    , luckNormal    = normal
+    , luckHeroic    = heroic
+    , luckLegendary = legendary
+    , luckNemesis   = nemesis
+    }
 
 newtype MagazineCapacity = MagazineCapacity Int
   deriving newtype (ToJSON)
@@ -1618,7 +1667,7 @@ instance ToJSON Trainings where
                 , "forerunner" .= Set.member Forerunner factionTrainingss
                 ]
           , "weapons"   .= trainingsWeapon t
-          , "alienTech" .= trainingsAlienTech t
+          , "alienTech" .= False
           ]
 
 emptyTrainings :: Trainings

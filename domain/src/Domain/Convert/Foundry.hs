@@ -18,7 +18,7 @@ import qualified Data.Set as Set
 import qualified Data.Text as T
 import           Data.Traversable (for)
 import           Data.Tuple (fst, snd)
-import           Text.Read (read)
+import           Text.Read (read, readMaybe)
 
 toFoundry :: CompendiumMap [RawData]
           -> Either T.Text (CompendiumMap [FoundryData])
@@ -32,7 +32,7 @@ mkFoundry (faction, _) rawData =
       case raw of
         AbilityData     a -> Right [ mkAbility TrueAbility a ]
         ArmorData       a -> fmap L.singleton $ mkArmor faction a
-        BestiaryData    b -> fmap L.singleton $ mkBestiary faction b
+        BestiaryData    b -> fmap L.singleton $ mkBestiary b
         EquipmentData   e -> fmap L.singleton $ mkEquipment faction e
         FloodData       f -> fmap L.singleton $ mkFlood f
         MeleeData       m -> mkMeleeWeapons m
@@ -126,9 +126,149 @@ mkArmor mbFaction raw = do
         , armorSize        = Normal
         }
 
-mkBestiary :: Maybe Faction -> RawBestiary -> Either T.Text FoundryData
-mkBestiary _mbFaction _raw = do
-  Left "reached conversion to Foundry"
+mkBestiary :: RawBestiary -> Either T.Text FoundryData
+mkBestiary raw = do
+  size <- sizeFromText $ rawBestiarySize raw
+  faction <- factionFromText $ rawBestiaryFaction raw
+
+  (normalOnlyByExp, expDifficulty) <-
+    difficultyTierValues
+      (rawBestiaryName raw)
+      "experience difficulty"
+      (rawBestiaryExperience raw)
+
+  (normalOnlyByLuck, luckDifficulty) <-
+    difficultyTierValues
+      (rawBestiaryName raw)
+      "luck"
+      (rawBestiaryLuck raw)
+
+  normalOnly <-
+    if normalOnlyByExp == normalOnlyByLuck
+       then Right $ normalOnlyByExp || normalOnlyByLuck
+       else
+         Left
+           $ T.unwords
+               [ "Cannot build Bestiary Character"
+               , rawBestiaryName raw <> ": mismatched difficulty tier count"
+               , "between luck and experience payout values."
+               ]
+
+  let abilities = mkAbility RacialTrait <$> rawBestiaryAbilities raw
+      name =
+        mkName
+          $ if T.isSuffixOf " - BR1" $ rawBestiaryName raw
+               then T.dropEnd 6 $ rawBestiaryName raw
+               else rawBestiaryName raw
+
+      carryingCapacity =
+        CarryingCapacity
+          { carryingCapacityDblSTR = (== 2) $ rawBestiaryCarryStrMod raw
+          , carryingCapacityDblTOU = (== 2) $ rawBestiaryCarryTouMod raw
+          , carryingCapacityMod    =
+              let carry =
+                    sum [ rawBestiaryCarryStrMod raw * rawBestiarySTR raw
+                        , rawBestiaryCarryTouMod raw * rawBestiaryTOU raw
+                        , 10 * rawBestiaryMythicSTR raw
+                        , 10 * rawBestiaryMythicTOU raw
+                        ]
+
+               in maybe 0 (subtract carry) $ rawBestiaryCarryCap raw
+          }
+
+      staticChars =
+        Set.fromList . splitStaticValues $ rawBestiaryStaticStats raw
+
+      mkChar char fn =
+        mkCharacteristic (fn raw)
+          . not
+          $ Set.member char staticChars
+
+      characteristics =
+        Characteristics
+          { characteristicsSTR = mkChar "STR" rawBestiarySTR
+          , characteristicsTOU = mkChar "TOU" rawBestiaryTOU
+          , characteristicsAGI = mkChar "AGI" rawBestiaryAGI
+          , characteristicsWFR = mkChar "WFR" rawBestiaryWFR
+          , characteristicsWFM = mkChar "WFM" rawBestiaryWFM
+          , characteristicsINT = mkChar "INT" rawBestiaryINT
+          , characteristicsPER = mkChar "PER" rawBestiaryPER
+          , characteristicsCRG = mkChar "CRG" rawBestiaryCRG
+          , characteristicsCHA = mkChar "CHA" rawBestiaryCHA
+          , characteristicsLDR = mkChar "LDR" rawBestiaryLDR
+          }
+
+      difficulty =
+        Difficulty
+          { difficultyNormalOnly = normalOnly
+          , difficultyAdvancesMythics =
+              L.any ((==) "Mythic Advancements" . rawAbilityName)
+                $ rawBestiaryAbilities raw
+          }
+
+      experiencePayout =
+        ExperiencePayout
+          { expBase       = 0
+          , expDifficulty = mkExperienceDifficulty expDifficulty
+          }
+
+      movement =
+        Movement
+          { movementRunChargeBonus = rawBestiaryChargeRunMod raw
+          , movementJumpMultiplier = rawBestiaryJumpMod raw
+          , movementLeapBonus      = rawBestiaryLeapAdd raw
+          , movementLeapMultiplier = rawBestiaryLeapMod raw
+          }
+
+      mythicCharacteristics =
+        MythicCharacteristics
+          { mythicSTR = rawBestiaryMythicSTR raw
+          , mythicTOU = rawBestiaryMythicTOU raw
+          , mythicAGI = rawBestiaryMythicAGI raw
+          }
+
+      shields =
+        case ( rawBestiaryIntegrity raw
+             , rawBestiaryDelay raw
+             , rawBestiaryRecharge raw
+             ) of
+          (Just integrity, Just delay, Just recharge) ->
+            mkCharacterShields integrity recharge delay
+
+          _ ->
+            emptyCharacterShields
+
+      wounds =
+        Wounds
+          { woundsMod    = 0
+          , woundsDblTOU =
+              flip L.any [ "Jiralhanae", "Cavalier" ]
+                . flip T.isInfixOf
+                $ rawBestiaryName raw
+          }
+
+  Right
+    . FoundryBestiary
+    $ Bestiary
+        { bestiaryName             = name
+        , bestiaryArmor            = emptyCharacterArmor
+        , bestiaryCarryingCapacity = carryingCapacity
+        , bestiaryCharacteristics  = characteristics
+        , bestiaryDifficulty       = difficulty
+        , bestiaryExpPayout        = experiencePayout
+        , bestiaryFaction          = faction
+        , bestiaryLuck             = mkLuck luckDifficulty
+        , bestiaryMovement         = movement
+        , bestiaryMythics          = mythicCharacteristics
+        , bestiaryNaturalArmor     = fromMaybe 0 $ rawBestiaryArmor raw
+        , bestiaryNotes            = rawBestiaryDescription raw
+        , bestiaryShields          = shields
+        , bestiarySkills           = characterSkillList
+        , bestiarySize             = size
+        , bestiaryTrainings        = findTrainings faction $ rawBestiaryName raw
+        , bestiaryWounds           = wounds
+        , bestiaryItems            = abilities
+        }
 
 mkEquipment :: Maybe Faction -> RawEquipment -> Either T.Text FoundryData
 mkEquipment mbFaction raw = do
@@ -560,6 +700,32 @@ findShieldsIn desc =
         _ ->
           Nothing
 
+findTrainings :: Faction -> T.Text -> Trainings
+findTrainings Forerunner _name =
+  emptyTrainings
+    { trainingsEquipment = allEquipmentTrainings
+    , trainingsFaction   = Set.singleton Forerunner
+    }
+
+findTrainings faction name =
+  let is = flip T.isInfixOf name
+   in case (is "Spartan", is "Civilian") of
+        (True, _) ->
+          emptyTrainings
+            { trainingsEquipment = allEquipmentTrainings
+            , trainingsFaction   = Set.fromList factions
+            }
+
+        (_, True) ->
+          emptyTrainings
+            { trainingsFaction = Set.singleton faction }
+
+        _ ->
+          emptyTrainings
+            { trainingsEquipment = Set.fromList [ Basic, Infantry ]
+            , trainingsFaction   = Set.singleton faction
+            }
+
 mkFireModeMap :: T.Text -> FireModes
 mkFireModeMap modes =
   let updateFireModeMap modeMap txt =
@@ -675,6 +841,30 @@ parseDiceValues dmgRoll =
 
     _ ->
       (0, 10)
+
+difficultyTierValues :: T.Text
+                     -> T.Text
+                     -> T.Text
+                     -> Either T.Text DifficultyTierValuesWithSingleLevelFlag
+difficultyTierValues name field values =
+  case fmap (readMaybe . T.unpack) $ splitStaticValues values of
+    [ Just easy, Just normal, Just heroic, Just legendary, Just nemesis ] ->
+      Right (False, (easy, normal, heroic, legendary, nemesis))
+
+    [ Just normal ] ->
+      Right (True, (normal, normal, normal, normal, normal))
+
+    _ ->
+      Left
+        $ T.unwords
+            [ "Cannot build"
+            , name <> ": "
+            , "must have either 1 or 5 difficulty values exactly for"
+            , field <> "."
+            ]
+
+splitStaticValues :: T.Text -> [T.Text]
+splitStaticValues = T.split (== ';')
 
 statAdjustmentsFromSpecialRules :: T.Text -> StatAdjustments
 statAdjustmentsFromSpecialRules txt =

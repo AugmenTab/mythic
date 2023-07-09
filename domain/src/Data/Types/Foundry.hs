@@ -2,6 +2,7 @@ module Data.Types.Foundry
   ( FoundryData(..)
   , Ability(..)
   , Armor(..)
+  , Bestiary(..)
   , Equipment(..)
   , Flood(..)
   , Weapon(..)
@@ -14,6 +15,7 @@ import           Flipstone.Prelude
 import           Domain.JSON
 import           Data.Types.Prelude
 
+import qualified Data.Bool as B
 import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 
@@ -27,7 +29,7 @@ class CompendiumEntry a where
 data FoundryData
   = FoundryAbility   Ability
   | FoundryArmor     Armor
---  | FoundryBestiary  Bestiary
+  | FoundryBestiary  Bestiary
   | FoundryEquipment Equipment
   | FoundryFlood     Flood
  -- | FoundryVehicle   Vehicle
@@ -36,7 +38,7 @@ data FoundryData
 instance CompendiumEntry FoundryData where
   named (FoundryAbility   a) = named a
   named (FoundryArmor     a) = named a
---  named (FoundryBestiary  b) = named b
+  named (FoundryBestiary  b) = named b
   named (FoundryEquipment e) = named e
   named (FoundryFlood     f) = named f
 --  named (FoundryVehicle   v) = named v
@@ -44,7 +46,7 @@ instance CompendiumEntry FoundryData where
 
   imged (FoundryAbility   a) = imged a
   imged (FoundryArmor     a) = imged a
---  imged (FoundryBestiary  b) = imged b
+  imged (FoundryBestiary  b) = imged b
   imged (FoundryEquipment e) = imged e
   imged (FoundryFlood     f) = imged f
 --  imged (FoundryVehicle   v) = imged v
@@ -52,7 +54,7 @@ instance CompendiumEntry FoundryData where
 
   typed (FoundryAbility   a) = typed a
   typed (FoundryArmor     a) = typed a
---  typed (FoundryBestiary  b) = typed b
+  typed (FoundryBestiary  b) = typed b
   typed (FoundryEquipment e) = typed e
   typed (FoundryFlood     f) = typed f
 --  typed (FoundryVehicle   v) = typed v
@@ -60,7 +62,7 @@ instance CompendiumEntry FoundryData where
 
   token (FoundryAbility   a) = token a
   token (FoundryArmor     a) = token a
---  token (FoundryBestiary  b) = token b
+  token (FoundryBestiary  b) = token b
   token (FoundryEquipment e) = token e
   token (FoundryFlood     f) = token f
 --  token (FoundryVehicle   v) = token v
@@ -68,7 +70,7 @@ instance CompendiumEntry FoundryData where
 
   items (FoundryAbility   a) = items a
   items (FoundryArmor     a) = items a
---  items (FoundryBestiary  b) = items b
+  items (FoundryBestiary  b) = items b
   items (FoundryEquipment e) = items e
   items (FoundryFlood     f) = items f
 --  items (FoundryVehicle   v) = items v
@@ -77,7 +79,7 @@ instance CompendiumEntry FoundryData where
 instance ToJSON FoundryData where
   toJSON (FoundryAbility   a) = toJSON a
   toJSON (FoundryArmor     a) = toJSON a
---  toJSON (FoundryBestiary  b) = toJSON b
+  toJSON (FoundryBestiary  b) = toJSON b
   toJSON (FoundryEquipment e) = toJSON e
   toJSON (FoundryFlood     f) = toJSON f
 --  toJSON (FoundryVehicle   v) = toJSON v
@@ -170,13 +172,21 @@ data Bestiary =
     , bestiaryMovement         :: Movement
     , bestiaryMythics          :: MythicCharacteristics
     , bestiaryNaturalArmor     :: Int
-    , bestiaryNotes            :: Maybe T.Text
+    , bestiaryNotes            :: T.Text
     , bestiaryShields          :: CharacterShields
     , bestiarySkills           :: Skills
     , bestiarySize             :: Size
     , bestiaryTrainings        :: Trainings
     , bestiaryWounds           :: Wounds
+    , bestiaryItems            :: [FoundryData]
     }
+
+instance CompendiumEntry Bestiary where
+  named = bestiaryName
+  imged = const bestiaryImg
+  typed = const (FoundryActor ActorBestiary)
+  token = Just . mkBestiaryToken
+  items = bestiaryItems
 
 instance ToJSON Bestiary where
   toJSON b =
@@ -245,7 +255,7 @@ instance ToJSON Bestiary where
       , "movement"              .= bestiaryMovement b
       , "mythicCharacteristics" .= bestiaryMythics b
       , "naturalArmor"          .= bestiaryNaturalArmor b
-      , "notes"                 .= fromMaybe T.empty (bestiaryNotes b)
+      , "notes"                 .= bestiaryNotes b
       , "shields"               .= bestiaryShields b
       , "size"                  .= bestiarySize b
       , "skills"                .= bestiarySkills b
@@ -253,14 +263,18 @@ instance ToJSON Bestiary where
       , "wounds"                .= bestiaryWounds b
       ]
 
-  {-
-instance CompendiumEntry Bestiary where
-  named = bestiaryName
-  imged = _
-  typed = const (FoundryActor ActorBestiary)
-  token = _
-  items = _
--}
+bestiaryImg :: Img
+bestiaryImg = mkImg "icons/svg/mystery-man.svg"
+
+mkBestiaryToken :: Bestiary -> Token
+mkBestiaryToken bestiary =
+  Token
+    { tokenName = bestiaryName bestiary
+    , tokenType = ActorBestiary
+    , tokenSize = bestiarySize bestiary
+    , tokenBar2 =
+        B.bool Nothing (Just "shields") . hasShields $ bestiaryShields bestiary
+    }
 
 data Equipment =
   Equipment
