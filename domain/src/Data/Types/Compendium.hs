@@ -14,13 +14,14 @@ import           Domain.JSON
 
 import qualified Data.Bool as B
 import qualified Data.Char as C
+import           Data.Hashable (hash)
 import qualified Data.List as L
-import           Data.List ((!!))
 import           Data.Maybe (catMaybes)
 import qualified Data.Text as T
+import           Data.Vector (Vector, (!))
+import qualified Data.Vector as V
 import           GHC.IO (FilePath)
 import           System.Random (mkStdGen, randomRs)
-import           Text.Show (Show, show)
 
 data Compendium item =
   Compendium
@@ -112,31 +113,30 @@ idText :: EntryID -> T.Text
 idText (EntryID i) = i
 
 -- This represents the range of characters to use when constructing an ID.
-idCharacters :: [Char]
-idCharacters = [ '0'..'9' ] <> [ 'A'..'Z' ] <> [ 'a'..'z' ]
+idCharacters :: Vector Char
+idCharacters = V.fromList $ [ '0'..'9' ] <> [ 'A'..'Z' ] <> [ 'a'..'z' ]
 
 -- This represents the range of pseudorandom Ints to pick when generating an ID.
 -- The numbers chosen from this range will be used as the index to select values
 -- from idCharacters to build a seemingly random but reproducible ID.
 idRange :: (Int, Int)
-idRange = (0, L.length idCharacters - 1)
+idRange = (0, V.length idCharacters - 1)
 
--- Despite using a "random" numbers, we define the seed with the item's Show
--- instance and label, which allows us to reliably produce the same ID every
--- time the packs are generated as long as the item details themselves don't
--- change.
-mkEntryID :: Show item => Label -> item -> EntryID
-mkEntryID (Label label) entry = do
-  let mkSeed :: T.Text -> Int
-      mkSeed txt = T.length txt * sum (C.ord <$> T.unpack txt)
-   in EntryID
-        . T.pack
-        . fmap (idCharacters !!)
-        . L.take 16
-        . randomRs idRange
-        . mkStdGen
-        . mkSeed
-        $ label <> " - " <> T.pack (show entry)
+-- Despite using a "random" numbers, we define the seed with a hash built from
+-- the label and name, which allows us to reliably produce the same ID every
+-- time the packs are generated as long as the item and compendium names remain
+-- the same. This also allows us to generate different IDs for the same item if
+-- it appears in different compendia.
+mkEntryID :: Label -> Name -> EntryID
+mkEntryID (Label label) name = do
+  EntryID
+    . T.pack
+    . fmap (idCharacters !)
+    . L.take 16
+    . randomRs idRange
+    . mkStdGen
+    . hash
+    $ label <> " - " <> nameText name
 
 newtype Label = Label T.Text
   deriving newtype (ToJSON)

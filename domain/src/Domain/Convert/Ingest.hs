@@ -37,11 +37,13 @@ ingestRaw subject lines = do
   fmap (Map.fromListWith (<>))
     $ traverse (mkCompendiumMapEntry subject) =<< ingestFn csv
 
+-- NOTE: This CANNOT exclude a double-apostrophe character by itself (\"). It
+-- will fail to read in Forerunner equipment due to the use of commas in the
+-- name field.
 isEmptyLine :: T.Text -> Bool
 isEmptyLine line =
   L.any (flip T.isPrefixOf line)
     [ ","
-    , "\""
     , "\t"
     , " "
     , "Default,"

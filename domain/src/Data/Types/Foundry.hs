@@ -16,7 +16,6 @@ import           Data.Types.Prelude
 
 import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
-import           Text.Show (Show(show))
 
 class CompendiumEntry a where
   named :: a -> Name
@@ -75,16 +74,6 @@ instance CompendiumEntry FoundryData where
 --  items (FoundryVehicle   v) = items v
   items (FoundryWeapon    w) = items w
 
-instance Show FoundryData where
-  show (FoundryAbility   a) = show a
-  show (FoundryArmor     a) = show a
---  show (FoundryBestiary  b) = show b
---  show (FoundryCharacter c) = show c
-  show (FoundryEquipment e) = show e
-  show (FoundryFlood     f) = show f
---  show (FoundryVehicle   v) = show v
-  show (FoundryWeapon    w) = show w
-
 instance ToJSON FoundryData where
   toJSON (FoundryAbility   a) = toJSON a
   toJSON (FoundryArmor     a) = toJSON a
@@ -102,7 +91,7 @@ data Ability =
     , abilitySummary     :: Description
     , abilityDescription :: Description
     , abilityType        :: AbilityType
-    } deriving stock (Show)
+    }
 
 instance CompendiumEntry Ability where
   named = abilityName
@@ -139,7 +128,7 @@ data Armor =
     , armorProtection  :: Protection
     , armorShields     :: Shields
     , armorSize        :: Size
-    } deriving stock (Show)
+    }
 
 instance CompendiumEntry Armor where
   named = armorName
@@ -187,7 +176,7 @@ data Bestiary =
     , bestiarySize             :: Size
     , bestiaryTrainings        :: Trainings
     , bestiaryWounds           :: Wounds
-    } deriving stock (Show)
+    }
 
 instance ToJSON Bestiary where
   toJSON b =
@@ -284,7 +273,7 @@ data Equipment =
     , equipmentDescription     :: Description
     , equipmentShields         :: Maybe Shields
     , equipmentCharacteristics :: Maybe StatAdjustments
-    } deriving stock (Show)
+    }
 
 instance CompendiumEntry Equipment where
   named = equipmentName
@@ -326,7 +315,7 @@ data Flood =
     , floodTrainings             :: Trainings
     , floodExperience            :: ExperiencePayout
     , floodItems                 :: [FoundryData]
-    } deriving stock (Show)
+    }
 
 instance CompendiumEntry Flood where
   named = floodName
@@ -440,7 +429,7 @@ data Weapon =
     , weaponShields         :: Maybe Shields
     , weaponCharacteristics :: Maybe StatAdjustments
     , weaponSettings        :: WeaponSettings
-    } deriving stock (Show)
+    }
 
 instance CompendiumEntry Weapon where
   named = weaponName

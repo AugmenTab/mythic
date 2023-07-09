@@ -95,7 +95,6 @@ data AbilityType
   | RacialTrait
   | Trait
   | Augmentation
-  deriving stock (Show)
 
 instance ToJSON AbilityType where
   toJSON = toJSON . abilityTypeToText
@@ -127,7 +126,7 @@ actorTypeText actor =
     ActorVehicle  -> "Vehicle"
 
 newtype Ammo = Ammo T.Text
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 mkAmmo :: T.Text -> Ammo
 mkAmmo = Ammo
@@ -141,7 +140,6 @@ data AmmoGroup
   | Grenade
   | MRC
   | BruteShot
-  deriving stock (Show)
 
 instance ToJSON AmmoGroup where
   toJSON = toJSON . ammoGroupToText
@@ -159,7 +157,6 @@ ammoGroupToText ag =
     BruteShot    -> "bruteShot"
 
 newtype AmmoList = AmmoList [Ammunition]
-  deriving newtype (Show)
 
 instance ToJSON AmmoList where
   toJSON (AmmoList l) =
@@ -184,7 +181,7 @@ data Ammunition =
     , ammunitionRange        :: WeaponRange
     , ammunitionDescription  :: Description
     , ammunitionSpecials     :: SpecialRules_Weapon
-    } deriving stock (Show)
+    }
 
 instance ToJSON Ammunition where
   toJSON a =
@@ -212,7 +209,6 @@ instance ToJSON Ammunition where
 
 newtype ArmorAdjustment =
   ArmorAdjustment ItemAdjustment
-    deriving newtype (Show)
 
 instance ToJSON ArmorAdjustment where
   toJSON (ArmorAdjustment a) =
@@ -231,7 +227,7 @@ data ArmorNotes =
     , armorNotesVariant      :: Maybe T.Text
     , armorNotesPermutations :: Maybe T.Text
     , armorNotesOther        :: Maybe T.Text
-    } deriving stock (Show)
+    }
 
 instance ToJSON ArmorNotes where
   toJSON a =
@@ -267,7 +263,7 @@ data Attack =
     , attackHalf     :: Int
     , attackFull     :: Int
     , attackBonus    :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON Attack where
   toJSON a =
@@ -301,7 +297,6 @@ data Barrel
   | L
   | XL
   | XXL
-  deriving stock (Show)
 
 instance ToJSON Barrel where
   toJSON = toJSON . barrelText
@@ -317,7 +312,7 @@ barrelText barrel =
     XXL -> "xxl"
 
 newtype Breakpoints = Breakpoints Int
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
@@ -328,7 +323,7 @@ data CarryingCapacity =
     , carryingCapacityDblTOU :: Bool
     , carryingCapacityCarry  :: Int
     , carryingCapacityMod    :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON CarryingCapacity where
   toJSON cc =
@@ -366,7 +361,7 @@ data CharacterArmor =
     , characterArmorRightArm :: Int
     , characterArmorLeftLeg  :: Int
     , characterArmorRightLeg :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON CharacterArmor where
   toJSON a =
@@ -400,7 +395,7 @@ data Characteristic =
   Characteristic
     { characteristicValue    :: Int
     , characteristicAdvances :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON Characteristic where
   toJSON c =
@@ -438,7 +433,7 @@ data Characteristics =
     , characteristicsCRG :: Characteristic
     , characteristicsCHA :: Characteristic
     , characteristicsLDR :: Characteristic
-    } deriving stock (Show)
+    }
 
 instance ToJSON Characteristics where
   toJSON c =
@@ -464,7 +459,7 @@ data Characteristics_Flood =
     , floodCharacteristicsWFM :: Int
     , floodCharacteristicsINT :: Int
     , floodCharacteristicsPER :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON Characteristics_Flood where
   toJSON c =
@@ -494,7 +489,7 @@ data CharacterShields =
     , characterShieldsMax      :: Int
     , characterShieldsRecharge :: Int
     , characterShieldsDelay    :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON CharacterShields where
   toJSON s =
@@ -515,7 +510,7 @@ emptyCharacterShields =
     }
 
 newtype CompendiumDetails = CompendiumDetails T.Text
-  deriving newtype (Eq, Ord, Show)
+  deriving newtype (Eq, Ord)
 
 mkCompendiumDetails :: T.Text -> CompendiumDetails
 mkCompendiumDetails = CompendiumDetails
@@ -527,10 +522,10 @@ type CompendiumData = (Maybe Faction, CompendiumDetails)
 type CompendiumMap entries = Map.Map CompendiumData entries
 
 newtype Contamination = Contamination Int
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 newtype Description = Description T.Text
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 mkDescription :: T.Text -> Description
 mkDescription = Description
@@ -539,7 +534,7 @@ data Difficulty =
   Difficulty
     { difficultyAdvancesMythics :: Bool
     , difficultyNormalOnly      :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON Difficulty where
   toJSON d =
@@ -575,7 +570,7 @@ data EquipmentTraining
   | Ordnance
   | Cannon
   | Melee
-  deriving stock (Eq, Ord, Show)
+  deriving stock (Eq, Ord)
 
 instance ToJSON EquipmentTraining where
   toJSON = toJSON . equipmentTrainingText
@@ -600,7 +595,7 @@ data ExperienceDifficulty =
     , expHeroic    :: Int
     , expLegendary :: Int
     , expNemesis   :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON ExperienceDifficulty where
   toJSON exp =
@@ -626,7 +621,7 @@ data ExperiencePayout =
   ExperiencePayout
     { expBase       :: Int
     , expDifficulty :: ExperienceDifficulty
-    } deriving stock (Show)
+    }
 
 instance ToJSON ExperiencePayout where
   toJSON exp =
@@ -644,7 +639,7 @@ data Faction
   | Covenant
   | Banished
   | Forerunner
-  deriving stock (Eq, Ord, Show)
+  deriving stock (Eq, Ord)
 
 instance ToJSON Faction where
   toJSON = toJSON . factionText
@@ -686,7 +681,6 @@ data FactionTraining
   = UNSCTraining
   | CovenantTraining
   | ForerunnerTraining
-  deriving stock (Show)
 
 instance ToJSON FactionTraining where
   toJSON = toJSON . factionTrainingText
@@ -702,7 +696,6 @@ data FirearmType
   = Firearms
   | Cannons
   | Shotguns
-  deriving stock (Show)
 
 instance ToJSON FirearmType where
   toJSON = toJSON . firearmTypeText
@@ -724,7 +717,7 @@ data FireMode
   | Pump
   | Semi
   | Sustained
-  deriving stock (Eq, Ord, Show)
+  deriving stock (Eq, Ord)
 
 fireModeFromText :: T.Text -> Maybe FireMode
 fireModeFromText txt =
@@ -753,7 +746,6 @@ fireModeText fm =
     Sustained  -> "sustained"
 
 newtype FireModes = FireModes (Map.Map FireMode FireRate)
-  deriving newtype (Show)
 
 instance ToJSON FireModes where
   toJSON (FireModes f) =
@@ -781,7 +773,6 @@ mkFireRate :: Int -> FireRate
 mkFireRate = FireRate
 
 newtype FloodWounds = FloodWounds Int
-  deriving newtype (Show)
 
 instance ToJSON FloodWounds where
   toJSON (FloodWounds w) =
@@ -800,7 +791,7 @@ data Hardpoints =
     , hardpointsRightArm :: Int
     , hardpointsLeftLeg  :: Int
     , hardpointsRightLeg :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON Hardpoints where
   toJSON hp =
@@ -835,7 +826,7 @@ data ItemAdjustment =
     , itemAdjustmentVariant :: Int
     , itemAdjustmentOther   :: Int
     , itemAdjustmentTotal   :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON ItemAdjustment where
   toJSON a =
@@ -862,7 +853,7 @@ data ItemPrice =
     { priceBase  :: Int
     , priceMods  :: Int
     , priceTotal :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON ItemPrice where
   toJSON p =
@@ -883,7 +874,7 @@ data ItemTrainings =
   ItemTrainings
     { itemTrainingsEquipment :: Maybe EquipmentTraining
     , itemTrainingsFaction   :: Maybe FactionTraining
-    } deriving stock (Show)
+    }
 
 instance ToJSON ItemTrainings where
   toJSON t =
@@ -923,7 +914,7 @@ data Luck =
     , luckHeroic    :: Int
     , luckLegendary :: Int
     , luckNemesis   :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON Luck where
   toJSON l =
@@ -945,7 +936,7 @@ instance ToJSON Luck where
       ]
 
 newtype MagazineCapacity = MagazineCapacity Int
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 mkMagazineCapacity :: Int -> MagazineCapacity
 mkMagazineCapacity = MagazineCapacity
@@ -956,7 +947,7 @@ data Movement =
     , movementJumpMultiplier :: Int
     , movementLeapBonus      :: Int
     , movementLeapMultiplier :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON Movement where
   toJSON m =
@@ -978,7 +969,7 @@ data MythicCharacteristics =
     { mythicSTR :: Int
     , mythicTOU :: Int
     , mythicAGI :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON MythicCharacteristics where
   toJSON m =
@@ -1004,7 +995,7 @@ data MythicCharacteristics_Flood =
     { floodMythicSTR :: Int
     , floodMythicTOU :: Int
     , floodMythicAGI :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON MythicCharacteristics_Flood where
   toJSON m =
@@ -1023,7 +1014,7 @@ instance ToJSON MythicCharacteristics_Flood where
           ]
 
 newtype Name = Name T.Text
-  deriving newtype (Eq, Ord, Show, ToJSON)
+  deriving newtype (Eq, Ord, ToJSON)
 
 mkName :: T.Text -> Name
 mkName = Name
@@ -1032,7 +1023,7 @@ nameText :: Name -> T.Text
 nameText (Name t) = t
 
 newtype Prerequisites = Prerequisites T.Text
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 mkPrereqs :: T.Text -> Prerequisites
 mkPrereqs = Prerequisites
@@ -1045,7 +1036,7 @@ data Protection =
     , protectionRightArm :: ArmorAdjustment
     , protectionLeftLeg  :: ArmorAdjustment
     , protectionRightLeg :: ArmorAdjustment
-    } deriving stock (Show)
+    }
 
 instance ToJSON Protection where
   toJSON p =
@@ -1058,7 +1049,6 @@ instance ToJSON Protection where
            ]
 
 newtype Reload = Reload Int
-  deriving newtype (Show)
 
 instance ToJSON Reload where
   toJSON (Reload r) =
@@ -1070,7 +1060,7 @@ mkReload :: Int -> Reload
 mkReload = Reload
 
 newtype ScopeMagnification = ScopeMagnification Int
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 mkScopeMagnification :: Int -> ScopeMagnification
 mkScopeMagnification = ScopeMagnification
@@ -1081,7 +1071,7 @@ data Shields =
     , shieldsIntegrity :: ItemAdjustment
     , shieldsRecharge  :: ItemAdjustment
     , shieldsDelay     :: ItemAdjustment
-    } deriving stock (Show)
+    }
 
 instance ToJSON Shields where
   toJSON s =
@@ -1114,7 +1104,7 @@ data Size
   | Monumental
   | Colossal
   | Vast
-  deriving stock (Eq, Ord, Show)
+  deriving stock (Eq, Ord)
 
 instance ToJSON Size where
   toJSON = toJSON . sizeText
@@ -1172,7 +1162,6 @@ sizeToInt size =
     Vast       -> 25
 
 newtype Skills = Skills [T.Text]
-  deriving newtype (Show)
 
 instance ToJSON Skills where
   toJSON (Skills skills) =
@@ -1336,7 +1325,7 @@ data SpecialRules_Weapon =
     , tearGas          :: Maybe ()
     , tranquilize      :: Maybe Int
     , vehicleLock      :: Maybe ()
-    } deriving stock (Show)
+    }
 
 instance ToJSON SpecialRules_Weapon where
   toJSON r =
@@ -1435,7 +1424,7 @@ data StatAdjustments =
     , statAdjustmentsAGI       :: ItemAdjustment
     , statAdjustmentsMythicSTR :: ItemAdjustment
     , statAdjustmentsMythicAGI :: ItemAdjustment
-    } deriving stock (Show)
+    }
 
 instance ToJSON StatAdjustments where
   toJSON s =
@@ -1461,7 +1450,6 @@ data StrengthMultiplier
   | HalfStrength
   | FullStrength
   | DoubleStrength
-  deriving stock (Show)
 
 strengthMultiplierFromText :: T.Text -> Maybe StrengthMultiplier
 strengthMultiplierFromText txt =
@@ -1484,7 +1472,7 @@ data Swarm =
   Swarm
     { swarmWillSwarm :: Bool
     , swarmValue     :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON Swarm where
   toJSON s =
@@ -1604,7 +1592,7 @@ data Trainings =
     , trainingsFaction   :: Set.Set Faction
     , trainingsWeapon    :: WeaponTrainings
     , trainingsAlienTech :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON Trainings where
   toJSON t =
@@ -1646,7 +1634,6 @@ data WeaponGroup
   = Ranged
   | MeleeGroup
   | Thrown
-  deriving stock (Show)
 
 instance ToJSON WeaponGroup where
   toJSON = toJSON . weaponGroupText
@@ -1663,7 +1650,7 @@ data WeaponRange =
     { weaponRangeClose :: Int
     , weaponRangeLong  :: Int
     , weaponRangeMelee :: Int
-    } deriving stock (Show)
+    }
 
 instance ToJSON WeaponRange where
   toJSON r =
@@ -1690,7 +1677,7 @@ data WeaponSettings =
     , settingsBulletDiameter :: Double
     , settingsCaseLength     :: Double
     , settingsSingleUse      :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON WeaponSettings where
   toJSON s =
@@ -1720,7 +1707,7 @@ data WeaponTag
   | SD
   | PD
   | BD
-  deriving stock (Eq, Ord, Show)
+  deriving stock (Eq, Ord)
 
 weaponTagFromText :: T.Text -> Maybe WeaponTag
 weaponTagFromText tag =
@@ -1736,7 +1723,6 @@ weaponTagFromText tag =
     _      -> Nothing
 
 newtype WeaponTags = WeaponTags (Set.Set WeaponTag)
-  deriving newtype (Show)
 
 instance ToJSON WeaponTags where
   toJSON (WeaponTags t) =
@@ -1756,7 +1742,7 @@ data WeaponTrainings =
     , weaponTrainingsMAC              :: Bool
     , weaponTrainingsRapidReload      :: Bool
     , weaponTrainingsUnarmedCombatant :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON WeaponTrainings where
   toJSON t =
@@ -1780,7 +1766,7 @@ data Weight =
   Weight
     { weightEach          :: Double
     , weightSelfSupported :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON Weight where
   toJSON w =
@@ -1803,13 +1789,13 @@ emptyWeight =
     }
 
 newtype WeaponType = WeaponType { unWeaponType :: T.Text }
-  deriving newtype (Show, ToJSON)
+  deriving newtype (ToJSON)
 
 data Wounds =
   Wounds
     { woundsMod    :: Int
     , woundsDblTOU :: Bool
-    } deriving stock (Show)
+    }
 
 instance ToJSON Wounds where
   toJSON w =

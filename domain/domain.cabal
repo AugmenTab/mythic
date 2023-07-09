@@ -63,6 +63,7 @@ library
     , extra
     , flipstone-prelude
     , ghc-prim
+    , hashable
     , http-client
     , http-conduit
     , http-types
@@ -100,6 +101,7 @@ executable domain-exe
     , extra
     , flipstone-prelude
     , ghc-prim
+    , hashable
     , http-client
     , http-conduit
     , http-types

@@ -30,6 +30,7 @@ dependencies:
 - extra
 - flipstone-prelude
 - ghc-prim
+- hashable
 - http-client
 - http-conduit
 - http-types
