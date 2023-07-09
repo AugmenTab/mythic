@@ -170,14 +170,105 @@ armorImg = mkImg "icons/equipment/chest/breastplate-layered-leather-green.webp"
 
 data Bestiary =
   Bestiary
-    {
-    }
+    { bestiaryName             :: Name
+    , bestiaryArmor            :: CharacterArmor
+    , bestiaryCarryingCapacity :: CarryingCapacity
+    , bestiaryCharacteristics  :: Characteristics
+    , bestiaryDifficulty       :: Difficulty
+    , bestiaryExpPayout        :: ExperiencePayout
+    , bestiaryFaction          :: Faction
+    , bestiaryLuck             :: Luck
+    , bestiaryMovement         :: Movement
+    , bestiaryMythics          :: MythicCharacteristics
+    , bestiaryNaturalArmor     :: Int
+    , bestiaryNotes            :: Maybe T.Text
+    , bestiaryShields          :: CharacterShields
+    , bestiarySkills           :: Skills
+    , bestiarySize             :: Size
+    , bestiaryTrainings        :: Trainings
+    , bestiaryWounds           :: Wounds
+    } deriving stock (Show)
+
+instance ToJSON Bestiary where
+  toJSON b =
+    object
+      [ "abilityNotes"   .= T.empty
+      , "armor"          .= bestiaryArmor b
+      , "cR"             .= valueInt 0
+      , "equipmentNotes" .= T.empty
+      , "environment"    .= T.empty
+      , "lifestyle"      .= T.empty
+      , "height"         .= valueInt 0
+      , "race"           .= T.empty
+      , "rank"           .= T.empty
+      , "soldierType"    .= T.empty
+      , "specialization" .= T.empty
+      , "upbringing"     .= T.empty
+      , "weight"         .= valueInt 0
+
+      , "educations" .=
+          object
+            [ "intMultiplier" .= valueInt 2
+            , "max"           .= valueInt 0
+            , "mod"           .= valueInt 0
+            , "notes"         .= T.empty
+            , "style"         .= T.empty
+            , "unlimited"     .= False
+            , "value"         .= valueInt 0
+            ]
+
+      , "fatigue" .=
+          object
+            [ "emcumbrance" .= False
+            , "enduring"    .= valueInt 0
+            , "max"         .= valueInt 0
+            , "value"       .= valueInt 0
+            ]
+
+      , "initiative" .=
+          object
+            [ "formula" .= T.empty
+            , "mods"    .= T.empty
+            ]
+
+      , "perceptiveRange" .=
+          object
+            [ "base"  .= valueInt 0
+            , "mod"   .= valueInt 0
+            , "total" .= valueInt 0
+            , "vigil" .= False
+            ]
+
+      , "supportPoints" .=
+          object
+            [ "max"   .= valueInt 0
+            , "other" .= valueInt 0
+            , "rank"  .= valueInt 0
+            , "value" .= valueInt 0
+            ]
+
+      , "carryingCapacity"      .= bestiaryCarryingCapacity b
+      , "characteristics"       .= bestiaryCharacteristics b
+      , "difficulty"            .= bestiaryDifficulty b
+      , "experiencePayout"      .= bestiaryExpPayout b
+      , "faction"               .= bestiaryFaction b
+      , "luck"                  .= bestiaryLuck b
+      , "movement"              .= bestiaryMovement b
+      , "mythicCharacteristics" .= bestiaryMythics b
+      , "naturalArmor"          .= bestiaryNaturalArmor b
+      , "notes"                 .= fromMaybe T.empty (bestiaryNotes b)
+      , "shields"               .= bestiaryShields b
+      , "size"                  .= bestiarySize b
+      , "skills"                .= bestiarySkills b
+      , "trainings"             .= bestiaryTrainings b
+      , "wounds"                .= bestiaryWounds b
+      ]
 
   {-
 instance CompendiumEntry Bestiary where
-  named = _
+  named = bestiaryName
   imged = _
-  typed = _
+  typed = const (FoundryActor ActorBestiary)
   token = _
   items = _
 -}
@@ -222,8 +313,8 @@ equipmentImg =
 data Flood =
   Flood
     { floodName                  :: Name
-    , floodCharacteristics       :: Characteristics
-    , floodMythicCharacteristics :: MythicCharacteristics
+    , floodCharacteristics       :: Characteristics_Flood
+    , floodMythicCharacteristics :: MythicCharacteristics_Flood
     , floodWounds                :: FloodWounds
     , floodSize                  :: Size
     , floodNotes                 :: Maybe T.Text

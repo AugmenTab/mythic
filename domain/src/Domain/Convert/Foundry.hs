@@ -180,26 +180,21 @@ mkFlood raw = do
           $ rawFloodName raw
 
       characteristics =
-        Characteristics
-          { characteristicsIsFlood = True
-          , characteristicsSTR     = rawFloodSTR raw
-          , characteristicsTOU     = rawFloodTOU raw
-          , characteristicsAGI     = rawFloodAGI raw
-          , characteristicsWFR     = rawFloodWFR raw
-          , characteristicsWFM     = rawFloodWFM raw
-          , characteristicsINT     = rawFloodINT raw
-          , characteristicsPER     = rawFloodPER raw
-          , characteristicsCRG     = Nothing
-          , characteristicsCHA     = Nothing
-          , characteristicsLDR     = Nothing
+        Characteristics_Flood
+          { floodCharacteristicsSTR = rawFloodSTR raw
+          , floodCharacteristicsTOU = rawFloodTOU raw
+          , floodCharacteristicsAGI = rawFloodAGI raw
+          , floodCharacteristicsWFR = rawFloodWFR raw
+          , floodCharacteristicsWFM = rawFloodWFM raw
+          , floodCharacteristicsINT = rawFloodINT raw
+          , floodCharacteristicsPER = rawFloodPER raw
           }
 
       mythics =
-        MythicCharacteristics
-          { mythicIsFlood = True
-          , mythicSTR     = rawFloodMythicSTR raw
-          , mythicTOU     = rawFloodMythicTOU raw
-          , mythicAGI     = rawFloodMythicAGI raw
+        MythicCharacteristics_Flood
+          { floodMythicSTR = rawFloodMythicSTR raw
+          , floodMythicTOU = rawFloodMythicTOU raw
+          , floodMythicAGI = rawFloodMythicAGI raw
           }
 
       swarm =

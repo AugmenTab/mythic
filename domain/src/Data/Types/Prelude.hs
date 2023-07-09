@@ -8,9 +8,13 @@ module Data.Types.Prelude
   , ArmorNotes(..)
   , Attack, emptyAttack
   , Barrel
+  , CarryingCapacity(..)
   , CharacterArmor, emptyCharacterArmor
+  , Characteristic, mkCharacteristic
   , Characteristics(..)
+  , Characteristics_Flood(..)
   , CharacterShields, emptyCharacterShields
+  , Difficulty(..)
   , EntryType(..), entryTypeText
   , EquipmentTraining(..)
   , ExperienceDifficulty, emptyExperienceDifficulty
@@ -25,7 +29,10 @@ module Data.Types.Prelude
   , ItemPrice, mkItemPrice
   , ItemTrainings, mkItemTrainings
   , ItemType(..)
+  , Luck(..)
+  , Movement(..)
   , MythicCharacteristics(..)
+  , MythicCharacteristics_Flood(..)
   , Protection(..)
   , Shields(..), emptyShields
   , Size(..), sizeFromText
@@ -43,6 +50,7 @@ module Data.Types.Prelude
   , WeaponTags(..)
   , WeaponTrainings, emptyWeaponTrainings
   , Weight(..), emptyWeight
+  , Wounds(..)
 
     -- Newtypes
   , Ammo, mkAmmo
@@ -314,6 +322,42 @@ newtype Breakpoints = Breakpoints Int
 mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
 
+data CarryingCapacity =
+  CarryingCapacity
+    { carryingCapacityDblSTR :: Bool
+    , carryingCapacityDblTOU :: Bool
+    , carryingCapacityCarry  :: Int
+    , carryingCapacityMod    :: Int
+    } deriving stock (Show)
+
+instance ToJSON CarryingCapacity where
+  toJSON cc =
+    object
+      [ "bar" .=
+          object
+            [ "bgBar"  .= valueText "transparent"
+            , "bgFill" .= valueText "rgba(0, 0, 0, 0.5)"
+            , "left"   .= valueText "0.3em"
+            , "tier"   .= valueText "carry"
+            , "width"  .= valueText "0.0%"
+            ]
+      , "carry"          .= carryingCapacityCarry cc
+      , "character"      .= valueInt 0
+      , "doubleStr"      .= carryingCapacityDblSTR cc
+      , "doubleTou"      .= carryingCapacityDblTOU cc
+      , "felt"           .= valueInt 0
+      , "hearing"        .= valueInt 0
+      , "hearingPenalty" .= False
+      , "imposing"       .= False
+      , "lift"           .= valueInt 0
+      , "mod"            .= carryingCapacityMod cc
+      , "overencumbered" .= False
+      , "push"           .= valueInt 0
+      , "strongBack"     .= False
+      , "strongman"      .= False
+      , "total"          .= valueInt 0
+      ]
+
 data CharacterArmor =
   CharacterArmor
     { characterArmorHead     :: Int
@@ -352,47 +396,97 @@ emptyCharacterArmor =
     , characterArmorRightLeg = 0
     }
 
+data Characteristic =
+  Characteristic
+    { characteristicValue    :: Int
+    , characteristicAdvances :: Bool
+    } deriving stock (Show)
+
+instance ToJSON Characteristic where
+  toJSON c =
+    object
+      [ "abilityPool"  .= valueInt 0
+      , "advancements" .= valueInt 0
+      , "advances"     .= characteristicAdvances c
+      , "background"   .= valueInt 0
+      , "difficulty"   .= valueInt 0
+      , "equipment"    .= valueInt 0
+      , "medical"      .= valueInt 0
+      , "other"        .= valueInt 0
+      , "penalty"      .= valueInt 0
+      , "roll"         .= valueInt 0
+      , "soldierType"  .= characteristicValue c
+      , "total"        .= valueInt 0
+      ]
+
+mkCharacteristic :: Bool -> Int -> Characteristic
+mkCharacteristic advances val =
+  Characteristic
+    { characteristicValue    = val
+    , characteristicAdvances = advances
+    }
+
 data Characteristics =
   Characteristics
-    { characteristicsIsFlood :: Bool
-    , characteristicsSTR     :: Int
-    , characteristicsTOU     :: Int
-    , characteristicsAGI     :: Int
-    , characteristicsWFR     :: Int
-    , characteristicsWFM     :: Int
-    , characteristicsINT     :: Int
-    , characteristicsPER     :: Int
-    , characteristicsCRG     :: Maybe Int
-    , characteristicsCHA     :: Maybe Int
-    , characteristicsLDR     :: Maybe Int
+    { characteristicsSTR :: Characteristic
+    , characteristicsTOU :: Characteristic
+    , characteristicsAGI :: Characteristic
+    , characteristicsWFR :: Characteristic
+    , characteristicsWFM :: Characteristic
+    , characteristicsINT :: Characteristic
+    , characteristicsPER :: Characteristic
+    , characteristicsCRG :: Characteristic
+    , characteristicsCHA :: Characteristic
+    , characteristicsLDR :: Characteristic
     } deriving stock (Show)
 
 instance ToJSON Characteristics where
   toJSON c =
-    if characteristicsIsFlood c
-       then
-         let forFlood fn =
-               object
-                 [ "base"      .= fn c
-                 , "equipment" .= valueInt 0
-                 , "medical"   .= valueInt 0
-                 , "other"     .= valueInt 0
-                 , "total"     .= valueInt 0
-                 , "roll"      .= valueInt 0
-                 ]
+    object
+      [ "str" .= characteristicsSTR c
+      , "tou" .= characteristicsTOU c
+      , "agi" .= characteristicsAGI c
+      , "wfr" .= characteristicsWFR c
+      , "wfm" .= characteristicsWFM c
+      , "int" .= characteristicsINT c
+      , "per" .= characteristicsPER c
+      , "crg" .= characteristicsCRG c
+      , "cha" .= characteristicsCHA c
+      , "ldr" .= characteristicsLDR c
+      ]
 
-          in object
-               [ "str" .= forFlood characteristicsSTR
-               , "tou" .= forFlood characteristicsTOU
-               , "agi" .= forFlood characteristicsAGI
-               , "wfr" .= forFlood characteristicsWFR
-               , "wfm" .= forFlood characteristicsWFM
-               , "int" .= forFlood characteristicsINT
-               , "per" .= forFlood characteristicsPER
-               ]
+data Characteristics_Flood =
+  Characteristics_Flood
+    { floodCharacteristicsSTR :: Int
+    , floodCharacteristicsTOU :: Int
+    , floodCharacteristicsAGI :: Int
+    , floodCharacteristicsWFR :: Int
+    , floodCharacteristicsWFM :: Int
+    , floodCharacteristicsINT :: Int
+    , floodCharacteristicsPER :: Int
+    } deriving stock (Show)
 
-       else
-         object [] -- TODO
+instance ToJSON Characteristics_Flood where
+  toJSON c =
+    let mkChar fn =
+          object
+            [ "base"      .= fn c
+            , "equipment" .= valueInt 0
+            , "medical"   .= valueInt 0
+            , "other"     .= valueInt 0
+            , "total"     .= valueInt 0
+            , "roll"      .= valueInt 0
+            ]
+
+     in object
+          [ "str" .= mkChar floodCharacteristicsSTR
+          , "tou" .= mkChar floodCharacteristicsTOU
+          , "agi" .= mkChar floodCharacteristicsAGI
+          , "wfr" .= mkChar floodCharacteristicsWFR
+          , "wfm" .= mkChar floodCharacteristicsWFM
+          , "int" .= mkChar floodCharacteristicsINT
+          , "per" .= mkChar floodCharacteristicsPER
+          ]
 
 data CharacterShields =
   CharacterShields
@@ -440,6 +534,21 @@ newtype Description = Description T.Text
 
 mkDescription :: T.Text -> Description
 mkDescription = Description
+
+data Difficulty =
+  Difficulty
+    { difficultyAdvancesMythics :: Bool
+    , difficultyNormalOnly      :: Bool
+    } deriving stock (Show)
+
+instance ToJSON Difficulty where
+  toJSON d =
+    let normalOnly = difficultyNormalOnly d
+     in object
+          [ "advancesMythics" .= difficultyAdvancesMythics d
+          , "normalOnly"      .= normalOnly
+          , "tier"            .= valueText (B.bool "0" "1" normalOnly)
+          ]
 
 data EntryType
   = FoundryActor ActorType
@@ -807,40 +916,111 @@ itemTypeText item =
     ItemEquipment -> "equipment"
     ItemWeapon    -> "weapon"
 
+data Luck =
+  Luck
+    { luckEasy      :: Int
+    , luckNormal    :: Int
+    , luckHeroic    :: Int
+    , luckLegendary :: Int
+    , luckNemesis   :: Int
+    } deriving stock (Show)
+
+instance ToJSON Luck where
+  toJSON l =
+    object
+      [ "advancements" .= valueInt 0
+      , "burnt"        .= valueInt 0
+      , "max"          .= valueInt 0
+      , "other"        .= valueInt 0
+      , "starting"     .= valueInt 0
+
+      , "difficulty" .=
+          object
+            [ "easy"      .= luckEasy l
+            , "normal"    .= luckNormal l
+            , "heroic"    .= luckHeroic l
+            , "legendary" .= luckLegendary l
+            , "nemesis"   .= luckNemesis l
+            ]
+      ]
+
 newtype MagazineCapacity = MagazineCapacity Int
   deriving newtype (Show, ToJSON)
 
 mkMagazineCapacity :: Int -> MagazineCapacity
 mkMagazineCapacity = MagazineCapacity
 
+data Movement =
+  Movement
+    { movementRunChargeBonus :: Int
+    , movementJumpMultiplier :: Int
+    , movementLeapBonus      :: Int
+    , movementLeapMultiplier :: Int
+    } deriving stock (Show)
+
+instance ToJSON Movement where
+  toJSON m =
+    object
+      [ "agiBonusRunCharge" .= movementRunChargeBonus m
+      , "blur"              .= False
+      , "charge"            .= valueInt 0
+      , "full"              .= valueInt 0
+      , "half"              .= valueInt 0
+      , "jump"              .= valueInt 0
+      , "jumpMultiplier"    .= movementJumpMultiplier m
+      , "leap"              .= valueInt 0
+      , "leapAgiBonus"      .= movementLeapBonus m
+      , "leapMultiplier"    .= movementLeapMultiplier m
+      ]
+
 data MythicCharacteristics =
   MythicCharacteristics
-    { mythicIsFlood :: Bool
-    , mythicSTR     :: Int
-    , mythicTOU     :: Int
-    , mythicAGI     :: Int
+    { mythicSTR :: Int
+    , mythicTOU :: Int
+    , mythicAGI :: Int
     } deriving stock (Show)
 
 instance ToJSON MythicCharacteristics where
   toJSON m =
-    if mythicIsFlood m
-       then
-         let forFlood fn =
-               object
-                 [ "base"      .= fn m
-                 , "equipment" .= valueInt 0
-                 , "other"     .= valueInt 0
-                 , "total"     .= valueInt 0
-                 ]
+    let mkMythic fn =
+          object
+            [ "advancements" .= valueInt 0
+            , "difficulty"   .= valueInt 0
+            , "equipment"    .= valueInt 0
+            , "other"        .= valueInt 0
+            , "soldierType"  .= fn m
+            , "total"        .= valueInt 0
+            ]
 
-          in object
-               [ "str" .= forFlood mythicSTR
-               , "tou" .= forFlood mythicTOU
-               , "agi" .= forFlood mythicAGI
-               ]
+     in object
+          [ "str"   .= mkMythic mythicSTR
+          , "tou"   .= mkMythic mythicTOU
+          , "agi"   .= mkMythic mythicAGI
+          , "notes" .= T.empty
+          ]
 
-       else
-         object [] -- TODO
+data MythicCharacteristics_Flood =
+  MythicCharacteristics_Flood
+    { floodMythicSTR :: Int
+    , floodMythicTOU :: Int
+    , floodMythicAGI :: Int
+    } deriving stock (Show)
+
+instance ToJSON MythicCharacteristics_Flood where
+  toJSON m =
+    let mkMythic fn =
+          object
+            [ "base"      .= fn m
+            , "equipment" .= valueInt 0
+            , "other"     .= valueInt 0
+            , "total"     .= valueInt 0
+            ]
+
+     in object
+          [ "str" .= mkMythic floodMythicSTR
+          , "tou" .= mkMythic floodMythicTOU
+          , "agi" .= mkMythic floodMythicAGI
+          ]
 
 newtype Name = Name T.Text
   deriving newtype (Eq, Ord, Show, ToJSON)
@@ -1624,3 +1804,21 @@ emptyWeight =
 
 newtype WeaponType = WeaponType { unWeaponType :: T.Text }
   deriving newtype (Show, ToJSON)
+
+data Wounds =
+  Wounds
+    { woundsMod    :: Int
+    , woundsDblTOU :: Bool
+    } deriving stock (Show)
+
+instance ToJSON Wounds where
+  toJSON w =
+    object
+      [ "advancements" .= valueInt 0
+      , "aiDegen"      .= valueInt 0
+      , "difficulty"   .= valueInt 0
+      , "doubleTou"    .= woundsDblTOU w
+      , "max"          .= valueInt 0
+      , "other"        .= woundsMod w
+      , "value"        .= valueInt 0
+      ]
