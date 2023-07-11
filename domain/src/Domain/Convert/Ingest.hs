@@ -32,6 +32,7 @@ ingestRaw subject lines = do
           Request.MeleeWeaponSheet  -> ingestMelee
           Request.PermutationSheet  -> ingestPermutation
           Request.RangedWeaponSheet -> ingestRanged
+          Request.VehicleSheet      -> ingestVehicle
 
   fmap (Map.fromListWith (<>))
     $ traverse (mkCompendiumMapEntry subject) =<< ingestFn csv
@@ -71,6 +72,7 @@ mkCompendiumMapEntry subject rawData = do
           MeleeData       raw -> factionOrOther $ rawMeleeFaction raw
           PermutationData raw -> factionOrOther $ rawPermutationFaction raw
           RangedData      raw -> factionOrOther $ rawRangedFaction raw
+          VehicleData     raw -> factionOrOther $ rawVehicleFaction raw
 
   pure ( (faction, mkCompendiumDetails $ Request.sheetSubjectTitle subject)
        , [ rawData ]
@@ -103,3 +105,6 @@ ingestPermutation =
 
 ingestRanged :: T.Text -> Either T.Text [RawData]
 ingestRanged = ffmap RangedData . decodeCSV . LBS.fromStrict . TE.encodeUtf8
+
+ingestVehicle :: T.Text -> Either T.Text [RawData]
+ingestVehicle = ffmap VehicleData . decodeCSV . LBS.fromStrict . TE.encodeUtf8

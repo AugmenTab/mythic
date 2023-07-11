@@ -10,6 +10,7 @@ module Data.Types.Ingest
   , RawPermutation(..)
   , RawRangedBase(..)
   , RawRangedWeapon(..)
+  , RawVehicle(..)
   ) where
 
 import           Flipstone.Prelude
@@ -35,6 +36,7 @@ data RawData
   | MeleeData       RawMeleeWeapon
   | PermutationData RawPermutation
   | RangedData      RawRangedWeapon
+  | VehicleData     RawVehicle
 
 data RawAbility =
   RawAbility
@@ -370,6 +372,90 @@ instance CSV.FromNamedRecord RawRangedWeapon where
       <*> r .: "COMP_faction"
       <*> r .: "COMP_weight"
       <*> r .: "COMP_price"
+
+data RawVehicle =
+  RawVehicle
+    { rawVehicleName                :: T.Text
+    , rawVehicleFaction             :: T.Text
+    , rawVehiclePrice               :: Int
+    , rawVehicleExperience          :: Int
+    , rawVehicleLength              :: Double
+    , rawVehicleWidth               :: Double
+    , rawVehicleHeight              :: Double
+    , rawVehicleWeight              :: T.Text
+    , rawVehicleCrew                :: Maybe T.Text
+    , rawVehicleComplement          :: Maybe T.Text
+    , rawVehicleSizePoints          :: Int
+    , rawVehicleWeaponPoints        :: Int
+    , rawVehicleSize                :: T.Text
+    , rawVehicleAccelerate          :: Maybe Int
+    , rawVehicleBrake               :: Maybe Int
+    , rawVehicleTopSpeed            :: Maybe Int
+    , rawVehicleManeuver            :: Maybe Int
+    , rawVehicleAGI                 :: Maybe Int
+    , rawVehicleMythicAGI           :: Maybe Int
+    , rawVehicleSTR                 :: Maybe Int
+    , rawVehicleMythicSTR           :: Maybe Int
+    , rawVehicleBreakpointsWeapon   :: Int
+    , rawVehicleBreakpointsMobility :: Int
+    , rawVehicleBreakpointsEngine   :: Int
+    , rawVehicleBreakpointsOptics   :: Int
+    , rawVehicleBreakpointsHull     :: Int
+    , rawVehicleArmorFront          :: Int
+    , rawVehicleArmorBack           :: Int
+    , rawVehicleArmorSide           :: Int
+    , rawVehicleArmorTop            :: Int
+    , rawVehicleArmorBottom         :: Int
+    , rawVehicleShieldIntegrity     :: Maybe Int
+    , rawVehicleShieldDelay         :: Maybe Int
+    , rawVehicleShieldRecharge      :: Maybe Int
+    , rawVehicleAdditionalInfo      :: T.Text
+    , rawVehicleDescription         :: T.Text
+    , rawVehicleMeleeWeapons        :: [RawMeleeWeapon]
+    , rawVehicleRangedWeapons       :: [RawRangedWeapon]
+    }
+
+instance CSV.FromNamedRecord RawVehicle where
+  parseNamedRecord v = do
+    RawVehicle
+      <$> v .: "Name"
+      <*> v .: "COMP_faction"
+      <*> v .: "COMP_price"
+      <*> v .: "Comp_experience"
+      <*> v .: "COMP_length"
+      <*> v .: "Comp_width"
+      <*> v .: "Comp_height"
+      <*> v .: "Comp_weight"
+      <*> (nonEmptyText <$> v .: "Comp_crew")
+      <*> (nonEmptyText <$> v .: "Comp_complement")
+      <*> v .: "Comp_size_points"
+      <*> v .: "Comp_weapon_points"
+      <*> v .: "Comp_size_category"
+      <*> (positiveInt <$> v .: "Comp_accelerate")
+      <*> (positiveInt <$> v .: "Comp_brake")
+      <*> (positiveInt <$> v .: "Comp_topspeed")
+      <*> (positiveInt <$> v .: "Comp_maneuver")
+      <*> (positiveInt <$> v .: "Comp_AGI")
+      <*> (positiveInt <$> v .: "Comp_AGI_mythic")
+      <*> (positiveInt <$> v .: "Comp_STR")
+      <*> (positiveInt <$> v .: "Comp_STR_mythic")
+      <*> v .: "Comp_weapon_bpts"
+      <*> v .: "Comp_mobility_bpts"
+      <*> v .: "Comp_engine_bpts"
+      <*> v .: "Comp_optics_bpts"
+      <*> v .: "Comp_hull_bpts"
+      <*> v .: "Comp_front_armor"
+      <*> v .: "Comp_back_armor"
+      <*> v .: "Comp_side_armor"
+      <*> v .: "Comp_top_armor"
+      <*> v .: "Comp_bottom_armor"
+      <*> (positiveInt <$> v .: "Comp_shield_rating")
+      <*> (positiveInt <$> v .: "Comp_shield_delay")
+      <*> (positiveInt <$> v .: "Comp_shield_rate")
+      <*> v .: "Comp_aditional_info"
+      <*> v .: "COMP_description"
+      <*> pure [] -- TODO
+      <*> pure [] -- TODO
 
 --
 -- Helpers

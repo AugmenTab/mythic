@@ -38,6 +38,7 @@ mkFoundry (faction, _) rawData =
         MeleeData       m -> mkMeleeWeapons m
         PermutationData p -> fmap L.singleton $ mkPermutation faction p
         RangedData      r -> mkRangedWeapons faction r
+        VehicleData     v -> fmap L.singleton $ mkVehicle faction v
 
 mkAbility :: AbilityType -> RawAbility -> FoundryData
 mkAbility abilityType raw =
@@ -558,6 +559,10 @@ mkRanged mbFaction raw rawBase = do
         -- value will be kept hardcoded to `Nothing` here for now.
         , weaponCharacteristics = Nothing
         }
+
+mkVehicle :: Maybe Faction -> RawVehicle -> Either T.Text FoundryData
+mkVehicle _mbFaction _raw =
+  Left "Made it to Foundry conversion"
 
 --
 -- Helpers
