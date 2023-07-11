@@ -19,7 +19,7 @@ module Data.Types.Prelude
   , EquipmentTraining(..), allEquipmentTrainings
   , ExperienceDifficulty, emptyExperienceDifficulty, mkExperienceDifficulty
   , ExperiencePayout(..)
-  , Faction(..), factions, factionFromText, factionText
+  , Faction(..), factions, compendiumFactionFromText, factionFromText, factionText
   , FactionTraining
   , FirearmType
   , FireMode(..), fireModeFromText
@@ -678,6 +678,9 @@ data Faction
   | Covenant
   | Banished
   | Forerunner
+  -- This catch-all is used to create a compendium for outlier items in
+  -- otherwise faction-specific compendium packs.
+  | OtherFaction
   deriving stock (Eq, Ord)
 
 instance ToJSON Faction where
@@ -691,6 +694,9 @@ factions =
   , Forerunner
   ]
 
+compendiumFactionFromText :: T.Text -> Faction
+compendiumFactionFromText = fromRight OtherFaction . factionFromText
+
 factionFromText :: T.Text -> Either T.Text Faction
 factionFromText txt =
   case txt of
@@ -703,10 +709,11 @@ factionFromText txt =
 factionText :: Faction -> T.Text
 factionText faction =
   case faction of
-    UNSC       -> "UNSC"
-    Covenant   -> "Covenant"
-    Banished   -> "Banished"
-    Forerunner -> "Forerunner"
+    UNSC         -> "UNSC"
+    Covenant     -> "Covenant"
+    Banished     -> "Banished"
+    Forerunner   -> "Forerunner"
+    OtherFaction -> "Other"
 
 factionTrainingFor :: Faction -> FactionTraining
 factionTrainingFor faction =
@@ -715,6 +722,11 @@ factionTrainingFor faction =
     Covenant   -> CovenantTraining
     Banished   -> CovenantTraining
     Forerunner -> ForerunnerTraining
+    -- An unfortunate side-effect of having an "Other" catch-all faction is
+    -- not having a good mapping for it. In this case, we've elected to default
+    -- to the UNSC faction training since that's what would be automatically
+    -- populated by the UI upon render.
+    OtherFaction -> UNSCTraining
 
 data FactionTraining
   = UNSCTraining

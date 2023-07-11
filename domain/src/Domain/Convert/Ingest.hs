@@ -8,7 +8,6 @@ import qualified Domain.Request as Request
 import           Data.Types
 
 import qualified Data.ByteString.Lazy as LBS
-import           Data.Either.Extra (eitherToMaybe)
 import qualified Data.List as L
 import qualified Data.Map.Strict as Map
 import qualified Data.Text as T
@@ -61,18 +60,17 @@ mkCompendiumMapEntry :: Request.SheetSubject
                      -> RawData
                      -> Either T.Text (CompendiumData, [RawData])
 mkCompendiumMapEntry subject rawData = do
-  let faction =
-        eitherToMaybe
-          . factionFromText
-          $ case rawData of
-              AbilityData     _   -> "factionless_ability"
-              ArmorData       raw -> rawArmorFaction raw
-              BestiaryData    _   -> "factionless_bestiary"
-              EquipmentData   raw -> rawEquipmentFaction raw
-              FloodData       _   -> "factionless_flood"
-              MeleeData       _   -> "factionless_melee"
-              PermutationData raw -> rawPermutationFaction raw
-              RangedData      _   -> "factionless_ranged"
+  let factionOrOther = Just . compendiumFactionFromText
+      faction =
+        case rawData of
+          AbilityData     _   -> Nothing
+          ArmorData       raw -> factionOrOther $ rawArmorFaction raw
+          BestiaryData    raw -> factionOrOther $ rawBestiaryFaction raw
+          EquipmentData   raw -> factionOrOther $ rawEquipmentFaction raw
+          FloodData       _   -> Nothing
+          MeleeData       raw -> factionOrOther $ rawMeleeFaction raw
+          PermutationData raw -> factionOrOther $ rawPermutationFaction raw
+          RangedData      raw -> factionOrOther $ rawRangedFaction raw
 
   pure ( (faction, mkCompendiumDetails $ Request.sheetSubjectTitle subject)
        , [ rawData ]

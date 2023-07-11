@@ -72,9 +72,33 @@
       "type": "Item"
     },
     {
-      "label": "Bestiary",
-      "name": "bestiary",
-      "path": "packs/bestiary.db",
+      "label": "Bestiary - UNSC",
+      "name": "bestiary-unsc",
+      "path": "packs/bestiary-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Bestiary - Covenant",
+      "name": "bestiary-covenant",
+      "path": "packs/bestiary-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Bestiary - Banished",
+      "name": "bestiary-banished",
+      "path": "packs/bestiary-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Bestiary - Forerunner",
+      "name": "bestiary-forerunner",
+      "path": "packs/bestiary-forerunner.db",
       "private": false,
       "system": "mythic",
       "type": "Actor"
@@ -112,9 +136,41 @@
       "type": "Actor"
     },
     {
-      "label": "Melee Weapons",
-      "name": "melee-weapons",
-      "path": "packs/melee-weapons.db",
+      "label": "Melee Weapons - UNSC",
+      "name": "melee-weapons-unsc",
+      "path": "packs/melee-weapons-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Covenant",
+      "name": "melee-weapons-covenant",
+      "path": "packs/melee-weapons-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Banished",
+      "name": "melee-weapons-banished",
+      "path": "packs/melee-weapons-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Forerunner",
+      "name": "melee-weapons-forerunner",
+      "path": "packs/melee-weapons-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Other",
+      "name": "melee-weapons-other",
+      "path": "packs/melee-weapons-other.db",
       "private": false,
       "system": "mythic",
       "type": "Item"
@@ -128,9 +184,41 @@
       "type": "Item"
     },
     {
-      "label": "Ranged Weapons",
-      "name": "ranged-weapons",
-      "path": "packs/ranged-weapons.db",
+      "label": "Ranged Weapons - UNSC",
+      "name": "ranged-weapons-unsc",
+      "path": "packs/ranged-weapons-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Covenant",
+      "name": "ranged-weapons-covenant",
+      "path": "packs/ranged-weapons-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Banished",
+      "name": "ranged-weapons-banished",
+      "path": "packs/ranged-weapons-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Forerunner",
+      "name": "ranged-weapons-forerunner",
+      "path": "packs/ranged-weapons-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Other",
+      "name": "ranged-weapons-other",
+      "path": "packs/ranged-weapons-other.db",
       "private": false,
       "system": "mythic",
       "type": "Item"
