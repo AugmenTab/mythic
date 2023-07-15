@@ -5,6 +5,7 @@ module Data.Types.Foundry
   , Bestiary(..)
   , Equipment(..)
   , Flood(..)
+  , Vehicle(..)
   , Weapon(..)
 
   -- Type Classes
@@ -32,7 +33,7 @@ data FoundryData
   | FoundryBestiary  Bestiary
   | FoundryEquipment Equipment
   | FoundryFlood     Flood
- -- | FoundryVehicle   Vehicle
+  | FoundryVehicle   Vehicle
   | FoundryWeapon    Weapon
 
 instance CompendiumEntry FoundryData where
@@ -41,7 +42,7 @@ instance CompendiumEntry FoundryData where
   named (FoundryBestiary  b) = named b
   named (FoundryEquipment e) = named e
   named (FoundryFlood     f) = named f
---  named (FoundryVehicle   v) = named v
+  named (FoundryVehicle   v) = named v
   named (FoundryWeapon    w) = named w
 
   imged (FoundryAbility   a) = imged a
@@ -49,7 +50,7 @@ instance CompendiumEntry FoundryData where
   imged (FoundryBestiary  b) = imged b
   imged (FoundryEquipment e) = imged e
   imged (FoundryFlood     f) = imged f
---  imged (FoundryVehicle   v) = imged v
+  imged (FoundryVehicle   v) = imged v
   imged (FoundryWeapon    w) = imged w
 
   typed (FoundryAbility   a) = typed a
@@ -57,7 +58,7 @@ instance CompendiumEntry FoundryData where
   typed (FoundryBestiary  b) = typed b
   typed (FoundryEquipment e) = typed e
   typed (FoundryFlood     f) = typed f
---  typed (FoundryVehicle   v) = typed v
+  typed (FoundryVehicle   v) = typed v
   typed (FoundryWeapon    w) = typed w
 
   token (FoundryAbility   a) = token a
@@ -65,7 +66,7 @@ instance CompendiumEntry FoundryData where
   token (FoundryBestiary  b) = token b
   token (FoundryEquipment e) = token e
   token (FoundryFlood     f) = token f
---  token (FoundryVehicle   v) = token v
+  token (FoundryVehicle   v) = token v
   token (FoundryWeapon    w) = token w
 
   items (FoundryAbility   a) = items a
@@ -73,7 +74,7 @@ instance CompendiumEntry FoundryData where
   items (FoundryBestiary  b) = items b
   items (FoundryEquipment e) = items e
   items (FoundryFlood     f) = items f
---  items (FoundryVehicle   v) = items v
+  items (FoundryVehicle   v) = items v
   items (FoundryWeapon    w) = items w
 
 instance ToJSON FoundryData where
@@ -82,7 +83,7 @@ instance ToJSON FoundryData where
   toJSON (FoundryBestiary  b) = toJSON b
   toJSON (FoundryEquipment e) = toJSON e
   toJSON (FoundryFlood     f) = toJSON f
---  toJSON (FoundryVehicle   v) = toJSON v
+  toJSON (FoundryVehicle   v) = toJSON v
   toJSON (FoundryWeapon    w) = toJSON w
 
 data Ability =
@@ -416,6 +417,98 @@ mkFloodToken flood =
     , tokenType = ActorFlood
     , tokenSize = floodSize flood
     , tokenBar2 = Nothing
+    }
+
+data Vehicle =
+  Vehicle
+    { vehicleName            :: Name
+    , vehicleDesignation     :: Name
+    , vehicleVariant         :: Maybe T.Text
+    , vehicleFaction         :: Faction
+    , vehiclePrice           :: Int
+    , vehicleExperience      :: Int
+    , vehicleSize            :: Maybe Size
+    , vehicleDimensions      :: Dimensions
+    , vehicleCharacteristics :: Characteristics_Vehicle
+    , vehicleMovement        :: Movement_Vehicle
+    , vehicleBreakpoints     :: Breakpoints_Vehicle
+    , vehicleArmor           :: Armor_Vehicle
+    , vehicleShields         :: CharacterShields
+    , vehicleSizePoints      :: Int
+    , vehicleWeaponPoints    :: Int
+    , vehicleCrew            :: Crew
+    , vehicleSpecialRules    :: SpecialRules_Vehicle
+    , vehiclePropulsion      :: Propulsion
+    , vehicleNotes           :: Description
+    , vehicleWeapons         :: [FoundryData]
+    }
+
+instance CompendiumEntry Vehicle where
+  named = vehicleName
+  imged = vehicleImg
+  typed = const (FoundryActor ActorVehicle)
+  token = Just . mkVehicleToken
+  items = vehicleWeapons
+
+instance ToJSON Vehicle where
+  toJSON v =
+    object
+      [ "designation"     .= vehicleDesignation v
+      , "faction"         .= vehicleFaction v
+      , "factionTraining" .= factionTrainingFor (vehicleFaction v)
+      , "variant"         .= fromMaybe T.empty (vehicleVariant v)
+      , "price"           .= vehiclePrice v
+      , "experience"      .= vehicleExperience v
+      , "size"            .= vehicleSize v
+      , "dimensions"      .= vehicleDimensions v
+      , "characteristics" .= vehicleCharacteristics v
+      , "movement"        .= vehicleMovement v
+      , "breakpoints"     .= vehicleBreakpoints v
+      , "armor"           .= vehicleArmor v
+      , "shields"         .= vehicleShields v
+      , "sizePoints"      .= vehicleSizePoints v
+      , "weaponPoints"    .= vehicleWeaponPoints v
+      , "crew"            .= vehicleCrew v
+      , "special"         .= vehicleSpecialRules v
+      , "propulsion"      .= vehiclePropulsion v
+      , "notes"           .= vehicleNotes v
+
+      , "modifications" .=
+          object
+            [ "mods"  .= emptyArray
+            , "notes" .= T.empty
+            ]
+
+      , "cargo" .=
+          object
+            [ "total" .= valueInt 0
+            , "notes" .= T.empty
+            ]
+
+      , "perceptiveRange" .=
+          object
+            [ "total" .= valueInt 0
+            ]
+      ]
+
+vehicleImg :: Vehicle -> Img
+vehicleImg veh =
+  mkImg $
+    case propulsionType $ vehiclePropulsion veh of
+      Legs       -> "icons/commodities/leather/boot-torn-tab.webp"
+      Stationary -> "icons/weapons/artillery/cannon-engraved-gold.webp"
+      Thrusters  -> "icons/commodities/biological/wing-bird-white.webp"
+      Treads     -> "icons/commodities/tech/cog-track-steel.webp"
+      Wheels     -> "icons/commodities/tech/wheel.webp"
+
+mkVehicleToken :: Vehicle -> Token
+mkVehicleToken veh =
+  Token
+    { tokenName = vehicleName veh
+    , tokenType = ActorVehicle
+    , tokenSize = fromMaybe Normal $ vehicleSize veh
+    , tokenBar2 =
+        B.bool Nothing (Just "shields") . hasShields $ vehicleShields veh
     }
 
 data Weapon =

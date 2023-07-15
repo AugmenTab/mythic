@@ -5,22 +5,27 @@ module Data.Types.Prelude
   , AmmoGroup(..)
   , AmmoList, mkAmmoList
   , Ammunition(..)
+  , Armor_Vehicle(..)
   , ArmorNotes(..)
   , Attack, emptyAttack
   , Barrel
+  , Breakpoints_Vehicle(..)
   , CarryingCapacity(..)
   , CharacterArmor, emptyCharacterArmor
   , Characteristic, mkCharacteristic
   , Characteristics(..)
   , Characteristics_Flood(..)
+  , Characteristics_Vehicle(..), emptyVehicleCharacteristics
   , CharacterShields, emptyCharacterShields, hasShields, mkCharacterShields
+  , Crew, mkCrew
   , Difficulty(..)
+  , Dimensions(..)
   , EntryType(..), entryTypeText
   , EquipmentTraining(..), allEquipmentTrainings
   , ExperienceDifficulty, emptyExperienceDifficulty, mkExperienceDifficulty
   , ExperiencePayout(..)
   , Faction(..), factions, compendiumFactionFromText, factionFromText, factionText
-  , FactionTraining
+  , FactionTraining, factionTrainingFor
   , FirearmType
   , FireMode(..), fireModeFromText
   , FireModes, fireModes, mkFireModes
@@ -31,8 +36,11 @@ module Data.Types.Prelude
   , ItemType(..)
   , Luck, mkLuck
   , Movement(..)
+  , Movement_Vehicle(..), emptyVehicleMovement
   , MythicCharacteristics(..)
   , MythicCharacteristics_Flood(..)
+  , Propulsion(..), combinePropulsions
+  , PropulsionType(..), propulsionTypeFromText, propulsionCountsForType
   , Protection(..)
   , Shields(..), emptyShields
   , Size(..), sizeFromText
@@ -222,6 +230,31 @@ instance ToJSON ArmorAdjustment where
 mkArmorAdjustment :: ItemAdjustment -> ArmorAdjustment
 mkArmorAdjustment = ArmorAdjustment
 
+data Armor_Vehicle =
+  Armor_Vehicle
+    { armorFront  :: Int
+    , armorBack   :: Int
+    , armorSide   :: Int
+    , armorTop    :: Int
+    , armorBottom :: Int
+    }
+
+instance ToJSON Armor_Vehicle where
+  toJSON a =
+    let mkArmor fn =
+          object
+            [ "value" .= fn a
+            , "max"   .= fn a
+            ]
+
+     in object
+          [ "front"  .= mkArmor armorFront
+          , "back"   .= mkArmor armorBack
+          , "side"   .= mkArmor armorSide
+          , "top"    .= mkArmor armorTop
+          , "bottom" .= mkArmor armorBottom
+          ]
+
 data ArmorNotes =
   ArmorNotes
     { armorNotesDefault      :: Maybe T.Text
@@ -317,6 +350,43 @@ newtype Breakpoints = Breakpoints Int
 
 mkBreakpoints :: Int -> Breakpoints
 mkBreakpoints = Breakpoints
+
+data Breakpoints_Vehicle =
+  Breakpoints_Vehicle
+    { breakpointsWEP  :: Breakpoints
+    , breakpointsMOB  :: Breakpoints
+    , breakpointsENG  :: Breakpoints
+    , breakpointsOP   :: Breakpoints
+    , breakpointsHULL :: Breakpoints
+    }
+
+instance ToJSON Breakpoints_Vehicle where
+  toJSON b =
+    let mk fn =
+          object
+            [ "value" .= fn b
+            , "max"   .= fn b
+            ]
+
+     in object
+          [ "wep"  .= mk breakpointsWEP
+          , "mob"  .= mk breakpointsMOB
+          , "eng"  .= mk breakpointsENG
+          , "op"   .= mk breakpointsOP
+          , "hull" .=
+              object
+                [ "value" .= breakpointsHULL b
+                , "max"   .= breakpointsHULL b
+                , "doom"  .=
+                    object
+                      [ "level" .= valueText "tier_0"
+                      , "armor" .= valueInt 0
+                      , "blast" .= valueInt 0
+                      , "kill"  .= valueInt 0
+                      , "move"  .= valueInt 0
+                      ]
+                ]
+          ]
 
 data CarryingCapacity =
   CarryingCapacity
@@ -483,6 +553,41 @@ instance ToJSON Characteristics_Flood where
           , "per" .= mkChar floodCharacteristicsPER
           ]
 
+data Characteristics_Vehicle =
+  Characteristics_Vehicle
+    { vehCharacteristicsSTR       :: Int
+    , vehCharacteristicsMythicSTR :: Int
+    , vehCharacteristicsAGI       :: Int
+    , vehCharacteristicsMythicAGI :: Int
+    , vehCharacteristicsWFR       :: Int
+    , vehCharacteristicsINT       :: Int
+    , vehCharacteristicsPER       :: Int
+    }
+
+instance ToJSON Characteristics_Vehicle where
+  toJSON c =
+    object
+      [ "str"       .= vehCharacteristicsSTR c
+      , "mythicStr" .= vehCharacteristicsMythicSTR c
+      , "agi"       .= vehCharacteristicsAGI c
+      , "mythicAgi" .= vehCharacteristicsMythicAGI c
+      , "wfr"       .= vehCharacteristicsWFR c
+      , "int"       .= vehCharacteristicsINT c
+      , "per"       .= vehCharacteristicsPER c
+      ]
+
+emptyVehicleCharacteristics :: Characteristics_Vehicle
+emptyVehicleCharacteristics =
+  Characteristics_Vehicle
+    { vehCharacteristicsSTR       = 0
+    , vehCharacteristicsMythicSTR = 0
+    , vehCharacteristicsAGI       = 0
+    , vehCharacteristicsMythicAGI = 0
+    , vehCharacteristicsWFR       = 0
+    , vehCharacteristicsINT       = 0
+    , vehCharacteristicsPER       = 0
+    }
+
 data CharacterShields =
   CharacterShields
     { characterShieldsValue    :: Int
@@ -542,6 +647,43 @@ newtype Description = Description T.Text
 mkDescription :: T.Text -> Description
 mkDescription = Description
 
+data Crew =
+  Crew
+    { crewOperators  :: [CrewRole]
+    , crewGunners    :: [CrewRole]
+    , crewComplement :: [CrewRole]
+    , crewNotes      :: Description
+    }
+
+instance ToJSON Crew where
+  toJSON c =
+    object
+      [ "operators"  .= crewOperators  c
+      , "gunners"    .= crewGunners    c
+      , "complement" .= crewComplement c
+      , "notes"      .= crewNotes      c
+      ]
+
+mkCrew :: Int -> Int -> Int -> T.Text -> Crew
+mkCrew operators gunners complement notes =
+  let mkRoles = L.zipWith (\n fn -> fn n) [ 0.. ] . flip L.replicate CrewRole
+   in Crew
+        { crewOperators  = mkRoles operators
+        , crewGunners    = mkRoles gunners
+        , crewComplement = mkRoles complement
+        , crewNotes      = mkDescription notes
+        }
+
+newtype CrewRole = CrewRole Int
+
+instance ToJSON CrewRole where
+  toJSON (CrewRole r) =
+    object
+      [ "idx"     .= r
+      , "id"      .= nullJSON
+      , "display" .= nullJSON
+      ]
+
 data Difficulty =
   Difficulty
     { difficultyAdvancesMythics :: Bool
@@ -559,6 +701,23 @@ instance ToJSON Difficulty where
 
 type DifficultyTierValues = (Int, Int, Int, Int, Int)
 type DifficultyTierValuesWithSingleLevelFlag = (Bool, DifficultyTierValues)
+
+data Dimensions =
+  Dimensions
+    { dimensionsLength :: Double
+    , dimensionsWidth  :: Double
+    , dimensionsHeight :: Double
+    , dimensionsWeight :: Double
+    }
+
+instance ToJSON Dimensions where
+  toJSON d =
+    object
+      [ "length" .= dimensionsLength d
+      , "width"  .= dimensionsWidth  d
+      , "height" .= dimensionsHeight d
+      , "weight" .= dimensionsWeight d
+      ]
 
 data EntryType
   = FoundryActor ActorType
@@ -1025,6 +1184,70 @@ instance ToJSON Movement where
       , "leapMultiplier"    .= movementLeapMultiplier m
       ]
 
+data Movement_Vehicle =
+  Movement_Vehicle
+    { movementAccelerate :: Int
+    , movementBrake      :: Int
+    , movementSpeed      :: Int
+    , movementManeuver   :: Int
+    , movementWalkerJump :: Int
+    , movementWalkerLeap :: Int
+    }
+
+instance ToJSON Movement_Vehicle where
+  toJSON m =
+    object
+      [ "accelerate" .=
+          object
+            [ "value" .= movementAccelerate m
+            , "max"   .= movementAccelerate m
+            ]
+
+      , "brake" .=
+          object
+            [ "value" .= movementBrake m
+            , "max"   .= movementBrake m
+            ]
+
+      , "speed" .=
+          object
+            [ "base"  .= movementSpeed m
+            , "value" .= valueInt 0
+            , "max"   .= movementSpeed m
+            ]
+
+      , "maneuver" .=
+          object
+            [ "value" .= valueInt 0
+            , "max"   .= movementManeuver m
+            , "owner" .= T.empty
+            ]
+
+      , "walker" .=
+          object
+            [ "half"    .= valueInt 0
+            , "full"    .= valueInt 0
+            , "charge"  .= valueInt 0
+            , "run"     .= valueInt 0
+            , "jump"    .= movementWalkerJump m
+            , "leap"    .= movementWalkerLeap m
+            , "owner"   .= T.empty
+            , "evasion" .= valueInt 0
+            , "parry"   .= valueInt 0
+            ]
+      ]
+
+emptyVehicleMovement :: Movement_Vehicle
+emptyVehicleMovement =
+  Movement_Vehicle
+    { movementAccelerate = 0
+    , movementBrake      = 0
+    , movementSpeed      = 0
+    , movementManeuver   = 0
+    , movementWalkerJump = 0
+    , movementWalkerLeap = 0
+    }
+
 data MythicCharacteristics =
   MythicCharacteristics
     { mythicSTR :: Int
@@ -1088,6 +1311,78 @@ newtype Prerequisites = Prerequisites T.Text
 
 mkPrereqs :: T.Text -> Prerequisites
 mkPrereqs = Prerequisites
+
+data Propulsion =
+  Propulsion
+    { propulsionType  :: PropulsionType
+    , propulsionCount :: Int
+    }
+
+instance ToJSON Propulsion where
+  toJSON p =
+    object
+      [ "type"  .= propulsionTypeToText (propulsionType p)
+      , "value" .= propulsionCount p
+      , "max"   .= T.pack (show $ propulsionCount p)
+      , "state" .=
+          object
+            [ "multiplier" .= valueInt 1
+            , "toHit"      .= valueInt 0
+            ]
+      ]
+
+combinePropulsions :: [Propulsion] -> Either T.Text Propulsion
+combinePropulsions ps =
+  case Set.fromList $ propulsionType <$> ps of
+    deduped
+      | Set.size deduped == 0 ->
+          Left "Cannot have no propulsion"
+
+      | Set.size deduped == 1 ->
+          Right
+            $ Propulsion
+                { propulsionType  = Set.elemAt 0 deduped
+                , propulsionCount = sum $ propulsionCount <$> ps
+                }
+
+      | otherwise ->
+          Left "Cannot mix propulsion types"
+
+data PropulsionType
+  = Legs
+  | Stationary
+  | Thrusters
+  | Treads
+  | Wheels
+  deriving stock (Eq, Ord)
+
+propulsionTypeFromText :: T.Text -> Either T.Text PropulsionType
+propulsionTypeFromText txt =
+  case txt of
+    "Jets"       -> Right Thrusters
+    "Legs"       -> Right Legs
+    "Propellers" -> Right Thrusters
+    "Tracks"     -> Right Treads
+    "Wheels"     -> Right Wheels
+    _            -> Left $ "Unknown propulsion type: " <> txt
+
+propulsionTypeToText :: PropulsionType -> T.Text
+propulsionTypeToText pt =
+  case pt of
+    Legs       -> "legs"
+    Stationary -> "none"
+    Thrusters  -> "thrusters"
+    Treads     -> "treads"
+    Wheels     -> "wheels"
+
+propulsionCountsForType :: PropulsionType -> [Int]
+propulsionCountsForType pt =
+  case pt of
+    Legs       -> [ 2, 4, 6 ]
+    Stationary -> []
+    Thrusters  -> [ minBound..maxBound ]
+    Treads     -> [ 2, 4, 6, 8 ]
+    Wheels     -> [ 3, 4, 6, 8 ]
 
 data Protection =
   Protection
