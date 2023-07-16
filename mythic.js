@@ -71,7 +71,7 @@ function registerSystemSettings() {
     config: false,
     scope: "world",
     type: String,
-    default: "0.3.2"
+    default: "0.3.3"
   });
 
   // Critical Failure Threshold

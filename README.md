@@ -54,6 +54,16 @@ All available Item types in this system.
 All of the compendia that come included with this system.
 
 Available Compendium Packs:
+* Actor
+  * Bestiary - Banished
+  * Bestiary - Covenant
+  * Bestiary - Forerunner
+  * Bestiary - The Flood
+  * Bestiary - UNSC
+  * Vehicles - Banished
+  * Vehicles - Covenant
+  * Vehicles - Forerunner
+  * Vehicles - UNSC
 * Item
   * Abilities
   * Armor - Banished
@@ -61,20 +71,19 @@ Available Compendium Packs:
   * Armor - Forerunner
   * Armor - UNSC
   * Armor Permutations - UNSC
-  * Bestiary
-  * Bestiary - The Flood
   * Equipment - Covenant
   * Equipment - Forerunner
   * Equipment - UNSC
-  * Melee Weapons
-  * Ranged Weapons
-
-Upcoming Compendium Packs:
-* Actor
-  * *Vehicles - Banished*
-  * *Vehicles - Covenant*
-  * *Vehicles - Forerunner*
-  * *Vehicles - UNSC*
+  * Melee Weapons - Banished
+  * Melee Weapons - Covenant
+  * Melee Weapons - Forerunner
+  * Melee Weapons - Other
+  * Melee Weapons - UNSC
+  * Ranged Weapons - Banished
+  * Ranged Weapons - Covenant
+  * Ranged Weapons - Forerunner
+  * Ranged Weapons - Other
+  * Ranged Weapons - UNSC
 
 ## Legal
 

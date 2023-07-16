@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.3
+
+### Changes
+
+* Splits compendium packs back into per-faction packs where applicable.
+* Introduces the Vehicle compendium packs, with embedded melee and ranged weapons.
+
 ## 0.3.2
 
 ### Changes

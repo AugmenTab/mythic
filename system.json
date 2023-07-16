@@ -13,7 +13,7 @@
     "verified": "10"
   },
   "description": "An unofficial system implementation for playing the fan-made Mythic game on Foundry Virtual Tabletop.",
-  "download": "https://github.com/AugmenTab/mythic/releases/download/v0.3.2/mythic.zip",
+  "download": "https://github.com/AugmenTab/mythic/releases/download/v0.3.3/mythic.zip",
   "esmodules": [
     "mythic.js"
   ],
@@ -31,6 +31,198 @@
   "license": "LICENSE",
   "manifest": "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json",
   "packs": [
+    {
+      "label": "Abilities",
+      "name": "abilities",
+      "path": "packs/abilities.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - UNSC",
+      "name": "armor-unsc",
+      "path": "packs/armor-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Covenant",
+      "name": "armor-covenant",
+      "path": "packs/armor-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Banished",
+      "name": "armor-banished",
+      "path": "packs/armor-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor - Forerunner",
+      "name": "armor-forerunner",
+      "path": "packs/armor-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Bestiary - UNSC",
+      "name": "bestiary-unsc",
+      "path": "packs/bestiary-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Bestiary - Covenant",
+      "name": "bestiary-covenant",
+      "path": "packs/bestiary-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Bestiary - Banished",
+      "name": "bestiary-banished",
+      "path": "packs/bestiary-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Bestiary - Forerunner",
+      "name": "bestiary-forerunner",
+      "path": "packs/bestiary-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Equipment - UNSC",
+      "name": "equipment-unsc",
+      "path": "packs/equipment-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Covenant",
+      "name": "equipment-covenant",
+      "path": "packs/equipment-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Forerunner",
+      "name": "equipment-forerunner",
+      "path": "packs/equipment-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Bestiary - The Flood",
+      "name": "bestiary-the-flood",
+      "path": "packs/bestiary-the-flood.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Actor"
+    },
+    {
+      "label": "Melee Weapons - UNSC",
+      "name": "melee-weapons-unsc",
+      "path": "packs/melee-weapons-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Covenant",
+      "name": "melee-weapons-covenant",
+      "path": "packs/melee-weapons-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Banished",
+      "name": "melee-weapons-banished",
+      "path": "packs/melee-weapons-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Forerunner",
+      "name": "melee-weapons-forerunner",
+      "path": "packs/melee-weapons-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Melee Weapons - Other",
+      "name": "melee-weapons-other",
+      "path": "packs/melee-weapons-other.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor Permutations - UNSC",
+      "name": "armor-permutations-unsc",
+      "path": "packs/armor-permutations-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - UNSC",
+      "name": "ranged-weapons-unsc",
+      "path": "packs/ranged-weapons-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Covenant",
+      "name": "ranged-weapons-covenant",
+      "path": "packs/ranged-weapons-covenant.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Banished",
+      "name": "ranged-weapons-banished",
+      "path": "packs/ranged-weapons-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Forerunner",
+      "name": "ranged-weapons-forerunner",
+      "path": "packs/ranged-weapons-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Ranged Weapons - Other",
+      "name": "ranged-weapons-other",
+      "path": "packs/ranged-weapons-other.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
     {
       "label": "Vehicles - UNSC",
       "name": "vehicles-unsc",
@@ -72,5 +264,5 @@
   ],
   "title": "Mythic",
   "url": "https://github.com/AugmenTab/mythic",
-  "version": "0.3.2"
+  "version": "0.3.3"
 }
