@@ -154,7 +154,7 @@ mythicCompatibility =
 
 mythicManifest :: [Compendium FoundryData] -> Manifest
 mythicManifest compendia =
-  let version = "0.3.2"
+  let release = "0.3.2"
       mythicDescription =
         T.unwords [ "An unofficial system implementation for playing the"
                   , "fan-made Mythic game on Foundry Virtual Tabletop."
@@ -164,7 +164,7 @@ mythicManifest compendia =
         { systemId                = "mythic"
         , title                   = "Mythic"
         , description             = mythicDescription
-        , version                 = version
+        , version                 = release
         , authors                 = [ mythicAuthor ]
         , esmodules               = [ "mythic.js" ]
         , styles                  = [ "mythic.css" ]
@@ -178,7 +178,7 @@ mythicManifest compendia =
         , compatibility           = mythicCompatibility
         , url                     = "https://github.com/AugmenTab/mythic"
         , manifest                = "https://raw.githubusercontent.com/AugmenTab/mythic/main/system.json"
-        , download                = "https://github.com/AugmenTab/mythic/releases/download/v" <> version <> "/mythic.zip"
+        , download                = "https://github.com/AugmenTab/mythic/releases/download/v" <> release <> "/mythic.zip"
         , license                 = "LICENSE"
         , readme                  = "README.md"
         , changelog               = "https://github.com/AugmenTab/mythic/blob/main/CHANGELOG.md"

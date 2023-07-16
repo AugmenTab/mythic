@@ -495,7 +495,7 @@ vehicleImg :: Vehicle -> Img
 vehicleImg veh =
   mkImg $
     case propulsionType $ vehiclePropulsion veh of
-      Legs       -> "icons/commodities/leather/boot-torn-tab.webp"
+      Legs       -> "icons/commodities/leather/boot-torn-tan.webp"
       Stationary -> "icons/weapons/artillery/cannon-engraved-gold.webp"
       Thrusters  -> "icons/commodities/biological/wing-bird-white.webp"
       Treads     -> "icons/commodities/tech/cog-track-steel.webp"

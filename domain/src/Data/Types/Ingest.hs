@@ -375,44 +375,45 @@ instance CSV.FromNamedRecord RawRangedWeapon where
 
 data RawVehicle =
   RawVehicle
-    { rawVehicleName                :: T.Text
-    , rawVehicleFaction             :: T.Text
-    , rawVehiclePrice               :: Int
-    , rawVehicleExperience          :: Int
-    , rawVehicleLength              :: Double
-    , rawVehicleWidth               :: Double
-    , rawVehicleHeight              :: Double
-    , rawVehicleWeight              :: T.Text
-    , rawVehicleCrew                :: Maybe T.Text
-    , rawVehicleComplement          :: Maybe T.Text
-    , rawVehicleSizePoints          :: Int
-    , rawVehicleWeaponPoints        :: Int
-    , rawVehicleSize                :: T.Text
-    , rawVehicleAccelerate          :: Maybe Int
-    , rawVehicleBrake               :: Maybe Int
-    , rawVehicleTopSpeed            :: Maybe Int
-    , rawVehicleManeuver            :: Maybe Int
-    , rawVehicleAGI                 :: Maybe Int
-    , rawVehicleMythicAGI           :: Maybe Int
-    , rawVehicleSTR                 :: Maybe Int
-    , rawVehicleMythicSTR           :: Maybe Int
-    , rawVehicleBreakpointsWeapon   :: Int
-    , rawVehicleBreakpointsMobility :: Int
-    , rawVehicleBreakpointsEngine   :: Int
-    , rawVehicleBreakpointsOptics   :: Int
-    , rawVehicleBreakpointsHull     :: Int
-    , rawVehicleArmorFront          :: Int
-    , rawVehicleArmorBack           :: Int
-    , rawVehicleArmorSide           :: Int
-    , rawVehicleArmorTop            :: Int
-    , rawVehicleArmorBottom         :: Int
-    , rawVehicleShieldIntegrity     :: Maybe Int
-    , rawVehicleShieldDelay         :: Maybe Int
-    , rawVehicleShieldRecharge      :: Maybe Int
-    , rawVehicleAdditionalInfo      :: T.Text
-    , rawVehicleDescription         :: T.Text
-    , rawVehicleMeleeWeapons        :: [RawMeleeWeapon]
-    , rawVehicleRangedWeapons       :: [RawRangedWeapon]
+    { rawVehicleName            :: T.Text
+    , rawVehicleFaction         :: T.Text
+    , rawVehiclePrice           :: Int
+    , rawVehicleExperience      :: Int
+    , rawVehicleLength          :: Double
+    , rawVehicleWidth           :: Double
+    , rawVehicleHeight          :: Double
+    , rawVehicleWeight          :: T.Text
+    , rawVehicleCrew            :: Maybe T.Text
+    , rawVehicleComplement      :: Maybe T.Text
+    , rawVehicleSizePoints      :: Int
+    , rawVehicleWeaponPoints    :: Int
+    , rawVehicleSize            :: T.Text
+    , rawVehicleAccelerate      :: Maybe Int
+    , rawVehicleBrake           :: Maybe Int
+    , rawVehicleTopSpeed        :: Maybe Int
+    , rawVehicleManeuver        :: Int
+    , rawVehicleAGI             :: Maybe Int
+    , rawVehicleMythicAGI       :: Maybe Int
+    , rawVehicleSTR             :: Maybe Int
+    , rawVehicleMythicSTR       :: Maybe Int
+    , rawVehicleTurretStats     :: Maybe T.Text
+    , rawVehicleBreakpointsWEP  :: Int
+    , rawVehicleBreakpointsMOB  :: Int
+    , rawVehicleBreakpointsENG  :: Int
+    , rawVehicleBreakpointsOP   :: Int
+    , rawVehicleBreakpointsHULL :: Int
+    , rawVehicleArmorFront      :: Int
+    , rawVehicleArmorBack       :: Int
+    , rawVehicleArmorSide       :: Int
+    , rawVehicleArmorTop        :: Int
+    , rawVehicleArmorBottom     :: Int
+    , rawVehicleShieldIntegrity :: Maybe Int
+    , rawVehicleShieldDelay     :: Maybe Int
+    , rawVehicleShieldRecharge  :: Maybe Int
+    , rawVehicleAdditionalInfo  :: T.Text
+    , rawVehicleDescription     :: T.Text
+    , rawVehicleMeleeWeapons    :: [RawMeleeWeapon]
+    , rawVehicleRangedWeapons   :: [RawRangedWeapon]
     }
 
 instance CSV.FromNamedRecord RawVehicle where
@@ -434,11 +435,12 @@ instance CSV.FromNamedRecord RawVehicle where
       <*> (positiveInt <$> v .: "Comp_accelerate")
       <*> (positiveInt <$> v .: "Comp_brake")
       <*> (positiveInt <$> v .: "Comp_topspeed")
-      <*> (positiveInt <$> v .: "Comp_maneuver")
+      <*> v .: "Comp_maneuver"
       <*> (positiveInt <$> v .: "Comp_AGI")
       <*> (positiveInt <$> v .: "Comp_AGI_mythic")
       <*> (positiveInt <$> v .: "Comp_STR")
       <*> (positiveInt <$> v .: "Comp_STR_mythic")
+      <*> (nonEmptyText <$> v .: "turret_stats")
       <*> v .: "Comp_weapon_bpts"
       <*> v .: "Comp_mobility_bpts"
       <*> v .: "Comp_engine_bpts"

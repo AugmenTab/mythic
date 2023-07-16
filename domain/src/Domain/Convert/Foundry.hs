@@ -13,12 +13,13 @@ import qualified Data.List as L
 import qualified Data.List.Extra as L
 import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
-import           Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
+import           Data.Maybe (catMaybes, fromMaybe, listToMaybe, mapMaybe)
 import qualified Data.Set as Set
 import qualified Data.Text as T
 import           Data.Traversable (for)
 import           Data.Tuple (fst, snd)
 import           Text.Read (read, readMaybe)
+import           Text.Show (show)
 
 toFoundry :: CompendiumMap [RawData]
           -> Either T.Text (CompendiumMap [FoundryData])
@@ -41,7 +42,7 @@ mkFoundry (faction, _) rawData =
         VehicleData     v -> fmap L.singleton $ mkVehicle faction v
 
 mkAbility :: AbilityType -> RawAbility -> FoundryData
-mkAbility abilityType raw =
+mkAbility aType raw =
   FoundryAbility
     $ Ability
         { abilityName        = mkName $ rawAbilityName raw
@@ -49,7 +50,7 @@ mkAbility abilityType raw =
         , abilityCost        = rawAbilityCost raw
         , abilitySummary     = mkDescription $ rawAbilitySummary raw
         , abilityDescription = mkDescription $ rawAbilityDescription raw
-        , abilityType        = abilityType
+        , abilityType        = aType
         }
 
 mkArmor :: Maybe Faction -> RawArmor -> Either T.Text FoundryData
@@ -132,7 +133,7 @@ mkBestiary raw = do
   size <- sizeFromText $ rawBestiarySize raw
   faction <- factionFromText $ rawBestiaryFaction raw
 
-  (normalOnlyByExp, expDifficulty) <-
+  (normalOnlyByExp, expDiff) <-
     difficultyTierValues
       (rawBestiaryName raw)
       "experience difficulty"
@@ -210,7 +211,7 @@ mkBestiary raw = do
       experiencePayout =
         ExperiencePayout
           { expBase       = 0
-          , expDifficulty = mkExperienceDifficulty expDifficulty
+          , expDifficulty = mkExperienceDifficulty expDiff
           }
 
       movement =
@@ -375,8 +376,8 @@ mkMeleeWeapons raw = traverse (mkMelee raw) . NE.toList $ rawMeleeBases raw
 mkMelee :: RawMeleeWeapon -> RawMeleeBase -> Either T.Text FoundryData
 mkMelee raw rawBase = do
   let mbFaction = eitherToMaybe . factionFromText $ rawMeleeFaction raw
-      weaponType = rawMeleeBaseType rawBase
-      weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
+      wType = rawMeleeBaseType rawBase
+      weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
       fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
       weight =
         Weight
@@ -395,7 +396,7 @@ mkMelee raw rawBase = do
           . T.split (== ']')
           $ T.filter (/= '[') specialsTxt
 
-      (tagSpecials, weaponTags) =
+      (tagSpecials, wTags) =
         L.unzip $ mapMaybe (L.unsnoc . T.split (== ' ')) tags
 
       (unknownSpecials, specialRules) =
@@ -419,13 +420,13 @@ mkMelee raw rawBase = do
         , weaponTrainings   = mkItemTrainings mbFaction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe MeleeGroup $ snd <$> weaponDetails
-        , weaponTags        = buildWeaponTags weaponTags
+        , weaponTags        = buildWeaponTags wTags
                                 $ rawMeleeBaseAttr rawBase
         , weaponFireModes   = mkFireModes fireModeMap
         , weaponAttack      = emptyAttack
         , weaponReload      = mkReload 0
         , weaponNickname    = Nothing
-        , weaponType        = WeaponType weaponType
+        , weaponType        = WeaponType wType
         , weaponMagCap      = mkMagazineCapacity 0
         , weaponAmmo        = mkAmmo ""
         , weaponAmmoGroup   = None
@@ -488,8 +489,8 @@ mkRanged :: Maybe Faction
 mkRanged mbFaction raw rawBase = do
   let faction = eitherToMaybe . factionFromText $ rawRangedFaction raw
       (name, nickname) = mkNameAndNickname $ rawRangedBaseName rawBase
-      weaponType = rawRangedBaseType rawBase
-      weaponDetails = Map.lookup (T.toUpper weaponType) weaponDetailsMap
+      wType = rawRangedBaseType rawBase
+      weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
       weight =
         Weight
           { weightEach = rawRangedWeight raw
@@ -507,7 +508,7 @@ mkRanged mbFaction raw rawBase = do
           . T.split (== ']')
           $ T.filter (/= '[') specialsTxt
 
-      (tagSpecials, weaponTags) =
+      (tagSpecials, wTags) =
         L.unzip $ mapMaybe (L.unsnoc . T.split (== ' ')) tags
 
       (unknownSpecials, specialRules) =
@@ -538,13 +539,13 @@ mkRanged mbFaction raw rawBase = do
         , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe Ranged $ snd <$> weaponDetails
-        , weaponTags        = buildWeaponTags weaponTags
+        , weaponTags        = buildWeaponTags wTags
                                 $ rawRangedBaseAttr rawBase
         , weaponFireModes   = mkFireModeMap $ rawRangedBaseROF rawBase
         , weaponAttack      = emptyAttack
         , weaponReload      = reload
         , weaponNickname    = nickname
-        , weaponType        = WeaponType weaponType
+        , weaponType        = WeaponType wType
         , weaponMagCap      = mkMagazineCapacity $ rawRangedBaseMagazine rawBase
         , weaponAmmo        = mkAmmo ""
         , weaponAmmoGroup   = None
@@ -561,8 +562,152 @@ mkRanged mbFaction raw rawBase = do
         }
 
 mkVehicle :: Maybe Faction -> RawVehicle -> Either T.Text FoundryData
-mkVehicle _mbFaction _raw =
-  Left "Made it to Foundry conversion"
+mkVehicle mbFaction raw = do
+  let errMsg reason =
+        T.unwords
+          [ "Cannot build Vehicle"
+          , rawVehicleName raw <> ":"
+          , reason
+          ]
+
+      (specialsTxt, propulsionTxt) =
+        case L.filter (T.any C.isAlphaNum) . T.split (== '.') $ rawVehicleAdditionalInfo raw of
+          [ g1, g2 ] ->
+            (g1, g2)
+
+          [ g1 ]
+            | Just True <- fmap (C.isDigit . fst) . T.uncons $ T.strip g1 ->
+                (T.empty, g1)
+
+            | otherwise ->
+                (g1, T.empty)
+
+          _ ->
+            (T.empty, T.empty)
+
+  faction <- maybeToEither (errMsg "no faction could be parsed") mbFaction
+  tonnes <-
+    case T.words . T.toLower $ rawVehicleWeight raw of
+      [ wt , unit ]
+        | unit == "kg"     -> Right . (/ 1000) . read $ T.unpack wt
+        | unit == "tonnes" -> Right . read $ T.unpack wt
+      _ -> Left . errMsg $ "Cannot parse weight " <> rawVehicleWeight raw
+
+  (characteristics, movement, propulsion, isWalker) <- do
+    mapLeft errMsg $ getVehicleStatsByType raw specialsTxt propulsionTxt
+
+  (operators, gunners) <- do
+    case fmap (T.words . T.strip) . T.split (== ',') <$> rawVehicleCrew raw of
+      Just [ [ o, opTxt ], [ g, grTxt ] ]
+        | T.isInfixOf "Operator" opTxt
+        , T.isInfixOf "Gunner" grTxt
+        , Just ops <- readMaybe $ T.unpack o
+        , ops > 0
+        , Just grs <- readMaybe $ T.unpack g ->
+            Right (ops, grs)
+
+      Just [ o : restOp ]
+        | T.isInfixOf "Operator" $ T.unwords restOp
+        , Just ops <- readMaybe $ T.unpack o
+        , ops > 0 ->
+            Right (ops, 0)
+
+      Nothing ->
+        Right (0, 0)
+
+      _ ->
+        Left
+          . errMsg
+          $ "Cannot parse crew " <> fromMaybe T.empty (rawVehicleCrew raw)
+
+  let (designation, variant) =
+        case fmap T.strip . T.splitOn " - " $ rawVehicleName raw of
+          [ d, v ] -> (d, Just v)
+          [ d ]    -> (d, Nothing)
+          _        -> (rawVehicleName raw, Nothing)
+
+      mbSize = eitherToMaybe . sizeFromText $ rawVehicleSize raw
+      dimensions =
+        Dimensions
+          { dimensionsLength = rawVehicleLength raw
+          , dimensionsWidth  = rawVehicleWidth  raw
+          , dimensionsHeight = rawVehicleHeight raw
+          , dimensionsWeight = tonnes
+          }
+
+      breakpoints =
+        Breakpoints_Vehicle
+          { breakpointsWEP  = mkBreakpoints $ rawVehicleBreakpointsWEP  raw
+          , breakpointsMOB  = mkBreakpoints $ rawVehicleBreakpointsMOB  raw
+          , breakpointsENG  = mkBreakpoints $ rawVehicleBreakpointsENG  raw
+          , breakpointsOP   = mkBreakpoints $ rawVehicleBreakpointsOP   raw
+          , breakpointsHULL = mkBreakpoints $ rawVehicleBreakpointsHULL raw
+          }
+
+      armor =
+        Armor_Vehicle
+          { armorFront  = rawVehicleArmorFront  raw
+          , armorBack   = rawVehicleArmorBack   raw
+          , armorSide   = rawVehicleArmorSide   raw
+          , armorTop    = rawVehicleArmorTop    raw
+          , armorBottom = rawVehicleArmorBottom raw
+          }
+
+      shields =
+        case ( rawVehicleShieldIntegrity raw
+             , rawVehicleShieldDelay     raw
+             , rawVehicleShieldRecharge  raw
+             ) of
+          (Just integrity, Just delay, Just recharge) ->
+            mkCharacterShields integrity recharge delay
+
+          _ ->
+            emptyCharacterShields
+
+      complement = T.count "[C]" $ rawVehicleDescription raw
+      crewNotes =
+        T.intercalate ", "
+          . catMaybes
+          $ [ rawVehicleCrew raw
+            , rawVehicleComplement raw
+            ]
+
+      (unknownSpecials, specialRules) =
+        buildVehicleSpecials raw specialsTxt isWalker
+
+      notes =
+        mkDescription
+          . T.intercalate "<br><br>"
+          . L.filter (not . T.null)
+          $ [ propulsionTxt
+            , T.intercalate ", " $ Set.toList unknownSpecials
+            , rawVehicleDescription raw
+            ]
+
+  Right
+    . FoundryVehicle
+    $ Vehicle
+        { vehicleName            = mkName $ rawVehicleName raw
+        , vehicleDesignation     = mkName designation -- Name
+        , vehicleVariant         = variant
+        , vehicleFaction         = faction
+        , vehiclePrice           = rawVehiclePrice raw
+        , vehicleExperience      = rawVehicleExperience raw
+        , vehicleSize            = mbSize
+        , vehicleDimensions      = dimensions
+        , vehicleCharacteristics = characteristics
+        , vehicleMovement        = movement
+        , vehicleBreakpoints     = breakpoints
+        , vehicleArmor           = armor
+        , vehicleShields         = shields
+        , vehicleSizePoints      = rawVehicleSizePoints raw
+        , vehicleWeaponPoints    = rawVehicleWeaponPoints raw
+        , vehicleCrew            = mkCrew operators gunners complement crewNotes
+        , vehicleSpecialRules    = specialRules
+        , vehiclePropulsion      = propulsion
+        , vehicleNotes           = notes
+        , vehicleWeapons         = [] -- TODO
+        }
 
 --
 -- Helpers
@@ -622,6 +767,184 @@ buildSpecials specials =
           _                 -> (Set.insert txt unk, rules)
 
    in L.foldl' updateSpecialRules (Set.empty, emptyWeaponSpecialRules) specials
+
+buildVehicleSpecials :: RawVehicle
+                     -> T.Text
+                     -> Bool
+                     -> (Set.Set T.Text, SpecialRules_Vehicle)
+buildVehicleSpecials raw specials isWalker =
+  let boolToMaybe txt cond = B.bool Nothing (Just txt) cond
+      extract = tryParseInt . T.takeWhile (/= ')') . T.drop 1 . T.dropWhile (/= '(')
+      updateSpecialRules (unk, rules) txt =
+        case T.strip . T.toLower <$> T.words txt of
+          "all-terrain" : _ -> (unk, rules { allTerrain      = Just ()     })
+          "antigrav"    : _ -> (unk, rules { antiGrav        = Just ()     })
+          "autoloader"  : _ -> (unk, rules { autoloader      = Just ()     })
+          "boost"       : _ -> (unk, rules { boost           = extract txt })
+          "continuous"  : _ -> (unk, rules { continuousTrack = Just ()     })
+          "heavy"       : _ -> (unk, rules { heavyPlating    = Just ()     })
+          "neural"      : _ -> (unk, rules { neuralInterface = Just ()     })
+          "open-top"    : _ -> (unk, rules { openTop         = Just ()     })
+          "slipspace"   : _ -> (unk, rules { slipspace       = Just ()     })
+          "walker"      : _ -> (unk, rules { walkerStomp     = Just ()     })
+          _                 -> (Set.insert txt unk, rules)
+
+   in L.foldl' updateSpecialRules (Set.empty, emptyVehicleSpecialRules)
+        . catMaybes
+        . L.cons
+            ( boolToMaybe "autoloader"
+                . not
+                . L.null
+                $ rawVehicleRangedWeapons raw
+            )
+        . L.cons
+            ( boolToMaybe "slipspace"
+                . T.isInfixOf "slipspace"
+                . T.toLower
+                $ rawVehicleDescription raw
+            )
+        . L.cons (boolToMaybe "walker" isWalker)
+        . fmap (Just . T.strip)
+        $ T.split (== ',') specials
+
+getVehicleStatsByType :: RawVehicle
+                      -> T.Text
+                      -> T.Text
+                      -> Either T.Text ( Characteristics_Vehicle
+                                       , Movement_Vehicle
+                                       , Propulsion
+                                       , Bool
+                                       )
+getVehicleStatsByType raw specialsTxt propulsionTxt =
+  let mbWalkerStats = do
+        str  <- rawVehicleSTR raw
+        mStr <- rawVehicleMythicSTR raw
+        agi  <- rawVehicleAGI raw
+        mAgi <- rawVehicleMythicAGI raw
+        Just (str, mStr, agi, mAgi)
+
+      mbMovement = do
+        acc <- rawVehicleAccelerate raw
+        brk <- rawVehicleBrake raw
+        spd <- rawVehicleTopSpeed raw
+        Just (acc, brk, spd, rawVehicleManeuver raw)
+
+   in case ( getTurretStats raw <$> rawVehicleTurretStats raw
+           , getWalkerStats specialsTxt propulsionTxt <$> mbWalkerStats
+           , getVehicleStats specialsTxt propulsionTxt <$> mbMovement
+           ) of
+        (Just turret, _, _)  -> turret
+        (_, Just walker, _)  -> walker
+        (_, _, Just vehicle) -> vehicle
+        _ -> Left $ "Couldn't build stats for " <> rawVehicleName raw
+
+getTurretStats :: RawVehicle
+               -> T.Text
+               -> Either T.Text ( Characteristics_Vehicle
+                                , Movement_Vehicle
+                                , Propulsion
+                                , Bool
+                                )
+getTurretStats raw turretStats = do
+  (wfr, int, per) <-
+    case traverse (readMaybe . T.unpack) $ T.split (== ';') turretStats of
+      Just [ wfr, int, per ] -> Right (wfr, int, per)
+      _ -> Left $ "Could not parse turret stats: " <> rawVehicleName raw
+
+  Right
+    ( emptyVehicleCharacteristics
+        { vehCharacteristicsWFR = wfr
+        , vehCharacteristicsINT = int
+        , vehCharacteristicsPER = per
+        }
+    , emptyVehicleMovement
+    , Propulsion
+        { propulsionType  = Stationary
+        , propulsionCount = 0
+        }
+    , False
+    )
+
+getVehicleStats :: T.Text
+                -> T.Text
+                -> (Int, Int, Int, Int)
+                -> Either T.Text ( Characteristics_Vehicle
+                                 , Movement_Vehicle
+                                 , Propulsion
+                                 , Bool
+                                 )
+getVehicleStats specialsTxt propulsionTxt (acc, brk, spd, man) = do
+  propulsion <- findVehiclePropulsion specialsTxt propulsionTxt
+
+  let pType = propulsionType propulsion
+      count = propulsionCount propulsion
+
+  if hasPermissiblePropulsionCountForType count pType
+     then
+       Right
+         ( emptyVehicleCharacteristics
+         , emptyVehicleMovement
+             { movementAccelerate = acc
+             , movementBrake      = brk
+             , movementSpeed      = spd
+             , movementManeuver   = man
+             }
+         , propulsion
+         , False
+         )
+
+     else
+       Left
+         $ T.unwords
+             [ "Inappropriate propulsion count"
+             , T.pack $ show count
+             , "for type"
+             , propulsionTypeToText pType
+             ]
+
+getWalkerStats :: T.Text
+               -> T.Text
+               -> (Int, Int, Int, Int)
+               -> Either T.Text ( Characteristics_Vehicle
+                                , Movement_Vehicle
+                                , Propulsion
+                                , Bool
+                                )
+getWalkerStats specialsTxt propulsionTxt (str, mStr, agi, mAgi) = do
+  propulsion <- do
+    unchecked <- findVehiclePropulsion specialsTxt propulsionTxt
+    case (propulsionType unchecked, propulsionCount unchecked) of
+      (Legs, 3) -> Right $ unchecked { propulsionCount = 2 }
+      _ -> Right unchecked
+
+  let count = propulsionCount propulsion
+      pType = propulsionType propulsion
+
+  if hasPermissiblePropulsionCountForType count pType
+     then
+       Right
+         ( emptyVehicleCharacteristics
+             { vehCharacteristicsSTR       = str
+             , vehCharacteristicsMythicSTR = mStr
+             , vehCharacteristicsAGI       = agi
+             , vehCharacteristicsMythicAGI = mAgi
+             }
+         , emptyVehicleMovement
+             { movementWalkerJump = div mStr 2
+             , movementWalkerLeap = mStr
+             }
+         , propulsion
+         , True
+         )
+
+     else
+       Left
+         $ T.unwords
+             [ "Inappropriate propulsion count"
+             , T.pack $ show count
+             , "for type"
+             , propulsionTypeToText pType
+             ]
 
 findArmorStatAdjustments :: RawArmor -> StatAdjustments -> StatAdjustments
 findArmorStatAdjustments raw startingStats =
@@ -730,6 +1053,12 @@ findTrainings faction name =
             { trainingsEquipment = Set.fromList [ Basic, Infantry ]
             , trainingsFaction   = Set.singleton faction
             }
+
+findVehiclePropulsion :: T.Text -> T.Text -> Either T.Text Propulsion
+findVehiclePropulsion specialsTxt =
+  (=<<) (combinePropulsions . catMaybes)
+    . traverse (propulsionFromText specialsTxt . T.strip)
+    . T.split (== ',')
 
 mkFireModeMap :: T.Text -> FireModes
 mkFireModeMap modes =

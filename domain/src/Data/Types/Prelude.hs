@@ -39,8 +39,8 @@ module Data.Types.Prelude
   , Movement_Vehicle(..), emptyVehicleMovement
   , MythicCharacteristics(..)
   , MythicCharacteristics_Flood(..)
-  , Propulsion(..), combinePropulsions
-  , PropulsionType(..), propulsionTypeFromText, propulsionCountsForType
+  , Propulsion(..), propulsionFromText, combinePropulsions
+  , PropulsionType(..), propulsionTypeToText, hasPermissiblePropulsionCountForType
   , Protection(..)
   , Shields(..), emptyShields
   , Size(..), sizeFromText
@@ -96,7 +96,9 @@ import           Data.Monoid (mappend)
 import           Data.Ratio ((%))
 import qualified Data.Set as Set
 import qualified Data.Text as T
+import           Data.Tuple (fst)
 import           GHC.Types (Double)
+import           Text.Read (readMaybe)
 import           Text.Show (Show, show)
 
 data AbilityType
@@ -1218,8 +1220,8 @@ instance ToJSON Movement_Vehicle where
 
       , "maneuver" .=
           object
-            [ "value" .= valueInt 0
-            , "max"   .= movementManeuver m
+            [ "base"  .= movementManeuver m
+            , "total" .= valueInt 0
             , "owner" .= T.empty
             ]
 
@@ -1331,19 +1333,56 @@ instance ToJSON Propulsion where
             ]
       ]
 
+propulsionFromText :: T.Text -> T.Text -> Either T.Text (Maybe Propulsion)
+propulsionFromText specialsTxt propulsionTxt = do
+  case T.words propulsionTxt of
+    [ ct, pType ] ->
+      case (readMaybe $ T.unpack ct, propulsionTypeFromText pType) of
+        (Just count, Right (Just propType)) ->
+          Right
+           . Just
+           $ Propulsion
+               { propulsionType = propType
+               , propulsionCount = count
+               }
+
+        (_, Right Nothing) ->
+          Right Nothing
+
+        (Nothing, _) ->
+          Left $ "Could not parse propulsion count " <> ct
+
+        (_, Left err) ->
+          Left err
+
+    _ | T.isInfixOf "Antigrav" specialsTxt ->
+          Right
+            . Just
+            $ Propulsion
+                { propulsionType = Thrusters
+                , propulsionCount = 1
+                }
+
+      | otherwise ->
+          Left $ "Not enough data to parse propulsion: " <> propulsionTxt
+
 combinePropulsions :: [Propulsion] -> Either T.Text Propulsion
 combinePropulsions ps =
-  case Set.fromList $ propulsionType <$> ps of
+  case Map.fromList $ (\p -> (propulsionType p, p)) <$> ps of
     deduped
-      | Set.size deduped == 0 ->
+      | Map.size deduped == 0 ->
           Left "Cannot have no propulsion"
 
-      | Set.size deduped == 1 ->
+      | Map.size deduped == 1 ->
           Right
             $ Propulsion
-                { propulsionType  = Set.elemAt 0 deduped
+                { propulsionType  = fst $ Map.elemAt 0 deduped
                 , propulsionCount = sum $ propulsionCount <$> ps
                 }
+
+      | Map.size deduped > 1
+      , Just treads <- Map.lookup Treads deduped ->
+          Right treads
 
       | otherwise ->
           Left "Cannot mix propulsion types"
@@ -1356,14 +1395,15 @@ data PropulsionType
   | Wheels
   deriving stock (Eq, Ord)
 
-propulsionTypeFromText :: T.Text -> Either T.Text PropulsionType
+propulsionTypeFromText :: T.Text -> Either T.Text (Maybe PropulsionType)
 propulsionTypeFromText txt =
   case txt of
-    "Jets"       -> Right Thrusters
-    "Legs"       -> Right Legs
-    "Propellers" -> Right Thrusters
-    "Tracks"     -> Right Treads
-    "Wheels"     -> Right Wheels
+    "Arms"       -> Right Nothing
+    "Jets"       -> Right $ Just Thrusters
+    "Legs"       -> Right $ Just Legs
+    "Propellers" -> Right $ Just Thrusters
+    "Tracks"     -> Right $ Just Treads
+    "Wheels"     -> Right $ Just Wheels
     _            -> Left $ "Unknown propulsion type: " <> txt
 
 propulsionTypeToText :: PropulsionType -> T.Text
@@ -1375,14 +1415,14 @@ propulsionTypeToText pt =
     Treads     -> "treads"
     Wheels     -> "wheels"
 
-propulsionCountsForType :: PropulsionType -> [Int]
-propulsionCountsForType pt =
+hasPermissiblePropulsionCountForType :: Int -> PropulsionType -> Bool
+hasPermissiblePropulsionCountForType count pt =
   case pt of
-    Legs       -> [ 2, 4, 6 ]
-    Stationary -> []
-    Thrusters  -> [ minBound..maxBound ]
-    Treads     -> [ 2, 4, 6, 8 ]
-    Wheels     -> [ 3, 4, 6, 8 ]
+    Legs       -> L.elem count [ 2, 4, 6 ]
+    Stationary -> True
+    Thrusters  -> True
+    Treads     -> L.elem count [ 2, 4, 6, 8 ]
+    Wheels     -> L.elem count [ 3, 4, 6, 8 ]
 
 data Protection =
   Protection
