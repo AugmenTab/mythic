@@ -16,6 +16,7 @@ module Data.Types.Ingest
 import           Flipstone.Prelude
 
 import           Control.Monad.Extra (mapMaybeM)
+import qualified Data.ByteString as BS
 import qualified Data.Csv as CSV
 import           Data.Csv ((.:))
 import qualified Data.List as L
@@ -259,10 +260,10 @@ data RawMeleeBase =
 data RawMeleeWeapon =
   RawMeleeWeapon
     { rawMeleeName    :: T.Text
-    , rawMeleeBases   :: NE.NonEmpty RawMeleeBase
     , rawMeleeFaction :: T.Text
     , rawMeleeWeight  :: Double
     , rawMeleePrice   :: Int
+    , rawMeleeBases   :: NE.NonEmpty RawMeleeBase
     }
 
 instance CSV.FromNamedRecord RawMeleeWeapon where
@@ -292,10 +293,10 @@ instance CSV.FromNamedRecord RawMeleeWeapon where
 
     RawMeleeWeapon
       <$> m .: "Name"
-      <*> pure (NE.appendList base variant)
       <*> m .: "COMP_faction"
       <*> m .: "COMP_weight"
       <*> m .: "COMP_price"
+      <*> pure (NE.appendList base variant)
 
 data RawPermutation =
   RawPermutation
@@ -335,10 +336,10 @@ data RawRangedBase =
 data RawRangedWeapon =
   RawRangedWeapon
     { rawRangedName    :: T.Text
-    , rawRangedBases   :: NE.NonEmpty RawRangedBase
     , rawRangedFaction :: T.Text
     , rawRangedWeight  :: Double
     , rawRangedPrice   :: Int
+    , rawRangedBases   :: NE.NonEmpty RawRangedBase
     }
 
 instance CSV.FromNamedRecord RawRangedWeapon where
@@ -368,10 +369,10 @@ instance CSV.FromNamedRecord RawRangedWeapon where
 
     RawRangedWeapon
       <$> r .: "Name"
-      <*> pure (NE.appendList base variant)
       <*> r .: "COMP_faction"
       <*> r .: "COMP_weight"
       <*> r .: "COMP_price"
+      <*> pure (NE.appendList base variant)
 
 data RawVehicle =
   RawVehicle
@@ -418,9 +419,54 @@ data RawVehicle =
 
 instance CSV.FromNamedRecord RawVehicle where
   parseNamedRecord v = do
+    faction <- v .: "COMP_faction"
+
+    let toBS :: Int -> BS.ByteString
+        toBS = TE.encodeUtf8 . T.pack . show
+
+        mkMelee n = do
+          name <- v .: ("Comp_name[" <> n <> "]")
+          if T.null name
+             then pure Nothing
+             else
+               fmap (Just . RawMeleeWeapon name faction 0 0 . NE.singleton)
+                 $ RawMeleeBase name
+                     <$> v .: ("COMP_type[" <> n <> "]")
+                     <*> v .: ("COMP_attribute[" <> n <> "]")
+                     <*> v .: ("COMP_range[" <> n <> "]")
+                     <*> v .: ("COMP_damage_roll[" <> n <> "]")
+                     <*> v .: ("COMP_damage_base[" <> n <> "]")
+                     <*> v .: ("COMP_pierce[" <> n <> "]")
+                     <*> v .: ("COMP_hitmod[" <> n <> "]")
+                     <*> v .: ("COMP_breakpoints[" <> n <> "]")
+                     <*> v .: ("COMP_base_add[" <> n <> "]")
+                     <*> v .: ("COMP_pierce_add[" <> n <> "]")
+                     <*> v .: ("COMP_special_rules[" <> n <> "]")
+                     <*> v .: ("COMP_description[" <> n <> "]")
+
+        mkRanged n = do
+          name <- v .: ("COMP_name[" <> n <> "]")
+          if T.null name
+             then pure Nothing
+             else
+               fmap (Just . RawRangedWeapon name faction 0 0 . NE.singleton)
+                 $ RawRangedBase name
+                     <$> v .: ("COMP_type[" <> n <> "]")
+                     <*> v .: ("COMP_attribute[" <> n <> "]")
+                     <*> v .: ("COMP_range[" <> n <> "]")
+                     <*> v .: ("COMP_damage_roll[" <> n <> "]")
+                     <*> v .: ("COMP_damage_base[" <> n <> "]")
+                     <*> v .: ("COMP_pierce[" <> n <> "]")
+                     <*> v .: ("COMP_hitmod[" <> n <> "]")
+                     <*> v .: ("COMP_magazine[" <> n <> "]")
+                     <*> v .: ("COMP_rof[" <> n <> "]")
+                     <*> v .: ("COMP_reload[" <> n <> "]")
+                     <*> v .: ("COMP_special_rules[" <> n <> "]")
+                     <*> v .: ("COMP_description[" <> n <> "]")
+
     RawVehicle
       <$> v .: "Name"
-      <*> v .: "COMP_faction"
+      <*> pure faction
       <*> v .: "COMP_price"
       <*> v .: "Comp_experience"
       <*> v .: "COMP_length"
@@ -456,8 +502,8 @@ instance CSV.FromNamedRecord RawVehicle where
       <*> (positiveInt <$> v .: "Comp_shield_rate")
       <*> v .: "Comp_aditional_info"
       <*> v .: "COMP_description"
-      <*> pure [] -- TODO
-      <*> pure [] -- TODO
+      <*> mapMaybeM (mkMelee . toBS) [ 0..7 ]
+      <*> mapMaybeM (mkRanged . toBS) [ 8..19 ]
 
 --
 -- Helpers

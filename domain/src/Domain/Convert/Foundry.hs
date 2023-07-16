@@ -36,9 +36,9 @@ mkFoundry (faction, _) rawData =
         BestiaryData    b -> fmap L.singleton $ mkBestiary b
         EquipmentData   e -> fmap L.singleton $ mkEquipment faction e
         FloodData       f -> fmap L.singleton $ mkFlood f
-        MeleeData       m -> mkMeleeWeapons m
+        MeleeData       m -> mkMeleeWeapons False m
         PermutationData p -> fmap L.singleton $ mkPermutation faction p
-        RangedData      r -> mkRangedWeapons faction r
+        RangedData      r -> mkRangedWeapons False faction r
         VehicleData     v -> fmap L.singleton $ mkVehicle faction v
 
 mkAbility :: AbilityType -> RawAbility -> FoundryData
@@ -67,6 +67,7 @@ mkArmor mbFaction raw = do
         Weight
           { weightEach          = rawArmorWeight raw
           , weightSelfSupported = rawArmorSelfSupported raw
+          , weightIsEmbedded    = False
           }
 
       desc = rawArmorDescription raw
@@ -290,6 +291,7 @@ mkEquipment mbFaction raw = do
           -- concerned. This can be updated if/when a user points one out or one
           -- gets added to the game.
           , weightSelfSupported = False
+          , weightIsEmbedded    = False
           }
 
   Right
@@ -370,18 +372,23 @@ mkFlood raw = do
         , floodItems                 = abilities
         }
 
-mkMeleeWeapons :: RawMeleeWeapon -> Either T.Text [FoundryData]
-mkMeleeWeapons raw = traverse (mkMelee raw) . NE.toList $ rawMeleeBases raw
+mkMeleeWeapons :: Embedded -> RawMeleeWeapon -> Either T.Text [FoundryData]
+mkMeleeWeapons embedded raw =
+  traverse (mkMelee embedded raw) . NE.toList $ rawMeleeBases raw
 
-mkMelee :: RawMeleeWeapon -> RawMeleeBase -> Either T.Text FoundryData
-mkMelee raw rawBase = do
+mkMelee :: Embedded
+        -> RawMeleeWeapon
+        -> RawMeleeBase
+        -> Either T.Text FoundryData
+mkMelee embedded raw rawBase = do
   let mbFaction = eitherToMaybe . factionFromText $ rawMeleeFaction raw
       wType = rawMeleeBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
       fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
       weight =
         Weight
-          { weightEach = rawMeleeWeight raw
+          { weightEach       = rawMeleeWeight raw
+          , weightIsEmbedded = embedded
           -- No Item supports its own weight as far as the descriptions are
           -- concerned. This can be updated if/when a user points one out or one
           -- gets added to the game.
@@ -466,7 +473,7 @@ mkPermutation mbFaction raw = do
         , equipmentPrice       = mkItemPrice $ rawPermutationPrice raw
         , equipmentBreakpoints = mkBreakpoints 0
         , equipmentTrainings   = mkItemTrainings (Just faction) Nothing
-        , equipmentWeight      = emptyWeight
+        , equipmentWeight      = emptyWeight False
         , equipmentDescription = mkDescription desc
         , equipmentShields     = Nothing
 
@@ -476,24 +483,29 @@ mkPermutation mbFaction raw = do
         , equipmentCharacteristics = Nothing
         }
 
-mkRangedWeapons :: Maybe Faction
+mkRangedWeapons :: Embedded
+                -> Maybe Faction
                 -> RawRangedWeapon
                 -> Either T.Text [FoundryData]
-mkRangedWeapons mbFaction raw =
-  traverse (mkRanged mbFaction raw) . NE.toList $ rawRangedBases raw
+mkRangedWeapons embedded mbFaction raw =
+  traverse (mkRanged mbFaction embedded raw)
+    . NE.toList
+    $ rawRangedBases raw
 
 mkRanged :: Maybe Faction
+         -> Bool
          -> RawRangedWeapon
          -> RawRangedBase
          -> Either T.Text FoundryData
-mkRanged mbFaction raw rawBase = do
+mkRanged mbFaction isEmbedded raw rawBase = do
   let faction = eitherToMaybe . factionFromText $ rawRangedFaction raw
       (name, nickname) = mkNameAndNickname $ rawRangedBaseName rawBase
       wType = rawRangedBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
       weight =
         Weight
-          { weightEach = rawRangedWeight raw
+          { weightEach       = rawRangedWeight raw
+          , weightIsEmbedded = isEmbedded
           -- No Item supports its own weight as far as the descriptions are
           -- concerned. This can be updated if/when a user points one out or one
           -- gets added to the game.
@@ -512,7 +524,11 @@ mkRanged mbFaction raw rawBase = do
         L.unzip $ mapMaybe (L.unsnoc . T.split (== ' ')) tags
 
       (unknownSpecials, specialRules) =
-        buildSpecials $ T.split (== ',') specials <> fmap T.unwords tagSpecials
+        buildSpecials
+          . catMaybes
+          . L.cons (findSpecialRuleLinked $ nameText name)
+          . fmap Just
+          $ T.split (== ',') specials <> fmap T.unwords tagSpecials
 
       description =
         mkDescription $ T.concat
@@ -584,6 +600,16 @@ mkVehicle mbFaction raw = do
 
           _ ->
             (T.empty, T.empty)
+
+  meleeWeapons <-
+    fmap concat
+      . traverse (mkMeleeWeapons True)
+      $ rawVehicleMeleeWeapons raw
+
+  rangedWeapons <-
+    fmap concat
+      . traverse (mkRangedWeapons True mbFaction)
+      $ rawVehicleRangedWeapons raw
 
   faction <- maybeToEither (errMsg "no faction could be parsed") mbFaction
   tonnes <-
@@ -706,7 +732,7 @@ mkVehicle mbFaction raw = do
         , vehicleSpecialRules    = specialRules
         , vehiclePropulsion      = propulsion
         , vehicleNotes           = notes
-        , vehicleWeapons         = [] -- TODO
+        , vehicleWeapons         = meleeWeapons <> rangedWeapons
         }
 
 --
@@ -1027,6 +1053,15 @@ findShieldsIn desc =
 
         _ ->
           Nothing
+
+findSpecialRuleLinked :: T.Text -> Maybe T.Text
+findSpecialRuleLinked txt =
+  case T.words . T.takeWhile (/= ')') . T.drop 1 $ T.dropWhile (/= '(') txt of
+    [ val, "Linked" ] ->
+      Just $ "Linked (" <> val <> ")"
+
+    _ ->
+      Nothing
 
 findTrainings :: Faction -> T.Text -> Trainings
 findTrainings Forerunner _name =

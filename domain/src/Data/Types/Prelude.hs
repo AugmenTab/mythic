@@ -82,6 +82,7 @@ module Data.Types.Prelude
   , CompendiumData
   , CompendiumMap
   , DifficultyTierValuesWithSingleLevelFlag
+  , Embedded
   ) where
 
 import           Flipstone.Prelude
@@ -720,6 +721,9 @@ instance ToJSON Dimensions where
       , "height" .= dimensionsHeight d
       , "weight" .= dimensionsWeight d
       ]
+
+-- This alias indicates whether an entity is embedded on another entity.
+type Embedded = Bool
 
 data EntryType
   = FoundryActor ActorType
@@ -2162,6 +2166,7 @@ data Weight =
   Weight
     { weightEach          :: Double
     , weightSelfSupported :: Bool
+    , weightIsEmbedded    :: Embedded
     }
 
 instance ToJSON Weight where
@@ -2172,16 +2177,17 @@ instance ToJSON Weight where
                                    else 0
            , "each"          .= weightEach w
            , "quantity"      .= valueInt 1
-           , "carried"       .= False
-           , "equipped"      .= False
+           , "carried"       .= weightIsEmbedded w
+           , "equipped"      .= weightIsEmbedded w
            , "selfSupported" .= weightSelfSupported w
            ]
 
-emptyWeight :: Weight
-emptyWeight =
+emptyWeight :: Bool -> Weight
+emptyWeight isEmbedded =
   Weight
     { weightEach          = 0
     , weightSelfSupported = False
+    , weightIsEmbedded    = isEmbedded
     }
 
 newtype WeaponType = WeaponType { unWeaponType :: T.Text }
