@@ -8,7 +8,7 @@ import           Domain.Helpers (tryParseInt)
 
 import qualified Data.Bool as B
 import qualified Data.Char as C
-import           Data.Either.Extra (eitherToMaybe, maybeToEither)
+import           Data.Either.Extra (eitherToMaybe)
 import qualified Data.List as L
 import qualified Data.List.Extra as L
 import qualified Data.List.NonEmpty as NE
@@ -23,23 +23,23 @@ import           Text.Show (show)
 
 toFoundry :: CompendiumMap [RawData]
           -> Either T.Text (CompendiumMap [FoundryData])
-toFoundry = Map.traverseWithKey mkFoundry
+toFoundry = traverse mkFoundry
 
-mkFoundry :: CompendiumData -> [RawData] -> Either T.Text [FoundryData]
-mkFoundry (faction, _) rawData =
+mkFoundry :: [RawData] -> Either T.Text [FoundryData]
+mkFoundry rawData =
   fmap concat
     . for rawData
     $ \raw ->
       case raw of
         AbilityData     a -> Right [ mkAbility TrueAbility a ]
-        ArmorData       a -> fmap L.singleton $ mkArmor faction a
+        ArmorData       a -> fmap L.singleton $ mkArmor a
         BestiaryData    b -> fmap L.singleton $ mkBestiary b
-        EquipmentData   e -> fmap L.singleton $ mkEquipment faction e
+        EquipmentData   e -> fmap L.singleton $ mkEquipment e
         FloodData       f -> fmap L.singleton $ mkFlood f
         MeleeData       m -> mkMeleeWeapons False m
-        PermutationData p -> fmap L.singleton $ mkPermutation faction p
-        RangedData      r -> mkRangedWeapons False faction r
-        VehicleData     v -> fmap L.singleton $ mkVehicle faction v
+        PermutationData p -> fmap L.singleton $ mkPermutation p
+        RangedData      r -> mkRangedWeapons False r
+        VehicleData     v -> fmap L.singleton $ mkVehicle v
 
 mkAbility :: AbilityType -> RawAbility -> FoundryData
 mkAbility aType raw =
@@ -53,15 +53,9 @@ mkAbility aType raw =
         , abilityType        = aType
         }
 
-mkArmor :: Maybe Faction -> RawArmor -> Either T.Text FoundryData
-mkArmor mbFaction raw = do
-  faction <-
-    flip maybeToEither mbFaction
-      $ T.unwords
-          [ "Cannot build Armor"
-          , rawArmorName raw <> ":"
-          , "no faction could be parsed."
-          ]
+mkArmor :: RawArmor -> Either T.Text FoundryData
+mkArmor raw = do
+  faction <- factionFromText $ rawArmorFaction raw
 
   let weight =
         Weight
@@ -273,15 +267,9 @@ mkBestiary raw = do
         , bestiaryItems            = abilities
         }
 
-mkEquipment :: Maybe Faction -> RawEquipment -> Either T.Text FoundryData
-mkEquipment mbFaction raw = do
-  faction <-
-    flip maybeToEither mbFaction
-      $ T.unwords
-          [ "Cannot build Equipment"
-          , rawEquipmentName raw <> ":"
-          , "no faction could be parsed."
-          ]
+mkEquipment :: RawEquipment -> Either T.Text FoundryData
+mkEquipment raw = do
+  faction <- factionFromText $ rawEquipmentFaction raw
 
   let desc = rawEquipmentDescription raw
       weight =
@@ -449,15 +437,10 @@ mkMelee embedded raw rawBase = do
         , weaponCharacteristics = Nothing
         }
 
-mkPermutation :: Maybe Faction -> RawPermutation -> Either T.Text FoundryData
-mkPermutation mbFaction raw = do
+mkPermutation :: RawPermutation -> Either T.Text FoundryData
+mkPermutation raw = do
   faction <-
-    flip maybeToEither mbFaction
-      $ T.unwords
-          [ "Cannot build Permutation"
-          , rawPermutationName raw <> ":"
-          , "no faction could be parsed."
-          ]
+    factionFromText $ rawPermutationFaction raw
 
   let desc =
         T.intercalate "<br><br>"
@@ -484,21 +467,19 @@ mkPermutation mbFaction raw = do
         }
 
 mkRangedWeapons :: Embedded
-                -> Maybe Faction
                 -> RawRangedWeapon
                 -> Either T.Text [FoundryData]
-mkRangedWeapons embedded mbFaction raw =
-  traverse (mkRanged mbFaction embedded raw)
+mkRangedWeapons embedded raw =
+  traverse (mkRanged embedded raw)
     . NE.toList
     $ rawRangedBases raw
 
-mkRanged :: Maybe Faction
-         -> Bool
+mkRanged :: Bool
          -> RawRangedWeapon
          -> RawRangedBase
          -> Either T.Text FoundryData
-mkRanged mbFaction isEmbedded raw rawBase = do
-  let faction = eitherToMaybe . factionFromText $ rawRangedFaction raw
+mkRanged isEmbedded raw rawBase = do
+  let mbFaction = eitherToMaybe . factionFromText $ rawRangedFaction raw
       (name, nickname) = mkNameAndNickname $ rawRangedBaseName rawBase
       wType = rawRangedBaseType rawBase
       weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
@@ -552,7 +533,7 @@ mkRanged mbFaction isEmbedded raw rawBase = do
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawRangedPrice raw
         , weaponBreakpoints = mkBreakpoints 0
-        , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
+        , weaponTrainings   = mkItemTrainings mbFaction $ fst <$> weaponDetails
         , weaponWeight      = weight
         , weaponGroup       = fromMaybe Ranged $ snd <$> weaponDetails
         , weaponTags        = buildWeaponTags wTags
@@ -577,8 +558,8 @@ mkRanged mbFaction isEmbedded raw rawBase = do
         , weaponCharacteristics = Nothing
         }
 
-mkVehicle :: Maybe Faction -> RawVehicle -> Either T.Text FoundryData
-mkVehicle mbFaction raw = do
+mkVehicle :: RawVehicle -> Either T.Text FoundryData
+mkVehicle raw = do
   let errMsg reason =
         T.unwords
           [ "Cannot build Vehicle"
@@ -608,10 +589,10 @@ mkVehicle mbFaction raw = do
 
   rangedWeapons <-
     fmap concat
-      . traverse (mkRangedWeapons True mbFaction)
+      . traverse (mkRangedWeapons True)
       $ rawVehicleRangedWeapons raw
 
-  faction <- maybeToEither (errMsg "no faction could be parsed") mbFaction
+  faction <- factionFromText $ rawVehicleFaction raw
   tonnes <-
     case T.words . T.toLower $ rawVehicleWeight raw of
       [ wt , unit ]

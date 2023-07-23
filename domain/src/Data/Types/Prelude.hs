@@ -24,7 +24,7 @@ module Data.Types.Prelude
   , EquipmentTraining(..), allEquipmentTrainings
   , ExperienceDifficulty, emptyExperienceDifficulty, mkExperienceDifficulty
   , ExperiencePayout(..)
-  , Faction(..), factions, compendiumFactionFromText, factionFromText, factionText
+  , Faction(..), factions, compendiumFaction, factionFromText, factionText
   , FactionTraining, factionTrainingFor
   , FirearmType
   , FireMode(..), fireModeFromText
@@ -79,7 +79,6 @@ module Data.Types.Prelude
   , WeaponType(..)
 
   -- Type Aliases
-  , CompendiumData
   , CompendiumMap
   , DifficultyTierValuesWithSingleLevelFlag
   , Embedded
@@ -638,8 +637,7 @@ mkCompendiumDetails = CompendiumDetails
 compendiumDetails :: CompendiumDetails -> T.Text
 compendiumDetails (CompendiumDetails t) = t
 
-type CompendiumData = (Maybe Faction, CompendiumDetails)
-type CompendiumMap entries = Map.Map CompendiumData entries
+type CompendiumMap entries = Map.Map CompendiumDetails entries
 
 newtype Contamination = Contamination Int
   deriving newtype (ToJSON)
@@ -859,8 +857,8 @@ factions =
   , Forerunner
   ]
 
-compendiumFactionFromText :: T.Text -> Faction
-compendiumFactionFromText = fromRight OtherFaction . factionFromText
+compendiumFaction :: Maybe Faction -> Faction
+compendiumFaction = fromMaybe OtherFaction
 
 factionFromText :: T.Text -> Either T.Text Faction
 factionFromText txt =

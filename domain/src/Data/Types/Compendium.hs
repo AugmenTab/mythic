@@ -1,10 +1,11 @@
 module Data.Types.Compendium
   ( Compendium(..)
+  , mkCompendiumName
+  , mkCompendiumPath
   , Entry(..)
   , EntryID, mkEntryID, idText
   , Label, mkCompendiumLabel, mkItemLabel, labelText
-  , mkCompendiumName
-  , mkCompendiumPath
+  , Folder, mkFolder
   ) where
 
 import           Flipstone.Prelude
@@ -14,7 +15,6 @@ import           Domain.JSON
 
 import           Data.Hashable (hash)
 import qualified Data.List as L
-import           Data.Maybe (catMaybes)
 import qualified Data.Text as T
 import           Data.Vector (Vector, (!))
 import qualified Data.Vector as V
@@ -40,19 +40,14 @@ instance ToJSON (Compendium item) where
            , "system"  .= valueText "mythic"
            ]
 
-mkCompendiumName :: Maybe Faction -> CompendiumDetails -> Name
-mkCompendiumName mbFaction details =
+mkCompendiumName :: CompendiumDetails -> Name
+mkCompendiumName =
   mkName
     . T.toLower
     . T.intercalate "-"
-    $ catMaybes
-        [ Just
-            . T.intercalate "-"
-            . L.filter (/= "-")
-            . T.words
-            $ compendiumDetails details
-        , factionText <$> mbFaction
-        ]
+    . L.filter (/= "-")
+    . T.words
+    . compendiumDetails
 
 mkCompendiumPath :: Name -> FilePath
 mkCompendiumPath name =
@@ -60,22 +55,21 @@ mkCompendiumPath name =
 
 data Entry entry =
   Entry
-    { entryId    :: EntryID
-    , entryName  :: Name
-    , entryImg   :: Img
-    , entryType  :: EntryType
-    , entryData  :: entry
-    , entryToken :: Maybe Token
-    , entryItems :: [Entry FoundryData]
+    { entryId     :: EntryID
+    , entryName   :: Name
+    , entryImg    :: Img
+    , entryType   :: EntryType
+    , entryData   :: entry
+    , entryToken  :: Maybe Token
+    , entryItems  :: [Entry FoundryData]
+    , entryFolder :: Maybe Folder
     }
 
 instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
   toJSON e =
     let EntryID _id = entryId e
         ownership =
-          object [ "default"       .= valueInt 0
-                 , keyFromText _id .= valueInt 3
-                 ]
+          object [ "default" .= valueInt 0 ]
 
      in case entryType e of
           FoundryActor _ ->
@@ -92,6 +86,7 @@ instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
               , "folder"         .= nullJSON
               , "sort"           .= valueInt 0
               , "ownership"      .= ownership
+              , "folder"         .= entryFolder e
               ]
 
           FoundryItem _ ->
@@ -104,6 +99,7 @@ instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
               , "flags"     .= emptyObject
               , "effects"   .= emptyArray
               , "ownership" .= ownership
+              , "folder"    .= entryFolder e
               ]
 
 newtype EntryID = EntryID T.Text
@@ -122,7 +118,7 @@ idCharacters = V.fromList $ [ '0'..'9' ] <> [ 'A'..'Z' ] <> [ 'a'..'z' ]
 idRange :: (Int, Int)
 idRange = (0, V.length idCharacters - 1)
 
--- Despite using a "random" numbers, we define the seed with a hash built from
+-- Despite using "random" numbers, we define the seed with a hash built from
 -- the label and name, which allows us to reliably produce the same ID every
 -- time the packs are generated as long as the item and compendium names remain
 -- the same. This also allows us to generate different IDs for the same item if
@@ -141,14 +137,8 @@ mkEntryID (Label label) name = do
 newtype Label = Label T.Text
   deriving newtype (ToJSON)
 
-mkCompendiumLabel :: Maybe Faction -> CompendiumDetails -> Label
-mkCompendiumLabel mbFaction content =
-  Label
-    . T.intercalate " - "
-    $ catMaybes
-        [ Just $ compendiumDetails content
-        , factionText <$> mbFaction
-        ]
+mkCompendiumLabel :: CompendiumDetails -> Label
+mkCompendiumLabel = Label . compendiumDetails
 
 mkItemLabel :: Label -> Name -> Label
 mkItemLabel (Label label) name =
@@ -156,3 +146,9 @@ mkItemLabel (Label label) name =
 
 labelText :: Label -> T.Text
 labelText (Label l) = l
+
+newtype Folder = Folder Faction
+  deriving newtype (ToJSON)
+
+mkFolder :: Maybe Faction -> Folder
+mkFolder = Folder . compendiumFaction

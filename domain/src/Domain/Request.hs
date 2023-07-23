@@ -93,7 +93,7 @@ makeSheetRequest =
         $ HTTP.parseRequest baseURL
 
 sheetTimeout :: HTTP.ResponseTimeout
-sheetTimeout = HTTP.responseTimeoutMicro $ 2 * 60 * 1000000 -- 2 minutes
+sheetTimeout = HTTP.responseTimeoutMicro $ 5 * 60 * 1000000 -- 2 minutes
 
 path :: BS.ByteString
 path =

@@ -26,6 +26,7 @@ class CompendiumEntry a where
   typed :: a -> EntryType
   token :: a -> Maybe Token
   items :: a -> [FoundryData]
+  filed :: a -> Maybe Faction
 
 data FoundryData
   = FoundryAbility   Ability
@@ -77,6 +78,14 @@ instance CompendiumEntry FoundryData where
   items (FoundryVehicle   v) = items v
   items (FoundryWeapon    w) = items w
 
+  filed (FoundryAbility   a) = filed a
+  filed (FoundryArmor     a) = filed a
+  filed (FoundryBestiary  b) = filed b
+  filed (FoundryEquipment e) = filed e
+  filed (FoundryFlood     f) = filed f
+  filed (FoundryVehicle   v) = filed v
+  filed (FoundryWeapon    w) = filed w
+
 instance ToJSON FoundryData where
   toJSON (FoundryAbility   a) = toJSON a
   toJSON (FoundryArmor     a) = toJSON a
@@ -102,6 +111,7 @@ instance CompendiumEntry Ability where
   typed = const (FoundryItem ItemAbility)
   token = const Nothing
   items = const []
+  filed = const Nothing
 
 instance ToJSON Ability where
   toJSON a =
@@ -139,6 +149,7 @@ instance CompendiumEntry Armor where
   typed = const (FoundryItem ItemArmor)
   token = const Nothing
   items = const []
+  filed = Just . armorFaction
 
 instance ToJSON Armor where
   toJSON a =
@@ -188,6 +199,7 @@ instance CompendiumEntry Bestiary where
   typed = const (FoundryActor ActorBestiary)
   token = Just . mkBestiaryToken
   items = bestiaryItems
+  filed = Just . bestiaryFaction
 
 instance ToJSON Bestiary where
   toJSON b =
@@ -296,6 +308,7 @@ instance CompendiumEntry Equipment where
   typed = const (FoundryItem ItemEquipment)
   token = const Nothing
   items = const []
+  filed = Just . equipmentFaction
 
 instance ToJSON Equipment where
   toJSON e =
@@ -338,6 +351,7 @@ instance CompendiumEntry Flood where
   typed = const (FoundryActor ActorFlood)
   token = Just . mkFloodToken
   items = floodItems
+  filed = const Nothing
 
 instance ToJSON Flood where
   toJSON f =
@@ -449,6 +463,7 @@ instance CompendiumEntry Vehicle where
   typed = const (FoundryActor ActorVehicle)
   token = Just . mkVehicleToken
   items = vehicleWeapons
+  filed = Just . vehicleFaction
 
 instance ToJSON Vehicle where
   toJSON v =
@@ -544,6 +559,7 @@ instance CompendiumEntry Weapon where
   typed = const (FoundryItem ItemWeapon)
   token = const Nothing
   items = const []
+  filed = weaponFaction
 
 instance ToJSON Weapon where
   toJSON w =

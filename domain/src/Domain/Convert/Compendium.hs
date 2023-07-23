@@ -15,11 +15,13 @@ toCompendium :: CompendiumEntry entry
 toCompendium = mapMaybe (uncurry mkCompendium) . Map.toList
 
 mkCompendium :: CompendiumEntry entry
-             => CompendiumData -> [entry] -> Maybe (Compendium entry)
-mkCompendium (mbFaction, content) fData = do
-  let label   = mkCompendiumLabel mbFaction content
-      name    = mkCompendiumName  mbFaction content
-      entries = mkEntry label <$> fData
+             => CompendiumDetails -> [entry] -> Maybe (Compendium entry)
+mkCompendium content fData = do
+  let label   = mkCompendiumLabel content
+      name    = mkCompendiumName  content
+      entries =
+        (\entry -> mkEntry label entry . Just . mkFolder $ filed entry)
+          <$> fData
 
   cType <- entryType . fst <$> L.uncons entries
 
@@ -32,15 +34,18 @@ mkCompendium (mbFaction, content) fData = do
         , compendiumEntries = entries
         }
 
-mkEntry :: CompendiumEntry entry => Label -> entry -> Entry entry
-mkEntry label entry =
+mkEntry :: CompendiumEntry entry
+        => Label -> entry -> Maybe Folder -> Entry entry
+mkEntry label entry mbFolder =
   let itemLabel = mkItemLabel label $ named entry
+      itemEntries = (\item -> mkEntry itemLabel item Nothing) <$> items entry
    in Entry
-        { entryId    = mkEntryID label $ named entry
-        , entryName  = named entry
-        , entryImg   = imged entry
-        , entryType  = typed entry
-        , entryData  = entry
-        , entryToken = token entry
-        , entryItems = mkEntry itemLabel <$> items entry
+        { entryId     = mkEntryID label $ named entry
+        , entryName   = named entry
+        , entryImg    = imged entry
+        , entryType   = typed entry
+        , entryData   = entry
+        , entryToken  = token entry
+        , entryItems  = itemEntries
+        , entryFolder = mbFolder
         }

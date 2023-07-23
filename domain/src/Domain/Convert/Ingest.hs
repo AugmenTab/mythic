@@ -35,7 +35,8 @@ ingestRaw subject lines = do
           Request.VehicleSheet      -> ingestVehicle
 
   fmap (Map.fromListWith (<>))
-    $ traverse (mkCompendiumMapEntry subject) =<< ingestFn csv
+    . ffmap (mkCompendiumMapEntry subject)
+    $ ingestFn csv
 
 -- NOTE: This CANNOT exclude a double-apostrophe character by itself (\"). It
 -- will fail to read in Forerunner equipment due to the use of commas in the
@@ -59,24 +60,9 @@ isEmptyLine line =
 
 mkCompendiumMapEntry :: Request.SheetSubject
                      -> RawData
-                     -> Either T.Text (CompendiumData, [RawData])
-mkCompendiumMapEntry subject rawData = do
-  let factionOrOther = Just . compendiumFactionFromText
-      faction =
-        case rawData of
-          AbilityData     _   -> Nothing
-          ArmorData       raw -> factionOrOther $ rawArmorFaction raw
-          BestiaryData    raw -> factionOrOther $ rawBestiaryFaction raw
-          EquipmentData   raw -> factionOrOther $ rawEquipmentFaction raw
-          FloodData       _   -> Nothing
-          MeleeData       raw -> factionOrOther $ rawMeleeFaction raw
-          PermutationData raw -> factionOrOther $ rawPermutationFaction raw
-          RangedData      raw -> factionOrOther $ rawRangedFaction raw
-          VehicleData     raw -> factionOrOther $ rawVehicleFaction raw
-
-  pure ( (faction, mkCompendiumDetails $ Request.sheetSubjectTitle subject)
-       , [ rawData ]
-       )
+                     -> (CompendiumDetails, [RawData])
+mkCompendiumMapEntry subject rawData =
+  (mkCompendiumDetails $ Request.sheetSubjectTitle subject, [ rawData ])
 
 ingestAbility :: T.Text -> Either T.Text [RawData]
 ingestAbility =

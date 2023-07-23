@@ -147,9 +147,9 @@ instance ToJSON Compatibility where
 mythicCompatibility :: Compatibility
 mythicCompatibility =
   Compatibility
-    { minimumVersion  = "10"
-    , verifiedVersion = "10"
-    , maximumVersion  = "10"
+    { minimumVersion  = "11"
+    , verifiedVersion = "11"
+    , maximumVersion  = "11"
     }
 
 mythicManifest :: [Compendium FoundryData] -> Manifest
