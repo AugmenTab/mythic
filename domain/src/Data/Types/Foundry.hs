@@ -559,7 +559,7 @@ instance CompendiumEntry Weapon where
   typed = const (FoundryItem ItemWeapon)
   token = const Nothing
   items = const []
-  filed = weaponFaction
+  filed = Just . compendiumFaction . weaponFaction
 
 instance ToJSON Weapon where
   toJSON w =

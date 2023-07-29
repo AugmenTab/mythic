@@ -50,8 +50,7 @@ mkCompendiumName =
     . compendiumDetails
 
 mkCompendiumPath :: Name -> FilePath
-mkCompendiumPath name =
-  T.unpack $ "packs/" <> nameText name <> ".db"
+mkCompendiumPath = T.unpack . T.append "packs/" . nameText
 
 data Entry entry =
   Entry

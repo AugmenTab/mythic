@@ -2,4 +2,4 @@
 templates/sheets/skill-sheet.hbs
 node_modules
 
-packs/*.db
+packs/*

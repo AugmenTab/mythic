@@ -15,6 +15,13 @@ packages:
   original:
     commit: b516a71f960149ff6cec163e2ee0c61478e913e0
     git: https://github.com/flipstone/flipstone-prelude.git
+- completed:
+    hackage: higher-leveldb-0.6.0.0@sha256:e763c909464b566dcfa9f09683585e2c3fe49c3842539bb9180333d937b60ebd,2126
+    pantry-tree:
+      sha256: e64f1db06d50a28ae90df5f1c189edab15343c987766ef4504081e325d354a3f
+      size: 357
+  original:
+    hackage: higher-leveldb-0.6.0.0@sha256:e763c909464b566dcfa9f09683585e2c3fe49c3842539bb9180333d937b60ebd,2126
 snapshots:
 - completed:
     sha256: 4905c93319aa94aa53da8f41d614d7bacdbfe6c63a8c6132d32e6e62f24a9af4

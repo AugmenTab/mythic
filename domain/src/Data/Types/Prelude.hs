@@ -20,7 +20,7 @@ module Data.Types.Prelude
   , Crew, mkCrew
   , Difficulty(..)
   , Dimensions(..)
-  , EntryType(..), entryTypeText
+  , EntryType(..), entryTypeText, entryTypeKeySpace
   , EquipmentTraining(..), allEquipmentTrainings
   , ExperienceDifficulty, emptyExperienceDifficulty, mkExperienceDifficulty
   , ExperiencePayout(..)
@@ -88,6 +88,7 @@ import           Flipstone.Prelude
 import           Domain.JSON
 
 import qualified Data.Bool as B
+import qualified Data.ByteString as BS
 import           Data.Coerce (coerce)
 import qualified Data.List.Extra as L
 import qualified Data.Map.Strict as Map
@@ -737,6 +738,12 @@ entryTypeText et =
   case et of
     FoundryActor _ -> "Actor"
     FoundryItem  _ -> "Item"
+
+entryTypeKeySpace :: EntryType -> BS.ByteString
+entryTypeKeySpace et =
+  case et of
+    FoundryActor _ -> "actors"
+    FoundryItem  _ -> "items"
 
 data EquipmentTraining
   = Basic

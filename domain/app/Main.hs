@@ -27,25 +27,24 @@ main = do
 
       mgr <- HTTP.newManager tlsManagerSettings
       compendia <-
-        Async.forConcurrently sheets $ uncurry $ \subject sheetData -> do
-          let subjectTxt = Request.sheetSubjectText subject
+        fmap concat
+          . Async.forConcurrently sheets
+          . uncurry
+          $ \subject sheetData -> do
+            let subjectTxt = Request.sheetSubjectText subject
 
-          resp <- HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
+            resp <-
+              HTTP.httpLbs (Request.setSheetQueryStrings sheetData req) mgr
 
-          IO.putStrLn $ "Converting " <> subjectTxt <> "..."
-          let results =
-                pure . Convert.toCompendium
-                  =<< Convert.toFoundry
-                  =<< Convert.ingestRaw subject
-                  =<< Request.responseContent resp subject
+            IO.putStrLn $ "Converting " <> subjectTxt <> "..."
+            either (Exit.die . T.unpack) pure $
+              pure . Convert.toCompendium
+                =<< Convert.toFoundry
+                =<< Convert.ingestRaw subject
+                =<< Request.responseContent resp subject
 
-          case results of
-            Left  errMsg -> Exit.die $ T.unpack errMsg
-            Right packs  -> do
-              void $ handleSheetResults packs
-              pure packs
-
-      Persist.writeManifest $ concat compendia
+      handleSheetResults compendia
+      Persist.writeManifest compendia
       IO.putStrLn "Done."
 
 handleSheetResults :: [Compendium FoundryData] -> IO ()

@@ -7,19 +7,33 @@ import           Flipstone.Prelude
 import           Data.Types
 import           Domain.JSON
 
+import           Control.Monad (mapM_)
 import qualified Data.LanguageCodes as LanguageCodes
-import qualified Data.List as L
 import           Data.Maybe (catMaybes)
 import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
 import qualified Data.Text.IO as IO
+import qualified Database.LevelDB.Higher as DB
 
 writeCompendium :: Compendium FoundryData -> IO ()
 writeCompendium compendium = do
-  IO.writeFile ("../" <> compendiumPath compendium)
-    . T.unlines
-    . fmap encodeLine
-    . L.sortOn entryName
+  -- TODO: Find out if the compendium type has folders
+  -- TODO: If it has folders
+  --         then mapM_ `put` into LevelDB $ filter, by folder
+  --         else mapM_ `put` items into LevelDB
+  -- TODO: Figure out how to do it as a batch?
+
+  let keySpace = entryTypeKeySpace $ compendiumType compendium
+
+  DB.runCreateLevelDB ("../" <> compendiumPath compendium) keySpace
+    . mapM_ writeEntry
     $ compendiumEntries compendium
+
+writeEntry :: Entry FoundryData -> DB.LevelDBT IO ()
+writeEntry entry =
+  DB.put
+    (TE.encodeUtf8 $ idText $ entryId entry)
+    (encodeLine entry)
 
 writeManifest :: [Compendium FoundryData] -> IO ()
 writeManifest = IO.writeFile "../system.json" . encodePage . mythicManifest
@@ -154,7 +168,7 @@ mythicCompatibility =
 
 mythicManifest :: [Compendium FoundryData] -> Manifest
 mythicManifest compendia =
-  let release = "0.3.4"
+  let release = "0.4.0-beta"
       mythicDescription =
         T.unwords [ "An unofficial system implementation for playing the"
                   , "fan-made Mythic game on Foundry Virtual Tabletop."

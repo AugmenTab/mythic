@@ -22,6 +22,7 @@ import           Data.Aeson (ToJSON(..), object, (.=))
 import qualified Data.Aeson.Encode.Pretty as Pretty
 import           Data.Aeson.Key (Key, fromText)
 import           Data.Aeson.Types (Value(..))
+import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
@@ -43,8 +44,10 @@ defaultConfig =
 encodeJSON :: ToJSON a => Pretty.Config -> a -> T.Text
 encodeJSON config = TE.decodeUtf8 . LBS.toStrict . Pretty.encodePretty' config
 
-encodeLine :: ToJSON a => a -> T.Text
-encodeLine = encodeJSON (defaultConfig { Pretty.confIndent = Pretty.Spaces 0 })
+encodeLine :: ToJSON a => a -> BS.ByteString
+encodeLine =
+  TE.encodeUtf8
+    . encodeJSON (defaultConfig { Pretty.confIndent = Pretty.Spaces 0 })
 
 encodePage :: ToJSON a => a -> T.Text
 encodePage = encodeJSON defaultConfig

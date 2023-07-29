@@ -13,7 +13,7 @@
     "verified": "11"
   },
   "description": "An unofficial system implementation for playing the fan-made Mythic game on Foundry Virtual Tabletop.",
-  "download": "https://github.com/AugmenTab/mythic/releases/download/v0.3.4/mythic.zip",
+  "download": "https://github.com/AugmenTab/mythic/releases/download/v0.4.0-beta/mythic.zip",
   "esmodules": [
     "mythic.js"
   ],
@@ -34,74 +34,10 @@
     {
       "label": "Abilities",
       "name": "abilities",
-      "path": "packs/abilities.db",
+      "path": "packs/abilities",
       "private": false,
       "system": "mythic",
       "type": "Item"
-    },
-    {
-      "label": "Armor",
-      "name": "armor",
-      "path": "packs/armor.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Bestiary",
-      "name": "bestiary",
-      "path": "packs/bestiary.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Actor"
-    },
-    {
-      "label": "Equipment",
-      "name": "equipment",
-      "path": "packs/equipment.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Bestiary - The Flood",
-      "name": "bestiary-the-flood",
-      "path": "packs/bestiary-the-flood.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Actor"
-    },
-    {
-      "label": "Melee Weapons",
-      "name": "melee-weapons",
-      "path": "packs/melee-weapons.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Armor Permutations",
-      "name": "armor-permutations",
-      "path": "packs/armor-permutations.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Ranged Weapons",
-      "name": "ranged-weapons",
-      "path": "packs/ranged-weapons.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Item"
-    },
-    {
-      "label": "Vehicles",
-      "name": "vehicles",
-      "path": "packs/vehicles.db",
-      "private": false,
-      "system": "mythic",
-      "type": "Actor"
     }
   ],
   "primaryTokenAttribute": "wounds",
