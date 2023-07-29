@@ -13,7 +13,7 @@
     "verified": "10"
   },
   "description": "An unofficial system implementation for playing the fan-made Mythic game on Foundry Virtual Tabletop.",
-  "download": "https://github.com/AugmenTab/mythic/releases/download/v0.3.3/mythic.zip",
+  "download": "https://github.com/AugmenTab/mythic/releases/download/v0.3.4/mythic.zip",
   "esmodules": [
     "mythic.js"
   ],
@@ -264,5 +264,5 @@
   ],
   "title": "Mythic",
   "url": "https://github.com/AugmenTab/mythic",
-  "version": "0.3.3"
+  "version": "0.3.4"
 }

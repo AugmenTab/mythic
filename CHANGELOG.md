@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4
+
+### Changes
+
+* Updates compendiums with latest vehicle pricing rebalance.
+
 ## 0.3.3
 
 ### Changes
