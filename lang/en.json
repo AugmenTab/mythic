@@ -369,7 +369,8 @@
                 "targetOutOfRange": "Target is out of range for this weapon.",
                 "unknownCrewRole": "The provided vehicle crew role is unknown.",
                 "unknownActor": "Cannot find Actor for provided Actor ID.",
-                "noVehicleAsCrew": "The provided Actor ID belongs to a Vehicle - cannot assign vehicle role to a Vehicle."
+                "noVehicleAsCrew": "The provided Actor ID belongs to a Vehicle - cannot assign vehicle role to a Vehicle.",
+                "vehicleInitiative": "Vehicles cannot be added to the turn tracker."
             },
             "education": {
                 "flavor": "Education",

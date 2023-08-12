@@ -1,7 +1,8 @@
 /** @module mythic */
 
-import { mythic } from "./module/config.js";
 import * as Chat from "./module/chat.js";
+import { makeUIWarning } from "./module/common.js";
+import { mythic } from "./module/config.js";
 import * as Helpers from "./module/helpers.js";
 import * as Migrations from "./module/migrations.js";
 import MythicActor from "./module/MythicActor.js";
@@ -222,3 +223,13 @@ Hooks.once("ready", function () {
 
 /** Hook to establish event listeners on the chat log. */
 Hooks.on("renderChatMessage", (app, html, data) => Chat.addChatListeners(html));
+
+/** Hook to block Vehicles from being added to the combat tracker. */
+Hooks.on("preCreateCombatant", c => {
+  if (c.actor.type === "Vehicle") {
+    makeUIWarning("mythic.chat.error.vehicleInitiative");
+    return false;
+  } else {
+    return true;
+  }
+});

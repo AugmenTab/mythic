@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.5
+
+### Bug Fixes
+
+* Fixes bug where having Vehicle Actors on the Combat tracker would break the Combat. Instead, they now do not get added to initiative, with a toast displayed to the user.
+
 ## 0.3.4
 
 ### Changes
