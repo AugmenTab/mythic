@@ -2,8 +2,15 @@ module.exports = grunt => {
   const DEV_PATH = "/home/foundry/foundrydata/Data/systems/mythic/";
   const RELEASE_DIR = "/home/tab/Documents";
   const RELEASE_PATH = RELEASE_DIR + "/mythic";
-  const RELEASE_TASKS =
-    [ "less", "copy:release", "uglify", "compress", "copy:manifest", "clean" ];
+  const RELEASE_TASKS = [
+    "shell:compile_packs",
+    "less",
+    "copy:release",
+    "uglify",
+    "compress",
+    "copy:manifest",
+    "clean"
+  ];
 
   // Configuration
   grunt.initConfig({
@@ -92,6 +99,13 @@ module.exports = grunt => {
         files: "*",
         tasks: [ "default" ]
       }
+    },
+
+    // grunt-shell
+    shell: {
+      compile_packs: {
+        command: "cd domain/ && stack build --fast && stack exec domain-exe"
+      }
     }
   });
 
@@ -102,6 +116,7 @@ module.exports = grunt => {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-shell');
 
   // Tasks
   grunt.registerTask('default', [ "less", "copy:dev" ]);
