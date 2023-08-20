@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.6
+
+### Changes
+
+* Adds support for manned stationary vehicles (non-automated turrets).
+
 ## 0.3.5
 
 ### Bug Fixes

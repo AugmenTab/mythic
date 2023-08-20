@@ -66,7 +66,7 @@
                       &nbsp;({{this.target}})
                     </div>
                     {{#if (eq ../../actor.type "Vehicle")}}
-                      {{#unless (eq ../../actor.system.propulsion.type "none")}}
+                      {{#unless ../../actor.system.automated}}
                         <select
                           class="item-edit-inline special-focus"
                           style="width: 50px"

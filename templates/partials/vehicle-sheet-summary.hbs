@@ -1,10 +1,14 @@
 <header class="sheet-header">
   {{> "systems/mythic/templates/partials/vehicle-details.hbs"}}
 </header>
-{{> "systems/mythic/templates/partials/vehicle-crew-manifest.hbs"}}
+{{#unless system.automated}}
+  {{> "systems/mythic/templates/partials/vehicle-crew-manifest.hbs"}}
+{{/unless}}
 <div class="vehicle-summary">
   {{#if (eq system.propulsion.type "none")}}
-    {{> "systems/mythic/templates/partials/stationary.hbs"}}
+    {{#unless system.automated}}
+      {{> "systems/mythic/templates/partials/stationary.hbs"}}
+    {{/unless}}
   {{else if (eq system.propulsion.type "legs")}}
     {{> "systems/mythic/templates/partials/walker.hbs"}}
   {{else}}

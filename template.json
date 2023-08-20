@@ -1167,6 +1167,7 @@
                 "has": false
               }
             },
+            "automated": false,
             "propulsion": {
               "type": "wheels",
               "value": 3,

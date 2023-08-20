@@ -723,6 +723,7 @@
                 "walkerStomp": "Walker Stomp"
             },
             "stationary": "Stationary Turret Stats",
+            "automated": "Automated",
             "types": {
                 "ground": "Ground",
                 "air": "Air",

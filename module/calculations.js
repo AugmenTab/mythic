@@ -1202,6 +1202,17 @@ function calculateVehicleDoom(veh) {
 
 function calculateVehiclePropulsion(veh) {
   const propulsion = veh.system.propulsion;
+
+  // If the vehicle is not stationary, its automated toggle is hidden, which
+  // can be a pain point if it's set to `true`. This sets it to false if the
+  // propulsion type is anything other than `none`.
+  //
+  // Surprisingly, the user's selection is actually remembered when switching
+  // back, so there's no loss of data or UX dings here.
+  if (propulsion.type !== "none") {
+    veh.system.automated = false;
+  }
+
   veh.system.propulsion.state = Vehicle.getPropulsion(propulsion);
 }
 
@@ -1345,24 +1356,27 @@ function calculateWeaponSummaryAttackData(actor) {
   Object.values(weapons).forEach(weapon => {
     const currentAmmo = weapon.system.currentAmmo;
     const isVehicle = actor.type === "Vehicle";
+    const isManned = isVehicle && !actor.system.automated;
     const owner =
-      isVehicle
+      isVehicle && isManned
         ? Vehicle.getRoleOwner(weapon.system.owner)
         : actor;
-
-    if (isVehicle && actor.system.propulsion.type === "none") {
-      actor.system.special.autoloader.has = true;
-      weapon.system.ammoList[currentAmmo].target =
-        actor.system.characteristics.wfr;
-
-      weapon.system.reload.total = Math.floor(weapon.system.reload.base / 2);
-      calculateWeaponAttacksRanged(weapon.system);
-      return;
-    }
 
     if (!owner) {
       weapon.system.ammoList[currentAmmo].target = 0;
       return;
+    }
+
+    if (isVehicle && actor.system.propulsion.type === "none") {
+      actor.system.special.autoloader.has = true;
+      weapon.system.reload.total = Math.floor(weapon.system.reload.base / 2);
+
+      if (!isManned) {
+        weapon.system.ammoList[currentAmmo].target =
+          actor.system.characteristics.wfr;
+        calculateWeaponAttacksRanged(weapon.system);
+        return;
+      }
     }
 
     // Non-walkers should only be able to use ranged weapons.

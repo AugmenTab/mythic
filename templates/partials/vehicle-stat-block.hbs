@@ -1,4 +1,9 @@
-<div class="vehicle-stat-block">
+<div
+  class="vehicle-stat-block"
+  {{#if (cond "&&" (eq system.propulsion.type "none") system.automated)}}
+    style="grid-column: span 2"
+  {{/if}}
+>
   {{!-- Break Points --}}
   <div>
     <table>

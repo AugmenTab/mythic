@@ -67,11 +67,15 @@ export async function rollAttacks(element, actor, weapon) {
   const attackOptions = await getAttackRollOptions();
   if (attackOptions.cancelled) return;
 
+  const isVehicle = actor.type === "Vehicle";
+  const isManned = isVehicle && !actor.system.automated;
   const owner =
-    actor.type === "Vehicle" ? Vehicle.getRoleOwner(weapon.system.owner) : actor;
+    isVehicle && isManned
+      ? Vehicle.getRoleOwner(weapon.system.owner)
+      : actor;
 
   const str =
-    actor.type === "Vehicle"
+    isVehicle
       ? ( actor.system.characteristics.mythicStr
         + Common.getCharacteristicModifier(actor.system.characteristics.str)
         )
@@ -108,7 +112,7 @@ export async function rollAttacks(element, actor, weapon) {
   }
 
   const pRange =
-    (actor.type === "Vehicle" && actor.system.propulsion.type === "none")
+    (isVehicle && actor.system.propulsion.type === "none" && !isManned)
       ? actor.system.characteristics.per * 20
       : owner.system.perceptiveRange.total * (
           isNaN(weapon.system.scopeMagnification)
@@ -140,8 +144,7 @@ export async function rollAttacks(element, actor, weapon) {
     pierce: rangeEffects.pierce
   };
 
-  const wfm =
-    actor.type === "Vehicle" ? 0 : actor.system.characteristics.wfm.total;
+  const wfm = isVehicle ? 0 : actor.system.characteristics.wfm.total;
   await getAttackAndDamageOutcomes(actor, str, wfm, weapon, data);
   return weapon.system.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
