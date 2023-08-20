@@ -701,6 +701,11 @@ mkVehicle mbFaction raw = do
       (unknownSpecials, specialRules) =
         buildVehicleSpecials raw specialsTxt isWalker
 
+      isAutomated =
+        L.and [ propulsionType propulsion == Stationary
+              , vehCharacteristicsWFR characteristics > 0
+              ]
+
       notes =
         mkDescription
           . T.intercalate "<br><br>"
@@ -730,6 +735,7 @@ mkVehicle mbFaction raw = do
         , vehicleWeaponPoints    = rawVehicleWeaponPoints raw
         , vehicleCrew            = mkCrew operators gunners complement crewNotes
         , vehicleSpecialRules    = specialRules
+        , vehicleAutomated       = isAutomated
         , vehiclePropulsion      = propulsion
         , vehicleNotes           = notes
         , vehicleWeapons         = meleeWeapons <> rangedWeapons

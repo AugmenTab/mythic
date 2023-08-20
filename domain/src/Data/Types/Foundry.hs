@@ -438,6 +438,7 @@ data Vehicle =
     , vehicleWeaponPoints    :: Int
     , vehicleCrew            :: Crew
     , vehicleSpecialRules    :: SpecialRules_Vehicle
+    , vehicleAutomated       :: Bool
     , vehiclePropulsion      :: Propulsion
     , vehicleNotes           :: Description
     , vehicleWeapons         :: [FoundryData]
@@ -470,6 +471,7 @@ instance ToJSON Vehicle where
       , "weaponPoints"    .= vehicleWeaponPoints v
       , "crew"            .= vehicleCrew v
       , "special"         .= vehicleSpecialRules v
+      , "automated"       .= vehicleAutomated v
       , "propulsion"      .= vehiclePropulsion v
       , "notes"           .= vehicleNotes v
 
