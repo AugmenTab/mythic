@@ -1,7 +1,9 @@
 <div
   class="vehicle-stat-block"
-  {{#if (cond "&&" (eq system.propulsion.type "none") system.automated)}}
-    style="grid-column: span 2"
+  {{#if (eq system.propulsion.type "none")}}
+    {{#unless system.automated}}
+      style="grid-column: span 2"
+    {{/unless}}
   {{/if}}
 >
   {{!-- Break Points --}}

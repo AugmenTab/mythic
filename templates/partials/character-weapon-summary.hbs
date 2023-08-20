@@ -169,7 +169,7 @@
                           {{localnum weapon.system.scopeMinimum}}&nbsp;-
                         {{/if}}
                         {{#if (eq ../../actor.type "Vehicle")}}
-                          {{#if (eq ../../actor.system.propulsion.type "none")}}
+                          {{#if ../../actor.system.automated}}
                             {{localnum (doMath "*" 20 ../../actor.system.characteristics.per)}}m
                           {{else}}
                             {{#with (getEntity "actor" weapon.system.owner)}}

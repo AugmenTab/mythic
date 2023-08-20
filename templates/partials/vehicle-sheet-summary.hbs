@@ -6,9 +6,9 @@
 {{/unless}}
 <div class="vehicle-summary">
   {{#if (eq system.propulsion.type "none")}}
-    {{#unless system.automated}}
+    {{#if system.automated}}
       {{> "systems/mythic/templates/partials/stationary.hbs"}}
-    {{/unless}}
+    {{/if}}
   {{else if (eq system.propulsion.type "legs")}}
     {{> "systems/mythic/templates/partials/walker.hbs"}}
   {{else}}
