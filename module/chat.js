@@ -58,9 +58,16 @@ export function getPostableItemFlavorPath(item) {
   switch(item.type) {
     case "ability":
       return `mythic.characterTalents.abilities.type.${item.system.type}`;
+    case "armor":
+      return "mythic.chat.armor.flavor";
     case "education":
-      return `mythic.chat.education.flavor`;
-    default: return "";
+      return "mythic.chat.education.flavor";
+    case "equipment":
+      return "mythic.chat.equipment.flavor";
+    case "weapon":
+      return "mythic.chat.weapon.flavor";
+    default:
+      return "";
   }
 }
 

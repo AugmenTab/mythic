@@ -350,6 +350,9 @@
                 "cancel": "Cancel",
                 "roll": "Roll"
             },
+            "armor": {
+                "flavor": "Armor"
+            },
             "attack": {
                 "title": "Attack",
                 "pierce": "Pierce",
@@ -383,6 +386,9 @@
             "equip-training": {
                 "flavor": "Equipment Trainings",
                 "empty": "This character has no equipment trainings."
+            },
+            "equipment": {
+                "flavor": "Equipment"
             },
             "evade": "Batched Evasions",
             "parry": "Batched Parries",
@@ -423,6 +429,9 @@
               "splatter": "Splatter Attack",
               "trample": "Trample Attack",
               "wreck": "Vehicle Wreck"
+            },
+            "weapon": {
+                "flavor": "Weapon"
             }
         },
         "combat": {
