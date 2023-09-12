@@ -85,6 +85,16 @@ Available Compendium Packs:
   * Ranged Weapons - Other
   * Ranged Weapons - UNSC
 
+### System API
+
+There is a minimal API exposed to facilitate some macros. It's worth nothing that a lot of the functions in this API were not originally designed to be exposed, and as such, HTML elements frequently appear as arguments to these functions. The documentation below will help describe how to spoof these elements for use in your own personal macros.
+
+[Chat](docs/chat.md): A module for generating and posting select chat messages.
+[Common](docs/common.md): A module of commonly-used helper functions.
+[Dice](docs/dice.md): A module for rolling attacks, tests, and otherwise handling dice.
+
+**Note:** As support for Mythic for Foundry winds down, it is unlikely that this API will see a large number of additions. If something can be done without significant refactoring, I will make an attempt to do so at the community's request. The upcoming 100DOS implementation that is poised to replace Mythic for Foundry will have a more thoughfully designed and feature-complete API.
+
 ## Legal
 
 The software component of this system is distributed under the GNUv3 license.

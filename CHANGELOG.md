@@ -5,6 +5,7 @@
 ### Changes
 
 * Adds support for manned stationary vehicles (non-automated turrets).
+* Exposes some of the system API to facilitate macros - see the README for more information.
 
 ## 0.3.5
 
