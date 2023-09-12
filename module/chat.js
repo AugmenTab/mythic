@@ -18,7 +18,7 @@ export function addChatListeners(html) {
  * @async
  * @param {object} data - The data that will be passed to the Handlebars
  * template.
- * @returns {string} The HTML of the chat message to be posted.
+ * @returns {string} The raw HTML of the chat message to be posted.
  */
 export async function buildChatMessageContent(data) {
   const template = `systems/mythic/templates/chat/${data.template}.hbs`;
@@ -49,7 +49,7 @@ export function getScatterArrow(roll) {
 }
 
 /*
- * Provides the localization path for postable item flavor text.
+ * Provides the localization path for postable item chat flavor.
  *
  * @param {object} item - The Item that is being rolled to chat.
  * @returns {string} The localization path.

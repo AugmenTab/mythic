@@ -36,7 +36,8 @@ const SIZE_DAMAGE_BONUS = {
 };
 
 /**
- * Evaluates a string of simple addition and subtraction expressions.
+ * Evaluates a string of simple addition and subtraction expressions. This is
+ * capable of handling dice as part of the calculation.
  *
  * @param {string} str - The string representation of the expression.
  * @returns {number} The number value of the evaluated expression.
@@ -180,6 +181,7 @@ export async function rollEvasionBatch(element, actor) {
  *
  * @async
  * @param {Actor} veh - The Actor Vehicle that fired the listener.
+ * @param {string} atkType - The type of special Vehicle attack being made.
  */
 export async function rollVehicleAttack(veh, atkType) {
   function getDetails() {
