@@ -1504,7 +1504,7 @@
                         },
                         "emp": {
                             "has": false,
-                            "value": 0
+                            "value": "1D5"
                         },
                         "flame": {
                             "has": false,

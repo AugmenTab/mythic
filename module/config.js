@@ -366,7 +366,7 @@ mythic.specialRules = {
     cryo: "text",
     diceMinimum: "number",
     electrified: "text",
-    emp: "number",
+    emp: "text",
     flame: "text",
     flashbang: "none",
     gravimetricPulse: "number",

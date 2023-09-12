@@ -1697,7 +1697,7 @@ data SpecialRules_Weapon =
     , cryo             :: Maybe T.Text
     , diceMinimum      :: Maybe Int
     , electrified      :: Maybe T.Text
-    , emp              :: Maybe Int
+    , emp              :: Maybe T.Text
     , flame            :: Maybe T.Text
     , flashbang        :: Maybe ()
     , gravimetricPulse :: Maybe Int
@@ -1747,7 +1747,7 @@ instance ToJSON SpecialRules_Weapon where
                , "cryo"             .= textRule (cryo r)
                , "diceMinimum"      .= intRule  (diceMinimum r)
                , "electrified"      .= textRule (electrified r)
-               , "emp"              .= intRule  (emp r)
+               , "emp"              .= textRule (emp r)
                , "flame"            .= textRule (flame r)
                , "flashbang"        .= noneRule (flashbang r)
                , "gravimetricPulse" .= intRule  (gravimetricPulse r)
