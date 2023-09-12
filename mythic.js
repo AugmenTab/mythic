@@ -1,7 +1,8 @@
 /** @module mythic */
 
-import * as Chat from "./module/chat.js";
-import { makeUIWarning } from "./module/common.js";
+import * as chat from "./module/chat.js";
+import * as common from "./module/common.js";
+import * as dice from "./module/dice.js";
 import { mythic } from "./module/config.js";
 import * as Helpers from "./module/helpers.js";
 import * as Migrations from "./module/migrations.js";
@@ -13,6 +14,13 @@ import MythicBestiaryCharacterSheet from "./module/sheets/MythicBestiaryCharacte
 import MythicFloodCharacterSheet from "./module/sheets/MythicFloodCharacterSheet.js";
 import MythicNamedCharacterSheet from "./module/sheets/MythicNamedCharacterSheet.js";
 import MythicVehicleSheet from "./module/sheets/MythicVehicleSheet.js";
+
+globalThis.mythic = {
+  chat,
+  common,
+  config: mythic,
+  dice
+};
 
 /**
  * Loads all registered Handlebars partials.
@@ -193,6 +201,7 @@ function registerSystemSettings() {
 
 /** Hook to set up config, Actor and Item sheets, and load Handlebars templates. */
 Hooks.once("init", function() {
+  globalThis.mythic = game.mythic = Object.assign(game.system, globalThis.mythic);
   console.log("mythic | Initializing Mythic 6.0 System");
 
   CONFIG.mythic = mythic;
@@ -222,12 +231,12 @@ Hooks.once("ready", function () {
 });
 
 /** Hook to establish event listeners on the chat log. */
-Hooks.on("renderChatMessage", (app, html, data) => Chat.addChatListeners(html));
+Hooks.on("renderChatMessage", (app, html, data) => chat.addChatListeners(html));
 
 /** Hook to block Vehicles from being added to the combat tracker. */
 Hooks.on("preCreateCombatant", c => {
   if (c.actor.type === "Vehicle") {
-    makeUIWarning("mythic.chat.error.vehicleInitiative");
+    common.makeUIWarning("mythic.chat.error.vehicleInitiative");
     return false;
   } else {
     return true;
