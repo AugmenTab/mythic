@@ -190,7 +190,7 @@ instance CSV.FromNamedRecord RawEquipment where
                  <*> e .: "COMP_faction"
                  <*> e .: "COMP_description"
                  <*> (defaultZeroDbl <$> e .: "COMP_weight")
-                 <*> e .: "COMP_price"
+                 <*> (defaultZero <$> e .: "COMP_price")
 
 data RawFlood =
   RawFlood
