@@ -7,6 +7,10 @@
 * Adds support for manned stationary vehicles (non-automated turrets).
 * Exposes some of the system API to facilitate macros - see the README for more information.
 
+### Bug Fixes
+
+* Fixes bug where making melee attacks in walker vehicles would only post attacks that DIDN'T hit.
+
 ## 0.3.5
 
 ### Bug Fixes

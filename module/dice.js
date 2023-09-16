@@ -146,7 +146,7 @@ export async function rollAttacks(element, actor, weapon) {
   };
 
   const wfm = isVehicle ? 0 : actor.system.characteristics.wfm.total;
-  await getAttackAndDamageOutcomes(actor, str, wfm, weapon, data);
+  await getAttackAndDamageOutcomes(actor, owner, str, wfm, weapon, data);
   return weapon.system.ammoList[currentAmmo].currentMag - parseInt(element.innerHTML);
 }
 
@@ -317,7 +317,7 @@ function determineRollOutcome(roll, target) {
   return outcome;
 }
 
-async function getAttackAndDamageOutcomes(actor, str, wfm, weapon, data) {
+async function getAttackAndDamageOutcomes(actor, owner, str, wfm, weapon, data) {
   const currentAmmo = weapon.system.ammoList[weapon.system.currentAmmo];
   const fireMode = weapon.system.attack.fireMode.split("-")[0];
   let result = {
@@ -359,7 +359,7 @@ async function getAttackAndDamageOutcomes(actor, str, wfm, weapon, data) {
       pierce: data.pierce
     };
 
-    const attack = await rollAttackAndDamage(actor, str, weapon, attackData);
+    const attack = await rollAttackAndDamage(actor, owner, str, weapon, attackData);
     result.hits += attack.outcome === "success" ? 1 : 0;
     result.attacks.push(attack);
   }
@@ -498,7 +498,7 @@ function reverseDigits(roll) {
   return parseInt(digits.join(""));
 }
 
-async function rollAttackAndDamage(actor, str, weapon, data) {
+async function rollAttackAndDamage(actor, owner, str, weapon, data) {
   const ammo = weapon.system.ammoList[weapon.system.currentAmmo];
   const roll = await new Roll(FORMULA).roll({ async: true });
   const outcome = determineRollOutcome(roll.total, data.target);
@@ -545,9 +545,9 @@ async function rollAttackAndDamage(actor, str, weapon, data) {
       base += Math.floor(str * ammo.strDamage);
       pierce += Math.floor(str * ammo.strPiercing);
 
-      if (actor.system.trainings.weapons.unarmedCombatant) {
+      if (owner.system.trainings.weapons.unarmedCombatant) {
         const wfm =
-          Common.getCharacteristicModifier(actor.system.characteristics.wfm.total);
+          Common.getCharacteristicModifier(owner.system.characteristics.wfm.total);
 
         pierce += Math.floor(wfm / 2);
       }
