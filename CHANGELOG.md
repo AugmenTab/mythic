@@ -4,6 +4,7 @@
 
 ### Changes
 
+* Adds dual support for both v10 and v11.
 * Adds support for manned stationary vehicles (non-automated turrets).
 * Exposes some of the system API to facilitate macros - see the README for more information.
 * Adds Special Ammo Items to the Equipment compendium packs.

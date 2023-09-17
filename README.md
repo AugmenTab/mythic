@@ -70,9 +70,12 @@ Available Compendium Packs:
   * Armor - Covenant
   * Armor - Forerunner
   * Armor - UNSC
+  * Armor Permutations - Banished
   * Armor Permutations - UNSC
+  * Equipment - Banished
   * Equipment - Covenant
   * Equipment - Forerunner
+  * Equipment - Other
   * Equipment - UNSC
   * Melee Weapons - Banished
   * Melee Weapons - Covenant
@@ -84,6 +87,8 @@ Available Compendium Packs:
   * Ranged Weapons - Forerunner
   * Ranged Weapons - Other
   * Ranged Weapons - UNSC
+* Macro
+  * Macros
 
 ### System API
 
