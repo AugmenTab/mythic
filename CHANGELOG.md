@@ -6,11 +6,16 @@
 
 * Adds support for manned stationary vehicles (non-automated turrets).
 * Exposes some of the system API to facilitate macros - see the README for more information.
-* Adds Special Ammo to the Equipment compendium packs.
+* Adds Special Ammo Items to the Equipment compendium packs.
+* Introduces new compendium packs:
+  * Equipment - Banished
+  * Equipment - Other
+  * Armor Permutations - Banished
 
 ### Bug Fixes
 
 * Fixes bug where making melee attacks in walker vehicles would only post attacks that DIDN'T hit.
+* Fixes bug where grenades and other thrown weapons were being created as ranged weapons in the compendium.
 
 ## 0.3.5
 

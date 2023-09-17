@@ -11,7 +11,6 @@ import qualified Data.Char as C
 import           Data.Either.Extra (eitherToMaybe, maybeToEither)
 import qualified Data.List as L
 import qualified Data.List.Extra as L
-import qualified Data.List.NonEmpty as NE
 import qualified Data.Map.Strict as Map
 import           Data.Maybe (catMaybes, fromMaybe, listToMaybe, mapMaybe)
 import qualified Data.Set as Set
@@ -374,7 +373,7 @@ mkFlood raw = do
 
 mkMeleeWeapons :: Embedded -> RawMeleeWeapon -> Either T.Text [FoundryData]
 mkMeleeWeapons embedded raw =
-  traverse (mkMelee embedded raw) . NE.toList $ rawMeleeBases raw
+  traverse (mkMelee embedded raw) $ rawMeleeBases raw
 
 mkMelee :: Embedded
         -> RawMeleeWeapon
@@ -383,7 +382,7 @@ mkMelee :: Embedded
 mkMelee embedded raw rawBase = do
   let mbFaction = eitherToMaybe . factionFromText $ rawMeleeFaction raw
       wType = rawMeleeBaseType rawBase
-      weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
+      weaponDetails = Map.lookup (T.toUpper $ T.strip wType) weaponDetailsMap
       fireModeMap = Map.singleton NoFireMode $ mkFireRate 0
       weight =
         Weight
@@ -426,7 +425,7 @@ mkMelee embedded raw rawBase = do
         , weaponBreakpoints = mkBreakpoints 0
         , weaponTrainings   = mkItemTrainings mbFaction $ fst <$> weaponDetails
         , weaponWeight      = weight
-        , weaponGroup       = fromMaybe MeleeGroup $ snd <$> weaponDetails
+        , weaponGroup       = MeleeGroup
         , weaponTags        = buildWeaponTags wTags
                                 $ rawMeleeBaseAttr rawBase
         , weaponFireModes   = mkFireModes fireModeMap
@@ -465,6 +464,16 @@ mkPermutation mbFaction raw = do
           , rawPermutationDescription raw
           ]
 
+      weight =
+        Weight
+          { weightEach       = rawPermutationWeight raw
+          , weightIsEmbedded = False
+          -- No Item supports its own weight as far as the descriptions are
+          -- concerned. This can be updated if/when a user points one out or one
+          -- gets added to the game.
+          , weightSelfSupported = False
+          }
+
   Right
     . FoundryEquipment
     $ Equipment
@@ -473,7 +482,7 @@ mkPermutation mbFaction raw = do
         , equipmentPrice       = mkItemPrice $ rawPermutationPrice raw
         , equipmentBreakpoints = mkBreakpoints 0
         , equipmentTrainings   = mkItemTrainings (Just faction) Nothing
-        , equipmentWeight      = emptyWeight False
+        , equipmentWeight      = weight
         , equipmentDescription = mkDescription desc
         , equipmentShields     = Nothing
 
@@ -489,7 +498,6 @@ mkRangedWeapons :: Embedded
                 -> Either T.Text [FoundryData]
 mkRangedWeapons embedded mbFaction raw =
   traverse (mkRanged mbFaction embedded raw)
-    . NE.toList
     $ rawRangedBases raw
 
 mkRanged :: Maybe Faction
@@ -501,7 +509,6 @@ mkRanged mbFaction isEmbedded raw rawBase = do
   let faction = eitherToMaybe . factionFromText $ rawRangedFaction raw
       (name, nickname) = mkNameAndNickname $ rawRangedBaseName rawBase
       wType = rawRangedBaseType rawBase
-      weaponDetails = Map.lookup (T.toUpper wType) weaponDetailsMap
       weight =
         Weight
           { weightEach       = rawRangedWeight raw
@@ -544,6 +551,10 @@ mkRanged mbFaction isEmbedded raw rawBase = do
           . T.words
           $ rawRangedBaseReload rawBase
 
+  weaponDetails <-
+    maybeToEither ("Could not parse weapon type " <> wType)
+      $ Map.lookup (T.toUpper $ T.strip wType) weaponDetailsMap
+
   Right
     . FoundryWeapon
     $ Weapon
@@ -552,9 +563,9 @@ mkRanged mbFaction isEmbedded raw rawBase = do
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawRangedPrice raw
         , weaponBreakpoints = mkBreakpoints 0
-        , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
+        , weaponTrainings   = mkItemTrainings faction . Just $ fst weaponDetails
         , weaponWeight      = weight
-        , weaponGroup       = fromMaybe Ranged $ snd <$> weaponDetails
+        , weaponGroup       = snd weaponDetails
         , weaponTags        = buildWeaponTags wTags
                                 $ rawRangedBaseAttr rawBase
         , weaponFireModes   = mkFireModeMap $ rawRangedBaseROF rawBase
@@ -1276,6 +1287,7 @@ weaponDetailsMap =
     [ ( "AUTOCANNON"            , (Cannon  , Ranged) )
     , ( "AXE"                   , (Melee   , MeleeGroup) )
     , ( "BEAM"                  , (Advanced, Ranged) )
+    , ( "BEAM WEAPON"           , (Advanced, Ranged) )
     , ( "CANNON"                , (Cannon  , Ranged) )
     , ( "CARBINE"               , (Infantry, Ranged) )
     , ( "CHEMICAL SPRAYER"      , (Advanced, Ranged) )
@@ -1287,13 +1299,16 @@ weaponDetailsMap =
     , ( "ENERGY WEAPON"         , (Advanced, Ranged) )
     , ( "FIST WEAPON"           , (Melee   , MeleeGroup) )
     , ( "GARROTE"               , (Melee   , MeleeGroup) )
+    , ( "GMG"                   , (Heavy   , Ranged) )
     , ( "GRENADE"               , (Infantry, Thrown) )
     , ( "GRENADE LAUNCHER"      , (Launcher, Ranged) )
     , ( "HAMMER"                , (Melee   , MeleeGroup) )
     , ( "HEAVY MACHINE GUN"     , (Heavy   , Ranged) )
+    , ( "HMG"                   , (Heavy   , Ranged) )
     , ( "KNIFE"                 , (Basic   , MeleeGroup) )
     , ( "LANDMINE"              , (Ordnance, Thrown) )
     , ( "LIGHT MACHINE GUN"     , (Heavy   , Ranged) )
+    , ( "LMG"                   , (Heavy   , Ranged) )
     , ( "MACE"                  , (Melee   , MeleeGroup) )
     , ( "MACHINE GUN"           , (Heavy   , Ranged) )
     , ( "MAGAZINE SHOTGUN"      , (Basic   , Ranged) )
@@ -1309,8 +1324,10 @@ weaponDetailsMap =
     , ( "RIFLE"                 , (Infantry, Ranged) )
     , ( "ROCKET LAUNCHER"       , (Launcher, Ranged) )
     , ( "SATCHEL CHARGE"        , (Ordnance, Thrown) )
+    , ( "SHOTGUN"               , (Basic   , Ranged) )
     , ( "SHOVEL"                , (Melee   , MeleeGroup) )
     , ( "SINGLE LOADING SHOTGUN", (Basic   , Ranged) )
+    , ( "SINGLE USE"            , (Infantry, Thrown) )
     , ( "SMG"                   , (Infantry, Ranged) )
     , ( "SNIPER RIFLE"          , (Range   , Ranged) )
     , ( "SPRAY WEAPON"          , (Melee   , MeleeGroup) )

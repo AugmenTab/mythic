@@ -73,9 +73,9 @@ sheetDataMap =
     , ( BestiarySheet    , (GID "1982557897", Range "A2:BX407") )
     , ( EquipmentSheet   , (GID "1641182149", Range "A2:F580")  )
     , ( FloodSheet       , (GID "1809814064", Range "A2:AA381") )
-    , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AH63")  )
-    , ( PermutationSheet , (GID "80923077"  , Range "A2:F74")   )
-    , ( RangedWeaponSheet, (GID "1510373161", Range "B2:AF397") )
+    , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AV63")  )
+    , ( PermutationSheet , (GID "80923077"  , Range "A2:G84")   )
+    , ( RangedWeaponSheet, (GID "1510373161", Range "B2:AS397") )
     , ( VehicleSheet     , (GID "144762228" , Range "A2:KU475") )
     ]
 

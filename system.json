@@ -120,9 +120,25 @@
       "type": "Item"
     },
     {
+      "label": "Equipment - Banished",
+      "name": "equipment-banished",
+      "path": "packs/equipment-banished.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
       "label": "Equipment - Forerunner",
       "name": "equipment-forerunner",
       "path": "packs/equipment-forerunner.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Equipment - Other",
+      "name": "equipment-other",
+      "path": "packs/equipment-other.db",
       "private": false,
       "system": "mythic",
       "type": "Item"
@@ -179,6 +195,14 @@
       "label": "Armor Permutations - UNSC",
       "name": "armor-permutations-unsc",
       "path": "packs/armor-permutations-unsc.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Item"
+    },
+    {
+      "label": "Armor Permutations - Banished",
+      "name": "armor-permutations-banished",
+      "path": "packs/armor-permutations-banished.db",
       "private": false,
       "system": "mythic",
       "type": "Item"
