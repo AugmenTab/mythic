@@ -50,9 +50,9 @@
         <th>{{localize "mythic.characterEducations.roll"}}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="item-list">
       {{#each educations as |edu _|}}
-        <tr>
+        <tr class="item" data-item="{{edu._id}}">
           <td>
             <div class="education-name">
               <a

@@ -16,11 +16,11 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="item-list">
       {{#if shields}}
         {{#if equippedShields}}
           {{#each equippedShields as |shield _|}}
-            <tr>
+            <tr class="item" data-item="{{shield._id}}">
               <td>
                 <div class="weapon-name">
                   <img alt="{{shield.name}}" src="{{shield.img}}"/>

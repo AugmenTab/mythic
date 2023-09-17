@@ -21,7 +21,7 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="item-list">
       {{#each weapons as |weapon|}}
         {{> "systems/mythic/templates/partials/cargo-item.hbs" weapon}}
       {{else}}
@@ -44,7 +44,7 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="item-list">
       {{#each cargo as |item|}}
         {{> "systems/mythic/templates/partials/cargo-item.hbs" item}}
       {{else}}

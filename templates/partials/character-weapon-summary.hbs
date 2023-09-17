@@ -46,12 +46,12 @@
         <th>{{localize "mythic.characterWeaponSummary.full"}}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="item-list">
       {{#if weapons}}
         {{#if equippedWeapons}}
           {{#each equippedWeapons as |weapon _|}}
             {{#with (lookup weapon.system.ammoList weapon.system.currentAmmo)}}
-              <tr>
+              <tr class="item" data-item="{{weapon._id}}">
               {{!-- Nickname or Name --}}
                 <td>
                   <div class="weapon-name">

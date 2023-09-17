@@ -20,7 +20,7 @@
       <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="item-list">
     {{#each abilities as |ability _|}}
       {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" ability}}
     {{else}}
@@ -52,7 +52,7 @@
       <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="item-list">
     {{#each racials as |racial _|}}
       {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" racial}}
     {{else}}
@@ -84,7 +84,7 @@
       <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="item-list">
     {{#each traits as |trait _|}}
       {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" trait}}
     {{else}}
@@ -116,7 +116,7 @@
       <th>{{localize "mythic.characterTalents.abilities.cost"}}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="item-list">
     {{#each augmentations as |augmentation _|}}
       {{> "systems/mythic/templates/partials/character-sheet-ability.hbs" augmentation}}
     {{else}}

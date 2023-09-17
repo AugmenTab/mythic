@@ -210,6 +210,16 @@ export default class MythicVehicleSheet extends ActorSheet {
     event.preventDefault();
   }
 
+  _onDragStart(event) {
+    if (!event.currentTarget.classList.contains("item")) {
+      super._onDragStart(event);
+    }
+
+    const dragData =
+      this.actor.items.get(event.currentTarget.dataset.item).toDragData();
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+  }
+
   async _onItemCreate(event) {
     event.preventDefault();
     const element = event.currentTarget;

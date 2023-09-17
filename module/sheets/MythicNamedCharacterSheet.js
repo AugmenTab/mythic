@@ -114,6 +114,16 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     html.find(".special-focus").focus(this._onItemEditInline.bind(this));
   }
 
+  _onDragStart(event) {
+    if (!event.currentTarget.classList.contains("item")) {
+      super._onDragStart(event);
+    }
+
+    const dragData =
+      this.actor.items.get(event.currentTarget.dataset.item).toDragData();
+    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+  }
+
   async _onEvade(event) {
     event.preventDefault();
     await rollEvasionBatch(event.currentTarget, this.actor);

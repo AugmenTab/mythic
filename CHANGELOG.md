@@ -12,6 +12,7 @@
   * Equipment - Other
   * Armor Permutations - Banished
   * Macros
+* Makes Items draggable from Actor sheets, both into the Items sidebar as well as onto other Actor sheets.
 
 ### Bug Fixes
 
