@@ -552,8 +552,16 @@ mkRanged mbFaction isEmbedded raw rawBase = do
           $ rawRangedBaseReload rawBase
 
   weaponDetails <-
-    maybeToEither ("Could not parse weapon type " <> wType)
-      $ Map.lookup (T.toUpper $ T.strip wType) weaponDetailsMap
+    case Map.lookup (T.toUpper $ T.strip wType) weaponDetailsMap of
+      Just details ->
+        Right $ Just details
+
+      Nothing
+        | wType == "Secondary Attack" ->
+            Right Nothing
+
+        | otherwise ->
+            Left $ "Could not parse weapon type " <> wType
 
   Right
     . FoundryWeapon
@@ -563,9 +571,9 @@ mkRanged mbFaction isEmbedded raw rawBase = do
         , weaponDescription = description
         , weaponPrice       = mkItemPrice $ rawRangedPrice raw
         , weaponBreakpoints = mkBreakpoints 0
-        , weaponTrainings   = mkItemTrainings faction . Just $ fst weaponDetails
+        , weaponTrainings   = mkItemTrainings faction $ fst <$> weaponDetails
         , weaponWeight      = weight
-        , weaponGroup       = snd weaponDetails
+        , weaponGroup       = maybe Ranged snd weaponDetails
         , weaponTags        = buildWeaponTags wTags
                                 $ rawRangedBaseAttr rawBase
         , weaponFireModes   = mkFireModeMap $ rawRangedBaseROF rawBase

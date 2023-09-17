@@ -11,6 +11,7 @@
   * Equipment - Banished
   * Equipment - Other
   * Armor Permutations - Banished
+  * Macros
 
 ### Bug Fixes
 

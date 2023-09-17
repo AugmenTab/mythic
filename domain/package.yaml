@@ -26,8 +26,10 @@ dependencies:
 - bytestring
 - cassava
 - containers
+- directory
 - either
 - extra
+- filepath
 - flipstone-prelude
 - ghc-prim
 - hashable

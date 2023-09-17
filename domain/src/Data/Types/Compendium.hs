@@ -106,6 +106,23 @@ instance (CompendiumEntry item, ToJSON item) => ToJSON (Entry item) where
               , "ownership" .= ownership
               ]
 
+          FoundrySystem MacroType ->
+            object
+              [ "_id"       .= entryId e
+              , "actorIds"  .= emptyArray
+              , "author"    .= mkEntryID (Label "Macros") (mkName "Warpugss")
+              , "command"   .= entryData e
+              , "img"       .= entryImg e
+              , "name"      .= entryName e
+              , "ownership" .= object [ "default" .= valueInt 0 ]
+              , "scope"     .= valueText "global"
+              , "type"      .= valueText "script"
+              ]
+
+          FoundrySystem _ ->
+            -- These are not yet implemented, and should not be reachable.
+            object []
+
 newtype EntryID = EntryID T.Text
   deriving newtype (ToJSON)
 

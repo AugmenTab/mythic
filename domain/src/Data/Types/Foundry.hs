@@ -5,6 +5,7 @@ module Data.Types.Foundry
   , Bestiary(..)
   , Equipment(..)
   , Flood(..)
+  , Macro(..)
   , Vehicle(..)
   , Weapon(..)
 
@@ -33,6 +34,7 @@ data FoundryData
   | FoundryBestiary  Bestiary
   | FoundryEquipment Equipment
   | FoundryFlood     Flood
+  | FoundryMacro     Macro
   | FoundryVehicle   Vehicle
   | FoundryWeapon    Weapon
 
@@ -42,6 +44,7 @@ instance CompendiumEntry FoundryData where
   named (FoundryBestiary  b) = named b
   named (FoundryEquipment e) = named e
   named (FoundryFlood     f) = named f
+  named (FoundryMacro     m) = named m
   named (FoundryVehicle   v) = named v
   named (FoundryWeapon    w) = named w
 
@@ -50,6 +53,7 @@ instance CompendiumEntry FoundryData where
   imged (FoundryBestiary  b) = imged b
   imged (FoundryEquipment e) = imged e
   imged (FoundryFlood     f) = imged f
+  imged (FoundryMacro     m) = imged m
   imged (FoundryVehicle   v) = imged v
   imged (FoundryWeapon    w) = imged w
 
@@ -58,6 +62,7 @@ instance CompendiumEntry FoundryData where
   typed (FoundryBestiary  b) = typed b
   typed (FoundryEquipment e) = typed e
   typed (FoundryFlood     f) = typed f
+  typed (FoundryMacro     m) = typed m
   typed (FoundryVehicle   v) = typed v
   typed (FoundryWeapon    w) = typed w
 
@@ -66,6 +71,7 @@ instance CompendiumEntry FoundryData where
   token (FoundryBestiary  b) = token b
   token (FoundryEquipment e) = token e
   token (FoundryFlood     f) = token f
+  token (FoundryMacro     m) = token m
   token (FoundryVehicle   v) = token v
   token (FoundryWeapon    w) = token w
 
@@ -74,6 +80,7 @@ instance CompendiumEntry FoundryData where
   items (FoundryBestiary  b) = items b
   items (FoundryEquipment e) = items e
   items (FoundryFlood     f) = items f
+  items (FoundryMacro     m) = items m
   items (FoundryVehicle   v) = items v
   items (FoundryWeapon    w) = items w
 
@@ -83,6 +90,7 @@ instance ToJSON FoundryData where
   toJSON (FoundryBestiary  b) = toJSON b
   toJSON (FoundryEquipment e) = toJSON e
   toJSON (FoundryFlood     f) = toJSON f
+  toJSON (FoundryMacro     m) = toJSON m
   toJSON (FoundryVehicle   v) = toJSON v
   toJSON (FoundryWeapon    w) = toJSON w
 
@@ -418,6 +426,25 @@ mkFloodToken flood =
     , tokenSize = floodSize flood
     , tokenBar2 = Nothing
     }
+
+data Macro =
+  Macro
+    { macroName :: Name
+    , macroCommand :: T.Text
+    }
+
+instance CompendiumEntry Macro where
+  named = macroName
+  imged = const macroImg
+  typed = const (FoundrySystem MacroType)
+  token = const Nothing
+  items = const []
+
+instance ToJSON Macro where
+  toJSON = toJSON . macroCommand
+
+macroImg :: Img
+macroImg = mkImg "icons/svg/dice-target.svg"
 
 data Vehicle =
   Vehicle

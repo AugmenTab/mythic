@@ -76,7 +76,7 @@ sheetDataMap =
     , ( MeleeWeaponSheet , (GID "346860164" , Range "A2:AV63")  )
     , ( PermutationSheet , (GID "80923077"  , Range "A2:G84")   )
     , ( RangedWeaponSheet, (GID "1510373161", Range "B2:AS397") )
-    , ( VehicleSheet     , (GID "144762228" , Range "A2:KU475") )
+ -- , ( VehicleSheet     , (GID "144762228" , Range "A2:KU475") )
     ]
 
 makeSheetRequest :: Either T.Text HTTP.Request

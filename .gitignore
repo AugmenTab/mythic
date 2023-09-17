@@ -3,3 +3,4 @@ templates/sheets/skill-sheet.hbs
 node_modules
 
 packs/*.db
+macros/*.txt

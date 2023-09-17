@@ -36,6 +36,7 @@ library
       Domain.Debug
       Domain.Helpers
       Domain.JSON
+      Domain.Macros
       Domain.Persist
       Domain.Request
   other-modules:
@@ -59,8 +60,10 @@ library
     , bytestring
     , cassava
     , containers
+    , directory
     , either
     , extra
+    , filepath
     , flipstone-prelude
     , ghc-prim
     , hashable
@@ -96,9 +99,11 @@ executable domain-exe
     , bytestring
     , cassava
     , containers
+    , directory
     , domain
     , either
     , extra
+    , filepath
     , flipstone-prelude
     , ghc-prim
     , hashable

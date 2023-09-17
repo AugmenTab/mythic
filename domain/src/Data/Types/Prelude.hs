@@ -49,6 +49,7 @@ module Data.Types.Prelude
   , StatAdjustments(..), emptyStatAdjustments
   , StrengthMultiplier(..), strengthMultiplierFromText
   , Swarm, mkSwarm
+  , SystemType(..), systemTypeText
   , Token(..)
   , Trainings(..), emptyTrainings
   , WeaponGroup(..)
@@ -726,19 +727,22 @@ instance ToJSON Dimensions where
 type Embedded = Bool
 
 data EntryType
-  = FoundryActor ActorType
-  | FoundryItem  ItemType
+  = FoundryActor  ActorType
+  | FoundryItem   ItemType
+  | FoundrySystem SystemType
   deriving stock (Eq)
 
 instance ToJSON EntryType where
-  toJSON (FoundryActor a) = toJSON a
-  toJSON (FoundryItem  i) = toJSON i
+  toJSON (FoundryActor  a) = toJSON a
+  toJSON (FoundryItem   i) = toJSON i
+  toJSON (FoundrySystem s) = toJSON s
 
 entryTypeText :: EntryType -> T.Text
 entryTypeText et =
   case et of
-    FoundryActor _ -> "Actor"
-    FoundryItem  _ -> "Item"
+    FoundryActor  _ -> "Actor"
+    FoundryItem   _ -> "Item"
+    FoundrySystem s -> systemTypeText s
 
 data EquipmentTraining
   = Basic
@@ -1891,6 +1895,30 @@ mkSwarm val willSwarm =
     { swarmWillSwarm = willSwarm
     , swarmValue     = val
     }
+
+data SystemType
+  = Adventure
+  | CardStack
+  | JournalEntry
+  | MacroType
+  | Playlist
+  | RollableTable
+  | Scene
+  deriving stock (Eq)
+
+instance ToJSON SystemType where
+  toJSON = toJSON . systemTypeText
+
+systemTypeText :: SystemType -> T.Text
+systemTypeText st =
+  case st of
+    Adventure -> "Adventure"
+    CardStack -> "Card Stack"
+    JournalEntry -> "Journal Entry"
+    MacroType -> "Macro"
+    Playlist -> "Playlist"
+    RollableTable -> "Rollable Table"
+    Scene -> "Scene"
 
 data Token =
   Token

@@ -5,6 +5,7 @@ module Main
 import           Flipstone.Prelude
 import           Data.Types
 import qualified Domain.Convert as Convert
+import qualified Domain.Macros as Macros
 import qualified Domain.Persist as Persist
 import qualified Domain.Request as Request
 
@@ -26,7 +27,7 @@ main = do
       let sheets = Map.toList Request.sheetDataMap
 
       mgr <- HTTP.newManager tlsManagerSettings
-      compendia <-
+      actorAndItemCompendia <-
         Async.forConcurrently sheets $ uncurry $ \subject sheetData -> do
           let subjectTxt = Request.sheetSubjectText subject
 
@@ -42,20 +43,24 @@ main = do
           case results of
             Left  errMsg -> Exit.die $ T.unpack errMsg
             Right packs  -> do
-              void $ handleSheetResults packs
+              handleSheetResults packs
               pure packs
 
-      Persist.writeManifest $ concat compendia
+      macroCompendium <- Macros.mkMacroCompendium
+      handleSheetResults macroCompendium
+
+      Persist.writeManifest $ concat actorAndItemCompendia <> macroCompendium
       IO.putStrLn "Done."
 
 handleSheetResults :: [Compendium FoundryData] -> IO ()
-handleSheetResults compendia = forM_ compendia $ \compendium -> do
-  IO.putStrLn $
-    T.unwords [ "Writing compendium"
-              , labelText $ compendiumLabel compendium
-              , "to"
-              , T.pack $ compendiumPath compendium
-              , " ..."
-              ]
+handleSheetResults actorAndItemCompendia =
+  forM_ actorAndItemCompendia $ \compendium -> do
+    IO.putStrLn $
+      T.unwords [ "Writing compendium"
+                , labelText $ compendiumLabel compendium
+                , "to"
+                , T.pack $ compendiumPath compendium
+                , " ..."
+                ]
 
-  Persist.writeCompendium compendium
+    Persist.writeCompendium compendium

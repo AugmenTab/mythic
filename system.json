@@ -278,6 +278,14 @@
       "private": false,
       "system": "mythic",
       "type": "Actor"
+    },
+    {
+      "label": "Macros",
+      "name": "macros",
+      "path": "packs/macros.db",
+      "private": false,
+      "system": "mythic",
+      "type": "Macro"
     }
   ],
   "primaryTokenAttribute": "wounds",
