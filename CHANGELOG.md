@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.7
+
+### Bug Fixes
+
+* Compendium Flood NPCs now have all equipment and faction trainings by default.
+* Improved the parser to fix shield values incorrectly appearing on some items.
+
 ## 0.3.6
 
 ### Changes
