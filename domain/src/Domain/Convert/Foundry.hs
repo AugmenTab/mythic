@@ -1053,12 +1053,15 @@ findDelayIn txts
   | otherwise                      = findDelayIn . snd =<< L.uncons txts
 
 findIntegrityIn :: [T.Text] -> Maybe ItemAdjustment
-findIntegrityIn txts
-  | L.length txts < 3                  = Nothing
-  | "rating"    : "of" : v : _ <- txts = basicItemAdjustment <$> tryParseInt v
-  | "integrity" : "of" : v : _ <- txts = basicItemAdjustment <$> tryParseInt v
-  | "integrity" : v    : _     <- txts = basicItemAdjustment <$> tryParseInt v
-  | otherwise                          = findIntegrityIn . snd =<< L.uncons txts
+findIntegrityIn txts =
+  let continueWith = fmap snd . L.uncons
+   in case txts of
+        _ | L.length txts < 3 -> Nothing
+        "armor"     : "rating" : _     -> findIntegrityIn =<< continueWith =<< continueWith txts
+        "integrity" : "of"     : v : _ -> basicItemAdjustment <$> tryParseInt v
+        "integrity" : v        : _     -> basicItemAdjustment <$> tryParseInt v
+        "rating"    : "of"     : v : _ -> basicItemAdjustment <$> tryParseInt v
+        _                              -> findIntegrityIn =<< continueWith txts
 
 findRechargeIn :: [T.Text] -> Maybe ItemAdjustment
 findRechargeIn txts
