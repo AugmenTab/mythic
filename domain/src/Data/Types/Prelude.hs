@@ -754,7 +754,7 @@ data EquipmentTraining
   | Ordnance
   | Cannon
   | Melee
-  deriving stock (Eq, Ord)
+  deriving stock (Bounded, Enum, Eq, Ord)
 
 instance ToJSON EquipmentTraining where
   toJSON = toJSON . equipmentTrainingText

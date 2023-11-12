@@ -346,6 +346,12 @@ mkFlood raw = do
           $ rawFloodAbilities raw
 
       abilities = mkAbility RacialTrait <$> rawFloodAbilities raw
+      trainings =
+        emptyTrainings
+          { trainingsEquipment = Set.fromList [ minBound..maxBound ]
+          , trainingsFaction   = Set.fromList factions
+          }
+
       experience =
         ExperiencePayout
           { expBase       = rawFloodExperience raw
@@ -366,7 +372,7 @@ mkFlood raw = do
         , floodArmor                 = emptyCharacterArmor
         , floodShields               = emptyCharacterShields
         , floodSkills                = floodSkillList
-        , floodTrainings             = emptyTrainings
+        , floodTrainings             = trainings
         , floodExperience            = experience
         , floodItems                 = abilities
         }
