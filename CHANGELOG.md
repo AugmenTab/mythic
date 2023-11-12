@@ -2,6 +2,11 @@
 
 ## 0.3.7
 
+### Changes
+
+* Brings the system into Mythic 6.1 compliance with the following changes:
+  * Reduced Armor arm hardpoints to 2.
+
 ### Bug Fixes
 
 * Compendium Flood NPCs now have all equipment and faction trainings by default.

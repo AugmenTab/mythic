@@ -413,7 +413,7 @@ mythic.specialRules = {
 mythic.armorHardpoints = {
   head: 3,
   chest: 6,
-  arm: 3,
+  arm: 2,
   leg: 3
 }
 
