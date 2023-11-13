@@ -6,6 +6,8 @@
 
 * Brings the system into Mythic 6.1 compliance with the following changes:
   * Reduced Armor arm hardpoints to 2.
+  * Perceptive Range updated to double Perception modifier.
+  * Vigil updated to increase Perceptive Range multiplier by 2.
 
 ### Bug Fixes
 

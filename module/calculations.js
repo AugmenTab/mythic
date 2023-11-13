@@ -1099,8 +1099,8 @@ function calculateMythicDifficulty(actorData) {
 }
 
 function calculatePerceptiveRange(actorData) {
-  const base = actorData.characteristics.per.total * (
-    actorData.perceptiveRange.vigil ? 10 : 5
+  const base = 2 * actorData.characteristics.per.total * (
+    actorData.perceptiveRange.vigil ? 2 : 1
   );
   actorData.perceptiveRange.base = base;
   actorData.perceptiveRange.total = actorData.perceptiveRange.mod + base;
