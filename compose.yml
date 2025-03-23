@@ -1,0 +1,20 @@
+services:
+  foundry:
+    build: .
+    container_name: foundryvtt-dev
+    environment:
+      FOUNDRY_USERNAME: "${FOUNDRY_USERNAME}"
+      FOUNDRY_PASSWORD: "${FOUNDRY_PASSWORD}"
+      FOUNDRY_ADMIN_KEY: "${FOUNDRY_ADMIN_KEY}"
+      FOUNDRY_VERSION: "${FOUNDRY_VERSION}"
+    ports:
+      - "30000:30000"
+    volumes:
+      - ./mythic:/root/.local/share/FoundryVTT/Data/systems/mythic
+      - foundry_worlds:/root/.local/share/FoundryVTT/Data/worlds
+      - foundry_license:/root/.local/share/FoundryVTT/Config
+    entrypoint: ["/bin/bash", "-c", "node resources/app/main.js"]
+
+volumes:
+  foundry_worlds:
+  foundry_license:

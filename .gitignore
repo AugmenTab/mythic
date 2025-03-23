@@ -3,4 +3,8 @@ templates/sheets/skill-sheet.hbs
 node_modules
 
 packs/*.db
+mythic/packs/*
 macros/*.txt
+
+.env
+/foundryvtt/

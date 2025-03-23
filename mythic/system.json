@@ -8,7 +8,7 @@
   ],
   "changelog": "https://github.com/AugmenTab/mythic/blob/main/CHANGELOG.md",
   "compatibility": {
-    "maximum": "11",
+    "maximum": "12",
     "minimum": "10",
     "verified": "11"
   },
@@ -17,8 +17,10 @@
   "esmodules": [
     "mythic.js"
   ],
-  "gridDistance": 1,
-  "gridUnits": "m",
+  "grid": {
+    "units": "m",
+    "distance": 1
+  },
   "id": "mythic",
   "initiative": "@initiative.formula",
   "languages": [
