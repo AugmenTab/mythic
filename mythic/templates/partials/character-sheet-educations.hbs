@@ -82,16 +82,14 @@
               data-field="roll.skill"
               data-item-id="{{edu._id}}"
             >
-              {{#select edu.system.roll.skill}}
-                <option value="int">INT</option>
-                {{#each edu.system.skills as |skill key|}}
-                  {{#if skill}}
-                    <option value="{{key}}">
-                      {{localize (concat "mythic.skillNames." key)}}
-                    </option>
-                  {{/if}}
-                {{/each}}
-              {{/select}}
+              <option value="int" {{#if (eq "int" edu.system.roll.skill)}}selected{{/if}}>INT</option>
+              {{#each edu.system.skills as |skill key|}}
+                {{#if skill}}
+                  <option value="{{key}}" {{#if (eq key edu.system.roll.skill)}}selected{{/if}}>
+                    {{localize (concat "mythic.skillNames." key)}}
+                  </option>
+                {{/if}}
+              {{/each}}
             </select>
           </td>
           <td>
@@ -100,11 +98,7 @@
               data-field="roll.training"
               data-item-id="{{edu._id}}"
             >
-              {{#select edu.system.roll.training}}
-                {{#each ../config.educationTraining as |value key|}}
-                  <option value="{{key}}">{{localize value}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions ../config.educationTraining selected=edu.system.roll.training localize=true}}
             </select>
           </td>
           <td style="width:90px">

@@ -23,25 +23,15 @@
             <td>{{localize details.type}}</td>
             <td>
               <select name="system.skills.{{skill}}.characteristic">
-                {{#select this.characteristic}}
-                  {{#if (eq ../../actor.type "Flood")}}
-                    {{#each details.floodCharacteristics as |stat|}}
-                      <option value="{{stat}}">{{stat}}</option>
-                    {{/each}}
-                  {{else}}
-                    {{#each details.characteristics as |stat|}}
-                      <option value="{{stat}}">{{stat}}</option>
-                    {{/each}}
-                  {{/if}}
-                {{/select}}
+                {{#if (eq ../../actor.type "Flood")}}
+                  {{selectOptions details.floodCharacteristics selected=this.characteristic}}
+                {{else}}
+                  {{selectOptions details.characteristics selected=this.characteristic}}
+                {{/if}}
             </td>
             <td>
               <select name="system.skills.{{skill}}.training.tier">
-                {{#select this.training.tier}}
-                  {{#each ../../config.skillTraining as |content option|}}
-                    <option value="{{option}}">{{localize content}}</option>
-                  {{/each}}
-                {{/select}}
+                {{selectOptions ../../config.skillTraining selected=this.training.tier localize=true}}
               </select>
             </td>
             <td>

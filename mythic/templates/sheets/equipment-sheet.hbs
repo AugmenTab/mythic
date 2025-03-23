@@ -42,11 +42,7 @@
           <tr>
             <td>
               <select name="system.trainings.faction">
-                {{#select system.trainings.faction}}
-                  {{#each config.trainings.factions as |value key|}}
-                    <option value="{{key}}">{{localize value}}</option>
-                  {{/each}}
-                {{/select}}
+                {{selectOptions config.trainings.factions selected=system.trainings.faction localize=true}}
               </select>
             </td>
             <td>

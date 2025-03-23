@@ -114,164 +114,282 @@ mythic.skills = {
   appeal: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CHA"],
-    floodCharacteristics: []
+    characteristics: {
+      CHA: "CHA"
+    },
+    floodCharacteristics: {}
   },
   athletics: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.move",
-    characteristics: ["AGI", "STR"],
-    floodCharacteristics: ["AGI", "STR"]
+    characteristics: {
+      AGI: "AGI",
+      STR: "STR"
+    },
+    floodCharacteristics: {
+      AGI: "AGI",
+      STR: "STR"
+    }
   },
   camouflage: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT", "PER"],
-    floodCharacteristics: ["INT", "PER"]
+    characteristics: {
+      INT: "INT",
+      PER: "PER"
+    },
+    floodCharacteristics: {
+      INT: "INT",
+      PER: "PER"
+    },
   },
   command: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["LDR"],
-    floodCharacteristics: []
+    characteristics: {
+      LDR: "LDR"
+    },
+    floodCharacteristics: {}
   },
   cryptography: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: ["INT"]
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      INT: "INT"
+    }
   },
   deception: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CHA", "LDR"],
-    floodCharacteristics: []
+    characteristics: {
+      CHA: "CHA",
+      LDR: "LDR"
+    },
+    floodCharacteristics: {}
   },
   demolition: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: ["INT"]
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      INT: "INT"
+    }
   },
   evasion: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.move",
-    characteristics: ["AGI", "WFM"],
-    floodCharacteristics: ["AGI", "WFM"]
+    characteristics: {
+      AGI: "AGI",
+      WFM: "WFM"
+    },
+    floodCharacteristics: {
+      AGI: "AGI",
+      WFM: "WFM"
+    }
   },
   gambling: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["INT", "CHA"],
-    floodCharacteristics: []
+    characteristics: {
+      INT: "INT",
+      CHA: "CHA"
+    },
+    floodCharacteristics: {}
   },
   interrogation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CHA", "LDR", "INT"],
-    floodCharacteristics: []
+    characteristics: {
+      CHA: "CHA",
+      LDR: "LDR",
+      INT: "INT"
+    },
+    floodCharacteristics: {}
   },
   intimidation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["STR", "CHA", "LDR", "INT"],
-    floodCharacteristics: ["STR", "INT"]
+    characteristics: {
+      STR: "STR",
+      CHA: "CHA",
+      LDR: "LDR",
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      STR: "STR",
+      INT: "INT"
+    }
   },
   investigation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["INT", "PER"],
-    floodCharacteristics: ["INT", "PER"]
+    characteristics: {
+      INT: "INT",
+      PER: "PER"
+    },
+    floodCharacteristics: {
+      INT: "INT",
+      PER: "PER"
+    }
   },
   medHuman: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: []
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {}
   },
   medCovenant: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: []
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {}
   },
   medXenophile: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: []
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {}
   },
   navGroundAir: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT", "PER"],
-    floodCharacteristics: ["INT", "PER"]
+    characteristics: {
+      INT: "INT",
+      PER: "PER"
+    },
+    floodCharacteristics: {
+      INT: "INT",
+      PER: "PER"
+    }
   },
   navSpace: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT", "PER"],
-    floodCharacteristics: ["INT", "PER"]
+    characteristics: {
+      INT: "INT",
+      PER: "PER"
+    },
+    floodCharacteristics: {
+      INT: "INT",
+      PER: "PER"
+    }
   },
   negotiation: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.social",
-    characteristics: ["CHA"],
-    floodCharacteristics: []
+    characteristics: {
+      CHA: "CHA"
+    },
+    floodCharacteristics: {}
   },
   pilotGround: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["AGI", "INT"],
-    floodCharacteristics: ["AGI", "INT"]
+    characteristics: {
+      AGI: "AGI",
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      AGI: "AGI",
+      INT: "INT"
+    }
   },
   pilotAir: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["AGI", "INT"],
-    floodCharacteristics: ["AGI", "INT"]
+    characteristics: {
+      AGI: "AGI",
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      AGI: "AGI",
+      INT: "INT"
+    }
   },
   pilotSpace: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["AGI", "INT"],
-    floodCharacteristics: ["AGI", "INT"]
+    characteristics: {
+      AGI: "AGI",
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      AGI: "AGI",
+      INT: "INT"
+    }
   },
   security: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: ["INT"]
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      INT: "INT"
+    }
   },
   stunting: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.move",
-    characteristics: ["AGI"],
-    floodCharacteristics: ["AGI"]
+    characteristics: {
+      AGI: "AGI"
+    },
+    floodCharacteristics: {
+      AGI: "AGI"
+    },
   },
   survival: {
     difficulty: "mythic.skillSheet.difficulties.basic",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT", "PER"],
-    floodCharacteristics: ["INT", "PER"]
+    characteristics: {
+      INT: "INT",
+      PER: "PER"
+    },
+    floodCharacteristics: {
+      INT: "INT",
+      PER: "PER"
+    }
   },
   techHuman: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: ["INT"]
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      INT: "INT"
+    }
   },
   techCovenant: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: ["INT"]
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      INT: "INT"
+    }
   },
   techForerunner: {
     difficulty: "mythic.skillSheet.difficulties.adv",
     type: "mythic.skillSheet.types.field",
-    characteristics: ["INT"],
-    floodCharacteristics: ["INT"]
+    characteristics: {
+      INT: "INT"
+    },
+    floodCharacteristics: {
+      INT: "INT"
+    }
   }
 }
 
@@ -433,9 +551,23 @@ mythic.vehicle = {
     hull: "mythic.vehicleSheet.breakpoints.hull"
   },
   mobility: {
-    legs: [ 2, 4, 6 ],
-    treads: [ 2, 4, 6, 8 ],
-    wheels: [ 3, 4, 6, 8 ]
+    legs: {
+      2: 2,
+      4: 4,
+      6: 6
+    },
+    treads: {
+      2: 2,
+      4: 4,
+      6: 6,
+      8: 8
+    },
+    wheels: {
+      3: 3,
+      4: 4,
+      6: 6,
+      8: 8
+    }
   },
   propulsion: {
     none: "mythic.vehicleSheet.propulsion.none",
@@ -448,5 +580,19 @@ mythic.vehicle = {
     ground: "mythic.vehicleSheet.types.ground",
     air: "mythic.vehicleSheet.types.air",
     space: "mythic.vehicleSheet.types.space"
+  }
+}
+
+mythic.strAttack = {
+  damage: {
+    "0": "--",
+    "0.5": "½ STR",
+    "1": "STR",
+    "2": "STR × 2"
+  },
+  piercing: {
+    "0": "--",
+    "0.5": "½ STR",
+    "1": "STR"
   }
 }

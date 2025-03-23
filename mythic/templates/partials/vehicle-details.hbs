@@ -47,11 +47,7 @@
     </div>
     <div class="vehicle-physical">
       <select name="system.factionTraining">
-        {{#select system.factionTraining}}
-          {{#each config.trainings.factions as |value key|}}
-            <option value="{{key}}">{{localize value}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions config.trainings.factions selected=system.factionTraining localize=true}}
       </select>
       <span class="offset-label">
         <p>{{localize "mythic.vehicleDetails.price"}}</p>
@@ -78,11 +74,7 @@
         />
       </span>
       <select name="system.size">
-        {{#select system.size}}
-          {{#each config.size as |value key|}}
-            <option value="{{key}}">{{localize value}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions config.size selected=system.size localize=true}}
       </select>
       <span class="offset-label">
         <p>{{localize "mythic.vehicleDetails.length"}}</p>

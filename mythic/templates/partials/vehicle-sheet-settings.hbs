@@ -322,11 +322,7 @@
         <tr>
           <td>
             <select name="system.propulsion.type">
-              {{#select system.propulsion.type}}
-                {{#each config.vehicle.propulsion as |value key|}}
-                  <option value="{{key}}">{{localize value}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions config.vehicle.propulsion selected=system.propulsion.type localize=true}}
           </td>
           <td>
             <input
@@ -356,11 +352,7 @@
                   disabled="true" aria-disabled="true"
                 {{/if}}
               >
-                {{#select system.propulsion.max}}
-                  {{#each (lookup config.vehicle.mobility system.propulsion.type)}}
-                    <option value="{{this}}">{{this}}</option>
-                  {{/each}}
-                {{/select}}
+              {{selectOptions (lookup config.vehicle.mobility system.propulsion.type) selected=system.propulsion.max}}
               </select>
             {{/if}}
           </td>

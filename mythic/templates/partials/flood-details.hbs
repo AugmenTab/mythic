@@ -20,11 +20,7 @@
         />
       </p>
       <select name="system.size">
-        {{#select system.size}}
-          {{#each config.size as |name size|}}
-            <option value="{{size}}">{{localize name}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions config.size selected=system.size localize=true}}
       </select>
       <p>
         <input

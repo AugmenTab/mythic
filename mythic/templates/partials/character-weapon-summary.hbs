@@ -73,30 +73,37 @@
                           data-field="owner"
                           data-item-id="{{weapon._id}}"
                         >
-                          {{#select weapon.system.owner}}
-                            <option value="">--</option>
-                            {{#each ../../actor.system.crew.operators as |operator|}}
-                              {{#if operator.display}}
-                                <option value="{{concat "o_" operator.id}}">
-                                  [O{{doMath "+" operator.idx 1}}]
-                                </option>
-                              {{/if}}
-                            {{/each}}
-                            {{#each ../../actor.system.crew.gunners as |gunner|}}
-                              {{#if gunner.display}}
-                                <option value="{{concat "g_" gunner.id}}">
-                                  [G{{doMath "+" gunner.idx 1}}]
-                                </option>
-                              {{/if}}
-                            {{/each}}
-                            {{#each ../../actor.system.crew.complement as |complement|}}
-                              {{#if complement.display}}
-                                <option value="{{concat "c_" complement.id}}">
-                                  [C{{doMath "+" complement.idx 1}}]
-                                </option>
-                              {{/if}}
-                            {{/each}}
-                          {{/select}}
+                          <option value="" {{#if (eq "" weapon.system.owner)}}selected{{/if}}>--</option>
+                          {{#each ../../actor.system.crew.operators as |operator|}}
+                            {{#if operator.display}}
+                              <option
+                                value="{{concat "o_" operator.id}}"
+                                {{#if (eq (concat "o_" operator.id) weapon.system.owner)}}selected{{/if}}
+                              >
+                                [O{{doMath "+" operator.idx 1}}]
+                              </option>
+                            {{/if}}
+                          {{/each}}
+                          {{#each ../../actor.system.crew.gunners as |gunner|}}
+                            {{#if gunner.display}}
+                              <option
+                                value="{{concat "g_" gunner.id}}"
+                                {{#if (eq (concat "g_" gunner.id) weapon.system.owner)}}selected{{/if}}
+                              >
+                                [G{{doMath "+" gunner.idx 1}}]
+                              </option>
+                            {{/if}}
+                          {{/each}}
+                          {{#each ../../actor.system.crew.complement as |complement|}}
+                            {{#if complement.display}}
+                              <option
+                                value="{{concat "c_" complement.id}}"
+                                {{#if (eq (concat "c_" complement.id) weapon.system.owner)}}selected{{/if}}
+                              >
+                                [C{{doMath "+" complement.idx 1}}]
+                              </option>
+                            {{/if}}
+                          {{/each}}
                         </select>
                       {{/unless}}
                     {{/if}}
@@ -114,16 +121,17 @@
                       data-field="attack.fireMode"
                       data-item-id="{{weapon._id}}"
                     >
-                      {{#select weapon.system.attack.fireMode}}
-                        <option value="none">--</option>
-                        {{#each weapon.system.fireMode as |rate mode|}}
-                          {{#if rate}}
-                            <option value="{{mode}}-{{rate}}">
-                              {{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})
-                            </option>
-                          {{/if}}
-                        {{/each}}
-                      {{/select}}
+                      <option value="none" {{#if (eq "none" weapon.system.attack.fireMode)}}selected{{/if}}>--</option>
+                      {{#each weapon.system.fireMode as |rate mode|}}
+                        {{#if rate}}
+                          <option
+                            value="{{mode}}-{{rate}}"
+                            {{#if (eq (concat mode (concat "-" rate)) weapon.system.attack.fireMode)}}selected{{/if}}
+                          >
+                            {{localize (concat "mythic.weaponSheet.fireMode." mode)}}&nbsp;({{rate}})
+                          </option>
+                        {{/if}}
+                      {{/each}}
                     </select>
                   {{else if (eq weapon.system.group "thrown")}}
                     <select
@@ -131,11 +139,7 @@
                       data-field="ammoList.{{weapon.system.currentAmmo}}.range.grip"
                       data-item-id="{{weapon._id}}"
                     >
-                      {{#select this.range.grip}}
-                        {{#each ../../config.grips as |value grip|}}
-                          <option value="{{grip}}">{{localize value}}</option>
-                        {{/each}}
-                      {{/select}}
+                      {{selectOptions ../../config.grips selected=this.range.grip localize=true}}
                     </select>
                   {{else}}
                     {{localize (concat "mythic.weaponGroups." weapon.system.group)}}

@@ -1,4 +1,4 @@
-/** @module MythicNamedCharacterSheet */
+/** @module MythicBestiaryCharacterSheet */
 
 import * as Calc from "../calculations.js";
 import { getPostableItemFlavorPath, postChatMessage } from "../chat.js";
@@ -6,12 +6,12 @@ import { localize, makeUIError } from "../common.js";
 import { rollAttacks, rollEvasionBatch, rollTest } from "../dice.js";
 
 /**
- * Class representing the unique features of this system's Named Character
+ * Class representing the unique features of this system's Bestiary Character
  * sheet.
  *
  * @extends ActorSheet
  */
-export default class MythicNamedCharacterSheet extends ActorSheet {
+export default class MythicBestiaryCharacterSheet extends ActorSheet {
 
   /**
    * Establish default size and class options for the ActorSheet, establish tab
@@ -22,9 +22,9 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
    * or overwritten records.
    */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["mythic", "sheet", "namedCharacter", "character"],
-      height: 745,
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["mythic", "sheet", "bestiaryCharacter", "character"],
+      height: 735,
       width: 800,
       tabs: [
         {
@@ -38,7 +38,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
           initial: 'skills'
         }
       ],
-      template: "systems/mythic/templates/sheets/namedCharacter-sheet.hbs"
+      template: "systems/mythic/templates/sheets/bestiaryCharacter-sheet.hbs"
     });
   }
 
@@ -63,10 +63,8 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     data.armors = Calc.sortAndFilterItems(data.items, "armor");
     data.educations = Calc.sortAndFilterItems(data.items, "education");
     data.equipment = Calc.sortAndFilterItems(data.items, "equipment");
-
     data.shields = data.items.filter(Calc.isNonArmorShieldItem);
     data.equippedShields = data.shields.filter(i => i.system.weight.equipped);
-
     data.weapons = Calc.sortAndFilterItems(data.items, "weapon", "nickname");
     data.equippedWeapons = data.weapons.filter(w => w.system.weight.equipped);
     return data;
@@ -93,11 +91,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     super.activateListeners(html);
 
     html.find(".evade").click(this._onEvade.bind(this));
-    html.find(".exp-apply").click(this._onExpApply.bind(this));
-    html.find(".exp-create").click(this._onExpCreate.bind(this));
-    html.find(".exp-delete").click(this._onExpDelete.bind(this));
-    html.find(".exp-edit").change(this._onExpEdit.bind(this));
-    html.find(".exp-submit").keyup(this._onExpSubmit.bind(this));
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-edit").click(this._onItemEdit.bind(this));
@@ -129,59 +122,16 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     await rollEvasionBatch(event.currentTarget, this.actor);
   }
 
-  async _onExpApply(event) {
-    event.preventDefault();
-    let system = duplicate(this.actor.system);
-    const field = document.getElementById("exp-total-value");
-    const val = Math.floor(parseInt(field.value));
-    system.experience.total += (!isNaN(val)) ? val : 0;
-    if (isNaN(parseInt(field.value))) {
-      makeUIError("mythic.chat.error.nan");
-    }
-    await this.actor.update({ "system": system });
-  }
-
-  async _onExpCreate(event) {
-    event.preventDefault;
-    let system = duplicate(this.actor.system);
-    let purchases = Calc.setupExperiencePurchases(system.experience.purchases);
-    const purchase = { index: purchases.length, name: null, price: null };
-    system.experience.purchases.push(purchase);
-    await this.actor.update({ "system": system });
-  }
-
-  async _onExpDelete(event) {
-    event.preventDefault;
-    const element = event.currentTarget;
-    let system = duplicate(this.actor.system);
-    const purchases = system.experience.purchases.filter(x => x.index != element.dataset.index);
-    system.experience.purchases = Calc.setupExperiencePurchases(purchases);
-    await this.actor.update({ "system": system });
-  }
-
-  async _onExpEdit(event) {
-    event.preventDefault;
-    const element = event.currentTarget;
-    let system = duplicate(this.actor.system);
-    let val = element.dataset.field === "price" ? parseInt(element.value) : element.value;
-    if (element.dataset.field === "price" && isNaN(val)) val = 0;
-    system.experience.purchases[element.dataset.index][element.dataset.field] = val;
-    await this.actor.update({ "system": system });
-  }
-
-  _onExpSubmit(event) {
-    if (event.keyCode === 13) this._onExpApply(event);
-  }
-
   async _onLanguageAdd(event) {
     event.preventDefault();
     const element = event.currentTarget;
     let field = document.getElementById("lang-input");
     if (field.value === "") {
-      return makeUIError("mythic.characterTalents.trainings.emptyLang");
+      makeUIError("mythic.characterTalents.trainings.emptyLang");
+      return;
     }
 
-    let system = duplicate(this.actor.system);
+    let system = foundry.utils.duplicate(this.actor.system);
     let langs = new Set(system.trainings.languages);
     if (langs.has(field.value)) {
       makeUIError("mythic.characterTalents.trainings.hasLang");
@@ -199,7 +149,7 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const element = event.currentTarget;
     const lang = element.dataset.lang;
 
-    let system = duplicate(this.actor.system);
+    let system = foundry.utils.duplicate(this.actor.system);
     let langs = new Set(system.trainings.languages);
     if (langs.has(lang)) {
       langs.delete(lang);
@@ -293,21 +243,6 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     await item.update({ "system": Calc.handleReloadMagCount(item.system) });
   }
 
-  async _onRoll(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    if (element.classList[0] === "attack") {
-      const item = await this.actor.items.get(element.getAttribute("data-item-id"));
-      const newMag = await rollAttacks(element, this.actor, item);
-      if (!isNaN(newMag)) {
-        item.system.ammoList[item.system.currentAmmo].currentMag = newMag;
-        await item.update({ "system": item.system });
-      }
-    } else {
-      await rollTest(element, this.actor);
-    }
-  }
-
   async _onShieldItemRecharge(event) {
     event.preventDefault();
     const element = event.currentTarget;
@@ -336,5 +271,20 @@ export default class MythicNamedCharacterSheet extends ActorSheet {
     const val = system.shields.value + system.shields.recharge;
     const update = val > system.shields.max ? system.shields.max : val;
     await this.actor.update({ "system.shields.value": update });
+  }
+
+  async _onRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    if (element.classList[0] === "attack") {
+      const item = await this.actor.items.get(element.getAttribute("data-item-id"));
+      const newMag = await rollAttacks(element, this.actor, item);
+      if (!isNaN(newMag)) {
+        item.system.ammoList[item.system.currentAmmo].currentMag = newMag;
+        await item.update({ "system": item.system });
+      }
+    } else {
+      await rollTest(element, this.actor);
+    }
   }
 }

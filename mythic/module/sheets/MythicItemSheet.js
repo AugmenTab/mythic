@@ -18,7 +18,7 @@ export default class MythicItemSheet extends ItemSheet {
    * or overwritten records.
    */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "item"],
       height: 635,
       width: 585,

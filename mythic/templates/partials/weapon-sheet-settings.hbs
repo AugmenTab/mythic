@@ -38,22 +38,14 @@
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.firearmType.field"}}</h4>
     <select name="system.settings.firearmType">
-      {{#select system.settings.firearmType}}
-        {{#each config.weaponSettings.firearmType as |value key|}}
-          <option value="{{key}}">{{localize value}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions config.weaponSettings.firearmType selected=system.settings.firearmType localize=true}}
     </select>
     <p>{{localize (concat "mythic.weaponSheet.settings.firearmTypeDescriptions." system.settings.firearmType)}}</p>
   </div>
   <div class="weapon-setting">
     <h4>{{localize "mythic.weaponSheet.settings.barrel.field"}}</h4>
     <select name="system.settings.barrel">
-      {{#select system.settings.barrel}}
-        {{#each config.weaponSettings.barrel as |value key|}}
-          <option value="{{key}}">{{localize value}}</option>
-        {{/each}}
-      {{/select}}
+      {{selectOptions config.weaponSettings.barrel selected=system.settings.barrel localize=true}}
     </select>
     <div class="weapon-setting-descriptions">
       {{#with system.settings.barrel}}

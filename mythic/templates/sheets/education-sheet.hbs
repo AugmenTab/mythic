@@ -37,20 +37,12 @@
         <tr>
           <td>
             <select name="system.difficulty">
-              {{#select system.difficulty}}
-                {{#each config.skillDifficulty as |name diff|}}
-                  <option value="{{diff}}">{{localize name}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions config.skillDifficulty selected=system.difficulty localize=true}}
             </select>
           </td>
           <td>
             <select name="system.type">
-              {{#select system.type}}
-                {{#each config.educationType as |name type|}}
-                  <option value="{{type}}">{{localize name}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions config.educationType selected=system.type localize=true}}
             </select>
           </td>
           <td>

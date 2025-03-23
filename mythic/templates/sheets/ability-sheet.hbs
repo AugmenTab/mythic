@@ -58,11 +58,7 @@
           </td>
           <td>
             <select name="system.type">
-              {{#select system.type}}
-                {{#each config.abilityTypes as |value key|}}
-                  <option value="{{key}}">{{localize value}}</option>
-                {{/each}}
-              {{/select}}
+              {{selectOptions config.abilityTypes selected=system.type localize=true}}
             </select>
           </td>
         </tr>

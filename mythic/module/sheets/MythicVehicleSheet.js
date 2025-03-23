@@ -21,7 +21,7 @@ export default class MythicVehicleSheet extends ActorSheet {
    * or overwritten records.
    */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "vehicle", "character"],
       height: 765,
       width: 820,
@@ -45,7 +45,7 @@ export default class MythicVehicleSheet extends ActorSheet {
   getData() {
     const data = super.getData();
 
-    data.system = data.actor.system;
+    data.system = data.actor.system || {};
     data.config = CONFIG.mythic;
 
     data.cargo =

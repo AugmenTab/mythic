@@ -92,11 +92,7 @@
     </div>
     <div class="physical">
       <select name="system.size">
-        {{#select system.size}}
-          {{#each config.size as |name size|}}
-            <option value="{{size}}">{{localize name}}</option>
-          {{/each}}
-        {{/select}}
+        {{selectOptions config.size selected=system.size localize=true}}
       </select>
       <p>
         <input
@@ -139,17 +135,11 @@
         </p>
       {{else}}
         <select name="system.difficulty.tier">
-          {{#select system.difficulty.tier}}
-            {{#if system.difficulty.normalOnly}}
-              <option value="0">
-                {{localize "mythic.difficulty.normal"}}
-              </option>
-            {{else}}
-              {{#each config.difficulty as |name mult|}}
-                <option value="{{mult}}">{{localize name}}</option>
-              {{/each}}
-            {{/if}}
-          {{/select}}
+          {{#if system.difficulty.normalOnly}}
+            <option value="1" selected>{{localize "mythic.difficulty.normal"}}</option>
+           {{else}}
+            {{selectOptions config.difficulty selected=system.difficulty.tier localize=true}}
+           {{/if}}
         </select>
       {{/if}}
     </div>

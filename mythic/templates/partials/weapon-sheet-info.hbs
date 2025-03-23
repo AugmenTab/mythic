@@ -7,27 +7,15 @@
   <input name="system.ammo" type="text" value="{{system.ammo}}"/>
   <p>{{localize "mythic.weaponSheet.stats.ammoGroup"}}</p>
   <select name="system.ammoGroup">
-    {{#select system.ammoGroup}}
-      {{#each config.ammoGroups as |value key|}}
-        <option value="{{key}}">{{localize value}}</option>
-      {{/each}}
-    {{/select}}
+    {{selectOptions config.ammoGroups selected=system.ammoGroup localize=true}}
   </select>
   <p>{{localize "mythic.weaponSheet.stats.factionTraining"}}</p>
   <select name="system.trainings.faction">
-    {{#select system.trainings.faction}}
-      {{#each config.trainings.factions as |value key|}}
-        <option value="{{key}}">{{localize value}}</option>
-      {{/each}}
-    {{/select}}
+    {{selectOptions config.trainings.factions selected=system.trainings.faction localize=true}}
   </select>
   <p>{{localize "mythic.weaponSheet.stats.equipmentTraining"}}</p>
   <select name="system.trainings.equipment">
-    {{#select system.trainings.equipment}}
-      {{#each config.trainings.equipment as |value key|}}
-        <option value="{{key}}">{{localize value}}</option>
-      {{/each}}
-    {{/select}}
+    {{selectOptions config.trainings.equipment selected=system.trainings.equipment localize=true}}
   </select>
   <p>{{localize "mythic.weaponSheet.stats.price"}}</p>
   <input
@@ -121,11 +109,7 @@
     <tr>
       <td>
         <select name="system.group">
-          {{#select system.group}}
-            {{#each config.weaponGroups as |value key|}}
-              <option value="{{key}}">{{localize value}}</option>
-            {{/each}}
-          {{/select}}
+          {{selectOptions config.weaponGroups selected=system.group localize=true}}
         </select>
       </td>
       <td>
@@ -162,12 +146,7 @@
             />
             <b>&plus;</b>
             <select name="system.ammoList.STD.strDamage">
-              {{#select system.ammoList.STD.strDamage}}
-                <option value="0">--</option>
-                <option value="0.5">&frac12; STR</option>
-                <option value="1">STR</option>
-                <option value="2">STR &times; 2</option>
-              {{/select}}
+              {{selectOptions config.strAttack.damage selected=system.ammoList.STD.strDamage}}
             </select>
           </span>
         {{else}}
@@ -288,11 +267,7 @@
       {{else if (eq system.group "thrown")}}
         <td>
           <select name="system.ammoList.STD.range.grip">
-            {{#select system.ammoList.STD.range.grip}}
-              {{#each config.grips as |value key|}}
-                <option value="{{key}}">{{localize value}}</option>
-              {{/each}}
-            {{/select}}
+            {{selectOptions config.grips selected=system.ammoList.STD.range.grip localize=true}}
           </select>
         </td>
         <td>
@@ -330,11 +305,7 @@
             />
             <b>&plus;</b>
             <select name="system.ammoList.STD.strPiercing">
-              {{#select system.ammoList.STD.strPiercing}}
-                <option value="0">--</option>
-                <option value="0.5">&frac12; STR</option>
-                <option value="1">STR</option>
-              {{/select}}
+              {{selectOptions config.strAttack.piercing selected=system.ammoList.STD.strPiercing}}
             </select>
           </span>
         </td>

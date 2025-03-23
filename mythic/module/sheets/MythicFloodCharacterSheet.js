@@ -22,7 +22,7 @@ export default class MythicFloodCharacterSheet extends ActorSheet {
    * or overwritten records.
    */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["mythic", "sheet", "flood", "character"],
       height: 745,
       width: 800,

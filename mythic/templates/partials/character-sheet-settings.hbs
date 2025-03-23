@@ -182,11 +182,7 @@
               {{#unless (eq name "extra")}}
                 <td>
                   <select name="system.characteristics.{{name}}.advancements">
-                    {{#select stat.advancements}}
-                      {{#each ../config.advancements.characteristics as |text num|}}
-                        <option value="{{num}}">{{text}}</option>
-                      {{/each}}
-                    {{/select}}
+                    {{selectOptions ../config.advancements.characteristics selected=stat.advancements}}
                   </select>
                 </td>
               {{/unless}}
@@ -321,11 +317,7 @@
               {{#unless (eq name "notes")}}
                 <td>
                   <select name="system.mythicCharacteristics.{{name}}.advancements">
-                    {{#select stat.advancements}}
-                      {{#each ../config.advancements.mythicCharacteristics as |text num|}}
-                        <option value="{{num}}">{{text}}</option>
-                      {{/each}}
-                    {{/select}}
+                    {{selectOptions ../config.advancements.mythicCharacteristics selected=stat.advancements}}
                   </select>
                 </td>
               {{/unless}}
@@ -658,11 +650,7 @@
               <td>
                 {{#if (eq actor.type "Named Character")}}
                   <select name="system.wounds.advancements">
-                    {{#select system.wounds.advancements}}
-                      {{#each config.advancements.wounds as |text num|}}
-                        <option value="{{num}}">{{text}}</option>
-                      {{/each}}
-                    {{/select}}
+                    {{selectOptions config.advancements.wounds selected=system.wounds.advancements}}
                   </select>
                 {{else}}
                   {{system.wounds.difficulty}}

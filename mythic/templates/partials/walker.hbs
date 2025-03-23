@@ -92,18 +92,19 @@
             {{localnum system.movement.walker.evasion}}
           </button>
           <select name="system.movement.walker.owner">
-            {{#select system.movement.walker.owner}}
-              <option value="">--</option>
-              {{#if system.crew.operators}}
-                {{#each system.crew.operators as |operator|}}
-                  {{#if operator.display}}
-                    <option value="{{concat "o_" operator.id}}">
-                      [O{{doMath "+" operator.idx 1}}]
-                    </option>
-                  {{/if}}
-                {{/each}}
-              {{/if}}
-            {{/select}}
+            <option value="" {{#if (eq "" system.movement.walker.owner)}}selected{{/if}}>--</option>
+            {{#if system.crew.operators}}
+              {{#each system.crew.operators as |operator|}}
+                {{#if operator.display}}
+                  <option
+                    value="{{concat "o_" operator.id}}"
+                    {{#if (eq (concat "o_" operator.id) ../system.movement.walker.owner)}}selected{{/if}}
+                  >
+                    [O{{doMath "+" operator.idx 1}}]
+                  </option>
+                {{/if}}
+              {{/each}}
+            {{/if}}
           </select>
           <button
             name="{{localize "mythic.skillNames.parry"}}"
