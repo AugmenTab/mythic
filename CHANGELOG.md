@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Changes
+
+* Updates to Foundry v12.
+
 ## 0.3.7
 
 ### Changes

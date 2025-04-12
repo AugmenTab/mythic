@@ -9,8 +9,8 @@
   "changelog": "https://github.com/AugmenTab/mythic/blob/main/CHANGELOG.md",
   "compatibility": {
     "maximum": "12",
-    "minimum": "10",
-    "verified": "11"
+    "minimum": "12",
+    "verified": "12"
   },
   "description": "An unofficial system implementation for playing the fan-made Mythic game on Foundry Virtual Tabletop.",
   "download": "https://github.com/AugmenTab/mythic/releases/download/v0.3.5/mythic.zip",
@@ -298,5 +298,5 @@
   ],
   "title": "Mythic",
   "url": "https://github.com/AugmenTab/mythic",
-  "version": "0.3.7-beta"
+  "version": "0.4.0"
 }

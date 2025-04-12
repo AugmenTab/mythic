@@ -3,7 +3,7 @@ module.exports = grunt => {
   const RELEASE_DIR = "/home/tab/Documents";
   const RELEASE_PATH = RELEASE_DIR + "/mythic";
   const RELEASE_TASKS = [
-    "shell:compile_packs",
+    // "shell:compile_packs",
     "less",
     "copy:release",
     "uglify",
@@ -57,15 +57,17 @@ module.exports = grunt => {
       },
       release: {
         files: [
-          { expand: true, src: "lang/*",        dest: RELEASE_PATH },
-          { expand: true, src: "packs/*",       dest: RELEASE_PATH },
-          { expand: true, src: "templates/**",  dest: RELEASE_PATH },
-          { expand: true, src: "CHANGELOG.md",  dest: RELEASE_PATH },
-          { expand: true, src: "LICENSE.txt",   dest: RELEASE_PATH },
-          { expand: true, src: "mythic.css",    dest: RELEASE_PATH },
-          { expand: true, src: "README.md",     dest: RELEASE_PATH },
-          { expand: true, src: "system.json",   dest: RELEASE_PATH },
-          { expand: true, src: "template.json", dest: RELEASE_PATH }
+          { expand: true, src: "CHANGELOG.md",         dest: RELEASE_PATH },
+          { expand: true, src: "LICENSE.txt",          dest: RELEASE_PATH },
+          { expand: true, src: "README.md",            dest: RELEASE_PATH },
+          { expand: true, src: "mythic/lang/**",       dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/module/**",     dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/packs/**.db",   dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/templates/**",  dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/mythic.css",    dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/mythic.js",     dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/system.json",   dest: RELEASE_DIR  },
+          { expand: true, src: "mythic/template.json", dest: RELEASE_DIR  }
         ]
       }
     },
@@ -78,7 +80,7 @@ module.exports = grunt => {
           compress: true
         },
         files: {
-          "mythic.css": "less/mythic.less"
+          "mythic/mythic.css": "less/mythic.less"
         }
       }
     },
